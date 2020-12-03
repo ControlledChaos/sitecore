@@ -221,13 +221,38 @@ if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
 }
 
 /**
- * Load theme classes
+ * Core plugin function
  *
- * Requires once each file in the `includes/classes`directory
- * with the `class-` prefix.
+ * Loads PHP classes.
+ *
+ * @since  1.0.0
+ * @access public
+ * @global string $pagenow Gets the filename of the current page.
+ * @return void
  */
-foreach ( glob( SCP_PATH . 'includes/classes/class-*.php' ) as $filename ) {
-	if ( file_exists( $filename ) ) {
-		require_once $filename;
+function sitecore() {
+
+	// Register plugin classes.
+	require_once SCP_PATH . 'includes/autoload.php';
+
+	// Get the filename of the current page.
+	global $pagenow;
+
+	// Instantiate plugin classes.
+	// new Classes\Init;
+
+	// Instantiate backend plugin classes.
+	if ( is_admin() ) {
+
+		// Run the page header on all screens.
+		// Classes\Admin :: instance();
+
+		// Run the dashboard only on the backend index screen.
+		if ( 'index.php' == $pagenow ) {
+			// Classes\Dashboard :: instance();
+		}
 	}
 }
+
+// Run the plugin.
+sitecore();
