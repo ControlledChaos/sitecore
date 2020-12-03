@@ -26,7 +26,8 @@ define( 'SCP_CLASS', SCP_PATH . 'includes/classes/class-' );
  * activation & deactivation classes.
  */
 const CLASSES = [
-	'SiteCore\Classes\Init' => SCP_CLASS . 'init.php'
+	'SiteCore\Classes\Init' => SCP_CLASS . 'init.php',
+	'SiteCore\Classes\Register_Type' => SCP_CLASS . 'register-types.php'
 ];
 
 // Autoload class files.
