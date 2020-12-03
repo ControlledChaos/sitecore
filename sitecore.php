@@ -27,9 +27,8 @@ namespace SiteCore;
  * Site Core is free software. It can be redistributed and/or modified
  * ad libidum. There is no license distributed with this product.
  *
- * Site Core is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * Site Core is distributed WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @see DISCLAIMER.md
  */
