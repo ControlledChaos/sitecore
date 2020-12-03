@@ -164,10 +164,10 @@ if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
 }
 
 // Get the plugin activation class.
-require SCP_PATH . 'includes/classes/class-activate.php';
+require_once SCP_PATH . 'includes/classes/class-activate.php';
 
 // Get the plugin deactivation class.
-require SCP_PATH . 'includes/classes/class-deactivate.php';
+require_once SCP_PATH . 'includes/classes/class-deactivate.php';
 
 /**
  * Register the activaction & deactivation hooks
@@ -219,4 +219,16 @@ deactivate_plugin();
  */
 if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
 	return;
+}
+
+/**
+ * Load theme classes
+ *
+ * Requires once each file in the `includes/classes`directory
+ * with the `class-` prefix.
+ */
+foreach ( glob( SCP_PATH . 'includes/classes/class-*.php' ) as $filename ) {
+	if ( file_exists( $filename ) ) {
+		require_once $filename;
+	}
 }
