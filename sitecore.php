@@ -98,6 +98,8 @@ define( 'SCP_PHP_VERSION', '7.3' );
  * Keeping the version at 1.0.0 as this is a starter plugin but
  * you may want to start counting as you develop for your use case.
  *
+ * Remember to find and replace the `@version x.x.x` in docblocks.
+ *
  * @since  1.0.0
  * @return string Returns the latest plugin version.
  */
