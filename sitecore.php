@@ -4,10 +4,10 @@
  *
  * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
  *
- * @package     Site_Core
- * @version     1.0.0
- * @author      Greg Sweet <greg@ccdzine.com>
- * @link        https://github.com/ControlledChaos/sitecore
+ * @package Site_Core
+ * @version 1.0.0
+ * @author  Greg Sweet <greg@ccdzine.com>
+ * @link    https://github.com/ControlledChaos/sitecore
  *
  * Plugin Name:  Site Core
  * Plugin URI:   https://github.com/ControlledChaos/sitecore
@@ -23,11 +23,14 @@
 /**
  * License & Warranty
  *
- * Site Core is free software: you can redistribute it and/or modify it.
+ * Site Core is free software. It can be redistributed and/or modified
+ * ad libidum. There is no license distributed with this product.
  *
  * Site Core is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @see DISCLAIMER.md
  */
 
 /**
@@ -75,3 +78,5 @@
  * @see admin\partials - Check all files.
  * @see admin\partials\help - Check all files.
  */
+
+namespace SiteCore;
