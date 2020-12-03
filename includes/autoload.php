@@ -27,6 +27,8 @@ define( 'SCP_CLASS', SCP_PATH . 'includes/classes/class-' );
  */
 const CLASSES = [
 	'SiteCore\Classes\Init' => SCP_CLASS . 'init.php',
+	'SiteCore\Classes\ACF' => SCP_CLASS . 'acf.php',
+	'SiteCore\Classes\ACF_Extend' => SCP_CLASS . 'acf-extend.php',
 	'SiteCore\Classes\Register_Type' => SCP_CLASS . 'register-types.php'
 ];
 

@@ -26,6 +26,31 @@ class Init {
 	 * @return self
 	 */
 	public function __construct() {
-		// Add actions & filters.
+
+		// Compatability with other products.
+		$this->compat();
+	}
+
+	/**
+	 * Compatability with other products
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function compat() {
+
+		if ( ! class_exists( 'acf' ) ) {
+			$acf = new ACF;
+		} else {
+			$acf = null;
+		}
+
+		if ( ! class_exists( 'ACFE' ) && class_exists( 'acf_pro' ) ) {
+			$acf_extend = new ACF_Extend;
+		} else {
+			$acf_extend = null;
+		}
+		return [ $acf, $acf_extend ];
 	}
 }

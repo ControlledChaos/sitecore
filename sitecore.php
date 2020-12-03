@@ -241,7 +241,7 @@ function sitecore() {
 	global $pagenow;
 
 	// Instantiate plugin classes.
-	// new Classes\Init;
+	$init = new Classes\Init;
 
 	// Instantiate backend plugin classes.
 	if ( is_admin() ) {
