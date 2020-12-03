@@ -17,8 +17,9 @@
  * Author URI:   https://ccdzine.com/
  * Text Domain:  sitecore
  * Domain Path:  /languages
- * Tested up to: 5.5.3
  */
+
+namespace SiteCore;
 
 /**
  * License & Warranty
@@ -79,8 +80,6 @@
  * @see admin\partials\help - Check all files.
  */
 
-namespace SiteCore;
-
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -92,9 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0.0
  * @return string Returns the minimum required PHP version.
  */
-if ( ! defined( 'SCP_PHP_VERSION' ) ) {
-	define( 'SCP_PHP_VERSION', '7.3' );
-}
+define( 'SCP_PHP_VERSION', '7.3' );
 
 /**
  * Constant: Plugin version
@@ -105,20 +102,27 @@ if ( ! defined( 'SCP_PHP_VERSION' ) ) {
  * @since  1.0.0
  * @return string Returns the latest plugin version.
  */
-if ( ! defined( 'SCP_VERSION' ) ) {
-	define( 'SCP_VERSION', '1.0.0' );
-}
+define( 'SCP_VERSION', '1.0.0' );
 
 /**
  * Constant: Text domain
  *
  * @since  1.0.0
  * @return string Returns the text domain of the plugin.
- *
- * @todo   Replace all strings with constant.
  */
-if ( ! defined( 'SCP_DOMAIN' ) ) {
-	define( 'SCP_DOMAIN', 'sitecore' );
+define( 'SCP_DOMAIN', 'sitecore' );
+
+/**
+ * Constant: Plugin name
+ *
+ * @since  1.0.0
+ * @return string Returns the text domain of the plugin.
+ */
+if ( defined( 'SCP_DOMAIN' ) ) {
+	$plugin_name = esc_html__( 'Site Core', SCP_DOMAIN );
+	define( 'SCP_NAME', $plugin_name );
+} else {
+	define( 'SCP_NAME', 'Site Core' );
 }
 
 /**
@@ -157,4 +161,62 @@ if ( ! defined( 'SCP_URL' ) ) {
  */
 if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
 	define( 'SCP_ADMIN_SLUG', 'sitecore' );
+}
+
+// Get the plugin activation class.
+require SCP_PATH . 'includes/classes/class-activate.php';
+
+// Get the plugin deactivation class.
+require SCP_PATH . 'includes/classes/class-deactivate.php';
+
+/**
+ * Register the activaction & deactivation hooks
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+\register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
+\register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
+
+/**
+ * Run activation class
+ *
+ * The code that runs during plugin activation.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+function activate_plugin() {
+	activation_class();
+}
+activate_plugin();
+
+/**
+ * Run daactivation class
+ *
+ * The code that runs during plugin deactivation.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+function deactivate_plugin() {
+	deactivation_class();
+}
+deactivate_plugin();
+
+/**
+ * Disable plugin
+ *
+ * Stop here if the minimum PHP version is not met.
+ * Prevents breaking sites running older PHP versions.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
+	return;
 }
