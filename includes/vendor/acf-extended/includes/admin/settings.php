@@ -5,39 +5,39 @@ if(!defined('ABSPATH'))
 
 add_action('admin_menu', 'acfe_admin_settings_menu');
 function acfe_admin_settings_menu(){
-    
+
     if(!acf_get_setting('show_admin'))
         return;
-    
+
     $submenu_page = add_submenu_page('edit.php?post_type=acf-field-group', __('Settings'), __('Settings'), acf_get_setting('capability'), 'acfe-settings', 'acfe_admin_settings_html');
-    
+
     add_action('admin_print_scripts-' . $submenu_page, function(){
         acf_enqueue_scripts();
     });
-    
+
 }
 
 function acfe_admin_settings_html(){
 ?>
 <div class="wrap" id="acfe-admin-settings">
-    
+
     <h1><?php _e('Settings'); ?></h1>
-    
+
     <div id="poststuff">
-        
+
         <div class="postbox acf-postbox">
             <div class="postbox-header">
                 <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
             </div>
             <div class="inside acf-fields -left">
-            
-                <?php 
+
+                <?php
                 acf_render_field_wrap(array(
                     'type'  => 'tab',
                     'label' => 'ACF',
                 ));
                 ?>
-                
+
                 <?php
 
                 $settings = array(
@@ -210,9 +210,9 @@ function acfe_admin_settings_html(){
                         'description' => 'Allows ACF to remove the default WP custom fields metabox. Defaults to true'
                     ),
                 );
-                
+
                 ?>
-                
+
                 <?php foreach($settings as $setting){ ?>
                     <div class="acf-field">
                         <div class="acf-label">
@@ -224,18 +224,18 @@ function acfe_admin_settings_html(){
                         </div>
                     </div>
                 <?php } ?>
-                
-                <?php 
+
+                <?php
                 acf_render_field_wrap(array(
                     'type'  => 'tab',
                     'label' => 'ACF: Extended',
                 ));
                 ?>
-                
+
                 <?php
-                
+
                 $settings = array(
-                    
+
                     // Modules
                     array(
                         'name'  => 'acfe/modules/author',
@@ -303,7 +303,7 @@ function acfe_admin_settings_html(){
                         'value' => '<code>' . (acf_get_setting('acfe/modules/ui', true) ? __('True'): __('False')) . '</code>',
                         'description' => 'Show/hide the UI enhancements module. Defaults to true'
                     ),
-                    
+
                     // Recaptcha
                     array(
                         'name'  => 'acfe/field/recaptcha/site_key',
@@ -347,7 +347,7 @@ function acfe_admin_settings_html(){
                         'value' => '<code>' . (acf_get_setting('acfe/dev') ? __('True'): __('False')) . '</code>',
                         'description' => 'Show/hide the advanced WP post meta box. Defaults to false'
                     ),
-                    
+
                     // PHP
                     array(
                         'name'  => 'acfe/php',
@@ -373,7 +373,7 @@ function acfe_admin_settings_html(){
                         'value' => '<code>' . implode("<br />", (array) acf_get_setting('acfe/php_load')) . '</code>',
                         'description' => 'PHP AutoSync loading path'
                     ),
-                    
+
                     // Json
                     array(
                         'name'  => 'acfe/json',
@@ -399,7 +399,7 @@ function acfe_admin_settings_html(){
                         'value' => '<code>' . implode("<br />", (array) acf_get_setting('acfe/json_load')) . '</code>',
                         'description' => 'Json AutoSync loading paths'
                     ),
-                    
+
                     // Theme
                     array(
                         'name'  => 'acfe/theme_path',
@@ -421,7 +421,7 @@ function acfe_admin_settings_html(){
                     ),
                 );
                 ?>
-                
+
                 <?php foreach($settings as $setting){ ?>
                     <div class="acf-field">
                         <div class="acf-label">
@@ -436,18 +436,18 @@ function acfe_admin_settings_html(){
 
                 <script type="text/javascript">
                 if( typeof acf !== 'undefined' ) {
-                        
+
                     acf.newPostbox({
                         'id': 'acfe-settings',
                         'label': 'left'
-                    });	
+                    });
 
                 }
                 </script>
             </div>
         </div>
     </div>
-    
+
 </div>
 <?php
 }

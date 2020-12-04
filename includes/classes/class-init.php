@@ -49,7 +49,7 @@ class Init {
 		if ( ! class_exists( 'ACFE' ) && class_exists( 'acf_pro' ) ) {
 			$acf_extend = new ACF_Extend;
 		} else {
-			$acf_extend = null;
+			$acf_extend = new ACF_Extend;
 		}
 		return [ $acf, $acf_extend ];
 	}

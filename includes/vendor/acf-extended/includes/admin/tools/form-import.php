@@ -1,7 +1,13 @@
 <?php
 
-if(!defined('ABSPATH'))
-	exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Stop here if ACF Pro is not active.
+if ( ! defined('ACF_PRO') ) {
+    return;
+}
 
 // Check setting
 if(!acf_get_setting('acfe/modules/dynamic_forms'))

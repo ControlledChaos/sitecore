@@ -1,7 +1,14 @@
 <?php
 
-if(!defined('ABSPATH'))
+// Restrict direct access.
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
+}
+
+// Stop here if ACF Pro is not active.
+if ( ! defined('ACF_PRO') ) {
+    return;
+}
 
 acfe_include('includes/modules/form/form-front.php');
 

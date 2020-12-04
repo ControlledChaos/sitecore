@@ -3,6 +3,11 @@
 if(!defined('ABSPATH'))
     exit;
 
+// Stop here if ACF Pro is not active.
+if ( ! defined('ACF_PRO') ) {
+    return;
+}
+
 add_action('wp_ajax_acfe/flexible/layout_preview', 'acfe_flexible_layout_preview');
 function acfe_flexible_layout_preview($options = array()){
     

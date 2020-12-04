@@ -1,7 +1,14 @@
 <?php
 
-if(!defined('ABSPATH'))
+// Restrict direct access.
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
+}
+
+// Stop here if ACF Pro is not active.
+if ( ! defined('ACF_PRO') ) {
+    return;
+}
 
 // Check setting
 if(!acf_get_setting('acfe/modules/dynamic_block_types'))
