@@ -169,6 +169,18 @@ if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
 	define( 'SCP_ADMIN_SLUG', 'site-core' );
 }
 
+/**
+ * Activation & deactivation
+ *
+ * The activation & deactivation methods run here before the check
+ * for PHP version which otherwise disables the functionality of
+ * the plugin.
+ *
+ * The namspace of this file must remain escaped by use of the
+ * backslash (`\`) prepending the acivation hooks and corresponding
+ * functions.
+ */
+
 // Get the plugin activation class.
 require_once SCP_PATH . 'includes/classes/class-activate.php';
 
