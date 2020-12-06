@@ -86,14 +86,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Constant: Required PHP version
- *
- * @since  1.0.0
- * @return string Returns the minimum required PHP version.
- */
-define( 'SCP_PHP_VERSION', '7.3' );
-
-/**
  * Constant: Plugin version
  *
  * Keeping the version at 1.0.0 as this is a starter plugin but
@@ -105,6 +97,14 @@ define( 'SCP_PHP_VERSION', '7.3' );
  * @return string Returns the latest plugin version.
  */
 define( 'SCP_VERSION', '1.0.0' );
+
+/**
+ * Constant: Required PHP version
+ *
+ * @since  1.0.0
+ * @return string Returns the minimum required PHP version.
+ */
+define( 'SCP_PHP_VERSION', '7.3' );
 
 /**
  * Constant: Text domain
