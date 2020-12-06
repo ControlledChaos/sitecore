@@ -275,3 +275,5 @@ function sitecore() {
 
 // Run the plugin.
 sitecore();
+
+// Happy developing!
