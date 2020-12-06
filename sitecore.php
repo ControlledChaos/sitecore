@@ -214,7 +214,7 @@ function deactivate_plugin() {
 deactivate_plugin();
 
 /**
- * Disable plugin
+ * Disable plugin for PHP version
  *
  * Stop here if the minimum PHP version is not met.
  * Prevents breaking sites running older PHP versions.
