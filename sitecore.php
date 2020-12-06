@@ -56,19 +56,23 @@ namespace SiteCore;
  *    include underscores between words.
  *
  * 4. Text domain
- *    Find sitecore and replace with the new name of your
+ *    Find `sitecore` and replace with the new name of your
  *    primary plugin file (this file).
  *
- * 5. Constants prefix
+ * 5. Admin page slug
+ *    Find `site-core` and replace with the new base slug of your
+ *    plugin's admin pages.
+ *
+ * 6. Constants prefix
  *    Find `SCP` and replace with something unique to your plugin name. Use
  *    only uppercase letters.
  *
- * 6. General prefix
+ * 7. General prefix
  *    Find `scp` and replace with something unique to your plugin name. Use
  *    only lowercase letters. This will change the prefix of all filters and
  *    settings, and the prefix of functions outside of a class.
  *
- * 7. Author
+ * 8. Author
  *    Find `Greg Sweet <greg@ccdzine.com>` and replace with your name and
  *    email address or those of your organization.
  *
@@ -155,14 +159,14 @@ if ( ! defined( 'SCP_URL' ) ) {
  * This URL slug is used for various plugin admin & settings pages.
  *
  * The prefix will change in your search & replace in renaming the plugin.
- * Change the second part of the define(), here as 'sitecore',
+ * Change the second part of the define(), here as 'site-core',
  * to your preferred page slug.
  *
  * @since  1.0.0
  * @return string Returns the URL slug of the admin pages.
  */
 if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
-	define( 'SCP_ADMIN_SLUG', 'sitecore' );
+	define( 'SCP_ADMIN_SLUG', 'site-core' );
 }
 
 // Get the plugin activation class.
