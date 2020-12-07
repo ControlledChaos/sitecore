@@ -111,6 +111,14 @@ define( 'SCP_VERSION', '1.0.0' );
 define( 'SCP_PHP_VERSION', '7.3' );
 
 /**
+ * Constant: Plugin base name
+ *
+ * @since  1.0.0
+ * @return string Returns the base name of this plugin file.
+ */
+define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
  * Constant: Text domain
  *
  * @since  1.0.0
