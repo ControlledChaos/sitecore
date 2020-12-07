@@ -40,13 +40,94 @@ class Init {
 	 */
 	public function compat() {
 
-		if ( ! class_exists( 'acf' ) ) {
+		/**
+		 * Get plugins path
+		 *
+		 * Used to check for active plugins with the `is_plugin_active` function.
+		 */
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		/**
+		 * Compatability constants
+		 *
+		 * Define constants for conditional loading of files
+		 * if not defined in the system config file.
+		 *
+		 * The use of constants rather than settings is to
+		 * prevent site owners and administrators disabling
+		 * code which is needed to operate the site. Non-
+		 * developers are less likely to edit the config file.
+		 */
+
+		/**
+		 * ACF constant
+		 *
+		 * When set to true this loads the included files for
+		 * the Advanced Custom Fields plugin.
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Default is true.
+		 */
+		if ( ! defined( 'SCP_USE_ACF' ) ) {
+			define( 'SCP_USE_ACF', true );
+		}
+
+		/**
+		 * ACFE constant
+		 *
+		 * When set to true this loads the included files for
+		 * the Advanced Custom Fields Extended plugin.
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Default is true.
+		 */
+		if ( ! defined( 'SCP_USE_ACFE' ) ) {
+			define( 'SCP_USE_ACFE', true );
+		}
+
+		/**
+		 * Use ACF
+		 *
+		 * Instatiates this plugin's ACF class to
+		 * include Advanced Custom Fields. Does so
+		 * only if the original, third party plugin
+		 * is not active and if the SCP_USE_ACF is
+		 * defined as true.
+		 *
+		 * @since 1.0.0
+		 */
+		if (
+			(
+				! class_exists( 'acf' ) ||
+				! is_plugin_active( 'advanced-custom-fields/acf.php' ) ||
+				! is_plugin_active( 'advanced-custom-fields-pro/acf.php' )
+			)
+			&& SCP_USE_ACF
+		) {
 			$acf = new ACF;
 		} else {
 			$acf = null;
 		}
 
-		if ( ! class_exists( 'ACFE' ) ) {
+		/**
+		 * Use ACF Extended
+		 *
+		 * Instatiates this plugin's ACF class to
+		 * include ACF  Extended. Does so only if
+		 * the original, third party plugin is not
+		 * active and if the SCP_USE_ACF is defined
+		 * as true.
+		 *
+		 * @since 1.0.0
+		 */
+		if (
+			(
+				! class_exists( 'ACFE' ) ||
+				! is_plugin_active( 'acf-extended/acf-extended.php' ) ||
+				! is_plugin_active( 'acf-extended-pro/acf-extended.php' )
+			)
+			&& SCP_USE_ACFE
+		) {
 			$acf_extend = new ACF_Extend;
 		} else {
 			$acf_extend = null;
