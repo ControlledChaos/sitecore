@@ -259,6 +259,9 @@ if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
  */
 function sitecore() {
 
+	// Get the filename of the current page.
+	global $pagenow;
+
 	// Autoload class files.
 	spl_autoload_register(
 		function () {
@@ -268,13 +271,14 @@ function sitecore() {
 		}
 	);
 
-	// Get the filename of the current page.
-	global $pagenow;
+	// Classes namespace variable.
+	$namespace = __NAMESPACE__ . '\Classes';
+
+	// Classes as variables.
+	$scp_plugins = $namespace . '\Plugins';
 
 	// Instantiate plugin classes.
-	$scp_init = __NAMESPACE__ . '\Classes\Init';
-
-	new $scp_init;
+	new $scp_plugins;
 
 	// Instantiate backend plugin classes.
 	if ( is_admin() ) {

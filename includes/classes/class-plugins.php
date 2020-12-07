@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Init {
+class Plugins {
 
 	/**
 	 * Constructor method
@@ -28,17 +28,14 @@ class Init {
 	public function __construct() {
 
 		// Compatability with other products.
-		$this->compat();
+		$this->acf();
+		$this->acfe();
 	}
 
 	/**
-	 * Compatability with other products
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
+	 * Include plugins file from system
 	 */
-	public function compat() {
+	public function plugins() {
 
 		/**
 		 * Get plugins path
@@ -59,6 +56,18 @@ class Init {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			return;
 		}
+	}
+
+	/**
+	 * Compatability with other products
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acf() {
+
+		$this->plugins();
 
 		/**
 		 * Compatability constants
@@ -86,19 +95,6 @@ class Init {
 		}
 
 		/**
-		 * ACFE constant
-		 *
-		 * When set to true this loads the included files for
-		 * the Advanced Custom Fields Extended plugin.
-		 *
-		 * @since 1.0.0
-		 * @var   boolean Default is true.
-		 */
-		if ( ! defined( 'SCP_USE_ACFE' ) ) {
-			define( 'SCP_USE_ACFE', true );
-		}
-
-		/**
 		 * Use ACF
 		 *
 		 * Instatiates this plugin's ACF class to
@@ -120,6 +116,44 @@ class Init {
 			$acf = new ACF;
 		} else {
 			$acf = null;
+		}
+		return $acf;
+	}
+
+	/**
+	 * Compatability with other products
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acfe() {
+
+		$this->plugins();
+
+		/**
+		 * Compatability constants
+		 *
+		 * Define constants for conditional loading of files
+		 * if not defined in the system config file.
+		 *
+		 * The use of constants rather than settings is to
+		 * prevent site owners and administrators disabling
+		 * code which is needed to operate the site. Non-
+		 * developers are less likely to edit the config file.
+		 */
+
+		/**
+		 * ACFE constant
+		 *
+		 * When set to true this loads the included files for
+		 * the Advanced Custom Fields Extended plugin.
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Default is true.
+		 */
+		if ( ! defined( 'SCP_USE_ACFE' ) ) {
+			define( 'SCP_USE_ACFE', true );
 		}
 
 		/**
@@ -145,6 +179,6 @@ class Init {
 		} else {
 			$acf_extend = null;
 		}
-		return [ $acf, $acf_extend ];
+		return $acf_extend;
 	}
 }
