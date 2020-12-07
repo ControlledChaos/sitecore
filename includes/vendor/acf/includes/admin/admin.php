@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Admin') ) :
+if ( ! class_exists( 'ACF_Admin' ) ) :
 
 class ACF_Admin {
 	
@@ -36,18 +36,18 @@ class ACF_Admin {
 	function admin_menu() {
 		
 		// Bail early if ACF is hidden.
-		if( !acf_get_setting('show_admin') ) {
+		if ( !acf_get_setting( 'show_admin' ) ) {
 			return;
 		}
 		
 		// Vars.
 		$slug = 'edit.php?post_type=acf-field-group';
-		$cap = acf_get_setting('capability');
+		$cap = acf_get_setting( 'capability' );
 		
 		// Add menu items.
-		add_menu_page( __("Custom Fields",'acf'), __("Custom Fields",'acf'), $cap, $slug, false, 'dashicons-welcome-widgets-menus', '80.025' );
-		add_submenu_page( $slug, __('Field Groups','acf'), __('Field Groups','acf'), $cap, $slug );
-		add_submenu_page( $slug, __('Add New','acf'), __('Add New','acf'), $cap, 'post-new.php?post_type=acf-field-group' );
+		add_menu_page( __("Custom Fields",'acf' ), __("Custom Fields",'acf' ), $cap, $slug, false, 'dashicons-welcome-widgets-menus', '80.025' );
+		add_submenu_page( $slug, __( 'Field Groups','acf' ), __( 'Field Groups','acf' ), $cap, $slug );
+		add_submenu_page( $slug, __( 'Add New','acf' ), __( 'Add New','acf' ), $cap, 'post-new.php?post_type=acf-field-group' );
 	}
 	
 	/**
@@ -77,7 +77,7 @@ class ACF_Admin {
 		
 		// Determine body class version.
 		$wp_minor_version = floatval( $wp_version );
-		if( $wp_minor_version >= 5.3 ) {
+		if ( $wp_minor_version >= 5.3 ) {
 			$classes .= ' acf-admin-5-3';
 		} else {
 			$classes .= ' acf-admin-3-8';
@@ -102,7 +102,7 @@ class ACF_Admin {
 	function current_screen( $screen ) {
 		
 		// Determine if the current page being viewed is "ACF" related.
-		if( isset( $screen->post_type ) && $screen->post_type === 'acf-field-group' ) {
+		if ( isset( $screen->post_type ) && $screen->post_type === 'acf-field-group' ) {
 			add_action( 'in_admin_header',		array( $this, 'in_admin_header' ) );
 			add_filter( 'admin_footer_text',	array( $this, 'admin_footer_text' ) );
 			$this->setup_help_tab();
@@ -197,11 +197,11 @@ class ACF_Admin {
 	 */
 	function admin_footer_text( $text ) {
 		// Use RegExp to append "ACF" after the <a> element allowing translations to read correctly.
-		return preg_replace( '/(<a[\S\s]+?\/a>)/', '$1 ' . __('and', 'acf') . ' <a href="https://www.advancedcustomfields.com" target="_blank">ACF</a>', $text, 1 );
+		return preg_replace( '/(<a[\S\s]+?\/a>)/', '$1 ' . __( 'and', 'acf' ) . ' <a href="https://www.advancedcustomfields.com" target="_blank">ACF</a>', $text, 1 );
 	}
 }
 
 // Instantiate.
-acf_new_instance('ACF_Admin');
+acf_new_instance( 'ACF_Admin' );
 
 endif; // class_exists check

@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Widget') ) :
+if ( ! class_exists( 'ACF_Location_Widget' ) ) :
 
 class ACF_Location_Widget extends ACF_Location {
 	
@@ -36,7 +36,7 @@ class ACF_Location_Widget extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['widget']) ) {
+		if ( isset( $screen['widget']) ) {
 			$widget = $screen['widget'];
 		} else {
 			return false;
@@ -62,7 +62,7 @@ class ACF_Location_Widget extends ACF_Location {
 		$choices = array( 
 			'all' => __( 'All', 'acf' )
 		);
-		if( $wp_widget_factory->widgets ) {
+		if ( $wp_widget_factory->widgets ) {
 			foreach( $wp_widget_factory->widgets as $widget ) {
 				$choices[ $widget->id_base ] = $widget->name;
 			}

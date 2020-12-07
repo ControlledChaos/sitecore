@@ -1,16 +1,16 @@
 <?php 
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-if(!class_exists('ACFE_Admin_Tool_FG_Local_Export')):
+if (!class_exists( 'ACFE_Admin_Tool_FG_Local_Export' ) ):
 
 class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
 
     function initialize(){
         
         // vars
-        $this->title = __('Export Local Field Groups');
+        $this->title = __( 'Export Local Field Groups' );
         $this->name = 'acfe-fg-local';
         $this->icon = 'dashicons-upload';
         
@@ -18,46 +18,46 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
     
     function load(){
         
-        if($ids = acf_maybe_get_GET('acfe-fg-local-sync')){
+        if ( $ids = acf_maybe_get_GET( 'acfe-fg-local-sync' ) ){
             
-            $ids = explode(' ', $ids);
+            $ids = explode( ' ', $ids);
         
             // Count number of imported field groups.
-            $total = count($ids);
+            $total = count( $ids);
             
             // Generate text.
             $text = sprintf( _n( 'Imported 1 field group', 'Imported %s field groups', $total, 'acf' ), $total );		
             
             // Add links to text.
-            $links = array();
+            $links = [];
             foreach( $ids as $id ) {
                 $links[] = '<a href="' . get_edit_post_link( $id ) . '">' . get_the_title( $id ) . '</a>';
             }
             $text .= ' ' . implode( ', ', $links );
             
             // Add notice
-            acf_add_admin_notice($text, 'success');
+            acf_add_admin_notice( $text, 'success' );
             
         }
         
-        if($this->is_active()){
+        if ( $this->is_active() ){
             
             $array = $this->get_selected();
             $keys = $this->get_selected_keys();
             $action = $this->get_action();
             
             // validate
-            if($array === false)
-                return acf_add_admin_notice(__('No field group selected'), 'warning');
+            if ( $array === false)
+                return acf_add_admin_notice(__( 'No field group selected' ), 'warning' );
             
             // Json
-            if($action === 'json'){
+            if ( $action === 'json' ){
                 
                 // Slugs
-                $slugs = implode('-', $keys);
+                $slugs = implode( '-', $keys);
                 
                 // Date
-                $date = date('Y-m-d');
+                $date = date( 'Y-m-d' );
                 
                 // file
                 $file_name = 'acfe-export-local-' . $slugs . '-' .  $date . '.json';
@@ -68,31 +68,31 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
                 header("Content-Type: application/json; charset=utf-8");
                 
                 // return
-                echo acf_json_encode($array);
+                echo acf_json_encode( $array);
                 die;
                 
             }
             
             // Sync
-            elseif($action === 'sync'){
+            elseif ( $action === 'sync' ){
                 
                 // Force array
-                $array = acf_array($array);
+                $array = acf_array( $array);
                 
                 // Remeber imported field group ids.
-                $ids = array();
+                $ids = [];
                 
                 // Loop over json
-                foreach($array as $field_group){
+                foreach( $array as $field_group){
                     
                     // Search database for existing field group.
-                    $post = acf_get_field_group_post($field_group['key']);
+                    $post = acf_get_field_group_post( $field_group['key']);
                     
-                    if($post)
+                    if ( $post)
                         $field_group['ID'] = $post->ID;
                     
                     // Import field group.
-                    $field_group = acf_import_field_group($field_group);
+                    $field_group = acf_import_field_group( $field_group);
                     
                     // append message
                     $ids[] = $field_group['ID'];
@@ -100,10 +100,10 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
                 }
                 
                 // url
-                $url = add_query_arg('acfe-fg-local-sync', implode('+', $ids), acf_get_admin_tools_url());
+                $url = add_query_arg( 'acfe-fg-local-sync', implode( '+', $ids), acf_get_admin_tools_url() );
                 
                 // redirect
-                wp_redirect($url);
+                wp_redirect( $url);
                 exit;
                 
             }
@@ -114,7 +114,7 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
     
     function html(){
 		
-		if($this->is_active()){
+		if ( $this->is_active() ){
             
             $array = $this->get_selected();
             $action = $this->get_action();
@@ -125,16 +125,16 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
                     
                     <?php
                     // prevent default translation and fake __() within string
-                    acf_update_setting('l10n_var_export', true);
+                    acf_update_setting( 'l10n_var_export', true);
                     
                     // vars
                     $json = $array;
                     
                     $str_replace = array(
                         "  "			=> "\t",
-                        "'!!__(!!\'"	=> "__('",
+                        "'!!__(!!\'"	=> "__( '",
                         "!!\', !!\'"	=> "', '",
-                        "!!\')!!'"		=> "')",
+                        "!!\' )!!'"		=> "' )",
                         "array ("		=> "array("
                     );
                     
@@ -145,26 +145,26 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
 
 
                     ?>
-                    <p><?php _e("The following code can be used to register a local version of the selected field group(s). A local field group can provide many benefits such as faster load times, version control & dynamic fields/settings. Simply copy and paste the following code to your theme's functions.php file or include it within an external file.", 'acf'); ?></p>
+                    <p><?php _e("The following code can be used to register a local version of the selected field group(s). A local field group can provide many benefits such as faster load times, version control & dynamic fields/settings. Simply copy and paste the following code to your theme's functions.php file or include it within an external file.", 'acf' ); ?></p>
                     
                     <div id="acf-admin-tool-export">
                     
                         <textarea id="acf-export-textarea" readonly="true"><?php
                         
-                        echo "if( function_exists('acf_add_local_field_group') ):" . "\r\n" . "\r\n";
+                        echo "if ( function_exists( 'acf_add_local_field_group' ) ):" . "\r\n" . "\r\n";
                         
                         foreach( $json as $field_group ) {
                                     
                             // code
-                            $code = var_export($field_group, true);
+                            $code = var_export( $field_group, true);
                             
                             
                             // change double spaces to tabs
-                            $code = str_replace( array_keys($str_replace), array_values($str_replace), $code );
+                            $code = str_replace( array_keys( $str_replace), array_values( $str_replace), $code );
                             
                             
                             // correctly formats "=> array("
-                            $code = preg_replace( array_keys($preg_replace), array_values($preg_replace), $code );
+                            $code = preg_replace( array_keys( $preg_replace), array_values( $preg_replace), $code );
                             
                             
                             // esc_textarea
@@ -186,21 +186,21 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
                         <a class="button" id="acf-export-copy"><?php _e( 'Copy to clipboard', 'acf' ); ?></a>
                     </p>
                     <script type="text/javascript">
-                    (function($){
+                    (function( $){
                         
                         // vars
-                        var $a = $('#acf-export-copy');
-                        var $textarea = $('#acf-export-textarea');
+                        var $a = $( '#acf-export-copy' );
+                        var $textarea = $( '#acf-export-textarea' );
                         
                         
                         // remove $a if 'copy' is not supported
-                        if( !document.queryCommandSupported('copy') ) {
+                        if ( ! document.queryCommandSupported( 'copy' ) ) {
                             return $a.remove();
                         }
                         
                         
                         // event
-                        $a.on('click', function( e ){
+                        $a.on( 'click', function( e ){
                             
                             // prevent default
                             e.preventDefault();
@@ -214,13 +214,13 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
                             try {
                                 
                                 // copy
-                                var copy = document.execCommand('copy');
-                                if( !copy ) return;
+                                var copy = document.execCommand( 'copy' );
+                                if ( !copy ) return;
                                 
                                 
                                 // tooltip
                                 acf.newTooltip({
-                                    text: 		"<?php _e('Copied', 'acf' ); ?>",
+                                    text: 		"<?php _e( 'Copied', 'acf' ); ?>",
                                     timeout:	250,
                                     target: 	$(this),
                                 });
@@ -248,40 +248,40 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
 		// vars
 		$selected = $this->get_selected_keys();
 		
-		if(!$selected)
+		if (! $selected)
             return false;
         
         // Return
-        $array = array();
+        $array = [];
         
         // Enable filters
         acf_enable_filters();
         
         // Disable fitler: clone
-        acf_disable_filter('clone');
+        acf_disable_filter( 'clone' );
         
         // Get desync PHP Field Groups
         $desync_php_field_groups = acfe_get_desync_php_field_groups();
         
-        foreach($desync_php_field_groups as $file_key => $file_path){
+        foreach( $desync_php_field_groups as $file_key => $file_path){
             
-            require_once($file_path);
+            require_once( $file_path);
             
         }
         
-        foreach($selected as $field_group_key){
+        foreach( $selected as $field_group_key){
             
-            $field_group = acf_get_field_group($field_group_key);
+            $field_group = acf_get_field_group( $field_group_key);
             
             // validate field group
-            if(empty($field_group))
+            if (empty( $field_group) )
                 continue;
             
             // load fields
-            $field_group['fields'] = acf_get_fields($field_group);
+            $field_group['fields'] = acf_get_fields( $field_group);
 
             // prepare for export
-            $field_group = acf_prepare_field_group_for_export($field_group);
+            $field_group = acf_prepare_field_group_for_export( $field_group);
             
             $array[] = $field_group;
             
@@ -295,14 +295,14 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
 	function get_selected_keys(){
 		
 		// check $_POST
-		if($keys = acf_maybe_get_POST('keys'))
+		if ( $keys = acf_maybe_get_POST( 'keys' ) )
 			return (array) $keys;
 		
 		// check $_GET
-		if($keys = acf_maybe_get_GET('keys')){
+		if ( $keys = acf_maybe_get_GET( 'keys' ) ){
             
-			$keys = str_replace(' ', '+', $keys);
-			return explode('+', $keys);
+			$keys = str_replace( ' ', '+', $keys);
+			return explode( '+', $keys);
             
 		}
 		
@@ -314,11 +314,11 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
     function get_action(){
         
         // check $_POST
-		if($action = acf_maybe_get_POST('action'))
+		if ( $action = acf_maybe_get_POST( 'action' ) )
             return $action;
 		
 		// check $_GET
-		if($action = acf_maybe_get_GET('action'))
+		if ( $action = acf_maybe_get_GET( 'action' ) )
             return $action;
 		
 		// return
@@ -328,6 +328,6 @@ class ACFE_Admin_Tool_FG_Local extends ACF_Admin_Tool{
     
 }
 
-acf_register_admin_tool('ACFE_Admin_Tool_FG_Local');
+acf_register_admin_tool( 'ACFE_Admin_Tool_FG_Local' );
 
 endif;

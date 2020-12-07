@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Admin_Tool') ) :
+if ( ! class_exists( 'ACF_Admin_Tool' ) ) :
 
 class ACF_Admin_Tool {
 	
@@ -87,7 +87,7 @@ class ACF_Admin_Tool {
 	*/
 	
 	function is_active() {
-		return acf_maybe_get_GET('tool') === $this->name;
+		return acf_maybe_get_GET( 'tool' ) === $this->name;
 	}
 	
 	

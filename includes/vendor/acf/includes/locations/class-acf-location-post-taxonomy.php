@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Post_Taxonomy') ) :
+if ( ! class_exists( 'ACF_Location_Post_Taxonomy' ) ) :
 
 class ACF_Location_Post_Taxonomy extends ACF_Location {
 	
@@ -36,9 +36,9 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['post_id']) ) {
+		if ( isset( $screen['post_id']) ) {
 			$post_id = $screen['post_id'];
-		} elseif( isset($screen['attachment_id']) ) {
+		} elseif ( isset( $screen['attachment_id']) ) {
 			$post_id = $screen['attachment_id'];
 		} else {
 			return false;
@@ -46,28 +46,28 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 		
 		// Get WP_Term from rule value.
 		$term = acf_get_term( $rule['value'] );
-		if( !$term || is_wp_error($term) ) {
+		if ( ! $term || is_wp_error( $term) ) {
 			return false;
 		}
 		
 		// Get terms connected to post.
-		if( isset($screen['post_terms']) ) {
-			$post_terms = acf_maybe_get( $screen['post_terms'], $term->taxonomy, array() );
+		if ( isset( $screen['post_terms']) ) {
+			$post_terms = acf_maybe_get( $screen['post_terms'], $term->taxonomy, [] );
 		} else {
-			$post_terms = wp_get_post_terms( $post_id, $term->taxonomy, array('fields' => 'ids') );
+			$post_terms = wp_get_post_terms( $post_id, $term->taxonomy, array( 'fields' => 'ids' ) );
 		}
 		
 		// If no post terms are found, and we are dealing with the "category" taxonomy, treat as default "Uncategorized" category.
-		if( !$post_terms && $term->taxonomy == 'category' ) {
+		if ( ! $post_terms && $term->taxonomy == 'category' ) {
 			$post_terms = array( 1 );
 		}
 		
 		// Search $post_terms for a match.
-		$result = ( in_array($term->term_id, $post_terms) || in_array($term->slug, $post_terms) );
+		$result = ( in_array( $term->term_id, $post_terms) || in_array( $term->slug, $post_terms) );
 		
 		// Reverse result for "!=" operator.
-        if( $rule['operator'] === '!=' ) {
-        	return !$result;
+        if ( $rule['operator'] === '!=' ) {
+        	return ! $result;
         }
 		return $result;
 	}
@@ -95,11 +95,11 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 	 * @return	string|array
 	 */
 	public function get_object_subtype( $rule ) {
-		if( $rule['operator'] === '==' ) {
+		if ( $rule['operator'] === '==' ) {
 			$term = acf_decode_term( $rule['value'] );
-			if( $term ) {
+			if ( $term ) {
 				$taxonomy = get_taxonomy( $term['taxonomy'] );
-				if( $taxonomy ) {
+				if ( $taxonomy ) {
 					return $taxonomy->object_type;
 				}
 			}

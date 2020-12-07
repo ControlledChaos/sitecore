@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_User_Role') ) :
+if ( ! class_exists( 'ACF_Location_User_Role' ) ) :
 
 class ACF_Location_User_Role extends ACF_Location {
 	
@@ -38,18 +38,18 @@ class ACF_Location_User_Role extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['user_role']) ) {
+		if ( isset( $screen['user_role']) ) {
 			$user_role = $screen['user_role'];
-		} elseif( isset($screen['user_id']) ) {
+		} elseif ( isset( $screen['user_id']) ) {
 			$user_id = $screen['user_id'];
 			$user_role = '';
 			
 			// Determine $user_role from $user_id.
-			if( $user_id === 'new' ) {
+			if ( $user_id === 'new' ) {
 				$user_role = get_option( 'default_role' );
 			
 			// Check if user can, and if so, set the value allowing them to match.
-			} elseif( user_can($user_id, $rule['value']) ) {
+			} elseif ( user_can( $user_id, $rule['value']) ) {
 				$user_role = $rule['value'];
 			}
 		} else {

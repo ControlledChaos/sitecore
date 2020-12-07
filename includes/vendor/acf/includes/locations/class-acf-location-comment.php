@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Comment') ) :
+if ( ! class_exists( 'ACF_Location_Comment' ) ) :
 
 class ACF_Location_Comment extends ACF_Location {
 	
@@ -36,7 +36,7 @@ class ACF_Location_Comment extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['comment']) ) {
+		if ( isset( $screen['comment']) ) {
 			$comment = $screen['comment'];
 		} else {
 			return false;
@@ -56,7 +56,7 @@ class ACF_Location_Comment extends ACF_Location {
 	public function get_values( $rule ) {
 		return array_merge(
 			array(
-				'all' => __('All', 'acf')
+				'all' => __( 'All', 'acf' )
 			),
 			acf_get_pretty_post_types() // Todo: Change to post types that support comments.
 		);

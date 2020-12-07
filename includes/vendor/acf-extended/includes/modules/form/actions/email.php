@@ -1,86 +1,86 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-if(!class_exists('acfe_form_email')):
+if (!class_exists( 'acfe_form_email' ) ):
 
 class acfe_form_email{
     
     function __construct(){
         
-        add_action('acfe/form/make/email',                                  array($this, 'make'), 10, 3);
-        add_action('acfe/form/submit/email',                                array($this, 'submit'), 10, 3);
+        add_action( 'acfe/form/make/email',                                  array( $this, 'make' ), 10, 3);
+        add_action( 'acfe/form/submit/email',                                array( $this, 'submit' ), 10, 3);
         
-        add_filter('acf/prepare_field/name=acfe_form_email_file',           array(acfe()->acfe_form, 'map_fields_deep'));
+        add_filter( 'acf/prepare_field/name=acfe_form_email_file',           array(acfe()->acfe_form, 'map_fields_deep' ) );
         
-        add_action('acf/render_field/name=acfe_form_email_advanced_args',   array($this, 'advanced_args'));
-        add_action('acf/render_field/name=form_email_advanced_send',        array($this, 'advanced_send'));
+        add_action( 'acf/render_field/name=acfe_form_email_advanced_args',   array( $this, 'advanced_args' ) );
+        add_action( 'acf/render_field/name=form_email_advanced_send',        array( $this, 'advanced_send' ) );
         
     }
     
-    function make($form, $current_post_id, $action){
+    function make( $form, $current_post_id, $action){
         
         // Form
-        $form_name = acf_maybe_get($form, 'name');
-        $form_id = acf_maybe_get($form, 'ID');
+        $form_name = acf_maybe_get( $form, 'name' );
+        $form_id = acf_maybe_get( $form, 'ID' );
     
         // Prepare
         $prepare = true;
-        $prepare = apply_filters('acfe/form/prepare/email',                          $prepare, $form, $current_post_id, $action);
-        $prepare = apply_filters('acfe/form/prepare/email/form=' . $form_name,       $prepare, $form, $current_post_id, $action);
+        $prepare = apply_filters( 'acfe/form/prepare/email',                          $prepare, $form, $current_post_id, $action);
+        $prepare = apply_filters( 'acfe/form/prepare/email/form=' . $form_name,       $prepare, $form, $current_post_id, $action);
     
-        if(!empty($action))
-            $prepare = apply_filters('acfe/form/prepare/email/action=' . $action,    $prepare, $form, $current_post_id, $action);
+        if (!empty( $action) )
+            $prepare = apply_filters( 'acfe/form/prepare/email/action=' . $action,    $prepare, $form, $current_post_id, $action);
     
-        if($prepare === false)
+        if ( $prepare === false)
             return;
         
         // Fields
-        $from = get_sub_field('acfe_form_email_from');
-        $from = acfe_form_map_field_value($from, $current_post_id, $form);
+        $from = get_sub_field( 'acfe_form_email_from' );
+        $from = acfe_form_map_field_value( $from, $current_post_id, $form);
 	
-	    $reply_to = get_sub_field('acfe_form_email_reply_to');
-	    $reply_to = acfe_form_map_field_value($reply_to, $current_post_id, $form);
+	    $reply_to = get_sub_field( 'acfe_form_email_reply_to' );
+	    $reply_to = acfe_form_map_field_value( $reply_to, $current_post_id, $form);
         
-        $to = get_sub_field('acfe_form_email_to');
-        $to = acfe_form_map_field_value($to, $current_post_id, $form);
+        $to = get_sub_field( 'acfe_form_email_to' );
+        $to = acfe_form_map_field_value( $to, $current_post_id, $form);
         
-        $cc = get_sub_field('acfe_form_email_cc');
-        $cc = acfe_form_map_field_value($cc, $current_post_id, $form);
+        $cc = get_sub_field( 'acfe_form_email_cc' );
+        $cc = acfe_form_map_field_value( $cc, $current_post_id, $form);
         
-        $bcc = get_sub_field('acfe_form_email_bcc');
-        $bcc = acfe_form_map_field_value($bcc, $current_post_id, $form);
+        $bcc = get_sub_field( 'acfe_form_email_bcc' );
+        $bcc = acfe_form_map_field_value( $bcc, $current_post_id, $form);
         
-        $subject = get_sub_field('acfe_form_email_subject');
-        $subject = acfe_form_map_field_value($subject, $current_post_id, $form);
+        $subject = get_sub_field( 'acfe_form_email_subject' );
+        $subject = acfe_form_map_field_value( $subject, $current_post_id, $form);
         
-        $content = get_sub_field('acfe_form_email_content');
-        $content = acfe_form_map_field_value($content, $current_post_id, $form);
+        $content = get_sub_field( 'acfe_form_email_content' );
+        $content = acfe_form_map_field_value( $content, $current_post_id, $form);
         
-        $headers = array();
-        $attachments = array();
+        $headers = [];
+        $attachments = [];
         
         // Delete files
-        $delete_files = array();
+        $delete_files = [];
         
         // Attachments: Dynamic
-        if(have_rows('acfe_form_email_files')):
-            while(have_rows('acfe_form_email_files')): the_row();
+        if (have_rows( 'acfe_form_email_files' ) ):
+            while(have_rows( 'acfe_form_email_files' ) ): the_row();
             
-                $file_field_key = get_sub_field('acfe_form_email_file');
-                $file_delete = get_sub_field('acfe_form_email_file_delete');
-                $file_id = acfe_form_map_field_value($file_field_key, $current_post_id, $form);
+                $file_field_key = get_sub_field( 'acfe_form_email_file' );
+                $file_delete = get_sub_field( 'acfe_form_email_file_delete' );
+                $file_id = acfe_form_map_field_value( $file_field_key, $current_post_id, $form);
                 
-                $field = acf_get_field($file_field_key);
-                $file = acf_format_value($file_id, 0, $field);
+                $field = acf_get_field( $file_field_key);
+                $file = acf_format_value( $file_id, 0, $field);
                 
-                if(!acf_maybe_get($file, 'ID'))
+                if (!acf_maybe_get( $file, 'ID' ) )
                     continue;
                 
-                $attachments[] = get_attached_file($file['ID']);
+                $attachments[] = get_attached_file( $file['ID']);
                 
-                if($file_delete){
+                if ( $file_delete){
                     
                     $delete_files[] = $file['ID'];
                     
@@ -90,31 +90,31 @@ class acfe_form_email{
         endif;
         
         // Attachments: Static
-        if(have_rows('acfe_form_email_files_static')):
-            while(have_rows('acfe_form_email_files_static')): the_row();
+        if (have_rows( 'acfe_form_email_files_static' ) ):
+            while(have_rows( 'acfe_form_email_files_static' ) ): the_row();
             
-                $file = get_sub_field('acfe_form_email_file_static');
+                $file = get_sub_field( 'acfe_form_email_file_static' );
                 
-                $attachments[] = get_attached_file($file);
+                $attachments[] = get_attached_file( $file);
         
             endwhile;
         endif;
         
         $headers[] = 'From: ' . $from;
 	
-	    if(!empty($reply_to)){
+	    if (!empty( $reply_to) ){
 		
 		    $headers[] = 'Reply-To: ' . $reply_to;
 		
 	    }
         
-        if(!empty($cc)){
+        if (!empty( $cc) ){
 	
 	        $headers[] = 'Cc: ' . $cc;
          
         }
         
-        if(!empty($bcc)){
+        if (!empty( $bcc) ){
 	
 	        $headers[] = 'Bcc: ' . $bcc;
          
@@ -136,25 +136,25 @@ class acfe_form_email{
         );
         
         // Deprecated filters
-        $args = apply_filters_deprecated('acfe/form/submit/email/args',                      array($args, $form, $action), '0.8.1', 'acfe/form/submit/email_args');
-        $args = apply_filters_deprecated('acfe/form/submit/email/args/form=' . $form_name,   array($args, $form, $action), '0.8.1', 'acfe/form/submit/email_args/form=' . $form_name);
+        $args = apply_filters_deprecated( 'acfe/form/submit/email/args',                      array( $args, $form, $action), '0.8.1', 'acfe/form/submit/email_args' );
+        $args = apply_filters_deprecated( 'acfe/form/submit/email/args/form=' . $form_name,   array( $args, $form, $action), '0.8.1', 'acfe/form/submit/email_args/form=' . $form_name);
         
         // Filters
-        $args = apply_filters('acfe/form/submit/email_args',                      $args, $form, $action);
-        $args = apply_filters('acfe/form/submit/email_args/form=' . $form_name,   $args, $form, $action);
+        $args = apply_filters( 'acfe/form/submit/email_args',                      $args, $form, $action);
+        $args = apply_filters( 'acfe/form/submit/email_args/form=' . $form_name,   $args, $form, $action);
         
-        if(!empty($action)){
+        if (!empty( $action) ){
 	
 	        // Deprecated filter
-            $args = apply_filters_deprecated('acfe/form/submit/email/args/action=' . $action, array($args, $form, $action), '0.8.1', 'acfe/form/submit/email_args/action=' . $action);
+            $args = apply_filters_deprecated( 'acfe/form/submit/email/args/action=' . $action, array( $args, $form, $action), '0.8.1', 'acfe/form/submit/email_args/action=' . $action);
             
             // Filter
-            $args = apply_filters('acfe/form/submit/email_args/action=' . $action, $args, $form, $action);
+            $args = apply_filters( 'acfe/form/submit/email_args/action=' . $action, $args, $form, $action);
             
         }
         
         // Bail early if no args
-        if($args === false)
+        if ( $args === false)
             return;
 	
 	    // Check if Headers changed
@@ -181,15 +181,15 @@ class acfe_form_email{
 		    ),
 	    );
 	
-	    foreach($rules as $rule){
+	    foreach( $rules as $rule){
 		
-		    $new_check = acf_maybe_get($args, $rule['args_key']);
+		    $new_check = acf_maybe_get( $args, $rule['args_key']);
 		
-		    if(!empty($new_check) && $new_check !== $rule['value_old']){
+		    if (!empty( $new_check) && $new_check !== $rule['value_old']){
 			
-			    foreach($args['headers'] as &$header){
+			    foreach( $args['headers'] as &$header){
 				
-				    if(stripos($header, $rule['header_key']) !== 0)
+				    if (stripos( $header, $rule['header_key']) !== 0)
 					    continue;
 				
 				    $header = $rule['header_key'] . ' ' . $new_check;
@@ -201,20 +201,20 @@ class acfe_form_email{
 		
 	    }
 	    
-        wp_mail($args['to'], $args['subject'], $args['content'], $args['headers'], $args['attachments']);
+        wp_mail( $args['to'], $args['subject'], $args['content'], $args['headers'], $args['attachments']);
         
-        do_action('acfe/form/submit/email',                     $args, $form, $action);
-        do_action('acfe/form/submit/email/form=' . $form_name,  $args, $form, $action);
+        do_action( 'acfe/form/submit/email',                     $args, $form, $action);
+        do_action( 'acfe/form/submit/email/form=' . $form_name,  $args, $form, $action);
         
-        if(!empty($action))
-            do_action('acfe/form/submit/email/action=' . $action, $args, $form, $action);
+        if (!empty( $action) )
+            do_action( 'acfe/form/submit/email/action=' . $action, $args, $form, $action);
         
         // Delete files
-        if(!empty($delete_files)){
+        if (!empty( $delete_files) ){
             
-            foreach($delete_files as $file_id){
+            foreach( $delete_files as $file_id){
 	
-	            wp_delete_attachment($file_id, true);
+	            wp_delete_attachment( $file_id, true);
             
             }
             
@@ -222,38 +222,38 @@ class acfe_form_email{
         
     }
     
-    function submit($args, $form, $action){
+    function submit( $args, $form, $action){
     
         // Form name
-        $form_name = acf_maybe_get($form, 'name');
+        $form_name = acf_maybe_get( $form, 'name' );
     
-        $args = apply_filters('acfe/form/query_var/email',                    $args, $form, $action);
-        $args = apply_filters('acfe/form/query_var/email/form=' . $form_name, $args, $form, $action);
-        $args = apply_filters('acfe/form/query_var/email/action=' . $action,  $args, $form, $action);
+        $args = apply_filters( 'acfe/form/query_var/email',                    $args, $form, $action);
+        $args = apply_filters( 'acfe/form/query_var/email/form=' . $form_name, $args, $form, $action);
+        $args = apply_filters( 'acfe/form/query_var/email/action=' . $action,  $args, $form, $action);
     
         // Query var
-        $query_var = acfe_form_unique_action_id($form, 'email');
+        $query_var = acfe_form_unique_action_id( $form, 'email' );
     
-        if(!empty($action))
+        if (!empty( $action) )
             $query_var = $action;
     
         // Set Query Var
-        set_query_var($query_var, $args);
+        set_query_var( $query_var, $args);
         
     }
     
-    function advanced_args($field){
+    function advanced_args( $field){
         
         $form_name = 'my_form';
         
-        if(acf_maybe_get($field, 'value'))
-            $form_name = get_field('acfe_form_name', $field['value']);
+        if (acf_maybe_get( $field, 'value' ) )
+            $form_name = get_field( 'acfe_form_name', $field['value']);
         
         ?>You may use the following hooks:<br /><br />
 <pre data-codemirror="php-plain">
-add_filter('acfe/form/submit/email_args', 'my_form_email_args', 10, 3);
-add_filter('acfe/form/submit/email_args/form=<?php echo $form_name; ?>', 'my_form_email_args', 10, 3);
-add_filter('acfe/form/submit/email_args/action=my-email-action', 'my_form_email_args', 10, 3);</pre>
+add_filter( 'acfe/form/submit/email_args', 'my_form_email_args', 10, 3);
+add_filter( 'acfe/form/submit/email_args/form=<?php echo $form_name; ?>', 'my_form_email_args', 10, 3);
+add_filter( 'acfe/form/submit/email_args/action=my-email-action', 'my_form_email_args', 10, 3);</pre>
 <br />
 <pre data-codemirror="php-plain">
 /**
@@ -261,8 +261,8 @@ add_filter('acfe/form/submit/email_args/action=my-email-action', 'my_form_email_
  * @array   $form   The form settings
  * @string  $action The action alias name
  */
-add_filter('acfe/form/submit/email_args/form=<?php echo $form_name; ?>', 'my_form_email_args', 10, 4);
-function my_form_email_args($args, $form, $action){
+add_filter( 'acfe/form/submit/email_args/form=<?php echo $form_name; ?>', 'my_form_email_args', 10, 4);
+function my_form_email_args( $args, $form, $action){
     
     /**
      * $args = array(
@@ -298,18 +298,18 @@ function my_form_email_args($args, $form, $action){
         
     }
     
-    function advanced_send($field){
+    function advanced_send( $field){
         
         $form_name = 'my_form';
         
-        if(acf_maybe_get($field, 'value'))
-            $form_name = get_field('acfe_form_name', $field['value']);
+        if (acf_maybe_get( $field, 'value' ) )
+            $form_name = get_field( 'acfe_form_name', $field['value']);
         
         ?>You may use the following hooks:<br /><br />
 <pre data-codemirror="php-plain">
-add_action('acfe/form/submit/email', 'my_form_email_send', 10, 3);
-add_action('acfe/form/submit/email/form=<?php echo $form_name; ?>', 'my_form_email_send', 10, 3);
-add_action('acfe/form/submit/email/action=my-email-action', 'my_form_email_send', 10, 3);</pre>
+add_action( 'acfe/form/submit/email', 'my_form_email_send', 10, 3);
+add_action( 'acfe/form/submit/email/form=<?php echo $form_name; ?>', 'my_form_email_send', 10, 3);
+add_action( 'acfe/form/submit/email/action=my-email-action', 'my_form_email_send', 10, 3);</pre>
 <br />
 <pre data-codemirror="php-plain">
 /**
@@ -317,14 +317,14 @@ add_action('acfe/form/submit/email/action=my-email-action', 'my_form_email_send'
  * @array   $form       The form settings
  * @string  $action     The action alias name
  */
-add_action('acfe/form/submit/email/form=<?php echo $form_name; ?>', 'my_form_email_send', 10, 3);
-function my_form_email_send($args, $form, $action){
+add_action( 'acfe/form/submit/email/form=<?php echo $form_name; ?>', 'my_form_email_send', 10, 3);
+function my_form_email_send( $args, $form, $action){
     
     /**
      * Get the value from the form input named 'my_field'
      * This is the value entered by the user during the form submission
      */
-    $my_field = get_field('my_field');
+    $my_field = get_field( 'my_field' );
     
 }</pre><?php
         

@@ -10,7 +10,7 @@
 *  @subpackage	Forms
 */
 
-if( ! class_exists('acf_form_comment') ) :
+if ( ! class_exists( 'acf_form_comment' ) ) :
 
 class acf_form_comment {
 	
@@ -35,10 +35,10 @@ class acf_form_comment {
 		
 		
 		// render
-		add_filter('comment_form_field_comment',		array($this, 'comment_form_field_comment'), 999, 1);
+		add_filter( 'comment_form_field_comment',		array( $this, 'comment_form_field_comment' ), 999, 1);
 		
-		//add_action( 'comment_form_logged_in_after',		array( $this, 'add_comment') );
-		//add_action( 'comment_form',						array( $this, 'add_comment') );
+		//add_action( 'comment_form_logged_in_after',		array( $this, 'add_comment' ) );
+		//add_action( 'comment_form',						array( $this, 'add_comment' ) );
 
 		
 		// save
@@ -68,7 +68,7 @@ class acf_form_comment {
 		
 		
 		// validate page
-		if( $pagenow == 'comment.php' ) {
+		if ( $pagenow == 'comment.php' ) {
 			
 			return true;
 			
@@ -97,7 +97,7 @@ class acf_form_comment {
 	function admin_enqueue_scripts() {
 		
 		// validate page
-		if( ! $this->validate_page() ) {
+		if ( ! $this->validate_page() ) {
 		
 			return;
 			
@@ -109,8 +109,8 @@ class acf_form_comment {
 		
 		
 		// actions
-		add_action('admin_footer',				array($this, 'admin_footer'), 10, 1);
-		add_action('add_meta_boxes_comment', 	array($this, 'edit_comment'), 10, 1);
+		add_action( 'admin_footer',				array( $this, 'admin_footer' ), 10, 1);
+		add_action( 'add_meta_boxes_comment', 	array( $this, 'edit_comment' ), 10, 1);
 
 	}
 	
@@ -137,17 +137,17 @@ class acf_form_comment {
 		// get field groups
 		$field_groups = acf_get_field_groups(array(
 			'comment' => get_post_type( $comment->comment_post_ID )
-		));
+		) );
 		
 		
 		// render
-		if( !empty($field_groups) ) {
+		if ( !empty( $field_groups) ) {
 		
 			// render post data
 			acf_form_data(array( 
 				'screen'	=> 'comment',
 				'post_id'	=> $post_id
-			));
+			) );
 			
 			
 			foreach( $field_groups as $field_group ) {
@@ -163,15 +163,15 @@ class acf_form_comment {
 					//'style'			=> $field_group['style'],
 					'label'			=> $field_group['label_placement'],
 					'edit_url'		=> '',
-					'edit_title'	=> __('Edit field group', 'acf'),
+					'edit_title'	=> __( 'Edit field group', 'acf' ),
 					//'visibility'	=> $visibility
 				);
 				
 				
 				// edit_url
-				if( $field_group['ID'] && acf_current_user_can_admin() ) {
+				if ( $field_group['ID'] && acf_current_user_can_admin() ) {
 					
-					$o['edit_url'] = admin_url('post.php?post=' . $field_group['ID'] . '&action=edit');
+					$o['edit_url'] = admin_url( 'post.php?post=' . $field_group['ID'] . '&action=edit' );
 						
 				}
 				
@@ -181,9 +181,9 @@ class acf_form_comment {
 					<div class="inside">
 						<?php acf_render_fields( $fields, $post_id, 'div', $field_group['instruction_placement'] ); ?>
 						<script type="text/javascript">
-						if( typeof acf !== 'undefined' ) {
+						if ( typeof acf !== 'undefined' ) {
 								
-							acf.newPostbox(<?php echo json_encode($o); ?>);	
+							acf.newPostbox(<?php echo json_encode( $o); ?>);	
 						
 						}
 						</script>
@@ -224,11 +224,11 @@ class acf_form_comment {
 		// get field groups
 		$field_groups = acf_get_field_groups(array(
 			'comment' => $post->post_type
-		));
+		) );
 		
 		
 		// bail early if no field groups
-		if( !$field_groups ) return $html;
+		if ( ! $field_groups ) return $html;
 		
 		
 		// enqueue scripts
@@ -242,7 +242,7 @@ class acf_form_comment {
 			acf_form_data(array( 
 				'screen'	=> 'comment',
 				'post_id'	=> $post_id
-			));
+			) );
 			
 			echo '<div class="acf-comment-fields acf-fields -clear">';
 			
@@ -284,19 +284,19 @@ class acf_form_comment {
 	function save_comment( $comment_id ) {
 		
 		// bail early if not valid nonce
-		if( !acf_verify_nonce('comment') ) {
+		if ( !acf_verify_nonce( 'comment' ) ) {
 			return $comment_id;
 		}
 		
 		
 		// kses
-    	if( isset($_POST['acf']) ) {
+    	if ( isset( $_POST['acf']) ) {
 	    	$_POST['acf'] = wp_kses_post_deep( $_POST['acf'] );
     	}
 		
 	    
 	    // validate and save
-	    if( acf_validate_save_post(true) ) {
+	    if ( acf_validate_save_post(true) ) {
 			acf_save_post( "comment_{$comment_id}" );
 		}
 		
@@ -320,21 +320,21 @@ class acf_form_comment {
 		
 ?>
 <script type="text/javascript">
-(function($) {
+(function( $) {
 	
 	// vars
-	var $spinner = $('#publishing-action .spinner');
+	var $spinner = $( '#publishing-action .spinner' );
 	
 	
 	// create spinner if not exists (may exist in future WP versions)
-	if( !$spinner.exists() ) {
+	if ( ! $spinner.exists() ) {
 		
 		// create spinner
-		$spinner = $('<span class="spinner"></span>');
+		$spinner = $( '<span class="spinner"></span>' );
 		
 		
 		// append
-		$('#publishing-action').prepend( $spinner );
+		$( '#publishing-action' ).prepend( $spinner );
 		
 	}
 	

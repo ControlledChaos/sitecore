@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_range') ) :
+if ( ! class_exists( 'acf_field_range' ) ) :
 
 class acf_field_range extends acf_field_number {
 	
@@ -22,7 +22,7 @@ class acf_field_range extends acf_field_number {
 		
 		// vars
 		$this->name = 'range';
-		$this->label = __("Range",'acf');
+		$this->label = __("Range",'acf' );
 		$this->defaults = array(
 			'default_value'	=> '',
 			'min'			=> '',
@@ -50,41 +50,41 @@ class acf_field_range extends acf_field_number {
 	function render_field( $field ) {
 		
 		// vars
-		$atts = array();
+		$atts = [];
 		$keys = array( 'type', 'id', 'class', 'name', 'value', 'min', 'max', 'step' );
 		$keys2 = array( 'readonly', 'disabled', 'required' );
 		$html = '';
 		
 		// step
-		if( !$field['step'] ) {
+		if ( ! $field['step'] ) {
 			$field['step'] = 1;
 		}
 		
 		// min / max
-		if( !$field['min'] ) {
+		if ( ! $field['min'] ) {
 			$field['min'] = 0;
 		}
-		if( !$field['max'] ) {
+		if ( ! $field['max'] ) {
 			$field['max'] = 100;
 		}
 		
 		// allow for prev 'non numeric' value
-		if( !is_numeric($field['value']) ) {
+		if ( ! is_numeric( $field['value']) ) {
 			$field['value'] = 0;
 		}
 		
 		// constrain within max and min
-		$field['value'] = max($field['value'], $field['min']);
-		$field['value'] = min($field['value'], $field['max']);
+		$field['value'] = max( $field['value'], $field['min']);
+		$field['value'] = min( $field['value'], $field['max']);
 		
 		// atts (value="123")
 		foreach( $keys as $k ) {
-			if( isset($field[ $k ]) ) $atts[ $k ] = $field[ $k ];
+			if ( isset( $field[ $k ]) ) $atts[ $k ] = $field[ $k ];
 		}
 		
 		// atts2 (disabled="disabled")
 		foreach( $keys2 as $k ) {
-			if( !empty($field[ $k ]) ) $atts[ $k ] = $k;
+			if ( !empty( $field[ $k ]) ) $atts[ $k ] = $k;
 		}
 		
 		// remove empty atts
@@ -94,8 +94,8 @@ class acf_field_range extends acf_field_number {
 		$html .= '<div class="acf-range-wrap">';
 			
 			// prepend
-			if( $field['prepend'] !== '' ) {
-				$html .= '<div class="acf-prepend">' . acf_esc_html($field['prepend']) . '</div>';
+			if ( $field['prepend'] !== '' ) {
+				$html .= '<div class="acf-prepend">' . acf_esc_html( $field['prepend']) . '</div>';
 			}
 			
 			// range
@@ -104,11 +104,11 @@ class acf_field_range extends acf_field_number {
 			// Calculate input width based on the largest possible input character length.
 			// Also take into account the step size for decimal steps minus - 1.5 chars for leading "0.".
 			$len = max(
-				strlen( strval($field['min']) ),
-				strlen( strval($field['max']) )
+				strlen( strval( $field['min']) ),
+				strlen( strval( $field['max']) )
 			);
-			if( floatval($atts['step']) < 1 ) {
-				$len += strlen( strval($field['step']) ) - 1.5;
+			if ( floatval( $atts['step']) < 1 ) {
+				$len += strlen( strval( $field['step']) ) - 1.5;
 			}
 			
 			// input
@@ -120,11 +120,11 @@ class acf_field_range extends acf_field_number {
 				//'min'	=> $atts['min'], // removed to avoid browser validation errors
 				//'max'	=> $atts['max'],
 				'style'	=> 'width: ' . (1.8 + $len*0.7) . 'em;'
-			));
+			) );
 			
 			// append
-			if( $field['append'] !== '' ) {
-				$html .= '<div class="acf-append">' . acf_esc_html($field['append']) . '</div>';
+			if ( $field['append'] !== '' ) {
+				$html .= '<div class="acf-append">' . acf_esc_html( $field['append']) . '</div>';
 			}
 		
 		// close
@@ -152,59 +152,59 @@ class acf_field_range extends acf_field_number {
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Default Value','acf'),
-			'instructions'	=> __('Appears when creating a new post','acf'),
+			'label'			=> __( 'Default Value','acf' ),
+			'instructions'	=> __( 'Appears when creating a new post','acf' ),
 			'type'			=> 'number',
 			'name'			=> 'default_value',
-		));
+		) );
 		
 		
 		// min
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Minimum Value','acf'),
+			'label'			=> __( 'Minimum Value','acf' ),
 			'instructions'	=> '',
 			'type'			=> 'number',
 			'name'			=> 'min',
 			'placeholder'	=> '0'
-		));
+		) );
 		
 		
 		// max
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Maximum Value','acf'),
+			'label'			=> __( 'Maximum Value','acf' ),
 			'instructions'	=> '',
 			'type'			=> 'number',
 			'name'			=> 'max',
 			'placeholder'	=> '100'
-		));
+		) );
 		
 		
 		// step
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Step Size','acf'),
+			'label'			=> __( 'Step Size','acf' ),
 			'instructions'	=> '',
 			'type'			=> 'number',
 			'name'			=> 'step',
 			'placeholder'	=> '1'
-		));
+		) );
 		
 		
 		// prepend
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Prepend','acf'),
-			'instructions'	=> __('Appears before the input','acf'),
+			'label'			=> __( 'Prepend','acf' ),
+			'instructions'	=> __( 'Appears before the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'prepend',
-		));
+		) );
 		
 		
 		// append
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Append','acf'),
-			'instructions'	=> __('Appears after the input','acf'),
+			'label'			=> __( 'Append','acf' ),
+			'instructions'	=> __( 'Appears after the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'append',
-		));
+		) );
 		
 	}
 	

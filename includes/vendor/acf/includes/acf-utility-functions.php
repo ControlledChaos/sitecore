@@ -4,8 +4,8 @@
 global $acf_stores, $acf_instances;
 
 // Initialize plaeholders.
-$acf_stores = array();
-$acf_instances = array();
+$acf_stores = [];
+$acf_instances = [];
 
 /**
  * acf_new_instance
@@ -36,7 +36,7 @@ function acf_new_instance( $class = '' ) {
  */
 function acf_get_instance( $class = '' ) {
 	global $acf_instances;
-	if( !isset($acf_instances[ $class ]) ) {
+	if ( ! isset( $acf_instances[ $class ]) ) {
 		$acf_instances[ $class ] = new $class();
 	}
 	return $acf_instances[ $class ];
@@ -117,7 +117,7 @@ add_action( 'switch_blog', 'acf_switch_stores', 10, 2 );
  * @return	string
  */
 function acf_get_path( $filename = '' ) {
-	return ACF_PATH . ltrim($filename, '/');
+	return ACF_PATH . ltrim( $filename, '/' );
 }
 
 /**
@@ -133,10 +133,10 @@ function acf_get_path( $filename = '' ) {
  * @return	string
  */
 function acf_get_url( $filename = '' ) {
-	if( !defined('ACF_URL') ) {
-		define( 'ACF_URL', acf_get_setting('url') );
+	if ( ! defined( 'ACF_URL' ) ) {
+		define( 'ACF_URL', acf_get_setting( 'url' ) );
 	}
-	return ACF_URL . ltrim($filename, '/');
+	return ACF_URL . ltrim( $filename, '/' );
 }
 
 /*
@@ -151,8 +151,8 @@ function acf_get_url( $filename = '' ) {
  * @return	void
  */
 function acf_include( $filename = '' ) {
-	$file_path = acf_get_path($filename);
-	if( file_exists($file_path) ) {
-		include_once($file_path);
+	$file_path = acf_get_path( $filename);
+	if ( file_exists( $file_path) ) {
+		include_once( $file_path);
 	}
 }

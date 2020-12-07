@@ -14,7 +14,7 @@ acf_add_deprecated_filter( 'acf/get_field_groups',				'5.7.11', 'acf/load_field_
 acf_add_deprecated_filter( 'acf/get_fields',					'5.7.11', 'acf/load_fields' );
 
 // Register variations for deprecated filters.
-acf_add_filter_variations( 'acf/get_valid_field', array('type'), 0 );
+acf_add_filter_variations( 'acf/get_valid_field', array( 'type' ), 0 );
 
 /**
  * acf_render_field_wrap_label
@@ -76,7 +76,7 @@ function acf_get_fields_by_id( $parent_id = 0 ) {
 	_deprecated_function( __FUNCTION__, '5.7.11', 'acf_get_fields()' );
 	
 	// Return fields.
-	return acf_get_fields(array( 'ID' => $parent_id, 'key' => "group_$parent_id" ));
+	return acf_get_fields(array( 'ID' => $parent_id, 'key' => "group_$parent_id" ) );
 }
 
 /**
@@ -99,8 +99,8 @@ function acf_update_option( $option = '', $value = '', $autoload = null ) {
 	_deprecated_function( __FUNCTION__, '5.7.11', 'update_option()' );
 	
 	// Update.
-	if( $autoload === null ) {
-		$autoload = (bool) acf_get_setting('autoload');
+	if ( $autoload === null ) {
+		$autoload = (bool) acf_get_setting( 'autoload' );
 	}
 	return update_option( $option, $value, $autoload );
 }

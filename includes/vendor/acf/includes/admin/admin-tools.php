@@ -1,14 +1,14 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_admin_tools') ) :
+if ( ! class_exists( 'acf_admin_tools' ) ) :
 
 class acf_admin_tools {
 	
 	
 	/** @var array Contains an array of admin tool instances */
-	var $tools = array();
+	var $tools = [];
 	
 	
 	/** @var string The active tool */
@@ -30,7 +30,7 @@ class acf_admin_tools {
 	function __construct() {
 		
 		// actions
-		add_action('admin_menu', array($this, 'admin_menu'));
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		
 	}
 	
@@ -109,15 +109,15 @@ class acf_admin_tools {
 	function admin_menu() {
 		
 		// bail early if no show_admin
-		if( !acf_get_setting('show_admin') ) return;
+		if ( !acf_get_setting( 'show_admin' ) ) return;
 		
 		
 		// add page
-		$page = add_submenu_page('edit.php?post_type=acf-field-group', __('Tools','acf'), __('Tools','acf'), acf_get_setting('capability'), 'acf-tools', array($this, 'html'));
+		$page = add_submenu_page( 'edit.php?post_type=acf-field-group', __( 'Tools','acf' ), __( 'Tools','acf' ), acf_get_setting( 'capability' ), 'acf-tools', array( $this, 'html' ) );
 		
 		
 		// actions
-		add_action('load-' . $page, array($this, 'load'));
+		add_action( 'load-' . $page, array( $this, 'load' ) );
 		
 	}
 	
@@ -169,13 +169,13 @@ class acf_admin_tools {
 	function include_tools() {
 		
 		// include
-		acf_include('includes/admin/tools/class-acf-admin-tool.php');
-		acf_include('includes/admin/tools/class-acf-admin-tool-export.php');
-		acf_include('includes/admin/tools/class-acf-admin-tool-import.php');
+		acf_include( 'includes/admin/tools/class-acf-admin-tool.php' );
+		acf_include( 'includes/admin/tools/class-acf-admin-tool-export.php' );
+		acf_include( 'includes/admin/tools/class-acf-admin-tool-import.php' );
 		
 		
 		// action
-		do_action('acf/include_admin_tools');
+		do_action( 'acf/include_admin_tools' );
 		
 	}
 	
@@ -202,7 +202,7 @@ class acf_admin_tools {
 			
 			
 			// submit
-			if( acf_verify_nonce($tool->name) ) {
+			if ( acf_verify_nonce( $tool->name) ) {
 				$tool->submit();
 			}
 			
@@ -227,7 +227,7 @@ class acf_admin_tools {
 		
 		// vars
 		$screen = get_current_screen();
-		$active = acf_maybe_get_GET('tool');
+		$active = acf_maybe_get_GET( 'tool' );
 		
 		
 		// view
@@ -241,11 +241,11 @@ class acf_admin_tools {
 		foreach( $this->get_tools() as $tool ) {
 			
 			// check active
-			if( $active && $active !== $tool->name ) continue;
+			if ( $active && $active !== $tool->name ) continue;
 			
 			
 			// add metabox
-			add_meta_box( 'acf-admin-tool-' . $tool->name, $tool->title, array($this, 'metabox_html'), $screen->id, 'normal', 'default', array('tool' => $tool->name) );
+			add_meta_box( 'acf-admin-tool-' . $tool->name, $tool->title, array( $this, 'metabox_html' ), $screen->id, 'normal', 'default', array( 'tool' => $tool->name) );
 			
 		}
 		
@@ -271,7 +271,7 @@ class acf_admin_tools {
 	function metabox_html( $post, $metabox ) {
 		
 		// vars
-		$tool = $this->get_tool($metabox['args']['tool']);
+		$tool = $this->get_tool( $metabox['args']['tool']);
 		
 		
 		?>
@@ -326,7 +326,7 @@ function acf_register_admin_tool( $class ) {
 
 function acf_get_admin_tools_url() {
 	
-	return admin_url('edit.php?post_type=acf-field-group&page=acf-tools');
+	return admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools' );
 	
 }
 

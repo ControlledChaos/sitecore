@@ -1,8 +1,8 @@
 <?php
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_form_customizer') ) :
+if ( ! class_exists( 'acf_form_customizer' ) ) :
 
 class acf_form_customizer {
 	
@@ -23,19 +23,19 @@ class acf_form_customizer {
 	function __construct() {
 		
 		// vars
-		$this->preview_values = array();
-		$this->preview_fields = array();
-		$this->preview_errors = array();
+		$this->preview_values = [];
+		$this->preview_fields = [];
+		$this->preview_errors = [];
 		
 		
 		// actions
-		add_action('customize_controls_init',	array($this, 'customize_controls_init'));
-		add_action('customize_preview_init',	array($this, 'customize_preview_init'), 1, 1);
-		add_action('customize_save', 			array($this, 'customize_save'), 1, 1);
+		add_action( 'customize_controls_init',	array( $this, 'customize_controls_init' ) );
+		add_action( 'customize_preview_init',	array( $this, 'customize_preview_init' ), 1, 1);
+		add_action( 'customize_save', 			array( $this, 'customize_save' ), 1, 1);
 		
 		
 		// save
-		add_filter('widget_update_callback', 	array($this, 'save_widget'), 10, 4);
+		add_filter( 'widget_update_callback', 	array( $this, 'save_widget' ), 10, 4);
 		
 	}
 	
@@ -59,11 +59,11 @@ class acf_form_customizer {
 		// load acf scripts
 		acf_enqueue_scripts(array(
 			'context'	=> 'customize_controls'
-		));
+		) );
 		
 		
 		// actions
-		add_action('acf/input/admin_footer', array($this, 'admin_footer'), 1);
+		add_action( 'acf/input/admin_footer', array( $this, 'admin_footer' ), 1);
 
 	}
 		
@@ -87,14 +87,14 @@ class acf_form_customizer {
 	function save_widget( $instance, $new_instance, $old_instance, $widget ) {
 		
 		// bail ealry if not valid (customize + acf values + nonce)
-		if( !isset($_POST['wp_customize']) || !isset($new_instance['acf']) || !acf_verify_nonce('widget') ) return $instance;
+		if ( ! isset( $_POST['wp_customize']) || ! isset( $new_instance['acf']) || !acf_verify_nonce( 'widget' ) ) return $instance;
 		
 		
 		// vars
 		$data = array(
 			'post_id'	=> "widget_{$widget->id}",
-			'values'	=> array(),
-			'fields'	=> array()
+			'values'	=> [],
+			'fields'	=> []
 		);
 		
 		
@@ -110,7 +110,7 @@ class acf_form_customizer {
 			
 			
 			// continue if no field
-			if( !$field ) continue;
+			if ( ! $field ) continue;
 			
 			
 			// update
@@ -147,12 +147,12 @@ class acf_form_customizer {
 	function settings( $customizer ) {
 		
 		// vars
-		$data = array();
+		$data = [];
 		$settings = $customizer->settings();
 		
 		
 		// bail ealry if no settings
-		if( empty($settings) ) return false;
+		if ( empty( $settings) ) return false;
 		
 		
 		// loop over settings
@@ -163,7 +163,7 @@ class acf_form_customizer {
 			
 			
 			// verify settings type
-			if( substr($id, 0, 6) == 'widget' || substr($id, 0, 7) == 'nav_menu' ) {
+			if ( substr( $id, 0, 6) == 'widget' || substr( $id, 0, 7) == 'nav_menu' ) {
 				// allow
 			} else {
 				continue;
@@ -175,7 +175,7 @@ class acf_form_customizer {
 			
 			
 			// bail early if no acf
-			if( !is_array($value) || !isset($value['acf']) ) continue;
+			if ( ! is_array( $value) || ! isset( $value['acf']) ) continue;
 			
 			
 			// set data	
@@ -189,7 +189,7 @@ class acf_form_customizer {
 		
 		
 		// bail ealry if no settings
-		if( empty($data) ) return false;
+		if ( empty( $data) ) return false;
 		
 		
 		// return
@@ -218,7 +218,7 @@ class acf_form_customizer {
 		
 		
 		// bail ealry if no settings
-		if( empty($settings) ) return;
+		if ( empty( $settings) ) return;
 		
 		
 		// append values
@@ -236,12 +236,12 @@ class acf_form_customizer {
 		
 		
 		// bail ealry if no preview_values
-		if( empty($this->preview_values) ) return;
+		if ( empty( $this->preview_values) ) return;
 		
 		
 		// add filters
-		add_filter('acf/pre_load_value', array($this, 'pre_load_value'), 10, 3);
-		add_filter('acf/pre_load_reference', array($this, 'pre_load_reference'), 10, 3);
+		add_filter( 'acf/pre_load_value', array( $this, 'pre_load_value' ), 10, 3);
+		add_filter( 'acf/pre_load_reference', array( $this, 'pre_load_reference' ), 10, 3);
 		
 	}
 	
@@ -260,7 +260,7 @@ class acf_form_customizer {
 	function pre_load_value( $value, $post_id, $field ) {
 		
 		// check 
-		if( isset($this->preview_values[ $post_id ][ $field['key'] ]) ) {
+		if ( isset( $this->preview_values[ $post_id ][ $field['key'] ]) ) {
 			return $this->preview_values[ $post_id ][ $field['key'] ];
 		}
 		
@@ -283,7 +283,7 @@ class acf_form_customizer {
 	function pre_load_reference( $field_key, $field_name, $post_id ) {
 		
 		// check 
-		if( isset($this->preview_fields[ $post_id ][ $field_name ]) ) {
+		if ( isset( $this->preview_fields[ $post_id ][ $field_name ]) ) {
 			return $this->preview_fields[ $post_id ][ $field_name ];
 		}
 		
@@ -314,7 +314,7 @@ class acf_form_customizer {
 		
 		
 		// bail ealry if no settings
-		if( empty($settings) ) return;
+		if ( empty( $settings) ) return;
 		
 		
 		// append values
@@ -330,7 +330,7 @@ class acf_form_customizer {
 			
 			// remove [acf] data from saved widget array
 			$id_data = $setting->id_data();
-			add_filter('pre_update_option_' . $id_data['base'], array($this, 'pre_update_option'), 10, 3);
+			add_filter( 'pre_update_option_' . $id_data['base'], array( $this, 'pre_update_option' ), 10, 3);
 			
 		}
 		
@@ -353,7 +353,7 @@ class acf_form_customizer {
 	function pre_update_option( $value, $option, $old_value ) {
 		
 		// bail ealry if no value
-		if( empty($value) ) return $value;
+		if ( empty( $value) ) return $value;
 		
 		
 		// loop over widgets 
@@ -361,11 +361,11 @@ class acf_form_customizer {
 		foreach( $value as $i => $widget ) {
 			
 			// bail ealry if no acf
-			if( !isset($widget['acf']) ) continue;
+			if ( ! isset( $widget['acf']) ) continue;
 			
 			
 			// remove widget
-			unset($value[ $i ]['acf']);
+			unset( $value[ $i ]['acf']);
 			
 		}
 		
@@ -393,7 +393,7 @@ class acf_form_customizer {
 		
 ?>
 <script type="text/javascript">
-(function($) {
+(function( $) {
 	
 	// customizer saves widget on any input change, so unload is not needed
 	acf.unload.active = 0;
@@ -424,7 +424,7 @@ class acf_form_customizer {
 		
 		
 		// split
-		signature = signature.split(';');
+		signature = signature.split( ';' );
 		
 		
 		// loop
@@ -435,7 +435,7 @@ class acf_form_customizer {
 			
 			
 			// bail ealry if acf is found
-			if( bit.indexOf('acf') !== -1 ) continue;
+			if ( bit.indexOf( 'acf' ) !== -1 ) continue;
 			
 			
 			// append
@@ -445,7 +445,7 @@ class acf_form_customizer {
 		
 		
 		// update
-		signature = safe.join(';');
+		signature = safe.join( ';' );
 		
 		
 		// return

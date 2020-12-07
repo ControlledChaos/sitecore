@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Page_Type') ) :
+if ( ! class_exists( 'ACF_Location_Page_Type' ) ) :
 
 class ACF_Location_Page_Type extends ACF_Location {
 	
@@ -37,7 +37,7 @@ class ACF_Location_Page_Type extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['post_id']) ) {
+		if ( isset( $screen['post_id']) ) {
 			$post_id = $screen['post_id'];
 		} else {
 			return false;
@@ -45,24 +45,24 @@ class ACF_Location_Page_Type extends ACF_Location {
 		
 		// Get post.
 		$post = get_post( $post_id );
-		if ( !$post ) {
+		if ( ! $post ) {
 			return false;
 		}
 		
 		// Compare.
 		switch( $rule['value'] ) {
 			case 'front_page':
-				$front_page = (int) get_option('page_on_front');
+				$front_page = (int) get_option( 'page_on_front' );
 				$result = ( $front_page === $post->ID );
 				break;
 				
 			case 'posts_page':
-				$posts_page = (int) get_option('page_for_posts');
+				$posts_page = (int) get_option( 'page_for_posts' );
 				$result = ( $posts_page === $post->ID );
 				break;
 				
 			case 'top_level':
-				$page_parent = (int) ( isset($screen['page_parent']) ? $screen['page_parent'] : $post->post_parent );
+				$page_parent = (int) ( isset( $screen['page_parent']) ? $screen['page_parent'] : $post->post_parent );
 				$result = ( $page_parent === 0 );
 				break;
 				
@@ -72,12 +72,12 @@ class ACF_Location_Page_Type extends ACF_Location {
 	        		'post_parent' 		=> $post->ID,
 	        		'posts_per_page'	=> 1,
 					'fields'			=> 'ids',
-				));
+				) );
 				$result = !empty( $children );
 				break;
 				
 			case 'child':
-				$page_parent = (int) ( isset($screen['page_parent']) ? $screen['page_parent'] : $post->post_parent );
+				$page_parent = (int) ( isset( $screen['page_parent']) ? $screen['page_parent'] : $post->post_parent );
 				$result = ( $page_parent !== 0 );
 				break;
 					
@@ -86,8 +86,8 @@ class ACF_Location_Page_Type extends ACF_Location {
 		}
 		
 		// Reverse result for "!=" operator.
-        if( $rule['operator'] === '!=' ) {
-        	return !$result;
+        if ( $rule['operator'] === '!=' ) {
+        	return ! $result;
         }
 		return $result;
 	}	
@@ -103,11 +103,11 @@ class ACF_Location_Page_Type extends ACF_Location {
 	 */
 	public function get_values( $rule ) {
 		return array(
-			'front_page'	=> __("Front Page",'acf'),
-			'posts_page'	=> __("Posts Page",'acf'),
-			'top_level'		=> __("Top Level Page (no parent)",'acf'),
-			'parent'		=> __("Parent Page (has children)",'acf'),
-			'child'			=> __("Child Page (has parent)",'acf'),
+			'front_page'	=> __("Front Page",'acf' ),
+			'posts_page'	=> __("Posts Page",'acf' ),
+			'top_level'		=> __("Top Level Page (no parent)",'acf' ),
+			'parent'		=> __("Parent Page (has children)",'acf' ),
+			'child'			=> __("Child Page (has parent)",'acf' ),
 		);
 	}
 }

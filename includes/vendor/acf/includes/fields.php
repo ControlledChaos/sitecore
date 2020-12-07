@@ -1,13 +1,13 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_fields') ) :
+if ( ! class_exists( 'acf_fields' ) ) :
 
 class acf_fields {
 	
 	/** @var array Contains an array of field type instances */
-	var $types = array();
+	var $types = [];
 	
 	
 	/*
@@ -44,7 +44,7 @@ class acf_fields {
 	function register_field_type( $class ) {
 		
 		// allow instance
-		if( $class instanceOf acf_field ) {
+		if ( $class instanceOf acf_field ) {
 			$this->types[ $class->name ] = $class;
 		
 		// allow class name
@@ -205,12 +205,12 @@ function acf_get_field_type( $name ) {
 *  @return	n/a
 */
 
-function acf_get_field_types( $args = array() ) {
+function acf_get_field_types( $args = [] ) {
 	
 	// default
-	$args = wp_parse_args($args, array(
+	$args = wp_parse_args( $args, array(
 		'public'	=> true,	// true, false
-	));
+	) );
 	
 	// get field types
 	$field_types = acf()->fields->get_field_types();
@@ -232,10 +232,10 @@ function acf_get_field_types( $args = array() ) {
 *  @return	type Description.
 */
 
-function acf_get_field_types_info( $args = array() ) {
+function acf_get_field_types_info( $args = [] ) {
 	
 	// vars
-	$data = array();
+	$data = [];
 	$field_types = acf_get_field_types();
 	
 	// loop
@@ -286,7 +286,7 @@ function acf_is_field_type( $name = '' ) {
 
 function acf_get_field_type_prop( $name = '', $prop = '' ) {
 	$type = acf_get_field_type( $name );
-	return ($type && isset($type->$prop)) ? $type->$prop : null;
+	return ( $type && isset( $type->$prop) ) ? $type->$prop : null;
 }
 
 
@@ -305,7 +305,7 @@ function acf_get_field_type_prop( $name = '', $prop = '' ) {
 
 function acf_get_field_type_label( $name = '' ) {
 	$label = acf_get_field_type_prop( $name, 'label' );
-	return $label ? $label : '<span class="acf-tooltip-js" title="'.__('Field type does not exist', 'acf').'">'.__('Unknown', 'acf').'</span>';
+	return $label ? $label : '<span class="acf-tooltip-js" title="'.__( 'Field type does not exist', 'acf' ).'">'.__( 'Unknown', 'acf' ).'</span>';
 }
 
 
@@ -344,14 +344,14 @@ function acf_get_grouped_field_types() {
 	
 	// vars
 	$types = acf_get_field_types();
-	$groups = array();
+	$groups = [];
 	$l10n = array(
-		'basic'			=> __('Basic', 'acf'),
-		'content'		=> __('Content', 'acf'),
-		'choice'		=> __('Choice', 'acf'),
-		'relational'	=> __('Relational', 'acf'),
-		'jquery'		=> __('jQuery', 'acf'),
-		'layout'		=> __('Layout', 'acf'),
+		'basic'			=> __( 'Basic', 'acf' ),
+		'content'		=> __( 'Content', 'acf' ),
+		'choice'		=> __( 'Choice', 'acf' ),
+		'relational'	=> __( 'Relational', 'acf' ),
+		'jquery'		=> __( 'jQuery', 'acf' ),
+		'layout'		=> __( 'Layout', 'acf' ),
 	);
 	
 	
@@ -368,7 +368,7 @@ function acf_get_grouped_field_types() {
 	
 	
 	// filter
-	$groups = apply_filters('acf/get_field_types', $groups);
+	$groups = apply_filters( 'acf/get_field_types', $groups);
 	
 	
 	// return

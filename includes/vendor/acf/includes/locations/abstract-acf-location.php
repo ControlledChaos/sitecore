@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location') ) :
+if ( ! class_exists( 'ACF_Location' ) ) :
 
 abstract class ACF_Location extends ACF_Legacy_Location {
 	
@@ -115,7 +115,7 @@ abstract class ACF_Location extends ACF_Legacy_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
-		return array();
+		return [];
 	}
 	
 	/**
@@ -173,13 +173,13 @@ abstract class ACF_Location extends ACF_Legacy_Location {
 		$result = ( $value == $rule['value'] );
 		
 		// Allow "all" to match any value.
-        if( $rule['value'] === 'all' ) {
+        if ( $rule['value'] === 'all' ) {
 	        $result = true;   
         }
 		
 		// Reverse result for "!=" operator.
-        if( $rule['operator'] === '!=' ) {
-        	return !$result;
+        if ( $rule['operator'] === '!=' ) {
+        	return ! $result;
         }
 		return $result;
 	}

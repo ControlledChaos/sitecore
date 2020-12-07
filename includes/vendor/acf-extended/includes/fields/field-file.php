@@ -1,29 +1,29 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-add_filter('gettext', 'acfe_field_file_text', 99, 3);
-function acfe_field_file_text($translated_text, $text, $domain){
+add_filter( 'gettext', 'acfe_field_file_text', 99, 3);
+function acfe_field_file_text( $translated_text, $text, $domain){
     
-    if($domain !== 'acf')
+    if ( $domain !== 'acf' )
         return $translated_text;
     
-    if($text === 'No file selected')
+    if ( $text === 'No file selected' )
         return '';
 
     return $translated_text;
     
 }
 
-add_action('acf/render_field_settings/type=file', 'acfe_field_file_settings', 0);
-function acfe_field_file_settings($field){
+add_action( 'acf/render_field_settings/type=file', 'acfe_field_file_settings', 0);
+function acfe_field_file_settings( $field){
     
-    acf_render_field_setting($field, array(
-        'label'         => __('Uploader type'),
+    acf_render_field_setting( $field, array(
+        'label'         => __( 'Uploader type' ),
         'name'          => 'acfe_uploader',
         'key'           => 'acfe_uploader',
-        'instructions'  => __('Choose the uploader type'),
+        'instructions'  => __( 'Choose the uploader type' ),
         'type'          => 'radio',
         'choices'       => array(
             'wp'    => 'Media',
@@ -35,21 +35,21 @@ function acfe_field_file_settings($field){
         'layout'        => 'horizontal',
         'return_format' => 'value',
         'save_other_choice' => 0,
-    ));
+    ) );
     
 }
 
-add_filter('acf/prepare_field/type=file', 'acfe_field_file_uploader_type');
-function acfe_field_file_uploader_type($field){
+add_filter( 'acf/prepare_field/type=file', 'acfe_field_file_uploader_type' );
+function acfe_field_file_uploader_type( $field){
 	
-	if(!acf_maybe_get($field, 'acfe_uploader'))
+	if (!acf_maybe_get( $field, 'acfe_uploader' ) )
         return $field;
 	
 	// ACFE Form force uploader type
-	if(acf_is_filter_enabled('acfe/form/uploader'))
+	if (acf_is_filter_enabled( 'acfe/form/uploader' ) )
 		return $field;
 	
-	acf_update_setting('uploader', $field['acfe_uploader']);
+	acf_update_setting( 'uploader', $field['acfe_uploader']);
 
     return $field;
 

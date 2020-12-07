@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Current_User_Role') ) :
+if ( ! class_exists( 'ACF_Location_Current_User_Role' ) ) :
 
 class ACF_Location_Current_User_Role extends ACF_Location {
 	
@@ -36,12 +36,12 @@ class ACF_Location_Current_User_Role extends ACF_Location {
 		
 		// Get current user.
 		$user = wp_get_current_user();
-		if( !$user ) {
+		if ( ! $user ) {
 			return false;
 		}
 		
 		// Check super_admin value.
-		if( $rule['value'] == 'super_admin' ) {
+		if ( $rule['value'] == 'super_admin' ) {
 			$result = is_super_admin( $user->ID );
 			
 		// Check role.
@@ -50,8 +50,8 @@ class ACF_Location_Current_User_Role extends ACF_Location {
 		}
 		
 		// Reverse result for "!=" operator.
-        if( $rule['operator'] === '!=' ) {
-        	return !$result;
+        if ( $rule['operator'] === '!=' ) {
+        	return ! $result;
         }
 		return $result;
 	}
@@ -69,7 +69,7 @@ class ACF_Location_Current_User_Role extends ACF_Location {
 		$choices = wp_roles()->get_names();
 		
 		// Prepend Super Admin choice.
-		if( is_multisite() ) {
+		if ( is_multisite() ) {
 			return array_merge( 
 				array( 
 					'super_admin' => __( 'Super Admin', 'acf' )

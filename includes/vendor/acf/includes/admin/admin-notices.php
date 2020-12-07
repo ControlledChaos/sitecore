@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if( !defined('ABSPATH') ) exit;  
+if ( ! defined( 'ABSPATH' ) ) exit;  
 
 // Register notices store.
 acf_register_store( 'notices' );
@@ -22,7 +22,7 @@ acf_register_store( 'notices' );
  * @date	10/1/19
  * @since	5.7.10
  */
-if( ! class_exists('ACF_Admin_Notice') ) :
+if ( ! class_exists( 'ACF_Admin_Notice' ) ) :
 
 class ACF_Admin_Notice extends ACF_Data {
 	
@@ -57,22 +57,22 @@ class ACF_Admin_Notice extends ACF_Data {
 		
 		// Ensure text contains punctuation.
 		// todo: Remove this after updating translations.
-		$text = $this->get('text');
-		if( substr($text, -1) !== '.' && substr($text, -1) !== '>' ) {
+		$text = $this->get( 'text' );
+		if ( substr( $text, -1) !== '.' && substr( $text, -1) !== '>' ) {
 			$text .= '.';
 		} 
 		
 		// Print HTML.
-		printf('<div class="acf-admin-notice notice notice-%s %s">%s</div>',
+		printf( '<div class="acf-admin-notice notice notice-%s %s">%s</div>',
 			
 			// Type class.
-			$this->get('type'),
+			$this->get( 'type' ),
 			
 			// Dismissible class.
-			$this->get('dismissible') ? 'is-dismissible' : '',
+			$this->get( 'dismissible' ) ? 'is-dismissible' : '',
 			
 			// InnerHTML
-			$this->has('html') ? $this->get('html') : wpautop($text)
+			$this->has( 'html' ) ? $this->get( 'html' ) : wpautop( $text)
 		);
 	}
 }
@@ -119,7 +119,7 @@ function acf_render_admin_notices() {
 	$notices = acf_get_store( 'notices' )->get_data();
 	
 	// Loop over notices and render.
-	if( $notices ) {
+	if ( $notices ) {
 		foreach( $notices as $notice ) {
 			$notice->render();
 		}
@@ -127,7 +127,7 @@ function acf_render_admin_notices() {
 }
 
 // Render notices during admin action.
-add_action('admin_notices', 'acf_render_admin_notices', 99);
+add_action( 'admin_notices', 'acf_render_admin_notices', 99);
 
 /**
  * acf_add_admin_notice

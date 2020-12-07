@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_validation') ) :
+if ( ! class_exists( 'acf_validation' ) ) :
 
 class acf_validation {
 	
@@ -23,13 +23,13 @@ class acf_validation {
 	function __construct() {
 		
 		// vars
-		$this->errors = array();
+		$this->errors = [];
 		
 		
 		// ajax
-		add_action('wp_ajax_acf/validate_save_post',			array($this, 'ajax_validate_save_post'));
-		add_action('wp_ajax_nopriv_acf/validate_save_post',		array($this, 'ajax_validate_save_post'));
-		add_action('acf/validate_save_post',					array($this, 'acf_validate_save_post'), 5);
+		add_action( 'wp_ajax_acf/validate_save_post',			array( $this, 'ajax_validate_save_post' ) );
+		add_action( 'wp_ajax_nopriv_acf/validate_save_post',		array( $this, 'ajax_validate_save_post' ) );
+		add_action( 'acf/validate_save_post',					array( $this, 'acf_validate_save_post' ), 5);
 		
 	}
 	
@@ -75,13 +75,13 @@ class acf_validation {
 	function get_error( $input ) {
 		
 		// bail early if no errors
-		if( empty($this->errors) ) return false;
+		if ( empty( $this->errors) ) return false;
 		
 		
 		// loop
 		foreach( $this->errors as $error ) {
 			
-			if( $error['input'] === $input ) return $error;
+			if ( $error['input'] === $input ) return $error;
 			
 		}
 		
@@ -108,7 +108,7 @@ class acf_validation {
 	function get_errors() {
 		
 		// bail early if no errors
-		if( empty($this->errors) ) return false;
+		if ( empty( $this->errors) ) return false;
 		
 		
 		// return
@@ -132,7 +132,7 @@ class acf_validation {
 	
 	function reset_errors() {
 		
-		$this->errors = array();
+		$this->errors = [];
 		
 	}
 	
@@ -153,7 +153,7 @@ class acf_validation {
 	function ajax_validate_save_post() {
 		
 		// validate
-		if( !acf_verify_ajax() ) die();
+		if ( !acf_verify_ajax() ) die();
 		
 		
 		// vars
@@ -164,9 +164,9 @@ class acf_validation {
 		
 		
 		// success
-		if( acf_validate_save_post() ) {
+		if ( acf_validate_save_post() ) {
 			
-			wp_send_json_success($json);
+			wp_send_json_success( $json);
 			
 		}
 		
@@ -177,7 +177,7 @@ class acf_validation {
 		
 		
 		// return
-		wp_send_json_success($json);
+		wp_send_json_success( $json);
 		
 	}
 	
@@ -198,7 +198,7 @@ class acf_validation {
 	function acf_validate_save_post() {
 		
 		// bail early if no $_POST
-		if( empty($_POST['acf']) ) return;
+		if ( empty( $_POST['acf']) ) return;
 		
 		
 		// validate
@@ -268,7 +268,7 @@ function acf_reset_validation_errors() {
 function acf_validate_save_post( $show_errors = false ) {
 	
 	// action
-	do_action('acf/validate_save_post');
+	do_action( 'acf/validate_save_post' );
 	
 	
 	// vars
@@ -276,13 +276,13 @@ function acf_validate_save_post( $show_errors = false ) {
 	
 	
 	// bail ealry if no errors
-	if( !$errors ) return true;
+	if ( ! $errors ) return true;
 	
 	
 	// show errors
-	if( $show_errors ) {
+	if ( $show_errors ) {
 			
-		$message = '<h2>' . __('Validation failed', 'acf') . '</h2>';
+		$message = '<h2>' . __( 'Validation failed', 'acf' ) . '</h2>';
 		$message .= '<ul>';
 		foreach( $errors as $error ) {
 			
@@ -293,7 +293,7 @@ function acf_validate_save_post( $show_errors = false ) {
 		
 		
 		// die
-		wp_die( $message, __('Validation failed', 'acf') );
+		wp_die( $message, __( 'Validation failed', 'acf' ) );
 		
 	}
 	
@@ -321,7 +321,7 @@ function acf_validate_save_post( $show_errors = false ) {
 function acf_validate_values( $values, $input_prefix = '' ) {
 	
 	// bail early if empty
-	if( empty($values) ) return;
+	if ( empty( $values) ) return;
 	
 	
 	// loop
@@ -333,7 +333,7 @@ function acf_validate_values( $values, $input_prefix = '' ) {
 		
 		
 		// bail early if not found
-		if( !$field ) continue;
+		if ( ! $field ) continue;
 		
 		
 		// validate
@@ -365,10 +365,10 @@ function acf_validate_value( $value, $field, $input ) {
 	
 	
 	// valid
-	if( $field['required'] ) {
+	if ( $field['required'] ) {
 		
 		// valid is set to false if the value is empty, but allow 0 as a valid value
-		if( empty($value) && !is_numeric($value) ) {
+		if ( empty( $value) && ! is_numeric( $value) ) {
 			
 			$valid = false;
 			
@@ -395,7 +395,7 @@ function acf_validate_value( $value, $field, $input ) {
 	
 	
 	// allow $valid to be a custom error message
-	if( !empty($valid) && is_string($valid) ) {
+	if ( !empty( $valid) && is_string( $valid) ) {
 		
 		$message = $valid;
 		$valid = false;
@@ -403,7 +403,7 @@ function acf_validate_value( $value, $field, $input ) {
 	}
 	
 	
-	if( !$valid ) {
+	if ( ! $valid ) {
 		
 		acf_add_validation_error( $input, $message );
 		return false;

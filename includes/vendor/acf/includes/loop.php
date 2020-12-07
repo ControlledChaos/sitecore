@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_loop') ) :
+if ( ! class_exists( 'acf_loop' ) ) :
 
 class acf_loop {
 	
@@ -23,7 +23,7 @@ class acf_loop {
 	function __construct() {
 		
 		// vars
-		$this->loops = array();
+		$this->loops = [];
 		
 	}
 	
@@ -84,17 +84,17 @@ class acf_loop {
 	function get_i( $i = 0 ) {
 		
 		// 'active'
-		if( $i === 'active' ) $i = -1;
+		if ( $i === 'active' ) $i = -1;
 		
 		
 		// 'previous'
-		if( $i === 'previous' ) $i = -2;
+		if ( $i === 'previous' ) $i = -2;
 		
 		
 		// allow negative to look at end of loops
-		if( $i < 0 ) {
+		if ( $i < 0 ) {
 			
-			$i = count($this->loops) + $i;
+			$i = count( $this->loops) + $i;
 			
 		}
 		
@@ -118,7 +118,7 @@ class acf_loop {
 	*  @return	n/a
 	*/
 	
-	function add_loop( $loop = array() ) {
+	function add_loop( $loop = [] ) {
 		
 		// defaults
 		$loop = wp_parse_args( $loop, array(
@@ -129,7 +129,7 @@ class acf_loop {
 			'i'			=> -1,
 			'post_id'	=> 0,
 			'key'		=> ''
-		));
+		) );
 		
 		
 		// ensure array
@@ -137,10 +137,10 @@ class acf_loop {
 		
 		
 		// Re-index values if this loop starts from index 0.
-		// This allows ajax previews to work ($_POST data contains random unique array keys)
-		if( $loop['i'] == -1 ) {
+		// This allows ajax previews to work ( $_POST data contains random unique array keys)
+		if ( $loop['i'] == -1 ) {
 			
-			$loop['value'] = array_values($loop['value']);
+			$loop['value'] = array_values( $loop['value']);
 			
 		}
 		
@@ -177,7 +177,7 @@ class acf_loop {
 		
 		
 		// bail early if no set
-		if( !$this->is_loop($i) ) return false;
+		if ( ! $this->is_loop( $i) ) return false;
 		
 		
 		// set
@@ -211,11 +211,11 @@ class acf_loop {
 		
 		
 		// bail early if no set
-		if( !$this->is_loop($i) ) return false;
+		if ( ! $this->is_loop( $i) ) return false;
 		
 		
 		// check for key
-		if( $key !== null ) {
+		if ( $key !== null ) {
 			
 			return $this->loops[ $i ][ $key ];
 				
@@ -248,19 +248,19 @@ class acf_loop {
 		
 		
 		// bail early if no set
-		if( !$this->is_loop($i) ) return false;
+		if ( ! $this->is_loop( $i) ) return false;
 		
 		
 		// remove
-		unset($this->loops[ $i ]);
+		unset( $this->loops[ $i ]);
 		
 		
 		// reset keys
 		$this->loops = array_values( $this->loops );
 		
 		// PHP 7.2 no longer resets array keys for empty value
-		if( $this->is_empty() ) {
-			$this->loops = array();
+		if ( $this->is_empty() ) {
+			$this->loops = [];
 		}
 	}
 	
@@ -286,7 +286,7 @@ endif; // class_exists check
 *  @return	n/a
 */
 
-function acf_add_loop( $loop = array() ) {
+function acf_add_loop( $loop = [] ) {
 	
 	return acf()->loop->add_loop( $loop );
 	

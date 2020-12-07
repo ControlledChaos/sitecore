@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Media') ) :
+if ( ! class_exists( 'ACF_Media' ) ) :
 
 class ACF_Media {
 	
@@ -23,16 +23,16 @@ class ACF_Media {
 	function __construct() {
 		
 		// actions
-		add_action('acf/enqueue_scripts',			array($this, 'enqueue_scripts'));
-		add_action('acf/save_post', 				array($this, 'save_files'), 5, 1);
+		add_action( 'acf/enqueue_scripts',			array( $this, 'enqueue_scripts' ) );
+		add_action( 'acf/save_post', 				array( $this, 'save_files' ), 5, 1);
 		
 		
 		// filters
-		add_filter('wp_handle_upload_prefilter', 	array($this, 'handle_upload_prefilter'), 10, 1);
+		add_filter( 'wp_handle_upload_prefilter', 	array( $this, 'handle_upload_prefilter' ), 10, 1);
 		
 		
 		// ajax
-		add_action('wp_ajax_query-attachments',		array($this, 'wp_ajax_query_attachments'), -1);
+		add_action( 'wp_ajax_query-attachments',		array( $this, 'wp_ajax_query_attachments' ), -1);
 	}
 	
 	
@@ -49,21 +49,21 @@ class ACF_Media {
 	*/
 	
 	function enqueue_scripts(){
-		if( wp_script_is('acf-input') ) {
+		if ( wp_script_is( 'acf-input' ) ) {
 			acf_localize_text(array(
-				'Select.verb'			=> _x('Select', 'verb', 'acf'),
-				'Edit.verb'				=> _x('Edit', 'verb', 'acf'),
-				'Update.verb'			=> _x('Update', 'verb', 'acf'),
-				'Uploaded to this post'	=> __('Uploaded to this post', 'acf'),
-				'Expand Details' 		=> __('Expand Details', 'acf'),
-				'Collapse Details' 		=> __('Collapse Details', 'acf'),
-				'Restricted'			=> __('Restricted', 'acf'),
-				'All images'			=> __('All images', 'acf')
-			));
+				'Select.verb'			=> _x( 'Select', 'verb', 'acf' ),
+				'Edit.verb'				=> _x( 'Edit', 'verb', 'acf' ),
+				'Update.verb'			=> _x( 'Update', 'verb', 'acf' ),
+				'Uploaded to this post'	=> __( 'Uploaded to this post', 'acf' ),
+				'Expand Details' 		=> __( 'Expand Details', 'acf' ),
+				'Collapse Details' 		=> __( 'Collapse Details', 'acf' ),
+				'Restricted'			=> __( 'Restricted', 'acf' ),
+				'All images'			=> __( 'All images', 'acf' )
+			) );
 			acf_localize_data(array(
 				'mimeTypeIcon'	=> wp_mime_type_icon(),
 				'mimeTypes'		=> get_allowed_mime_types()
-			));
+			) );
 		}
 	}
 		
@@ -84,14 +84,14 @@ class ACF_Media {
 	function handle_upload_prefilter( $file ) {
 		
 		// bail early if no acf field
-		if( empty($_POST['_acfuploader']) ) {
+		if ( empty( $_POST['_acfuploader']) ) {
 			return $file;
 		}
 		
 		
 		// load field
 		$field = acf_get_field( $_POST['_acfuploader'] );
-		if( !$field ) {
+		if ( ! $field ) {
 			return $file;
 		}
 		
@@ -117,7 +117,7 @@ class ACF_Media {
 		
 		
 		// append error
-		if( !empty($errors) ) {
+		if ( !empty( $errors) ) {
 			$file['error'] = implode("\n", $errors);
 		}
 		
@@ -143,7 +143,7 @@ class ACF_Media {
 	function save_files( $post_id = 0 ) {
 		
 		// bail early if no $_FILES data
-		if( empty($_FILES['acf']['name']) ) {
+		if ( empty( $_FILES['acf']['name']) ) {
 			return;
 		}
 		
@@ -168,7 +168,7 @@ class ACF_Media {
 	
 	function wp_ajax_query_attachments() {
 		
-		add_filter('wp_prepare_attachment_for_js', 	array($this, 'wp_prepare_attachment_for_js'), 10, 3);
+		add_filter( 'wp_prepare_attachment_for_js', 	array( $this, 'wp_prepare_attachment_for_js' ), 10, 3);
 		
 	}
 	
@@ -179,14 +179,14 @@ class ACF_Media {
 		
 		
 		// bail early if no acf field
-		if( empty($_POST['query']['_acfuploader']) ) {
+		if ( empty( $_POST['query']['_acfuploader']) ) {
 			return $response;
 		}
 		
 		
 		// load field
 		$field = acf_get_field( $_POST['query']['_acfuploader'] );
-		if( !$field ) {
+		if ( ! $field ) {
 			return $response;
 		}
 		
@@ -196,8 +196,8 @@ class ACF_Media {
 		
 		
 		// append errors
-		if( !empty($errors) ) {
-			$response['acf_errors'] = implode('<br />', $errors);
+		if ( !empty( $errors) ) {
+			$response['acf_errors'] = implode( '<br />', $errors);
 		}
 		
 		
@@ -207,7 +207,7 @@ class ACF_Media {
 }
 
 // instantiate
-acf_new_instance('ACF_Media');
+acf_new_instance( 'ACF_Media' );
 
 endif; // class_exists check
 

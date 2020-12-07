@@ -1,15 +1,15 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-if(!class_exists('ACFE_Field_Groups_Local')):
+if (!class_exists( 'ACFE_Field_Groups_Local' ) ):
 
 class ACFE_Field_Groups_Local{
     
     var $view = '';
-    var $local_field_groups = array();
-    var $autosync_field_groups = array();
+    var $local_field_groups = [];
+    var $autosync_field_groups = [];
     var $old_version = false;
     var $acfe_admin_field_groups = '';
     
@@ -19,7 +19,7 @@ class ACFE_Field_Groups_Local{
     function __construct(){
         
         // Actions
-        add_action('current_screen', array($this, 'current_screen'));
+        add_action( 'current_screen', array( $this, 'current_screen' ) );
         
     }
     
@@ -29,25 +29,25 @@ class ACFE_Field_Groups_Local{
     function current_screen(){
         
         // Bail early if not Field Groups admin page.
-        if(!acf_is_screen('edit-acf-field-group'))
+        if (!acf_is_screen( 'edit-acf-field-group' ) )
             return;
     
         // Old Compatibility
-        if(acf_version_compare(acf_get_setting('version'),  '<', '5.9'))
+        if (acf_version_compare(acf_get_setting( 'version' ),  '<', '5.9' ) )
             $this->old_version = true;
         
         // Get ACF instance
-        $this->acfe_admin_field_groups = acf_get_instance('ACFE_Field_Groups');
+        $this->acfe_admin_field_groups = acf_get_instance( 'ACFE_Field_Groups' );
         $this->view = $this->acfe_admin_field_groups->view;
         
         // Hooks
-        add_filter('views_edit-acf-field-group', array($this, 'views'), 20);
+        add_filter( 'views_edit-acf-field-group', array( $this, 'views' ), 20);
         
-        if($this->view === 'acfe-local'){
+        if ( $this->view === 'acfe-local' ){
             
-            add_filter('admin_footer',                              array($this, 'admin_footer'));
-            add_filter('bulk_actions-edit-acf-field-group',         array($this, 'bulk_actions'));
-            add_filter('handle_bulk_actions-edit-acf-field-group',  array($this, 'handle_bulk_actions'), 10, 3);
+            add_filter( 'admin_footer',                              array( $this, 'admin_footer' ) );
+            add_filter( 'bulk_actions-edit-acf-field-group',         array( $this, 'bulk_actions' ) );
+            add_filter( 'handle_bulk_actions-edit-acf-field-group',  array( $this, 'handle_bulk_actions' ), 10, 3);
             
         }
         
@@ -56,24 +56,24 @@ class ACFE_Field_Groups_Local{
     /*
      * Views
      */
-    function views($views){
+    function views( $views){
         
         // Total
-        $count = count($this->get_local_field_groups());
+        $count = count( $this->get_local_field_groups() );
         
         // Bail early
-        if($count === 0)
+        if ( $count === 0)
             return $views;
             
         $views['acfe-local'] = sprintf(
             '<a %s href="%s">%s <span class="count">(%s)</span></a>',
-            ($this->view === 'acfe-local' ? 'class="current"' : ''),
-            esc_url(admin_url('edit.php?post_type=acf-field-group&post_status=acfe-local')),
-            esc_html(__('Local', 'acf')),
+            ( $this->view === 'acfe-local' ? 'class="current"' : '' ),
+            esc_url(admin_url( 'edit.php?post_type=acf-field-group&post_status=acfe-local' ) ),
+            esc_html(__( 'Local', 'acf' ) ),
             $count
         );
         
-        if($this->view === 'acfe-local'){
+        if ( $this->view === 'acfe-local' ){
             
             global $wp_list_table;
             
@@ -81,7 +81,7 @@ class ACFE_Field_Groups_Local{
                 'total_items' => $count,
                 'total_pages' => 1,
                 'per_page' => $count
-            ));
+            ) );
             
         }
         
@@ -104,7 +104,7 @@ class ACFE_Field_Groups_Local{
             'acfe-load',
         );
         
-        if($this->old_version){
+        if ( $this->old_version){
     
             $columns = array(
                 'acfe-source',
@@ -115,17 +115,17 @@ class ACFE_Field_Groups_Local{
             
         }
     
-        if(acf_get_setting('acfe/php'))
+        if (acf_get_setting( 'acfe/php' ) )
             $columns[] = 'acfe-autosync-php';
     
-        if(acf_get_setting('json'))
+        if (acf_get_setting( 'json' ) )
             $columns[] = 'acfe-autosync-json';
     
         ?>
         <script type="text/html" id="tmpl-acfe-local-tbody">
             <?php
         
-            foreach($this->local_field_groups as $field_group):
+            foreach( $this->local_field_groups as $field_group):
             
                 // vars
                 $i++;
@@ -133,14 +133,14 @@ class ACFE_Field_Groups_Local{
                 $key = $field_group['key'];
                 $title = $field_group['title'];
                 
-                if(isset($this->autosync_field_groups[$field_group['key']])){
+                if (isset( $this->autosync_field_groups[$field_group['key']]) ){
                     
                     $field_group['acfe_local_source'] = $this->autosync_field_groups[$field_group['key']];
                     
                 }
             
                 ?>
-                <tr <?php if($i%2 == 0): ?>class="alternate"<?php endif; ?>>
+                <tr <?php if ( $i%2 == 0): ?>class="alternate"<?php endif; ?>>
 
                     <th class="check-column" data-colname="">
                         <label for="cb-select-<?php echo $field_group['key']; ?>" class="screen-reader-text"><?php echo esc_html( sprintf( __( 'Select %s', 'acf' ), $field_group['title'] ) ); ?></label>
@@ -149,47 +149,47 @@ class ACFE_Field_Groups_Local{
 
                     <td class="post-title page-title column-title">
                         <strong>
-                            <span class="row-title"><?php echo esc_html($title); ?></span>
+                            <span class="row-title"><?php echo esc_html( $title); ?></span>
                         </strong>
                         <div class="row-actions">
                 
                             <span>
-                                <a href="<?php echo add_query_arg(array('action' => 'php', 'keys' => $key), acf_get_admin_tool_url('acfe-fg-local')); ?>">PHP</a> |
+                                <a href="<?php echo add_query_arg(array( 'action' => 'php', 'keys' => $key), acf_get_admin_tool_url( 'acfe-fg-local' ) ); ?>">PHP</a> |
                             </span>
                             
                             <span>
-                                <a href="<?php echo add_query_arg(array('action' => 'json', 'keys' => $key), acf_get_admin_tool_url('acfe-fg-local')); ?>">Json</a> |
+                                <a href="<?php echo add_query_arg(array( 'action' => 'json', 'keys' => $key), acf_get_admin_tool_url( 'acfe-fg-local' ) ); ?>">Json</a> |
                             </span>
                             
                             <span>
-                                <a href="<?php echo add_query_arg(array('action' => 'sync', 'keys' => $key), acf_get_admin_tool_url('acfe-fg-local')); ?>">Sync to database</a> |
+                                <a href="<?php echo add_query_arg(array( 'action' => 'sync', 'keys' => $key), acf_get_admin_tool_url( 'acfe-fg-local' ) ); ?>">Sync to database</a> |
                             </span>
                             
                             <span class="acfe-key">
-                                <code><?php echo esc_html($key); ?></code>
+                                <code><?php echo esc_html( $key); ?></code>
                             </span>
 
                         </div>
                     </td>
                 
-                    <?php foreach($columns as $column): ?>
-                        <td class="column-<?php echo esc_attr($column); ?>">
+                    <?php foreach( $columns as $column): ?>
+                        <td class="column-<?php echo esc_attr( $column); ?>">
                         
                             <?php
                             
-                            if($this->old_version){
+                            if ( $this->old_version){
     
-                                $this->acfe_admin_field_groups->render_table_column($column, $field_group);
+                                $this->acfe_admin_field_groups->render_table_column( $column, $field_group);
                                 
                             }else{
     
-                                if(strpos($column, 'acfe') === 0){
+                                if (strpos( $column, 'acfe' ) === 0){
         
-                                    $this->acfe_admin_field_groups->render_table_column($column, $field_group);
+                                    $this->acfe_admin_field_groups->render_table_column( $column, $field_group);
         
                                 }else{
     
-                                    acf_get_instance('ACF_Admin_Field_Groups')->render_admin_table_column($column, $field_group);
+                                    acf_get_instance( 'ACF_Admin_Field_Groups' )->render_admin_table_column( $column, $field_group);
         
                                 }
                                 
@@ -204,9 +204,9 @@ class ACFE_Field_Groups_Local{
         </script>
 
         <script type="text/javascript">
-            (function($){
+            (function( $){
                 
-                $('#the-list').html($('#tmpl-acfe-local-tbody').html());
+                $( '#the-list' ).html( $( '#tmpl-acfe-local-tbody' ).html() );
 
             })(jQuery);
         </script>
@@ -217,9 +217,9 @@ class ACFE_Field_Groups_Local{
     /*
      * Bulk Actions
      */
-    function bulk_actions($actions){
+    function bulk_actions( $actions){
         
-        $actions = array();
+        $actions = [];
         
         $actions['acfe_local_php'] = __( 'Export PHP', 'acf' );
         $actions['acfe_local_json'] = __( 'Export Json', 'acf' );
@@ -232,40 +232,40 @@ class ACFE_Field_Groups_Local{
     /*
      * Handle Bulk Actions
      */
-    function handle_bulk_actions($redirect, $action, $post_ids){
+    function handle_bulk_actions( $redirect, $action, $post_ids){
     
-        if(!isset($_REQUEST['post']) || empty($_REQUEST['post']))
+        if (! isset( $_REQUEST['post']) || empty( $_REQUEST['post']) )
             return $redirect;
         
         // PHP
-        if($action === 'acfe_local_php'){
+        if ( $action === 'acfe_local_php' ){
     
             $post_ids = $_REQUEST['post'];
     
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=php&keys=' . implode('+', $post_ids));
-            wp_redirect($url);
+            $url = admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=php&keys=' . implode( '+', $post_ids) );
+            wp_redirect( $url);
             exit;
         
         }
         
         // Json
-        elseif($action === 'acfe_local_json'){
+        elseif ( $action === 'acfe_local_json' ){
     
             $post_ids = $_REQUEST['post'];
     
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=json&keys=' . implode('+', $post_ids));
-            wp_redirect($url);
+            $url = admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=json&keys=' . implode( '+', $post_ids) );
+            wp_redirect( $url);
             exit;
             
         }
         
         // Sync DB
-        elseif($action === 'acfe_local_sync'){
+        elseif ( $action === 'acfe_local_sync' ){
             
             $post_ids = $_REQUEST['post'];
             
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=sync&keys=' . implode('+', $post_ids));
-            wp_redirect($url);
+            $url = admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=sync&keys=' . implode( '+', $post_ids) );
+            wp_redirect( $url);
             exit;
         
         }
@@ -278,19 +278,19 @@ class ACFE_Field_Groups_Local{
         
         $local_field_groups = acf_get_local_field_groups();
         
-        if(empty($local_field_groups))
-            return array();
+        if (empty( $local_field_groups) )
+            return [];
         
-        $locals = array();
+        $locals = [];
         
-        foreach($local_field_groups as $field_group){
+        foreach( $local_field_groups as $field_group){
             
             // local PHP
-            if(acf_maybe_get($field_group, 'local') !== 'php')
+            if (acf_maybe_get( $field_group, 'local' ) !== 'php' )
                 continue;
             
             // Exclude ACFE Field Groups
-            if(!acfe_is_super_dev() && stripos($field_group['key'], 'group_acfe_') === 0)
+            if (!acfe_is_super_dev() && stripos( $field_group['key'], 'group_acfe_' ) === 0)
                 continue;
             
             $locals[] = $field_group;
@@ -300,30 +300,30 @@ class ACFE_Field_Groups_Local{
         // Get desync PHP Field Groups
         $desync_php_field_groups = acfe_get_desync_php_field_groups();
         
-        foreach($desync_php_field_groups as $file_key => $file_path){
+        foreach( $desync_php_field_groups as $file_key => $file_path){
             
-            require_once($file_path);
+            require_once( $file_path);
             
             $this->autosync_field_groups[$file_key] = $file_path;
-            $locals[] = acf_get_field_group($file_key);
+            $locals[] = acf_get_field_group( $file_key);
             
         }
         
         $order = 'ASC';
-        if(isset($_REQUEST['orderby']) && $_REQUEST['orderby'] === 'title' && isset($_REQUEST['order']) && $_REQUEST['order'] === 'desc')
+        if (isset( $_REQUEST['orderby']) && $_REQUEST['orderby'] === 'title' && isset( $_REQUEST['order']) && $_REQUEST['order'] === 'desc' )
             $order = 'DESC';
         
         // Sort Title ASC
-        if($order === 'ASC'){
+        if ( $order === 'ASC' ){
             
-            usort($locals, function($a, $b){
-                return strcmp($a['title'], $b['title']);
+            usort( $locals, function( $a, $b){
+                return strcmp( $a['title'], $b['title']);
             });
             
         }else{
             
-            usort($locals, function($a, $b){
-                return strcmp($b['title'], $a['title']);
+            usort( $locals, function( $a, $b){
+                return strcmp( $b['title'], $a['title']);
             });
             
         }
@@ -336,7 +336,7 @@ class ACFE_Field_Groups_Local{
     
 }
 
-acf_new_instance('ACFE_Field_Groups_Local');
+acf_new_instance( 'ACFE_Field_Groups_Local' );
 
 endif;
 
@@ -345,13 +345,13 @@ function acfe_get_desync_php_field_groups(){
     $file_field_groups = acfe_get_local_php_files();
     $db_field_groups = acf_get_raw_field_groups();
     
-    foreach($file_field_groups as $file_key => $file_path){
+    foreach( $file_field_groups as $file_key => $file_path){
         
-        foreach($db_field_groups as $db){
+        foreach( $db_field_groups as $db){
             
-            if($db['key'] === $file_key){
+            if ( $db['key'] === $file_key){
                 
-                unset($file_field_groups[$file_key]);
+                unset( $file_field_groups[$file_key]);
                 break;
                 
             }

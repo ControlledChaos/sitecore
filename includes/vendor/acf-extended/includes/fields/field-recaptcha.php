@@ -1,6 +1,6 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
 class acfe_field_recaptcha extends acf_field{
@@ -8,7 +8,7 @@ class acfe_field_recaptcha extends acf_field{
     function __construct(){
         
         $this->name = 'acfe_recaptcha';
-        $this->label = __('reCAPTCHA', 'acf');
+        $this->label = __( 'reCAPTCHA', 'acf' );
         $this->category = 'jquery';
         $this->defaults = array(
             'required'      => 0,
@@ -26,29 +26,29 @@ class acfe_field_recaptcha extends acf_field{
         
     }
     
-    function render_field_settings($field){
+    function render_field_settings( $field){
         
         // Version
-        acf_render_field_setting($field, array(
-            'label'			=> __('Version', 'acf'),
-            'instructions'	=> __('Select the reCaptcha version', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Version', 'acf' ),
+            'instructions'	=> __( 'Select the reCaptcha version', 'acf' ),
             'type'			=> 'select',
             'name'			=> 'version',
             'choices'		=> array(
-                'v2'    => __('reCaptcha V2', 'acf'),
-                'v3'    => __('reCaptcha V3', 'acf'),
+                'v2'    => __( 'reCaptcha V2', 'acf' ),
+                'v3'    => __( 'reCaptcha V3', 'acf' ),
             )
-        ));
+        ) );
         
         // V2 Theme
-        acf_render_field_setting($field, array(
-            'label'			=> __('Theme', 'acf'),
-            'instructions'	=> __('Select the reCaptcha theme', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Theme', 'acf' ),
+            'instructions'	=> __( 'Select the reCaptcha theme', 'acf' ),
             'type'			=> 'select',
             'name'			=> 'v2_theme',
             'choices'		=> array(
-                'light' => __('Light', 'acf'),
-                'dark'  => __('Dark', 'acf'),
+                'light' => __( 'Light', 'acf' ),
+                'dark'  => __( 'Dark', 'acf' ),
             ),
             'conditional_logic' => array(
                 array(
@@ -59,17 +59,17 @@ class acfe_field_recaptcha extends acf_field{
                     )
                 )
             )
-        ));
+        ) );
         
         // V2 Size
-        acf_render_field_setting($field, array(
-            'label'			=> __('Size', 'acf'),
-            'instructions'	=> __('Select the reCaptcha size', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Size', 'acf' ),
+            'instructions'	=> __( 'Select the reCaptcha size', 'acf' ),
             'type'			=> 'select',
             'name'			=> 'v2_size',
             'choices'		=> array(
-                'normal'    => __('Normal', 'acf'),
-                'compact'   => __('Compact', 'acf'),
+                'normal'    => __( 'Normal', 'acf' ),
+                'compact'   => __( 'Compact', 'acf' ),
             ),
             'conditional_logic' => array(
                 array(
@@ -80,12 +80,12 @@ class acfe_field_recaptcha extends acf_field{
                     )
                 )
             )
-        ));
+        ) );
         
         // V3 Hide Logo
-        acf_render_field_setting($field, array(
-            'label'			=> __('Hide logo', 'acf'),
-            'instructions'	=> __('Hide the reCaptcha logo', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Hide logo', 'acf' ),
+            'instructions'	=> __( 'Hide the reCaptcha logo', 'acf' ),
             'type'			=> 'true_false',
             'name'			=> 'v3_hide_logo',
             'ui'            => true,
@@ -98,29 +98,29 @@ class acfe_field_recaptcha extends acf_field{
                     )
                 )
             )
-        ));
+        ) );
         
         // Site Key
-        acf_render_field_setting($field, array(
-            'label'			=> __('Site key', 'acf'),
-            'instructions'	=> __('Enter the site key. <a href="https://www.google.com/recaptcha/admin" target="_blank">reCaptcha API Admin</a>', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Site key', 'acf' ),
+            'instructions'	=> __( 'Enter the site key. <a href="https://www.google.com/recaptcha/admin" target="_blank">reCaptcha API Admin</a>', 'acf' ),
             'type'			=> 'text',
             'name'			=> 'site_key',
-        ));
+        ) );
         
         // Site Secret
-        acf_render_field_setting($field, array(
-            'label'			=> __('Secret key', 'acf'),
-            'instructions'	=> __('Enter the secret key. <a href="https://www.google.com/recaptcha/admin" target="_blank">reCaptcha API Admin</a>', 'acf'),
+        acf_render_field_setting( $field, array(
+            'label'			=> __( 'Secret key', 'acf' ),
+            'instructions'	=> __( 'Enter the secret key. <a href="https://www.google.com/recaptcha/admin" target="_blank">reCaptcha API Admin</a>', 'acf' ),
             'type'			=> 'text',
             'name'			=> 'secret_key',
-        ));
+        ) );
 
     }
     
-    function prepare_field($field){
+    function prepare_field( $field){
         
-        if($field['version'] === 'v3'){
+        if ( $field['version'] === 'v3' ){
             
             $field['wrapper']['class'] = 'acf-hidden';
             
@@ -130,21 +130,21 @@ class acfe_field_recaptcha extends acf_field{
         
     }
     
-    function render_field($field){
+    function render_field( $field){
 
         // Site key
-        $site_key = acf_get_setting('acfe/field/recaptcha/site_key', $field['site_key']);
+        $site_key = acf_get_setting( 'acfe/field/recaptcha/site_key', $field['site_key']);
         
         // Version
-        $field['version'] = acf_get_setting('acfe/field/recaptcha/version', $field['version']);
+        $field['version'] = acf_get_setting( 'acfe/field/recaptcha/version', $field['version']);
 
         // V2
-        if($field['version'] === 'v2'){ ?>
+        if ( $field['version'] === 'v2' ){ ?>
         
             <?php
             // Theme & Size
-            $field['v2_theme'] = acf_get_setting('acfe/field/recaptcha/v2/theme', $field['v2_theme']);
-            $field['v2_size'] = acf_get_setting('acfe/field/recaptcha/v2/size', $field['v2_size']);
+            $field['v2_theme'] = acf_get_setting( 'acfe/field/recaptcha/v2/theme', $field['v2_theme']);
+            $field['v2_size'] = acf_get_setting( 'acfe/field/recaptcha/v2/size', $field['v2_size']);
             
             $wrapper = array(
                 'class'         => 'acf-input-wrap acfe-field-recaptcha',
@@ -160,10 +160,10 @@ class acfe_field_recaptcha extends acf_field{
             );
             
             ?>
-            <div <?php acf_esc_attr_e($wrapper); ?>>
+            <div <?php acf_esc_attr_e( $wrapper); ?>>
                 
                 <div></div>
-                <?php acf_hidden_input($hidden_input); ?>
+                <?php acf_hidden_input( $hidden_input); ?>
                 
             </div>
             
@@ -175,10 +175,10 @@ class acfe_field_recaptcha extends acf_field{
         }
         
         // V3
-        elseif($field['version'] === 'v3'){
+        elseif ( $field['version'] === 'v3' ){
             
             // Hide logo
-            $field['v3_hide_logo'] = acf_get_setting('acfe/field/recaptcha/v3/hide_logo', $field['v3_hide_logo']);
+            $field['v3_hide_logo'] = acf_get_setting( 'acfe/field/recaptcha/v3/hide_logo', $field['v3_hide_logo']);
             
             $wrapper = array(
                 'class'         => 'acf-input-wrap acfe-field-recaptcha',
@@ -192,14 +192,14 @@ class acfe_field_recaptcha extends acf_field{
             );
             
             ?>
-            <div <?php acf_esc_attr_e($wrapper); ?>>
+            <div <?php acf_esc_attr_e( $wrapper); ?>>
                 
                 <div></div>
-                <?php acf_hidden_input($hidden_input); ?>
+                <?php acf_hidden_input( $hidden_input); ?>
                 
             </div>
             
-            <?php if($field['v3_hide_logo']){ ?>
+            <?php if ( $field['v3_hide_logo']){ ?>
                 <style>
                 .grecaptcha-badge{
                     display: none;
@@ -217,60 +217,60 @@ class acfe_field_recaptcha extends acf_field{
 
     }
     
-    function validate_value($valid, $value, $field, $input){
+    function validate_value( $valid, $value, $field, $input){
     
-        if(!$field['required'])
+        if (! $field['required'])
             return $valid;
     
         // Expired
-        if($value === 'expired'){
+        if ( $value === 'expired' ){
         
-            return __('reCaptcha has expired.');
+            return __( 'reCaptcha has expired.' );
         
         }
     
         // Error
-        elseif($value === 'error'){
+        elseif ( $value === 'error' ){
         
-            return __('An error has occured.');
+            return __( 'An error has occured.' );
         
         }
     
         // Avoid duplicate token: Do not process during Ajax validation
-        if(wp_doing_ajax())
+        if (wp_doing_ajax() )
             return $valid;
     
         // Secret key
-        $secret_key = acf_get_setting('acfe/field/recaptcha/secret_key', $field['secret_key']);
+        $secret_key = acf_get_setting( 'acfe/field/recaptcha/secret_key', $field['secret_key']);
     
         // API Call
         $curl = curl_init();
     
-        curl_setopt($curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$value}");
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $api = curl_exec($curl);
+        curl_setopt( $curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$value}");
+        curl_setopt( $curl, CURLOPT_HEADER, 0);
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+        $api = curl_exec( $curl);
     
-        curl_close($curl);
+        curl_close( $curl);
     
         // No API response
-        if(empty($api))
-            return __('An error has occured.');
+        if (empty( $api) )
+            return __( 'An error has occured.' );
     
         // Decode
-        $response = json_decode($api);
+        $response = json_decode( $api);
     
         // No success
-        if(!isset($response->success))
-            return __('An error has occured.');
+        if (! isset( $response->success) )
+            return __( 'An error has occured.' );
     
-        if($response->success === false){
+        if ( $response->success === false){
         
             $valid = false;
         
         }
 
-        elseif($response->success === true){
+        elseif ( $response->success === true){
         
             $valid = true;
         
@@ -280,7 +280,7 @@ class acfe_field_recaptcha extends acf_field{
         
     }
     
-    function update_value($value, $post_id, $field){
+    function update_value( $value, $post_id, $field){
         
         // Do not save field value
         return null;
@@ -290,4 +290,4 @@ class acfe_field_recaptcha extends acf_field{
 }
 
 // initialize
-acf_register_field_type('acfe_field_recaptcha');
+acf_register_field_type( 'acfe_field_recaptcha' );

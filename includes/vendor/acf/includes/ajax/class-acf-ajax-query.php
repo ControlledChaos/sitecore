@@ -1,8 +1,8 @@
 <?php
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Ajax_Query') ) :
+if ( ! class_exists( 'ACF_Ajax_Query' ) ) :
 
 class ACF_Ajax_Query extends ACF_Ajax {
 	
@@ -51,7 +51,7 @@ class ACF_Ajax_Query extends ACF_Ajax {
 		
 		// Get query results.
 		$results = $this->get_results( $args );
-		if( is_wp_error($results) ) {
+		if ( is_wp_error( $results) ) {
 			return $results;
 		}
 		
@@ -76,22 +76,22 @@ class ACF_Ajax_Query extends ACF_Ajax {
 	function init_request( $request ) {
 		
 		// Get field for this query.
-		if( isset($request['field_key']) ) {
+		if ( isset( $request['field_key']) ) {
 			$this->field = acf_get_field( $request['field_key'] );
 		}
 		
 		// Update query properties.
-		if( isset($request['page']) ) {
-			$this->page = intval($request['page']);
+		if ( isset( $request['page']) ) {
+			$this->page = intval( $request['page']);
 		}
-		if( isset($request['per_page']) ) {
-			$this->per_page = intval($request['per_page']);
+		if ( isset( $request['per_page']) ) {
+			$this->per_page = intval( $request['per_page']);
 		}
-		if( isset($request['search']) && acf_not_empty($request['search']) ) {
-			$this->search = sanitize_text_field($request['search']);
+		if ( isset( $request['search']) && acf_not_empty( $request['search']) ) {
+			$this->search = sanitize_text_field( $request['search']);
 			$this->is_search = true;
 		}
-		if( isset($request['post_id']) ) {
+		if ( isset( $request['post_id']) ) {
 			$this->post_id = $request['post_id'];
 		}
 	}
@@ -110,10 +110,10 @@ class ACF_Ajax_Query extends ACF_Ajax {
 	function get_args( $request ) {
 		
 		// Allow for custom "query" arg.
-		if( isset($request['query']) ) {
+		if ( isset( $request['query']) ) {
 			return (array) $request['query'];
 		}
-		return array();
+		return [];
 	}
 	
 	/**
@@ -128,7 +128,7 @@ class ACF_Ajax_Query extends ACF_Ajax {
 	 * @return	array
 	 */
 	function get_results( $args ) {
-		return array();
+		return [];
 	}
 	
 	/**

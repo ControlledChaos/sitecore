@@ -1,22 +1,22 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-if(!class_exists('acfe_field_validation')):
+if (!class_exists( 'acfe_field_validation' ) ):
 
 class acfe_field_validation{
     
-    public $functions = array();
+    public $functions = [];
     
 	function __construct(){
 		
         // Actions
-        add_action('load-post.php',                                     array($this, 'load'));
-        add_action('wp_ajax_acf/field_group/render_field_settings',		array($this, 'field_types_action'), 5);
+        add_action( 'load-post.php',                                     array( $this, 'load' ) );
+        add_action( 'wp_ajax_acf/field_group/render_field_settings',		array( $this, 'field_types_action' ), 5);
         
         // Filters
-        add_filter('acf/validate_value',                                array($this, 'validate_value'), 99, 4);
+        add_filter( 'acf/validate_value',                                array( $this, 'validate_value' ), 99, 4);
         
         // Validation functions
         $this->functions = array(
@@ -79,22 +79,22 @@ class acfe_field_validation{
      */
     function load(){
         
-        if(!acf_is_screen('acf-field-group'))
+        if (!acf_is_screen( 'acf-field-group' ) )
             return;
         
         $this->field_types_action();
         
         // Fix: Repeater
-        add_filter('acf/prepare_field/name=acfe_validate',              array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_location',     array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_rules_and',    array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_function',     array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_operator',     array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_match',        array($this, 'fix_repeater'));
-        add_filter('acf/prepare_field/name=acfe_validate_error',        array($this, 'fix_repeater'));
+        add_filter( 'acf/prepare_field/name=acfe_validate',              array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_location',     array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_rules_and',    array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_function',     array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_operator',     array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_match',        array( $this, 'fix_repeater' ) );
+        add_filter( 'acf/prepare_field/name=acfe_validate_error',        array( $this, 'fix_repeater' ) );
         
         // Fix: Clone
-        add_filter('acf/update_field',                                  array($this, 'fix_clone'));
+        add_filter( 'acf/update_field',                                  array( $this, 'fix_clone' ) );
         
     }
     
@@ -110,10 +110,10 @@ class acfe_field_validation{
             $field_type = $field['name'];
             
             // Exclude
-            if(in_array($field_type, array('message', 'accordion', 'tab', 'acfe_button', 'acfe_column', 'acfe_dynamic_message', 'group', 'repeater', 'flexible_content', 'clone')))
+            if (in_array( $field_type, array( 'message', 'accordion', 'tab', 'acfe_button', 'acfe_column', 'acfe_dynamic_message', 'group', 'repeater', 'flexible_content', 'clone' ) ))
                 continue;
             
-            add_action('acf/render_field_settings/type=' . $field_type, array($this, 'render_field_settings'), 990);
+            add_action( 'acf/render_field_settings/type=' . $field_type, array( $this, 'render_field_settings' ), 990);
             
         }
         
@@ -122,16 +122,16 @@ class acfe_field_validation{
     /**
      * Add Setting
      */
-    function render_field_settings($field){
+    function render_field_settings( $field){
         
         $valid = false;
         
         // Ajax
-        if(acf_verify_ajax()){
+        if (acf_verify_ajax() ){
             
-            $field_group = acfe_get_field_group_from_field($field);
+            $field_group = acfe_get_field_group_from_field( $field);
             
-            if(acf_maybe_get($field_group, 'acfe_form'))
+            if (acf_maybe_get( $field_group, 'acfe_form' ) )
                 $valid = true;
             
         }
@@ -139,18 +139,18 @@ class acfe_field_validation{
         // Display
         else{
             
-            if(acf_maybe_get($field, 'acfe_form'))
+            if (acf_maybe_get( $field, 'acfe_form' ) )
                 $valid = true;
             
-            if(!$valid && acf_maybe_get($field, '_name') === 'new_field'){
+            if (! $valid && acf_maybe_get( $field, '_name' ) === 'new_field' ){
                 
                 $field_group_id = get_the_ID();
                 
-                if($field_group_id){
+                if ( $field_group_id){
                     
-                    $field_group = acf_get_field_group($field_group_id);
+                    $field_group = acf_get_field_group( $field_group_id);
                     
-                    if(acf_maybe_get($field_group, 'acfe_form'))
+                    if (acf_maybe_get( $field_group, 'acfe_form' ) )
                         $valid = true;
                     
                 }
@@ -159,22 +159,22 @@ class acfe_field_validation{
         
         }
         
-        if(!$valid)
+        if (! $valid)
             return;
         
-        $choices = apply_filters('acfe/validate/functions', $this->functions, $field);
+        $choices = apply_filters( 'acfe/validate/functions', $this->functions, $field);
         
-        if(empty($choices))
+        if (empty( $choices) )
             return;
         
         // Settings
-        acf_render_field_setting($field, array(
-            'label'         => __('Advanced validation'),
+        acf_render_field_setting( $field, array(
+            'label'         => __( 'Advanced validation' ),
             'name'          => 'acfe_validate',
             'key'           => 'acfe_validate',
-            'instructions'  => __('Validate value against rules'),
+            'instructions'  => __( 'Validate value against rules' ),
             'type'          => 'repeater',
-            'button_label'  => __('Add validation'),
+            'button_label'  => __( 'Add validation' ),
             'required'      => false,
             'layout'        => 'row',
             'sub_fields'    => array(
@@ -203,12 +203,12 @@ class acfe_field_validation{
                     'placeholder'       => 'Everywhere',
                 ),
                 array(
-                    'label'         => __('Rules'),
+                    'label'         => __( 'Rules' ),
                     'name'          => 'acfe_validate_rules_and',
                     'key'           => 'acfe_validate_rules_and',
                     'instructions'  => '',
                     'type'          => 'repeater',
-                    'button_label'  => __('+ AND'),
+                    'button_label'  => __( '+ AND' ),
                     'required'      => false,
                     'layout'        => 'table',
                     'sub_fields'    => array(
@@ -419,56 +419,56 @@ class acfe_field_validation{
     /**
      * Validate
      */
-    function validate_value($valid, $value, $field, $input){
+    function validate_value( $valid, $value, $field, $input){
         
-        if(!$valid)
+        if (! $valid)
             return $valid;
         
-        if(!acf_maybe_get($field, 'acfe_validate'))
+        if (!acf_maybe_get( $field, 'acfe_validate' ) )
             return $valid;
         
-        foreach($field['acfe_validate'] as $k => $rule){
+        foreach( $field['acfe_validate'] as $k => $rule){
             
             // Fix possible ACF Clone Index
-            if($k === 'acfcloneindex')
+            if ( $k === 'acfcloneindex' )
                 continue;
             
             // Screen
-            $screen = isset($rule['acfe_validate_location']) ? $rule['acfe_validate_location'] : '';
+            $screen = isset( $rule['acfe_validate_location']) ? $rule['acfe_validate_location'] : '';
             $screen_allow = false;
             
             // Screen: All
-            if(empty($screen)){
+            if (empty( $screen) ){
                 
                 $screen_allow = true;
                 
             }
             
             // Screen: Admin
-            elseif($screen === 'admin' && acfe_form_is_admin()){
+            elseif ( $screen === 'admin' && acfe_form_is_admin() ){
                 
                 $screen_allow = true;
                 
             }
             
             // Screen: Front
-            elseif($screen === 'front' && acfe_form_is_front()){
+            elseif ( $screen === 'front' && acfe_form_is_front() ){
                 
                 $screen_allow = true;
                 
             }
             
-            if(!$screen_allow)
+            if (! $screen_allow)
                 continue;
             
-            if(!acf_maybe_get($rule, 'acfe_validate_rules_and'))
+            if (!acf_maybe_get( $rule, 'acfe_validate_rules_and' ) )
                 continue;
             
             $rule_match = true;
             
-            foreach($rule['acfe_validate_rules_and'] as $k => $function){
+            foreach( $rule['acfe_validate_rules_and'] as $k => $function){
                 
-                if(!$rule_match)
+                if (! $rule_match)
                     break;
                 
                 $rule_match = false;
@@ -482,31 +482,31 @@ class acfe_field_validation{
                 );
                 
                 $filter_call = false;
-                foreach($filters as $filter){
+                foreach( $filters as $filter){
                     
-                    if(has_filter($filter))
+                    if (has_filter( $filter) )
                         $filter_call = $filter;
                     
                 }
                 
                 // Filter
-                if($filter_call){
+                if ( $filter_call){
                     
-                    $result = apply_filters($filter_call, false, $value, $field);
+                    $result = apply_filters( $filter_call, false, $value, $field);
                     
                 }
                 
                 // Class
-                elseif(is_callable(array($this, $function['acfe_validate_function']))){
+                elseif (is_callable(array( $this, $function['acfe_validate_function']) )){
                     
-                    $result = call_user_func(array($this, $function['acfe_validate_function']), $value);
+                    $result = call_user_func(array( $this, $function['acfe_validate_function']), $value);
                     
                 }
                 
                 // Function
-                elseif(is_callable($function['acfe_validate_function'])){
+                elseif (is_callable( $function['acfe_validate_function']) ){
                     
-                    $result = call_user_func($function['acfe_validate_function'], $value);
+                    $result = call_user_func( $function['acfe_validate_function'], $value);
                     
                 }
                 
@@ -519,93 +519,93 @@ class acfe_field_validation{
                 
                 // Vars
                 $operator = $function['acfe_validate_operator'];
-                $match = acf_maybe_get($function, 'acfe_validate_match');
+                $match = acf_maybe_get( $function, 'acfe_validate_match' );
                 
-                if($operator === '==' && $result == $match){
+                if ( $operator === '==' && $result == $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!=' && $result != $match){
+                elseif ( $operator === '!=' && $result != $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '>' && $result > $match){
+                elseif ( $operator === '>' && $result > $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '>=' && $result >= $match){
+                elseif ( $operator === '>=' && $result >= $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '<' && $result < $match){
+                elseif ( $operator === '<' && $result < $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '<=' && $result <= $match){
+                elseif ( $operator === '<=' && $result <= $match){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'contains' && stripos($result, $match) !== false){
+                elseif ( $operator === 'contains' && stripos( $result, $match) !== false){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!contains' && stripos($result, $match) === false){
+                elseif ( $operator === '!contains' && stripos( $result, $match) === false){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'starts' && stripos($result, $match) === 0){
+                elseif ( $operator === 'starts' && stripos( $result, $match) === 0){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!starts' && stripos($result, $match) !== 0){
+                elseif ( $operator === '!starts' && stripos( $result, $match) !== 0){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'ends' && acfe_ends_with($result, $match)){
+                elseif ( $operator === 'ends' && acfe_ends_with( $result, $match) ){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!ends' && !acfe_ends_with($result, $match)){
+                elseif ( $operator === '!ends' && !acfe_ends_with( $result, $match) ){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'regex' && preg_match('/' . $match . '/', $result)){
+                elseif ( $operator === 'regex' && preg_match( '/' . $match . '/', $result) ){
                     $rule_match = true;
                 }
 
-                elseif($operator === '!regex' && !preg_match('/' . $match . '/', $result)){
+                elseif ( $operator === '!regex' && !preg_match( '/' . $match . '/', $result) ){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'true' && $result === true){
+                elseif ( $operator === 'true' && $result === true){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!true' && $result !== true){
+                elseif ( $operator === '!true' && $result !== true){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'false' && $result === false){
+                elseif ( $operator === 'false' && $result === false){
                     $rule_match = true;
                 }
 
-                elseif($operator === '!false' && $result !== false){
+                elseif ( $operator === '!false' && $result !== false){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'null' && $result === null){
+                elseif ( $operator === 'null' && $result === null){
                     $rule_match = true;
                 }
 
-                elseif($operator === '!null' && $result !== null){
+                elseif ( $operator === '!null' && $result !== null){
                     $rule_match = true;
                 }
                 
-                elseif($operator === 'empty' && empty($result)){
+                elseif ( $operator === 'empty' && empty( $result) ){
                     $rule_match = true;
                 }
                 
-                elseif($operator === '!empty' && !empty($result)){
+                elseif ( $operator === '!empty' && !empty( $result) ){
                     $rule_match = true;
                 }
 
@@ -614,10 +614,10 @@ class acfe_field_validation{
             // Error
             $error = $rule['acfe_validate_error'];
             
-            if($rule_match && !empty($error))
+            if ( $rule_match && !empty( $error) )
                 $valid = $error;
             
-            if(!$valid || is_string($valid))
+            if (! $valid || is_string( $valid) )
                 break;
             
         }
@@ -626,73 +626,73 @@ class acfe_field_validation{
         
     }
     
-    function get_user_by_id($value){
+    function get_user_by_id( $value){
         
-        return get_user_by('id', $value);
-        
-    }
-
-    function get_user_by_slug($value){
-        
-        return get_user_by('slug', $value);
+        return get_user_by( 'id', $value);
         
     }
 
-    function get_user_by_email($value){
+    function get_user_by_slug( $value){
         
-        return get_user_by('email', $value);
+        return get_user_by( 'slug', $value);
         
     }
 
-    function get_user_by_login($value){
+    function get_user_by_email( $value){
         
-        return get_user_by('login', $value);
+        return get_user_by( 'email', $value);
+        
+    }
+
+    function get_user_by_login( $value){
+        
+        return get_user_by( 'login', $value);
         
     }
     
-    function value($value){
+    function value( $value){
         
         return $value;
         
     }
     
-    function get_post_by_id($value){
+    function get_post_by_id( $value){
         
-        $get_post = get_post($value);
+        $get_post = get_post( $value);
         
-        if(!$get_post || is_wp_error($get_post))
+        if (! $get_post || is_wp_error( $get_post) )
             return false;
         
         return true;
         
     }
     
-    function get_post_by_slug($value){
+    function get_post_by_slug( $value){
         
         $get_posts = get_posts(array(
             'name'              => $value,
             'post_type'         => 'any',
             'post_status'       => 'any',
             'posts_per_page'    => 1
-        ));
+        ) );
         
-        if(empty($get_posts))
+        if (empty( $get_posts) )
             return false;
         
         return true;
         
     }
     
-    function get_post_by_title($value){
+    function get_post_by_title( $value){
         
         $get_posts = get_posts(array(
             's'                 => $value,
             'post_type'         => 'any',
             'post_status'       => 'any',
             'posts_per_page'    => 1
-        ));
+        ) );
         
-        if(empty($get_posts))
+        if (empty( $get_posts) )
             return false;
         
         return true;
@@ -702,10 +702,10 @@ class acfe_field_validation{
     /**
      * Process Setting
      */
-    function fix_repeater($field){
+    function fix_repeater( $field){
         
-        $field['prefix'] = str_replace('row-', '', $field['prefix']);
-        $field['name'] = str_replace('row-', '', $field['name']);
+        $field['prefix'] = str_replace( 'row-', '', $field['prefix']);
+        $field['name'] = str_replace( 'row-', '', $field['name']);
         
         return $field;
         
@@ -714,9 +714,9 @@ class acfe_field_validation{
     /**
      * Setting: ACF Clone Index fix for flexible duplicate
      */
-    function fix_clone($field){
+    function fix_clone( $field){
         
-        if(isset($field['acfe_validate']['acfcloneindex']))
+        if (isset( $field['acfe_validate']['acfcloneindex']) )
             $field['acfe_validate'] = false;
         
         return $field;

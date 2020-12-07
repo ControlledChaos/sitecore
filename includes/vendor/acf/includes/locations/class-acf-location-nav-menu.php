@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Nav_Menu') ) :
+if ( ! class_exists( 'ACF_Location_Nav_Menu' ) ) :
 
 class ACF_Location_Nav_Menu extends ACF_Location {
 	
@@ -36,20 +36,20 @@ class ACF_Location_Nav_Menu extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['nav_menu']) ) {
+		if ( isset( $screen['nav_menu']) ) {
 			$nav_menu = $screen['nav_menu'];
 		} else {
 			return false;
 		}
 		
 		// Allow for "location/xxx" rule value.
-		$bits = explode('/', $rule['value']);
-		if( $bits[0] === 'location' ) {
+		$bits = explode( '/', $rule['value']);
+		if ( $bits[0] === 'location' ) {
 			$location = $bits[1];
 			
 			// Get the map of menu locations [location => menu_id] and update $nav_menu to a location value.
 			$menu_locations = get_nav_menu_locations();
-			if( isset($menu_locations[ $location ]) ) {
+			if ( isset( $menu_locations[ $location ]) ) {
 				$rule['value'] = $menu_locations[ $location ];
 			}
 		}
@@ -74,7 +74,7 @@ class ACF_Location_Nav_Menu extends ACF_Location {
 		
 		// Append locations.
 		$nav_locations = get_registered_nav_menus();
-		if( $nav_locations ) {
+		if ( $nav_locations ) {
 			$cat = __( 'Menu Locations', 'acf' );
 			foreach( $nav_locations as $slug => $title ) {
 				$choices[ $cat ][ "location/$slug" ] = $title;
@@ -83,7 +83,7 @@ class ACF_Location_Nav_Menu extends ACF_Location {
 		
 		// Append menu IDs.
 		$nav_menus = wp_get_nav_menus();
-		if( $nav_menus ) {
+		if ( $nav_menus ) {
 			$cat = __( 'Menus', 'acf' );
 			foreach( $nav_menus as $nav_menu ) {
 				$choices[ $cat ][ $nav_menu->term_id ] = $nav_menu->name;

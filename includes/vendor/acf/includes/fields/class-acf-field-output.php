@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_output') ) :
+if ( ! class_exists( 'acf_field_output' ) ) :
 
 class acf_field_output extends acf_field {
 	
@@ -49,18 +49,18 @@ class acf_field_output extends acf_field {
 	function render_field( $field ) {
 		
 		// bail early if no html
-		if( !$field['html'] ) return;
+		if ( ! $field['html'] ) return;
 		
 		
 		// html
-		if( is_string($field['html']) && !function_exists($field['html']) ) {
+		if ( is_string( $field['html']) && !function_exists( $field['html']) ) {
 			
 			echo $field['html'];
 		
 		// function	
 		} else {
 			
-			call_user_func_array($field['html'], array($field));
+			call_user_func_array( $field['html'], array( $field) );
 			
 		}
 		

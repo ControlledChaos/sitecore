@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Legacy_Locations') ) :
+if ( ! class_exists( 'ACF_Legacy_Locations' ) ) :
 
 class ACF_Legacy_Locations {
 	

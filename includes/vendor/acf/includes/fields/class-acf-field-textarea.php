@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_textarea') ) :
+if ( ! class_exists( 'acf_field_textarea' ) ) :
 
 class acf_field_textarea extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_textarea extends acf_field {
 		
 		// vars
 		$this->name = 'textarea';
-		$this->label = __("Text Area",'acf');
+		$this->label = __("Text Area",'acf' );
 		$this->defaults = array(
 			'default_value'	=> '',
 			'new_lines'		=> '',
@@ -49,26 +49,26 @@ class acf_field_textarea extends acf_field {
 	function render_field( $field ) {
 		
 		// vars
-		$atts = array();
+		$atts = [];
 		$keys = array( 'id', 'class', 'name', 'value', 'placeholder', 'rows', 'maxlength' );
 		$keys2 = array( 'readonly', 'disabled', 'required' );
 		
 		
 		// rows
-		if( !$field['rows'] ) {
+		if ( ! $field['rows'] ) {
 			$field['rows'] = 8;
 		}
 		
 		
 		// atts (value="123")
 		foreach( $keys as $k ) {
-			if( isset($field[ $k ]) ) $atts[ $k ] = $field[ $k ];
+			if ( isset( $field[ $k ]) ) $atts[ $k ] = $field[ $k ];
 		}
 		
 		
 		// atts2 (disabled="disabled")
 		foreach( $keys2 as $k ) {
-			if( !empty($field[ $k ]) ) $atts[ $k ] = $k;
+			if ( !empty( $field[ $k ]) ) $atts[ $k ] = $k;
 		}
 		
 		
@@ -99,53 +99,53 @@ class acf_field_textarea extends acf_field {
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Default Value','acf'),
-			'instructions'	=> __('Appears when creating a new post','acf'),
+			'label'			=> __( 'Default Value','acf' ),
+			'instructions'	=> __( 'Appears when creating a new post','acf' ),
 			'type'			=> 'textarea',
 			'name'			=> 'default_value',
-		));
+		) );
 		
 		
 		// placeholder
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Placeholder Text','acf'),
-			'instructions'	=> __('Appears within the input','acf'),
+			'label'			=> __( 'Placeholder Text','acf' ),
+			'instructions'	=> __( 'Appears within the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'placeholder',
-		));
+		) );
 		
 		
 		// maxlength
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Character Limit','acf'),
-			'instructions'	=> __('Leave blank for no limit','acf'),
+			'label'			=> __( 'Character Limit','acf' ),
+			'instructions'	=> __( 'Leave blank for no limit','acf' ),
 			'type'			=> 'number',
 			'name'			=> 'maxlength',
-		));
+		) );
 		
 		
 		// rows
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Rows','acf'),
-			'instructions'	=> __('Sets the textarea height','acf'),
+			'label'			=> __( 'Rows','acf' ),
+			'instructions'	=> __( 'Sets the textarea height','acf' ),
 			'type'			=> 'number',
 			'name'			=> 'rows',
 			'placeholder'	=> 8
-		));
+		) );
 		
 		
 		// formatting
 		acf_render_field_setting( $field, array(
-			'label'			=> __('New Lines','acf'),
-			'instructions'	=> __('Controls how new lines are rendered','acf'),
+			'label'			=> __( 'New Lines','acf' ),
+			'instructions'	=> __( 'Controls how new lines are rendered','acf' ),
 			'type'			=> 'select',
 			'name'			=> 'new_lines',
 			'choices'		=> array(
-				'wpautop'		=> __("Automatically add paragraphs",'acf'),
-				'br'			=> __("Automatically add &lt;br&gt;",'acf'),
-				''				=> __("No Formatting",'acf')
+				'wpautop'		=> __("Automatically add paragraphs",'acf' ),
+				'br'			=> __("Automatically add &lt;br&gt;",'acf' ),
+				''				=> __("No Formatting",'acf' )
 			)
-		));
+		) );
 		
 	}
 	
@@ -169,7 +169,7 @@ class acf_field_textarea extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// bail early if no value or not for template
-		if( empty($value) || !is_string($value) ) {
+		if ( empty( $value) || ! is_string( $value) ) {
 			
 			return $value;
 		
@@ -177,13 +177,13 @@ class acf_field_textarea extends acf_field {
 				
 		
 		// new lines
-		if( $field['new_lines'] == 'wpautop' ) {
+		if ( $field['new_lines'] == 'wpautop' ) {
 			
-			$value = wpautop($value);
+			$value = wpautop( $value);
 			
-		} elseif( $field['new_lines'] == 'br' ) {
+		} elseif ( $field['new_lines'] == 'br' ) {
 			
-			$value = nl2br($value);
+			$value = nl2br( $value);
 			
 		}
 		
@@ -209,8 +209,8 @@ class acf_field_textarea extends acf_field {
 	function validate_value( $valid, $value, $field, $input ){
 		
 		// Check maxlength.
-		if( $field['maxlength'] && (acf_strlen($value) > $field['maxlength']) ) {
-			return sprintf( __('Value must not exceed %d characters', 'acf'), $field['maxlength'] );
+		if ( $field['maxlength'] && (acf_strlen( $value) > $field['maxlength']) ) {
+			return sprintf( __( 'Value must not exceed %d characters', 'acf' ), $field['maxlength'] );
 		}
 		
 		// Return.

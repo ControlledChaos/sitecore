@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Post_Status') ) :
+if ( ! class_exists( 'ACF_Location_Post_Status' ) ) :
 
 class ACF_Location_Post_Status extends ACF_Location {
 	
@@ -36,16 +36,16 @@ class ACF_Location_Post_Status extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['post_status']) ) {
+		if ( isset( $screen['post_status']) ) {
 			$post_status = $screen['post_status'];
-		} elseif( isset($screen['post_id']) ) {
+		} elseif ( isset( $screen['post_id']) ) {
 			$post_status = get_post_status( $screen['post_id'] );
 		} else {
 			return false;
 		}
 		
 		 // Treat "auto-draft" as "draft".
-	    if( $post_status === 'auto-draft' )  {
+	    if ( $post_status === 'auto-draft' )  {
 		    $post_status = 'draft';
 	    }
 	    
@@ -66,8 +66,8 @@ class ACF_Location_Post_Status extends ACF_Location {
 		global $wp_post_statuses;
 		
 		// Append to choices.
-		$choices = array();
-		if( $wp_post_statuses ) {
+		$choices = [];
+		if ( $wp_post_statuses ) {
 			foreach( $wp_post_statuses as $status ) {
 				$choices[ $status->name ] = $status->label;
 			}

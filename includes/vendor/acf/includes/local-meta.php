@@ -1,13 +1,13 @@
 <?php
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Local_Meta') ) :
+if ( ! class_exists( 'ACF_Local_Meta' ) ) :
 
 class ACF_Local_Meta {
 	
 	/** @var array Storage for meta data. */
-	var $meta = array();
+	var $meta = [];
 	
 	/** @var mixed Storage for the current post_id. */
 	var $post_id = 0;
@@ -26,9 +26,9 @@ class ACF_Local_Meta {
 	function __construct() {
 		
 		// add filters
-		add_filter( 'acf/pre_load_post_id', 	array($this, 'pre_load_post_id'), 	1, 2 );
-		add_filter( 'acf/pre_load_meta', 		array($this, 'pre_load_meta'), 		1, 2 );
-		add_filter( 'acf/pre_load_metadata', 	array($this, 'pre_load_metadata'), 	1, 4 );
+		add_filter( 'acf/pre_load_post_id', 	array( $this, 'pre_load_post_id' ), 	1, 2 );
+		add_filter( 'acf/pre_load_meta', 		array( $this, 'pre_load_meta' ), 		1, 2 );
+		add_filter( 'acf/pre_load_metadata', 	array( $this, 'pre_load_metadata' ), 	1, 4 );
 	}
 	
 	/**
@@ -45,10 +45,10 @@ class ACF_Local_Meta {
 	 * @param	bool $is_main Makes this postmeta visible to get_field() without a $post_id value.
 	 * @return	array
 	 */
-	function add( $meta = array(), $post_id = 0, $is_main = false ) {
+	function add( $meta = [], $post_id = 0, $is_main = false ) {
 		
 		// Capture meta if supplied meta is from a REQUEST.
-		if( $this->is_request($meta) ) {
+		if ( $this->is_request( $meta) ) {
 			$meta = $this->capture( $meta, $post_id );
 		}
 		
@@ -56,7 +56,7 @@ class ACF_Local_Meta {
 		$this->meta[ $post_id ] = $meta;
 		
 		// Set $post_id reference when is the "main" postmeta.
-		if( $is_main ) {
+		if ( $is_main ) {
 			$this->post_id = $post_id;
 		}
 		
@@ -75,7 +75,7 @@ class ACF_Local_Meta {
 	 * @param	array $meta An array of metdata to check.
 	 * @return	bool
 	 */
-	function is_request( $meta = array() ) {
+	function is_request( $meta = [] ) {
 		return acf_is_field_key( key( $meta ) );
 	}
 	
@@ -92,21 +92,21 @@ class ACF_Local_Meta {
 	 * @param	mixed $post_id The post_id for this data.
 	 * @return	array
 	 */
-	function capture( $values = array(), $post_id = 0 ) {
+	function capture( $values = [], $post_id = 0 ) {
 		
 		// Reset meta.
-		$this->meta[ $post_id ] = array();
+		$this->meta[ $post_id ] = [];
 		
 		// Listen for any added meta.
-		add_filter('acf/pre_update_metadata', array($this, 'capture_update_metadata'), 1, 5);
+		add_filter( 'acf/pre_update_metadata', array( $this, 'capture_update_metadata' ), 1, 5);
 		
 		// Simulate update.
-		if( $values ) {
+		if ( $values ) {
 			acf_update_values( $values, $post_id );
 		}
 		
 		// Remove listener filter.
-		remove_filter('acf/pre_update_metadata', array($this, 'capture_update_metadata'), 1, 5);
+		remove_filter( 'acf/pre_update_metadata', array( $this, 'capture_update_metadata' ), 1, 5);
 		
 		// Return meta.
 		return $this->meta[ $post_id ];
@@ -128,7 +128,7 @@ class ACF_Local_Meta {
 	 * @return	false.
 	 */
 	function capture_update_metadata( $null, $post_id, $name, $value, $hidden ) {
-		$name = ($hidden ? '_' : '') . $name;
+		$name = ( $hidden ? '_' : '' ) . $name;
 		$this->meta[ $post_id ][ $name ] = $value;
 		
 		// Return non null value to escape update process.
@@ -152,7 +152,7 @@ class ACF_Local_Meta {
 		unset( $this->meta[ $post_id ] );
 		
 		// reset post_id
-		if( $post_id === $this->post_id ) {
+		if ( $post_id === $this->post_id ) {
 			$this->post_id = 0;
 		}
 	}
@@ -170,7 +170,7 @@ class ACF_Local_Meta {
 	 * @return	mixed
 	 */
 	function pre_load_meta( $null, $post_id ) {
-		if( isset($this->meta[ $post_id ]) ) {
+		if ( isset( $this->meta[ $post_id ]) ) {
 			return $this->meta[ $post_id ];
 		}
 		return $null;
@@ -191,9 +191,9 @@ class ACF_Local_Meta {
 	 * @return	mixed
 	 */
 	function pre_load_metadata( $null, $post_id, $name, $hidden ) {
-		$name = ($hidden ? '_' : '') . $name;
-		if( isset($this->meta[ $post_id ]) ) {
-			if( isset($this->meta[ $post_id ][ $name ]) ) {
+		$name = ( $hidden ? '_' : '' ) . $name;
+		if ( isset( $this->meta[ $post_id ]) ) {
+			if ( isset( $this->meta[ $post_id ][ $name ]) ) {
 				return $this->meta[ $post_id ][ $name ];
 			}
 			return '__return_null';
@@ -214,7 +214,7 @@ class ACF_Local_Meta {
 	 * @return	mixed
 	 */
 	function pre_load_post_id( $null, $post_id ) {
-		if( !$post_id && $this->post_id ) {
+		if ( ! $post_id && $this->post_id ) {
 			return $this->post_id;
 		}
 		return $null;
@@ -234,8 +234,8 @@ endif; // class_exists check
  *
  * @return	array
  */
-function acf_setup_meta( $meta = array(), $post_id = 0, $is_main = false ) {
-	return acf_get_instance('ACF_Local_Meta')->add( $meta, $post_id, $is_main );
+function acf_setup_meta( $meta = [], $post_id = 0, $is_main = false ) {
+	return acf_get_instance( 'ACF_Local_Meta' )->add( $meta, $post_id, $is_main );
 }
 
 /**
@@ -250,5 +250,5 @@ function acf_setup_meta( $meta = array(), $post_id = 0, $is_main = false ) {
  * @return	void
  */
 function acf_reset_meta( $post_id = 0 ) {
-	return acf_get_instance('ACF_Local_Meta')->remove( $post_id );
+	return acf_get_instance( 'ACF_Local_Meta' )->remove( $post_id );
 }

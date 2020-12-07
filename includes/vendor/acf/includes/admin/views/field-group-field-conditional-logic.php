@@ -5,7 +5,7 @@ $disabled = false;
 
 
 // empty
-if( empty($field['conditional_logic']) ) {
+if ( empty( $field['conditional_logic']) ) {
 	
 	$disabled = true;
 	$field['conditional_logic'] = array(
@@ -14,7 +14,7 @@ if( empty($field['conditional_logic']) ) {
 		array(
 			
 			// rule 0
-			array()
+			[]
 		)
 	);
 }
@@ -22,7 +22,7 @@ if( empty($field['conditional_logic']) ) {
 ?>
 <tr class="acf-field acf-field-true-false acf-field-setting-conditional_logic" data-type="true_false" data-name="conditional_logic">
 	<td class="acf-label">
-		<label><?php _e("Conditional Logic",'acf'); ?></label>
+		<label><?php _e("Conditional Logic",'acf' ); ?></label>
 	</td>
 	<td class="acf-input">
 		<?php 
@@ -34,21 +34,21 @@ if( empty($field['conditional_logic']) ) {
 			'value'			=> $disabled ? 0 : 1,
 			'ui'			=> 1,
 			'class'			=> 'conditions-toggle',
-		));
+		) );
 		
 		?>
-		<div class="rule-groups" <?php if($disabled): ?>style="display:none;"<?php endif; ?>>
+		<div class="rule-groups" <?php if ( $disabled): ?>style="display:none;"<?php endif; ?>>
 			
 			<?php foreach( $field['conditional_logic'] as $group_id => $group ): 
 				
 				// validate
-				if( empty($group) ) continue;
+				if ( empty( $group) ) continue;
 				
 				
 				// vars
 				// $group_id must be completely different to $rule_id to avoid JS issues
 				$group_id = "group_{$group_id}";
-				$h4 = ($group_id == "group_0") ? __("Show this field if",'acf') : __("or",'acf');
+				$h4 = ( $group_id == "group_0") ? __("Show this field if",'acf' ) : __("or",'acf' );
 				
 				?>
 				<div class="rule-group" data-id="<?php echo $group_id; ?>">
@@ -64,7 +64,7 @@ if( empty($field['conditional_logic']) ) {
 								'field'		=>	'',
 								'operator'	=>	'',
 								'value'		=>	'',
-							));
+							) );
 							
 							
 							// vars		
@@ -81,7 +81,7 @@ if( empty($field['conditional_logic']) ) {
 							);
 							
 							?>
-							<tr class="rule" <?php acf_esc_attr_e($attributes); ?>>
+							<tr class="rule" <?php acf_esc_attr_e( $attributes); ?>>
 								<td class="param">
 									<?php 
 										
@@ -95,7 +95,7 @@ if( empty($field['conditional_logic']) ) {
 										'choices'	=> array(
 											$rule['field'] => $rule['field']
 										)
-									));										
+									) );										
 		
 									?>
 								</td>
@@ -112,7 +112,7 @@ if( empty($field['conditional_logic']) ) {
 										'choices'	=> array(
 											$rule['operator'] => $rule['operator']
 										)
-									)); 	
+									) ); 	
 									
 									?>
 								</td>
@@ -130,12 +130,12 @@ if( empty($field['conditional_logic']) ) {
 										'choices'	=> array(
 											$rule['value'] => $rule['value']
 										)
-									));
+									) );
 									
 									?>
 								</td>
 								<td class="add">
-									<a href="#" class="button add-conditional-rule"><?php _e("and",'acf'); ?></a>
+									<a href="#" class="button add-conditional-rule"><?php _e("and",'acf' ); ?></a>
 								</td>
 								<td class="remove">
 									<a href="#" class="acf-icon -minus remove-conditional-rule"></a>
@@ -148,9 +148,9 @@ if( empty($field['conditional_logic']) ) {
 				</div>
 			<?php endforeach; ?>
 			
-			<h4><?php _e("or",'acf'); ?></h4>
+			<h4><?php _e("or",'acf' ); ?></h4>
 			
-			<a href="#" class="button add-conditional-group"><?php _e("Add rule group",'acf'); ?></a>
+			<a href="#" class="button add-conditional-group"><?php _e("Add rule group",'acf' ); ?></a>
 			
 		</div>
 		

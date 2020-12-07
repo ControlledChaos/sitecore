@@ -1,7 +1,7 @@
 <?php
 
 // Exit if accessed directly.
-if( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Register store.
 acf_register_store( 'location-types' );
@@ -19,7 +19,7 @@ function acf_register_location_type( $class_name ) {
 	$store = acf_get_store( 'location-types' );
 	
 	// Check class exists.
-	if( !class_exists($class_name) ) {
+	if ( !class_exists( $class_name) ) {
 		$message = sprintf( __( 'Class "%s" does not exist.', 'acf' ), $class_name );
 		_doing_it_wrong( __FUNCTION__, $message, '5.9.0' );
 		return false;
@@ -30,7 +30,7 @@ function acf_register_location_type( $class_name ) {
 	$name = $location_type->name;
 	
 	// Check location type is unique.
-	if( $store->has( $name ) ) {
+	if ( $store->has( $name ) ) {
 		$message = sprintf( __( 'Location type "%s" is already registered.' ), $name );
 		_doing_it_wrong( __FUNCTION__, $message, '5.9.0' );
 		return false;
@@ -90,14 +90,14 @@ function acf_get_location_type( $name ) {
  * @return	array
  */
 function acf_get_location_rule_types() {
-	$types = array();
+	$types = [];
 	
 	// Default categories.
 	$categories = array(
-		'post'		=> __('Post', 'acf'),
-		'page'		=> __('Page', 'acf'),
-		'user'		=> __('User', 'acf'),
-		'forms'		=> __('Forms', 'acf'),
+		'post'		=> __( 'Post', 'acf' ),
+		'page'		=> __( 'Page', 'acf' ),
+		'user'		=> __( 'User', 'acf' ),
+		'forms'		=> __( 'Forms', 'acf' ),
 	);
 	
 	// Loop over all location types and append to $type.
@@ -105,13 +105,13 @@ function acf_get_location_rule_types() {
 	foreach( $location_types as $location_type ) {
 		
 		// Ignore if not public.
-		if( !$location_type->public ) {
+		if ( ! $location_type->public ) {
 			continue;
 		}
 		
 		// Find category label from category name.
 		$category = $location_type->category;
-		if( isset($categories[ $category ]) ) {
+		if ( isset( $categories[ $category ]) ) {
 			$category = $categories[ $category ];
 		}
 		
@@ -139,16 +139,16 @@ function acf_get_location_rule_types() {
  * @param	array $rule The location rule.
  * @return	array
  */
-function acf_validate_location_rule( $rule = array() ) {
+function acf_validate_location_rule( $rule = [] ) {
 	
 	// Apply defaults.
-	$rule = wp_parse_args($rule, array(
+	$rule = wp_parse_args( $rule, array(
 		'id'		=> '',
 		'group'		=> '',
 		'param'		=> '',
 		'operator'	=> '==',
 		'value'		=> '',
-	));
+	) );
 	
 	/**
 	 * Filters the location rule to ensure is valid.
@@ -177,7 +177,7 @@ function acf_get_location_rule_operators( $rule ) {
 	
 	// Get operators from location type since 5.9.
 	$location_type = acf_get_location_type( $rule['param'] );
-	if( $location_type ) {
+	if ( $location_type ) {
 		$operators = $location_type->get_operators( $rule );
 	}
 	
@@ -205,11 +205,11 @@ function acf_get_location_rule_operators( $rule ) {
  * @return	array
  */
 function acf_get_location_rule_values( $rule ) {
-	$values = array();
+	$values = [];
 	
 	// Get values from location type since 5.9.
 	$location_type = acf_get_location_type( $rule['param'] );
-	if( $location_type ) {
+	if ( $location_type ) {
 		$values = $location_type->get_values( $rule );
 	}
 	
@@ -243,7 +243,7 @@ function acf_match_location_rule( $rule, $screen, $field_group ) {
 	
 	// Get result from location type since 5.9.
 	$location_type = acf_get_location_type( $rule['param'] );
-	if( $location_type ) {
+	if ( $location_type ) {
 		$result = $location_type->match( $rule, $screen, $field_group );
 	}
 	
@@ -275,13 +275,13 @@ function acf_match_location_rule( $rule, $screen, $field_group ) {
  * @param	array $deprecated The field group array.
  * @return	array
  */
-function acf_get_location_screen( $screen = array(), $deprecated = false ) {
+function acf_get_location_screen( $screen = [], $deprecated = false ) {
 	
 	// Apply defaults.
-	$screen = wp_parse_args($screen, array(
-		'lang'	=> acf_get_setting('current_language'),
+	$screen = wp_parse_args( $screen, array(
+		'lang'	=> acf_get_setting( 'current_language' ),
 		'ajax'	=> false
-	));
+	) );
 	
 	/**
 	 * Filters the result.

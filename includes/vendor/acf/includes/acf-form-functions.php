@@ -45,10 +45,10 @@ function acf_get_form_data( $name = '' ) {
  * @param	void
  * @return	void
  */
-function acf_form_data( $data = array() ) {
+function acf_form_data( $data = [] ) {
 	
 	// Apply defaults.
-	$data = wp_parse_args($data, array(
+	$data = wp_parse_args( $data, array(
 		
 		/** @type string The current screen (post, user, taxonomy, etc). */
 		'screen' => 'post',
@@ -58,7 +58,7 @@ function acf_form_data( $data = array() ) {
 		
 		/** @type bool Enables AJAX validation. */
 		'validation' => true,
-	));
+	) );
 	
 	// Create nonce using screen.
 	$data['nonce'] = wp_create_nonce( $data['screen'] );
@@ -80,7 +80,7 @@ function acf_form_data( $data = array() ) {
 				'id'	=> '_acf_' . $name,
 				'name'	=> '_acf_' . $name,
 				'value'	=> $value
-			));
+			) );
 		}
 		
 		/**
@@ -115,12 +115,12 @@ function acf_form_data( $data = array() ) {
 function acf_save_post( $post_id = 0, $values = null ) {
 	
 	// Override $_POST data with $values.
-	if( $values !== null ) {
+	if ( $values !== null ) {
 		$_POST['acf'] = $values;
 	}
 	
 	// Bail early if no data to save.
-	if( empty($_POST['acf']) ) {
+	if ( empty( $_POST['acf']) ) {
 		return false;
 	}
 	
@@ -128,7 +128,7 @@ function acf_save_post( $post_id = 0, $values = null ) {
 	acf_set_form_data( 'post_id', $post_id );
 	
 	// Filter $_POST data for users without the 'unfiltered_html' capability.
-	if( !acf_allow_unfiltered_html() ) {
+	if ( !acf_allow_unfiltered_html() ) {
 		$_POST['acf'] = wp_kses_post_deep( $_POST['acf'] );
 	}
 	
@@ -154,7 +154,7 @@ function acf_save_post( $post_id = 0, $values = null ) {
 function _acf_do_save_post( $post_id = 0 ) {
 	
 	// Check and update $_POST data.
-	if( $_POST['acf'] ) {
+	if ( $_POST['acf'] ) {
 		acf_update_values( $_POST['acf'], $post_id );
 	}	
 }

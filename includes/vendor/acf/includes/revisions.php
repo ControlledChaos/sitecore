@@ -1,13 +1,13 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_revisions') ) :
+if ( ! class_exists( 'acf_revisions' ) ) :
 
 class acf_revisions {
 	
 	// vars
-	var $cache = array();
+	var $cache = [];
 	
 	
 	/*
@@ -25,14 +25,14 @@ class acf_revisions {
 	function __construct() {
 		
 		// actions	
-		add_action('wp_restore_post_revision', array($this, 'wp_restore_post_revision'), 10, 2 );
+		add_action( 'wp_restore_post_revision', array( $this, 'wp_restore_post_revision' ), 10, 2 );
 		
 		
 		// filters
-		add_filter('wp_save_post_revision_check_for_changes', array($this, 'wp_save_post_revision_check_for_changes'), 10, 3);
-		add_filter('_wp_post_revision_fields', array($this, 'wp_preview_post_fields'), 10, 2 );
-		add_filter('_wp_post_revision_fields', array($this, 'wp_post_revision_fields'), 10, 2 );
-		add_filter('acf/validate_post_id', array($this, 'acf_validate_post_id'), 10, 2 );
+		add_filter( 'wp_save_post_revision_check_for_changes', array( $this, 'wp_save_post_revision_check_for_changes' ), 10, 3);
+		add_filter( '_wp_post_revision_fields', array( $this, 'wp_preview_post_fields' ), 10, 2 );
+		add_filter( '_wp_post_revision_fields', array( $this, 'wp_post_revision_fields' ), 10, 2 );
+		add_filter( 'acf/validate_post_id', array( $this, 'acf_validate_post_id' ), 10, 2 );
 		
 	}
 	
@@ -55,11 +55,11 @@ class acf_revisions {
 	function wp_preview_post_fields( $fields ) {
 		
 		// bail early if not previewing a post
-		if( acf_maybe_get_POST('wp-preview') !== 'dopreview' ) return $fields;
+		if ( acf_maybe_get_POST( 'wp-preview' ) !== 'dopreview' ) return $fields;
 		
 		
 		// add to fields if ACF has changed
-		if( acf_maybe_get_POST('_acf_changed') ) {
+		if ( acf_maybe_get_POST( '_acf_changed' ) ) {
 			
 			$fields['_acf_changed'] = 'different than 1';
 			
@@ -90,7 +90,7 @@ class acf_revisions {
 	function wp_save_post_revision_check_for_changes( $return, $last_revision, $post ) {
 		
 		// if acf has changed, return false and prevent WP from performing 'compare' logic
-		if( acf_maybe_get_POST('_acf_changed') ) return false;
+		if ( acf_maybe_get_POST( '_acf_changed' ) ) return false;
 		
 		
 		// return
@@ -116,10 +116,10 @@ class acf_revisions {
 	function wp_post_revision_fields( $fields, $post = null ) {
 		
 		// validate page
-		if( acf_is_screen('revision') || acf_is_ajax('get-revision-diffs') ) {
+		if ( acf_is_screen( 'revision' ) || acf_is_ajax( 'get-revision-diffs' ) ) {
 			
 			// bail early if is restoring
-			if( acf_maybe_get_GET('action') === 'restore' ) return $fields;
+			if ( acf_maybe_get_GET( 'action' ) === 'restore' ) return $fields;
 			
 			// allow
 			
@@ -132,13 +132,13 @@ class acf_revisions {
 		
 		
 		// vars
-		$append = array();
-		$order = array();
-		$post_id = acf_maybe_get($post, 'ID');
+		$append = [];
+		$order = [];
+		$post_id = acf_maybe_get( $post, 'ID' );
 		
 		
 		// compatibility with WP < 4.5 (test)
-		if( !$post_id ) {
+		if ( ! $post_id ) {
 			
 			global $post;
 			$post_id = $post->ID;
@@ -151,7 +151,7 @@ class acf_revisions {
 		
 		
 		// bail early if no meta
-		if( !$meta ) return $fields;
+		if ( ! $meta ) return $fields;
 		
 		
 		// loop
@@ -162,7 +162,7 @@ class acf_revisions {
 			
 			
 			// bail ealry if no key
-			if( !$key ) continue;
+			if ( ! $key ) continue;
 			
 			
 			// update vars
@@ -171,26 +171,26 @@ class acf_revisions {
 			
 			// Load field.
 			$field = acf_get_field( $key );
-			if( !$field ) {
+			if ( ! $field ) {
 				continue;
 			}
 			
 			// get field
-			$field_title = $field['label'] . ' (' . $name . ')';
+			$field_title = $field['label'] . ' ( ' . $name . ' )';
 			$field_order = $field['menu_order'];
 			$ancestors = acf_get_field_ancestors( $field );
 			
 			
 			// ancestors
-			if( !empty($ancestors) ) {
+			if ( !empty( $ancestors) ) {
 				
 				// vars
-				$count = count($ancestors);
+				$count = count( $ancestors);
 				$oldest = acf_get_field( $ancestors[$count-1] );
 				
 				
 				// update vars
-				$field_title = str_repeat('- ', $count) . $field_title;
+				$field_title = str_repeat( '- ', $count) . $field_title;
 				$field_order = $oldest['menu_order'] . '.1';
 				
 			}
@@ -202,29 +202,29 @@ class acf_revisions {
 			
 			
 			// hook into specific revision field filter and return local value
-			add_filter("_wp_post_revision_field_{$name}", array($this, 'wp_post_revision_field'), 10, 4);
+			add_filter("_wp_post_revision_field_{$name}", array( $this, 'wp_post_revision_field' ), 10, 4);
 			
 		}
 		
 		
 		// append 
-		if( !empty($append) ) {
+		if ( !empty( $append) ) {
 			
 			// vars
 			$prefix = '_';
 			
 			
 			// add prefix
-			$append = acf_add_array_key_prefix($append, $prefix);
-			$order = acf_add_array_key_prefix($order, $prefix);
+			$append = acf_add_array_key_prefix( $append, $prefix);
+			$order = acf_add_array_key_prefix( $order, $prefix);
 			
 			
 			// sort by name (orders sub field values correctly)
-			array_multisort($order, $append);
+			array_multisort( $order, $append);
 			
 			
 			// remove prefix
-			$append = acf_remove_array_key_prefix($append, $prefix);
+			$append = acf_remove_array_key_prefix( $append, $prefix);
 			
 			
 			// append
@@ -257,7 +257,7 @@ class acf_revisions {
 	function wp_post_revision_field( $value, $field_name, $post = null, $direction = false) {
 		
 		// bail ealry if is empty
-		if( empty($value) ) return $value;
+		if ( empty( $value) ) return $value;
 		
 		
 		// value has not yet been 'maybe_unserialize'
@@ -273,22 +273,22 @@ class acf_revisions {
 		
 		
 		// default formatting
-		if( is_array($value) ) {
+		if ( is_array( $value) ) {
 			
-			$value = implode(', ', $value);
+			$value = implode( ', ', $value);
 			
-		} elseif( is_object($value) ) {
+		} elseif ( is_object( $value) ) {
 			
-			$value = serialize($value);
+			$value = serialize( $value);
 			
 		}
 		
 		
 		// image
-		if( $field['type'] == 'image' || $field['type'] == 'file' ) {
+		if ( $field['type'] == 'image' || $field['type'] == 'file' ) {
 			
-			$url = wp_get_attachment_url($value);
-			$value = $value . ' (' . $url . ')';
+			$url = wp_get_attachment_url( $value);
+			$value = $value . ' ( ' . $url . ' )';
 			
 		}
 		
@@ -323,7 +323,7 @@ class acf_revisions {
 		
 		
 		// save
-		if( $revision ) {
+		if ( $revision ) {
 			
 			// copy postmeta from revision to latest revision (potentialy may be the same, but most likely are different)
 			acf_copy_postmeta( $revision_id, $revision->ID );
@@ -350,11 +350,11 @@ class acf_revisions {
 	function acf_validate_post_id( $post_id, $_post_id ) {
 		
 		// bail early if no preview in URL
-		if( !isset($_GET['preview']) ) return $post_id;
+		if ( ! isset( $_GET['preview']) ) return $post_id;
 		
 		
 		// bail early if $post_id is not numeric
-		if( !is_numeric($post_id) ) return $post_id;
+		if ( ! is_numeric( $post_id) ) return $post_id;
 		
 		
 		// vars
@@ -363,19 +363,19 @@ class acf_revisions {
 		
 		
 		// check cache
-		if( isset($this->cache[$k]) ) return $this->cache[$k];
+		if ( isset( $this->cache[$k]) ) return $this->cache[$k];
 		
 		
 		// validate
-		if( isset($_GET['preview_id']) ) {
+		if ( isset( $_GET['preview_id']) ) {
 		
 			$preview_id = (int) $_GET['preview_id'];
 			
-		} elseif( isset($_GET['p']) ) {
+		} elseif ( isset( $_GET['p']) ) {
 			
 			$preview_id = (int) $_GET['p'];
 			
-		} elseif( isset($_GET['page_id']) ) {
+		} elseif ( isset( $_GET['page_id']) ) {
 			
 			$preview_id = (int) $_GET['page_id'];
 			
@@ -383,7 +383,7 @@ class acf_revisions {
 		
 		
 		// bail early id $preview_id does not match $post_id
-		if( $preview_id != $post_id ) return $post_id;
+		if ( $preview_id != $post_id ) return $post_id;
 		
 		
 		// attempt find revision
@@ -391,7 +391,7 @@ class acf_revisions {
 		
 		
 		// save
-		if( $revision && $revision->post_parent == $post_id) {
+		if ( $revision && $revision->post_parent == $post_id) {
 			
 			$post_id = (int) $revision->ID;
 			
@@ -435,7 +435,7 @@ function acf_save_post_revision( $post_id = 0 ) {
 	
 	
 	// save
-	if( $revision ) {
+	if ( $revision ) {
 		
 		acf_copy_postmeta( $post_id, $revision->ID );
 		
@@ -464,7 +464,7 @@ function acf_get_post_latest_revision( $post_id ) {
 	
 	
 	// shift off and return first revision (will return null if no revisions)
-	$revision = array_shift($revisions);
+	$revision = array_shift( $revisions);
 	
 	
 	// return

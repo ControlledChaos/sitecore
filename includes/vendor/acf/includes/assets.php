@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Assets') ) :
+if ( ! class_exists( 'ACF_Assets' ) ) :
 
 class ACF_Assets {
 	
@@ -12,7 +12,7 @@ class ACF_Assets {
 	 * @since 5.6.9
 	 * @var array
 	 */
-	public $text = array();
+	public $text = [];
 	
 	/**
 	 * Storage for l10n data.
@@ -20,7 +20,7 @@ class ACF_Assets {
 	 * @since 5.6.9
 	 * @var array
 	 */
-	public $data = array();
+	public $data = [];
 
 	/**
 	 * List of enqueue flags.
@@ -28,7 +28,7 @@ class ACF_Assets {
 	 * @since 5.9.0
 	 * @var bool
 	 */
-	private $enqueue = array();
+	private $enqueue = [];
 
 	/**
 	 * Constructor.
@@ -106,8 +106,8 @@ class ACF_Assets {
 	public function register_scripts() {
 		
 		// Extract vars.
-		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-		$version = acf_get_setting('version');
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$version = acf_get_setting( 'version' );
 		
 		// Register scripts.
 		wp_register_script( 'acf', acf_get_url( 'assets/js/acf' . $suffix . '.js' ), array( 'jquery' ), $version );
@@ -115,9 +115,9 @@ class ACF_Assets {
 		wp_register_script( 'acf-field-group', acf_get_url( 'assets/js/acf-field-group' . $suffix . '.js' ), array( 'acf-input' ), $version );
 		
 		// Register styles.
-		wp_register_style( 'acf-global', acf_get_url( 'assets/css/acf-global.css' ), array(), $version );
-		wp_register_style( 'acf-input', acf_get_url( 'assets/css/acf-input.css' ), array('acf-global'), $version );
-		wp_register_style( 'acf-field-group', acf_get_url( 'assets/css/acf-field-group.css' ), array('acf-input'), $version );
+		wp_register_style( 'acf-global', acf_get_url( 'assets/css/acf-global.css' ), [], $version );
+		wp_register_style( 'acf-input', acf_get_url( 'assets/css/acf-input.css' ), array( 'acf-global' ), $version );
+		wp_register_style( 'acf-field-group', acf_get_url( 'assets/css/acf-field-group.css' ), array( 'acf-input' ), $version );
 		
 		/**
 		 * Fires after core scripts and styles have been registered.
@@ -169,7 +169,7 @@ class ACF_Assets {
 	private function add_actions() {
 		
 		// Only run once.
-		if( acf_has_done('ACF_Assets::add_actions') ) {
+		if ( acf_has_done( 'ACF_Assets::add_actions' ) ) {
 			return;
 		}
 		
@@ -221,25 +221,25 @@ class ACF_Assets {
 		);
 		
 		// Determine the current context.
-		if( did_action('customize_controls_init') ) {
+		if ( did_action( 'customize_controls_init' ) ) {
 			$context = 'customizer';
-		} elseif( did_action('login_form_register') ) { 
+		} elseif ( did_action( 'login_form_register' ) ) { 
 			$context = 'login';
-		} elseif( is_admin() ) {
+		} elseif ( is_admin() ) {
 			$context = 'admin';
 		} else {
 			$context = 'wp';
 		}
 		
 		// Replace action if possible.
-		if( isset( $replacements[ $context ][ $action ] ) ) {
+		if ( isset( $replacements[ $context ][ $action ] ) ) {
 			$action = $replacements[ $context ][ $action ];
 		}
 		
 		// Check if action is currently being or has already been run.
-		if( did_action($action) ) {
+		if ( did_action( $action) ) {
 			$doing = acf_doing_action( $action );
-			if( $doing && $doing < $priority ) {
+			if ( $doing && $doing < $priority ) {
 				// Allow action to be added as per usual.
 			} else {
 				// Call method directly.
@@ -262,19 +262,19 @@ class ACF_Assets {
 	 * }
 	 * @return	void
 	 */
-	public function enqueue( $args = array() ) {
+	public function enqueue( $args = [] ) {
 
 		// Apply defaults.
-		$args = wp_parse_args($args, array(
+		$args = wp_parse_args( $args, array(
 			'input'		=> true,
 			'uploader'	=> false
-		));
+		) );
 
 		// Set enqueue flags and add actions.
-		if( $args['input'] ) {
+		if ( $args['input'] ) {
 			$this->enqueue[] = 'input';
 		}
-		if( $args['uploader'] ) {
+		if ( $args['uploader'] ) {
 			$this->enqueue[] = 'uploader';
 		}
 		$this->add_actions();
@@ -292,12 +292,12 @@ class ACF_Assets {
 	public function enqueue_uploader() {
 		
 		// Only run once.
-		if( acf_has_done('ACF_Assets::enqueue_uploader') ) {
+		if ( acf_has_done( 'ACF_Assets::enqueue_uploader' ) ) {
 			return;
 		}
 		
 		// Enqueue media assets.
-		if( current_user_can('upload_files') ) {
+		if ( current_user_can( 'upload_files' ) ) {
 			wp_enqueue_media();
 		}
 
@@ -326,13 +326,13 @@ class ACF_Assets {
 	public function enqueue_scripts() {
 		
 		// Enqueue input scripts.
-		if( in_array('input', $this->enqueue) ) {
+		if ( in_array( 'input', $this->enqueue) ) {
 			wp_enqueue_script( 'acf-input' );
 			wp_enqueue_style( 'acf-input' );
 		}
 
 		// Enqueue media scripts.
-		if( in_array('uploader', $this->enqueue) ) {
+		if ( in_array( 'uploader', $this->enqueue) ) {
 			$this->enqueue_uploader();
 		}
 
@@ -340,29 +340,29 @@ class ACF_Assets {
 		acf_localize_text(array(
 			
 			// Tooltip
-			'Are you sure?'			=> __('Are you sure?','acf'),
-			'Yes'					=> __('Yes','acf'),
-			'No'					=> __('No','acf'),
-			'Remove'				=> __('Remove','acf'),
-			'Cancel'				=> __('Cancel','acf'),
-		));
+			'Are you sure?'			=> __( 'Are you sure?','acf' ),
+			'Yes'					=> __( 'Yes','acf' ),
+			'No'					=> __( 'No','acf' ),
+			'Remove'				=> __( 'Remove','acf' ),
+			'Cancel'				=> __( 'Cancel','acf' ),
+		) );
 		
 		// Localize "input" text.
-		if( wp_script_is('acf-input') ) {
+		if ( wp_script_is( 'acf-input' ) ) {
 			acf_localize_text(array(
 				
 				// Unload
-				'The changes you made will be lost if you navigate away from this page'	=> __('The changes you made will be lost if you navigate away from this page', 'acf'),
+				'The changes you made will be lost if you navigate away from this page'	=> __( 'The changes you made will be lost if you navigate away from this page', 'acf' ),
 				
 				// Validation
-				'Validation successful'			=> __('Validation successful', 'acf'),
-				'Validation failed'				=> __('Validation failed', 'acf'),
-				'1 field requires attention'	=> __('1 field requires attention', 'acf'),
-				'%d fields require attention'	=> __('%d fields require attention', 'acf'),
+				'Validation successful'			=> __( 'Validation successful', 'acf' ),
+				'Validation failed'				=> __( 'Validation failed', 'acf' ),
+				'1 field requires attention'	=> __( '1 field requires attention', 'acf' ),
+				'%d fields require attention'	=> __( '%d fields require attention', 'acf' ),
 				
 				// Other
-				'Edit field group'	=> __('Edit field group', 'acf'),
-			));
+				'Edit field group'	=> __( 'Edit field group', 'acf' ),
+			) );
 			
 			/**
 			 * Fires during "admin_enqueue_scripts" when ACF scripts are enqueued.
@@ -385,13 +385,13 @@ class ACF_Assets {
 		do_action( 'acf/enqueue_scripts' );
 
 		// Filter i18n translations that differ from English and localize script.
-		$text = array();
+		$text = [];
 		foreach( $this->text as $k => $v ) {
-			if( str_replace('.verb', '', $k) !== $v ) {
+			if ( str_replace( '.verb', '', $k) !== $v ) {
 				$text[ $k ] = $v;
 			}
 		}
-		if( $text ) {
+		if ( $text ) {
 			wp_localize_script( 'acf', 'acfL10n', $text );
 		}
 	}
@@ -406,7 +406,7 @@ class ACF_Assets {
 	 * @return	void
 	 */
 	public function print_scripts() {
-		if( wp_script_is('acf-input') ) {
+		if ( wp_script_is( 'acf-input' ) ) {
 			
 			/**
 			 * Fires during "admin_head" when ACF scripts are enqueued.
@@ -443,7 +443,7 @@ class ACF_Assets {
 		global $wp_version;
 		
 		// Bail early if 'acf' script was never enqueued (fixes Elementor enqueue reset conflict).
-		if( !wp_script_is('acf') ) {
+		if ( !wp_script_is( 'acf' ) ) {
 			return;
 		}
 		
@@ -452,21 +452,21 @@ class ACF_Assets {
 			'admin_url'		=> admin_url(),
 			'ajaxurl'		=> admin_url( 'admin-ajax.php' ),
 			'nonce'			=> wp_create_nonce( 'acf_nonce' ),
-			'acf_version'	=> acf_get_setting('version'),
+			'acf_version'	=> acf_get_setting( 'version' ),
 			'wp_version'	=> $wp_version,
 			'browser'		=> acf_get_browser(),
 			'locale'		=> acf_get_locale(),
 			'rtl'			=> is_rtl(),
-			'screen'		=> acf_get_form_data('screen'),
-			'post_id'		=> acf_get_form_data('post_id'),
-			'validation'	=> acf_get_form_data('validation'),
+			'screen'		=> acf_get_form_data( 'screen' ),
+			'post_id'		=> acf_get_form_data( 'post_id' ),
+			'validation'	=> acf_get_form_data( 'validation' ),
 			'editor'		=> acf_is_block_editor() ? 'block' : 'classic'
-		));
+		) );
 		
 		// Print inline script.
 		printf( "<script>\n%s\n</script>\n", 'acf.data = ' . wp_json_encode( $this->data ) . ';' );
 		
-		if( wp_script_is('acf-input') ) {
+		if ( wp_script_is( 'acf-input' ) ) {
 			
 			/**
 			 * Filters an empty array for compat l10n data.
@@ -475,8 +475,8 @@ class ACF_Assets {
 			 *
 			 * @param	array $data An array of data to append to.
 			 */
-			$compat_l10n = apply_filters( 'acf/input/admin_l10n', array() );
-			if( $compat_l10n ) {
+			$compat_l10n = apply_filters( 'acf/input/admin_l10n', [] );
+			if ( $compat_l10n ) {
 				printf( "<script>\n%s\n</script>\n", 'acf.l10n = ' . wp_json_encode( $compat_l10n ) . ';' );
 			}
 			
@@ -534,7 +534,7 @@ class ACF_Assets {
 }
 
 // instantiate
-acf_new_instance('ACF_Assets');
+acf_new_instance( 'ACF_Assets' );
 
 endif; // class_exists check
 
@@ -548,7 +548,7 @@ endif; // class_exists check
  * @return	void
  */
 function acf_localize_text( $text ) {
-	return acf_get_instance('ACF_Assets')->add_text( $text );
+	return acf_get_instance( 'ACF_Assets' )->add_text( $text );
 }
 
 /**
@@ -561,7 +561,7 @@ function acf_localize_text( $text ) {
  * @return	void
  */
 function acf_localize_data( $data ) {
-	return acf_get_instance('ACF_Assets')->add_data( $data );
+	return acf_get_instance( 'ACF_Assets' )->add_data( $data );
 }
 
 /**
@@ -574,7 +574,7 @@ function acf_localize_data( $data ) {
  * @return	void
  */
 function acf_enqueue_script( $name ) {
-	return acf_get_instance('ACF_Assets')->enqueue_script( $name );
+	return acf_get_instance( 'ACF_Assets' )->enqueue_script( $name );
 }
 
 /**
@@ -586,8 +586,8 @@ function acf_enqueue_script( $name ) {
  * @param	array $args See ACF_Assets::enqueue_scripts() for a list of args.
  * @return	void
  */
-function acf_enqueue_scripts( $args = array() ) {
-	return acf_get_instance('ACF_Assets')->enqueue( $args );
+function acf_enqueue_scripts( $args = [] ) {
+	return acf_get_instance( 'ACF_Assets' )->enqueue( $args );
 }
 
 /**
@@ -600,5 +600,5 @@ function acf_enqueue_scripts( $args = array() ) {
  * @return	void
  */
 function acf_enqueue_uploader() {
-	return acf_get_instance('ACF_Assets')->enqueue_uploader();
+	return acf_get_instance( 'ACF_Assets' )->enqueue_uploader();
 }

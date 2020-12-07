@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_separator') ) :
+if ( ! class_exists( 'acf_field_separator' ) ) :
 
 class acf_field_separator extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_separator extends acf_field {
 		
 		// vars
 		$this->name = 'separator';
-		$this->label = __("Separator",'acf');
+		$this->label = __("Separator",'acf' );
 		$this->category = 'layout';
 		
 	}

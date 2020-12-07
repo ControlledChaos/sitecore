@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Taxonomy_Field_Walker') ) :
+if ( ! class_exists( 'ACF_Taxonomy_Field_Walker' ) ) :
 
 class ACF_Taxonomy_Field_Walker extends Walker {
 	
@@ -16,32 +16,32 @@ class ACF_Taxonomy_Field_Walker extends Walker {
 		
 	}
 
-	function start_el( &$output, $term, $depth = 0, $args = array(), $current_object_id = 0) {
+	function start_el( &$output, $term, $depth = 0, $args = [], $current_object_id = 0) {
 		
 		// vars
 		$selected = in_array( $term->term_id, $this->field['value'] );
 		
 		
 		// append
-		$output .= '<li data-id="' . $term->term_id . '"><label' . ($selected ? ' class="selected"' : '') . '><input type="' . $this->field['field_type'] . '" name="' . $this->field['name'] . '" value="' . $term->term_id . '" ' . ($selected ? 'checked="checked"' : '') . ' /> <span>' . $term->name . '</span></label>';
+		$output .= '<li data-id="' . $term->term_id . '"><label' . ( $selected ? ' class="selected"' : '' ) . '><input type="' . $this->field['field_type'] . '" name="' . $this->field['name'] . '" value="' . $term->term_id . '" ' . ( $selected ? 'checked="checked"' : '' ) . ' /> <span>' . $term->name . '</span></label>';
 				
 	}
 	
-	function end_el( &$output, $term, $depth = 0, $args = array() ) {
+	function end_el( &$output, $term, $depth = 0, $args = [] ) {
 	
 		// append
 		$output .= '</li>' .  "\n";
 		
 	}
 	
-	function start_lvl( &$output, $depth = 0, $args = array() ) {
+	function start_lvl( &$output, $depth = 0, $args = [] ) {
 		
 		// append
 		$output .= '<ul class="children acf-bl">' . "\n";
 		
 	}
 
-	function end_lvl( &$output, $depth = 0, $args = array() ) {
+	function end_lvl( &$output, $depth = 0, $args = [] ) {
 	
 		// append
 		$output .= '</ul>' . "\n";

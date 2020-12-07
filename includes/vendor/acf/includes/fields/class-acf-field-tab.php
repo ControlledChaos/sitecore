@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_tab') ) :
+if ( ! class_exists( 'acf_field_tab' ) ) :
 
 class acf_field_tab extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_tab extends acf_field {
 		
 		// vars
 		$this->name = 'tab';
-		$this->label = __("Tab",'acf');
+		$this->label = __("Tab",'acf' );
 		$this->category = 'layout';
 		$this->defaults = array(
 			'placement'	=> 'top',
@@ -56,7 +56,7 @@ class acf_field_tab extends acf_field {
 		);
 		
 		?>
-		<a <?php acf_esc_attr_e( $atts ); ?>><?php echo acf_esc_html($field['label']); ?></a>
+		<a <?php acf_esc_attr_e( $atts ); ?>><?php echo acf_esc_html( $field['label']); ?></a>
 		<?php
 		
 		
@@ -82,41 +82,41 @@ class acf_field_tab extends acf_field {
 /*
 		// message
 		$message = '';
-		$message .= '<p>' . __( 'Use "Tab Fields" to better organize your edit screen by grouping fields together.', 'acf') . '</p>';
-		$message .= '<p>' . __( 'All fields following this "tab field" (or until another "tab field" is defined) will be grouped together using this field\'s label as the tab heading.','acf') . '</p>';
+		$message .= '<p>' . __( 'Use "Tab Fields" to better organize your edit screen by grouping fields together.', 'acf' ) . '</p>';
+		$message .= '<p>' . __( 'All fields following this "tab field" (or until another "tab field" is defined) will be grouped together using this field\'s label as the tab heading.','acf' ) . '</p>';
 		
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Instructions','acf'),
+			'label'			=> __( 'Instructions','acf' ),
 			'instructions'	=> '',
 			'name'			=> 'notes',
 			'type'			=> 'message',
 			'message'		=> $message,
-		));
+		) );
 */
 		
 		
 		// preview_size
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Placement','acf'),
+			'label'			=> __( 'Placement','acf' ),
 			'type'			=> 'select',
 			'name'			=> 'placement',
 			'choices' 		=> array(
-				'top'			=>	__("Top aligned", 'acf'),
-				'left'			=>	__("Left aligned", 'acf'),
+				'top'			=>	__("Top aligned", 'acf' ),
+				'left'			=>	__("Left aligned", 'acf' ),
 			)
-		));
+		) );
 		
 		
 		// endpoint
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Endpoint','acf'),
-			'instructions'	=> __('Define an endpoint for the previous tabs to stop. This will start a new group of tabs.', 'acf'),
+			'label'			=> __( 'Endpoint','acf' ),
+			'instructions'	=> __( 'Define an endpoint for the previous tabs to stop. This will start a new group of tabs.', 'acf' ),
 			'name'			=> 'endpoint',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-		));
+		) );
 				
 	}
 	

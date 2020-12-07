@@ -1,15 +1,15 @@
 <?php
 
-if(!defined('ABSPATH'))
+if (! defined( 'ABSPATH' ) )
     exit;
 
-if(!class_exists('acfe_compatibility')):
+if (!class_exists( 'acfe_compatibility' ) ):
 
 class acfe_compatibility{
     
 	function __construct(){
         
-        add_action('acf/init', array($this, 'init'), 98);
+        add_action( 'acf/init', array( $this, 'init' ), 98);
         
 	}
     
@@ -17,22 +17,22 @@ class acfe_compatibility{
     
         $this->update_settings();
         
-        add_filter('acf/validate_field_group',                      array($this, 'field_group_location_list'), 20);
-        add_filter('acf/validate_field',                            array($this, 'field_acfe_update'), 20);
+        add_filter( 'acf/validate_field_group',                      array( $this, 'field_group_location_list' ), 20);
+        add_filter( 'acf/validate_field',                            array( $this, 'field_acfe_update' ), 20);
         
-        add_filter('acf/validate_field/type=group',                 array($this, 'field_seamless_style'), 20);
-        add_filter('acf/validate_field/type=clone',                 array($this, 'field_seamless_style'), 20);
-        add_filter('acfe/load_fields/type=flexible_content',        array($this, 'field_flexible_settings_title'), 20, 2);
+        add_filter( 'acf/validate_field/type=group',                 array( $this, 'field_seamless_style' ), 20);
+        add_filter( 'acf/validate_field/type=clone',                 array( $this, 'field_seamless_style' ), 20);
+        add_filter( 'acfe/load_fields/type=flexible_content',        array( $this, 'field_flexible_settings_title' ), 20, 2);
         
-        add_filter('acf/prepare_field/name=acfe_flexible_category', array($this, 'field_flexible_layout_categories'), 10, 2);
+        add_filter( 'acf/prepare_field/name=acfe_flexible_category', array( $this, 'field_flexible_layout_categories' ), 10, 2);
         
-        add_filter('pto/posts_orderby/ignore',                      array($this, 'pto_acf_field_group'), 10, 3);
-        add_filter('pto/get_options',                               array($this, 'pto_options_acf_field_group'));
+        add_filter( 'pto/posts_orderby/ignore',                      array( $this, 'pto_acf_field_group' ), 10, 3);
+        add_filter( 'pto/get_options',                               array( $this, 'pto_options_acf_field_group' ) );
         
-        add_action('admin_menu',                                    array($this, 'cotto_submenu'), 999);
-        add_filter('rank_math/metabox/priority',                    array($this, 'rankmath_metaboxes_priority'));
-        add_filter('wpseo_metabox_prio',                            array($this, 'yoast_metaboxes_priority'));
-        add_filter('pll_get_post_types',                            array($this, 'polylang'), 10, 2 );
+        add_action( 'admin_menu',                                    array( $this, 'cotto_submenu' ), 999);
+        add_filter( 'rank_math/metabox/priority',                    array( $this, 'rankmath_metaboxes_priority' ) );
+        add_filter( 'wpseo_metabox_prio',                            array( $this, 'yoast_metaboxes_priority' ) );
+        add_filter( 'pll_get_post_types',                            array( $this, 'polylang' ), 10, 2 );
         
     }
     
@@ -42,25 +42,25 @@ class acfe_compatibility{
     function update_settings(){
     
         // ACF Extended: 0.8.6.3 - Renamed 'acfe/modules/taxonomies' to 'acfe/modules/ui'
-        if(acf_get_setting('acfe/modules/taxonomies') !== null){
-            acf_update_setting('acfe/modules/ui', acf_get_setting('acfe/modules/taxonomies'));
+        if (acf_get_setting( 'acfe/modules/taxonomies' ) !== null){
+            acf_update_setting( 'acfe/modules/ui', acf_get_setting( 'acfe/modules/taxonomies' ) );
         }
         
         // ACF Extended: 0.8 - Renamed 'acfe_php*' to 'acfe/php*'
-        if(acf_get_setting('acfe_php') !== null){
-            acf_update_setting('acfe/php', acf_get_setting('acfe_php'));
+        if (acf_get_setting( 'acfe_php' ) !== null){
+            acf_update_setting( 'acfe/php', acf_get_setting( 'acfe_php' ) );
         }
     
-        if(acf_get_setting('php_save') !== null){
-            acf_update_setting('acfe/php_save', acf_get_setting('php_save'));
+        if (acf_get_setting( 'php_save' ) !== null){
+            acf_update_setting( 'acfe/php_save', acf_get_setting( 'php_save' ) );
         }
     
-        if(acf_get_setting('php_load') !== null){
-            acf_update_setting('acfe/php_load', acf_get_setting('php_load'));
+        if (acf_get_setting( 'php_load' ) !== null){
+            acf_update_setting( 'acfe/php_load', acf_get_setting( 'php_load' ) );
         }
     
-        if(acf_get_setting('php_found') !== null){
-            acf_update_setting('acfe/php_found', acf_get_setting('php_found'));
+        if (acf_get_setting( 'php_found' ) !== null){
+            acf_update_setting( 'acfe/php_found', acf_get_setting( 'php_found' ) );
         }
 	    
     }
@@ -69,31 +69,31 @@ class acfe_compatibility{
 	 * ACF Extended: 0.8
 	 * Field Group Location: Archive renamed to List
 	 */
-    function field_group_location_list($field_group){
+    function field_group_location_list( $field_group){
         
-        if(!acf_maybe_get($field_group, 'location'))
+        if (!acf_maybe_get( $field_group, 'location' ) )
             return $field_group;
         
-        foreach($field_group['location'] as &$or){
+        foreach( $field_group['location'] as &$or){
             
-            foreach($or as &$and){
+            foreach( $or as &$and){
                 
-                if(!isset($and['value']))
+                if (! isset( $and['value']) )
                     continue;
                 
                 // Post Type List
-                if($and['param'] === 'post_type' && acfe_ends_with($and['value'], '_archive')){
+                if ( $and['param'] === 'post_type' && acfe_ends_with( $and['value'], '_archive' ) ){
                 
                     $and['param'] = 'post_type_list';
-                    $and['value'] = substr_replace($and['value'], '', -8);
+                    $and['value'] = substr_replace( $and['value'], '', -8);
                 
                 }
                 
                 // Taxonomy List
-                elseif($and['param'] === 'taxonomy' && acfe_ends_with($and['value'], '_archive')){
+                elseif ( $and['param'] === 'taxonomy' && acfe_ends_with( $and['value'], '_archive' ) ){
                     
                     $and['param'] = 'taxonomy_list';
-                    $and['value'] = substr_replace($and['value'], '', -8);
+                    $and['value'] = substr_replace( $and['value'], '', -8);
                     
                 }
                 
@@ -109,12 +109,12 @@ class acfe_compatibility{
 	 * ACF Extended: 0.8
 	 * Field Filter Value: Removed from this version
 	 */
-    function field_acfe_update($field){
+    function field_acfe_update( $field){
         
-        if(!acf_maybe_get($field, 'acfe_update'))
+        if (!acf_maybe_get( $field, 'acfe_update' ) )
             return $field;
         
-        unset($field['acfe_update']);
+        unset( $field['acfe_update']);
         
         return $field;
         
@@ -124,9 +124,9 @@ class acfe_compatibility{
 	 * ACF Extended: 0.8.5
 	 * Field Group/Clone: Fixed typo "Seamless"
 	 */
-    function field_seamless_style($field){
+    function field_seamless_style( $field){
         
-        if($seamless = acf_maybe_get($field, 'acfe_seemless_style', false)){
+        if ( $seamless = acf_maybe_get( $field, 'acfe_seemless_style', false) ){
             
             $field['acfe_seamless_style'] = $seamless;
             
@@ -140,23 +140,23 @@ class acfe_compatibility{
 	 * ACF Extended: 0.8.4.5
 	 * Field Flexible Content: Fix duplicated "layout_settings" & "layout_title"
 	 */
-    function field_flexible_settings_title($fields, $parent){
+    function field_flexible_settings_title( $fields, $parent){
         
         // Check if is tool screen
-        if(!acf_is_screen(acfe_get_acf_screen_id('acf-tools')))
+        if (!acf_is_screen(acfe_get_acf_screen_id( 'acf-tools' ) ))
             return $fields;
         
-        foreach($fields as $_k => $_field){
+        foreach( $fields as $_k => $_field){
             
             // field name
-            $_field_name = acf_maybe_get($_field, 'name');
+            $_field_name = acf_maybe_get( $_field, 'name' );
             
             // check 'acfe_flexible_layout_title' & 'layout_settings'
-            if($_field_name !== 'acfe_flexible_layout_title' && $_field_name !== 'layout_settings')
+            if ( $_field_name !== 'acfe_flexible_layout_title' && $_field_name !== 'layout_settings' )
                 continue;
             
             // unset
-            unset($fields[$_k]);
+            unset( $fields[$_k]);
             
         }
         
@@ -168,22 +168,22 @@ class acfe_compatibility{
      * ACF Extended: 0.8.6.7
      * Field Flexible Content: Compatibility for Layout Categories
      */
-    function field_flexible_layout_categories($field){
+    function field_flexible_layout_categories( $field){
         
-        $value = acf_maybe_get($field, 'value');
+        $value = acf_maybe_get( $field, 'value' );
     
-        if(empty($value))
+        if (empty( $value) )
             return $field;
     
-        if(is_string($value)){
+        if (is_string( $value) ){
         
-            $explode = explode('|', $value);
+            $explode = explode( '|', $value);
         
-            $choices = array();
+            $choices = [];
         
-            foreach($explode as $v){
+            foreach( $explode as $v){
             
-                $v = trim($v);
+                $v = trim( $v);
                 $choices[$v] = $v;
             
             }
@@ -202,9 +202,9 @@ class acfe_compatibility{
 	 * https://wordpress.org/plugins/post-types-order/
 	 * The plugin apply custom order to ACF Field Group Post Type. We have to fix this
 	 */
-    function pto_acf_field_group($ignore, $orderby, $query){
+    function pto_acf_field_group( $ignore, $orderby, $query){
         
-        if(is_admin() && $query->is_main_query() && $query->get('post_type') === 'acf-field-group')
+        if (is_admin() && $query->is_main_query() && $query->get( 'post_type' ) === 'acf-field-group' )
             $ignore = true;
 
         return $ignore;
@@ -216,7 +216,7 @@ class acfe_compatibility{
      * https://wordpress.org/plugins/post-types-order/
      * The plugin apply a drag & drop UI on ACF Field Group UI. We have to fix this
      */
-    function pto_options_acf_field_group($options){
+    function pto_options_acf_field_group( $options){
         
         $options['show_reorder_interfaces']['acf-field-group'] = 'hide';
         
@@ -231,7 +231,7 @@ class acfe_compatibility{
      */
     function cotto_submenu(){
         
-        remove_submenu_page('edit.php?post_type=acf-field-group', 'to-interface-acf-field-group');
+        remove_submenu_page( 'edit.php?post_type=acf-field-group', 'to-interface-acf-field-group' );
         
     }
     
@@ -262,11 +262,11 @@ class acfe_compatibility{
      * Modules: Enable PolyLang Translation for ACFE Form Module
      * https://polylang.pro/doc/filter-reference/
      */
-    function polylang($post_types, $is_settings){
+    function polylang( $post_types, $is_settings){
         
-        if($is_settings){
+        if ( $is_settings){
             
-            unset($post_types['acfe-form']);
+            unset( $post_types['acfe-form']);
             
         }else{
             

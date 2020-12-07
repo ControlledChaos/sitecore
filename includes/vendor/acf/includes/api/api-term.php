@@ -12,10 +12,10 @@
 *  @return	array An array of taxonomy names.
 */
 
-function acf_get_taxonomies( $args = array() ) {
+function acf_get_taxonomies( $args = [] ) {
 
 	// vars
-	$taxonomies = array();
+	$taxonomies = [];
 	
 	// get taxonomy objects
 	$objects = get_taxonomies( $args, 'objects' );
@@ -25,19 +25,19 @@ function acf_get_taxonomies( $args = array() ) {
 		
 		// bail early if is builtin (WP) private post type
 		// - nav_menu_item, revision, customize_changeset, etc
-		if( $object->_builtin && !$object->public ) continue;
+		if ( $object->_builtin && ! $object->public ) continue;
 		
 		// append
 		$taxonomies[] = $i;
 	}
 	
 	// custom post_type arg which does not yet exist in core
-	if( isset($args['post_type']) ) {
-		$taxonomies = acf_get_taxonomies_for_post_type($args['post_type']);
+	if ( isset( $args['post_type']) ) {
+		$taxonomies = acf_get_taxonomies_for_post_type( $args['post_type']);
 	}
 	
 	// filter
-	$taxonomies = apply_filters('acf/get_taxonomies', $taxonomies, $args);
+	$taxonomies = apply_filters( 'acf/get_taxonomies', $taxonomies, $args);
 	
 	// return
 	return $taxonomies;
@@ -57,7 +57,7 @@ function acf_get_taxonomies( $args = array() ) {
 function acf_get_taxonomies_for_post_type( $post_types = 'post' ) {
 	
 	// vars
-	$taxonomies = array();
+	$taxonomies = [];
 	
 	// loop
 	foreach( (array) $post_types as $post_type ) {
@@ -68,7 +68,7 @@ function acf_get_taxonomies_for_post_type( $post_types = 'post' ) {
 	}
 	
 	// remove duplicates
-	$taxonomies = array_unique($taxonomies);
+	$taxonomies = array_unique( $taxonomies);
 	
 	// return
 	return $taxonomies;
@@ -86,16 +86,16 @@ function acf_get_taxonomies_for_post_type( $post_types = 'post' ) {
 *  @return	array
 */
 
-function acf_get_taxonomy_labels( $taxonomies = array() ) {
+function acf_get_taxonomy_labels( $taxonomies = [] ) {
 	
 	// default
-	if( empty($taxonomies) ) {
+	if ( empty( $taxonomies) ) {
 		$taxonomies = acf_get_taxonomies();
 	}
 	
 	// vars
-	$ref = array();
-	$data = array();
+	$ref = [];
+	$data = [];
 	
 	// loop
 	foreach( $taxonomies as $taxonomy ) {
@@ -108,7 +108,7 @@ function acf_get_taxonomy_labels( $taxonomies = array() ) {
 		$data[ $taxonomy ] = $label;
 		
 		// increase counter
-		if( !isset($ref[ $label ]) ) {
+		if ( ! isset( $ref[ $label ]) ) {
 			$ref[ $label ] = 0;
 		}
 		$ref[ $label ]++;
@@ -116,8 +116,8 @@ function acf_get_taxonomy_labels( $taxonomies = array() ) {
 	
 	// show taxonomy name next to label for shared labels
 	foreach( $data as $taxonomy => $label ) {
-		if( $ref[$label] > 1 ) {
-			$data[ $taxonomy ] .= ' (' . $taxonomy . ')';
+		if ( $ref[$label] > 1 ) {
+			$data[ $taxonomy ] .= ' ( ' . $taxonomy . ' )';
 		}
 	}
 	
@@ -141,14 +141,14 @@ function acf_get_term_title( $term ) {
 	$title = $term->name;
 	
 	// Allow for empty name.
-	if( $title === '' ) {
-		$title = __('(no title)', 'acf');
+	if ( $title === '' ) {
+		$title = __( '(no title)', 'acf' );
 	}
 	
 	// Prepend ancestors indentation.
-	if( is_taxonomy_hierarchical($term->taxonomy) ) {
+	if ( is_taxonomy_hierarchical( $term->taxonomy) ) {
 		$ancestors = get_ancestors( $term->term_id, $term->taxonomy );
-		$title = str_repeat('- ', count($ancestors)) . $title;
+		$title = str_repeat( '- ', count( $ancestors) ) . $title;
 	}
 	
 	return $title;
@@ -169,69 +169,69 @@ function acf_get_term_title( $term ) {
 function acf_get_grouped_terms( $args ) {
 	
 	// vars
-	$data = array();
+	$data = [];
 	
 	// defaults
-	$args = wp_parse_args($args, array(
+	$args = wp_parse_args( $args, array(
 		'taxonomy'					=> null,
 		'hide_empty'				=> false,
 		'update_term_meta_cache'	=> false,
-	));
+	) );
 	
 	// vars
-	$taxonomies = acf_get_taxonomy_labels( acf_get_array($args['taxonomy']) );
-	$is_single = (count($taxonomies) == 1);
+	$taxonomies = acf_get_taxonomy_labels( acf_get_array( $args['taxonomy']) );
+	$is_single = (count( $taxonomies) == 1);
 	
 	// specify exact taxonomies required for _acf_terms_clauses() to work.
-	$args['taxonomy'] = array_keys($taxonomies);
+	$args['taxonomy'] = array_keys( $taxonomies);
 	
 	// add filter to group results by taxonomy
-	if( !$is_single ) {
-		add_filter('terms_clauses', '_acf_terms_clauses', 10, 3);
+	if ( ! $is_single ) {
+		add_filter( 'terms_clauses', '_acf_terms_clauses', 10, 3);
 	}
 	
 	// get terms
 	$terms = get_terms( $args );
 	
 	// remove this filter (only once)
-	if( !$is_single ) {
-		remove_filter('terms_clauses', '_acf_terms_clauses', 10, 3);
+	if ( ! $is_single ) {
+		remove_filter( 'terms_clauses', '_acf_terms_clauses', 10, 3);
 	}
 	
 	// loop
 	foreach( $taxonomies as $taxonomy => $label ) {
 		
 		// vars
-		$this_terms = array();
+		$this_terms = [];
 		
 		// populate $this_terms
 		foreach( $terms as $term ) {
-			if( $term->taxonomy == $taxonomy ) {
+			if ( $term->taxonomy == $taxonomy ) {
 				$this_terms[] = $term;
 			}
 		}
 		
 		// bail early if no $items
-		if( empty($this_terms) ) continue;
+		if ( empty( $this_terms) ) continue;
 		
 		// sort into hierachial order
 		// this will fail if a search has taken place because parents wont exist
-		if( is_taxonomy_hierarchical($taxonomy) && empty($args['s'])) {
+		if ( is_taxonomy_hierarchical( $taxonomy) && empty( $args['s']) ) {
 			
 			// get all terms from this taxonomy
-			$all_terms = get_terms(array_merge($args, array(
+			$all_terms = get_terms(array_merge( $args, array(
 				'number'		=> 0,
 				'offset'		=> 0,
 				'taxonomy'		=> $taxonomy
-			)));
+			) ));
 			
 			// vars
-			$length = count($this_terms);
+			$length = count( $this_terms);
 			$offset = 0;
 			
 			// find starting point (offset)
 			foreach( $all_terms as $i => $term ) {
-				if( $term->term_id == $this_terms[0]->term_id ) {
+				if ( $term->term_id == $this_terms[0]->term_id ) {
 					$offset = $i;
 					break;
 				}
@@ -245,13 +245,13 @@ function acf_get_grouped_terms( $args ) {
 			// compare aray lengths
 			// if $ordered_posts is smaller than $all_posts, WP has lost posts during the get_page_children() function
 			// this is possible when get_post( $args ) filter out parents (via taxonomy, meta and other search parameters)
-			if( count($ordered_terms) == count($all_terms) ) {
-				$this_terms = array_slice($ordered_terms, $offset, $length);
+			if ( count( $ordered_terms) == count( $all_terms) ) {
+				$this_terms = array_slice( $ordered_terms, $offset, $length);
 			}
 		}
 		
 		// populate group
-		$data[ $label ] = array();
+		$data[ $label ] = [];
 		foreach( $this_terms as $term ) {
 			$data[ $label ][ $term->term_id ] = $term;
 		}	
@@ -278,8 +278,8 @@ function acf_get_grouped_terms( $args ) {
 function _acf_terms_clauses( $pieces, $taxonomies, $args ) {
 	
 	// prepend taxonomy to 'orderby' SQL
-	if( is_array($taxonomies) ) {
-		$sql = "FIELD(tt.taxonomy,'" . implode("', '", array_map('esc_sql', $taxonomies)) . "')";
+	if ( is_array( $taxonomies) ) {
+		$sql = "FIELD(tt.taxonomy,'" . implode("', '", array_map( 'esc_sql', $taxonomies) ) . "' )";
 		$pieces['orderby'] = str_replace("ORDER BY", "ORDER BY $sql,", $pieces['orderby']);
 	}
 	
@@ -297,7 +297,7 @@ function _acf_terms_clauses( $pieces, $taxonomies, $args ) {
 *  @deprecated	5.7.2
 */
 
-function acf_get_pretty_taxonomies( $taxonomies = array() ) {
+function acf_get_pretty_taxonomies( $taxonomies = [] ) {
 	return acf_get_taxonomy_labels( $taxonomies );
 }
 
@@ -317,10 +317,10 @@ function acf_get_pretty_taxonomies( $taxonomies = array() ) {
 function acf_get_term( $term_id, $taxonomy = '' ) {
 	
 	// allow $term_id parameter to be a string of "taxonomy:slug" or "taxonomy:id"
-	if( is_string($term_id) && strpos($term_id, ':') ) {
-		list( $taxonomy, $term_id ) = explode(':', $term_id);
+	if ( is_string( $term_id) && strpos( $term_id, ':' ) ) {
+		list( $taxonomy, $term_id ) = explode( ':', $term_id);
 		$term = get_term_by( 'slug', $term_id, $taxonomy );
-		if( $term ) return $term;
+		if ( $term ) return $term;
 	}
 	
 	// return
@@ -354,8 +354,8 @@ function acf_encode_term( $term ) {
 *  @return	string
 */
 function acf_decode_term( $string ) {
-	if( is_string($string) && strpos($string, ':') ) {
-		list( $taxonomy, $slug ) = explode(':', $string);
+	if ( is_string( $string) && strpos( $string, ':' ) ) {
+		list( $taxonomy, $slug ) = explode( ':', $string);
 		return compact( 'taxonomy', 'slug' );
 	}
 	return false;
@@ -375,7 +375,7 @@ function acf_decode_term( $string ) {
 function acf_get_encoded_terms( $values ) {
 	
 	// vars
-	$terms = array();
+	$terms = [];
 	
 	// loop over values
 	foreach( (array) $values as $value ) {
@@ -384,7 +384,7 @@ function acf_get_encoded_terms( $values ) {
 		$term = acf_get_term( $value );
 		
 		// append
-		if( $term instanceof WP_Term ) {
+		if ( $term instanceof WP_Term ) {
 			$terms[] = $term;
 		}
 	}
@@ -408,14 +408,14 @@ function acf_get_encoded_terms( $values ) {
 function acf_get_choices_from_terms( $terms, $format = 'term_id' ) {
 	
 	// vars
-	$groups = array();
+	$groups = [];
 	
 	// get taxonomy lables
 	$labels = acf_get_taxonomy_labels();
 	
 	// convert array of encoded strings to terms
-	$term = reset($terms);
-	if( !$term instanceof WP_Term ) {
+	$term = reset( $terms);
+	if ( ! $term instanceof WP_Term ) {
 		$terms = acf_get_encoded_terms( $terms );
 	}
 	
@@ -445,11 +445,11 @@ function acf_get_choices_from_terms( $terms, $format = 'term_id' ) {
 function acf_get_choices_from_grouped_terms( $value, $format = 'term_id' ) {
 	
 	// vars
-	$groups = array();
+	$groups = [];
 	
 	// loop over values
 	foreach( $value as $group => $terms ) {
-		$groups[ $group ] = array();
+		$groups[ $group ] = [];
 		foreach( $terms as $term_id => $term ) {
 			$choice = acf_get_choice_from_term( $term, $format );
 			$groups[ $group ][ $choice['id'] ] = $choice['text'];
@@ -479,8 +479,8 @@ function acf_get_choice_from_term( $term, $format = 'term_id' ) {
 	$text = acf_get_term_title( $term );
 	
 	// return format
-	if( $format == 'slug' ) {
-		$id = acf_encode_term($term);
+	if ( $format == 'slug' ) {
+		$id = acf_encode_term( $term);
 	}
 	
 	// return

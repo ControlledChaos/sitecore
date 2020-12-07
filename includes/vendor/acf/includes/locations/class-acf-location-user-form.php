@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_User_Form') ) :
+if ( ! class_exists( 'ACF_Location_User_Form' ) ) :
 
 class ACF_Location_User_Form extends ACF_Location {
 	
@@ -36,14 +36,14 @@ class ACF_Location_User_Form extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['user_form']) ) {
+		if ( isset( $screen['user_form']) ) {
 			$user_form = $screen['user_form'];
 		} else {
 			return false;
 		}
 		
 		// The "Add / Edit" choice (foolishly valued "edit") should match true for either "add" or "edit".
-		if( $rule['value'] === 'edit' && $user_form === 'add' ) {
+		if ( $rule['value'] === 'edit' && $user_form === 'add' ) {
 			$user_form = 'edit';
 		}
 				
@@ -62,10 +62,10 @@ class ACF_Location_User_Form extends ACF_Location {
 	 */
 	public function get_values( $rule ) {
 		return array(
-			'all' 		=> __('All', 'acf'),
-			'add' 		=> __('Add', 'acf'),
-			'edit' 		=> __('Add / Edit', 'acf'),
-			'register' 	=> __('Register', 'acf')
+			'all' 		=> __( 'All', 'acf' ),
+			'add' 		=> __( 'Add', 'acf' ),
+			'edit' 		=> __( 'Add / Edit', 'acf' ),
+			'register' 	=> __( 'Register', 'acf' )
 		);		
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_email') ) :
+if ( ! class_exists( 'acf_field_email' ) ) :
 
 class acf_field_email extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_email extends acf_field {
 		
 		// vars
 		$this->name = 'email';
-		$this->label = __("Email",'acf');
+		$this->label = __("Email",'acf' );
 		$this->defaults = array(
 			'default_value'	=> '',
 			'placeholder'	=> '',
@@ -48,39 +48,39 @@ class acf_field_email extends acf_field {
 	function render_field( $field ) {
 		
 		// vars
-		$atts = array();
+		$atts = [];
 		$keys = array( 'type', 'id', 'class', 'name', 'value', 'placeholder', 'pattern' );
 		$keys2 = array( 'readonly', 'disabled', 'required', 'multiple' );
 		$html = '';
 		
 		
 		// prepend
-		if( $field['prepend'] !== '' ) {
+		if ( $field['prepend'] !== '' ) {
 		
 			$field['class'] .= ' acf-is-prepended';
-			$html .= '<div class="acf-input-prepend">' . acf_esc_html($field['prepend']) . '</div>';
+			$html .= '<div class="acf-input-prepend">' . acf_esc_html( $field['prepend']) . '</div>';
 			
 		}
 		
 		
 		// append
-		if( $field['append'] !== '' ) {
+		if ( $field['append'] !== '' ) {
 		
 			$field['class'] .= ' acf-is-appended';
-			$html .= '<div class="acf-input-append">' . acf_esc_html($field['append']) . '</div>';
+			$html .= '<div class="acf-input-append">' . acf_esc_html( $field['append']) . '</div>';
 			
 		}
 		
 		
 		// atts (value="123")
 		foreach( $keys as $k ) {
-			if( isset($field[ $k ]) ) $atts[ $k ] = $field[ $k ];
+			if ( isset( $field[ $k ]) ) $atts[ $k ] = $field[ $k ];
 		}
 		
 		
 		// atts2 (disabled="disabled")
 		foreach( $keys2 as $k ) {
-			if( !empty($field[ $k ]) ) $atts[ $k ] = $k;
+			if ( !empty( $field[ $k ]) ) $atts[ $k ] = $k;
 		}
 		
 		
@@ -115,38 +115,38 @@ class acf_field_email extends acf_field {
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Default Value','acf'),
-			'instructions'	=> __('Appears when creating a new post','acf'),
+			'label'			=> __( 'Default Value','acf' ),
+			'instructions'	=> __( 'Appears when creating a new post','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'default_value',
-		));
+		) );
 		
 		
 		// placeholder
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Placeholder Text','acf'),
-			'instructions'	=> __('Appears within the input','acf'),
+			'label'			=> __( 'Placeholder Text','acf' ),
+			'instructions'	=> __( 'Appears within the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'placeholder',
-		));
+		) );
 		
 		
 		// prepend
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Prepend','acf'),
-			'instructions'	=> __('Appears before the input','acf'),
+			'label'			=> __( 'Prepend','acf' ),
+			'instructions'	=> __( 'Appears before the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'prepend',
-		));
+		) );
 		
 		
 		// append
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Append','acf'),
-			'instructions'	=> __('Appears after the input','acf'),
+			'label'			=> __( 'Append','acf' ),
+			'instructions'	=> __( 'Appears after the input','acf' ),
 			'type'			=> 'text',
 			'name'			=> 'append',
-		));
+		) );
 
 	}	
 	

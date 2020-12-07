@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_message') ) :
+if ( ! class_exists( 'acf_field_message' ) ) :
 
 class acf_field_message extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_message extends acf_field {
 		
 		// vars
 		$this->name = 'message';
-		$this->label = __("Message",'acf');
+		$this->label = __("Message",'acf' );
 		$this->category = 'layout';
 		$this->defaults = array(
 			'message'		=> '',
@@ -56,7 +56,7 @@ class acf_field_message extends acf_field {
 		
 		
 		// esc_html
-		if( $field['esc_html'] ) {
+		if ( $field['esc_html'] ) {
 			
 			$m = esc_html( $m );
 			
@@ -64,13 +64,13 @@ class acf_field_message extends acf_field {
 		
 		
 		// new lines
-		if( $field['new_lines'] == 'wpautop' ) {
+		if ( $field['new_lines'] == 'wpautop' ) {
 			
-			$m = wpautop($m);
+			$m = wpautop( $m);
 			
-		} elseif( $field['new_lines'] == 'br' ) {
+		} elseif ( $field['new_lines'] == 'br' ) {
 			
-			$m = nl2br($m);
+			$m = nl2br( $m);
 			
 		}
 		
@@ -98,35 +98,35 @@ class acf_field_message extends acf_field {
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Message','acf'),
+			'label'			=> __( 'Message','acf' ),
 			'instructions'	=> '',
 			'type'			=> 'textarea',
 			'name'			=> 'message',
-		));
+		) );
 		
 		
 		// formatting
 		acf_render_field_setting( $field, array(
-			'label'			=> __('New Lines','acf'),
-			'instructions'	=> __('Controls how new lines are rendered','acf'),
+			'label'			=> __( 'New Lines','acf' ),
+			'instructions'	=> __( 'Controls how new lines are rendered','acf' ),
 			'type'			=> 'select',
 			'name'			=> 'new_lines',
 			'choices'		=> array(
-				'wpautop'		=> __("Automatically add paragraphs",'acf'),
-				'br'			=> __("Automatically add &lt;br&gt;",'acf'),
-				''				=> __("No Formatting",'acf')
+				'wpautop'		=> __("Automatically add paragraphs",'acf' ),
+				'br'			=> __("Automatically add &lt;br&gt;",'acf' ),
+				''				=> __("No Formatting",'acf' )
 			)
-		));
+		) );
 		
 		
 		// HTML
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Escape HTML','acf'),
-			'instructions'	=> __('Allow HTML markup to display as visible text instead of rendering','acf'),
+			'label'			=> __( 'Escape HTML','acf' ),
+			'instructions'	=> __( 'Allow HTML markup to display as visible text instead of rendering','acf' ),
 			'name'			=> 'esc_html',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-		));
+		) );
 		
 	}
 	

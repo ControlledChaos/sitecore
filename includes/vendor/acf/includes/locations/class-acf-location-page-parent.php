@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('ACF_Location_Page_Parent') ) :
+if ( ! class_exists( 'ACF_Location_Page_Parent' ) ) :
 
 class ACF_Location_Page_Parent extends ACF_Location {
 	
@@ -37,9 +37,9 @@ class ACF_Location_Page_Parent extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if( isset($screen['page_parent']) ) {
+		if ( isset( $screen['page_parent']) ) {
 			$page_parent = $screen['page_parent'];
-		} elseif( isset($screen['post_id']) ) {
+		} elseif ( isset( $screen['post_id']) ) {
 			$post = get_post( $screen['post_id'] );
 			$page_parent = $post ? $post->post_parent : false;
 		} else {

@@ -1,16 +1,16 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if( ! class_exists('acf_form_front') ) :
+if ( ! class_exists( 'acf_form_front' ) ) :
 
 class acf_form_front {
 	
 	/** @var array An array of registered form settings */
-	private $forms = array();
+	private $forms = [];
 	
 	/** @var array An array of default fields */
-	public $fields = array();
+	public $fields = [];
 	
 	
 	/*
@@ -35,7 +35,7 @@ class acf_form_front {
 				'prefix'	=> 'acf',
 				'name'		=> '_post_title',
 				'key'		=> '_post_title',
-				'label'		=> __('Title', 'acf'),
+				'label'		=> __( 'Title', 'acf' ),
 				'type'		=> 'text',
 				'required'	=> true,
 			),
@@ -44,7 +44,7 @@ class acf_form_front {
 				'prefix'	=> 'acf',
 				'name'		=> '_post_content',
 				'key'		=> '_post_content',
-				'label'		=> __('Content', 'acf'),
+				'label'		=> __( 'Content', 'acf' ),
 				'type'		=> 'wysiwyg',
 			),
 			
@@ -52,21 +52,21 @@ class acf_form_front {
 				'prefix'	=> 'acf',
 				'name'		=> '_validate_email',
 				'key'		=> '_validate_email',
-				'label'		=> __('Validate Email', 'acf'),
+				'label'		=> __( 'Validate Email', 'acf' ),
 				'type'		=> 'text',
 				'value'		=> '',
-				'wrapper'	=> array('style' => 'display:none !important;')
+				'wrapper'	=> array( 'style' => 'display:none ! important;' )
 			)
 			
 		);
 		
 		
 		// actions
-		add_action('acf/validate_save_post', array($this, 'validate_save_post'), 1);
+		add_action( 'acf/validate_save_post', array( $this, 'validate_save_post' ), 1);
 		
 		
 		// filters
-		add_filter('acf/pre_save_post', array($this, 'pre_save_post'), 5, 2);
+		add_filter( 'acf/pre_save_post', array( $this, 'pre_save_post' ), 5, 2);
 		
 	}
 	
@@ -97,12 +97,12 @@ class acf_form_front {
 			'post_title'			=> false,
 			'post_content'			=> false,
 			'form'					=> true,
-			'form_attributes'		=> array(),
+			'form_attributes'		=> [],
 			'return'				=> add_query_arg( 'updated', 'true', acf_get_current_url() ),
 			'html_before_fields'	=> '',
 			'html_after_fields'		=> '',
-			'submit_value'			=> __("Update", 'acf'),
-			'updated_message'		=> __("Post updated", 'acf'),
+			'submit_value'			=> __("Update", 'acf' ),
+			'updated_message'		=> __("Post updated", 'acf' ),
 			'label_placement'		=> 'top',
 			'instruction_placement'	=> 'label',
 			'field_el'				=> 'div',
@@ -112,14 +112,14 @@ class acf_form_front {
 			'html_submit_button'	=> '<input type="submit" class="acf-button button button-primary button-large" value="%s" />', // 5.5.10
 			'html_submit_spinner'	=> '<span class="acf-spinner"></span>', // 5.5.10
 			'kses'					=> true // 5.6.5
-		));
+		) );
 		
 		$args['form_attributes'] = wp_parse_args( $args['form_attributes'], array(
 			'id'					=> $args['id'],
 			'class'					=> 'acf-form',
 			'action'				=> '',
 			'method'				=> 'post',
-		));
+		) );
 		
 		
 		// filter post_id
@@ -127,18 +127,18 @@ class acf_form_front {
 		
 		
 		// new post?
-		if( $args['post_id'] === 'new_post' ) {
+		if ( $args['post_id'] === 'new_post' ) {
 			
 			$args['new_post'] = wp_parse_args( $args['new_post'], array(
 				'post_type' 	=> 'post',
 				'post_status'	=> 'draft',
-			));
+			) );
 			
 		}
 		
 		
 		// filter
-		$args = apply_filters('acf/validate_form', $args);
+		$args = apply_filters( 'acf/validate_form', $args);
 		
 		
 		// return
@@ -160,7 +160,7 @@ class acf_form_front {
 	*  @return	$post_id (int)
 	*/
 	
-	function add_form( $args = array() ) {
+	function add_form( $args = [] ) {
 		
 		// validate
 		$args = $this->validate_form( $args );
@@ -188,7 +188,7 @@ class acf_form_front {
 	function get_form( $id = '' ) {
 		
 		// bail early if not set
-		if( !isset($this->forms[ $id ]) ) return false;
+		if ( ! isset( $this->forms[ $id ]) ) return false;
 		
 		
 		// return
@@ -216,19 +216,19 @@ class acf_form_front {
 		foreach( $this->fields as $k => $field ) {
 			
 			// bail early if no in $_POST
-			if( !isset($_POST['acf'][ $k ]) ) continue;
+			if ( ! isset( $_POST['acf'][ $k ]) ) continue;
 			
 			
 			// register
-			acf_add_local_field($field);
+			acf_add_local_field( $field);
 			
 		}
 		
 		
 		// honeypot
-		if( !empty($_POST['acf']['_validate_email']) ) {
+		if ( !empty( $_POST['acf']['_validate_email']) ) {
 			
-			acf_add_validation_error( '', __('Spam Detected', 'acf') );
+			acf_add_validation_error( '', __( 'Spam Detected', 'acf' ) );
 			
 		}
 		
@@ -257,15 +257,15 @@ class acf_form_front {
 		
 		
 		// determine save data
-		if( is_numeric($post_id) ) {
+		if ( is_numeric( $post_id) ) {
 			
 			// update post
 			$save['ID'] = $post_id;
 			
-		} elseif( $post_id == 'new_post' ) {
+		} elseif ( $post_id == 'new_post' ) {
 			
 			// merge in new post data
-			$save = array_merge($save, $form['new_post']);
+			$save = array_merge( $save, $form['new_post']);
 					
 		} else {
 			
@@ -276,27 +276,27 @@ class acf_form_front {
 		
 		
 		// save post_title
-		if( isset($_POST['acf']['_post_title']) ) {
+		if ( isset( $_POST['acf']['_post_title']) ) {
 			
-			$save['post_title'] = acf_extract_var($_POST['acf'], '_post_title');
+			$save['post_title'] = acf_extract_var( $_POST['acf'], '_post_title' );
 		
 		}
 		
 		
 		// save post_content
-		if( isset($_POST['acf']['_post_content']) ) {
+		if ( isset( $_POST['acf']['_post_content']) ) {
 			
-			$save['post_content'] = acf_extract_var($_POST['acf'], '_post_content');
+			$save['post_content'] = acf_extract_var( $_POST['acf'], '_post_content' );
 			
 		}
 		
 		
 		// honeypot
-		if( !empty($_POST['acf']['_validate_email']) ) return false;
+		if ( !empty( $_POST['acf']['_validate_email']) ) return false;
 		
 		
 		// validate
-		if( count($save) == 1 ) {
+		if ( count( $save) == 1 ) {
 			
 			return $post_id;
 			
@@ -304,7 +304,7 @@ class acf_form_front {
 		
 		
 		// save
-		if( $save['ID'] ) {
+		if ( $save['ID'] ) {
 			
 			wp_update_post( $save );
 			
@@ -362,12 +362,12 @@ class acf_form_front {
 	function check_submit_form() {
 		
 		// Verify nonce.
-		if( !acf_verify_nonce('acf_form') ) {
+		if ( !acf_verify_nonce( 'acf_form' ) ) {
 			return false;
 		}
 		
 		// Confirm form was submit.
-		if( !isset($_POST['_acf_form']) ) {
+		if ( ! isset( $_POST['_acf_form']) ) {
 			return false;
 		}
 		
@@ -375,15 +375,15 @@ class acf_form_front {
 		$form = $this->get_form( $_POST['_acf_form'] );
 		
 		// Fallback to encrypted JSON.
-		if( !$form ) {
-			$form = json_decode( acf_decrypt($_POST['_acf_form']), true );
-			if( !$form ) {
+		if ( ! $form ) {
+			$form = json_decode( acf_decrypt( $_POST['_acf_form']), true );
+			if ( ! $form ) {
 		    	return false;
 	    	}
 		}    	
     	
     	// Run kses on all $_POST data.
-    	if( $form['kses'] && isset($_POST['acf']) ) {
+    	if ( $form['kses'] && isset( $_POST['acf']) ) {
 	    	$_POST['acf'] = wp_kses_post_deep( $_POST['acf'] );
     	}
     	
@@ -412,11 +412,11 @@ class acf_form_front {
 	function submit_form( $form ) {
 		
 		// filter
-    	$form = apply_filters('acf/pre_submit_form', $form);
+    	$form = apply_filters( 'acf/pre_submit_form', $form);
     	
     	
     	// vars
-    	$post_id = acf_maybe_get($form, 'post_id', 0);
+    	$post_id = acf_maybe_get( $form, 'post_id', 0);
 		
 		
 		// add global for backwards compatibility
@@ -424,7 +424,7 @@ class acf_form_front {
 		
 		
 		// allow for custom save
-		$post_id = apply_filters('acf/pre_save_post', $post_id, $form);
+		$post_id = apply_filters( 'acf/pre_save_post', $post_id, $form);
 		
 		
 		// save
@@ -436,19 +436,19 @@ class acf_form_front {
 		
 		
 		// action
-		do_action('acf/submit_form', $form, $post_id);
+		do_action( 'acf/submit_form', $form, $post_id);
 		
 		
 		// vars
-		$return = acf_maybe_get($form, 'return', '');
+		$return = acf_maybe_get( $form, 'return', '' );
 		
 		
 		// redirect
-		if( $return ) {
+		if ( $return ) {
 			
 			// update %placeholders%
-			$return = str_replace('%post_id%', $post_id, $return);
-			$return = str_replace('%post_url%', get_permalink($post_id), $return);
+			$return = str_replace( '%post_id%', $post_id, $return);
+			$return = str_replace( '%post_url%', get_permalink( $post_id), $return);
 			
 			
 			// redirect
@@ -473,22 +473,22 @@ class acf_form_front {
 	*  @return	$post_id (int)
 	*/
 	
-	function render_form( $args = array() ) {
+	function render_form( $args = [] ) {
 		
 		// Vars.
 		$is_registered = false;
-		$field_groups = array();
-		$fields = array();
+		$field_groups = [];
+		$fields = [];
 		
 		// Allow form settings to be directly provided.
-		if( is_array($args) ) {
+		if ( is_array( $args) ) {
 			$args = $this->validate_form( $args );
 			
 		// Otherwise, lookup registered form.
 		} else {
 			$is_registered = true;
 			$args = $this->get_form( $args );
-			if( !$args ) {
+			if ( ! $args ) {
 				return false;
 			}
 		}
@@ -497,34 +497,34 @@ class acf_form_front {
 		$post_id = $args['post_id'];
 		
 		// Prevent ACF from loading values for "new_post".
-		if( $post_id === 'new_post' ) {
+		if ( $post_id === 'new_post' ) {
 			$post_id = false;
 		}
 		
 		// Set uploader type.
-		acf_update_setting('uploader', $args['uploader']);
+		acf_update_setting( 'uploader', $args['uploader']);
 		
 		// Register local fields.
 		foreach( $this->fields as $k => $field ) {
-			acf_add_local_field($field);
+			acf_add_local_field( $field);
 		}
 		
 		// Append post_title field.
-		if( $args['post_title'] ) {
-			$_post_title = acf_get_field('_post_title');
-			$_post_title['value'] = $post_id ? get_post_field('post_title', $post_id) : '';
+		if ( $args['post_title'] ) {
+			$_post_title = acf_get_field( '_post_title' );
+			$_post_title['value'] = $post_id ? get_post_field( 'post_title', $post_id) : '';
 			$fields[] = $_post_title;
 		}
 		
 		// Append post_content field.
-		if( $args['post_content'] ) {
-			$_post_content = acf_get_field('_post_content');
-			$_post_content['value'] = $post_id ? get_post_field('post_content', $post_id) : '';
+		if ( $args['post_content'] ) {
+			$_post_content = acf_get_field( '_post_content' );
+			$_post_content['value'] = $post_id ? get_post_field( 'post_content', $post_id) : '';
 			$fields[] = $_post_content;	
 		}
 		
 		// Load specific fields.
-		if( $args['fields'] ) {
+		if ( $args['fields'] ) {
 			
 			// Lookup fields using $strict = false for better compatibility with field names.
 			foreach( $args['fields'] as $selector ) {
@@ -532,27 +532,27 @@ class acf_form_front {
 			}
 		
 		// Load specific field groups.
-		} elseif( $args['field_groups'] ) {
+		} elseif ( $args['field_groups'] ) {
 			foreach( $args['field_groups'] as $selector ) {
 				$field_groups[] = acf_get_field_group( $selector );
 			}
 		
 		// Load fields for the given "new_post" args.	
-		} elseif( $args['post_id'] == 'new_post' ) {
+		} elseif ( $args['post_id'] == 'new_post' ) {
 			$field_groups = acf_get_field_groups( $args['new_post'] );
 		
 		// Load fields for the given "post_id" arg.
 		} else {
 			$field_groups = acf_get_field_groups(array(
 				'post_id' => $args['post_id']
-			));
+			) );
 		}
 		
 		// load fields from the found field groups.
-		if( $field_groups ) {
+		if ( $field_groups ) {
 			foreach( $field_groups as $field_group ) {
 				$_fields = acf_get_fields( $field_group );
-				if( $_fields ) {
+				if ( $_fields ) {
 					foreach( $_fields as $_field ) {
 						$fields[] = $_field;
 					}
@@ -561,17 +561,17 @@ class acf_form_front {
 		}
 		
 		// Add honeypot field.
-		if( $args['honeypot'] ) {
-			$fields[] = acf_get_field('_validate_email');
+		if ( $args['honeypot'] ) {
+			$fields[] = acf_get_field( '_validate_email' );
 		}
 		
 		// Display updated_message
-		if( !empty($_GET['updated']) && $args['updated_message'] ) {
+		if ( !empty( $_GET['updated']) && $args['updated_message'] ) {
 			printf( $args['html_updated_message'], $args['updated_message'] );
 		}
 		
 		// display form
-		if( $args['form'] ): ?>
+		if ( $args['form'] ): ?>
 		<form <?php echo acf_esc_attrs( $args['form_attributes'] ); ?>>
 		<?php endif; 
 			
@@ -579,16 +579,16 @@ class acf_form_front {
 			acf_form_data(array( 
 				'screen'	=> 'acf_form',
 				'post_id'	=> $args['post_id'],
-				'form'		=> $is_registered ? $args['id'] : acf_encrypt(json_encode($args))
-			));
+				'form'		=> $is_registered ? $args['id'] : acf_encrypt(json_encode( $args) )
+			) );
 			
 			?>
-			<div class="acf-fields acf-form-fields -<?php echo esc_attr($args['label_placement']); ?>">
+			<div class="acf-fields acf-form-fields -<?php echo esc_attr( $args['label_placement']); ?>">
 				<?php echo $args['html_before_fields']; ?>
 				<?php acf_render_fields( $fields, $post_id, $args['field_el'], $args['instruction_placement'] ); ?>
 				<?php echo $args['html_after_fields']; ?>
 			</div>
-		<?php if( $args['form'] ): ?>
+		<?php if ( $args['form'] ): ?>
 			<div class="acf-form-submit">
 				<?php printf( $args['html_submit_button'], $args['submit_value'] ); ?>
 				<?php echo $args['html_submit_spinner']; ?>
@@ -625,7 +625,7 @@ function acf_form_head() {
 	
 }
 
-function acf_form( $args = array() ) {
+function acf_form( $args = [] ) {
 	
 	acf()->form_front->render_form( $args );
 	

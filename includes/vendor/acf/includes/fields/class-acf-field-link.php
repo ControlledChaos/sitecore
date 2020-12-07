@@ -1,6 +1,6 @@
 <?php
 
-if( ! class_exists('acf_field_link') ) :
+if ( ! class_exists( 'acf_field_link' ) ) :
 
 class acf_field_link extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_link extends acf_field {
 		
 		// vars
 		$this->name = 'link';
-		$this->label = __("Link",'acf');
+		$this->label = __("Link",'acf' );
 		$this->category = 'relational';
 		$this->defaults = array(
 			'return_format'	=> 'array',
@@ -55,18 +55,18 @@ class acf_field_link extends acf_field {
 		
 		
 		// array (ACF 5.6.0)
-		if( is_array($value) ) {
+		if ( is_array( $value) ) {
 			
-			$link = array_merge($link, $value);
+			$link = array_merge( $link, $value);
 		
 		// post id (ACF < 5.6.0)
-		} elseif( is_numeric($value) ) {
+		} elseif ( is_numeric( $value) ) {
 			
 			$link['title'] = get_the_title( $value );
 			$link['url'] = get_permalink( $value );
 		
 		// string (ACF < 5.6.0)
-		} elseif( is_string($value) ) {
+		} elseif ( is_string( $value) ) {
 			
 			$link['url'] = $value;
 			
@@ -109,35 +109,35 @@ class acf_field_link extends acf_field {
 		
 		
 		// classes
-		if( $link['url'] ) {
+		if ( $link['url'] ) {
 			$div['class'] .= ' -value';
 		}
 		
-		if( $link['target'] === '_blank' ) {
+		if ( $link['target'] === '_blank' ) {
 			$div['class'] .= ' -external';
 		}
 		
-		/*<textarea id="<?php echo esc_attr($field['id']); ?>-textarea"><?php
-			echo esc_textarea('<a href="'.$link['url'].'" target="'.$link['target'].'">'.$link['title'].'</a>');
+		/*<textarea id="<?php echo esc_attr( $field['id']); ?>-textarea"><?php
+			echo esc_textarea( '<a href="'.$link['url'].'" target="'.$link['target'].'">'.$link['title'].'</a>' );
 		?></textarea>*/
 ?>
-<div <?php acf_esc_attr_e($div); ?>>
+<div <?php acf_esc_attr_e( $div); ?>>
 	
 	<div class="acf-hidden">
-		<a class="link-node" href="<?php echo esc_url($link['url']); ?>" target="<?php echo esc_attr($link['target']); ?>"><?php echo esc_html($link['title']); ?></a>
+		<a class="link-node" href="<?php echo esc_url( $link['url']); ?>" target="<?php echo esc_attr( $link['target']); ?>"><?php echo esc_html( $link['title']); ?></a>
 		<?php foreach( $link as $k => $v ): ?>
-			<?php acf_hidden_input(array( 'class' => "input-$k", 'name' => $field['name'] . "[$k]", 'value' => $v )); ?>
+			<?php acf_hidden_input(array( 'class' => "input-$k", 'name' => $field['name'] . "[$k]", 'value' => $v ) ); ?>
 		<?php endforeach; ?>
 	</div>
 	
-	<a href="#" class="button" data-name="add" target=""><?php _e('Select Link', 'acf'); ?></a>
+	<a href="#" class="button" data-name="add" target=""><?php _e( 'Select Link', 'acf' ); ?></a>
 	
 	<div class="link-wrap">
-		<span class="link-title"><?php echo esc_html($link['title']); ?></span>
-		<a class="link-url" href="<?php echo esc_url($link['url']); ?>" target="_blank"><?php echo esc_html($link['url']); ?></a>
-		<i class="acf-icon -link-ext acf-js-tooltip" title="<?php _e('Opens in a new window/tab', 'acf'); ?>"></i><?php
-		?><a class="acf-icon -pencil -clear acf-js-tooltip" data-name="edit" href="#" title="<?php _e('Edit', 'acf'); ?>"></a><?php
-		?><a class="acf-icon -cancel -clear acf-js-tooltip" data-name="remove" href="#" title="<?php _e('Remove', 'acf'); ?>"></a>
+		<span class="link-title"><?php echo esc_html( $link['title']); ?></span>
+		<a class="link-url" href="<?php echo esc_url( $link['url']); ?>" target="_blank"><?php echo esc_html( $link['url']); ?></a>
+		<i class="acf-icon -link-ext acf-js-tooltip" title="<?php _e( 'Opens in a new window/tab', 'acf' ); ?>"></i><?php
+		?><a class="acf-icon -pencil -clear acf-js-tooltip" data-name="edit" href="#" title="<?php _e( 'Edit', 'acf' ); ?>"></a><?php
+		?><a class="acf-icon -cancel -clear acf-js-tooltip" data-name="remove" href="#" title="<?php _e( 'Remove', 'acf' ); ?>"></a>
 	</div>
 	
 </div>
@@ -163,16 +163,16 @@ class acf_field_link extends acf_field {
 		
 		// return_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Return Value','acf'),
-			'instructions'	=> __('Specify the returned value on front end','acf'),
+			'label'			=> __( 'Return Value','acf' ),
+			'instructions'	=> __( 'Specify the returned value on front end','acf' ),
 			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'layout'		=> 'horizontal',
 			'choices'		=> array(
-				'array'			=> __("Link Array",'acf'),
-				'url'			=> __("Link URL",'acf'),
+				'array'			=> __("Link Array",'acf' ),
+				'url'			=> __("Link URL",'acf' ),
 			)
-		));
+		) );
 						
 	}
 	
@@ -196,7 +196,7 @@ class acf_field_link extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// bail early if no value
-		if( empty($value) ) return $value;
+		if ( empty( $value) ) return $value;
 		
 		
 		// get link
@@ -204,7 +204,7 @@ class acf_field_link extends acf_field {
 		
 		
 		// format value
-		if( $field['return_format'] == 'url' ) {
+		if ( $field['return_format'] == 'url' ) {
 			
 			return $link['url'];
 			
@@ -233,11 +233,11 @@ class acf_field_link extends acf_field {
 	function validate_value( $valid, $value, $field, $input ){
 		
 		// bail early if not required
-		if( !$field['required'] ) return $valid;
+		if ( ! $field['required'] ) return $valid;
 		
 		
 		// URL is required
-		if( empty($value) || empty($value['url']) ) {
+		if ( empty( $value) || empty( $value['url']) ) {
 			
 			return false;
 			
@@ -269,7 +269,7 @@ class acf_field_link extends acf_field {
 	function update_value( $value, $post_id, $field ) {
 		
 		// Check if value is an empty array and convert to empty string.
-		if( empty($value) || empty($value['url']) ) {
+		if ( empty( $value) || empty( $value['url']) ) {
 			$value = "";
 		}
 		

@@ -1,8 +1,8 @@
 <?php 
 
-if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
-if( ! class_exists('ACF_Data') ) :
+if ( ! class_exists( 'ACF_Data' ) ) :
 
 class ACF_Data {
 	
@@ -10,10 +10,10 @@ class ACF_Data {
 	var $cid = '';
 	
 	/** @var array Storage for data. */
-	var $data = array();
+	var $data = [];
 	
 	/** @var array Storage for data aliases. */
-	var $aliases = array();
+	var $aliases = [];
 	
 	/** @var bool Enables unique data per site. */
 	var $multisite = false;
@@ -35,7 +35,7 @@ class ACF_Data {
 		$this->cid = acf_uniqid();
 		
 		// Set data.
-		if( $data ) {
+		if ( $data ) {
 			$this->set( $data );
 		}
 		
@@ -91,7 +91,7 @@ class ACF_Data {
 	 * @return	type Description.
 	 */
 	function _key( $name = '' ) {
-		return isset($this->aliases[ $name ]) ? $this->aliases[ $name ] : $name;
+		return isset( $this->aliases[ $name ]) ? $this->aliases[ $name ] : $name;
 	}
 	
 	/**
@@ -106,8 +106,8 @@ class ACF_Data {
 	 * @return	boolean
 	 */
 	function has( $name = '' ) {
-		$key = $this->_key($name);
-		return isset($this->data[ $key ]);
+		$key = $this->_key( $name);
+		return isset( $this->data[ $key ]);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ class ACF_Data {
 	 * @return	type Description.
 	 */
 	function is( $key = '' ) {
-		return isset($this->data[ $key ]);
+		return isset( $this->data[ $key ]);
 	}
 	
 	/**
@@ -139,13 +139,13 @@ class ACF_Data {
 	function get( $name = false ) {
 		
 		// Get all.
-		if( $name === false ) {
+		if ( $name === false ) {
 			return $this->data;
 		
 		// Get specific.
 		} else {
-			$key = $this->_key($name);
-			return isset($this->data[ $key ]) ? $this->data[ $key ] : null;
+			$key = $this->_key( $name);
+			return isset( $this->data[ $key ]) ? $this->data[ $key ] : null;
 		}
 	}
 	
@@ -179,8 +179,8 @@ class ACF_Data {
 	function set( $name = '', $value = null ) {
 		
 		// Set multiple.
-		if( is_array($name) ) {
-			$this->data = array_merge($this->data, $name);
+		if ( is_array( $name) ) {
+			$this->data = array_merge( $this->data, $name);
 			
 		// Set single.	
 		} else {
@@ -243,8 +243,8 @@ class ACF_Data {
 	 * @return	void
 	 */
 	function reset() {
-		$this->data = array();
-		$this->aliases = array();
+		$this->data = [];
+		$this->aliases = [];
 	}
 	
 	/**
@@ -318,19 +318,19 @@ class ACF_Data {
 	function switch_site( $site_id, $prev_site_id ) {
 		
 		// Bail early if not multisite compatible.
-		if( !$this->multisite ) {
+		if ( ! $this->multisite ) {
 			return;
 		}
 		
 		// Bail early if no change in blog ID.
-		if( $site_id === $prev_site_id ) {
+		if ( $site_id === $prev_site_id ) {
 			return;
 		}
 		
 		// Create storage.
-		if( !isset($this->site_data) ) {
-			$this->site_data = array();
-			$this->site_aliases = array();
+		if ( ! isset( $this->site_data) ) {
+			$this->site_data = [];
+			$this->site_aliases = [];
 		}
 		
 		// Save state.
@@ -338,11 +338,11 @@ class ACF_Data {
 		$this->site_aliases[ $prev_site_id ] = $this->aliases;
 		
 		// Reset state.
-		$this->data = array();
-		$this->aliases = array();
+		$this->data = [];
+		$this->aliases = [];
 		
 		// Load state.
-		if( isset($this->site_data[ $site_id ]) ) {
+		if ( isset( $this->site_data[ $site_id ]) ) {
 			$this->data = $this->site_data[ $site_id ];
 			$this->aliases = $this->site_aliases[ $site_id ];
 			unset( $this->site_data[ $site_id ] );
