@@ -15,3 +15,8 @@
  * the plugin folder. However, this file can be deleted and the
  * main plugin file be renamed as `index.php`.
  */
+
+// Stop if this file is called directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
