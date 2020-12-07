@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0.0
  * @access public
  */
-class Post_Type_Tax {
+class Type_Tax {
 
 	/**
 	 * Class instance

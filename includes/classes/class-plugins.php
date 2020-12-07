@@ -35,7 +35,7 @@ class Plugins {
 	/**
 	 * Include plugins file from system
 	 */
-	public function plugins() {
+	protected function plugins() {
 
 		/**
 		 * Get plugins path
