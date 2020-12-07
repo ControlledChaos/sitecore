@@ -275,25 +275,30 @@ function sitecore() {
 	$namespace = __NAMESPACE__ . '\Classes';
 
 	// Classes as variables.
-	$type_tax = $namespace . '\Type_Tax';
-	$plugins = $namespace . '\Plugins';
-	$admin = $namespace . '\Admin';
+	$type_tax  = $namespace . '\Type_Tax';
+	$plugins   = $namespace . '\Plugins';
+	$admin     = $namespace . '\Admin';
 	$dashboard = $namespace . '\Dashboard';
+	$admin     = $namespace . '\Admin';
+	$frontend  = $namespace . '\Frontend';
 
-	// Instantiate plugin classes.
+	// Instantiate general plugin classes.
 	new $type_tax;
 	new $plugins;
 
 	// Instantiate backend plugin classes.
 	if ( is_admin() ) {
-
-		// Run the page header on all screens.
 		new $admin;
 
 		// Run the dashboard only on the backend index screen.
 		if ( 'index.php' == $pagenow ) {
 			new $dashboard;
 		}
+	}
+
+	// Instantiate frontend plugin classes.
+	if ( ! is_admin() ) {
+		new $frontend;
 	}
 }
 
