@@ -1,11 +1,15 @@
 <?php
 /**
- * Plugin Name: Advanced Custom Fields: Extended
- * Description: Enhancement Suite which improves Advanced Custom Fields administration
- * Version:     0.8.7.4
- * Author:      ACF Extended
- * Author URI:  https://www.acf-extended.com
- * Text Domain: acfe
+ * Advanced Custom Fields: Extended
+ *
+ * "Enhancement Suite which improves Advanced Custom Fields administration".
+ *
+ * @package    Site_Core
+ * @subpackage Vendor
+ * @category   Plugins
+ * @since      1.0.0
+ * @author     ACF Extended
+ * @link       https://www.acf-extended.com
  */
 
 if (! defined( 'ABSPATH' ) )
