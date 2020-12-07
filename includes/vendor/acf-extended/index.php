@@ -19,11 +19,12 @@
 /**
  * Advanced Custom Fields: Extended
  *
- * "Enhancement Suite which improves Advanced Custom Fields administration".
+ * "Enhancement Suite which improves Advanced Custom Fields administration."
  *
  * @package    Site_Core
  * @subpackage Vendor
  * @category   Plugins
+ * @version    x.x.x
  * @since      1.0.0
  * @author     ACF Extended
  * @link       https://www.acf-extended.com

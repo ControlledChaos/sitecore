@@ -1,14 +1,17 @@
 <?php
-/*
-Plugin Name: Advanced Custom Fields
-Plugin URI: https://www.advancedcustomfields.com
-Description: Customize WordPress with powerful, professional and intuitive fields.
-Version: 5.9.3
-Author: Elliot Condon
-Author URI: https://www.advancedcustomfields.com
-Text Domain: acf
-Domain Path: /lang
-*/
+/**
+ * Advanced Custom Fields
+ *
+ * "Customize WordPress with powerful, professional and intuitive fields."
+ *
+ * @package    Site_Core
+ * @subpackage Vendor
+ * @category   Plugins
+ * @version    5.9.3
+ * @since      1.0.0
+ * @author     Elliot Condon
+ * @link       https://www.advancedcustomfields.com
+ */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 

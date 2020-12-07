@@ -7,6 +7,7 @@
  * @package    Site_Core
  * @subpackage Vendor
  * @category   Plugins
+ * @version    0.8.7.4
  * @since      1.0.0
  * @author     ACF Extended
  * @link       https://www.acf-extended.com
