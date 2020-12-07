@@ -250,7 +250,7 @@ if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
 /**
  * Core plugin function
  *
- * Loads PHP classes.
+ * Loads and runs PHP classes.
  *
  * @since  1.0.0
  * @access public
