@@ -175,10 +175,7 @@ class Plugins {
 			)
 			&& SCP_USE_ACFE
 		) {
-			$acf_extend = new ACF_Extend;
-		} else {
-			$acf_extend = null;
+			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 		}
-		return $acf_extend;
 	}
 }
