@@ -45,7 +45,20 @@ class Init {
 		 *
 		 * Used to check for active plugins with the `is_plugin_active` function.
 		 */
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		// Compatibility with ClassicPress and WordPress.
+		if ( file_exists( ABSPATH . 'wp-admin/includes/plugin.php' ) ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		// Compatibility with the antibrand system.
+		} elseif ( defined( 'APP_INC_PATH' ) && file_exists( APP_INC_PATH . '/backend/plugin.php' ) ) {
+			include_once( APP_INC_PATH . '/backend/plugin.php' );
+		}
+
+		// Stop here if the plugin functions file can not be accessed.
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			return;
+		}
 
 		/**
 		 * Compatability constants
