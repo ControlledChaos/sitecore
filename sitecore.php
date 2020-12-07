@@ -259,14 +259,22 @@ if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
  */
 function sitecore() {
 
-	// Register plugin classes.
-	require_once SCP_PATH . 'includes/autoload.php';
+	// Autoload class files.
+	spl_autoload_register(
+		function () {
+			foreach ( glob( SCP_PATH . 'includes/classes/class-*.php' ) as $filename ) {
+				require_once $filename;
+			}
+		}
+	);
 
 	// Get the filename of the current page.
 	global $pagenow;
 
 	// Instantiate plugin classes.
-	$init = new Classes\Init;
+	$scp_init = __NAMESPACE__ . '\Classes\Init';
+
+	new $scp_init;
 
 	// Instantiate backend plugin classes.
 	if ( is_admin() ) {
