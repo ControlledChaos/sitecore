@@ -2,7 +2,7 @@
 /**
  * Advanced Custom Fields: Extended
  *
- * "Enhancement Suite which improves Advanced Custom Fields administration".
+ * "Enhancement Suite which improves Advanced Custom Fields administration."
  *
  * @package    Site_Core
  * @subpackage Vendor
