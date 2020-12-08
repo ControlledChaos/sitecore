@@ -84,6 +84,8 @@ use SiteCore\Classes\Vendor as Vendor;
  *    Find `Greg Sweet <greg@ccdzine.com>` and replace with your name and
  *    email address or those of your organization.
  *
+ * Edit the README file in the root directory as needed, or delete it.
+ *
  * Finally, remember to modify or remove the instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
