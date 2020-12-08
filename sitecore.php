@@ -138,7 +138,7 @@ define( 'SCP_DOMAIN', 'sitecore' );
  * @since  1.0.0
  * @return string Returns the text domain of the plugin.
  */
-if ( defined( 'SCP_NAME' ) ) {
+if ( ! defined( 'SCP_NAME' ) ) {
 	$plugin_name = esc_html__( 'Site Core', SCP_DOMAIN );
 	define( 'SCP_NAME', $plugin_name );
 } else {
