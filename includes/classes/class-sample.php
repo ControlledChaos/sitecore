@@ -3,8 +3,8 @@
  * Sample/starter class
  *
  * @package    Site_Core
- * @subpackage Includes
- * @category   Classes
+ * @subpackage Classes
+ * @category   General
  * @access     public
  * @since      1.0.0
  */

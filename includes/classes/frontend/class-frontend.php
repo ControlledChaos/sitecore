@@ -4,7 +4,7 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   Includes
+ * @category   Front
  * @access     public
  * @since      1.0.0
  */
