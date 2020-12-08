@@ -47,17 +47,6 @@ class Register_Sample extends Register_Type {
 	protected $plural = 'sample posts';
 
 	/**
-	 * Rewrite rules
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    array The array of rules.
-	 */
-	protected $rewrite = [
-		'slug' => 'sample'
-	];
-
-	/**
 	 * Menu icon
 	 *
 	 * @since  1.0.0
@@ -77,5 +66,24 @@ class Register_Sample extends Register_Type {
 
 		// Run the parent constructor method.
 		parent :: __construct();
+	}
+
+	/**
+	 * Rewrite rules
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array Returns the array of rewrite rules.
+	 */
+	public function rewrite() {
+
+		$rewrite = [
+			'slug'       => 'sample',
+			'with_front' => true,
+			'feeds'      => true,
+			'pages'      => true
+		];
+
+		return $rewrite;
 	}
 }

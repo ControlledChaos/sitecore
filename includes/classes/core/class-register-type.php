@@ -105,40 +105,72 @@ class Register_Type {
 	protected $exclude_from_search = false;
 
 	/**
-	 * Capabilities
+	 * Publicly queryable
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    array The array of capabilities.
+	 * @var    boolean Whether the post type is
+	 *                 publicly queryable.
 	 */
-	protected $capabilities = [];
+	protected $publicly_queryable = true;
 
 	/**
-	 * Supported taxonomies
+	 * Show user interface
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    array The array of supported taxonomies.
+	 * @var    boolean Whether the post type displays
+	 *                 a user interface.
 	 */
-	protected $taxonomies = [
-		'category',
-		'post_tag'
-	];
+	protected $show_ui = true;
 
 	/**
-	 * Rewrite rules
+	 * Show in admin menu
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    array The array of rules.
+	 * @var    boolean Whether the post type displays
+	 *                 links in the admin menu.
 	 */
-	protected $rewrite = [
-		'slug'       => '',
-		'with_front' => true,
-		'feeds'      => true,
-		'pages'      => true,
-		'ep_mask'    => EP_PERMALINK
-	];
+	protected $show_in_menu = true;
+
+	/**
+	 * Show in navigation menus
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type displays
+	 *                 in the navigation menus interface.
+	 */
+	protected $show_in_nav_menus = true;
+
+	/**
+	 * Show in admin/user toolbar
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type displays
+	 *                 links in the admin/user toolbar.
+	 */
+	protected $show_in_admin_bar = true;
+
+	/**
+	 * Show in REST API
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to show in REST API.
+	 */
+	protected $show_in_rest = false;
+
+	/**
+	 * REST controller class
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string REST API Controller class name.
+	 */
+	protected $rest_controller_class = 'WP_REST_Posts_Controller';
 
 	/**
 	 * Menu position
@@ -168,6 +200,34 @@ class Register_Type {
 	protected $menu_icon = 'dashicons-admin-post';
 
 	/**
+	 * Capability type
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string The capabilitiy type.
+	 */
+	protected $capability_type = 'post';
+
+	/**
+	 * Capabilities
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array The array of capabilities.
+	 */
+	protected $capabilities = [];
+
+	/**
+	 * Map meta cap
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to use the internal default
+	 *                 meta capability handling.
+	 */
+	protected $map_meta_cap = true;
+
+	/**
 	 * Supports
 	 *
 	 * The built in fields/metaboxes supported by the post type.
@@ -191,13 +251,73 @@ class Register_Type {
 	];
 
 	/**
-	 * Show in REST API
+	 * Register meta box callback
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    boolean Whether to show in REST API.
+	 * @var string Provide a callback function that sets up
+	 *             the meta boxes for the edit form.
+	 *             Do remove_meta_box() and add_meta_box()
+	 *             calls in the callback.
 	 */
-	protected $show_in_rest = false;
+	protected $register_meta_box_cb = null;
+
+	/**
+	 * Supported taxonomies
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array The array of supported taxonomies.
+	 */
+	protected $taxonomies = [
+		'category',
+		'post_tag'
+	];
+
+	/**
+	 * Has archive
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether there should be post type archives,
+	 *                 or if a string, the archive slug to use.
+	 *                 Will generate the proper rewrite rules if
+	 *                 $rewrite is enabled.
+	 */
+	protected $has_archive = true;
+
+	/**
+	 * Can_export
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to allow this post type to be exported.
+	 */
+	protected $can_export = true;
+
+	/**
+	 * Delete with user
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to delete posts of this type when deleting a user.
+	 *                 If true, posts of this type belonging to the user will be
+	 *                 moved to Trash when then user is deleted. If false, posts
+	 *                 of this type belonging to the user will *not* be trashed
+	 *                 or deleted. If not set (the default), posts are trashed
+	 *                 if post_type_supports('author'). Otherwise posts are not
+	 *                 trashed or deleted.
+	 */
+	protected $delete_with_user = null;
+
+	/**
+	 * Builtin
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean True if this post type is a native or "built-in" post_type.
+	 */
+	protected $_builtin = false;
 
 	/**
 	 * Constructor method
@@ -248,29 +368,28 @@ class Register_Type {
 			'public'                => $this->public,
 			'hierarchical'          => $this->hierarchical,
 			'exclude_from_search'   => $this->exclude_from_search,
-			'publicly_queryable'    => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'show_in_nav_menus'     => true,
-			'show_in_admin_bar'     => true,
+			'publicly_queryable'    => $this->publicly_queryable,
+			'show_ui'               => $this->show_ui,
+			'show_in_menu'          => $this->show_in_menu,
+			'show_in_nav_menus'     => $this->show_in_nav_menus,
+			'show_in_admin_bar'     => $this->show_in_admin_bar,
 			'show_in_rest'          => $this->show_in_rest,
 			'rest_base'             => $this->type_key . '_rest_api',
-			'rest_controller_class' => 'WP_REST_Posts_Controller',
+			'rest_controller_class' => $this->rest_controller_class,
 			'menu_position'         => $this->menu_position,
 			'menu_icon'             => $this->menu_icon,
-			'capability_type'       => 'post',
+			'capability_type'       => $this->capability_type,
 			'capabilities'          => $this->capabilities,
-			'map_meta_cap'          => true,
+			'map_meta_cap'          => $this->map_meta_cap,
 			'supports'              => $this->supports,
-			'register_meta_box_cb'  => '',
+			'register_meta_box_cb'  => $this->register_meta_box_cb,
 			'taxonomies'            => $this->taxonomies,
-			'has_archive'           => true,
-			'rewrite'               => $this->rewrite,
+			'has_archive'           => $this->has_archive,
+			'rewrite'               => $this->rewrite(),
 			'query_var'             => $this->type_key,
-			'menu_position'         => $this->menu_position,
-			'can_export'            => true,
-			'delete_with_user'      => null,
-			'_builtin'              => false,
+			'can_export'            => $this->can_export,
+			'delete_with_user'      => $this->delete_with_user,
+			'_builtin'              => $this->_builtin,
 			'_edit_link'            => 'post.php?post=%d'
 		];
 
@@ -319,5 +438,24 @@ class Register_Type {
 		];
 
 		return $labels;
+	}
+
+	/**
+	 * Rewrite rules
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array Returns the array of rewrite rules.
+	 */
+	public function rewrite() {
+
+		$rewrite = [
+			'slug'       => $this->type_key,
+			'with_front' => true,
+			'feeds'      => true,
+			'pages'      => true
+		];
+
+		return $rewrite;
 	}
 }
