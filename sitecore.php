@@ -129,6 +129,8 @@ define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 /**
  * Constant: Text domain
  *
+ * Remember to freplace in the plugin header above.
+ *
  * @since  1.0.0
  * @return string Returns the text domain of the plugin.
  */
@@ -136,6 +138,8 @@ define( 'SCP_DOMAIN', 'sitecore' );
 
 /**
  * Constant: Plugin name
+ *
+ * Remember to freplace in the plugin header above.
  *
  * @since  1.0.0
  * @return string Returns the text domain of the plugin.
@@ -194,10 +198,10 @@ if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
  */
 
 // Get the plugin activation class.
-require_once SCP_PATH . 'includes/classes/activate/class-activate.php';
+include_once SCP_PATH . 'includes/classes/activate/class-activate.php';
 
 // Get the plugin deactivation class.
-require_once SCP_PATH . 'includes/classes/activate/class-deactivate.php';
+include_once SCP_PATH . 'includes/classes/activate/class-deactivate.php';
 
 /**
  * Register the activaction & deactivation hooks
@@ -289,15 +293,25 @@ function sitecore() {
 	 * Autoload class files
 	 *
 	 * Automatically loads class files from the
-	 * `includes/classes` directory provided that
-	 * they are prefixed with `class-`.
+	 * `includes/classes` directory and immediate
+	 * subdirectories, provided that they are
+	 * prefixed with `class-`.
 	 *
 	 * @since  1.0.0
 	 * @example `class-abc-xyz.php`
 	 */
 	spl_autoload_register(
 		function() {
-		$dir_file = SCP_PATH .  'includes/classes/' . "{/,*/}" . 'class-*.php';
+
+			/**
+			 * Path to class files
+			 *
+			 * This includes main directory (`/`) and any
+			 * subdirectories (`* /`).
+			 */
+			$dir_file = SCP_PATH .  'includes/classes/' . "{/,*/}" . 'class-*.php';
+
+			// Include each file matching the path patterns.
 			foreach ( glob( $dir_file, GLOB_BRACE ) as $class_file ) {
 				if ( is_file( $class_file ) && is_readable( $class_file ) ) {
 					include_once $class_file;
