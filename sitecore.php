@@ -21,10 +21,11 @@
 
 namespace SiteCore;
 use SiteCore\Classes as General;
+use SiteCore\Classes\Activate as Activate;
 use SiteCore\Classes\Core as Core;
-use SiteCore\Classes\Vendor as Vendor;
 use SiteCore\Classes\Admin as Admin;
 use SiteCore\Classes\Front as Front;
+use SiteCore\Classes\Vendor as Vendor;
 
 /**
  * License & Warranty
@@ -220,7 +221,7 @@ require_once SCP_PATH . 'includes/classes/activate/class-deactivate.php';
  * @return void
  */
 function activate_plugin() {
-	activation_class();
+	Activate\activation_class();
 }
 activate_plugin();
 
@@ -234,7 +235,7 @@ activate_plugin();
  * @return void
  */
 function deactivate_plugin() {
-	deactivation_class();
+	Activate\deactivation_class();
 }
 deactivate_plugin();
 

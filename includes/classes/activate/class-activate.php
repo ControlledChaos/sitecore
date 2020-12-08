@@ -9,7 +9,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore;
+namespace SiteCore\Classes\Activate;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
