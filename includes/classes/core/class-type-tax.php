@@ -9,7 +9,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes;
+namespace SiteCore\Classes\Core;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -75,22 +75,9 @@ class Type_Tax {
 		// Get the current screen as a variable.
 		$screen = get_current_screen();
 
-		// Post type: post.
-		if ( 'post' == $screen->post_type ) {
-			$post_title = esc_html__( 'Post Title', SCP_DOMAIN );
-
-		// Post type: page.
-		} elseif ( 'page' == $screen->post_type ) {
-			$post_title = esc_html__( 'Page Title', SCP_DOMAIN );
-
-		// Post type: attachment.
-		} elseif ( $screen->post_type == 'attachment' ) {
-			$post_title = null;
-
-		// Post type: custom, unidentified.
-		} else {
-			$post_title = esc_html__( 'Enter Title', SCP_DOMAIN );
-		}
+		$post_type_obj = get_post_type_object( get_post_type() );
+		$name = $post_type_obj->labels->singular_name;
+		$post_title = esc_html__( $name . ' Title', SCP_DOMAIN );
 
 		// Apply a filter conditional modification.
 		$title = apply_filters( 'ccp_post_title_placeholders', $post_title );

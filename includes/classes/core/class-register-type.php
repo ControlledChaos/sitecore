@@ -24,7 +24,8 @@
  * @see includes/classes/class-register-sample.php
  */
 
-namespace SiteCore\Classes;
+declare( strict_types = 1 );
+namespace SiteCore\Classes\Core;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,22 +38,16 @@ class Register_Type {
 	 * Post type
 	 *
 	 * Maximum 20 characters. May only contain lowercase alphanumeric
-	 * characters, dashes, and underscores.
+	 * characters, dashes, and underscores. Dashes discouraged.
+	 *
+	 * @example 'book'
+	 * @example 'car_part'
 	 *
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    string The database name of the post type.
 	 */
 	protected $type_key = '';
-
-	/**
-	 * Capabilities
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    array The array of capabilities.
-	 */
-	protected $capabilities = [];
 
 	/**
 	 * Singular name
@@ -80,6 +75,43 @@ class Register_Type {
 	 * @var    string The post type description.
 	 */
 	protected $description = '';
+
+	/**
+	 * Public type
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type is public.
+	 */
+	protected $public = true;
+
+	/**
+	 * Hierarchical
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type is hierarchical.
+	 */
+	protected $hierarchical = false;
+
+	/**
+	 * Exclude from search
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type should be
+	 *                 excluded from search.
+	 */
+	protected $exclude_from_search = false;
+
+	/**
+	 * Capabilities
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array The array of capabilities.
+	 */
+	protected $capabilities = [];
 
 	/**
 	 * Supported taxonomies
@@ -159,6 +191,15 @@ class Register_Type {
 	];
 
 	/**
+	 * Show in REST API
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to show in REST API.
+	 */
+	protected $show_in_rest = false;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -204,15 +245,15 @@ class Register_Type {
 			'label'                 => __( ucwords( $this->plural ), SCP_DOMAIN ),
 			'labels'                => $this->labels(),
 			'description'           => __( ucfirst( $this->description ), SCP_DOMAIN ),
-			'public'                => true,
-			'hierarchical'          => false,
-			'exclude_from_search'   => false,
+			'public'                => $this->public,
+			'hierarchical'          => $this->hierarchical,
+			'exclude_from_search'   => $this->exclude_from_search,
 			'publicly_queryable'    => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'show_in_nav_menus'     => true,
 			'show_in_admin_bar'     => true,
-			'show_in_rest'          => false,
+			'show_in_rest'          => $this->show_in_rest,
 			'rest_base'             => $this->type_key . '_rest_api',
 			'rest_controller_class' => 'WP_REST_Posts_Controller',
 			'menu_position'         => $this->menu_position,

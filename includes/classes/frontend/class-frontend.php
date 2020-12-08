@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin class
+ * Frontend class
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -9,14 +9,14 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes;
+namespace SiteCore\Classes\Front;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Dashboard {
+class Frontend {
 
 	/**
 	 * Constructor method

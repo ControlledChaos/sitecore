@@ -9,7 +9,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes;
+namespace SiteCore\Classes\Vendor;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

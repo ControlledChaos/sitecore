@@ -20,6 +20,11 @@
  */
 
 namespace SiteCore;
+use SiteCore\Classes as General;
+use SiteCore\Classes\Core as Core;
+use SiteCore\Classes\Vendor as Vendor;
+use SiteCore\Classes\Admin as Admin;
+use SiteCore\Classes\Front as Front;
 
 /**
  * License & Warranty
@@ -186,10 +191,10 @@ if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
  */
 
 // Get the plugin activation class.
-require_once SCP_PATH . 'includes/classes/class-activate.php';
+require_once SCP_PATH . 'includes/classes/activate/class-activate.php';
 
 // Get the plugin deactivation class.
-require_once SCP_PATH . 'includes/classes/class-deactivate.php';
+require_once SCP_PATH . 'includes/classes/activate/class-deactivate.php';
 
 /**
  * Register the activaction & deactivation hooks
@@ -263,6 +268,26 @@ function sitecore() {
 	global $pagenow;
 
 	/**
+	 * Get pluggable path
+	 *
+	 * Used to check for the `is_user_logged_in` function.
+	 */
+
+	// Compatibility with ClassicPress and WordPress.
+	if ( file_exists( ABSPATH . 'wp-includes/pluggable.php' ) ) {
+		include_once( ABSPATH . 'wp-includes/pluggable.php' );
+
+	// Compatibility with the antibrand system.
+	} elseif ( defined( 'APP_INC_PATH' ) && file_exists( APP_INC_PATH . '/pluggable.php' ) ) {
+		include_once( APP_INC_PATH . '/pluggable.php' );
+	}
+
+	// Stop here if the plugin functions file can not be accessed.
+	if ( ! function_exists( 'is_user_logged_in' ) ) {
+		return;
+	}
+
+	/**
 	 * Autoload class files
 	 *
 	 * Automatically loads class files from the
@@ -273,41 +298,37 @@ function sitecore() {
 	 * @example `class-abc-xyz.php`
 	 */
 	spl_autoload_register(
-		function () {
-			foreach ( glob( SCP_PATH . 'includes/classes/class-*.php' ) as $filename ) {
-				require_once $filename;
+		function() {
+		$dir_file = SCP_PATH .  'includes/classes/' . "{/,*/}" . 'class-*.php';
+			foreach ( glob( $dir_file, GLOB_BRACE ) as $class_file ) {
+				if ( is_file( $class_file ) && is_readable( $class_file ) ) {
+					include_once $class_file;
+				}
 			}
 		}
 	);
 
-	// Classes namespace variable.
-	$namespace = __NAMESPACE__ . '\Classes';
-
-	// Classes as variables.
-	$type_tax  = $namespace . '\Type_Tax';
-	$plugins   = $namespace . '\Plugins';
-	$admin     = $namespace . '\Admin';
-	$dashboard = $namespace . '\Dashboard';
-	$admin     = $namespace . '\Admin';
-	$frontend  = $namespace . '\Frontend';
-
 	// Instantiate general plugin classes.
-	new $type_tax;
-	new $plugins;
+	new Core\Type_Tax;
+	new Vendor\Plugins;
 
 	// Instantiate backend plugin classes.
 	if ( is_admin() ) {
-		new $admin;
+		new Admin\Admin;
 
 		// Run the dashboard only on the backend index screen.
 		if ( 'index.php' == $pagenow ) {
-			new $dashboard;
+			new Admin\Dashboard;
 		}
 	}
 
 	// Instantiate frontend plugin classes.
 	if ( ! is_admin() ) {
-		new $frontend;
+		new Front\Frontend;
+	}
+
+	if ( is_user_logged_in() ) {
+		new General\User_Toolbar;
 	}
 }
 
