@@ -20,6 +20,8 @@
  */
 
 namespace SiteCore;
+
+// Alias namespaces.
 use SiteCore\Classes as General;
 use SiteCore\Classes\Activate as Activate;
 use SiteCore\Classes\Core as Core;
