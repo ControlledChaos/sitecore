@@ -262,7 +262,16 @@ function sitecore() {
 	// Get the filename of the current page.
 	global $pagenow;
 
-	// Autoload class files.
+	/**
+	 * Autoload class files
+	 *
+	 * Automatically loads class files from the
+	 * `includes/classes` directory provided that
+	 * they are prefixed with `class-`.
+	 *
+	 * @since  1.0.0
+	 * @example `class-abc-xyz.php`
+	 */
 	spl_autoload_register(
 		function () {
 			foreach ( glob( SCP_PATH . 'includes/classes/class-*.php' ) as $filename ) {
