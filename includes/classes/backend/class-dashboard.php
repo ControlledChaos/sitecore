@@ -82,8 +82,9 @@ class Dashboard {
 			// Otherwise just the count and post type name.
 			} else {
 				echo sprintf(
-					'<li class="post-count %1s-count">%2s %3s</li>',
+					'<li class="post-count %s-count"><icon class="dashicons %s"></icon> %s %s</li>',
 					$post_type->name,
+					$post_type->menu_icon,
 					$number,
 					$name
 				);
