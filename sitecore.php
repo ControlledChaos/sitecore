@@ -282,11 +282,6 @@ function sitecore() {
 		include_once( APP_INC_PATH . '/pluggable.php' );
 	}
 
-	// Stop here if the plugin functions file can not be accessed.
-	if ( ! function_exists( 'is_user_logged_in' ) ) {
-		return;
-	}
-
 	/**
 	 * Autoload class files
 	 *
@@ -327,7 +322,7 @@ function sitecore() {
 		new Front\Frontend;
 	}
 
-	if ( is_user_logged_in() ) {
+	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
 		new General\User_Toolbar;
 	}
 }
