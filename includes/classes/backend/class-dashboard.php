@@ -82,6 +82,11 @@ class Dashboard {
 			// Otherwise just the count and post type name.
 			} else {
 				echo sprintf(
+					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: inherit; }</style>',
+					$post_type->name . '-count',
+					$post_type->name . '-count'
+				);
+				echo sprintf(
 					'<li class="post-count %s-count"><icon class="dashicons %s"></icon> %s %s</li>',
 					$post_type->name,
 					$post_type->menu_icon,
