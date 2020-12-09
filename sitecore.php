@@ -25,6 +25,7 @@ namespace SiteCore;
 use SiteCore\Classes as General;
 use SiteCore\Classes\Activate as Activate;
 use SiteCore\Classes\Core as Core;
+use SiteCore\Classes\Media as Media;
 use SiteCore\Classes\Admin as Admin;
 use SiteCore\Classes\Front as Front;
 use SiteCore\Classes\Vendor as Vendor;
@@ -340,6 +341,7 @@ function sitecore() {
 	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
 		new Core\Editor_Options;
 	}
+	new Media\Media;
 	new Core\Type_Tax;
 	new Vendor\Plugins;
 
