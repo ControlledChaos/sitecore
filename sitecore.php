@@ -304,7 +304,6 @@ function sitecore() {
 	 */
 	spl_autoload_register(
 		function() {
-
 			/**
 			 * Path to class files
 			 *
