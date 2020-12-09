@@ -171,7 +171,7 @@ class Plugins {
 			(
 				! class_exists( 'ACFE' ) ||
 				! is_plugin_active( 'acf-extended/acf-extended.php' ) ||
-				! is_plugin_active( 'acf-extended-pro/acf-extended.php' )
+				! is_plugin_active( 'acf-extended-pro/acf-extended-pro.php' )
 			)
 			&& SCP_USE_ACFE
 		) {
