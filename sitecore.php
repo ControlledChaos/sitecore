@@ -277,6 +277,21 @@ function sitecore() {
 	global $pagenow;
 
 	/**
+	 * Get plugins path
+	 *
+	 * Used to check for active plugins with the `is_plugin_active` function.
+	 */
+
+	// Compatibility with ClassicPress and WordPress.
+	if ( file_exists( ABSPATH . 'wp-admin/includes/plugin.php' ) ) {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+	// Compatibility with the antibrand system.
+	} elseif ( defined( 'APP_INC_PATH' ) && file_exists( APP_INC_PATH . '/backend/plugin.php' ) ) {
+		include_once( APP_INC_PATH . '/backend/plugin.php' );
+	}
+
+	/**
 	 * Get pluggable path
 	 *
 	 * Used to check for the `is_user_logged_in` function.
@@ -322,6 +337,9 @@ function sitecore() {
 	);
 
 	// Instantiate general plugin classes.
+	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
+		new Core\Editor_Options;
+	}
 	new Core\Type_Tax;
 	new Vendor\Plugins;
 
