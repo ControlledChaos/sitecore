@@ -77,6 +77,3 @@ class Register_Media_Type extends Register_Tax {
 
 	}
 }
-
-// Run the class.
-new Register_Media_Type;
