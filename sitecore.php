@@ -315,7 +315,6 @@ function sitecore() {
 		new Core\Editor_Options;
 	}
 	new Core\Type_Tax;
-	new Core\Register_Sample_Tax;
 	new Core\Register_Media_Type;
 
 	// Instantiate media classes.
