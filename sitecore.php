@@ -307,45 +307,24 @@ function sitecore() {
 		include_once( APP_INC_PATH . '/pluggable.php' );
 	}
 
-	/**
-	 * Autoload class files
-	 *
-	 * Automatically loads class files from the
-	 * `includes/classes` directory and immediate
-	 * subdirectories, provided that they are
-	 * prefixed with `class-`.
-	 *
-	 * @since  1.0.0
-	 * @example `class-abc-xyz.php`
-	 */
-	spl_autoload_register(
-		function() {
-			/**
-			 * Path to class files
-			 *
-			 * This includes main directory (`/`) and any
-			 * subdirectories (`* /`).
-			 */
-			$dir_file = SCP_PATH .  'includes/classes' . "{/,/*/}" . 'class-*.php';
+	// Register plugin classes.
+	require SCP_PATH . 'includes/autoloader.php';
 
-			// Include each file matching the path patterns.
-			foreach ( glob( $dir_file, GLOB_BRACE ) as $class_file ) {
-				if ( is_file( $class_file ) && is_readable( $class_file ) ) {
-					require_once $class_file;
-				}
-			}
-		}
-	);
-
-	// Instantiate general plugin classes.
+	// Instantiate core plugin classes.
 	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
 		new Core\Editor_Options;
 	}
-	new Media\Media;
 	new Core\Type_Tax;
+	new Core\Register_Sample_Tax;
+	new Core\Register_Media_Type;
+
+	// Instantiate media classes.
+	new Media\Media;
+
+	// Instantiate third-party plugin classes.
 	new Vendor\Plugins;
 
-	// Instantiate backend plugin classes.
+	// Instantiate backend classes.
 	if ( is_admin() ) {
 		new Admin\Admin;
 
@@ -355,7 +334,7 @@ function sitecore() {
 		}
 	}
 
-	// Instantiate frontend plugin classes.
+	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
 		new Front\Frontend;
 	}
