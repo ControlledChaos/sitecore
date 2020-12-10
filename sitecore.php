@@ -201,10 +201,10 @@ if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
  */
 
 // Get the plugin activation class.
-include_once SCP_PATH . 'includes/classes/activate/class-activate.php';
+include_once SCP_PATH . 'activate/classes/class-activate.php';
 
 // Get the plugin deactivation class.
-include_once SCP_PATH . 'includes/classes/activate/class-deactivate.php';
+include_once SCP_PATH . 'activate/classes/class-deactivate.php';
 
 /**
  * Register the activaction & deactivation hooks
@@ -326,12 +326,12 @@ function sitecore() {
 			 * This includes main directory (`/`) and any
 			 * subdirectories (`* /`).
 			 */
-			$dir_file = SCP_PATH .  'includes/classes/' . "{/,*/}" . 'class-*.php';
+			$dir_file = SCP_PATH .  'includes/classes' . "{/,/*/}" . 'class-*.php';
 
 			// Include each file matching the path patterns.
 			foreach ( glob( $dir_file, GLOB_BRACE ) as $class_file ) {
 				if ( is_file( $class_file ) && is_readable( $class_file ) ) {
-					include_once $class_file;
+					require_once $class_file;
 				}
 			}
 		}

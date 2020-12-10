@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_Sample extends Register_Type {
+class Register_Sample_Type extends Register_Type {
 
 	/**
 	 * Post type
@@ -26,7 +26,7 @@ class Register_Sample extends Register_Type {
 	 * @access protected
 	 * @var    string The database name of the post type.
 	 */
-	protected $type_key = 'scp_sample';
+	protected $type_key = 'sample_type';
 
 	/**
 	 * Singular name
