@@ -936,7 +936,7 @@ class Editor_Options {
 		.classic-editor-forced-state {
 			font-style: italic;
 			font-weight: 400;
-			color: #72777c;
+			color: inherit;
 			font-size: small;
 		}
 		</style>
