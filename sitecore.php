@@ -307,12 +307,17 @@ function sitecore() {
 		include_once( APP_INC_PATH . '/pluggable.php' );
 	}
 
-	// Register plugin classes.
+	/**
+	 * Class autoloader
+	 *
+	 * The autoloader registers plugin classes for later use,
+	 * such as running new instances below.
+	 */
 	require SCP_PATH . 'includes/autoloader.php';
 
 	// Instantiate core plugin classes.
 	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
-		new Core\Editor_Options;
+		new Core\Editor_Options();
 	}
 	new Core\Type_Tax;
 	new Core\Register_Media_Type;
