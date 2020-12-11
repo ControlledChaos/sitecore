@@ -28,7 +28,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'SCP_CLASS', [
 	'core'    => SCP_PATH . 'includes/classes/core/class-',
+	'tools'   => SCP_PATH . 'includes/classes/tools/class-',
 	'media'   => SCP_PATH . 'includes/classes/media/class-',
+	'users'   => SCP_PATH . 'includes/classes/users/class-',
 	'vendor'  => SCP_PATH . 'includes/classes/vendor/class-',
 	'admin'   => SCP_PATH . 'includes/classes/backend/class-',
 	'front'   => SCP_PATH . 'includes/classes/frontend/class-',
