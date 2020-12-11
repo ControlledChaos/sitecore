@@ -317,7 +317,7 @@ function sitecore() {
 
 	// Instantiate core plugin classes.
 	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
-		new Core\Editor_Options();
+		new Core\Editor_Options;
 	}
 	new Core\Type_Tax;
 	new Core\Register_Media_Type;
