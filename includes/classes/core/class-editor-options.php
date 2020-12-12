@@ -587,7 +587,7 @@ class Editor_Options {
 	 * Redirect helper
 	 *
 	 * Add a hidden field in edit-form-advanced.php
-	 * to help redirect back to the classic editor on saving.
+	 * to help redirect back to the rich text editor on saving.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -603,7 +603,7 @@ class Editor_Options {
 	/**
 	 * Remember TinyMCE editor
 	 *
-	 * Remembers when the classic editor was used to edit a post.
+	 * Remembers when the rich text editor was used to edit a post.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -661,9 +661,9 @@ class Editor_Options {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  boolean $use_block_editor True for block editor, false for classic editor.
+	 * @param  boolean $use_block_editor True for block editor, false for rich text editor.
 	 * @param  WP_Post $post The post being edited.
-	 * @return boolean True for block editor, false for classic editor.
+	 * @return boolean True for block editor, false for rich text editor.
 	 */
 	public static function choose_editor( $use_block_editor, $post ) {
 
@@ -923,7 +923,7 @@ class Editor_Options {
 
 	/**
 	 * Adds links to the post/page screens to edit any post or page in
-	 * the classic editor or block editor.
+	 * the rich text editor or block editor.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -963,18 +963,18 @@ class Editor_Options {
 
 		// Link to the block editor.
 		$url        = remove_query_arg( 'classic-editor', $edit_url );
-		$text       = _x( 'Edit (block editor)', 'Editor Name', SCP_DOMAIN );
+		$text       = _x( 'Edit Blocks', 'Editor Name', SCP_DOMAIN );
 		$label      = sprintf( __( 'Edit &#8220;%s&#8221; in the block editor', SCP_DOMAIN ), $title );
 		$edit_block = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 
-		// Link to the classic editor.
+		// Link to the rich text editor.
 		$url          = add_query_arg( 'classic-editor', '', $edit_url );
-		$text         = _x( 'Edit (classic editor)', 'Editor Name', SCP_DOMAIN );
-		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the classic editor', SCP_DOMAIN ), $title );
-		$edit_classic = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
+		$text         = _x( 'Edit Rich Text', 'Editor Name', SCP_DOMAIN );
+		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the rich text editor', SCP_DOMAIN ), $title );
+		$edit_rich    = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 		$edit_actions = [
-			'classic-editor-block'   => $edit_block,
-			'classic-editor-classic' => $edit_classic,
+			'classic-editor-classic' => $edit_rich,
+			'classic-editor-block'   => $edit_block
 		];
 
 		// Insert the new Edit actions instead of the Edit action.
@@ -1006,8 +1006,8 @@ class Editor_Options {
 
 		} elseif ( $editors['classic_editor'] && ! $editors['block_editor'] ) {
 
-			// Forced to classic editor.
-			$state = '<span class="classic-editor-forced-state">' . _x( 'classic editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
+			// Forced to rich text editor.
+			$state = '<span class="classic-editor-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
 
 		} elseif ( ! $editors['classic_editor'] && $editors['block_editor'] ) {
 
@@ -1027,7 +1027,7 @@ class Editor_Options {
 				$is_classic = ( $settings['editor'] === 'tinymce' );
 			}
 
-			$state = $is_classic ? _x( 'Classic editor', 'Editor Name', SCP_DOMAIN ) : _x( 'Block editor', 'Editor Name', SCP_DOMAIN );
+			$state = $is_classic ? _x( 'Rich Text', 'Editor Name', SCP_DOMAIN ) : _x( 'Blocks', 'Editor Name', SCP_DOMAIN );
 		}
 
 		// Fix PHP 7+ warnings if another plugin returns unexpected type.

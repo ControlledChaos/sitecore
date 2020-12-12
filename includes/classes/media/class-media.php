@@ -119,7 +119,7 @@ class Media {
 	 * Default link when adding an image
 	 *
 	 * Note: As of this comment on June 21, 2018 the `image_default_link_type`
-	 * option only works with the classic editor, not with the new block editor.
+	 * option only works with the rich text editor, not with the new block editor.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -141,7 +141,7 @@ class Media {
 	 * Default gallery images link
 	 *
 	 * Note: As of this comment on June 21, 2018 this function only works with
-	 * galleries in the classic editor, not with the new block editor galleries.
+	 * galleries in the rich text editor, not with the new block editor galleries.
 	 *
 	 * @since  1.0.0
 	 * @access public

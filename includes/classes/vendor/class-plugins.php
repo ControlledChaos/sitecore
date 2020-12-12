@@ -178,7 +178,7 @@ class Plugins {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 		}
 
-		// Enable ACFE classic editor module by default.
+		// Enable ACFE rich text editor module by default.
 		if ( function_exists( 'acf_update_setting' ) ) {
 			acf_update_setting( 'acfe/modules/classic_editor', true );
 		}

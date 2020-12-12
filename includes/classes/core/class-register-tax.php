@@ -166,7 +166,7 @@ class Register_Tax {
      *
      * Note for WordPress 5.0 or greater:
      * If you want your taxonomy to adopt the block edit_form_image_editor
-     * rather than using the classic editor then set `show_in_rest` to `true`.
+     * rather than using the rich text editor then set `show_in_rest` to `true`.
      *
      * @since  1.0.0
 	 * @access public
