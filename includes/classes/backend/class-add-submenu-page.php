@@ -177,6 +177,14 @@ class Add_Submenu_Page {
 	/**
 	 * Callback function
 	 *
+	 * It is recommended that the page output callback functions
+	 * of classes that extend this class simply include a file in
+	 * the `views/pages` directory to output the markup of the page.
+	 *
+	 * The following demonstrates the basic page wrap and heading
+	 * markup that is standard to ClassicPress, WordPress, and the
+	 * antibrand system.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
