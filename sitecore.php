@@ -318,11 +318,23 @@ function sitecore() {
 	require SCP_PATH . 'includes/autoloader.php';
 
 	// Instantiate core plugin classes.
-	if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
-		new Core\Editor_Options;
-	}
 	new Core\Type_Tax;
 	new Core\Register_Media_Type;
+
+	/**
+	 * Editor options for WordPress
+	 *
+	 * Not run for ClassicPress and the default antibrand system.
+	 * The `classicpress_version()` function checks for ClassicPress.
+	 * The `APP_INC_PATH` checks for the default antibrand system.
+	 *
+	 * Not run if the Classic Editor plugin is active.
+	 */
+	if ( ! function_exists( 'classicpress_version' ) || ! defined( 'APP_INC_PATH' ) ) {
+		if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
+			new Core\Editor_Options;
+		}
+	}
 
 	// Instantiate media classes.
 	new Media\Media;
