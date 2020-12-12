@@ -267,7 +267,7 @@ class Editor_Options {
 		if ( is_multisite() ) {
 
 			$defaults = [
-				'editor'      => get_network_option( null, 'default-editor-replace' ) === 'block' ? 'block' : 'tinymce',
+				'editor'      => get_network_option( null, 'editor-options-replace' ) === 'block' ? 'block' : 'tinymce',
 				'allow-users' => false,
 			];
 
@@ -286,8 +286,8 @@ class Editor_Options {
 			}
 
 			// Override with the site options.
-			$editor_option      = get_option( 'default-editor-replace' );
-			$allow_users_option = get_option( 'default-editor-allow-users' );
+			$editor_option      = get_option( 'editor-options-replace' );
+			$allow_users_option = get_option( 'editor-options-allow-users' );
 
 			if ( $editor_option ) {
 				$defaults['editor'] = $editor_option;
@@ -302,8 +302,8 @@ class Editor_Options {
 
 		} else {
 
-			$allow_users = ( get_option( 'default-editor-allow-users' ) === 'allow' );
-			$option      = get_option( 'default-editor-replace' );
+			$allow_users = ( get_option( 'editor-options-allow-users' ) === 'allow' );
+			$option      = get_option( 'editor-options-replace' );
 
 			// Normalize old options.
 			if ( $option === 'block' || $option === 'no-replace' ) {
@@ -358,7 +358,7 @@ class Editor_Options {
 					 * The editor choice will be "remembered" when the post is
 					 * opened in either the tinymce or the block editor.
 					 */
-					if ( 'classic-editor' === $which ) {
+					if ( 'editor-options' === $which ) {
 						return true;
 					} elseif ( 'block-editor' === $which ) {
 						return false;
@@ -369,7 +369,7 @@ class Editor_Options {
 			}
 		}
 
-		if ( isset( $_GET['classic-editor'] ) ) {
+		if ( isset( $_GET['editor-options'] ) ) {
 			return true;
 		}
 
@@ -411,18 +411,18 @@ class Editor_Options {
 	public static function register_settings() {
 
 		// Add an option to Settings -> Writing.
-		register_setting( 'writing', 'default-editor-replace', [
+		register_setting( 'writing', 'editor-options-replace', [
 			'sanitize_callback' => [ __CLASS__, 'validate_option_editor' ],
 		] );
 
-		register_setting( 'writing', 'default-editor-allow-users', [
+		register_setting( 'writing', 'editor-options-allow-users', [
 			'sanitize_callback' => [ __CLASS__, 'validate_option_allow_users' ],
 		] );
 
 		$allowed_options = [
 			'writing' => [
-				'default-editor-replace',
-				'default-editor-allow-users'
+				'editor-options-replace',
+				'editor-options-allow-users'
 			],
 		];
 
@@ -432,11 +432,11 @@ class Editor_Options {
 			add_option_whitelist( $allowed_options );
 		}
 
-		$heading_1 = __( 'Default editor for all users', SCP_DOMAIN );
-		$heading_2 = __( 'Allow users to switch editors', SCP_DOMAIN );
+		$heading_default = __( 'Default editor for all users', SCP_DOMAIN );
+		$heading_allow   = __( 'Allow users to switch editors', SCP_DOMAIN );
 
-		add_settings_field( 'classic-editor-default', $heading_1, [ __CLASS__, 'editor_settings_default' ], 'writing' );
-		add_settings_field( 'classic-editor-choose', $heading_2, [ __CLASS__, 'editor_settings_choose' ], 'writing' );
+		add_settings_field( 'editor-options-default', $heading_default, [ __CLASS__, 'editor_settings_default' ], 'writing' );
+		add_settings_field( 'editor-options-choose', $heading_allow, [ __CLASS__, 'editor_settings_allow' ], 'writing' );
 	}
 
 	/**
@@ -449,9 +449,9 @@ class Editor_Options {
 	public static function save_user_settings( $user_id ) {
 
 		if (
-			isset( $_POST['classic-editor-user-settings'] ) &&
-			isset( $_POST['default-editor-replace'] ) &&
-			wp_verify_nonce( $_POST['classic-editor-user-settings'], 'allow-user-settings' )
+			isset( $_POST['editor-options-user-settings'] ) &&
+			isset( $_POST['editor-options-replace'] ) &&
+			wp_verify_nonce( $_POST['editor-options-user-settings'], 'allow-user-settings' )
 		) {
 			$user_id = (int) $user_id;
 
@@ -459,7 +459,7 @@ class Editor_Options {
 				return;
 			}
 
-			$editor = self :: validate_option_editor( $_POST['default-editor-replace'] );
+			$editor = self :: validate_option_editor( $_POST['editor-options-replace'] );
 			update_user_option( $user_id, 'default-editor-settings', $editor );
 		}
 	}
@@ -514,8 +514,8 @@ class Editor_Options {
 	 * @access public
 	 * @return void
 	 */
-	public static function editor_settings_choose() {
-		include_once SCP_PATH . 'views/backend/forms/partials/settings-writing-editor-choose.php';
+	public static function editor_settings_allow() {
+		include_once SCP_PATH . 'views/backend/forms/partials/settings-writing-editor-allow.php';
 	}
 
 	/**
@@ -570,10 +570,10 @@ class Editor_Options {
 			current_user_can( 'manage_network_options' ) &&
 			wp_verify_nonce( $_POST['tinymce-editor-network-settings'], 'allow-site-admin-settings' )
 		) {
-			if ( isset( $_POST['default-editor-replace'] ) && $_POST['default-editor-replace'] === 'block' ) {
-				update_network_option( null, 'default-editor-replace', 'block' );
+			if ( isset( $_POST['editor-options-replace'] ) && $_POST['editor-options-replace'] === 'block' ) {
+				update_network_option( null, 'editor-options-replace', 'block' );
 			} else {
-				update_network_option( null, 'default-editor-replace', 'tinymce' );
+				update_network_option( null, 'editor-options-replace', 'tinymce' );
 			}
 			if ( isset( $_POST['tinymce-editor-allow-sites'] ) && $_POST['tinymce-editor-allow-sites'] === 'allow' ) {
 				update_network_option( null, 'tinymce-editor-allow-sites', 'allow' );
@@ -596,7 +596,7 @@ class Editor_Options {
 	public static function add_redirect_helper() {
 
 		?>
-		<input type="hidden" name="classic-editor" value="" />
+		<input type="hidden" name="editor-options" value="" />
 		<?php
 	}
 
@@ -614,7 +614,7 @@ class Editor_Options {
 		$post_type = get_post_type( $post );
 
 		if ( $post_type && post_type_supports( $post_type, 'editor' ) ) {
-			self :: remember( $post->ID, 'classic-editor' );
+			self :: remember( $post->ID, 'editor-options' );
 		}
 	}
 
@@ -671,7 +671,7 @@ class Editor_Options {
 		$editors  = self :: get_enabled_editors_for_post( $post );
 
 		// If no editor is supported, pass through `$use_block_editor`.
-		if ( ! $editors['block_editor'] && ! $editors['classic_editor'] ) {
+		if ( ! $editors['block_editor'] && ! $editors['editor_options'] ) {
 			return $use_block_editor;
 		}
 
@@ -686,7 +686,7 @@ class Editor_Options {
 				( $settings['editor'] === 'tinymce' && ! isset( $_GET['default-editor__forget'] ) ) ||
 
 				// Switch to rich text editor when no draft post.
-				( isset( $_GET['classic-editor'] ) && isset( $_GET['default-editor__forget'] ) )
+				( isset( $_GET['editor-options'] ) && isset( $_GET['default-editor__forget'] ) )
 			) {
 				$use_block_editor = false;
 			}
@@ -699,7 +699,7 @@ class Editor_Options {
 		if ( $use_block_editor && ! $editors['block_editor'] ) {
 			$use_block_editor = false;
 
-		} elseif ( ! $use_block_editor && ! $editors['classic_editor'] && $editors['block_editor'] ) {
+		} elseif ( ! $use_block_editor && ! $editors['editor_options'] && $editors['block_editor'] ) {
 			$use_block_editor = true;
 		}
 
@@ -709,7 +709,7 @@ class Editor_Options {
 	/**
 	 * Redirect location
 	 *
-	 * Keeps the `classic-editor` query argument through redirects when saving posts.
+	 * Keeps the `editor-options` query argument through redirects when saving posts.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -718,10 +718,10 @@ class Editor_Options {
 	public static function redirect_location( $location ) {
 
 		if (
-			isset( $_REQUEST['classic-editor'] ) ||
-			( isset( $_POST['_wp_http_referer'] ) && strpos( $_POST['_wp_http_referer'], '&classic-editor' ) !== false )
+			isset( $_REQUEST['editor-options'] ) ||
+			( isset( $_POST['_wp_http_referer'] ) && strpos( $_POST['_wp_http_referer'], '&editor-options' ) !== false )
 		) {
-			$location = add_query_arg( 'classic-editor', '', $location );
+			$location = add_query_arg( 'editor-options', '', $location );
 		}
 
 		return $location;
@@ -730,7 +730,7 @@ class Editor_Options {
 	/**
 	 * Get edit post link
 	 *
-	 * Keeps the `classic-editor` query argument when looking at revisions.
+	 * Keeps the `editor-options` query argument when looking at revisions.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -740,8 +740,8 @@ class Editor_Options {
 
 		$settings = self :: get_settings();
 
-		if ( isset( $_REQUEST['classic-editor'] ) || $settings['editor'] === 'tinymce' ) {
-			$url = add_query_arg( 'classic-editor', '', $url );
+		if ( isset( $_REQUEST['editor-options'] ) || $settings['editor'] === 'tinymce' ) {
+			$url = add_query_arg( 'editor-options', '', $url );
 		}
 
 		return $url;
@@ -760,7 +760,7 @@ class Editor_Options {
 
 		$editors = self :: get_enabled_editors_for_post( $post );
 
-		if ( ! $editors['block_editor'] || ! $editors['classic_editor'] ) {
+		if ( ! $editors['block_editor'] || ! $editors['editor_options'] ) {
 
 			// Editors cannot be switched.
 			return;
@@ -789,7 +789,7 @@ class Editor_Options {
 		$edit_url = get_edit_post_link( $post->ID, 'raw' );
 
 		// Switching to block editor.
-		$edit_url = remove_query_arg( 'classic-editor', $edit_url );
+		$edit_url = remove_query_arg( 'editor-options', $edit_url );
 
 		// Forget the previous value when going to a specific editor.
 		$edit_url = add_query_arg( 'default-editor__forget', '', $edit_url );
@@ -812,7 +812,7 @@ class Editor_Options {
 
 		$editors = self :: get_enabled_editors_for_post( $GLOBALS['post'] );
 
-		if ( ! $editors['classic_editor'] ) {
+		if ( ! $editors['editor_options'] ) {
 			// Editor cannot be switched.
 			return;
 		}
@@ -869,11 +869,11 @@ class Editor_Options {
 			return self :: $supported_post_types[ $post_type ];
 		}
 
-		$classic_editor = post_type_supports( $post_type, 'editor' );
+		$editor_options = post_type_supports( $post_type, 'editor' );
 		$block_editor = self :: can_edit_post_type( $post_type );
 
 		$editors = [
-			'classic_editor' => $classic_editor,
+			'editor_options' => $editor_options,
 			'block_editor'   => $block_editor,
 		];
 
@@ -883,7 +883,7 @@ class Editor_Options {
 		 * @param array $editors Associative array of the editors and whether they are enabled for the post type.
 		 * @param string $post_type The post type.
 		 */
-		$editors = apply_filters( 'classic_editor_enabled_editors_for_post_type', $editors, $post_type );
+		$editors = apply_filters( 'editor_options_enabled_editors_for_post_type', $editors, $post_type );
 		self :: $supported_post_types[ $post_type ] = $editors;
 
 		return $editors;
@@ -905,7 +905,7 @@ class Editor_Options {
 
 		if ( ! $post_type ) {
 			return [
-				'classic_editor' => false,
+				'editor_options' => false,
 				'block_editor'   => false,
 			];
 		}
@@ -918,7 +918,7 @@ class Editor_Options {
 		 * @param array $editors Associative array of the editors and whether they are enabled for the post.
 		 * @param WP_Post $post  The post object.
 		 */
-		return apply_filters( 'classic_editor_enabled_editors_for_post', $editors, $post );
+		return apply_filters( 'editor_options_enabled_editors_for_post', $editors, $post );
 	}
 
 	/**
@@ -951,7 +951,7 @@ class Editor_Options {
 		$editors = self :: get_enabled_editors_for_post( $post );
 
 		// Do not show the links if only one editor is available.
-		if ( ! $editors['classic_editor'] || ! $editors['block_editor'] ) {
+		if ( ! $editors['editor_options'] || ! $editors['block_editor'] ) {
 			return $actions;
 		}
 
@@ -962,13 +962,13 @@ class Editor_Options {
 		$title = _draft_or_post_title( $post->ID );
 
 		// Link to the block editor.
-		$url        = remove_query_arg( 'classic-editor', $edit_url );
+		$url        = remove_query_arg( 'editor-options', $edit_url );
 		$text       = _x( 'Edit Blocks', 'Editor Name', SCP_DOMAIN );
 		$label      = sprintf( __( 'Edit &#8220;%s&#8221; in the block editor', SCP_DOMAIN ), $title );
 		$edit_block = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 
 		// Link to the rich text editor.
-		$url          = add_query_arg( 'classic-editor', '', $edit_url );
+		$url          = add_query_arg( 'editor-options', '', $edit_url );
 		$text         = _x( 'Edit Rich Text', 'Editor Name', SCP_DOMAIN );
 		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the rich text editor', SCP_DOMAIN ), $title );
 		$edit_rich    = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
@@ -1001,15 +1001,15 @@ class Editor_Options {
 
 		$editors = self :: get_enabled_editors_for_post( $post );
 
-		if ( ! $editors['classic_editor'] && ! $editors['block_editor'] ) {
+		if ( ! $editors['editor_options'] && ! $editors['block_editor'] ) {
 			return $post_states;
 
-		} elseif ( $editors['classic_editor'] && ! $editors['block_editor'] ) {
+		} elseif ( $editors['editor_options'] && ! $editors['block_editor'] ) {
 
 			// Forced to rich text editor.
 			$state = '<span class="editor-options-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
 
-		} elseif ( ! $editors['classic_editor'] && $editors['block_editor'] ) {
+		} elseif ( ! $editors['editor_options'] && $editors['block_editor'] ) {
 
 			// Forced to block editor.
 			$state = '<span class="editor-options-forced-state">' . _x( 'block editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
@@ -1019,7 +1019,7 @@ class Editor_Options {
 			$last_editor = get_post_meta( $post->ID, 'default-editor-remember', true );
 
 			if ( $last_editor ) {
-				$is_tinymce = ( $last_editor === 'classic-editor' );
+				$is_tinymce = ( $last_editor === 'editor-options' );
 			} elseif ( ! empty( $post->post_content ) ) {
 				$is_tinymce = ! self :: has_blocks( $post->post_content );
 			} else {
@@ -1120,12 +1120,12 @@ class Editor_Options {
 		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
 
 		if ( is_multisite() ) {
-			add_network_option( null, 'default-editor-replace', 'tinymce' );
+			add_network_option( null, 'editor-options-replace', 'tinymce' );
 			add_network_option( null, 'tinymce-editor-allow-sites', 'disallow' );
 		}
 
-		add_option( 'default-editor-replace', 'tinymce' );
-		add_option( 'default-editor-allow-users', 'disallow' );
+		add_option( 'editor-options-replace', 'tinymce' );
+		add_option( 'editor-options-allow-users', 'disallow' );
 	}
 
 	/**
@@ -1140,11 +1140,11 @@ class Editor_Options {
 	public static function uninstall() {
 
 		if ( is_multisite() ) {
-			delete_network_option( null, 'default-editor-replace' );
+			delete_network_option( null, 'editor-options-replace' );
 			delete_network_option( null, 'tinymce-editor-allow-sites' );
 		}
 
-		delete_option( 'default-editor-replace' );
-		delete_option( 'default-editor-allow-users' );
+		delete_option( 'editor-options-replace' );
+		delete_option( 'editor-options-allow-users' );
 	}
 }

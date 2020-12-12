@@ -7,7 +7,7 @@
 		render: function() {
 			var createElement = wp.element.createElement;
 			var PluginMoreMenuItem = wp.editPost.PluginMoreMenuItem;
-			var url = wp.url.addQueryArgs( document.location.href, { 'classic-editor': '', 'default-editor__forget': '' } );
+			var url = wp.url.addQueryArgs( document.location.href, { 'editor-options': '', 'default-editor__forget': '' } );
 			var linkText = lodash.get( window, [ 'editorOptionsL10n', 'linkText' ] ) || 'Switch to rich text editor ';
 
 			return createElement(

@@ -10,7 +10,7 @@
  */
 
 // Editor settings.
-$editor     = get_network_option( null, 'default-editor-replace' );
+$editor     = get_network_option( null, 'editor-options-replace' );
 $is_checked = ( get_network_option( null, 'tinymce-editor-allow-sites' ) === 'allow' );
 
 ?>
@@ -22,11 +22,11 @@ $is_checked = ( get_network_option( null, 'tinymce-editor-allow-sites' ) === 'al
 		<th scope="row"><?php _e( 'Default editor for all sites', SCP_DOMAIN ); ?></th>
 		<td>
 			<p>
-				<input type="radio" name="default-editor-replace" id="editor-options-tinymce" value="tinymce"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
+				<input type="radio" name="editor-options-replace" id="editor-options-tinymce" value="tinymce"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
 				<label for="editor-options-tinymce"><?php _ex( 'Rich text editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 			<p>
-				<input type="radio" name="default-editor-replace" id="editor-options-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
+				<input type="radio" name="editor-options-replace" id="editor-options-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
 				<label for="editor-options-block"><?php _ex( 'Block editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 		</td>
