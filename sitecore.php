@@ -326,7 +326,7 @@ function sitecore() {
 	 *
 	 * Not run for ClassicPress and the default antibrand system.
 	 * The `classicpress_version()` function checks for ClassicPress.
-	 * The `APP_INC_PATH` checks for the default antibrand system.
+	 * The `APP_INC_PATH` constant checks for the default antibrand system.
 	 *
 	 * Not run if the Classic Editor plugin is active.
 	 */
