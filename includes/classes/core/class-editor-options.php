@@ -108,7 +108,7 @@ class Editor_Options {
 			add_filter( 'redirect_post_location', [ __CLASS__, 'redirect_location' ] );
 			add_action( 'edit_form_top', [ __CLASS__, 'add_redirect_helper' ] );
 			add_action( 'admin_head-edit.php', [ __CLASS__, 'add_edit_php_inline_style' ] );
-			add_action( 'edit_form_top', [ __CLASS__, 'remember_classic_editor' ] );
+			add_action( 'edit_form_top', [ __CLASS__, 'remember_tinymce_editor' ] );
 			add_filter( 'block_editor_settings', [ __CLASS__, 'remember_block_editor' ], 10, 2 );
 
 			// Post state (edit.php).
@@ -159,7 +159,7 @@ class Editor_Options {
 			remove_action( 'admin_print_scripts-edit.php', 'gutenberg_replace_default_add_new_button' );
 			remove_filter( 'redirect_post_location', 'gutenberg_redirect_to_classic_editor_when_saving_posts' );
 			remove_filter( 'display_post_states', 'gutenberg_add_gutenberg_post_state' );
-			remove_action( 'edit_form_top', 'gutenberg_remember_classic_editor_when_saving_posts' );
+			remove_action( 'edit_form_top', 'gutenberg_remember_tinymce_editor_when_saving_posts' );
 		}
 	}
 
@@ -249,7 +249,7 @@ class Editor_Options {
 		 *
 		 * @param boolean To override the settings return an array with the above keys.
 		 */
-		$settings = apply_filters( 'classic_editor_plugin_settings', false );
+		$settings = apply_filters( 'default_editor_settings', false );
 
 		if ( is_array( $settings ) ) {
 
@@ -267,18 +267,18 @@ class Editor_Options {
 		if ( is_multisite() ) {
 
 			$defaults = [
-				'editor'      => get_network_option( null, 'classic-editor-replace' ) === 'block' ? 'block' : 'tinymce',
+				'editor'      => get_network_option( null, 'default-editor-replace' ) === 'block' ? 'block' : 'tinymce',
 				'allow-users' => false,
 			];
 
 			/**
 			 * Filters the default network options.
 			 *
-			 * @param array $defaults The default options array. See `classic_editor_plugin_settings` for supported keys and values.
+			 * @param array $defaults The default options array. See `default_editor_settings` for supported keys and values.
 			 */
 			$defaults = apply_filters( 'classic_editor_network_default_settings', $defaults );
 
-			if ( get_network_option( null, 'classic-editor-allow-sites' ) !== 'allow' ) {
+			if ( get_network_option( null, 'tinymce-editor-allow-sites' ) !== 'allow' ) {
 
 				// Per-site settings are disabled. Return default network options nad hide the settings UI.
 				$defaults['hide-settings-ui'] = true;
@@ -286,8 +286,8 @@ class Editor_Options {
 			}
 
 			// Override with the site options.
-			$editor_option      = get_option( 'classic-editor-replace' );
-			$allow_users_option = get_option( 'classic-editor-allow-users' );
+			$editor_option      = get_option( 'default-editor-replace' );
+			$allow_users_option = get_option( 'default-editor-allow-users' );
 
 			if ( $editor_option ) {
 				$defaults['editor'] = $editor_option;
@@ -302,8 +302,8 @@ class Editor_Options {
 
 		} else {
 
-			$allow_users = ( get_option( 'classic-editor-allow-users' ) === 'allow' );
-			$option      = get_option( 'classic-editor-replace' );
+			$allow_users = ( get_option( 'default-editor-allow-users' ) === 'allow' );
+			$option      = get_option( 'default-editor-replace' );
 
 			// Normalize old options.
 			if ( $option === 'block' || $option === 'no-replace' ) {
@@ -317,7 +317,7 @@ class Editor_Options {
 		// Override the defaults with the user options.
 		if ( ( ! isset( $GLOBALS['pagenow'] ) || $GLOBALS['pagenow'] !== 'options-writing.php' ) && $allow_users ) {
 
-			$user_options = get_user_option( 'classic-editor-settings' );
+			$user_options = get_user_option( 'default-editor-settings' );
 
 			if ( $user_options === 'block' || $user_options === 'tinymce' ) {
 				$editor = $user_options;
@@ -340,7 +340,7 @@ class Editor_Options {
 	 * @access private
 	 * @return boolean Returns true if the TinyMCE editor is used.
 	 */
-	private static function is_classic( $post_id = 0 ) {
+	private static function is_tinymce( $post_id = 0 ) {
 
 		if ( ! $post_id ) {
 			$post_id = self :: get_edited_post_id();
@@ -350,7 +350,7 @@ class Editor_Options {
 			$settings = self :: get_settings();
 
 			if ( $settings['allow-users'] && ! isset( $_GET['classic-editor__forget'] ) ) {
-				$which = get_post_meta( $post_id, 'classic-editor-remember', true );
+				$which = get_post_meta( $post_id, 'default-editor-remember', true );
 
 				if ( $which ) {
 
@@ -411,18 +411,18 @@ class Editor_Options {
 	public static function register_settings() {
 
 		// Add an option to Settings -> Writing.
-		register_setting( 'writing', 'classic-editor-replace', [
+		register_setting( 'writing', 'default-editor-replace', [
 			'sanitize_callback' => [ __CLASS__, 'validate_option_editor' ],
 		] );
 
-		register_setting( 'writing', 'classic-editor-allow-users', [
+		register_setting( 'writing', 'default-editor-allow-users', [
 			'sanitize_callback' => [ __CLASS__, 'validate_option_allow_users' ],
 		] );
 
 		$allowed_options = [
 			'writing' => [
-				'classic-editor-replace',
-				'classic-editor-allow-users'
+				'default-editor-replace',
+				'default-editor-allow-users'
 			],
 		];
 
@@ -450,7 +450,7 @@ class Editor_Options {
 
 		if (
 			isset( $_POST['classic-editor-user-settings'] ) &&
-			isset( $_POST['classic-editor-replace'] ) &&
+			isset( $_POST['default-editor-replace'] ) &&
 			wp_verify_nonce( $_POST['classic-editor-user-settings'], 'allow-user-settings' )
 		) {
 			$user_id = (int) $user_id;
@@ -459,8 +459,8 @@ class Editor_Options {
 				return;
 			}
 
-			$editor = self :: validate_option_editor( $_POST['classic-editor-replace'] );
-			update_user_option( $user_id, 'classic-editor-settings', $editor );
+			$editor = self :: validate_option_editor( $_POST['default-editor-replace'] );
+			update_user_option( $user_id, 'default-editor-settings', $editor );
 		}
 	}
 
@@ -566,19 +566,19 @@ class Editor_Options {
 	public static function save_network_settings() {
 
 		if (
-			isset( $_POST['classic-editor-network-settings'] ) &&
+			isset( $_POST['tinymce-editor-network-settings'] ) &&
 			current_user_can( 'manage_network_options' ) &&
-			wp_verify_nonce( $_POST['classic-editor-network-settings'], 'allow-site-admin-settings' )
+			wp_verify_nonce( $_POST['tinymce-editor-network-settings'], 'allow-site-admin-settings' )
 		) {
-			if ( isset( $_POST['classic-editor-replace'] ) && $_POST['classic-editor-replace'] === 'block' ) {
-				update_network_option( null, 'classic-editor-replace', 'block' );
+			if ( isset( $_POST['default-editor-replace'] ) && $_POST['default-editor-replace'] === 'block' ) {
+				update_network_option( null, 'default-editor-replace', 'block' );
 			} else {
-				update_network_option( null, 'classic-editor-replace', 'tinymce' );
+				update_network_option( null, 'default-editor-replace', 'tinymce' );
 			}
-			if ( isset( $_POST['classic-editor-allow-sites'] ) && $_POST['classic-editor-allow-sites'] === 'allow' ) {
-				update_network_option( null, 'classic-editor-allow-sites', 'allow' );
+			if ( isset( $_POST['tinymce-editor-allow-sites'] ) && $_POST['tinymce-editor-allow-sites'] === 'allow' ) {
+				update_network_option( null, 'tinymce-editor-allow-sites', 'allow' );
 			} else {
-				update_network_option( null, 'classic-editor-allow-sites', 'disallow' );
+				update_network_option( null, 'tinymce-editor-allow-sites', 'disallow' );
 			}
 		}
 	}
@@ -609,7 +609,7 @@ class Editor_Options {
 	 * @access public
 	 * @return void
 	 */
-	public static function remember_classic_editor( $post ) {
+	public static function remember_tinymce_editor( $post ) {
 
 		$post_type = get_post_type( $post );
 
@@ -647,8 +647,8 @@ class Editor_Options {
 	 */
 	private static function remember( $post_id, $editor ) {
 
-		if ( get_post_meta( $post_id, 'classic-editor-remember', true ) !== $editor ) {
-			update_post_meta( $post_id, 'classic-editor-remember', $editor );
+		if ( get_post_meta( $post_id, 'default-editor-remember', true ) !== $editor ) {
+			update_post_meta( $post_id, 'default-editor-remember', $editor );
 		}
 	}
 
@@ -691,7 +691,7 @@ class Editor_Options {
 				$use_block_editor = false;
 			}
 
-		} elseif ( self :: is_classic( $post->ID ) ) {
+		} elseif ( self :: is_tinymce( $post->ID ) ) {
 			$use_block_editor = false;
 		}
 
@@ -1016,18 +1016,18 @@ class Editor_Options {
 
 		} else {
 
-			$last_editor = get_post_meta( $post->ID, 'classic-editor-remember', true );
+			$last_editor = get_post_meta( $post->ID, 'default-editor-remember', true );
 
 			if ( $last_editor ) {
-				$is_classic = ( $last_editor === 'classic-editor' );
+				$is_tinymce = ( $last_editor === 'classic-editor' );
 			} elseif ( ! empty( $post->post_content ) ) {
-				$is_classic = ! self :: has_blocks( $post->post_content );
+				$is_tinymce = ! self :: has_blocks( $post->post_content );
 			} else {
 				$settings = self :: get_settings();
-				$is_classic = ( $settings['editor'] === 'tinymce' );
+				$is_tinymce = ( $settings['editor'] === 'tinymce' );
 			}
 
-			$state = $is_classic ? _x( 'Rich Text', 'Editor Name', SCP_DOMAIN ) : _x( 'Blocks', 'Editor Name', SCP_DOMAIN );
+			$state = $is_tinymce ? _x( 'Rich Text', 'Editor Name', SCP_DOMAIN ) : _x( 'Blocks', 'Editor Name', SCP_DOMAIN );
 		}
 
 		// Fix PHP 7+ warnings if another plugin returns unexpected type.
@@ -1076,7 +1076,7 @@ class Editor_Options {
 		$settings = self :: get_settings();
 		$post_id  = self :: get_edited_post_id();
 
-		if ( $post_id && ( $settings['editor'] === 'tinymce' || self :: is_classic( $post_id ) ) ) {
+		if ( $post_id && ( $settings['editor'] === 'tinymce' || self :: is_tinymce( $post_id ) ) ) {
 
 			// Move the Privacy Policy help notice back under the title field.
 			remove_action( 'admin_notices', [ 'WP_Privacy_Policy_Content', 'notice' ] );
@@ -1120,12 +1120,12 @@ class Editor_Options {
 		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
 
 		if ( is_multisite() ) {
-			add_network_option( null, 'classic-editor-replace', 'tinymce' );
-			add_network_option( null, 'classic-editor-allow-sites', 'disallow' );
+			add_network_option( null, 'default-editor-replace', 'tinymce' );
+			add_network_option( null, 'tinymce-editor-allow-sites', 'disallow' );
 		}
 
-		add_option( 'classic-editor-replace', 'tinymce' );
-		add_option( 'classic-editor-allow-users', 'disallow' );
+		add_option( 'default-editor-replace', 'tinymce' );
+		add_option( 'default-editor-allow-users', 'disallow' );
 	}
 
 	/**
@@ -1140,11 +1140,11 @@ class Editor_Options {
 	public static function uninstall() {
 
 		if ( is_multisite() ) {
-			delete_network_option( null, 'classic-editor-replace' );
-			delete_network_option( null, 'classic-editor-allow-sites' );
+			delete_network_option( null, 'default-editor-replace' );
+			delete_network_option( null, 'tinymce-editor-allow-sites' );
 		}
 
-		delete_option( 'classic-editor-replace' );
-		delete_option( 'classic-editor-allow-users' );
+		delete_option( 'default-editor-replace' );
+		delete_option( 'default-editor-allow-users' );
 	}
 }

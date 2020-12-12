@@ -16,13 +16,13 @@ use SiteCore\Classes\Core as Core;
 $settings = Core\Editor_Options :: get_settings( 'refresh' );
 
 ?>
-<div class="classic-editor-options">
+<div class="tinymce-editor-options">
 	<p>
-		<input type="radio" name="classic-editor-allow-users" id="classic-editor-allow" value="allow"<?php if ( $settings['allow-users'] ) echo ' checked'; ?> />
+		<input type="radio" name="default-editor-allow-users" id="classic-editor-allow" value="allow"<?php if ( $settings['allow-users'] ) echo ' checked'; ?> />
 		<label for="classic-editor-allow"><?php _e( 'Yes', SCP_DOMAIN ); ?></label>
 	</p>
 	<p>
-		<input type="radio" name="classic-editor-allow-users" id="classic-editor-disallow" value="disallow"<?php if ( ! $settings['allow-users'] ) echo ' checked'; ?> />
+		<input type="radio" name="default-editor-allow-users" id="classic-editor-disallow" value="disallow"<?php if ( ! $settings['allow-users'] ) echo ' checked'; ?> />
 		<label for="classic-editor-disallow"><?php _e( 'No', SCP_DOMAIN ); ?></label>
 	</p>
 </div>
