@@ -99,7 +99,7 @@ class Editor_Options {
 				// Support older Gutenberg versions.
 				add_filter( 'gutenberg_can_edit_post', [ __CLASS__, 'choose_editor' ], 100, 2 );
 
-				if ( $settings['editor'] === 'classic' ) {
+				if ( $settings['editor'] === 'tinymce' ) {
 					self :: remove_block_hooks( 'some' );
 				}
 			}
@@ -124,7 +124,7 @@ class Editor_Options {
 
 		} else {
 
-			if ( $settings['editor'] === 'classic' ) {
+			if ( $settings['editor'] === 'tinymce' ) {
 
 				/**
 				 * Also used in Gutenberg.
@@ -244,7 +244,7 @@ class Editor_Options {
 		 *
 		 * Has to return an associative array with two keys.
 		 * The defaults are:
-		 *   'editor' => 'classic', // Accepted values: 'classic', 'block'.
+		 *   'editor' => 'tinymce', // Accepted values: 'tinymce', 'block'.
 		 *   'allow-users' => false,
 		 *
 		 * @param boolean To override the settings return an array with the above keys.
@@ -254,7 +254,7 @@ class Editor_Options {
 		if ( is_array( $settings ) ) {
 
 			return [
-				'editor'           => ( isset( $settings['editor'] ) && $settings['editor'] === 'block' ) ? 'block' : 'classic',
+				'editor'           => ( isset( $settings['editor'] ) && $settings['editor'] === 'block' ) ? 'block' : 'tinymce',
 				'allow-users'      => ! empty( $settings['allow-users'] ),
 				'hide-settings-ui' => true,
 			];
@@ -267,7 +267,7 @@ class Editor_Options {
 		if ( is_multisite() ) {
 
 			$defaults = [
-				'editor'      => get_network_option( null, 'classic-editor-replace' ) === 'block' ? 'block' : 'classic',
+				'editor'      => get_network_option( null, 'classic-editor-replace' ) === 'block' ? 'block' : 'tinymce',
 				'allow-users' => false,
 			];
 
@@ -297,7 +297,7 @@ class Editor_Options {
 				$defaults['allow-users'] = ( $allow_users_option === 'allow' );
 			}
 
-			$editor      = ( isset( $defaults['editor'] ) && $defaults['editor'] === 'block' ) ? 'block' : 'classic';
+			$editor      = ( isset( $defaults['editor'] ) && $defaults['editor'] === 'block' ) ? 'block' : 'tinymce';
 			$allow_users = ! empty( $defaults['allow-users'] );
 
 		} else {
@@ -309,8 +309,8 @@ class Editor_Options {
 			if ( $option === 'block' || $option === 'no-replace' ) {
 				$editor = 'block';
 			} else {
-				// empty( $option ) || $option === 'classic' || $option === 'replace'.
-				$editor = 'classic';
+				// empty( $option ) || $option === 'tinymce' || $option === 'replace'.
+				$editor = 'tinymce';
 			}
 		}
 
@@ -319,7 +319,7 @@ class Editor_Options {
 
 			$user_options = get_user_option( 'classic-editor-settings' );
 
-			if ( $user_options === 'block' || $user_options === 'classic' ) {
+			if ( $user_options === 'block' || $user_options === 'tinymce' ) {
 				$editor = $user_options;
 			}
 		}
@@ -477,7 +477,7 @@ class Editor_Options {
 			return 'block';
 		}
 
-		return 'classic';
+		return 'tinymce';
 	}
 
 	/**
@@ -573,7 +573,7 @@ class Editor_Options {
 			if ( isset( $_POST['classic-editor-replace'] ) && $_POST['classic-editor-replace'] === 'block' ) {
 				update_network_option( null, 'classic-editor-replace', 'block' );
 			} else {
-				update_network_option( null, 'classic-editor-replace', 'classic' );
+				update_network_option( null, 'classic-editor-replace', 'tinymce' );
 			}
 			if ( isset( $_POST['classic-editor-allow-sites'] ) && $_POST['classic-editor-allow-sites'] === 'allow' ) {
 				update_network_option( null, 'classic-editor-allow-sites', 'allow' );
@@ -683,9 +683,9 @@ class Editor_Options {
 
 			if (
 				// Add New.
-				( $settings['editor'] === 'classic' && ! isset( $_GET['classic-editor__forget'] ) ) ||
+				( $settings['editor'] === 'tinymce' && ! isset( $_GET['classic-editor__forget'] ) ) ||
 
-				// Switch to classic editor when no draft post.
+				// Switch to rich text editor when no draft post.
 				( isset( $_GET['classic-editor'] ) && isset( $_GET['classic-editor__forget'] ) )
 			) {
 				$use_block_editor = false;
@@ -740,7 +740,7 @@ class Editor_Options {
 
 		$settings = self :: get_settings();
 
-		if ( isset( $_REQUEST['classic-editor'] ) || $settings['editor'] === 'classic' ) {
+		if ( isset( $_REQUEST['classic-editor'] ) || $settings['editor'] === 'tinymce' ) {
 			$url = add_query_arg( 'classic-editor', '', $url );
 		}
 
@@ -796,7 +796,7 @@ class Editor_Options {
 
 		?>
 		<p style="margin: 1em 0;">
-			<a href="<?php echo esc_url( $edit_url ); ?>"><?php _e( 'Switch to block editor', SCP_DOMAIN ); ?></a>
+			<a href="<?php echo esc_url( $edit_url ); ?>"><?php _e( 'Switch to block editor ', SCP_DOMAIN ); ?></a>
 		</p>
 		<?php
 	}
@@ -828,7 +828,7 @@ class Editor_Options {
 		wp_localize_script(
 			'editor-options',
 			'editorOptionsL10n',
-			[ 'linkText' => __( 'Switch to classic editor', SCP_DOMAIN ) ]
+			[ 'linkText' => __( 'Switch to rich text editor ', SCP_DOMAIN ) ]
 		);
 	}
 
@@ -934,8 +934,8 @@ class Editor_Options {
 	public static function add_edit_links( $actions, $post ) {
 
 		// This is in Gutenberg, don't duplicate it.
-		if ( array_key_exists( 'classic', $actions ) ) {
-			unset( $actions['classic'] );
+		if ( array_key_exists( 'tinymce', $actions ) ) {
+			unset( $actions['tinymce'] );
 		}
 
 		if ( ! array_key_exists( 'edit', $actions ) ) {
@@ -1024,7 +1024,7 @@ class Editor_Options {
 				$is_classic = ! self :: has_blocks( $post->post_content );
 			} else {
 				$settings = self :: get_settings();
-				$is_classic = ( $settings['editor'] === 'classic' );
+				$is_classic = ( $settings['editor'] === 'tinymce' );
 			}
 
 			$state = $is_classic ? _x( 'Classic editor', 'Editor Name', SCP_DOMAIN ) : _x( 'Block editor', 'Editor Name', SCP_DOMAIN );
@@ -1076,7 +1076,7 @@ class Editor_Options {
 		$settings = self :: get_settings();
 		$post_id  = self :: get_edited_post_id();
 
-		if ( $post_id && ( $settings['editor'] === 'classic' || self :: is_classic( $post_id ) ) ) {
+		if ( $post_id && ( $settings['editor'] === 'tinymce' || self :: is_classic( $post_id ) ) ) {
 
 			// Move the Privacy Policy help notice back under the title field.
 			remove_action( 'admin_notices', [ 'WP_Privacy_Policy_Content', 'notice' ] );
@@ -1120,11 +1120,11 @@ class Editor_Options {
 		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
 
 		if ( is_multisite() ) {
-			add_network_option( null, 'classic-editor-replace', 'classic' );
+			add_network_option( null, 'classic-editor-replace', 'tinymce' );
 			add_network_option( null, 'classic-editor-allow-sites', 'disallow' );
 		}
 
-		add_option( 'classic-editor-replace', 'classic' );
+		add_option( 'classic-editor-replace', 'tinymce' );
 		add_option( 'classic-editor-allow-users', 'disallow' );
 	}
 

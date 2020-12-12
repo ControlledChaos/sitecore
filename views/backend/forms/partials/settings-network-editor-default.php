@@ -22,7 +22,7 @@ $is_checked = ( get_network_option( null, 'classic-editor-allow-sites' ) === 'al
 		<th scope="row"><?php _e( 'Default editor for all sites', SCP_DOMAIN ); ?></th>
 		<td>
 			<p>
-				<input type="radio" name="classic-editor-replace" id="classic-editor-classic" value="classic"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
+				<input type="radio" name="classic-editor-replace" id="classic-editor-classic" value="tinymce"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
 				<label for="classic-editor-classic"><?php _ex( 'Rich text editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 			<p>
