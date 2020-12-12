@@ -49,6 +49,13 @@ class Editor_Options {
 		add_action( 'plugins_loaded', [ $this, 'init_actions' ] );
 	}
 
+	/**
+	 * Initial actions
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function init_actions() {
 
 		$block_editor = has_action( 'enqueue_block_assets' );
@@ -93,7 +100,7 @@ class Editor_Options {
 				add_filter( 'gutenberg_can_edit_post', [ __CLASS__, 'choose_editor' ], 100, 2 );
 
 				if ( $settings['editor'] === 'classic' ) {
-					self :: remove_gutenberg_hooks( 'some' );
+					self :: remove_block_hooks( 'some' );
 				}
 			}
 
@@ -129,7 +136,7 @@ class Editor_Options {
 
 					// Support older Gutenberg versions.
 					add_filter( 'gutenberg_can_edit_post_type', '__return_false', 100 );
-					self :: remove_gutenberg_hooks();
+					self :: remove_block_hooks();
 				}
 
 			} else {
@@ -156,7 +163,14 @@ class Editor_Options {
 		}
 	}
 
-	public static function remove_gutenberg_hooks( $remove = 'all' ) {
+	/**
+	 * Remove block hooks
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public static function remove_block_hooks( $remove = 'all' ) {
 
 		remove_action( 'admin_menu', 'gutenberg_menu' );
 		remove_action( 'admin_init', 'gutenberg_redirect_demo' );
@@ -209,12 +223,20 @@ class Editor_Options {
 		// remove_filter( 'the_content', 'do_blocks', 9 );
 		// remove_action( 'init', 'gutenberg_register_post_types' );
 
-		// Continue to manage wpautop for posts that were edited in Gutenberg.
+		// Continue to manage wpautop for posts that were edited in the block editor.
 		// remove_filter( 'wp_editor_settings', 'gutenberg_disable_editor_settings_wpautop' );
 		// remove_filter( 'the_content', 'gutenberg_wpautop', 8 );
 
 	}
 
+	/**
+	 * Get settings
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @param  string $refresh
+	 * @return object
+	 */
 	private static function get_settings( $refresh = 'no' ) {
 
 		/**
@@ -311,6 +333,13 @@ class Editor_Options {
 		return self :: $settings;
 	}
 
+	/**
+	 * If the TinyMCE editor is used
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @return boolean Returns true if the TinyMCE editor is used.
+	 */
 	private static function is_classic( $post_id = 0 ) {
 
 		if ( ! $post_id ) {
@@ -348,7 +377,13 @@ class Editor_Options {
 	}
 
 	/**
-	 * Get the edited post ID (early) when loading the Edit Post screen.
+	 * Get the edited post ID
+	 *
+	 * Retrieve early when loading the Edit Post screen.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @return integer Returns the ID.
 	 */
 	private static function get_edited_post_id() {
 
@@ -366,6 +401,13 @@ class Editor_Options {
 		return 0;
 	}
 
+	/**
+	 * Register settings
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function register_settings() {
 
 		// Add an option to Settings -> Writing.
@@ -393,10 +435,17 @@ class Editor_Options {
 		$heading_1 = __( 'Default editor for all users', SCP_DOMAIN );
 		$heading_2 = __( 'Allow users to switch editors', SCP_DOMAIN );
 
-		add_settings_field( 'classic-editor-1', $heading_1, [ __CLASS__, 'settings_1' ], 'writing' );
-		add_settings_field( 'classic-editor-2', $heading_2, [ __CLASS__, 'settings_2' ], 'writing' );
+		add_settings_field( 'classic-editor-default', $heading_1, [ __CLASS__, 'editor_settings_default' ], 'writing' );
+		add_settings_field( 'classic-editor-choose', $heading_2, [ __CLASS__, 'editor_settings_choose' ], 'writing' );
 	}
 
+	/**
+	 * Save user settings
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function save_user_settings( $user_id ) {
 
 		if (
@@ -416,7 +465,11 @@ class Editor_Options {
 	}
 
 	/**
-	 * Validate
+	 * Validate editor option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the value of the option.
 	 */
 	public static function validate_option_editor( $value ) {
 
@@ -427,6 +480,13 @@ class Editor_Options {
 		return 'classic';
 	}
 
+	/**
+	 * Validate allow choisce option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the value of the option.
+	 */
 	public static function validate_option_allow_users( $value ) {
 
 		if ( $value === 'allow' ) {
@@ -436,51 +496,36 @@ class Editor_Options {
 		return 'disallow';
 	}
 
-	public static function settings_1() {
-
-		$settings = self :: get_settings( 'refresh' );
-
-		?>
-		<div class="classic-editor-options">
-			<p>
-				<input type="radio" name="classic-editor-replace" id="classic-editor-classic" value="classic"<?php if ( $settings['editor'] === 'classic' ) echo ' checked'; ?> />
-				<label for="classic-editor-classic"><?php _ex( 'Classic editor', 'Editor Name', SCP_DOMAIN ); ?></label>
-			</p>
-			<p>
-				<input type="radio" name="classic-editor-replace" id="classic-editor-block" value="block"<?php if ( $settings['editor'] !== 'classic' ) echo ' checked'; ?> />
-				<label for="classic-editor-block"><?php _ex( 'Block editor', 'Editor Name', SCP_DOMAIN ); ?></label>
-			</p>
-		</div>
-		<script>
-		jQuery( 'document' ).ready( function( $ ) {
-			if ( window.location.hash === '#classic-editor-options' ) {
-				$( '.classic-editor-options' ).closest( 'td' ).addClass( 'highlight' );
-			}
-		} );
-		</script>
-		<?php
-	}
-
-	public static function settings_2() {
-
-		$settings = self :: get_settings( 'refresh' );
-
-		?>
-		<div class="classic-editor-options">
-			<p>
-				<input type="radio" name="classic-editor-allow-users" id="classic-editor-allow" value="allow"<?php if ( $settings['allow-users'] ) echo ' checked'; ?> />
-				<label for="classic-editor-allow"><?php _e( 'Yes', SCP_DOMAIN ); ?></label>
-			</p>
-			<p>
-				<input type="radio" name="classic-editor-allow-users" id="classic-editor-disallow" value="disallow"<?php if ( ! $settings['allow-users'] ) echo ' checked'; ?> />
-				<label for="classic-editor-disallow"><?php _e( 'No', SCP_DOMAIN ); ?></label>
-			</p>
-		</div>
-		<?php
+	/**
+	 * Form fields for the default editor option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public static function editor_settings_default() {
+		include_once SCP_PATH . 'views/backend/forms/partials/settings-writing-editor-default.php';
 	}
 
 	/**
+	 * Form fields for allow editor choice option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public static function editor_settings_choose() {
+		include_once SCP_PATH . 'views/backend/forms/partials/settings-writing-editor-choose.php';
+	}
+
+	/**
+	 * Form fields for user default editor option
+	 *
 	 * Shown on the Profile page when allowed by admin.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function user_settings() {
 
@@ -497,54 +542,27 @@ class Editor_Options {
 			return;
 		}
 
-		?>
-		<table class="form-table">
-			<tr class="classic-editor-user-options">
-				<th scope="row"><?php _e( 'Default Editor', SCP_DOMAIN ); ?></th>
-				<td>
-				<?php wp_nonce_field( 'allow-user-settings', 'classic-editor-user-settings' ); ?>
-				<?php self :: settings_1(); ?>
-				</td>
-			</tr>
-		</table>
-		<script>jQuery( 'tr.user-rich-editing-wrap' ).before( jQuery( 'tr.classic-editor-user-options' ) );</script>
-		<?php
+		include_once SCP_PATH . 'views/backend/forms/partials/settings-user-editor-default.php';
 	}
 
+	/**
+	 * Form fields for network default editor option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function network_settings() {
-
-		$editor     = get_network_option( null, 'classic-editor-replace' );
-		$is_checked = ( get_network_option( null, 'classic-editor-allow-sites' ) === 'allow' );
-
-		?>
-		<h2 id="classic-editor-options"><?php _e( 'Editor Settings', SCP_DOMAIN ); ?></h2>
-		<table class="form-table">
-			<?php wp_nonce_field( 'allow-site-admin-settings', 'classic-editor-network-settings' ); ?>
-			<tr>
-				<th scope="row"><?php _e( 'Default editor for all sites', SCP_DOMAIN ); ?></th>
-				<td>
-					<p>
-						<input type="radio" name="classic-editor-replace" id="classic-editor-classic" value="classic"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
-						<label for="classic-editor-classic"><?php _ex( 'Classic editor', 'Editor Name', SCP_DOMAIN ); ?></label>
-					</p>
-					<p>
-						<input type="radio" name="classic-editor-replace" id="classic-editor-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
-						<label for="classic-editor-block"><?php _ex( 'Block editor', 'Editor Name', SCP_DOMAIN ); ?></label>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row"><?php _e( 'Change settings', SCP_DOMAIN ); ?></th>
-				<td>
-					<input type="checkbox" name="classic-editor-allow-sites" id="classic-editor-allow-sites" value="allow"<?php if ( $is_checked ) echo ' checked'; ?>>
-					<label for="classic-editor-allow-sites"><?php _e( 'Allow site admins to change settings', SCP_DOMAIN ); ?></label>
-					<p class="description"><?php _e( 'By default the block editor is replaced with the classic editor and users cannot switch editors.', SCP_DOMAIN ); ?></p>
-				</td>
-			</tr>
-		</table>
-		<?php
+		include_once SCP_PATH . 'views/backend/forms/partials/settings-network-editor-default.php';
 	}
 
+	/**
+	 * Save network settings
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function save_network_settings() {
 
 		if (
@@ -566,8 +584,14 @@ class Editor_Options {
 	}
 
 	/**
+	 * Redirect helper
+	 *
 	 * Add a hidden field in edit-form-advanced.php
 	 * to help redirect back to the classic editor on saving.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function add_redirect_helper() {
 
@@ -577,7 +601,13 @@ class Editor_Options {
 	}
 
 	/**
-	 * Remember when the classic editor was used to edit a post.
+	 * Remember TinyMCE editor
+	 *
+	 * Remembers when the classic editor was used to edit a post.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function remember_classic_editor( $post ) {
 
@@ -589,7 +619,13 @@ class Editor_Options {
 	}
 
 	/**
-	 * Remember when the block editor was used to edit a post.
+	 * Remember block editor
+	 *
+	 * Remembers when the block editor was used to edit a post.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function remember_block_editor( $editor_settings, $post ) {
 
@@ -602,6 +638,13 @@ class Editor_Options {
 		return $editor_settings;
 	}
 
+	/**
+	 * Remember editor option
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	private static function remember( $post_id, $editor ) {
 
 		if ( get_post_meta( $post_id, 'classic-editor-remember', true ) !== $editor ) {
@@ -616,8 +659,10 @@ class Editor_Options {
 	 *
 	 * @uses `use_block_editor_for_post` filter.
 	 *
-	 * @param boolean $use_block_editor True for block editor, false for classic editor.
-	 * @param WP_Post $post             The post being edited.
+	 * @since  1.0.0
+	 * @access public
+	 * @param  boolean $use_block_editor True for block editor, false for classic editor.
+	 * @param  WP_Post $post The post being edited.
 	 * @return boolean True for block editor, false for classic editor.
 	 */
 	public static function choose_editor( $use_block_editor, $post ) {
@@ -637,8 +682,11 @@ class Editor_Options {
 		if ( empty( $post->ID ) || $post->post_status === 'auto-draft' ) {
 
 			if (
-				( $settings['editor'] === 'classic' && ! isset( $_GET['classic-editor__forget'] ) ) ||  // Add New
-				( isset( $_GET['classic-editor'] ) && isset( $_GET['classic-editor__forget'] ) ) // Switch to classic editor when no draft post.
+				// Add New.
+				( $settings['editor'] === 'classic' && ! isset( $_GET['classic-editor__forget'] ) ) ||
+
+				// Switch to classic editor when no draft post.
+				( isset( $_GET['classic-editor'] ) && isset( $_GET['classic-editor__forget'] ) )
 			) {
 				$use_block_editor = false;
 			}
@@ -659,7 +707,13 @@ class Editor_Options {
 	}
 
 	/**
-	 * Keep the `classic-editor` query arg through redirects when saving posts.
+	 * Redirect location
+	 *
+	 * Keeps the `classic-editor` query argument through redirects when saving posts.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the query argument.
 	 */
 	public static function redirect_location( $location ) {
 
@@ -674,7 +728,13 @@ class Editor_Options {
 	}
 
 	/**
-	 * Keep the `classic-editor` query arg when looking at revisions.
+	 * Get edit post link
+	 *
+	 * Keeps the `classic-editor` query argument when looking at revisions.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the query argument.
 	 */
 	public static function get_edit_post_link( $url ) {
 
@@ -687,6 +747,15 @@ class Editor_Options {
 		return $url;
 	}
 
+	/**
+	 * Add meta box
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $post_type
+	 * @param  object $post
+	 * @return void
+	 */
 	public static function add_meta_box( $post_type, $post ) {
 
 		$editors = self :: get_enabled_editors_for_post( $post );
@@ -707,6 +776,14 @@ class Editor_Options {
 		add_meta_box( $id, $title, $callback, null, 'side', 'default', $args );
 	}
 
+	/**
+	 * Do mata box
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  object $post
+	 * @return void
+	 */
 	public static function do_meta_box( $post ) {
 
 		$edit_url = get_edit_post_link( $post->ID, 'raw' );
@@ -724,6 +801,13 @@ class Editor_Options {
 		<?php
 	}
 
+	/**
+	 * Enqueue scripts
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function enqueue_block_editor_scripts() {
 
 		$editors = self :: get_enabled_editors_for_post( $GLOBALS['post'] );
@@ -748,6 +832,14 @@ class Editor_Options {
 		);
 	}
 
+	/**
+	 * Can edit post type
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @param  object $post_type
+	 * @return boolean Returns true if the user can edit post type.
+	 */
 	private static function can_edit_post_type( $post_type ) {
 
 		$can_edit = false;
@@ -762,9 +854,13 @@ class Editor_Options {
 	}
 
 	/**
+	 * Enabled for post type
+	 *
 	 * Checks which editors are enabled for the post type.
 	 *
-	 * @param string $post_type The post type.
+	 * @since  1.0.0
+	 * @access private
+	 * @param  string $post_type The post type.
 	 * @return array Associative array of the editors and whether they are enabled for the post type.
 	 */
 	private static function get_enabled_editors_for_post_type( $post_type ) {
@@ -784,7 +880,7 @@ class Editor_Options {
 		/**
 		 * Filters the editors that are enabled for the post type.
 		 *
-		 * @param array $editors    Associative array of the editors and whether they are enabled for the post type.
+		 * @param array $editors Associative array of the editors and whether they are enabled for the post type.
 		 * @param string $post_type The post type.
 		 */
 		$editors = apply_filters( 'classic_editor_enabled_editors_for_post_type', $editors, $post_type );
@@ -794,9 +890,13 @@ class Editor_Options {
 	}
 
 	/**
+	 * Enabled for post
+	 *
 	 * Checks which editors are enabled for the post.
 	 *
-	 * @param WP_Post $post  The post object.
+	 * @since  1.0.0
+	 * @access private
+	 * @param  WP_Post $post The post object.
 	 * @return array Associative array of the editors and whether they are enabled for the post.
 	 */
 	private static function get_enabled_editors_for_post( $post ) {
@@ -825,8 +925,10 @@ class Editor_Options {
 	 * Adds links to the post/page screens to edit any post or page in
 	 * the classic editor or block editor.
 	 *
-	 * @param  array   $actions Post actions.
-	 * @param  WP_Post $post    Edited post.
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $actions Post actions.
+	 * @param  WP_Post $post  Edited post.
 	 * @return array Updated post actions.
 	 */
 	public static function add_edit_links( $actions, $post ) {
@@ -856,7 +958,7 @@ class Editor_Options {
 		// Forget the previous value when going to a specific editor.
 		$edit_url = add_query_arg( 'classic-editor__forget', '', $edit_url );
 
-		// Build the edit actions. See also: WP_Posts_List_Table::handle_row_actions().
+		// Build the edit actions. See also: WP_Posts_List_Table :: handle_row_actions().
 		$title = _draft_or_post_title( $post->ID );
 
 		// Link to the block editor.
@@ -883,7 +985,13 @@ class Editor_Options {
 	}
 
 	/**
+	 * Add post state
+	 *
 	 * Show the editor that will be used in a "post state" in the Posts list table.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed
 	 */
 	public static function add_post_state( $post_states, $post ) {
 
@@ -929,6 +1037,13 @@ class Editor_Options {
 		return $post_states;
 	}
 
+	/**
+	 * Post list inline styles
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function add_edit_php_inline_style() {
 
 		?>
@@ -943,6 +1058,13 @@ class Editor_Options {
 		<?php
 	}
 
+	/**
+	 * On admin administration
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public static function on_admin_init() {
 
 		global $pagenow;
@@ -962,7 +1084,15 @@ class Editor_Options {
 		}
 	}
 
-	// Need to support WP < 5.0
+	/**
+	 * Has blocks
+	 *
+	 * Support for ClassicPress, WP < 5.0, and antibrand.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @return boolean Returns true if blocks are available.
+	 */
 	private static function has_blocks( $post = null ) {
 
 		if ( ! is_string( $post ) ) {
@@ -977,7 +1107,13 @@ class Editor_Options {
 	}
 
 	/**
+	 * Plugin activation
+	 *
 	 * Set defaults on activation.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function activate() {
 
@@ -993,7 +1129,13 @@ class Editor_Options {
 	}
 
 	/**
+	 * Plugin uninstall
+	 *
 	 * Delete the options on uninstall.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	public static function uninstall() {
 
