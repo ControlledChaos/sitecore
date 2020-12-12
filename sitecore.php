@@ -345,6 +345,7 @@ function sitecore() {
 	// Instantiate backend classes.
 	if ( is_admin() ) {
 		new Admin\Admin;
+		new Admin\Manage_Website_Page;
 	}
 
 	// Instantiate frontend classes.

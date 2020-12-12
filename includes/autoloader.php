@@ -64,10 +64,11 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Vendor\ACF'     => SCP_CLASS['vendor'] . 'acf.php',
 
 	// Backend/admin classes,
-	'SiteCore\Classes\Admin\Admin'            => SCP_CLASS['admin'] . 'admin.php',
-	'SiteCore\Classes\Admin\Add_Menu_Page'    => SCP_CLASS['admin'] . 'add-menu-page.php',
-	'SiteCore\Classes\Admin\Add_Submenu_Page' => SCP_CLASS['admin'] . 'add-submenu-page.php',
-	'SiteCore\Classes\Admin\Dashboard'        => SCP_CLASS['admin'] . 'dashboard.php',
+	'SiteCore\Classes\Admin\Admin'               => SCP_CLASS['admin'] . 'admin.php',
+	'SiteCore\Classes\Admin\Add_Menu_Page'       => SCP_CLASS['admin'] . 'add-menu-page.php',
+	'SiteCore\Classes\Admin\Add_Submenu_Page'    => SCP_CLASS['admin'] . 'add-submenu-page.php',
+	'SiteCore\Classes\Admin\Manage_Website_Page' => SCP_CLASS['admin'] . 'manage-website-page.php',
+	'SiteCore\Classes\Admin\Dashboard'           => SCP_CLASS['admin'] . 'dashboard.php',
 
 	// Frontend classes.
 	'SiteCore\Classes\Front\Frontend' => SCP_CLASS['front'] . 'frontend.php',
