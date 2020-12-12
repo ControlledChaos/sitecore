@@ -22,12 +22,12 @@ $is_checked = ( get_network_option( null, 'tinymce-editor-allow-sites' ) === 'al
 		<th scope="row"><?php _e( 'Default editor for all sites', SCP_DOMAIN ); ?></th>
 		<td>
 			<p>
-				<input type="radio" name="default-editor-replace" id="classic-editor-classic" value="tinymce"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
-				<label for="classic-editor-classic"><?php _ex( 'Rich text editor', 'Editor Name', SCP_DOMAIN ); ?></label>
+				<input type="radio" name="default-editor-replace" id="editor-options-tinymce" value="tinymce"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
+				<label for="editor-options-tinymce"><?php _ex( 'Rich text editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 			<p>
-				<input type="radio" name="default-editor-replace" id="classic-editor-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
-				<label for="classic-editor-block"><?php _ex( 'Block editor', 'Editor Name', SCP_DOMAIN ); ?></label>
+				<input type="radio" name="default-editor-replace" id="editor-options-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
+				<label for="editor-options-block"><?php _ex( 'Block editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 		</td>
 	</tr>

@@ -276,7 +276,7 @@ class Editor_Options {
 			 *
 			 * @param array $defaults The default options array. See `default_editor_settings` for supported keys and values.
 			 */
-			$defaults = apply_filters( 'classic_editor_network_default_settings', $defaults );
+			$defaults = apply_filters( 'default_editor_network_settings', $defaults );
 
 			if ( get_network_option( null, 'tinymce-editor-allow-sites' ) !== 'allow' ) {
 
@@ -349,14 +349,14 @@ class Editor_Options {
 		if ( $post_id ) {
 			$settings = self :: get_settings();
 
-			if ( $settings['allow-users'] && ! isset( $_GET['classic-editor__forget'] ) ) {
+			if ( $settings['allow-users'] && ! isset( $_GET['default-editor__forget'] ) ) {
 				$which = get_post_meta( $post_id, 'default-editor-remember', true );
 
 				if ( $which ) {
 
 					/**
 					 * The editor choice will be "remembered" when the post is
-					 * opened in either the classic or the block editor.
+					 * opened in either the tinymce or the block editor.
 					 */
 					if ( 'classic-editor' === $which ) {
 						return true;
@@ -683,10 +683,10 @@ class Editor_Options {
 
 			if (
 				// Add New.
-				( $settings['editor'] === 'tinymce' && ! isset( $_GET['classic-editor__forget'] ) ) ||
+				( $settings['editor'] === 'tinymce' && ! isset( $_GET['default-editor__forget'] ) ) ||
 
 				// Switch to rich text editor when no draft post.
-				( isset( $_GET['classic-editor'] ) && isset( $_GET['classic-editor__forget'] ) )
+				( isset( $_GET['classic-editor'] ) && isset( $_GET['default-editor__forget'] ) )
 			) {
 				$use_block_editor = false;
 			}
@@ -766,7 +766,7 @@ class Editor_Options {
 			return;
 		}
 
-		$id       = 'classic-editor-switch-editor';
+		$id       = 'editor-options-switch-editor';
 		$title    = __( 'Editor', SCP_DOMAIN );
 		$callback = [ __CLASS__, 'do_meta_box' ];
 		$args     = [
@@ -792,7 +792,7 @@ class Editor_Options {
 		$edit_url = remove_query_arg( 'classic-editor', $edit_url );
 
 		// Forget the previous value when going to a specific editor.
-		$edit_url = add_query_arg( 'classic-editor__forget', '', $edit_url );
+		$edit_url = add_query_arg( 'default-editor__forget', '', $edit_url );
 
 		?>
 		<p style="margin: 1em 0;">
@@ -956,7 +956,7 @@ class Editor_Options {
 		}
 
 		// Forget the previous value when going to a specific editor.
-		$edit_url = add_query_arg( 'classic-editor__forget', '', $edit_url );
+		$edit_url = add_query_arg( 'default-editor__forget', '', $edit_url );
 
 		// Build the edit actions. See also: WP_Posts_List_Table :: handle_row_actions().
 		$title = _draft_or_post_title( $post->ID );
@@ -973,8 +973,8 @@ class Editor_Options {
 		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the rich text editor', SCP_DOMAIN ), $title );
 		$edit_rich    = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 		$edit_actions = [
-			'classic-editor-classic' => $edit_rich,
-			'classic-editor-block'   => $edit_block
+			'editor-options-tinymce' => $edit_rich,
+			'editor-options-block'   => $edit_block
 		];
 
 		// Insert the new Edit actions instead of the Edit action.
@@ -1007,12 +1007,12 @@ class Editor_Options {
 		} elseif ( $editors['classic_editor'] && ! $editors['block_editor'] ) {
 
 			// Forced to rich text editor.
-			$state = '<span class="classic-editor-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
+			$state = '<span class="editor-options-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
 
 		} elseif ( ! $editors['classic_editor'] && $editors['block_editor'] ) {
 
 			// Forced to block editor.
-			$state = '<span class="classic-editor-forced-state">' . _x( 'block editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
+			$state = '<span class="editor-options-forced-state">' . _x( 'block editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
 
 		} else {
 
@@ -1048,7 +1048,7 @@ class Editor_Options {
 
 		?>
 		<style>
-		.classic-editor-forced-state {
+		.editor-options-forced-state {
 			font-style: italic;
 			font-weight: 400;
 			color: inherit;
