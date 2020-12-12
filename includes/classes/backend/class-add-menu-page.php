@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin initialization class
+ * Add menu page class
  *
  * @package    Site_Core
  * @subpackage Classes
