@@ -23,7 +23,7 @@ $is_checked = ( get_network_option( null, 'classic-editor-allow-sites' ) === 'al
 		<td>
 			<p>
 				<input type="radio" name="classic-editor-replace" id="classic-editor-classic" value="classic"<?php if ( $editor !== 'block' ) echo ' checked'; ?> />
-				<label for="classic-editor-classic"><?php _ex( 'Classic editor', 'Editor Name', SCP_DOMAIN ); ?></label>
+				<label for="classic-editor-classic"><?php _ex( 'Rich text editor', 'Editor Name', SCP_DOMAIN ); ?></label>
 			</p>
 			<p>
 				<input type="radio" name="classic-editor-replace" id="classic-editor-block" value="block"<?php if ( $editor === 'block' ) echo ' checked'; ?> />
@@ -36,7 +36,7 @@ $is_checked = ( get_network_option( null, 'classic-editor-allow-sites' ) === 'al
 		<td>
 			<input type="checkbox" name="classic-editor-allow-sites" id="classic-editor-allow-sites" value="allow"<?php if ( $is_checked ) echo ' checked'; ?>>
 			<label for="classic-editor-allow-sites"><?php _e( 'Allow site admins to change settings', SCP_DOMAIN ); ?></label>
-			<p class="description"><?php _e( 'By default the block editor is replaced with the classic editor and users cannot switch editors.', SCP_DOMAIN ); ?></p>
+			<p class="description"><?php _e( 'By default the block editor is replaced with the rich text editor and users cannot switch editors.', SCP_DOMAIN ); ?></p>
 		</td>
 	</tr>
 </table>
