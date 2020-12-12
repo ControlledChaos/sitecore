@@ -83,9 +83,9 @@ define( 'SCP_CLASSES', [
  * @return void
  */
 spl_autoload_register(
-	function ( string $classname ) {
-		if ( isset( SCP_CLASSES[ $classname ] ) ) {
-			require SCP_CLASSES[ $classname ];
+	function ( string $class ) {
+		if ( isset( SCP_CLASSES[ $class ] ) ) {
+			require SCP_CLASSES[ $class ];
 		}
 	}
 );
