@@ -124,7 +124,7 @@ class Add_Submenu_Page {
 	public function __construct() {
 
 		// Add an about page for the plugin.
-        add_action( 'admin_menu', [ $this, 'menu_page' ] );
+        add_action( 'admin_menu', [ $this, 'submenu_page' ] );
 	}
 
 	/**
@@ -137,13 +137,13 @@ class Add_Submenu_Page {
 	public function submenu_page() {
 
 		add_submenu_page(
-			$this->$parent_slug,
-			$this->$page_title,
-			$this->$menu_title,
-			$this->$capability,
-			$this->$menu_slug,
+			$this->parent_slug,
+			$this->page_title,
+			$this->menu_title,
+			$this->capability,
+			$this->menu_slug,
 			$this->callback(),
-			$this->$position
+			$this->position
 		);
 	}
 

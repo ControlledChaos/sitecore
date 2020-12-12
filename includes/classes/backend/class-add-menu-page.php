@@ -143,13 +143,13 @@ class Add_Menu_Page {
 	public function menu_page() {
 
 		add_menu_page(
-			$this->$page_title,
-			$this->$menu_title,
-			$this->$capability,
-			$this->$menu_slug,
+			$this->page_title,
+			$this->menu_title,
+			$this->capability,
+			$this->menu_slug,
 			$this->callback(),
-			$this->$icon_url,
-			$this->$position
+			$this->icon_url,
+			$this->position
 		);
 	}
 
