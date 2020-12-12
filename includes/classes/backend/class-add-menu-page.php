@@ -65,11 +65,11 @@ class Add_Menu_Page {
 	 * Callback function
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The function to be called to output the
-	 *                content for the page. Default value: ''.
+	 *                content for the page. Default value: 'callback'.
 	 */
-	public $function = '';
+	protected $function = 'callback';
 
 	/**
 	 * Menu icon
@@ -110,17 +110,6 @@ class Add_Menu_Page {
 	public $description = '';
 
 	/**
-	 * Instance of the class
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return object Returns the instance.
-	 */
-	public static function instance() {
-		return new self;
-	}
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -143,14 +132,52 @@ class Add_Menu_Page {
 	public function menu_page() {
 
 		add_menu_page(
-			$this->page_title,
-			$this->menu_title,
-			$this->capability,
-			$this->menu_slug,
-			$this->callback(),
-			$this->icon_url,
-			$this->position
+			$this->page_title(),
+			$this->menu_title(),
+			strtolower( $this->capability ),
+			strtolower( $this->menu_slug ),
+			[ $this, $this->function ],
+			strtolower( $this->icon_url ),
+			(integer)$this->position
 		);
+	}
+
+	/**
+	 * Page title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function page_title() {
+		return $this->page_title;
+	}
+
+	/**
+	 * Menu title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function menu_title() {
+		return ucwords( $this->menu_title );
+	}
+
+	/**
+	 * Menu title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function description() {
+
+		$description = sprintf(
+			'<p class="description">%s</p>',
+			__( $this->description, SCP_DOMAIN )
+		);
+		return $description;
 	}
 
 	/**
@@ -161,6 +188,26 @@ class Add_Menu_Page {
 	 * @return void
 	 */
 	public function callback() {
-		// Page content.
+
+		// Native page wrap element/class.
+		$html = '<div class="wrap">';
+
+		// Print a heading using the menu title variable.
+		$html .= sprintf(
+			'<h1>%s</h1>',
+			__( $this->menu_title(), SCP_DOMAIN )
+		);
+
+		// Print a paragraph with native description class using the description variable.
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( $this->description(), SCP_DOMAIN )
+		);
+
+		// End page wrap.
+		$html .= '</div>';
+
+		// Return the page markup.
+		echo $html;
 	}
 }

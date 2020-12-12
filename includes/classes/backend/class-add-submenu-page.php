@@ -22,74 +22,74 @@ class Add_Submenu_Page {
 	 * Parent slug
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The slug name for the parent menu or
 	 *                the file name of a standard admin page.
 	 */
-	public $parent_slug = '';
+	protected $parent_slug = '';
 
 	/**
 	 * Page title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The text to be displayed in the
 	 *                title tags of the page when the
 	 *                menu is selected.
 	 */
-	public $page_title = '';
+	protected $page_title = '';
 
 	/**
 	 * Menu title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The text to be used for the menu.
 	 */
-	public $menu_title = '';
+	protected $menu_title = '';
 
 	/**
 	 * Capability
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The capability required for the menu
 	 *                to be displayed to the user.
 	 */
-	public $capability = '';
+	protected $capability = '';
 
 	/**
 	 * Page slug
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The slug name to refer to the menu by.
 	 *                Should be unique for the menu page and
 	 *                only include lowercase alphanumeric,
 	 *                dashes, and underscores characters to be
 	 *                compatible with sanitize_key().
 	 */
-	public $menu_slug = '';
+	protected $menu_slug = '';
 
 	/**
 	 * Callback function
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The function to be called to output the
-	 *                content for the page. Default value: ''.
+	 *                content for the page. Default value: 'callback'.
 	 */
-	public $function = '';
+	protected $function = 'callback';
 
 	/**
 	 * Menu position
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
 	 *                 Default value: null
 	 */
-	public $position = null;
+	protected $position = null;
 
 	/**
 	 * Page description
@@ -98,21 +98,10 @@ class Add_Submenu_Page {
 	 * the template provided in this plugin.
 	 *
 	 * @since 1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The description of the page diplayed below the title.
 	 */
-	public $description = '';
-
-	/**
-	 * Instance of the class
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return object Returns the instance.
-	 */
-	public static function instance() {
-		return new self;
-	}
+	protected $description = '';
 
 	/**
 	 * Constructor method
@@ -137,14 +126,52 @@ class Add_Submenu_Page {
 	public function submenu_page() {
 
 		add_submenu_page(
-			$this->parent_slug,
-			$this->page_title,
-			$this->menu_title,
-			$this->capability,
-			$this->menu_slug,
-			$this->callback(),
-			$this->position
+			strtolower( $this->parent_slug ),
+			$this->page_title(),
+			$this->menu_title(),
+			strtolower( $this->capability ),
+			strtolower( $this->menu_slug ),
+			[ $this, $this->function ],
+			(integer)$this->position
 		);
+	}
+
+	/**
+	 * Page title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function page_title() {
+		return $this->page_title;
+	}
+
+	/**
+	 * Menu title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function menu_title() {
+		return ucwords( $this->menu_title );
+	}
+
+	/**
+	 * Menu title
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the conditional menu label.
+	 */
+	public function description() {
+
+		$description = sprintf(
+			'<p class="description">%s</p>',
+			__( $this->description, SCP_DOMAIN )
+		);
+		return $description;
 	}
 
 	/**
@@ -155,6 +182,26 @@ class Add_Submenu_Page {
 	 * @return void
 	 */
 	public function callback() {
-		// Page content.
+
+		// Native page wrap element/class.
+		$html = '<div class="wrap">';
+
+		// Print a heading using the menu title variable.
+		$html .= sprintf(
+			'<h1>%s</h1>',
+			__( $this->menu_title(), SCP_DOMAIN )
+		);
+
+		// Print a paragraph with native description class using the description variable.
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( $this->description(), SCP_DOMAIN )
+		);
+
+		// End page wrap.
+		$html .= '</div>';
+
+		// Return the page markup.
+		echo $html;
 	}
 }
