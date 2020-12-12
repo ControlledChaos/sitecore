@@ -12,7 +12,7 @@ Develop site-specific plugins for ClassicPress, WordPress, and the antibrand sys
 
 ## Plugin Overview
 
-This is not a boilerplate per se. It is a means to an end, not intended to be used as is, without further development. However it can be used as such. I use it to build site-specific plugins for clients.
+This is a means to an end, not intended to be used as is without further development. However it can be used as such. I use it to build site-specific plugins for clients.
 
 This plugin is opinionated. However, many of the enhancements included are very popular modifications and are easily removed if not wanted.
 
