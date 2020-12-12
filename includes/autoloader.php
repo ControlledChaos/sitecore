@@ -58,7 +58,6 @@ define( 'SCP_CLASSES', [
 
 	// Media classes.
 	'SiteCore\Classes\Media\Media'       => SCP_CLASS['media'] . 'media.php',
-	'SiteCore\Classes\Media\SVG_Uploads' => SCP_CLASS['media'] . 'svg-uploads.php',
 
 	// Vendor classes.
 	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
