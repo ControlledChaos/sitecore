@@ -345,13 +345,6 @@ function sitecore() {
 	// Instantiate backend classes.
 	if ( is_admin() ) {
 		new Admin\Admin;
-		new Admin\Add_Menu_Page;
-		new Admin\Add_Submenu_Page;
-
-		// Run the dashboard only on the backend index screen.
-		if ( 'index.php' == $pagenow ) {
-			new Admin\Dashboard;
-		}
 	}
 
 	// Instantiate frontend classes.
