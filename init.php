@@ -82,6 +82,7 @@ function sitecore() {
 
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
+	new Core\Register_Site_Help;
 	new Core\Register_Media_Type;
 
 	/**
