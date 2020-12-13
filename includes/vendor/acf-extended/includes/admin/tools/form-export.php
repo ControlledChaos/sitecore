@@ -1,6 +1,6 @@
 <?php 
 
-if (! defined( 'ABSPATH' ) )
+if(!defined('ABSPATH'))
     exit;
 
 // Stop here if ACF Pro is not active.
@@ -9,21 +9,21 @@ if ( ! defined( 'ACF_PRO' ) ) {
 }
 
 // Check setting
-if (!acf_get_setting( 'acfe/modules/dynamic_forms' ) )
+if(!acf_get_setting('acfe/modules/dynamic_forms'))
     return;
 
-if (!class_exists( 'ACFE_Admin_Tool_Export_Form' ) ):
+if(!class_exists('ACFE_Admin_Tool_Export_Form')):
 
 class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
     
     public $action = false;
-    public $data = [];
+    public $data = array();
 
     function initialize(){
         
         // vars
         $this->name = 'acfe_tool_form_export';
-        $this->title = __( 'Export Forms' );
+        $this->title = __('Export Forms');
         $this->icon = 'dashicons-upload';
         
     }
@@ -31,7 +31,7 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
     function html(){
         
         // Archive
-        if (! $this->is_active() ){
+        if(!$this->is_active()){
             
             $this->html_archive();
             
@@ -42,49 +42,49 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
     function html_archive(){
         
         // vars
-        $choices = [];
+        $choices = array();
         
         $get_forms = get_posts(array(
             'post_type'         => 'acfe-form',
             'posts_per_page'    => -1,
             'fields'            => 'ids'
-        ) );
+        ));
         
-        if ( $get_forms){
-            foreach( $get_forms as $form_id){
+        if($get_forms){
+            foreach($get_forms as $form_id){
                 
-                $name = get_field( 'acfe_form_name', $form_id);
+                $name = get_field('acfe_form_name', $form_id);
                 
-                $choices[$name] = esc_html(get_the_title( $form_id) );
+                $choices[$name] = esc_html(get_the_title($form_id));
                 
             }	
         }
         
         ?>
-        <p><?php _e( 'Export Forms', 'acf' ); ?></p>
+        <p><?php _e('Export Forms', 'acf'); ?></p>
         
         <div class="acf-fields">
             <?php 
             
-            if (!empty( $choices) ){
+            if(!empty($choices)){
             
                 // render
                 acf_render_field_wrap(array(
-                    'label'		=> __( 'Select Forms', 'acf' ),
+                    'label'		=> __('Select Forms', 'acf'),
                     'type'		=> 'checkbox',
                     'name'		=> 'keys',
                     'prefix'	=> false,
                     'value'		=> false,
                     'toggle'	=> true,
                     'choices'	=> $choices,
-                ) );
+                ));
             
             }
             
             else{
                 
                 echo '<div style="padding:15px 12px;">';
-                    _e( 'No dynamic form available.' );
+                    _e('No dynamic form available.');
                 echo '</div>'; 
                 
             }
@@ -95,13 +95,13 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
         <?php 
         
         $disabled = '';
-        if (empty( $choices) )
+        if(empty($choices))
             $disabled = 'disabled="disabled"';
         
         ?>
         
         <p class="acf-submit">
-            <button type="submit" name="action" class="button button-primary" value="json" <?php echo $disabled; ?>><?php _e( 'Export File' ); ?></button>
+            <button type="submit" name="action" class="button button-primary" value="json" <?php echo $disabled; ?>><?php _e('Export File'); ?></button>
         </p>
         <?php
         
@@ -109,22 +109,22 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
     
     function load(){
         
-		if ( $this->is_active() ){
+		if($this->is_active()){
             
             $this->action = $this->get_action();
             $this->data = $this->get_selected();
             
             // Json submit
-            if ( $this->action === 'json' )
+            if($this->action === 'json')
                 $this->submit();
 
 	    	// add notice
-	    	if (!empty( $this->data) ){
+	    	if(!empty($this->data)){
                 
-		    	$count = count( $this->data);
+		    	$count = count($this->data);
 		    	$text = sprintf(_n( 'Exported 1 form.', 'Exported %s forms.', $count, 'acf' ), $count);
                 
-		    	acf_add_admin_notice( $text, 'success' );
+		    	acf_add_admin_notice($text, 'success');
                 
 	    	}
             
@@ -138,26 +138,26 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
         $this->data = $this->get_selected();
         
         // validate
-		if ( $this->data === false)
-			return acf_add_admin_notice(__( 'No forms selected' ), 'warning' );
+		if($this->data === false)
+			return acf_add_admin_notice(__('No forms selected'), 'warning');
         
-        $keys = [];
-        foreach( $this->data as $args){
+        $keys = array();
+        foreach($this->data as $args){
             
             $keys[] = $args['acfe_form_name'];
             
         }
         
-        if ( $this->action === 'json' ){
+        if($this->action === 'json'){
         
             // Prefix
-            $prefix = (count( $keys) > 1) ? 'forms' : 'forms';
+            $prefix = (count($keys) > 1) ? 'forms' : 'forms';
             
             // Slugs
-            $slugs = implode( '-', $keys);
+            $slugs = implode('-', $keys);
             
             // Date
-            $date = date( 'Y-m-d' );
+            $date = date('Y-m-d');
             
             // file
             $file_name = 'acfe-export-' .  $prefix  . '-' . $slugs . '-' .  $date . '.json';
@@ -168,7 +168,7 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
             header("Content-Type: application/json; charset=utf-8");
             
             // return
-            echo acf_json_encode( $this->data);
+            echo acf_json_encode($this->data);
             die;
         
         }
@@ -180,25 +180,25 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
 		// vars
 		$selected = $this->get_selected_keys();
         
-		if (! $selected)
+		if(!$selected)
             return false;
 		
-        $data = [];
+        $data = array();
         
-        acf_enable_filter( 'local' );
+        acf_enable_filter('local');
         
 		// construct Data
-		foreach( $selected as $key){
+		foreach($selected as $key){
             
-            if (! $form = get_page_by_path( $key, OBJECT, 'acfe-form' ) )
+            if(!$form = get_page_by_path($key, OBJECT, 'acfe-form'))
                 continue;
             
 			// add to data array
-			$data[] = array_merge(array( 'title' => get_the_title( $form->ID) ), get_fields( $form->ID, false) );
+			$data[] = array_merge(array('title' => get_the_title($form->ID)), get_fields($form->ID, false));
             
 		}
         
-		acf_disable_filter( 'local' );
+		acf_disable_filter('local');
         
 		// return
 		return $data;
@@ -208,17 +208,17 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
 	function get_selected_keys(){
 		
 		// check $_POST
-		if ( $keys = acf_maybe_get_POST( 'keys' ) ){
+		if($keys = acf_maybe_get_POST('keys')){
             
 			return (array) $keys;
             
         }
 		
 		// check $_GET
-		if ( $keys = acf_maybe_get_GET( 'keys' ) ){
+		if($keys = acf_maybe_get_GET('keys')){
             
-			$keys = str_replace( ' ', '+', $keys);
-			return explode( '+', $keys);
+			$keys = str_replace(' ', '+', $keys);
+			return explode('+', $keys);
             
 		}
 		
@@ -239,6 +239,6 @@ class ACFE_Admin_Tool_Export_Form extends ACF_Admin_Tool{
     
 }
 
-acf_register_admin_tool( 'ACFE_Admin_Tool_Export_Form' );
+acf_register_admin_tool('ACFE_Admin_Tool_Export_Form');
 
 endif;

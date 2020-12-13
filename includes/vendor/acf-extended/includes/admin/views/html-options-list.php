@@ -1,7 +1,7 @@
 <div class="wrap" id="acfe-admin-options">
 
-    <h1 class="wp-heading-inline"><?php _e( 'Options' ); ?></h1>
-    <a href="<?php echo sprintf( '?page=%s&action=add', esc_attr( $_REQUEST['page']) ); ?>" class="page-title-action"><?php _e( 'Add New' ); ?></a>
+    <h1 class="wp-heading-inline"><?php _e('Options'); ?></h1>
+    <a href="<?php echo sprintf('?page=%s&action=add', esc_attr($_REQUEST['page'])); ?>" class="page-title-action"><?php _e('Add New'); ?></a>
     
     <hr class="wp-header-end" />
     
@@ -20,7 +20,7 @@
                         // Prepare items
                         $acfe_options_list->prepare_items();
 
-                        $acfe_options_list->search_box( 'Search', 'search' );
+                        $acfe_options_list->search_box('Search', 'search');
 
                         $acfe_options_list->display();
                         

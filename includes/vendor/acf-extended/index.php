@@ -1,6 +1,6 @@
 <?php
 /**
- * Advanced Custom Fields: Extended
+//  * Advanced Custom Fields: Extended
  *
  * "Enhancement Suite which improves Advanced Custom Fields administration."
  *
@@ -13,7 +13,7 @@
 /**
  * Updating plugin #1
  *
- * The following docblock replaces the plugin header in the main file.
+ * The following docblock replaces the plugin header is the main file.
  */
 
 /**
@@ -32,6 +32,17 @@
 
 /**
  * Updating plugin #2
+ *
+ * Remove or comment out the following condition from
+ * the `has_acf()` function in the core ACFE file,
+ * `acf-extended.php`.
+ *
+ * Remove:
+ * `&& defined( 'ACF_PRO' )`
+ */
+
+/**
+ * Updating plugin #3
  *
  * The following code is added to the files listed.
  *

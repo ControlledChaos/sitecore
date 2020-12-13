@@ -1,9 +1,7 @@
 <?php
 
-// Restrict direct access.
-if ( ! defined( 'ABSPATH' ) ) {
+if(!defined('ABSPATH'))
     exit;
-}
 
 // Stop here if ACF Pro is not active.
 if ( ! defined( 'ACF_PRO' ) ) {
@@ -11,16 +9,16 @@ if ( ! defined( 'ACF_PRO' ) ) {
 }
 
 // Check setting
-if (!acf_get_setting( 'acfe/modules/dynamic_block_types' ) )
+if(!acf_get_setting('acfe/modules/dynamic_block_types'))
     return;
 
 /**
  * Register Dynamic Block Type
  */
-add_action( 'init', 'acfe_dbt_register' );
+add_action('init', 'acfe_dbt_register');
 function acfe_dbt_register(){
     
-    register_post_type( 'acfe-dbt', array(
+    register_post_type('acfe-dbt', array(
         'label'                 => 'Block Type',
         'description'           => 'Block Type',
         'labels'                => array(
@@ -30,7 +28,7 @@ function acfe_dbt_register(){
             'edit_item'     => 'Edit Block Type',
             'add_new_item'  => 'New Block Type',
         ),
-        'supports'              => array( 'title' ),
+        'supports'              => array('title'),
         'hierarchical'          => false,
         'public'                => false,
         'show_ui'               => true,
@@ -44,36 +42,36 @@ function acfe_dbt_register(){
         'exclude_from_search'   => true,
         'publicly_queryable'    => false,
         'capabilities'          => array(
-            'publish_posts'         => acf_get_setting( 'capability' ),
-            'edit_posts'            => acf_get_setting( 'capability' ),
-            'edit_others_posts'     => acf_get_setting( 'capability' ),
-            'delete_posts'          => acf_get_setting( 'capability' ),
-            'delete_others_posts'   => acf_get_setting( 'capability' ),
-            'read_private_posts'    => acf_get_setting( 'capability' ),
-            'edit_post'             => acf_get_setting( 'capability' ),
-            'delete_post'           => acf_get_setting( 'capability' ),
-            'read_post'             => acf_get_setting( 'capability' ),
+            'publish_posts'         => acf_get_setting('capability'),
+            'edit_posts'            => acf_get_setting('capability'),
+            'edit_others_posts'     => acf_get_setting('capability'),
+            'delete_posts'          => acf_get_setting('capability'),
+            'delete_others_posts'   => acf_get_setting('capability'),
+            'read_private_posts'    => acf_get_setting('capability'),
+            'edit_post'             => acf_get_setting('capability'),
+            'delete_post'           => acf_get_setting('capability'),
+            'read_post'             => acf_get_setting('capability'),
         ),
         'acfe_admin_orderby'    => 'title',
         'acfe_admin_order'      => 'ASC',
         'acfe_admin_ppp'        => 999,
-    ) );
+    ));
 
 }
 
 /**
  * Dynamic Block Type Menu: Submenu Highlight
  */
-add_filter( 'submenu_file', 'acfe_dbt_menu_sub_highlight' );
-function acfe_dbt_menu_sub_highlight( $submenu_file){
+add_filter('submenu_file', 'acfe_dbt_menu_sub_highlight');
+function acfe_dbt_menu_sub_highlight($submenu_file){
     
     global $pagenow;
     
-    if ( $pagenow !== 'post-new.php' )
+    if($pagenow !== 'post-new.php')
         return $submenu_file;
     
     $post_type = get_post_type();
-    if ( $post_type !== 'acfe-dbt' )
+    if($post_type !== 'acfe-dbt')
         return $submenu_file;
     
     return 'edit.php?post_type=acfe-dbt';
@@ -88,39 +86,39 @@ acfe_dbt_registers();
 
 function acfe_dbt_registers(){
 	
-	$dynamic_block_types = acfe_settings( 'modules.dynamic_block_type.data' );
+	$dynamic_block_types = acfe_settings('modules.dynamic_block_type.data');
 	
-    if (empty( $dynamic_block_types) )
+    if(empty($dynamic_block_types))
         return;
     
-    foreach( $dynamic_block_types as $name => $args){
+    foreach($dynamic_block_types as $name => $args){
     
-        if (acf_has_block_type( 'acf/' . $name) )
+        if(acf_has_block_type('acf/' . $name))
             continue;
     
         // Textdomain
         $textdomain = 'ACF Extended: Block Types';
     
         // Title
-        if (isset( $args['title']) ){
+        if(isset($args['title'])){
         
-            acfe__( $args['title'], 'Title', $textdomain);
+            acfe__($args['title'], 'Title', $textdomain);
         
         }
     
         // Description
-        if (isset( $args['description']) ){
+        if(isset($args['description'])){
         
-            acfe__( $args['description'], 'Description', $textdomain);
+            acfe__($args['description'], 'Description', $textdomain);
         
         }
     
         // Template
-        if (acf_maybe_get( $args, 'render_template' ) ){
+        if(acf_maybe_get($args, 'render_template')){
         
-            $template = acfe_locate_file_path( $args['render_template']);
+            $template = acfe_locate_file_path($args['render_template']);
     
-            if (!empty( $template) ){
+            if(!empty($template)){
         
                 $args['render_template'] = $template;
         
@@ -130,11 +128,11 @@ function acfe_dbt_registers(){
         
     
         // Style
-        if (acf_maybe_get( $args, 'enqueue_style' ) ){
+        if(acf_maybe_get($args, 'enqueue_style')){
         
-            $style = acfe_locate_file_url( $args['enqueue_style']);
+            $style = acfe_locate_file_url($args['enqueue_style']);
     
-            if (!empty( $style) ){
+            if(!empty($style)){
         
                 $args['enqueue_style'] = $style;
         
@@ -144,11 +142,11 @@ function acfe_dbt_registers(){
         
     
         // Script
-        if (acf_maybe_get( $args, 'enqueue_script' ) ){
+        if(acf_maybe_get($args, 'enqueue_script')){
         
-            $script = acfe_locate_file_url( $args['enqueue_script']);
+            $script = acfe_locate_file_url($args['enqueue_script']);
     
-            if (!empty( $script) ){
+            if(!empty($script)){
         
                 $args['enqueue_script'] = $script;
         
@@ -157,7 +155,7 @@ function acfe_dbt_registers(){
         }
     
         // Register Block Type
-        acf_register_block_type( $args);
+        acf_register_block_type($args);
     
     }
 
@@ -166,18 +164,18 @@ function acfe_dbt_registers(){
 /**
  * ACF Exclude Dynamic Options Page from available post types
  */
-add_filter( 'acf/get_post_types', 'acfe_dbt_exclude', 10, 2);
-function acfe_dbt_exclude( $post_types, $args){
+add_filter('acf/get_post_types', 'acfe_dbt_exclude', 10, 2);
+function acfe_dbt_exclude($post_types, $args){
     
-    if (empty( $post_types) )
+    if(empty($post_types))
         return $post_types;
     
-    foreach( $post_types as $k => $post_type){
+    foreach($post_types as $k => $post_type){
         
-        if ( $post_type !== 'acfe-dbt' )
+        if($post_type !== 'acfe-dbt')
             continue;
         
-        unset( $post_types[$k]);
+        unset($post_types[$k]);
         
     }
     
@@ -185,17 +183,17 @@ function acfe_dbt_exclude( $post_types, $args){
     
 }
 
-add_action( 'post_submitbox_misc_actions', 'acfe_dbt_misc_actions' );
-function acfe_dbt_misc_actions( $post){
+add_action('post_submitbox_misc_actions', 'acfe_dbt_misc_actions');
+function acfe_dbt_misc_actions($post){
     
-    if ( $post->post_type !== 'acfe-dbt' )
+    if($post->post_type !== 'acfe-dbt')
         return;
     
-    $name = get_field( 'name', $post->ID);
+    $name = get_field('name', $post->ID);
     
     ?>
     <div class="misc-pub-section misc-pub-acfe-field-group-export" style="padding-top:2px;">
-        <span style="font-size:17px;color: #82878c;line-height: 1.3;width: 20px;margin-right: 2px;" class="dashicons dashicons-editor-code"></span> Export: <a href="<?php echo admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=php&keys=' . $name); ?>">PHP</a> <a href="<?php echo admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=json&keys=' . $name); ?>">Json</a>
+        <span style="font-size:17px;color: #82878c;line-height: 1.3;width: 20px;margin-right: 2px;" class="dashicons dashicons-editor-code"></span> Export: <a href="<?php echo admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=php&keys=' . $name); ?>">PHP</a> <a href="<?php echo admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=json&keys=' . $name); ?>">Json</a>
     </div>
     <?php
     
@@ -204,27 +202,27 @@ function acfe_dbt_misc_actions( $post){
 /**
  * Dynamic Block Types Save
  */
-add_action( 'acf/save_post', 'acfe_dbt_filter_save', 20);
-function acfe_dbt_filter_save( $post_id){
+add_action('acf/save_post', 'acfe_dbt_filter_save', 20);
+function acfe_dbt_filter_save($post_id){
     
-    if (get_post_type( $post_id) !== 'acfe-dbt' )
+    if(get_post_type($post_id) !== 'acfe-dbt')
         return;
     
     // Register Args
-	$label = get_post_field( 'post_title', $post_id);
-    $name = get_field( 'name', $post_id);
-    $description = get_field( 'description', $post_id);
-    $category = get_field( 'category', $post_id);
-    $keywords = acf_decode_choices(get_field( 'keywords', $post_id), true);
-    $post_types = acf_get_array(get_field( 'post_types', $post_id) );
-    $mode = get_field( 'mode', $post_id);
-    $align = get_field( 'align', $post_id);
-    $align_content = get_field( 'align_content', $post_id);
-    $render_template = get_field( 'render_template', $post_id);
-    $render_callback = get_field( 'render_callback', $post_id);
-    $enqueue_style = get_field( 'enqueue_style', $post_id);
-    $enqueue_script = get_field( 'enqueue_script', $post_id);
-    $enqueue_assets = get_field( 'enqueue_assets', $post_id);
+	$label = get_post_field('post_title', $post_id);
+    $name = get_field('name', $post_id);
+    $description = get_field('description', $post_id);
+    $category = get_field('category', $post_id);
+    $keywords = acf_decode_choices(get_field('keywords', $post_id), true);
+    $post_types = acf_get_array(get_field('post_types', $post_id));
+    $mode = get_field('mode', $post_id);
+    $align = get_field('align', $post_id);
+    $align_content = get_field('align_content', $post_id);
+    $render_template = get_field('render_template', $post_id);
+    $render_callback = get_field('render_callback', $post_id);
+    $enqueue_style = get_field('enqueue_style', $post_id);
+    $enqueue_script = get_field('enqueue_script', $post_id);
+    $enqueue_assets = get_field('enqueue_assets', $post_id);
     
     // Register: Args
     $register_args = array(
@@ -245,27 +243,27 @@ function acfe_dbt_filter_save( $post_id){
     );
     
     // Align
-    if ( $align === 'none' )
+    if($align === 'none')
         $register_args['align'] = '';
     
     // Icon
-    $icon_type = get_field( 'icon_type', $post_id);
+    $icon_type = get_field('icon_type', $post_id);
     
     // Icon: Simple
-    if ( $icon_type === 'simple' ){
+    if($icon_type === 'simple'){
         
-        $icon_text = get_field( 'icon_text', $post_id);
+        $icon_text = get_field('icon_text', $post_id);
         
         $register_args['icon'] = $icon_text;
         
     }
     
     // Icon: Colors
-    elseif ( $icon_type == 'colors' ){
+    elseif($icon_type == 'colors'){
         
-        $icon_background = get_field( 'icon_background', $post_id);
-        $icon_foreground = get_field( 'icon_foreground', $post_id);
-        $icon_src = get_field( 'icon_src', $post_id);
+        $icon_background = get_field('icon_background', $post_id);
+        $icon_foreground = get_field('icon_foreground', $post_id);
+        $icon_src = get_field('icon_src', $post_id);
         
         $register_args['icon'] = array(
             'background'    => $icon_background,
@@ -277,116 +275,123 @@ function acfe_dbt_filter_save( $post_id){
     }
     
     // Supports: Align
-    $supports_align = get_field( 'supports_align', $post_id);
-    $supports_align_args = acf_decode_choices(get_field( 'supports_align_args', $post_id), true);
+    $supports_align = get_field('supports_align', $post_id);
+    $supports_align_args = acf_decode_choices(get_field('supports_align_args', $post_id), true);
     
     $register_args['supports']['align'] = false;
-    if (!empty( $supports_align) ){
+    if(!empty($supports_align)){
         
         $register_args['supports']['align'] = true;
         
-        if (!empty( $supports_align_args) )
+        if(!empty($supports_align_args))
             $register_args['supports']['align'] = $supports_align_args;
         
     }
     
     // Supports: Mode
-    $supports_mode = get_field( 'supports_mode', $post_id);
+    $supports_mode = get_field('supports_mode', $post_id);
     
     $register_args['supports']['mode'] = false;
-    if (!empty( $supports_mode) )
+    if(!empty($supports_mode))
         $register_args['supports']['mode'] = true;
     
     // Supports: Multiple
-    $supports_multiple = get_field( 'supports_multiple', $post_id);
+    $supports_multiple = get_field('supports_multiple', $post_id);
     
     $register_args['supports']['multiple'] = false;
-    if (!empty( $supports_multiple) )
+    if(!empty($supports_multiple))
         $register_args['supports']['multiple'] = true;
     
     // Supports: Experimental JSX
-    $experimental_jsx = get_field( 'supports_experimental_jsx', $post_id);
+    $experimental_jsx = get_field('supports_experimental_jsx', $post_id);
     
-    $register_args['supports']['__experimental_jsx'] = false;
-    if (!empty( $experimental_jsx) )
-        $register_args['supports']['__experimental_jsx'] = true;
+    $register_args['supports']['jsx'] = false;
+    if(!empty($experimental_jsx))
+        $register_args['supports']['jsx'] = true;
     
     // Supports: Align Content
-    $supports_align_content = get_field( 'supports_align_content', $post_id);
+    $supports_align_content = get_field('supports_align_content', $post_id);
     
     $register_args['supports']['align_content'] = false;
-    if (!empty( $supports_align_content) )
+    if(!empty($supports_align_content))
         $register_args['supports']['align_content'] = true;
+    
+    // Supports: Anchor
+    $supports_anchor = get_field('supports_anchor', $post_id);
+    
+    $register_args['supports']['anchor'] = false;
+    if(!empty($supports_anchor))
+        $register_args['supports']['anchor'] = true;
     
         
     // Get ACFE option
-	$option = acfe_settings( 'modules.dynamic_block_type.data' );
+	$option = acfe_settings('modules.dynamic_block_type.data');
     
     // Create ACFE option
     $option[$name] = $register_args;
     
     // Sort keys ASC
-    ksort( $option);
+    ksort($option);
     
     // Update ACFE option
-	acfe_settings( 'modules.dynamic_block_type.data', $option, true);
+	acfe_settings('modules.dynamic_block_type.data', $option, true);
 	
 	// Update post
 	wp_update_post(array(
 		'ID'            => $post_id,
 		'post_name'     => $name,
-	) );
+	));
     
 }
 
 /**
  * Dynamic Block Type Status Publish > Trash
  */
-add_action( 'publish_to_trash', 'acfe_dbt_filter_status_trash' );
-function acfe_dbt_filter_status_trash( $post){
+add_action('publish_to_trash', 'acfe_dbt_filter_status_trash');
+function acfe_dbt_filter_status_trash($post){
     
-    if (get_post_type( $post->ID) !== 'acfe-dbt' )
+    if(get_post_type($post->ID) !== 'acfe-dbt')
         return;
     
     $post_id = $post->ID;
-    $name = get_field( 'name', $post_id);
+    $name = get_field('name', $post_id);
     
     // Get ACFE option
-	$option = acfe_settings( 'modules.dynamic_block_type.data' );
+	$option = acfe_settings('modules.dynamic_block_type.data');
     
     // Check ACFE option
-    acfe_unset( $option, $name);
+    acfe_unset($option, $name);
     
     // Update ACFE option
-	acfe_settings( 'modules.dynamic_block_type.data', $option, true);
+	acfe_settings('modules.dynamic_block_type.data', $option, true);
     
 }
 
 /**
  * Dynamic Block Type Status Trash > Publish
  */
-add_action( 'trash_to_publish', 'acfe_dbt_filter_status_publish' );
-function acfe_dbt_filter_status_publish( $post){
+add_action('trash_to_publish', 'acfe_dbt_filter_status_publish');
+function acfe_dbt_filter_status_publish($post){
     
-    if (get_post_type( $post->ID) !== 'acfe-dbt' )
+    if(get_post_type($post->ID) !== 'acfe-dbt')
         return;
     
-    acfe_dbt_filter_save( $post->ID);
+    acfe_dbt_filter_save($post->ID);
     
 }
 
 /**
  * Admin List Columns
  */
-add_filter( 'manage_edit-acfe-dbt_columns', 'acfe_dbt_admin_columns' );
-function acfe_dbt_admin_columns( $columns){
+add_filter('manage_edit-acfe-dbt_columns', 'acfe_dbt_admin_columns');
+function acfe_dbt_admin_columns($columns){
     
-    acfe_unset( $columns, 'date' );
+    acfe_unset($columns, 'date');
     
-    $columns['name'] = __( 'Name' );
-    $columns['category'] = __( 'Category' );
-    $columns['post_types'] = __( 'Post Types' );
-    $columns['render'] = __( 'Render' );
+    $columns['name'] = __('Name');
+    $columns['category'] = __('Category');
+    $columns['post_types'] = __('Post Types');
+    $columns['render'] = __('Render');
     
     return $columns;
     
@@ -395,61 +400,61 @@ function acfe_dbt_admin_columns( $columns){
 /**
  * Admin List Columns HTML
  */
-add_action( 'manage_acfe-dbt_posts_custom_column', 'acfe_dbt_admin_columns_html', 10, 2);
-function acfe_dbt_admin_columns_html( $column, $post_id){
+add_action('manage_acfe-dbt_posts_custom_column', 'acfe_dbt_admin_columns_html', 10, 2);
+function acfe_dbt_admin_columns_html($column, $post_id){
     
     // Name
-    if ( $column == 'name' ){
+    if($column == 'name'){
         
-        echo '<code style="font-size: 12px;">' . get_field( 'name', $post_id) . '</code>';
+        echo '<code style="font-size: 12px;">' . get_field('name', $post_id) . '</code>';
         
     }
     
     // Category
-    elseif ( $column == 'category' ){
+    elseif($column == 'category'){
         
-        echo ucfirst(get_field( 'category', $post_id) );
+        echo ucfirst(get_field('category', $post_id));
         
     }
     
     // Post Types
-    elseif ( $column == 'post_types' ){
+    elseif($column == 'post_types'){
         
-        $post_types = get_field( 'post_types', $post_id);
+        $post_types = get_field('post_types', $post_id);
         
-        if (empty( $post_types) ){
+        if(empty($post_types)){
             echo '—';
             return;
         }
         
-        $post_types_names = [];
-        foreach( $post_types as $post_type_slug){
-            $post_type_obj = get_post_type_object( $post_type_slug);
+        $post_types_names = array();
+        foreach($post_types as $post_type_slug){
+            $post_type_obj = get_post_type_object($post_type_slug);
             $post_types_names[] = $post_type_obj->label;
         }
         
-        if (empty( $post_types_names) ){
+        if(empty($post_types_names)){
             echo '—';
             return;
         }
         
-        echo implode( ', ', $post_types_names);
+        echo implode(', ', $post_types_names);
         
     }
     
     // Render
-    elseif ( $column == 'render' ){
+    elseif($column == 'render'){
         
-        $render_template = get_field( 'render_template', $post_id);
-        $render_callback = get_field( 'render_callback', $post_id);
+        $render_template = get_field('render_template', $post_id);
+        $render_callback = get_field('render_callback', $post_id);
         
-        if (!empty( $render_template) ){
+        if(!empty($render_template)){
             
             echo '<code style="font-size: 12px;">' . $render_template . '</code>';
             
         }
         
-        elseif (!empty( $render_callback) ){
+        elseif(!empty($render_callback)){
             
             echo '<code style="font-size: 12px;">' . $render_callback . '</code>';
             
@@ -468,38 +473,38 @@ function acfe_dbt_admin_columns_html( $column, $post_id){
 /**
  * Admin List Row Actions
  */
-add_filter( 'post_row_actions','acfe_dbt_admin_row', 10, 2);
-function acfe_dbt_admin_row( $actions, $post){
+add_filter('post_row_actions','acfe_dbt_admin_row', 10, 2);
+function acfe_dbt_admin_row($actions, $post){
 
-    if ( $post->post_type !== 'acfe-dbt' || $post->post_status !== 'publish' )
+    if($post->post_type !== 'acfe-dbt' || $post->post_status !== 'publish')
         return $actions;
     
     $post_id = $post->ID;
-    $name = get_field( 'name', $post_id);
+    $name = get_field('name', $post_id);
     
-    $actions['acfe_dpt_export_php'] = '<a href="' . admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=php&keys=' . $name) . '">' . __( 'PHP' ) . '</a>';
-    $actions['acfe_dpt_export_json'] = '<a href="' . admin_url( 'edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=json&keys=' . $name) . '">' . __( 'Json' ) . '</a>';
+    $actions['acfe_dpt_export_php'] = '<a href="' . admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=php&keys=' . $name) . '">' . __('PHP') . '</a>';
+    $actions['acfe_dpt_export_json'] = '<a href="' . admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_tool_dbt_export&action=json&keys=' . $name) . '">' . __('Json') . '</a>';
     
     return $actions;
     
 }
 
-add_filter( 'enter_title_here', 'acfe_dbt_admin_placeholder_title', 10, 2);
-function acfe_dbt_admin_placeholder_title( $placeholder, $post){
+add_filter('enter_title_here', 'acfe_dbt_admin_placeholder_title', 10, 2);
+function acfe_dbt_admin_placeholder_title($placeholder, $post){
 	
 	// Get post type
 	global $typenow;
 	
 	// Check post type
 	$post_type = $typenow;
-	if ( $post_type !== 'acfe-dbt' )
+	if($post_type !== 'acfe-dbt')
 		return $placeholder;
 	
 	return 'Block Type Title';
 	
 }
 
-add_action( 'admin_footer-post.php', 'acfe_dbt_admin_validate_title' );
+add_action('admin_footer-post.php', 'acfe_dbt_admin_validate_title');
 function acfe_dbt_admin_validate_title(){
 	
 	// Get post type
@@ -507,29 +512,29 @@ function acfe_dbt_admin_validate_title(){
 	
 	// Check post type
 	$post_type = $typenow;
-	if ( $post_type !== 'acfe-dbt' )
+	if($post_type !== 'acfe-dbt')
 		return;
 	
 	?>
     <script type="text/javascript">
-        (function( $){
+        (function($){
 
-            if (typeof acf === 'undefined' )
+            if(typeof acf === 'undefined')
                 return;
 
-            $( '#post' ).submit(function(e){
+            $('#post').submit(function(e){
 
                 // vars
-                var $title = $( '#titlewrap #title' );
+                var $title = $('#titlewrap #title');
 
                 // empty
-                if (! $title.val() ){
+                if(!$title.val()){
 
                     // prevent default
                     e.preventDefault();
 
                     // alert
-                    alert( 'Block Type Title is required.' );
+                    alert('Block Type Title is required.');
 
                     // focus
                     $title.focus();
@@ -546,26 +551,26 @@ function acfe_dbt_admin_validate_title(){
 /**
  * Admin Validate Name
  */
-add_filter( 'acf/validate_value/key=field_acfe_dbt_name', 'acfe_dbt_admin_validate_name', 10, 4);
-function acfe_dbt_admin_validate_name( $valid, $value, $field, $input){
+add_filter('acf/validate_value/key=field_acfe_dbt_name', 'acfe_dbt_admin_validate_name', 10, 4);
+function acfe_dbt_admin_validate_name($valid, $value, $field, $input){
 	
-	if (! $valid)
+	if(!$valid)
 		return $valid;
 	
 	// Editing Current Block Type
-	$current_post_id = acf_maybe_get_POST( 'post_ID' );
+	$current_post_id = acf_maybe_get_POST('post_ID');
 	
-	if (!empty( $current_post_id) ){
+	if(!empty($current_post_id)){
 		
-		$current_name = get_field( $field['name'], $current_post_id);
+		$current_name = get_field($field['name'], $current_post_id);
 		
-		if ( $value === $current_name)
+		if($value === $current_name)
 			return $valid;
 		
 	}
 	
 	// Check existing ACF Block Types
-    if (acf_has_block_type( 'acf/' . $value) ){
+    if(acf_has_block_type('acf/' . $value)){
 	
 		$valid = 'This block type name already exists';
         
@@ -575,16 +580,16 @@ function acfe_dbt_admin_validate_name( $valid, $value, $field, $input){
 	
 }
 
-add_filter( 'acf/update_value/key=field_acfe_dbt_name', 'acfe_dbt_admin_update_name', 10, 3);
-function acfe_dbt_admin_update_name( $value, $post_id, $field){
+add_filter('acf/update_value/key=field_acfe_dbt_name', 'acfe_dbt_admin_update_name', 10, 3);
+function acfe_dbt_admin_update_name($value, $post_id, $field){
 	
 	// Previous value
-	$_value = get_field( $field['name'], $post_id);
+	$_value = get_field($field['name'], $post_id);
 	
 	// Value Changed. Delete option
-	if ( $_value !== $value){
+	if($_value !== $value){
 		
-		acfe_settings()->delete( 'modules.dynamic_block_type.data.' . $_value);
+		acfe_settings()->delete('modules.dynamic_block_type.data.' . $_value);
 		
 	}
 	
@@ -592,27 +597,27 @@ function acfe_dbt_admin_update_name( $value, $post_id, $field){
 	
 }
 
-add_action( 'load-post.php', 'acfe_dbt_load' );
+add_action('load-post.php', 'acfe_dbt_load');
 function acfe_dbt_load(){
         
     // globals
     global $typenow;
     
     // Restrict
-    if ( $typenow !== 'acfe-dbt' )
+    if($typenow !== 'acfe-dbt')
         return;
     
-    add_action( 'add_meta_boxes', 'acfe_dbt_load_meta_boxes' );
+    add_action('add_meta_boxes', 'acfe_dbt_load_meta_boxes');
     
-    if (! isset( $_REQUEST['post']) )
+    if(!isset($_REQUEST['post']))
         return;
     
     $post_id = $_REQUEST['post'];
-    $name = get_field( 'name', $post_id);
+    $name = get_field('name', $post_id);
     
-    $prepend = acfe_get_setting( 'theme_folder' ) ? trailingslashit(acfe_get_setting( 'theme_folder' ) ) : '';
+    $prepend = acfe_get_setting('theme_folder') ? trailingslashit(acfe_get_setting('theme_folder')) : '';
     
-    add_filter( 'acf/prepare_field/name=render_template', function( $field) use( $name, $prepend){
+    add_filter('acf/prepare_field/name=render_template', function($field) use($name, $prepend){
         
         $prepend = apply_filters("acfe/block_type/prepend/template",                $prepend, $name);
         $prepend = apply_filters("acfe/block_type/prepend/template/name={$name}",   $prepend, $name);
@@ -623,7 +628,7 @@ function acfe_dbt_load(){
         
     });
     
-    add_filter( 'acf/prepare_field/name=enqueue_style', function( $field) use( $name, $prepend){
+    add_filter('acf/prepare_field/name=enqueue_style', function($field) use($name, $prepend){
         
         $prepend = apply_filters("acfe/block_type/prepend/style",               $prepend, $name);
         $prepend = apply_filters("acfe/block_type/prepend/style/name={$name}",  $prepend, $name);
@@ -634,7 +639,7 @@ function acfe_dbt_load(){
         
     });
     
-    add_filter( 'acf/prepare_field/name=enqueue_script', function( $field) use( $name, $prepend){
+    add_filter('acf/prepare_field/name=enqueue_script', function($field) use($name, $prepend){
         
         $prepend = apply_filters("acfe/block_type/prepend/script",              $prepend, $name);
         $prepend = apply_filters("acfe/block_type/prepend/script/name={$name}", $prepend, $name);
@@ -647,21 +652,21 @@ function acfe_dbt_load(){
     
 }
 
-add_action( 'load-post-new.php', 'acfe_dbt_load_new' );
+add_action('load-post-new.php', 'acfe_dbt_load_new');
 function acfe_dbt_load_new(){
     
     // globals
     global $typenow;
     
     // Restrict
-    if ( $typenow !== 'acfe-dbt' )
+    if($typenow !== 'acfe-dbt')
         return;
     
-    $prepend = acfe_get_setting( 'theme_folder' ) ? trailingslashit(acfe_get_setting( 'theme_folder' ) ) : '';
+    $prepend = acfe_get_setting('theme_folder') ? trailingslashit(acfe_get_setting('theme_folder')) : '';
     
-    add_filter( 'acf/prepare_field/name=render_template', function( $field) use( $prepend){
+    add_filter('acf/prepare_field/name=render_template', function($field) use($prepend){
         
-        $prepend = apply_filters( 'acfe/block_type/prepend/template', $prepend, '' );
+        $prepend = apply_filters('acfe/block_type/prepend/template', $prepend, '');
         
         $field['prepend'] = $prepend;
         
@@ -669,9 +674,9 @@ function acfe_dbt_load_new(){
         
     });
     
-    add_filter( 'acf/prepare_field/name=enqueue_style', function( $field) use( $prepend){
+    add_filter('acf/prepare_field/name=enqueue_style', function($field) use($prepend){
         
-        $prepend = apply_filters( 'acfe/block_type/prepend/style', $prepend, '' );
+        $prepend = apply_filters('acfe/block_type/prepend/style', $prepend, '');
         
         $field['prepend'] = $prepend;
         
@@ -679,9 +684,9 @@ function acfe_dbt_load_new(){
         
     });
     
-    add_filter( 'acf/prepare_field/name=enqueue_script', function( $field) use( $prepend){
+    add_filter('acf/prepare_field/name=enqueue_script', function($field) use($prepend){
         
-        $prepend = apply_filters( 'acfe/block_type/prepend/script', $prepend, '' );
+        $prepend = apply_filters('acfe/block_type/prepend/script', $prepend, '');
         
         $field['prepend'] = $prepend;
         
@@ -693,13 +698,13 @@ function acfe_dbt_load_new(){
 
 function acfe_dbt_load_meta_boxes(){
     
-    $name = get_field( 'name', get_the_ID() );
+    $name = get_field('name', get_the_ID());
     
     $data = acf_get_field_groups(array(
         'block' => 'acf/' . $name
-    ) );
+    ));
     
-    if (empty( $data) )
+    if(empty($data))
         return;
     
     add_meta_box(
@@ -708,7 +713,7 @@ function acfe_dbt_load_meta_boxes(){
         'acfe-dbt-field-groups', 
         
         // Title
-        __( 'Field groups', 'acf' ), 
+        __('Field groups', 'acf'), 
         
         // Render
         'acfe_dbt_load_meta_boxes_render', 
@@ -729,23 +734,23 @@ function acfe_dbt_load_meta_boxes(){
     
 }
 
-function acfe_dbt_load_meta_boxes_render( $array, $data){
+function acfe_dbt_load_meta_boxes_render($array, $data){
 
     $data = $data['args'];
     
-    foreach( $data as $field_group){ ?>
+    foreach($data as $field_group){ ?>
         
         <div class="acf-field">
     
             <div class="acf-label">
-                <label for="acf-_post_title"><a href="<?php echo admin_url( 'post.php?post=' . $field_group['ID'] . '&action=edit' ); ?>"><?php echo $field_group['title']; ?></a></label>
+                <label for="acf-_post_title"><a href="<?php echo admin_url('post.php?post=' . $field_group['ID'] . '&action=edit'); ?>"><?php echo $field_group['title']; ?></a></label>
                 <p class="description"><?php echo $field_group['key']; ?></p>
             </div>
             
             <div class="acf-input">
-                <?php $fields = acf_get_fields( $field_group); ?>
+                <?php $fields = acf_get_fields($field_group); ?>
                 
-                <?php if (!empty( $fields) ){ ?>
+                <?php if(!empty($fields)){ ?>
                     
                     <table class="acf-table">
                         <thead>
@@ -758,19 +763,19 @@ function acfe_dbt_load_meta_boxes_render( $array, $data){
                         <tbody>
                             <?php 
                             
-                                $array = [];
-                                foreach( $fields as $field){
+                                $array = array();
+                                foreach($fields as $field){
                                     
-                                    acfe_dbt_get_fields_labels_recursive( $array, $field);
+                                    acfe_dbt_get_fields_labels_recursive($array, $field);
                                     
                                 }
                                 
-                                foreach( $array as $field_key => $field_label){
+                                foreach($array as $field_key => $field_label){
                                     
-                                    $field = acf_get_field( $field_key);
-                                    $type = acf_get_field_type( $field['type']);
+                                    $field = acf_get_field($field_key);
+                                    $type = acf_get_field_type($field['type']);
                                     $type_label = '-';
-                                    if (isset( $type->label) )
+                                    if(isset($type->label))
                                         $type_label = $type->label;
                                 ?>
                             
@@ -793,7 +798,7 @@ function acfe_dbt_load_meta_boxes_render( $array, $data){
     <?php } ?>
     
     <script type="text/javascript">
-    if (typeof acf !== 'undefined' ){
+    if(typeof acf !== 'undefined'){
         
         acf.newPostbox(<?php echo wp_json_encode(array(
             'id'		=> 'acfe-dbt-field-groups',
@@ -801,7 +806,7 @@ function acfe_dbt_load_meta_boxes_render( $array, $data){
             'style'		=> 'default',
             'label'		=> 'left',
             'edit'		=> false
-        ) ); ?>);
+        )); ?>);
         
     }	
     </script>
@@ -813,19 +818,19 @@ function acfe_dbt_get_fields_labels_recursive(&$array, $field){
     
     $label = '';
     
-    $ancestors = isset( $field['ancestors']) ? $field['ancestors'] : count(acf_get_field_ancestors( $field) );
-    $label = str_repeat( '- ', $ancestors) . $label;
+    $ancestors = isset($field['ancestors']) ? $field['ancestors'] : count(acf_get_field_ancestors($field));
+    $label = str_repeat('- ', $ancestors) . $label;
     
-    $label .= !empty( $field['label']) ? $field['label'] : '( ' . __( 'no label', 'acf' ) . ' )';
+    $label .= !empty($field['label']) ? $field['label'] : '(' . __('no label', 'acf') . ')';
     $label .= $field['required'] ? ' <span class="acf-required">*</span>' : '';
     
     $array[$field['key']] = $label;
     
-    if (isset( $field['sub_fields']) && !empty( $field['sub_fields']) ){
+    if(isset($field['sub_fields']) && !empty($field['sub_fields'])){
         
-        foreach( $field['sub_fields'] as $s_field){
+        foreach($field['sub_fields'] as $s_field){
             
-            acfe_dbt_get_fields_labels_recursive( $array, $s_field);
+            acfe_dbt_get_fields_labels_recursive($array, $s_field);
             
         }
         
@@ -833,12 +838,12 @@ function acfe_dbt_get_fields_labels_recursive(&$array, $field){
     
 }
 
-//$__experimental_jsx = [];
-$experimental_jsx = [];
-$align_content = [];
-$supports_align_content = [];
+//$__experimental_jsx = array();
+$experimental_jsx = array();
+$align_content = array();
+$supports_align_content = array();
 
-if (acf_version_compare(acf_get_setting( 'version' ),  '>=', '5.9' ) ){
+if(acf_version_compare(acf_get_setting('version'),  '>=', '5.9')){
     
     $experimental_jsx = array(
         'key' => 'field_acfe_dbt_supports_experimental_jsx',
@@ -924,7 +929,7 @@ if (acf_version_compare(acf_get_setting( 'version' ),  '>=', '5.9' ) ){
  */
 acf_add_local_field_group(array(
     'key' => 'group_acfe_dynamic_block_type',
-    'title' => __( 'Dynamic Block Type', 'acfe' ),
+    'title' => __('Dynamic Block Type', 'acfe'),
     
     'location' => array(
         array(
@@ -1534,6 +1539,29 @@ full',
             'rows' => '',
             'new_lines' => '',
         ),
+
+        array(
+            'key' => 'field_acfe_dbt_supports_anchor',
+            'label' => 'Anchor',
+            'name' => 'supports_anchor',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'acfe_validate' => '',
+            'acfe_update' => '',
+            'acfe_permissions' => '',
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => 'True',
+            'ui_off_text' => 'False',
+        ),
         
         $experimental_jsx,
     
@@ -1586,4 +1614,4 @@ full',
             'ui_off_text' => 'False',
         ),
     ),
-) );
+));

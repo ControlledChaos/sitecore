@@ -1,12 +1,12 @@
 <?php
 
-acf_register_store( 'acfe/settings' );
+acf_register_store('acfe/settings');
 
-if (!class_exists( 'acfe_settings' ) ):
+if(!class_exists('acfe_settings')):
 
 class acfe_settings{
 
-	public $settings = [];
+	public $settings = array();
 	
 	public $upgrades = array(
         '0_8_5' => '0.8.5',
@@ -43,51 +43,51 @@ class acfe_settings{
 			
 			'dynamic_block_type' => array(
 				'active' => true,
-				'settings' => [],
-				'data' => []
+				'settings' => array(),
+				'data' => array()
 			),
 			
 			'dynamic_form' => array(
 				'active' => true,
-				'settings' => [],
-				'data' => []
+				'settings' => array(),
+				'data' => array()
 			),
 			
 			'dynamic_option' => array(
 				'active' => true,
-				'settings' => [],
-				'data' => []
+				'settings' => array(),
+				'data' => array()
 			),
 			
 			'dynamic_post_type' => array(
 				'active' => true,
-				'settings' => [],
-				'data' => []
+				'settings' => array(),
+				'data' => array()
 			),
 			
 			'dynamic_taxonomy' => array(
 				'active' => true,
-				'settings' => [],
-				'data' => []
+				'settings' => array(),
+				'data' => array()
 			),
 		
 		),
 		
 		// Upgrades
-		'upgrades' => [],
+		'upgrades' => array(),
 	);
 
 	function __construct(){
 	 
-		$this->settings = acf_get_store( 'acfe/settings' );
+		$this->settings = acf_get_store('acfe/settings');
 		
-		if (empty( $this->settings->get_data() )){
+		if(empty($this->settings->get_data())){
             
-            $option = get_option( 'acfe', [] );
+            $option = get_option('acfe', array());
             
-            if (!empty( $option) ){
+            if(!empty($option)){
                 
-                $this->settings->set( $option);
+                $this->settings->set($option);
                 
                 $this->version();
                 
@@ -101,122 +101,122 @@ class acfe_settings{
 
 	}
 	
-	function get( $selector = false){
+	function get($selector = false){
 		
-		return $this->array_get( $this->settings->get(), $selector);
+		return $this->array_get($this->settings->get(), $selector);
 		
 	}
 	
-	function set( $selector = false, $value = null, $update = true, $append = false){
+	function set($selector = false, $value = null, $update = true, $append = false){
 		
-		if ( $value === null)
+		if($value === null)
 			return false;
 		
 		$rows = $this->settings->get();
 		
-		if ( $append){
+		if($append){
 			
-			$this->array_append( $rows, $selector, $value);
+			$this->array_append($rows, $selector, $value);
 			
 		}else{
 			
-			$this->array_set( $rows, $selector, $value);
+			$this->array_set($rows, $selector, $value);
 			
 		}
 		
-		$this->settings->set( $rows);
+		$this->settings->set($rows);
 		
-		if ( $update)
+		if($update)
 			$this->update();
 		
 		return $this;
 		
 	}
 	
-	function clear( $selector = false, $update = true){
+	function clear($selector = false, $update = true){
 		
 		$rows = $this->settings->get();
 		
-		$this->array_clear( $rows, $selector);
+		$this->array_clear($rows, $selector);
 		
-		$this->settings->set( $rows);
+		$this->settings->set($rows);
 		
-		if ( $update)
+		if($update)
 			$this->update();
 		
 		return $this;
 		
 	}
 	
-	function delete( $selector = false, $update = true){
+	function delete($selector = false, $update = true){
 		
 		// Single
-		if (strpos( $selector, '.' ) === false){
+		if(strpos($selector, '.') === false){
 			
-			$this->settings->remove( $selector);
+			$this->settings->remove($selector);
 		
 		// Array
 		}else{
 			
 			$rows = $this->settings->get();
 			
-			$this->array_remove( $rows, $selector);
+			$this->array_remove($rows, $selector);
 			
-			$this->settings->set( $rows);
+			$this->settings->set($rows);
 			
 		}
 		
-		if ( $update)
+		if($update)
 			$this->update();
 		
 		return $this;
 		
 	}
 	
-	function append( $selector = false, $value = null, $update = true){
+	function append($selector = false, $value = null, $update = true){
 		
-		if ( $selector === false && $value === null)
+		if($selector === false && $value === null)
 			return false;
 		
 		// Allow simple append without selector
-		if ( $value === null){
+		if($value === null){
 			
 			$value = $selector;
 			$selector = false;
 			
 		}
 		
-		return $this->set( $selector, $value, $update, true);
+		return $this->set($selector, $value, $update, true);
 		
 	}
 	
-	function array_get( $array, $key, $default = null) {
+	function array_get($array, $key, $default = null) {
 		
-		if (empty( $key) )
+		if(empty($key))
 			return $array;
 		
-		if (! is_array( $key) )
-			$key = explode( '.', $key);
+		if(!is_array($key))
+			$key = explode('.', $key);
 		
-		$count = count( $key);
+		$count = count($key);
 		$i=-1;
 		
-		foreach( $key as $segment){
+		foreach($key as $segment){
 			
 			$i++;
 			
-			if (! isset( $array[$segment]) )
+			if(!isset($array[$segment]))
 				continue;
 			
-			if ( $i+1 === $count){
+			if($i+1 === $count){
 				
 				return $array[$segment];
 				
 			}
 			
-			unset( $key[$i]);
+			unset($key[$i]);
 			
-			return $this->array_get( $array[$segment], $key, $default);
+			return $this->array_get($array[$segment], $key, $default);
 			
 			
 		}
@@ -227,18 +227,18 @@ class acfe_settings{
 	
 	function array_set(&$array, $key, $value){
 		
-		if (empty( $key) )
+		if(empty($key))
 			return $array = $value;
 		
-		$keys = explode( '.', $key);
+		$keys = explode('.', $key);
 		
-		while(count( $keys) > 1){
+		while(count($keys) > 1){
 			
-			$key = array_shift( $keys);
+			$key = array_shift($keys);
 			
-			if (! isset( $array[$key]) || ! is_array( $array[$key]) ){
+			if(!isset($array[$key]) || !is_array($array[$key])){
 				
-				$array[$key] = [];
+				$array[$key] = array();
 				
 			}
 			
@@ -246,7 +246,7 @@ class acfe_settings{
 			
 		}
 		
-		$array[array_shift( $keys)] = $value;
+		$array[array_shift($keys)] = $value;
 		
 		return $array;
 		
@@ -254,14 +254,14 @@ class acfe_settings{
 	
 	function array_append(&$array, $key, $value){
 		
-		$get = $this->array_get( $array, $key);
+		$get = $this->array_get($array, $key);
 		
-		$old = acf_get_array( $get);
-		$value = acf_get_array( $value);
+		$old = acf_get_array($get);
+		$value = acf_get_array($value);
 		
-		$value = array_merge( $old, $value);
+		$value = array_merge($old, $value);
 		
-		$this->array_set( $array, $key, $value);
+		$this->array_set($array, $key, $value);
 		
 		return $array;
 		
@@ -269,17 +269,17 @@ class acfe_settings{
 	
 	function array_clear(&$array, $key){
 		
-		$get = $this->array_get( $array, $key);
+		$get = $this->array_get($array, $key);
 		
-		if ( $get === null)
+		if($get === null)
 			return $array;
 		
 		$value = null;
 		
-		if (is_array( $get) )
-			$value = [];
+		if(is_array($get))
+			$value = array();
 		
-		$this->array_set( $array, $key, $value);
+		$this->array_set($array, $key, $value);
 		
 		return $array;
 		
@@ -289,15 +289,15 @@ class acfe_settings{
 		
 		$original =& $array;
 		
-		foreach( (array)$keys as $key){
+		foreach((array)$keys as $key){
 			
-			$parts = explode( '.', $key);
+			$parts = explode('.', $key);
 			
-			while(count( $parts) > 1){
+			while(count($parts) > 1){
 				
-				$part = array_shift( $parts);
+				$part = array_shift($parts);
 				
-				if (isset( $array[$part]) && is_array( $array[$part]) ){
+				if(isset($array[$part]) && is_array($array[$part])){
 					
 					$array =& $array[$part];
 					
@@ -305,7 +305,7 @@ class acfe_settings{
 				
 			}
 			
-			unset( $array[array_shift( $parts)]);
+			unset($array[array_shift($parts)]);
 			
 			// clean up after each pass
 			$array =& $original;
@@ -318,11 +318,11 @@ class acfe_settings{
         
         $this->model['upgrades'] = $this->upgrades;
 		
-		$this->set( '', $this->model, true);
+		$this->set('', $this->model, true);
 		
         new acfe_upgrades();
 		
-		add_action( 'init', array( $this, 'reset_modules' ) );
+		add_action('init', array($this, 'reset_modules'));
 		
 	}
 	
@@ -333,15 +333,15 @@ class acfe_settings{
 			'post_type'         => 'acfe-dpt',
 			'posts_per_page'    => -1,
 			'fields'            => 'ids'
-		) );
+		));
 		
-		if (!empty( $post_types) ){
+		if(!empty($post_types)){
 			
-			foreach( $post_types as $post_id){
+			foreach($post_types as $post_id){
 				
-				acfe_dpt_filter_save( $post_id);
+				acfe_dpt_filter_save($post_id);
 				
-				acf_log( '[ACF Extended] Reset: Dynamic Post Type "' . get_post_field( 'post_title', $post_id) . '"' );
+				acf_log('[ACF Extended] Reset: Dynamic Post Type "' . get_post_field('post_title', $post_id) . '"');
 				
 			}
 			
@@ -352,15 +352,15 @@ class acfe_settings{
 			'post_type'         => 'acfe-dt',
 			'posts_per_page'    => -1,
 			'fields'            => 'ids'
-		) );
+		));
 		
-		if (!empty( $taxonomies) ){
+		if(!empty($taxonomies)){
 			
-			foreach( $taxonomies as $post_id){
+			foreach($taxonomies as $post_id){
 				
-				acfe_dt_filter_save( $post_id);
+				acfe_dt_filter_save($post_id);
 				
-				acf_log( '[ACF Extended] Reset: Dynamic Taxonomy "' . get_post_field( 'post_title', $post_id) . '"' );
+				acf_log('[ACF Extended] Reset: Dynamic Taxonomy "' . get_post_field('post_title', $post_id) . '"');
 				
 			}
 			
@@ -371,15 +371,15 @@ class acfe_settings{
 			'post_type'         => 'acfe-dbt',
 			'posts_per_page'    => -1,
 			'fields'            => 'ids'
-		) );
+		));
 		
-		if (!empty( $block_types) ){
+		if(!empty($block_types)){
 			
-			foreach( $block_types as $post_id){
+			foreach($block_types as $post_id){
 				
-				acfe_dbt_filter_save( $post_id);
+				acfe_dbt_filter_save($post_id);
 				
-				acf_log( '[ACF Extended] Reset: Dynamic Block Type "' . get_post_field( 'post_title', $post_id) . '"' );
+				acf_log('[ACF Extended] Reset: Dynamic Block Type "' . get_post_field('post_title', $post_id) . '"');
 				
 			}
 			
@@ -390,15 +390,15 @@ class acfe_settings{
 			'post_type'         => 'acfe-dop',
 			'posts_per_page'    => -1,
 			'fields'            => 'ids'
-		) );
+		));
 		
-		if (!empty( $options_pages) ){
+		if(!empty($options_pages)){
 			
-			foreach( $options_pages as $post_id){
+			foreach($options_pages as $post_id){
 				
-				acfe_dop_filter_save( $post_id);
+				acfe_dop_filter_save($post_id);
 				
-				acf_log( '[ACF Extended] Reset: Dynamic Options Page "' . get_post_field( 'post_title', $post_id) . '"' );
+				acf_log('[ACF Extended] Reset: Dynamic Options Page "' . get_post_field('post_title', $post_id) . '"');
 				
 			}
 			
@@ -408,17 +408,17 @@ class acfe_settings{
 	
 	function version(){
 		
-		$version = $this->get( 'version' );
+		$version = $this->get('version');
 		
-		if (acf_version_compare( $version, '<', ACFE_VERSION) ){
+		if(acf_version_compare($version, '<', ACFE_VERSION)){
 		    
-		    if (!empty( $this->upgrades) ){
+		    if(!empty($this->upgrades)){
 		        
 		        $do_upgrades = false;
             
-                foreach( $this->upgrades as $function => $v){
+                foreach($this->upgrades as $function => $v){
                     
-                    if (acf_version_compare( $v, '<=', $version) )
+                    if(acf_version_compare($v, '<=', $version))
                         continue;
     
                     $do_upgrades = true;
@@ -432,13 +432,13 @@ class acfe_settings{
 			$data = $this->get();
 			$model = $this->model;
 			
-			$new_model = $this->parse_args_r( $data, $model);
+			$new_model = $this->parse_args_r($data, $model);
 			
 			$new_model['version'] = ACFE_VERSION;
 			
-			$this->set( '', $new_model, true);
+			$this->set('', $new_model, true);
             
-            if ( $do_upgrades){
+            if($do_upgrades){
                 
                 new acfe_upgrades();
                 
@@ -452,7 +452,7 @@ class acfe_settings{
 		
 		$settings = $this->settings->get();
 		
-		update_option( 'acfe', $settings, 'true' );
+		update_option('acfe', $settings, 'true');
 		
 	}
 	
@@ -462,10 +462,10 @@ class acfe_settings{
 		$b = (array) $b;
 		$r = $b;
 		
-		foreach( $a as $k => &$v){
+		foreach($a as $k => &$v){
 			
-			if (is_array( $v) && isset( $r[ $k ]) ){
-				$r[$k] = $this->parse_args_r( $v, $r[ $k ]);
+			if(is_array($v) && isset($r[ $k ])){
+				$r[$k] = $this->parse_args_r($v, $r[ $k ]);
 			}else{
 				$r[$k] = $v;
 			}
@@ -480,21 +480,21 @@ class acfe_settings{
 
 endif;
 
-function acfe_settings( $selector = null, $value = null, $update = true){
+function acfe_settings($selector = null, $value = null, $update = true){
 	
-	$instance = acf_get_instance( 'acfe_settings' );
+	$instance = acf_get_instance('acfe_settings');
 	
 	// Set
-	if ( $selector !== null && $value !== null){
+	if($selector !== null && $value !== null){
 			
-		return $instance->set( $selector, $value, $update);
+		return $instance->set($selector, $value, $update);
 		
 	}
 	
 	// Get
-	elseif ( $selector !== null && $value === null){
+	elseif($selector !== null && $value === null){
 		
-		return $instance->get( $selector);
+		return $instance->get($selector);
 		
 	}
 	

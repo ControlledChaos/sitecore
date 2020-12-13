@@ -1,9 +1,9 @@
 <div class="wrap acf-settings-wrap">
     
     <?php
-    $title = __( 'Edit Option' );
-    if ( $_REQUEST['action'] === 'add' )
-        $title = __( 'Add Option' );
+    $title = __('Edit Option');
+    if($_REQUEST['action'] === 'add')
+        $title = __('Add Option');
     ?>
     <h1 class="wp-heading-inline"><?php echo $title; ?></h1>
     
@@ -17,10 +17,10 @@
         acf_form_data(array(
             'screen'	=> 'acfe-options-edit',
             'post_id'	=> 'acfe_options_edit',
-        ) );
+        ));
         
-        wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false);
-        wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false);
+        wp_nonce_field('meta-box-order', 'meta-box-order-nonce', false);
+        wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', false);
         
         ?>
         
@@ -40,13 +40,13 @@
                 
                 <div id="postbox-container-1" class="postbox-container">
                     
-                    <?php do_meta_boxes( 'acf_options_page', 'side', null); ?>
+                    <?php do_meta_boxes('acf_options_page', 'side', null); ?>
                         
                 </div>
                 
                 <div id="postbox-container-2" class="postbox-container">
                     
-                    <?php do_meta_boxes( 'acf_options_page', 'normal', null); ?>
+                    <?php do_meta_boxes('acf_options_page', 'normal', null); ?>
                     
                 </div>
             

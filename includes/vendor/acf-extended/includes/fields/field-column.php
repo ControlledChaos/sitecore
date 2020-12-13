@@ -1,16 +1,16 @@
 <?php
 
-if (! defined( 'ABSPATH' ) )
+if(!defined('ABSPATH'))
     exit;
 
-if (!class_exists( 'acfe_field_column' ) ):
+if(!class_exists('acfe_field_column')):
 
 class acfe_field_column extends acf_field{
     
     function __construct(){
         
         $this->name = 'acfe_column';
-        $this->label = __( 'Column', 'acfe' );
+        $this->label = __('Column', 'acfe');
         $this->category = 'layout';
         $this->defaults = array(
             'columns' => '6/12',
@@ -18,31 +18,31 @@ class acfe_field_column extends acf_field{
         );
         
         // Field wrapper
-        add_filter( 'acfe/field_wrapper_attributes/type=acfe_column', array( $this, 'field_wrapper_attributes' ), 10, 2);
+        add_filter('acfe/field_wrapper_attributes/type=acfe_column', array($this, 'field_wrapper_attributes'), 10, 2);
         
         // New sizes compatibility
-        add_filter( 'acf/validate_field/type=acfe_column', array( $this, 'new_validate_field' ), 20);
+        add_filter('acf/validate_field/type=acfe_column', array($this, 'new_validate_field'), 20);
         
         parent::__construct();
         
     }
     
-    function new_validate_field( $field){
+    function new_validate_field($field){
         
-        if (!acfe_ends_with( $field['columns'], '/6' ) )
+        if(!acfe_ends_with($field['columns'], '/6'))
             return $field;
         
-        if ( $field['columns'] === '1/6' ){
+        if($field['columns'] === '1/6'){
             $field['columns'] = '2/12';
-        }elseif ( $field['columns'] === '2/6' ){
+        }elseif($field['columns'] === '2/6'){
             $field['columns'] = '4/12';
-        }elseif ( $field['columns'] === '3/6' ){
+        }elseif($field['columns'] === '3/6'){
             $field['columns'] = '6/12';
-        }elseif ( $field['columns'] === '4/6' ){
+        }elseif($field['columns'] === '4/6'){
             $field['columns'] = '8/12';
-        }elseif ( $field['columns'] === '5/6' ){
+        }elseif($field['columns'] === '5/6'){
             $field['columns'] = '10/12';
-        }elseif ( $field['columns'] === '6/6' ){
+        }elseif($field['columns'] === '6/6'){
             $field['columns'] = '12/12';
         }
         
@@ -50,11 +50,11 @@ class acfe_field_column extends acf_field{
         
     }
     
-    function render_field_settings( $field){
+    function render_field_settings($field){
         
         // columns
         acf_render_field_setting( $field, array(
-            'label'         => __( 'Columns', 'acfe' ),
+            'label'         => __('Columns', 'acfe'),
             'instructions'  => '',
             'type'          => 'select',
             'name'          => 'columns',
@@ -82,29 +82,29 @@ class acfe_field_column extends acf_field{
                     )
                 )
             )
-		) );
+		));
         
         // endpoint
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Endpoint','acf' ),
-			'instructions'	=> __( 'Define an endpoint for the previous columns to stop.', 'acf' ),
+			'label'			=> __('Endpoint','acf'),
+			'instructions'	=> __('Define an endpoint for the previous columns to stop.', 'acf'),
 			'name'			=> 'endpoint',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
             'class'         => 'acfe-field-columns-endpoint',
-		) );
+		));
         
     }
     
-    function field_wrapper_attributes( $wrapper, $field){
+    function field_wrapper_attributes($wrapper, $field){
         
-        if ( $field['endpoint']){
+        if($field['endpoint']){
             
             $wrapper['data-endpoint'] = $field['endpoint'];
             
         }
         
-        elseif ( $field['columns']){
+        elseif($field['columns']){
             
             $wrapper['data-columns'] = $field['columns'];
             
@@ -115,7 +115,7 @@ class acfe_field_column extends acf_field{
     }
     
     
-    function render_field( $field){
+    function render_field($field){
         
         // vars
 		$atts = array(
@@ -123,21 +123,21 @@ class acfe_field_column extends acf_field{
 		);
 		
 		?>
-		<div <?php acf_esc_attr_e( $atts); ?>></div>
+		<div <?php acf_esc_attr_e($atts); ?>></div>
 		<?php
         
     }
 
-    function load_field( $field){
+    function load_field($field){
         
         $columns = '';
-        if ( $field['columns'])
+        if($field['columns'])
             $columns = ' ' . $field['columns'];
         
-        if ( $field['endpoint'])
+        if($field['endpoint'])
             $columns = ' endpoint';
         
-        $field['label'] = '(Column' . $columns .' )';
+        $field['label'] = '(Column' . $columns .')';
         $field['name'] = '';
         $field['instructions'] = '';
         $field['required'] = 0;
@@ -147,12 +147,12 @@ class acfe_field_column extends acf_field{
         
     }
     
-    function prepare_field( $field){
+    function prepare_field($field){
     
         global $pagenow;
         
         // Do not render on User/Term views (because of Table render)
-        if (acf_is_screen(array( 'profile', 'user', 'user-edit' ) ) || $pagenow === 'edit-tags.php' || $pagenow === 'term.php' )
+        if(acf_is_screen(array('profile', 'user', 'user-edit')) || $pagenow === 'edit-tags.php' || $pagenow === 'term.php')
             return false;
         
         $field['label'] = false;
@@ -164,6 +164,6 @@ class acfe_field_column extends acf_field{
 }
 
 // initialize
-acf_register_field_type( 'acfe_field_column' );
+acf_register_field_type('acfe_field_column');
 
 endif;
