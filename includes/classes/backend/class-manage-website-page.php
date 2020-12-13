@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin initialization class
+ * Add Manage Website page
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -64,12 +64,8 @@ class Manage_Website_Page extends Add_Submenu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    string The slug name to refer to the menu by.
-	 *                Should be unique for the menu page and
-	 *                only include lowercase alphanumeric,
-	 *                dashes, and underscores characters to be
-	 *                compatible with sanitize_key().
 	 */
-	protected $menu_slug = 'this-website';
+	protected $menu_slug = 'manage-website';
 
 	/**
 	 * Menu position
@@ -77,15 +73,11 @@ class Manage_Website_Page extends Add_Submenu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
-	 *                 Default value: null
 	 */
 	protected $position = 1;
 
 	/**
 	 * Page description
-	 *
-	 * This is a non-native feature. The description is addeded by
-	 * the template provided in this plugin.
 	 *
 	 * @since 1.0.0
 	 * @access protected
@@ -102,5 +94,20 @@ class Manage_Website_Page extends Add_Submenu_Page {
 	 */
 	public function __construct() {
 		parent :: __construct();
+	}
+
+	/**
+	 * Callback function
+	 *
+	 * @todo Conditional page output files, one being for
+	 * the antibrand admin screen class. But this will
+	 * work in the meantime.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function callback() {
+		include_once SCP_PATH . 'views/backend/pages/manage-website.php';
 	}
 }
