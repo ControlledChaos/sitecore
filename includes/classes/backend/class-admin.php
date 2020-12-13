@@ -23,7 +23,6 @@ class Admin {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @global string $pagenow Gets the filename of the current page.
 	 * @return self
 	 */
 	public function __construct() {
@@ -45,18 +44,15 @@ class Admin {
 	}
 
 	/**
-	 * Remove theme & plugin editor links.
+	 * Remove theme & plugin editor links
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return array
+	 * @return void
 	 */
 	public function remove_editor_links() {
-
-		$remove_theme_editor  = remove_submenu_page( 'themes.php', 'theme-editor.php' );
-		$remove_plugin_editor = remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
-
-		return [ $remove_theme_editor, $remove_plugin_editor ];
+		remove_submenu_page( 'themes.php', 'theme-editor.php' );
+		remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
 	}
 
 	/**
@@ -81,7 +77,9 @@ class Admin {
 	}
 
 	/**
-	 * Remove the ClassicPress/WordPress logo from the admin bar.
+	 * Remove toolbar logos
+	 *
+	 * Removes the ClassicPress/WordPress logo from the admin bar.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -91,12 +89,13 @@ class Admin {
 	 * @todo Make this optional on the Site Settings screen.
 	 */
 	public function remove_toolbar_logo( $wp_admin_bar ) {
-
 		$wp_admin_bar->remove_node( 'wp-logo' );
 	}
 
 	/**
-	 * Hide the ClassicPress/WordPress update notification to all but admins.
+	 * Admin only updates
+	 *
+	 * Hides the ClassicPress/WordPress update notification to all but admins.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -130,7 +129,9 @@ class Admin {
 	 */
 	public function admin_footer() {
 
-		$content = get_bloginfo( 'name' );
+		$content  = get_bloginfo( 'name' );
+		$content .= ' — ';
+		$content .= get_bloginfo( 'description' );
 
 		echo $content;
 	}
