@@ -86,6 +86,16 @@ class Manage_Website_Page extends Add_Submenu_Page {
 	protected $description = 'This page provides you with help managing this website.';
 
 	/**
+	 * Help section
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Content is added to the contextual help
+	 *                 section if true. Default is false.
+	 */
+	protected $add_help = true;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0

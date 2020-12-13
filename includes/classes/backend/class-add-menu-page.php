@@ -110,6 +110,16 @@ class Add_Menu_Page {
 	public $description = '';
 
 	/**
+	 * Help section
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Content is added to the contextual help
+	 *                 section if true. Default is false.
+	 */
+	protected $add_help = false;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -131,7 +141,7 @@ class Add_Menu_Page {
 	 */
 	public function menu_page() {
 
-		add_menu_page(
+		$this->help = add_menu_page(
 			$this->page_title(),
 			$this->menu_title(),
 			strtolower( $this->capability ),
@@ -140,6 +150,11 @@ class Add_Menu_Page {
 			strtolower( $this->icon_url ),
 			(integer)$this->position
 		);
+
+		// Add content to the contextual help section.
+		if ( true == $this->add_help ) {
+			add_action( 'load-' . $this->help, [ $this, 'help' ] );
+		}
 	}
 
 	/**
@@ -217,5 +232,66 @@ class Add_Menu_Page {
 
 		// Return the page markup.
 		echo $html;
+	}
+
+	/**
+	 * Help tabs
+	 *
+	 * Adds tabs to the contextual help section.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function help() {
+
+		// Add to this page only.
+		$screen = get_current_screen();
+		if ( $screen->id != $this->help ) {
+			return;
+		}
+
+		// More information tab.
+		$screen->add_help_tab( [
+			'id'       => 'more_info',
+			'title'    => __( 'More Information', SCP_DOMAIN ),
+			'content'  => null,
+			'callback' => [ $this, 'more_info' ]
+		] );
+
+		// Add a help sidebar.
+		$screen->set_help_sidebar(
+			$this->sidebar()
+		);
+	}
+
+	/**
+	 * More Infromation tab
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function more_info() {
+		include_once SCP_PATH . 'views/backend/help/sample-more-info.php';
+	}
+
+	/**
+	 * Help sidebar
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the content of the sidebar.
+	 */
+	public function sidebar() {
+
+		ob_start();
+
+		require SCP_PATH . 'views/backend/help/sample-sidebar.php';
+
+		$html = ob_get_clean();
+
+		// Return the page markup.
+		return $html;
 	}
 }
