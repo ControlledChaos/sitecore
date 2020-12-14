@@ -9,18 +9,18 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes\Admin;
+namespace SiteCore;
 
 // Alias namespaces.
-use SiteCore\Classes as General;
+use SiteCore\Classes          as General;
 use SiteCore\Classes\Activate as Activate;
-use SiteCore\Classes\Core as Core;
-use SiteCore\Classes\Tools as Tools;
-use SiteCore\Classes\Media as Media;
-use SiteCore\Classes\Users as Users;
-use SiteCore\Classes\Admin as Admin;
-use SiteCore\Classes\Front as Front;
-use SiteCore\Classes\Vendor as Vendor;
+use SiteCore\Classes\Core     as Core;
+use SiteCore\Classes\Tools    as Tools;
+use SiteCore\Classes\Media    as Media;
+use SiteCore\Classes\Users    as Users;
+use SiteCore\Classes\Admin    as Admin;
+use SiteCore\Classes\Front    as Front;
+use SiteCore\Classes\Vendor   as Vendor;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -83,7 +83,6 @@ function sitecore() {
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
 	new Core\Register_Site_Help;
-	new Core\Register_Media_Type;
 
 	/**
 	 * Editor options for WordPress
@@ -102,6 +101,7 @@ function sitecore() {
 
 	// Instantiate media classes.
 	new Media\Media;
+	new Media\Register_Media_Type;
 
 	// Instantiate third-party plugin classes.
 	new Vendor\Plugins;
@@ -110,11 +110,12 @@ function sitecore() {
 	if ( is_admin() ) {
 		new Admin\Admin;
 		new Admin\Manage_Website_Page;
+		new Admin\Sample_Submenu_Page;
 	}
 
 	// Run the dashboard only on the backend index screen.
 	if ( 'index.php' == $pagenow ) {
-		new Dashboard;
+		new Admin\Dashboard;
 	}
 
 	// Instantiate frontend classes.
@@ -129,5 +130,3 @@ function sitecore() {
 
 // Run the plugin.
 sitecore();
-
-// Happy developing!
