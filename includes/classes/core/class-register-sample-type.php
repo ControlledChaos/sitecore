@@ -2,6 +2,10 @@
 /**
  * Sample class to register a post type
  *
+ * Copy this file and rename it to reflect
+ * its new class name. Add to the autoloader
+ * and intantiate where appropriate.
+ *
  * @package    Site_Core
  * @subpackage Classes
  * @category   Core
