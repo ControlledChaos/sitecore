@@ -55,10 +55,10 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Type'       => SCP_CLASS['core'] . 'register-type.php',
 	'SiteCore\Classes\Core\Register_Site_Help'  => SCP_CLASS['core'] . 'register-site-help.php',
 	'SiteCore\Classes\Core\Register_Tax'        => SCP_CLASS['core'] . 'register-tax.php',
-	'SiteCore\Classes\Core\Register_Media_Type' => SCP_CLASS['core'] . 'register-media-type.php',
 
 	// Media classes.
-	'SiteCore\Classes\Media\Media'       => SCP_CLASS['media'] . 'media.php',
+	'SiteCore\Classes\Media\Media'               => SCP_CLASS['media'] . 'media.php',
+	'SiteCore\Classes\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',
 
 	// Vendor classes.
 	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
@@ -69,6 +69,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Admin\Add_Menu_Page'       => SCP_CLASS['admin'] . 'add-menu-page.php',
 	'SiteCore\Classes\Admin\Add_Submenu_Page'    => SCP_CLASS['admin'] . 'add-submenu-page.php',
 	'SiteCore\Classes\Admin\Manage_Website_Page' => SCP_CLASS['admin'] . 'manage-website-page.php',
+	'SiteCore\Classes\Admin\Sample_Submenu_Page' => SCP_CLASS['admin'] . 'sample-submenu-page.php',
 	'SiteCore\Classes\Admin\Dashboard'           => SCP_CLASS['admin'] . 'dashboard.php',
 
 	// Frontend classes.
