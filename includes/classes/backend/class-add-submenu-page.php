@@ -9,6 +9,7 @@
  * @since      1.0.0
  */
 
+declare( strict_types = 1 );
 namespace SiteCore\Classes\Admin;
 
 // Restrict direct access.
@@ -56,7 +57,7 @@ class Add_Submenu_Page {
 	 * @var    string The capability required for the menu
 	 *                to be displayed to the user.
 	 */
-	protected $capability = '';
+	protected $capability = 'manage_options';
 
 	/**
 	 * Page slug
@@ -87,9 +88,8 @@ class Add_Submenu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
-	 *                 Default value: null
 	 */
-	protected $position = null;
+	protected $position = 30;
 
 	/**
 	 * Page description
@@ -123,7 +123,7 @@ class Add_Submenu_Page {
 	public function __construct() {
 
 		// Add an about page for the plugin.
-        add_action( 'admin_menu', [ $this, 'submenu_page' ] );
+		add_action( 'admin_menu', [ $this, 'submenu_page' ] );
 	}
 
 	/**
@@ -155,38 +155,80 @@ class Add_Submenu_Page {
 	 * Page title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return string Returns the conditional menu label.
 	 */
-	public function page_title() {
-		return $this->page_title;
+	protected function page_title() {
+
+		if ( ! empty( $this->page_title ) ) {
+			return __( ucwords( $this->page_title ), SCP_DOMAIN );
+		}
+
+		return __( strtoupper( 'Don\'t forget your page title!' ), SCP_DOMAIN );
 	}
 
 	/**
 	 * Menu title
 	 *
 	 * @since  1.0.0
-	 * @access public
-	 * @return string Returns the conditional menu label.
+	 * @access protected
+	 * @return string Returns the menu label.
 	 */
-	public function menu_title() {
-		return ucwords( $this->menu_title );
+	protected function menu_title() {
+
+		if ( ! empty( $this->menu_title ) ) {
+			return __( ucwords( $this->menu_title ), SCP_DOMAIN );
+		}
+
+		return __( strtoupper( 'Forget something?' ), SCP_DOMAIN );
 	}
 
 	/**
-	 * Menu title
+	 * Page heading
 	 *
 	 * @since  1.0.0
-	 * @access public
-	 * @return string Returns the conditional menu label.
+	 * @access protected
+	 * @return string Returns the page heading.
 	 */
-	public function description() {
+	protected function heading() {
+		return $this->menu_title();
+	}
+
+	/**
+	 * Page content
+	 *
+	 * This can be used in the default `callback()` method.
+	 * Hooking into `scp_submanu_page_content` adds
+	 * content/markup inside the standard page markup.
+	 * Use a new `callback()` method to override these defaults.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the page content.
+	 */
+	protected function content() {
+		return '';
+	}
+
+	/**
+	 * Page description
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the page description.
+	 */
+	protected function description() {
 
 		$description = sprintf(
 			'<p class="description">%s</p>',
 			__( $this->description, SCP_DOMAIN )
 		);
-		return $description;
+
+		if ( ! empty( $this->description ) ) {
+			return $description;
+		}
+
+		return null;
 	}
 
 	/**
@@ -198,7 +240,10 @@ class Add_Submenu_Page {
 	 *
 	 * The following demonstrates the basic page wrap and heading
 	 * markup that is standard to ClassicPress, WordPress, and the
-	 * antibrand system.
+	 * antibrand system. It can be used as is by hooking into
+	 * `scp_submanu_page_content` to add content.
+	 *
+	 * @see class-sample-submenu-page.php
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -212,7 +257,7 @@ class Add_Submenu_Page {
 		// Print a heading using the menu title variable.
 		$html .= sprintf(
 			'<h1>%s</h1>',
-			__( $this->menu_title(), SCP_DOMAIN )
+			__( $this->heading(), SCP_DOMAIN )
 		);
 
 		// Print a paragraph with native description class using the description variable.
@@ -220,6 +265,8 @@ class Add_Submenu_Page {
 			'<p class="description">%s</p>',
 			__( $this->description(), SCP_DOMAIN )
 		);
+
+		$html .= $this->content();
 
 		// End page wrap.
 		$html .= '</div>';
@@ -239,11 +286,8 @@ class Add_Submenu_Page {
 	 */
 	public function help() {
 
-		// Add to this page only.
+		// Get the current screen object.
 		$screen = get_current_screen();
-		if ( $screen->id != $this->help ) {
-			return;
-		}
 
 		// More information tab.
 		$screen->add_help_tab( [
@@ -279,14 +323,14 @@ class Add_Submenu_Page {
 	 * demonstration.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return mixed Returns the content of the sidebar.
 	 */
-	public function sidebar() {
+	protected function sidebar() {
 
 		ob_start();
 
-		require SCP_PATH . 'views/backend/help/sample-sidebar.php';
+		include_once SCP_PATH . 'views/backend/help/sample-sidebar.php';
 
 		$html = ob_get_clean();
 

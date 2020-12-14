@@ -9,6 +9,7 @@
  * @since      1.0.0
  */
 
+declare( strict_types = 1 );
 namespace SiteCore\Classes\Admin;
 
 // Restrict direct access.
@@ -22,44 +23,44 @@ class Add_Menu_Page {
 	 * Page title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The text to be displayed in the
 	 *                title tags of the page when the
 	 *                menu is selected.
 	 */
-	public $page_title = '';
+	protected $page_title = '';
 
 	/**
 	 * Menu title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The text to be used for the menu.
 	 */
-	public $menu_title = '';
+	protected $menu_title = '';
 
 	/**
 	 * Capability
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The capability required for the menu
 	 *                to be displayed to the user.
 	 */
-	public $capability = '';
+	protected $capability = 'manage_options';
 
 	/**
 	 * Page slug
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The slug name to refer to the menu by.
 	 *                Should be unique for the menu page and
 	 *                only include lowercase alphanumeric,
 	 *                dashes, and underscores characters to be
 	 *                compatible with sanitize_key().
 	 */
-	public $menu_slug = '';
+	protected $menu_slug = '';
 
 	/**
 	 * Callback function
@@ -75,7 +76,7 @@ class Add_Menu_Page {
 	 * Menu icon
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The URL to the icon to be used for this menu.
 	 *                * Pass a base64-encoded SVG using a data URI,
 	 *                  which will be colored to match the color scheme.
@@ -85,17 +86,16 @@ class Add_Menu_Page {
 	 *                * Pass 'none' to leave div.wp-menu-image empty so
 	 *                  an icon can be added via CSS.
 	 */
-	public $icon_url = '';
+	protected $icon_url = 'dashicons-admin-generic';
 
 	/**
 	 * Menu position
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
-	 *                 Default value: null
 	 */
-	public $position = null;
+	protected $position = 30;
 
 	/**
 	 * Page description
@@ -104,10 +104,10 @@ class Add_Menu_Page {
 	 * the template provided in this plugin.
 	 *
 	 * @since 1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The description of the page diplayed below the title.
 	 */
-	public $description = '';
+	protected $description = '';
 
 	/**
 	 * Help section
@@ -129,7 +129,7 @@ class Add_Menu_Page {
 	public function __construct() {
 
 		// Add an about page for the plugin.
-        add_action( 'admin_menu', [ $this, 'menu_page' ] );
+		add_action( 'admin_menu', [ $this, 'menu_page' ] );
 	}
 
 	/**
@@ -161,10 +161,10 @@ class Add_Menu_Page {
 	 * Page title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return string Returns the conditional menu label.
 	 */
-	public function page_title() {
+	protected function page_title() {
 		return $this->page_title;
 	}
 
@@ -172,27 +172,59 @@ class Add_Menu_Page {
 	 * Menu title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return string Returns the conditional menu label.
 	 */
-	public function menu_title() {
+	protected function menu_title() {
 		return ucwords( $this->menu_title );
+	}
+
+	/**
+	 * Page heading
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the page heading.
+	 */
+	protected function heading() {
+		return $this->menu_title();
+	}
+
+	/**
+	 * Page content
+	 *
+	 * This can be used in the default `callback()` method.
+	 * Hooking into `scp_submanu_page_content` adds
+	 * content/markup inside the standard page markup.
+	 * Use a new `callback()` method to override these defaults.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the page content.
+	 */
+	protected function content() {
+		return '';
 	}
 
 	/**
 	 * Menu title
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return string Returns the conditional menu label.
 	 */
-	public function description() {
+	protected function description() {
 
 		$description = sprintf(
 			'<p class="description">%s</p>',
 			__( $this->description, SCP_DOMAIN )
 		);
-		return $description;
+
+		if ( ! empty( $this->description ) ) {
+			return $description;
+		}
+
+		return null;
 	}
 
 	/**
@@ -218,7 +250,7 @@ class Add_Menu_Page {
 		// Print a heading using the menu title variable.
 		$html .= sprintf(
 			'<h1>%s</h1>',
-			__( $this->menu_title(), SCP_DOMAIN )
+			__( $this->heading(), SCP_DOMAIN )
 		);
 
 		// Print a paragraph with native description class using the description variable.
@@ -226,6 +258,8 @@ class Add_Menu_Page {
 			'<p class="description">%s</p>',
 			__( $this->description(), SCP_DOMAIN )
 		);
+
+		$html .= $this->content();
 
 		// End page wrap.
 		$html .= '</div>';
@@ -245,11 +279,8 @@ class Add_Menu_Page {
 	 */
 	public function help() {
 
-		// Add to this page only.
+		// Get the current screen object.
 		$screen = get_current_screen();
-		if ( $screen->id != $this->help ) {
-			return;
-		}
 
 		// More information tab.
 		$screen->add_help_tab( [
@@ -287,7 +318,7 @@ class Add_Menu_Page {
 
 		ob_start();
 
-		require SCP_PATH . 'views/backend/help/sample-sidebar.php';
+		include_once SCP_PATH . 'views/backend/help/sample-sidebar.php';
 
 		$html = ob_get_clean();
 

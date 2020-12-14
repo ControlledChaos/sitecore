@@ -110,7 +110,6 @@ function sitecore() {
 	if ( is_admin() ) {
 		new Admin\Admin;
 		new Admin\Manage_Website_Page;
-		new Admin\Sample_Submenu_Page;
 	}
 
 	// Run the dashboard only on the backend index screen.
