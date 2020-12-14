@@ -4,20 +4,23 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   Core
+ * @category   Media
  * @access     public
  * @since      1.0.0
  */
 
 declare( strict_types = 1 );
-namespace SiteCore\Classes\Core;
+namespace SiteCore\Classes\Media;
+
+// Alias namespaces.
+use SiteCore\Classes\Core as Core;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_Media_Type extends Register_Tax {
+class Register_Media_Type extends Core\Register_Tax {
 
 	/**
 	 * Taxonomy
