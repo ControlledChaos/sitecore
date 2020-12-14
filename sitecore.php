@@ -21,6 +21,9 @@
 
 namespace SiteCore;
 
+// Alias namespaces.
+use SiteCore\Classes\Activate as Activate;
+
 /**
  * License & Warranty
  *
@@ -37,9 +40,10 @@ namespace SiteCore;
  * Renaming the plugin
  *
  * First change the name of this file to reflect the new name of your plugin.
+ * Or leave the name since it clearly describes the purpose of the plugin.
  *
  * Next change the information above in the plugin header and either change
- * the plugin name in the License & Warranty notice or remove it.
+ * the plugin name in the License & Warranty notice above or remove it.
  *
  * Following is a list of strings to find and replace in all plugin files.
  *
@@ -52,12 +56,12 @@ namespace SiteCore;
  *    in file headers.
  *
  * 3. Namespace
- *    Find `SiteCore` and replace with something unique to your plugin name,
- *    include underscores between words.
+ *    Find `SiteCore` and replace with something unique to your plugin name.
  *
  * 4. Text domain
  *    Find `sitecore` and replace with the new name of your
- *    primary plugin file (this file).
+ *    primary plugin file (this file). It is standard to match the domain
+ *    with the file name but this is not required to run the code.
  *
  * 5. Admin page slug
  *    Find `site-core` and replace with the new base slug of your
@@ -221,7 +225,7 @@ include_once SCP_PATH . 'activate/classes/class-deactivate.php';
  * @return void
  */
 function activate_plugin() {
-	Classes\Activate\activation_class();
+	Activate\activation_class();
 }
 activate_plugin();
 
@@ -235,7 +239,7 @@ activate_plugin();
  * @return void
  */
 function deactivate_plugin() {
-	Classes\Activate\deactivation_class();
+	Activate\deactivation_class();
 }
 deactivate_plugin();
 
