@@ -103,24 +103,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Remember to find and replace the `@version x.x.x` in docblocks.
  *
- * @since  1.0.0
- * @return string Returns the latest plugin version.
+ * @since 1.0.0
+ * @var   string The latest plugin version.
  */
 define( 'SCP_VERSION', '1.0.0' );
 
 /**
  * Constant: Required PHP version
  *
- * @since  1.0.0
- * @return string Returns the minimum required PHP version.
+ * @since 1.0.0
+ * @var   string The minimum required PHP version.
  */
 define( 'SCP_PHP_VERSION', '7.3' );
 
 /**
  * Constant: Plugin base name
  *
- * @since  1.0.0
- * @return string Returns the base name of this plugin file.
+ * @since 1.0.0
+ * @var   string The base name of this plugin file.
  */
 define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 
@@ -129,8 +129,8 @@ define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
  *
  * Remember to freplace in the plugin header above.
  *
- * @since  1.0.0
- * @return string Returns the text domain of the plugin.
+ * @since 1.0.0
+ * @var   string The text domain of the plugin.
  */
 define( 'SCP_DOMAIN', 'sitecore' );
 
@@ -139,8 +139,8 @@ define( 'SCP_DOMAIN', 'sitecore' );
  *
  * Remember to freplace in the plugin header above.
  *
- * @since  1.0.0
- * @return string Returns the text domain of the plugin.
+ * @since 1.0.0
+ * @var   string The text domain of the plugin.
  */
 if ( ! defined( 'SCP_NAME' ) ) {
 	$plugin_name = esc_html__( 'Site Core', SCP_DOMAIN );
@@ -152,9 +152,9 @@ if ( ! defined( 'SCP_NAME' ) ) {
 /**
  * Constant: Plugin folder path
  *
- * @since  1.0.0
- * @return string Returns the filesystem directory path (with trailing slash)
- *                for the plugin __FILE__ passed in.
+ * @since 1.0.0
+ * @var   string The filesystem directory path (with trailing slash)
+ *               for the plugin __FILE__ passed in.
  */
 if ( ! defined( 'SCP_PATH' ) ) {
 	define( 'SCP_PATH', plugin_dir_path( __FILE__ ) );
@@ -163,9 +163,9 @@ if ( ! defined( 'SCP_PATH' ) ) {
 /**
  * Constant: Plugin folder URL
  *
- * @since  1.0.0
- * @return string Returns the URL directory path (with trailing slash)
- *                for the plugin __FILE__ passed in.
+ * @since 1.0.0
+ * @var   string The URL directory path (with trailing slash)
+ *               for the plugin __FILE__ passed in.
  */
 if ( ! defined( 'SCP_URL' ) ) {
 	define( 'SCP_URL', plugin_dir_url( __FILE__ ) );
@@ -180,8 +180,8 @@ if ( ! defined( 'SCP_URL' ) ) {
  * Change the second part of the define(), here as 'site-core',
  * to your preferred page slug.
  *
- * @since  1.0.0
- * @return string Returns the URL slug of the admin pages.
+ * @since 1.0.0
+ * @var   string The URL slug of the admin pages.
  */
 if ( ! defined( 'SCP_ADMIN_SLUG' ) ) {
 	define( 'SCP_ADMIN_SLUG', 'site-core' );
