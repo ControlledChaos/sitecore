@@ -5,8 +5,8 @@
  * The autoloader registers plugin classes for later use.
  *
  * @package    Site_Core
- * @subpackage Classes
- * @category   General
+ * @subpackage Includes
+ * @category   Classes
  * @access     public
  * @since      1.0.0
  */
