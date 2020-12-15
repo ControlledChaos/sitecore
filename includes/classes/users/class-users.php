@@ -28,7 +28,17 @@ class Users {
 	public function __construct() {
 
 		// Move the personal data menu items.
-        add_action( 'admin_menu', [ $this, 'menus_personal_data' ] );
+		add_action( 'admin_menu', [ $this, 'menus_personal_data' ] );
+
+		/**
+		 * Remove user admin color picker
+		 *
+		 * If `SCP_ALLOW_ADMIN_COLOR_PICKER` is set to false.
+		 * This can be defined in the system config file.
+		 */
+		if ( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) {
+			remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
+		}
 	}
 
 	/**
