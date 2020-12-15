@@ -125,6 +125,9 @@ function sitecore() {
 	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
 		new General\User_Toolbar;
 	}
+
+	// Disable Site Health notifications.
+	add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
 }
 
 // Run the plugin.

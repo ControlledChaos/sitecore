@@ -29,6 +29,9 @@ class Dashboard {
 
 		// "At a Glance" dashboard widget.
 		add_action( 'dashboard_glance_items', [ $this, 'at_glance' ] );
+
+		// Remove Site Health from dashboard.
+		add_action('wp_dashboard_setup', [ $this, 'site_health' ] );
 	}
 
 	/**
@@ -96,5 +99,17 @@ class Dashboard {
 
 			}
 		}
+	}
+
+	/**
+	 *  Remove Site Health Status widget
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 *
+	 */
+	public function site_health() {
+		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
 	}
 }

@@ -39,6 +39,9 @@ class Admin {
 		// Hide the ClassicPress/WordPress update notification to all but admins.
 		add_action( 'admin_head', [ $this, 'admin_only_updates' ], 1 );
 
+		// Remove Site Health from menu.
+		add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
+
 		// Credits in admin footer.
 		add_filter( 'admin_footer_text', [ $this, 'admin_footer' ], 1 );
 	}
@@ -108,6 +111,32 @@ class Admin {
 		// The `update_core` capability includes admins and super admins.
 		if ( ! current_user_can( 'update_core' ) ) {
 			remove_action( 'admin_notices', 'update_nag', 3 );
+		}
+	}
+
+	/**
+	 * Remove Site Health from menu
+	 *
+	 * A temporary redirect to the dashboard is created.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global object pagenow Gets the current admin screen.
+	 * @return void
+	 *
+	 * @todo Make this optional on the Site Settings screen.
+	 */
+	public function menu_remove_site_health(){
+
+		global $pagenow;
+
+		// Remove the menu entry.
+		remove_submenu_page( 'tools.php','site-health.php' );
+
+		// Redirect if user is on the Site Health page, `wp-admin/site-health.php`.
+		if ( $pagenow == 'site-health.php' ) {
+			wp_redirect( admin_url( '/', 'http' ), 302 );
+			exit;
 		}
 	}
 
