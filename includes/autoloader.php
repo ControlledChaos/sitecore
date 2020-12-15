@@ -56,6 +56,9 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Site_Help'  => SCP_CLASS['core'] . 'register-site-help.php',
 	'SiteCore\Classes\Core\Register_Tax'        => SCP_CLASS['core'] . 'register-tax.php',
 
+	// Tools classes.
+	'SiteCore\Classes\Tools\RTL_Test' => SCP_CLASS['tools'] . 'rtl-test.php',
+
 	// Media classes.
 	'SiteCore\Classes\Media\Media'               => SCP_CLASS['media'] . 'media.php',
 	'SiteCore\Classes\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',

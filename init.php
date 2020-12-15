@@ -99,6 +99,9 @@ function sitecore() {
 		}
 	}
 
+	// Instantiate tools classes.
+	// @todo Put into a settings page.new Tools\RTL_Test;
+
 	// Instantiate media classes.
 	new Media\Media;
 	new Media\Register_Media_Type;
