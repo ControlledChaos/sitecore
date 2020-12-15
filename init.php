@@ -117,6 +117,9 @@ function sitecore() {
 		new Admin\Dashboard;
 	}
 
+	// Instantiate users classes.
+	new Users\Users;
+
 	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
 		new Front\Frontend;

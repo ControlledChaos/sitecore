@@ -60,6 +60,9 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Media\Media'               => SCP_CLASS['media'] . 'media.php',
 	'SiteCore\Classes\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',
 
+	// Users classes.
+	'SiteCore\Classes\Users\Users' => SCP_CLASS['users'] . 'users.php',
+
 	// Vendor classes.
 	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
 	'SiteCore\Classes\Vendor\ACF'     => SCP_CLASS['vendor'] . 'acf.php',
