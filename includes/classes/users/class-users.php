@@ -65,16 +65,16 @@ class Users {
 			}
 		}
 
-		// New Export Personal Data submenu entry.
+		// New Export Data submenu entry.
 		$submenu['users.php'][25] = [
-			__( 'Export Personal Data', SCP_DOMAIN ),
+			__( 'Export Data', SCP_DOMAIN ),
 			'export_others_personal_data',
 			'export-personal-data.php'
 		];
 
-		// New Erase Personal Data submenu entry.
+		// New Erase Data submenu entry.
 		$submenu['users.php'][30] = [
-			__( 'Erase Personal Data', SCP_DOMAIN ),
+			__( 'Erase Data', SCP_DOMAIN ),
 			'erase_others_personal_data',
 			'erase-personal-data.php'
 		];
