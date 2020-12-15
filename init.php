@@ -100,7 +100,8 @@ function sitecore() {
 	}
 
 	// Instantiate tools classes.
-	// @todo Put into a settings page.new Tools\RTL_Test;
+	// @todo Put into a settings page. new Tools\RTL_Test;
+	// @todo Put into a settings page. new Tools\Customizer_Reset;
 
 	// Instantiate media classes.
 	new Media\Media;

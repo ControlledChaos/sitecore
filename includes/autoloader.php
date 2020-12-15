@@ -57,7 +57,8 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Tax'        => SCP_CLASS['core'] . 'register-tax.php',
 
 	// Tools classes.
-	'SiteCore\Classes\Tools\RTL_Test' => SCP_CLASS['tools'] . 'rtl-test.php',
+	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
+	'SiteCore\Classes\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',
 
 	// Media classes.
 	'SiteCore\Classes\Media\Media'               => SCP_CLASS['media'] . 'media.php',
