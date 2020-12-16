@@ -88,7 +88,6 @@ class Sample_Menu_Page extends Add_Menu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
-	 *                 Default value: null
 	 */
 	protected $position = 3;
 
@@ -110,7 +109,7 @@ class Sample_Menu_Page extends Add_Menu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    boolean Content is added to the contextual help
-	 *                 section if true. Default is false.
+	 *                 section if true.
 	 */
 	protected $add_help = true;
 
