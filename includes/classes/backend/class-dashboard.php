@@ -30,8 +30,8 @@ class Dashboard {
 		// "At a Glance" dashboard widget.
 		add_action( 'dashboard_glance_items', [ $this, 'at_glance' ] );
 
-		// Remove Site Health from dashboard.
-		add_action('wp_dashboard_setup', [ $this, 'site_health' ] );
+		// Remove widgets.
+		add_action('wp_dashboard_setup', [ $this, 'remove_widgets' ] );
 	}
 
 	/**
@@ -102,14 +102,25 @@ class Dashboard {
 	}
 
 	/**
-	 *  Remove Site Health Status widget
+	 * Remove widgets
 	 *
 	 * @since  1.0.0
 	 * @access public
+	 * @global array wp_meta_boxes The metaboxes array holds all the widgets for wp-admin.
 	 * @return void
-	 *
 	 */
-	public function site_health() {
+	public function remove_widgets() {
+
+		global $wp_meta_boxes;
+
+		/**
+		 * WordPress News.
+		 *
+		 * @todo Confirm for ClassicPress petitions.
+		 */
+		unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'] );
+
+		// Site Health.
 		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
 	}
 }
