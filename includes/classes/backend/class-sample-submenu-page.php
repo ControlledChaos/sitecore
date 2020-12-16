@@ -82,9 +82,8 @@ class Sample_Submenu_Page extends Add_Submenu_Page {
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
-	 *                 Default value: null
 	 */
-	// protected $position = null;
+	protected $position = 9;
 
 	/**
 	 * Page description
