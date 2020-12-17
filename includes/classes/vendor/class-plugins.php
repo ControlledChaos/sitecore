@@ -178,7 +178,7 @@ class Plugins {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 			// Move the options page in menu.
-			add_action( 'admin_menu', [ $this, 'acfe_options' ], 1 );
+			add_action( 'admin_menu', [ $this, 'acfe_options_menu' ], 9 );
 
 			// Move ACFE options page in menu.
 			add_action( 'admin_menu', 'acfe_options_menu', 99 );
@@ -199,7 +199,7 @@ class Plugins {
 	 * @access public
 	 * @return void
 	 */
-	public function acfe_options() {
+	public function acfe_options_menu() {
 		remove_action( 'admin_menu', 'acfe_options_menu', 10 );
 	}
 }
