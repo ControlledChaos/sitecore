@@ -176,11 +176,30 @@ class Plugins {
 			&& SCP_USE_ACFE
 		) {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
+
+			// Move the options page in menu.
+			add_action( 'admin_menu', [ $this, 'acfe_options' ], 1 );
+
+			// Move ACFE options page in menu.
+			add_action( 'admin_menu', 'acfe_options_menu', 99 );
 		}
 
 		// Enable ACFE rich text editor module by default.
 		if ( function_exists( 'acf_update_setting' ) ) {
 			acf_update_setting( 'acfe/modules/classic_editor', true );
 		}
+	}
+
+	/**
+	 * Move ACFE options
+	 *
+	 * Moves the Options subpage under Settings in menu.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acfe_options() {
+		remove_action( 'admin_menu', 'acfe_options_menu', 10 );
 	}
 }
