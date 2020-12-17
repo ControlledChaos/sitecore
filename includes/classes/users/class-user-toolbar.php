@@ -4,14 +4,14 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   General
+ * @category   Users
  * @access     public
  * @since      1.0.0
  *
  * @todo Add toolbar menus to admin settings page(s).
  */
 
-namespace SiteCore\Classes;
+namespace SiteCore\Classes\Users;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

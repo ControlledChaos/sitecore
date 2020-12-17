@@ -65,7 +65,8 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',
 
 	// Users classes.
-	'SiteCore\Classes\Users\Users' => SCP_CLASS['users'] . 'users.php',
+	'SiteCore\Classes\Users\Users'        => SCP_CLASS['users'] . 'users.php',
+	'SiteCore\Classes\Users\User_Toolbar' => SCP_CLASS['users'] . 'user-toolbar.php',
 
 	// Vendor classes.
 	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
@@ -85,7 +86,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Front\Frontend' => SCP_CLASS['front'] . 'frontend.php',
 
 	// General/miscellaneos classes.
-	'SiteCore\Classes\User_Toolbar' => SCP_CLASS['general'] . 'user-toolbar.php'
+
 ] );
 
 /**
