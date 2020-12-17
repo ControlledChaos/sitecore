@@ -113,6 +113,11 @@ function sitecore() {
 	// Instantiate backend classes.
 	if ( is_admin() ) {
 		new Admin\Admin;
+		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+			new Admin\Admin_ACF_Settings_Page;
+		} else {
+			new Admin\Admin_Settings_Page;
+		}
 		new Admin\Manage_Website_Page;
 	}
 
