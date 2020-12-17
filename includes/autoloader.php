@@ -70,7 +70,8 @@ define( 'SCP_CLASSES', [
 	// Vendor classes.
 	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
 	'SiteCore\Classes\Vendor\ACF'     => SCP_CLASS['vendor'] . 'acf.php',
-	'SiteCore\Classes\Vendor\Register_ACF_Options' => SCP_CLASS['vendor'] . 'register-acf-options.php',
+	'SiteCore\Classes\Vendor\Register_ACF_Options'     => SCP_CLASS['vendor'] . 'register-acf-options.php',
+	'SiteCore\Classes\Vendor\Register_ACF_Sub_Options' => SCP_CLASS['vendor'] . 'register-acf-sub-options.php',
 
 	// Backend/admin classes,
 	'SiteCore\Classes\Admin\Admin'               => SCP_CLASS['admin'] . 'admin.php',
