@@ -75,11 +75,16 @@ class Type_Tax {
 		$screen = get_current_screen();
 
 		$post_type_obj = get_post_type_object( get_post_type() );
-		$name = $post_type_obj->labels->singular_name;
-		$post_title = esc_html__( $name . ' Title', SCP_DOMAIN );
+
+		if ( $post_type_obj ) {
+			$name = $post_type_obj->labels->singular_name;
+			$post_title = esc_html__( $name . ' Title', SCP_DOMAIN );
+		} else {
+			$post_title = esc_html__('Title', SCP_DOMAIN );
+		}
 
 		// Apply a filter conditional modification.
-		$title = apply_filters( 'ccp_post_title_placeholders', $post_title );
+		$title = apply_filters( 'scp_post_title_placeholders', $post_title );
 
 		// Return the new placeholder.
 		return $title;
