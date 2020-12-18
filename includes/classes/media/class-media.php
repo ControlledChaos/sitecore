@@ -177,7 +177,7 @@ class Media {
 		global $post;
 
 		// Apply a filter for conditional image sizes.
-		$size = apply_filters( 'ccp_rss_featured_image_size', 'medium' );
+		$size = apply_filters( 'scp_rss_featured_image_size', 'medium' );
 
 		/**
 		 * Use this layout only if the post has a featured image.
