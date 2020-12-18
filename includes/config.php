@@ -13,7 +13,7 @@
  *
  * @package    Site_Core
  * @subpackage Includes
- * @category   Classes
+ * @category   Configuration
  * @since      1.0.0
  */
 
