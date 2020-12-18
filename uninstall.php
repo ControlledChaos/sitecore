@@ -6,9 +6,10 @@
  *
  * Must not be namespaced!
  *
- * @package Site_Core
- * @subpackage Admin
- * @since 1.0.0
+ * @package    Site_Core
+ * @subpackage Core
+ * @category   Uninstall
+ * @since      1.0.0
  */
 
 // If uninstall not called then exit.
@@ -28,6 +29,5 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 function scp_sample_uninstall() {
 
 	// Add unnstall operations here.
-
 }
 register_uninstall_hook( __FILE__, 'scp_sample_uninstall' );

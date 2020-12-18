@@ -7,7 +7,6 @@
  * @package    Site_Core
  * @subpackage Includes
  * @category   Classes
- * @access     public
  * @since      1.0.0
  */
 

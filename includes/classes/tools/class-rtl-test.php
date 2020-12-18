@@ -8,7 +8,6 @@
  * @package    Site_Core
  * @subpackage Classes
  * @category   Tools
- * @access     public
  * @since      1.0.0
  * @author     Yoav Farhi
  * @author     Greg Sweet <greg@ccdzine.com>

@@ -7,7 +7,6 @@
  * @package    Site_Core
  * @subpackage Classes
  * @category   Tools
- * @access     public
  * @since      1.0.0
  * @author     WPZOOM
  * @author     Greg Sweet <greg@ccdzine.com>

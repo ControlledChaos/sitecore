@@ -5,7 +5,6 @@
  * @package    Site_Core
  * @subpackage Classes
  * @category   Core
- * @access     public
  * @since      1.0.0
  *
  * To register a new post type create a class that

@@ -4,8 +4,7 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   Includes
- * @access     public
+ * @category   Vendor
  * @since      1.0.0
  */
 

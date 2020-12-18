@@ -5,7 +5,6 @@
  * @package    Site_Core
  * @subpackage Views
  * @category   Forms
- * @access     public
  * @since      1.0.0
  */
 

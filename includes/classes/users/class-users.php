@@ -4,8 +4,7 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   General
- * @access     public
+ * @category   Users
  * @since      1.0.0
  */
 

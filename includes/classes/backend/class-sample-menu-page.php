@@ -9,7 +9,6 @@
  * @package    Site_Core
  * @subpackage Classes
  * @category   Admin
- * @access     public
  * @since      1.0.0
  */
 

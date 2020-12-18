@@ -5,7 +5,6 @@
  * @package    Site_Core
  * @subpackage Classes
  * @category   Media
- * @access     public
  * @since      1.0.0
  */
 

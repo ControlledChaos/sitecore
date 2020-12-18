@@ -5,7 +5,6 @@
  * @package    Site_Core
  * @subpackage Init
  * @category   Core
- * @access     public
  * @since      1.0.0
  */
 
