@@ -114,7 +114,7 @@ define( 'SCP_VERSION', '1.0.0' );
  * @since 1.0.0
  * @var   string The minimum required PHP version.
  */
-define( 'SCP_PHP_VERSION', '7.3' );
+define( 'SCP_PHP_VERSION', '7.4' );
 
 /**
  * Constant: Plugin base name
