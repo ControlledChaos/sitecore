@@ -41,8 +41,11 @@ class Admin {
 		// Remove Site Health from menu.
 		add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
 
-		// Credits in admin footer.
-		add_filter( 'admin_footer_text', [ $this, 'admin_footer' ], 1 );
+		// Primary footer text.
+		add_filter( 'admin_footer_text', [ $this, 'admin_footer_primary' ], 1 );
+
+		// Secondary footer text.
+		add_filter( 'update_footer', [ $this, 'admin_footer_secondary' ], 1 );
 	}
 
 	/**
@@ -140,27 +143,108 @@ class Admin {
 	}
 
 	/**
-	 * Admin footer
+	 * Admin footer primary
 	 *
 	 * Replaces the "Thank you for creating with ClassicPress/WordPress" text
-	 * in the #wpfooter div at the bottom of all admin screens.
+	 * in the #wpfooter div at the bottom of all admin screens. This replaces
+	 * text inside the default paragraph (<p>) tags.
 	 *
-	 * The output strings contain a trailing space after the period
-	 * because other plugins may also tap into the footer. a high
-	 * priority is used on the hook in attempt to put our text first.
-	 *
-	 * This replaces text inside the default paragraph (<p>) tags.
+	 * Several options are provided. Edit or delete as desired.
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return string
+	 * @return string Returns the text of the footer.
 	 */
-	public function admin_footer() {
+	public function admin_footer_primary() {
 
-		$content  = get_bloginfo( 'name' );
-		$content .= ' — ';
-		$content .= get_bloginfo( 'description' );
+		// Plugin credit option.
+		$plugin = sprintf(
+			'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a> %s',
+			get_bloginfo( 'name' ),
+			esc_html__( 'is managed by the' ),
+			esc_url( SCP_PLUGIN_URL ),
+			esc_html( SCP_NAME ),
+			esc_html__( 'plugin' )
+		);
 
-		echo $content;
+		// Site name & description option.
+		$name_desc = sprintf(
+			'%s - %s',
+			get_bloginfo( 'name' ),
+			get_bloginfo( 'description' )
+		);
+
+		// Developer website option.
+		$dev_url = sprintf(
+			'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a>',
+			get_bloginfo( 'name' ),
+			esc_html__( 'website was designed & developed by' ),
+			esc_url( SCP_DEV_URL ),
+			esc_html( SCP_DEV_NAME )
+		);
+
+		// Developer email option.
+		$dev_email = sprintf(
+			'%s %s %s <a href="mailto:%s">%s</a>',
+			esc_html__( 'Contact' ),
+			esc_html( SCP_DEV_NAME ),
+			esc_html__( 'for website assistance:' ),
+			esc_html( SCP_DEV_EMAIL ),
+			esc_html( SCP_DEV_EMAIL )
+		);
+
+		echo $name_desc;
+	}
+
+	/**
+	 * Admin footer secondary
+	 *
+	 * Several options are provided. Edit or delete as desired.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string Returns the text of the footer.
+	 */
+	public function admin_footer_secondary() {
+
+		remove_filter( 'update_footer', 'core_update_footer' );
+
+		// Plugin credit option.
+		$plugin = sprintf(
+			'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a> %s',
+			get_bloginfo( 'name' ),
+			esc_html__( 'is managed by the' ),
+			esc_url( SCP_PLUGIN_URL ),
+			esc_html( SCP_NAME ),
+			esc_html__( 'plugin' )
+		);
+
+		// Site name & description option.
+		$name_desc = sprintf(
+			'%s - %s',
+			get_bloginfo( 'name' ),
+			get_bloginfo( 'description' )
+		);
+
+		// Developer website option.
+		$dev_url = sprintf(
+			'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a>',
+			get_bloginfo( 'name' ),
+			esc_html__( 'website was designed & developed by' ),
+			esc_url( SCP_DEV_URL ),
+			esc_html( SCP_DEV_NAME )
+		);
+
+		// Developer email option.
+		$dev_email = sprintf(
+			'%s %s %s <a href="mailto:%s">%s</a>',
+			esc_html__( 'Contact' ),
+			esc_html( SCP_DEV_NAME ),
+			esc_html__( 'for website assistance:' ),
+			esc_html( SCP_DEV_EMAIL ),
+			esc_html( SCP_DEV_EMAIL )
+		);
+
+		echo $dev_email;
 	}
 }
