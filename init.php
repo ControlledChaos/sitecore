@@ -88,7 +88,7 @@ function sitecore() {
 	new Core\Register_Site_Help;
 
 	// If the Customizer is disabled in the system config file.
-	if ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) {
+	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {
 		new Core\Remove_Customizer;
 	}
 
