@@ -34,8 +34,46 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! defined( 'SCP_NAME' ) ) {
 	define( 'SCP_NAME', esc_html__( 'Site Core', SCP_DOMAIN ) );
-} else {
-	define( 'SCP_NAME', 'Site Core' );
+}
+
+/**
+ * Developer name
+ *
+ * @since 1.0.0
+ * @var   string The name of the developer/agency.
+ */
+if ( ! defined( 'SCP_DEV_NAME' ) ) {
+	define( 'SCP_DEV_NAME', 'Controlled Chaos' );
+}
+
+/**
+ * Developer URL
+ *
+ * @since 1.0.0
+ * @var   string The URL of the developer/agency.
+ */
+if ( ! defined( 'SCP_DEV_URL' ) ) {
+	define( 'SCP_DEV_URL', 'https://ccdzine.com/' );
+}
+
+/**
+ * Developer email
+ *
+ * @since 1.0.0
+ * @var   string The URL of the developer/agency.
+ */
+if ( ! defined( 'SCP_DEV_EMAIL' ) ) {
+	define( 'SCP_DEV_EMAIL', 'greg@ccdzine.com' );
+}
+
+/**
+ * Plugin URL
+ *
+ * @since 1.0.0
+ * @var   string The URL of the plugin.
+ */
+if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
+	define( 'SCP_PLUGIN_URL', 'https://github.com/ControlledChaos/sitecore' );
 }
 
 /**

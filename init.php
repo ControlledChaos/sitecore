@@ -81,7 +81,6 @@ function sitecore() {
 
 	// Get constants & helpers.
 	require SCP_PATH . 'includes/config.php';
-	require SCP_PATH . 'includes/support/dev-contact-info.php';
 
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
