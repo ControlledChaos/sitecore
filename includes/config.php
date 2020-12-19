@@ -25,6 +25,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Plugin name
+ *
+ * Remember to replace in the plugin header.
+ *
+ * @since 1.0.0
+ * @var   string The name of the plugin.
+ */
+if ( ! defined( 'SCP_NAME' ) ) {
+	define( 'SCP_NAME', esc_html__( 'Site Core', SCP_DOMAIN ) );
+} else {
+	define( 'SCP_NAME', 'Site Core' );
+}
+
+/**
  * Disable Customizer
  *
  * @since 1.0.0

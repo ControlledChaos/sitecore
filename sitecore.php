@@ -135,21 +135,6 @@ define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SCP_DOMAIN', 'sitecore' );
 
 /**
- * Constant: Plugin name
- *
- * Remember to freplace in the plugin header above.
- *
- * @since 1.0.0
- * @var   string The text domain of the plugin.
- */
-if ( ! defined( 'SCP_NAME' ) ) {
-	$plugin_name = esc_html__( 'Site Core', SCP_DOMAIN );
-	define( 'SCP_NAME', $plugin_name );
-} else {
-	define( 'SCP_NAME', 'Site Core' );
-}
-
-/**
  * Constant: Plugin folder path
  *
  * @since 1.0.0
