@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Add_Submenu_Page {
+class Add_Submenu_Page extends Add_Menu_Page {
 
 	/**
 	 * Parent slug
@@ -29,59 +29,6 @@ class Add_Submenu_Page {
 	protected $parent_slug = '';
 
 	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = '';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = '';
-
-	/**
-	 * Capability
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The capability required for the menu
-	 *                to be displayed to the user.
-	 */
-	protected $capability = 'manage_options';
-
-	/**
-	 * Page slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name to refer to the menu by.
-	 *                Should be unique for the menu page and
-	 *                only include lowercase alphanumeric,
-	 *                dashes, and underscores characters to be
-	 *                compatible with sanitize_key().
-	 */
-	protected $menu_slug = '';
-
-	/**
-	 * Callback function
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The function to be called to output the
-	 *                content for the page. Default value: 'callback'.
-	 */
-	protected $function = 'callback';
-
-	/**
 	 * Menu position
 	 *
 	 * @since  1.0.0
@@ -91,28 +38,6 @@ class Add_Submenu_Page {
 	protected $position = 30;
 
 	/**
-	 * Page description
-	 *
-	 * This is a non-native feature. The description is addeded by
-	 * the template provided in this plugin.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var    string The description of the page diplayed below the title.
-	 */
-	protected $description = '';
-
-	/**
-	 * Help section
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Content is added to the contextual help
-	 *                 section if true. Default is false.
-	 */
-	protected $add_help = false;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -120,9 +45,7 @@ class Add_Submenu_Page {
 	 * @return self
 	 */
 	public function __construct() {
-
-		// Add an about page for the plugin.
-		add_action( 'admin_menu', [ $this, 'submenu_page' ] );
+		parent :: __construct();
 	}
 
 	/**
@@ -132,7 +55,7 @@ class Add_Submenu_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function submenu_page() {
+	public function add_page() {
 
 		$this->help = add_submenu_page(
 			strtolower( $this->parent_slug ),
@@ -148,192 +71,5 @@ class Add_Submenu_Page {
 		if ( true == $this->add_help ) {
 			add_action( 'load-' . $this->help, [ $this, 'help' ] );
 		}
-	}
-
-	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the conditional menu label.
-	 */
-	protected function page_title() {
-
-		if ( ! empty( $this->page_title ) ) {
-			return __( ucwords( $this->page_title ), SCP_DOMAIN );
-		}
-
-		return __( strtoupper( 'Don\'t forget your page title!' ), SCP_DOMAIN );
-	}
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the menu label.
-	 */
-	protected function menu_title() {
-
-		if ( ! empty( $this->menu_title ) ) {
-			return __( ucwords( $this->menu_title ), SCP_DOMAIN );
-		}
-
-		return __( strtoupper( 'Forget something?' ), SCP_DOMAIN );
-	}
-
-	/**
-	 * Page heading
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the page heading.
-	 */
-	protected function heading() {
-		return $this->menu_title();
-	}
-
-	/**
-	 * Page content
-	 *
-	 * This can be used in the default `callback()` method.
-	 * Hooking into `scp_submanu_page_content` adds
-	 * content/markup inside the standard page markup.
-	 * Use a new `callback()` method to override these defaults.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return mixed Returns the page content.
-	 */
-	protected function content() {
-		return '';
-	}
-
-	/**
-	 * Page description
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the page description.
-	 */
-	protected function description() {
-
-		$description = sprintf(
-			'<p class="description">%s</p>',
-			__( $this->description, SCP_DOMAIN )
-		);
-
-		if ( ! empty( $this->description ) ) {
-			return $description;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Callback function
-	 *
-	 * It is recommended that the page output callback functions
-	 * of classes that extend this class simply include a file in
-	 * the `views/pages` directory to output the markup of the page.
-	 *
-	 * The following demonstrates the basic page wrap and heading
-	 * markup that is standard to ClassicPress, WordPress, and the
-	 * antibrand system. It can be used as is by hooking into
-	 * `scp_submanu_page_content` to add content.
-	 *
-	 * @see class-sample-submenu-page.php
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function callback() {
-
-		// Native page wrap element/class.
-		$html = '<div class="wrap">';
-
-		// Print a heading using the menu title variable.
-		$html .= sprintf(
-			'<h1>%s</h1>',
-			__( $this->heading(), SCP_DOMAIN )
-		);
-
-		// Print a paragraph with native description class using the description variable.
-		$html .= sprintf(
-			'<p class="description">%s</p>',
-			__( $this->description(), SCP_DOMAIN )
-		);
-
-		$html .= $this->content();
-
-		// End page wrap.
-		$html .= '</div>';
-
-		// Return the page markup.
-		echo $html;
-	}
-
-	/**
-	 * Help tabs
-	 *
-	 * Adds tabs to the contextual help section.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function help() {
-
-		// Get the current screen object.
-		$screen = get_current_screen();
-
-		// More information tab.
-		$screen->add_help_tab( [
-			'id'       => 'more_info',
-			'title'    => __( 'More Information', SCP_DOMAIN ),
-			'content'  => null,
-			'callback' => [ $this, 'more_info' ]
-		] );
-
-		// Add a help sidebar.
-		$screen->set_help_sidebar(
-			$this->sidebar()
-		);
-	}
-
-	/**
-	 * More Infromation tab
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function more_info() {
-		include_once SCP_PATH . 'views/backend/help/sample-more-info.php';
-	}
-
-	/**
-	 * Help sidebar
-	 *
-	 * The HTML markup for the sidebar can be written directly
-	 * in the `sidebar()` function. However, a sample sidebar
-	 * file is provided, with output buffering functions, for
-	 * demonstration.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return mixed Returns the content of the sidebar.
-	 */
-	protected function sidebar() {
-
-		ob_start();
-
-		include_once SCP_PATH . 'views/backend/help/sample-sidebar.php';
-
-		$html = ob_get_clean();
-
-		// Return the page markup.
-		return $html;
 	}
 }

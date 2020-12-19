@@ -128,7 +128,7 @@ class Add_Menu_Page {
 	public function __construct() {
 
 		// Add an about page for the plugin.
-		add_action( 'admin_menu', [ $this, 'menu_page' ] );
+		add_action( 'admin_menu', [ $this, 'add_page' ] );
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Add_Menu_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function menu_page() {
+	public function add_page() {
 
 		$this->help = add_menu_page(
 			$this->page_title(),
@@ -309,11 +309,16 @@ class Add_Menu_Page {
 	/**
 	 * Help sidebar
 	 *
+	 * The HTML markup for the sidebar can be written directly
+	 * in the `sidebar()` function. However, a sample sidebar
+	 * file is provided, with output buffering functions, for
+	 * demonstration.
+	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return mixed Returns the content of the sidebar.
 	 */
-	public function sidebar() {
+	protected function sidebar() {
 
 		ob_start();
 
