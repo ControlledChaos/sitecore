@@ -36,6 +36,9 @@ class Frontend {
 		// Disable emoji script.
 		add_action( 'init', [ $this, 'disable_emojis' ] );
 
+		// Deregister Dashicons for users not logged in.
+		add_action( 'wp_enqueue_scripts', [ $this, 'deregister_dashicons' ] );
+
 		// Remove the ClassicPress/WordPress logo from the admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'remove_toolbar_logo' ], 999 );
 
@@ -96,6 +99,20 @@ class Frontend {
 		remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 		remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
 		remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	}
+
+	/**
+	 * Deregister Dashicons for users not logged in.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function deregister_dashicons() {
+
+		if ( ! is_user_logged_in() ) {
+			wp_deregister_style( 'dashicons' );
+		}
 	}
 
 	/**
