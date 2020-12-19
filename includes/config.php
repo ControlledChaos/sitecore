@@ -25,6 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Disable Customizer
+ *
+ * @since 1.0.0
+ * @var   boolean Whether to allow the Customizer.
+ */
+if ( ! defined( 'SCP_ALLOW_CUSTOMIZER' ) ) {
+	define( 'SCP_ALLOW_CUSTOMIZER', true );
+}
+
+/**
  * User admin color picker
  *
  * @since 1.0.0

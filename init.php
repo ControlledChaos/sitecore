@@ -87,6 +87,11 @@ function sitecore() {
 	new Core\Type_Tax;
 	new Core\Register_Site_Help;
 
+	// If the Customizer is disabled in the system config file.
+	if ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) {
+		new Core\Remove_Customizer;
+	}
+
 	/**
 	 * Editor options for WordPress
 	 *
