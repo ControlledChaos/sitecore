@@ -119,7 +119,7 @@ function sitecore() {
 		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			new Admin\Admin_ACF_Settings_Page;
 		} else {
-			new Admin\Admin_Settings_Page;
+			// new Admin\Admin_Settings_Page;
 		}
 		new Admin\Manage_Website_Page;
 	}
@@ -142,6 +142,11 @@ function sitecore() {
 
 	// Disable Site Health notifications.
 	add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
+
+	// Remove the Draconian capital P filter.
+	remove_filter( 'the_title', 'capital_P_dangit', 11 );
+	remove_filter( 'the_content', 'capital_P_dangit', 11 );
+	remove_filter( 'comment_text', 'capital_P_dangit', 31 );
 }
 
 // Run the plugin.
