@@ -55,6 +55,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Site_Help' => SCP_CLASS['core'] . 'register-site-help.php',
 	'SiteCore\Classes\Core\Register_Tax'       => SCP_CLASS['core'] . 'register-tax.php',
 	'SiteCore\Classes\Core\Remove_Blog'        => SCP_CLASS['core'] . 'remove-blog.php',
+	'SiteCore\Classes\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
 
 	// Tools classes.
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
