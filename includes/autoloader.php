@@ -49,11 +49,12 @@ define( 'SCP_CLASS', [
 define( 'SCP_CLASSES', [
 
 	// Core classes.
-	'SiteCore\Classes\Core\Editor_Options'      => SCP_CLASS['core'] . 'editor-options.php',
-	'SiteCore\Classes\Core\Type_Tax'            => SCP_CLASS['core'] . 'type-tax.php',
-	'SiteCore\Classes\Core\Register_Type'       => SCP_CLASS['core'] . 'register-type.php',
-	'SiteCore\Classes\Core\Register_Site_Help'  => SCP_CLASS['core'] . 'register-site-help.php',
-	'SiteCore\Classes\Core\Register_Tax'        => SCP_CLASS['core'] . 'register-tax.php',
+	'SiteCore\Classes\Core\Editor_Options'     => SCP_CLASS['core'] . 'editor-options.php',
+	'SiteCore\Classes\Core\Type_Tax'           => SCP_CLASS['core'] . 'type-tax.php',
+	'SiteCore\Classes\Core\Register_Type'      => SCP_CLASS['core'] . 'register-type.php',
+	'SiteCore\Classes\Core\Register_Site_Help' => SCP_CLASS['core'] . 'register-site-help.php',
+	'SiteCore\Classes\Core\Register_Tax'       => SCP_CLASS['core'] . 'register-tax.php',
+	'SiteCore\Classes\Core\Remove_Blog'        => SCP_CLASS['core'] . 'remove-blog.php',
 
 	// Tools classes.
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
