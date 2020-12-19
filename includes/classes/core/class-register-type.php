@@ -224,7 +224,7 @@ class Register_Type {
 	 * @var    boolean Whether to use the internal default
 	 *                 meta capability handling.
 	 */
-	protected $map_meta_cap = true;
+	protected $map_meta_cap = null;
 
 	/**
 	 * Supports
@@ -322,10 +322,10 @@ class Register_Type {
 	 * Constructor method
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return self
 	 */
-	public function __construct() {
+	protected function __construct() {
 
 		// Register post type.
 		add_action( 'init', [ $this, 'register' ] );
@@ -354,11 +354,11 @@ class Register_Type {
 	 * Post type options
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return array Returns the array of post type options,
 	 *               including labels from $this->labels().
 	 */
-	public function options() {
+	protected function options() {
 
 		$options = [
 			'label'                 => __( ucwords( $this->plural ), SCP_DOMAIN ),
@@ -377,7 +377,7 @@ class Register_Type {
 			'rest_controller_class' => $this->rest_controller_class,
 			'menu_position'         => $this->menu_position,
 			'menu_icon'             => $this->menu_icon,
-			'capability_type'       => $this->capability_type,
+			'capability_type'       => $this->capability_type(),
 			'capabilities'          => $this->capabilities,
 			'map_meta_cap'          => $this->map_meta_cap,
 			'supports'              => $this->supports,
@@ -402,10 +402,10 @@ class Register_Type {
 	 * the string (uppercase words).
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return array Returns the array of post type labels.
 	 */
-	public function labels() {
+	protected function labels() {
 
 		$labels = [
 			'name'                  => __( ucwords( $this->plural ), SCP_DOMAIN ),
@@ -440,13 +440,29 @@ class Register_Type {
 	}
 
 	/**
+	 * Capability type
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the post type capability.
+	 */
+	protected function capability_type() {
+
+		if ( post_type_exists( $this->capability_type ) ) {
+			return $this->capability_type;
+		} else {
+			return 'post';
+		}
+	}
+
+	/**
 	 * Rewrite rules
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return array Returns the array of rewrite rules.
 	 */
-	public function rewrite() {
+	protected function rewrite() {
 
 		$rewrite = [
 			'slug'       => $this->type_key,
