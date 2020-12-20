@@ -11,7 +11,7 @@
 namespace SiteCore\Views\Admin;
 use SiteCore\Classes\Admin as Admin;
 
-// Instance of the Manage Website page class.
+// Instance of the Manage_Website_Page class.
 $page = new Admin\Manage_Website_Page;
 
 // Restrict direct access.
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	printf(
 		'<h1>%s</h1>',
-		__( $page->menu_title(), SCP_DOMAIN )
+		__( $page->heading(), SCP_DOMAIN )
 	);
 
 	printf(
