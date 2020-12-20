@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin ACF options subpage
+ * Admin ACF options page
  *
  * @package    Site_Core
  * @subpackage Classes
