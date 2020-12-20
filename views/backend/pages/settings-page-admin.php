@@ -82,7 +82,7 @@ $tabs = [
 ];
 
 // Apply a filter to the tabs array for adding tabs.
-$page_tabs = apply_filters( 'scp_tabs_page_about', $tabs );
+$tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 
 ?>
 <div class="wrap admin-settings">
@@ -107,7 +107,7 @@ $page_tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 		<div class="app-tabs" data-tabbed="tabbed" data-tabevent="click" data-tabdeeplinking="true">
 
 			<ul class='app-tabs-list app-tabs-horizontal hide-if-no-js'>
-				<?php echo implode( $page_tabs ); ?>
+				<?php echo implode( $tabs ); ?>
 			</ul>
 
 			<?php // Hook for adding tabbed content.
