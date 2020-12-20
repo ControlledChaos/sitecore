@@ -26,6 +26,12 @@ class Admin {
 	 */
 	public function __construct() {
 
+		// Enqueue backend JavaScript.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+
+		// Enqueue backend stylesheets.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+
 		// Remove theme & plugin editor links.
 		add_action( 'admin_init', [ $this, 'remove_editor_links' ] );
 
@@ -46,6 +52,51 @@ class Admin {
 
 		// Secondary footer text.
 		add_filter( 'update_footer', [ $this, 'admin_footer_secondary' ], 1 );
+	}
+
+	/**
+	 * Enqueue backend JavaScript
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+
+		// Enqueue jQuery tabs from ClassicPress/WordPress.
+		wp_enqueue_script( 'jquery-ui-tabs' );
+
+		/**
+		 * Enqueue jQuery tooltips from ClassicPress/WordPress
+		 *
+		 * For more control over tooltips, replace jQuery tooltips with Tooltipster,
+		 * which is included with this plugin.
+		 *
+		 * @todo Conditionally enqueue this depending on backend Tooltipster.
+		 */
+		wp_enqueue_script( 'jquery-ui-tooltip' );
+	}
+
+	/**
+	 * Enqueue the stylesheets for the admin area.
+	 *
+	 * Uses the universal slug partial for admin pages. Set this
+     * slug in the core plugin file.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_styles() {
+
+		/**
+		 * Enqueue the general backend styles.
+		 *
+		 * Included are just a few style rules for features added by this plugin.
+		 *
+		 * @since 1.0.0
+		 */
+		wp_enqueue_style( SCP_ADMIN_SLUG . '-admin', SCP_URL . 'assets/css/admin.min.css', [], '', 'all' );
 	}
 
 	/**
