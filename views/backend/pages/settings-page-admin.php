@@ -46,37 +46,37 @@ $tabs = [
 
 	// Introduction tab.
 	sprintf(
-		'<li><a href="%1s"><span class="dashicons dashicons-welcome-learn-more"></span> %2s</a></li>',
-		'#intro',
-		esc_html__( 'Introduction', SCP_DOMAIN )
+		'<li class="app-tab"><a href="%1s">%2s</a></li>',
+		'#menu',
+		esc_html__( 'Menu', SCP_DOMAIN )
 	),
 
 	// Projects tab.
 	sprintf(
-		'<li><a href="%1s"><span class="dashicons dashicons-art"></span> %2s</a></li>',
-		'#projects',
-		esc_html__( 'Projects', SCP_DOMAIN )
+		'<li class="app-tab"><a href="%1s">%2s</a></li>',
+		'#dashboard',
+		esc_html__( 'Dashboard', SCP_DOMAIN )
 	),
 
 	// Images tab.
 	sprintf(
-		'<li><a href="%1s"><span class="dashicons dashicons-format-gallery"></span> %3s</a></li>',
-		'#images',
-		esc_html__( 'Images', SCP_DOMAIN )
+		'<li class="app-tab"><a href="%1s">%3s</a></li>',
+		'#header',
+		esc_html__( 'Header', SCP_DOMAIN )
 	),
 
 	// Videos tab.
 	sprintf(
-		'<li><a href="%1s"><span class="dashicons dashicons-format-video"></span> %2s</a></li>',
-		'#videos',
-		esc_html__( 'Videos', SCP_DOMAIN )
+		'<li class="app-tab"><a href="%1s">%2s</a></li>',
+		'#footer',
+		esc_html__( 'Footer', SCP_DOMAIN )
 	),
 
 	// Settings tab.
 	sprintf(
-		'<li><a href="%1s"><span class="dashicons dashicons-admin-generic"></span> %2s</a></li>',
-		'#settings',
-		esc_html__( 'Settings', SCP_DOMAIN )
+		'<li class="app-tab"><a href="%1s">%2s</a></li>',
+		'#users',
+		esc_html__( 'Users', SCP_DOMAIN )
 	),
 
 ];
@@ -102,9 +102,9 @@ $page_tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 	<hr />
 
 	<!-- Begin jQuery tabbed content -->
-	<div class="backend-tabbed-content">
+	<div class="app-tabs" data-tabbed="tabbed" data-tabevent="click" data-tabdeeplinking="false">
 
-		<ul class="ui-tabs-nav">
+		<ul class='app-tabs-list app-tabs-horizontal hide-if-no-js'>
 			<?php echo implode( $page_tabs ); ?>
 		</ul>
 
@@ -112,20 +112,20 @@ $page_tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 		do_action( 'scp_content_page_about_before' ); ?>
 
 		<!-- Begin content -->
-		<div id="intro"><!-- Introduction content -->
-			<?php // include_once SCP_PATH . 'admin/partials/plugin-page-intro.php'; ?>
+		<div id="menu" class="app-tab-content"><!-- Introduction content -->
+			<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-menu.php'; ?>
 		</div>
-		<div id="projects"><!-- Media Options content -->
-			<?php // include_once SCP_PATH . 'admin/partials/plugin-page-projects.php'; ?>
+		<div id="dashboard" class="app-tab-content"><!-- Media Options content -->
+			<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-dashboard.php'; ?>
 		</div>
-		<div id="images"><!-- Images content -->
-			<?php // include_once SCP_PATH . 'admin/partials/plugin-page-images.php'; ?>
+		<div id="header" class="app-tab-content"><!-- Images content -->
+			<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-header.php'; ?>
 		</div>
-		<div id="videos"><!-- Videos content -->
-			<?php // include_once SCP_PATH . 'admin/partials//plugin-page-videos.php'; ?>
+		<div id="footer" class="app-tab-content"><!-- Videos content -->
+			<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-footer.php'; ?>
 		</div>
-		<div id="settings"><!-- Dev Tools content -->
-			<?php // include_once SCP_PATH . 'admin/partials/plugin-page-settings.php'; ?>
+		<div id="users" class="app-tab-content"><!-- Dev Tools content -->
+			<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-users.php'; ?>
 		</div>
 		<?php
 

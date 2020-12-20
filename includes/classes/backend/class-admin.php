@@ -66,6 +66,9 @@ class Admin {
 		// Enqueue jQuery tabs from ClassicPress/WordPress.
 		wp_enqueue_script( 'jquery-ui-tabs' );
 
+		// Enqueue plugin tabs system.
+		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/app-tabs.min.js', [ 'jquery' ], '', true );
+
 		/**
 		 * Enqueue jQuery tooltips from ClassicPress/WordPress
 		 *
