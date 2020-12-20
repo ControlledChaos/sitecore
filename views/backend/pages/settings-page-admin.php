@@ -1,6 +1,6 @@
 <?php
 /**
- * Output of the sample help sidebar
+ * Output of the Administration Settings page
  *
  * @package    Site_Core
  * @subpackage Views
@@ -14,6 +14,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<h4><?php _e( 'Help Sidebar', SCP_DOMAIN ); ?></h4>
-
-<p><?php _e( 'Demonstration help sidebar.', SCP_DOMAIN ); ?></p>
+Hello.

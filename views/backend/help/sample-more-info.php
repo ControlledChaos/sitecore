@@ -3,12 +3,10 @@
  * Output of the sample More Info help tab
  *
  * @package    Site_Core
- * @subpackage Classes
+ * @subpackage Views
  * @category   Admin
  * @since      1.0.0
  */
-
-namespace SiteCore\Classes\Admin;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

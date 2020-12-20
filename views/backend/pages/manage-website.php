@@ -3,12 +3,12 @@
  * Output of the Manage Website page
  *
  * @package    Site_Core
- * @subpackage Classes
+ * @subpackage Views
  * @category   Admin
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes\Admin;
+namespace SiteCore\Views\Admin;
 use SiteCore\Classes\Admin as Admin;
 
 // Instance of the Manage Website page class.
