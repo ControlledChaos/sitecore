@@ -3,16 +3,12 @@
  * Output of the sample page content
  *
  * @package    Site_Core
- * @subpackage Classes
+ * @subpackage Views
  * @category   Admin
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes\Admin;
-use SiteCore\Classes\Admin as Admin;
-
-// Instance of the relevant page class.
-$page = new Admin\Sample_Submenu_Page;
+namespace SiteCore\Views\Admin;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
