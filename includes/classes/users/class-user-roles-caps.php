@@ -171,7 +171,23 @@ class User_Roles_Caps {
 
 		do_action( 'scp_before_can_update_roles' );
 
-		if ( is_network_admin() || ! current_user_can( 'promote_users' ) || ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE && ! current_user_can( 'manage_sites' ) ) ) {
+		/**
+		 * Conditionally print the checklist
+		 *
+		 * Following is the condition from which this method was adapted.
+		 * It does not allow an administrator to access the checklist on
+		 * their own profile. So check for the `IS_PROFILE_PAGE` has been
+		 * removed.
+		 *
+		 * if (
+		 *     is_network_admin() ||
+		 *     ! current_user_can( 'promote_users' ) ||
+		 *     ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE && ! current_user_can( 'manage_sites' ) )
+		 * )
+		 *
+		 * @todo Text in network mode then edit this method and docblock accordingly.
+		 */
+		if ( is_network_admin() || ! current_user_can( 'promote_users' ) ) {
 				return false;
 		}
 
