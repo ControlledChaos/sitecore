@@ -44,35 +44,42 @@ $plugin_name = $plugin_data['Name'];
  */
 $tabs = [
 
-	// Introduction tab.
+	// Menu tab.
 	sprintf(
 		'<li class="app-tab"><a href="%1s">%2s</a></li>',
 		'#menu',
 		esc_html__( 'Menu', SCP_DOMAIN )
 	),
 
-	// Projects tab.
+	// Dashboard tab.
 	sprintf(
 		'<li class="app-tab"><a href="%1s">%2s</a></li>',
 		'#dashboard',
 		esc_html__( 'Dashboard', SCP_DOMAIN )
 	),
 
-	// Images tab.
+	// Toolbar tab.
+	sprintf(
+		'<li class="app-tab"><a href="%1s">%2s</a></li>',
+		'#toolbar',
+		esc_html__( 'Toolbar', SCP_DOMAIN )
+	),
+
+	// Header tab.
 	sprintf(
 		'<li class="app-tab"><a href="%1s">%3s</a></li>',
 		'#header',
 		esc_html__( 'Header', SCP_DOMAIN )
 	),
 
-	// Videos tab.
+	// Footer tab.
 	sprintf(
 		'<li class="app-tab"><a href="%1s">%2s</a></li>',
 		'#footer',
 		esc_html__( 'Footer', SCP_DOMAIN )
 	),
 
-	// Settings tab.
+	// Users tab.
 	sprintf(
 		'<li class="app-tab"><a href="%1s">%2s</a></li>',
 		'#users',
@@ -80,9 +87,6 @@ $tabs = [
 	),
 
 ];
-
-// Apply a filter to the tabs array for adding tabs.
-$tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 
 ?>
 <div class="wrap admin-settings">
@@ -103,40 +107,35 @@ $tabs = apply_filters( 'scp_tabs_page_about', $tabs );
 
 	<form method="post" action="options.php">
 
-		<!-- Begin jQuery tabbed content -->
+		<!-- Begin tabbed content -->
 		<div class="app-tabs" data-tabbed="tabbed" data-tabevent="click" data-tabdeeplinking="true">
 
 			<ul class='app-tabs-list app-tabs-horizontal hide-if-no-js'>
 				<?php echo implode( $tabs ); ?>
 			</ul>
 
-			<?php // Hook for adding tabbed content.
-			do_action( 'scp_content_page_about_before' ); ?>
-
 			<!-- Begin content -->
-			<div id="menu" class="app-tab-content"><!-- Introduction content -->
+			<div id="menu" class="app-tab-content">
 				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-menu.php'; ?>
 			</div>
-			<div id="dashboard" class="app-tab-content"><!-- Media Options content -->
+			<div id="dashboard" class="app-tab-content">
 				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-dashboard.php'; ?>
 			</div>
-			<div id="header" class="app-tab-content"><!-- Images content -->
+			<div id="toolbar" class="app-tab-content">
+				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-toolbar.php'; ?>
+			</div>
+			<div id="header" class="app-tab-content">
 				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-header.php'; ?>
 			</div>
-			<div id="footer" class="app-tab-content"><!-- Videos content -->
+			<div id="footer" class="app-tab-content">
 				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-footer.php'; ?>
 			</div>
-			<div id="users" class="app-tab-content"><!-- Dev Tools content -->
+			<div id="users" class="app-tab-content">
 				<?php include SCP_PATH . 'views/backend/forms/partials/settings-admin-users.php'; ?>
 			</div>
-			<?php
-
-			// Hook for adding tabbed content.
-			do_action( 'scp_content_page_about_after' ); ?>
 
 			<p class="submit"><?php submit_button( __( 'Save Settings', SCP_DOMAIN ), 'button-primary', '', false, [] ); ?></p>
 
-		</div><!-- End jQuery tabbed content -->
+		</div><!-- End tabbed content -->
 	</form>
-
 </div>

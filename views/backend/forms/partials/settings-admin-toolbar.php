@@ -1,6 +1,6 @@
 <?php
 /**
- * Form fields for admin settings users tab
+ * Form fields for admin settings toolbar tab
  *
  * @package    Site_Core
  * @subpackage Views
@@ -16,7 +16,7 @@ $page = new Admin\Admin_Settings_Page;
 
 printf(
 	'<h2>%s</h2>',
-	__( 'User Options', SCP_DOMAIN )
+	__( 'User Toolbar', SCP_DOMAIN )
 );
 
 ?>
