@@ -13,7 +13,7 @@
   list-style: none;
   margin: 2em 0 0;
   padding: 0 0 0 0.5em;
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px #ccd0d4;
 }
 
 .app-tabs .app-tabs-list .app-tab {
@@ -21,31 +21,31 @@
   position: relative;
   top: 1px;
   margin: 0 0.15em;
-  border: solid 1px #ccc;
+  border: solid 1px #ccd0d4;
   font-weight: 600;
 }
 
 .app-tabs .app-tabs-list .app-tab a {
   display: block;
   padding: 0.75em 1em;
-  background-color: #fff;
+  background-color: #f1f1f1;
   line-height: 1;
   text-decoration: none;
-  color: #555;
+  color: #444;
 }
 
 .app-tabs .app-tabs-list .app-tab a:hover, .app-tabs .app-tabs-list .app-tab a:focus, .app-tabs .app-tabs-list .app-tab a:active {
-  color: #000;
+  color: #23282d;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
 .app-tabs .app-tabs-list .app-tab.active {
-  border-bottom-color: #fff;
+  border-bottom-color: #f1f1f1;
 }
 
 .app-tabs .app-tabs-list .app-tab.active a {
-  color: #000;
+  color: #23282d;
   cursor: default;
 }
 
