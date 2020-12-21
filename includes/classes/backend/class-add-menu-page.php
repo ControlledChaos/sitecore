@@ -190,23 +190,7 @@ class Add_Menu_Page {
 	}
 
 	/**
-	 * Page content
-	 *
-	 * This can be used in the default `callback()` method.
-	 * Hooking into `scp_submanu_page_content` adds
-	 * content/markup inside the standard page markup.
-	 * Use a new `callback()` method to override these defaults.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return mixed Returns the page content.
-	 */
-	protected function content() {
-		return '';
-	}
-
-	/**
-	 * Menu title
+	 * Page description
 	 *
 	 * @since  1.0.0
 	 * @access protected
@@ -224,6 +208,22 @@ class Add_Menu_Page {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Page content
+	 *
+	 * This can be used in the default `callback()` method.
+	 * Hooking into `scp_submanu_page_content` adds
+	 * content/markup inside the standard page markup.
+	 * Use a new `callback()` method to override these defaults.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the page content.
+	 */
+	protected function content() {
+		return '';
 	}
 
 	/**
