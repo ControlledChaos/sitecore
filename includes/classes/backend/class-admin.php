@@ -110,8 +110,12 @@ class Admin {
 	 * @return void
 	 */
 	public function remove_editor_links() {
-		remove_submenu_page( 'themes.php', 'theme-editor.php' );
-		remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
+
+		// Do not remove for Developer user role.
+		if ( ! current_user_can( 'develop' ) ) {
+			remove_submenu_page( 'themes.php', 'theme-editor.php' );
+			remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
+		}
 	}
 
 	/**
@@ -125,6 +129,11 @@ class Admin {
 	 * @return void
 	 */
 	public function redirect_editor_pages() {
+
+		// Do not redirect for Developer user role.
+		if ( current_user_can( 'develop' ) ) {
+			return;
+		}
 
 		global $pagenow;
 
