@@ -14,6 +14,7 @@ namespace SiteCore;
 use SiteCore\Classes          as General;
 use SiteCore\Classes\Activate as Activate;
 use SiteCore\Classes\Core     as Core;
+use SiteCore\Classes\Settings as Settings;
 use SiteCore\Classes\Tools    as Tools;
 use SiteCore\Classes\Media    as Media;
 use SiteCore\Classes\Users    as Users;
@@ -85,6 +86,9 @@ function sitecore() {
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
 	new Core\Register_Site_Help;
+
+	// Instantiate settings plugin classes.
+	new Settings\Settings;
 
 	// If the Customizer is disabled in the system config file.
 	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {

@@ -26,14 +26,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var   array Defines an array of class file paths.
  */
 define( 'SCP_CLASS', [
-	'core'    => SCP_PATH . 'includes/classes/core/class-',
-	'tools'   => SCP_PATH . 'includes/classes/tools/class-',
-	'media'   => SCP_PATH . 'includes/classes/media/class-',
-	'users'   => SCP_PATH . 'includes/classes/users/class-',
-	'vendor'  => SCP_PATH . 'includes/classes/vendor/class-',
-	'admin'   => SCP_PATH . 'includes/classes/backend/class-',
-	'front'   => SCP_PATH . 'includes/classes/frontend/class-',
-	'general' => SCP_PATH . 'includes/classes/class-',
+	'core'     => SCP_PATH . 'includes/classes/core/class-',
+	'settings' => SCP_PATH . 'includes/classes/settings/class-',
+	'tools'    => SCP_PATH . 'includes/classes/tools/class-',
+	'media'    => SCP_PATH . 'includes/classes/media/class-',
+	'users'    => SCP_PATH . 'includes/classes/users/class-',
+	'vendor'   => SCP_PATH . 'includes/classes/vendor/class-',
+	'admin'    => SCP_PATH . 'includes/classes/backend/class-',
+	'front'    => SCP_PATH . 'includes/classes/frontend/class-',
+	'general'  => SCP_PATH . 'includes/classes/class-',
 ] );
 
 /**
@@ -56,6 +57,9 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Tax'       => SCP_CLASS['core'] . 'register-tax.php',
 	'SiteCore\Classes\Core\Remove_Blog'        => SCP_CLASS['core'] . 'remove-blog.php',
 	'SiteCore\Classes\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
+
+	// Settings classes.
+	'SiteCore\Classes\Settings\Settings'         => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
