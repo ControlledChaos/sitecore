@@ -161,9 +161,6 @@ class Add_Menu_Page {
 
 		// Render tabbed content.
 		add_action( 'render_screen_tabs', [ $this, 'render_tabs' ] );
-
-		// Set the tabbed content.
-		$this->tabs();
 	}
 
 	/**
@@ -254,6 +251,9 @@ class Add_Menu_Page {
 	 */
 	public function get_content_tabs() {
 
+		// Set the tabbed content.
+		$this->tabs();
+
 		$content_tabs = $this->content_tabs;
 		$priorities   = [];
 
@@ -340,7 +340,7 @@ class Add_Menu_Page {
 
 		$defaults = [
 			'id'             => null,
-			'id_before'      => 'tab-',
+			'id_before'      => null,
 			'id_after'       => null,
 			'url'            => null,
 			'capability'     => 'read',
