@@ -59,7 +59,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
 
 	// Settings classes.
-	'SiteCore\Classes\Settings\Settings'         => SCP_CLASS['settings'] . 'settings.php',
+	'SiteCore\Classes\Settings\Settings' => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',

@@ -14,4 +14,7 @@ use SiteCore\Classes\Admin as Admin;
 // Instance of the Manage_Website_Page class.
 $page = new Admin\Admin_Settings_Page;
 
-?>
+
+settings_fields( 'ccp-site-admin-menu' );
+do_settings_sections( 'ccp-site-admin-menu' );
+
