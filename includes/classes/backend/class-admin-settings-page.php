@@ -87,7 +87,7 @@ class Admin_Settings_Page extends Add_Submenu_Page {
 	 * @access protected
 	 * @var    string
 	 */
-	protected $tabs_hashtags = false;
+	protected $tabs_hashtags = true;
 
 	/**
 	 * Constructor method
