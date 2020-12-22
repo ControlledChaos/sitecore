@@ -282,7 +282,7 @@ class User_Roles_Caps {
 			return;
 		}
 
-		wp_nonce_field( 'update-md-multiple-roles', 'md_multiple_roles_nonce' );
+		wp_nonce_field( 'update-md-multiple-roles', 'scp_multiple_roles_nonce' );
 
 		$roles = $this->get_editable_roles();
 
@@ -313,18 +313,18 @@ class User_Roles_Caps {
 		 * The checklist is not always rendered when this method is
 		 * triggered on `profile_update` (i.e. when updating a
 		 * profile programmatically). First check that the
-		 * `md_multiple_roles_nonce` is available, else bail.
+		 * `scp_multiple_roles_nonce` is available, else bail.
 		 * If we continue to process and update_roles(),
 		 * all user roles will be lost. We check for
-		 * `md_multiple_roles_nonce` rather than `md_multiple_roles`
+		 * `scp_multiple_roles_nonce` rather than `scp_multiple_roles`
 		 * as this input/variable will be empty if all role inputs
 		 * are left unchecked.
 		 */
-		if ( ! isset( $_POST['md_multiple_roles_nonce'] ) ) {
+		if ( ! isset( $_POST['scp_multiple_roles_nonce'] ) ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( $_POST['md_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
+		if ( ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
 			return;
 		}
 
@@ -332,8 +332,8 @@ class User_Roles_Caps {
 			return;
 		}
 
-		if ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) {
-			$new_roles = $_POST['md_multiple_roles'];
+		if ( isset( $_POST['scp_multiple_roles'] ) && is_array( $_POST['scp_multiple_roles'] ) ) {
+			$new_roles = $_POST['scp_multiple_roles'];
 		} else {
 			$new_roles = [];
 		}
@@ -359,7 +359,7 @@ class User_Roles_Caps {
 	 */
 	public function network_add_roles_in_signup_meta( $meta, $domain, $path, $title, $user, $user_email, $key ) {
 
-		if ( isset( $_POST['md_multiple_roles_nonce'] ) && ! wp_verify_nonce( $_POST['md_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
+		if ( isset( $_POST['scp_multiple_roles_nonce'] ) && ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
 			return;
 		}
 
@@ -367,8 +367,8 @@ class User_Roles_Caps {
 			return;
 		}
 
-		if ( isset( $_POST['md_multiple_roles'] ) && is_array( $_POST['md_multiple_roles'] ) ) {
-			$new_roles = $_POST['md_multiple_roles'];
+		if ( isset( $_POST['scp_multiple_roles'] ) && is_array( $_POST['scp_multiple_roles'] ) ) {
+			$new_roles = $_POST['scp_multiple_roles'];
 		} else {
 			$new_roles = [];
 		}
@@ -377,7 +377,7 @@ class User_Roles_Caps {
 			return;
 		}
 
-		$meta['md_roles'] = $new_roles;
+		$meta['scp_roles'] = $new_roles;
 
 		return $meta;
 	}
@@ -396,8 +396,8 @@ class User_Roles_Caps {
 	 */
 	public function network_add_roles_after_activation( $user_id, $password, $meta ) {
 
-		if ( ! empty( $meta['md_roles'] ) ) {
-			$this->update_roles( $user_id, $meta['md_roles'] );
+		if ( ! empty( $meta['scp_roles'] ) ) {
+			$this->update_roles( $user_id, $meta['scp_roles'] );
 		}
 	}
 
@@ -414,7 +414,7 @@ class User_Roles_Caps {
 	public function list_role_column_replace( $columns ) {
 
 		unset( $columns['role'] );
-		$columns['md_multiple_roles_column'] = __( 'Roles', 'multiple-roles' );
+		$columns['scp_multiple_roles_column'] = __( 'Roles', 'multiple-roles' );
 
 		return $columns;
 	}
@@ -433,7 +433,7 @@ class User_Roles_Caps {
 	 */
 	public function list_role_column_content( $output, $column, $user_id ) {
 
-		if ( 'md_multiple_roles_column' !== $column ) {
+		if ( 'scp_multiple_roles_column' !== $column ) {
 			return $output;
 		}
 
