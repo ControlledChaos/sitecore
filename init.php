@@ -150,6 +150,9 @@ function sitecore() {
 		new Front\Frontend;
 	}
 
+	// Disable WordPress administration email verification prompt.
+	add_filter( 'admin_email_check_interval', '__return_false' );
+
 	// Disable Site Health notifications.
 	add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
 
