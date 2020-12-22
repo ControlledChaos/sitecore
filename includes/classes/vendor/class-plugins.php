@@ -28,11 +28,16 @@ class Plugins {
 
 		// Compatability with other products.
 		$this->acf();
-		$this->acfe();
+		$this->acf_extended();
+		$this->acf_columns();
 	}
 
 	/**
 	 * Include plugins file from system
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
 	 */
 	protected function plugins() {
 
@@ -126,7 +131,7 @@ class Plugins {
 	 * @access public
 	 * @return void
 	 */
-	public function acfe() {
+	public function acf_extended() {
 
 		$this->plugins();
 
@@ -196,5 +201,21 @@ class Plugins {
 	public function acfe_remove_menu() {
 		remove_action( 'admin_menu', 'acfe_options_menu', 10 );
 		remove_action( 'admin_menu', 'acfe_admin_settings_menu', 10 );
+	}
+
+	/**
+	 * Admin columns for ACF fields
+	 *
+	 * Adds options in the edit field interface to add the field to
+	 * list pages, such as "All Posts".
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acf_columns() {
+		if ( is_admin() ) {
+			return new ACF_Columns;
+		}
 	}
 }

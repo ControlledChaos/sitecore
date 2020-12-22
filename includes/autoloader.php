@@ -75,8 +75,9 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Users\User_Toolbar'    => SCP_CLASS['users'] . 'user-toolbar.php',
 
 	// Vendor classes.
-	'SiteCore\Classes\Vendor\Plugins' => SCP_CLASS['vendor'] . 'plugins.php',
-	'SiteCore\Classes\Vendor\ACF'     => SCP_CLASS['vendor'] . 'acf.php',
+	'SiteCore\Classes\Vendor\Plugins'     => SCP_CLASS['vendor'] . 'plugins.php',
+	'SiteCore\Classes\Vendor\ACF'         => SCP_CLASS['vendor'] . 'acf.php',
+	'SiteCore\Classes\Vendor\ACF_Columns' => SCP_CLASS['vendor'] . 'acf-columns.php',
 	'SiteCore\Classes\Vendor\Register_ACF_Options'     => SCP_CLASS['vendor'] . 'register-acf-options.php',
 	'SiteCore\Classes\Vendor\Register_ACF_Sub_Options' => SCP_CLASS['vendor'] . 'register-acf-sub-options.php',
 
