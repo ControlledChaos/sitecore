@@ -14,9 +14,4 @@ use SiteCore\Classes\Admin as Admin;
 // Instance of the Manage_Website_Page class.
 $page = new Admin\Admin_Settings_Page;
 
-printf(
-	'<h2>%s</h2>',
-	__( 'Admin Footer', SCP_DOMAIN )
-);
-
 ?>
