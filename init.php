@@ -31,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Core plugin function
  *
  * Loads and runs PHP classes.
+ * Removes unwanted features.
  *
  * @since  1.0.0
  * @access public
