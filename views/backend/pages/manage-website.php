@@ -8,16 +8,10 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Views\Admin;
 use SiteCore\Classes\Admin as Admin;
 
 // Instance of the Manage_Website_Page class.
 $page = new Admin\Manage_Website_Page;
-
-// Restrict direct access.
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
 
 ?>
 <div class="wrap manage-website">

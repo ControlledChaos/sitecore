@@ -8,16 +8,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Views\Admin;
-
-// Restrict direct access.
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
-
 ?>
-<hr />
-
 <p>Bacon ipsum dolor amet shank fatback cupim sirloin chicken rump ham hock turkey prosciutto shankle pork loin alcatra shoulder.  Jerky short loin pig pork belly porchetta.  Pork loin pastrami turkey chicken.  Pancetta spare ribs burgdoggen pork corned beef.  Jerky burgdoggen fatback, ham hock swine ham tri-tip chislic sausage salami cow strip steak venison.  Beef t-bone capicola doner, burgdoggen strip steak venison meatloaf turkey porchetta ground round turducken sirloin spare ribs.  Ham burgdoggen hamburger, venison buffalo swine tongue pancetta pork chop meatloaf.</p>
 
 <p>T-bone cupim rump, tail flank bresaola cow chuck tri-tip alcatra ham hock pork chop beef ribs buffalo.  Leberkas pork loin andouille jowl.  Tri-tip kielbasa pastrami, short loin capicola pig fatback strip steak t-bone ball tip hamburger pork loin.  Doner fatback turkey kielbasa meatloaf hamburger venison turducken pastrami ham capicola short loin beef.  Alcatra ribeye jowl, filet mignon spare ribs turducken tail turkey pork loin jerky pig pork belly kevin.  Ribeye meatloaf bacon sausage, buffalo ground round pork loin andouille.</p>
