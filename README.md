@@ -52,6 +52,22 @@ Included is the basic version of the Advanced Custom Fields: Extended enhancemen
 
 [https://www.acf-extended.com](https://www.acf-extended.com)
 
+### Post Types & Taxonomies
+
+Documentaion coming.
+
 ### Editor Options
 
 If the plugin is used with WordPress 5.0 or higher then it provides various content editing options. Set the block editor or the rich text editor as default. Allow users to choose their editor preference to override the default editor. In networks, all site administrators to override editor defaults.
+
+### Admin Pages Framework
+
+Easily add administration pages, including settings pages, as top-level menu entries or submenu entries. Simply extend the relevant class. Sample, starter files for each are provided to copy, rename, and provide details.
+
+### Settings API Framework
+
+In the works.
+
+### User Options, Roles, & Capabilities
+
+Much is complete, documentaion coming.
