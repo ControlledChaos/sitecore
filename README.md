@@ -33,3 +33,25 @@ This is a complete overhaul of my years-old starter plugin. Many of the features
 ## Plugin Logo
 
 Anyone who wants to submit a replacement for the logo into which I put three minutes of effort is welcome to do so.
+
+---
+
+## Features & Compatibility
+
+Following are the highlights of this plugin's functionality.
+
+### Advanced Custom Fields
+
+Included is the basic version of the Advanced Custom Fields system for adding editor fields.
+
+[https://www.advancedcustomfields.com](https://www.advancedcustomfields.com)
+
+### Advanced Custom Fields: Extended
+
+Included is the basic version of the Advanced Custom Fields: Extended enhancement suite to improves Advanced Custom Fields administration.
+
+[https://www.acf-extended.com](https://www.acf-extended.com)
+
+### Editor Options
+
+If the plugin is used with WordPress 5.0 or higher then it provides various content editing options. Set the block editor or the rich text editor as default. Allow users to choose their editor preference to override the default editor. In networks, all site administrators to override editor defaults.
