@@ -81,5 +81,8 @@ if ( ! defined( 'ACF_PRO' ) ) {
 * includes/modules/dynamic-block-type.php
 * includes/modules/dynamic-form.php
 * includes/modules/dynamic-options-page.php
+* includes/locations/post-type-archive.php
+
+The `dynamic-post-type.php` file must be updated to a conditional array for the `acfe_dpt_admin_archive` field. Use the `if ( ! defined( 'ACF_PRO' ) )` code to assign a variable to the full array if ACF Pro is active, else an empty array.
 
 It is recommended to retain the `index.php` security file in the `acf-extended` directory.

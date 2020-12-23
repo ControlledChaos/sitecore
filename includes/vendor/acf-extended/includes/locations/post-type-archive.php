@@ -3,6 +3,10 @@
 if(!defined('ABSPATH'))
     exit;
 
+if ( ! defined( 'ACF_PRO' ) ) {
+    return;
+}
+
 if(!class_exists('acfe_location_post_type_archive')):
 
 class acfe_location_post_type_archive{
