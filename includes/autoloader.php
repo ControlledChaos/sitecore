@@ -86,6 +86,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Admin\Add_Menu_Page'           => SCP_CLASS['admin'] . 'add-menu-page.php',
 	'SiteCore\Classes\Admin\Add_Submenu_Page'        => SCP_CLASS['admin'] . 'add-submenu-page.php',
 	'SiteCore\Classes\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
+	'SiteCore\Classes\Admin\Settings_Menu_Page'      => SCP_CLASS['admin'] . 'settings-menu-page.php',
 	'SiteCore\Classes\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
 	'SiteCore\Classes\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 	'SiteCore\Classes\Admin\Dashboard'               => SCP_CLASS['admin'] . 'dashboard.php',
