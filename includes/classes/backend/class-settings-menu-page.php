@@ -37,7 +37,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 *                title tags of the page when the
 	 *                menu is selected.
 	 */
-	protected $page_title = 'Sample Page';
+	protected $page_title = 'Sample Settings Page';
 
 	/**
 	 * Menu title
@@ -46,7 +46,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 * @access protected
 	 * @var    string The text to be used for the menu.
 	 */
-	protected $menu_title = 'Sample Page';
+	protected $menu_title = 'Sample Settings';
 
 	/**
 	 * Capability
@@ -141,8 +141,9 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	public function add_page() {
 		$this->settings->add_settings_page( array(
 			// 'parent_slug' => 'options-general.php',
-			'page_title'  => __( 'Sample Settings Page', SCP_DOMAIN ),
-			'menu_title'  => __( 'Sample Settings', SCP_DOMAIN ),
+			'page_title'  => $this->page_title(),
+			'menu_title'  => $this->menu_title(),
+			'heading'     => $this->heading(),
 			'capability'  => 'develop',
 		) );
 	}

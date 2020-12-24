@@ -222,6 +222,7 @@ class Settings {
 			'page_slug'   => '',
 			'page_title'  => '',
 			'menu_title'  => '',
+			'heading'     => '',
 			'capability'  => 'manage_options',
 		);
 
@@ -229,6 +230,7 @@ class Settings {
 
 		$this->settings_page['title']      = $args['page_title'];
 		$this->settings_page['capability'] = $args['capability'];
+		$this->settings_page['heading']      = $args['heading'];
 
 		if ( $args['parent_slug'] ) {
 			add_submenu_page(
@@ -267,8 +269,9 @@ class Settings {
 		}
 		?>
 		<div class="wrap">
-			<div id="icon-options-general" class="icon32"></div>
-			<h2><?php echo $this->settings_page['title']; ?></h2>
+
+			<h1><?php echo $this->settings_page['heading']; ?></h1>
+
 			<?php
 			// Output your settings form
 			$this->settings();
@@ -298,8 +301,8 @@ class Settings {
 	public function admin_enqueue_scripts() {
 
 		// scripts
-		wp_register_script( 'jquery-ui-timepicker', SCP_URL . 'assets/settings/jquery-timepicker/jquery.ui.timepicker.js', array( 'jquery', 'jquery-ui-core' ), false, true );
-		wp_register_script( 'wpsf', SCP_URL . 'assets/js/settings.min.js', array( 'jquery' ), false, true );
+		// wp_register_script( 'jquery-ui-timepicker', SCP_URL . 'assets/settings/jquery-timepicker/jquery.ui.timepicker.js', [ 'jquery', 'jquery-ui-core' ], false, true );
+		wp_register_script( 'scp-settings-api', SCP_URL . 'assets/js/settings.min.js', [ 'jquery' ], false, true );
 
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'farbtastic' );
@@ -307,19 +310,19 @@ class Settings {
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_script( 'jquery-ui-timepicker' );
-		wp_enqueue_script( 'wpsf' );
+		// wp_enqueue_script( 'jquery-ui-timepicker' );
+		wp_enqueue_script( 'scp-settings-api' );
 
 		// styles
-		wp_register_style( 'jquery-ui-timepicker', SCP_URL . 'assets/settings/jquery-timepicker/jquery.ui.timepicker.css' );
-		// wp_register_style( 'wpsf', SCP_URL . 'assets/css/settings.css' );
+		// wp_register_style( 'jquery-ui-timepicker', SCP_URL . 'assets/settings/jquery-timepicker/jquery.ui.timepicker.css' );
+		// wp_register_style( 'scp-settings-api', SCP_URL . 'assets/css/settings.min.css' );
 		wp_register_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/ui-darkness/jquery-ui.css' );
 
 		wp_enqueue_style( 'farbtastic' );
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'jquery-ui-timepicker' );
 		wp_enqueue_style( 'jquery-ui-css' );
-		// wp_enqueue_style( 'wpsf' );
+		// wp_enqueue_style( 'scp-settings-api' );
 	}
 
 	/**
