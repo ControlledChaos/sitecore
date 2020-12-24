@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Settings_Menu_Page extends Add_Menu_Page {
+class Add_Settings_Page extends Add_Menu_Page {
 
 	/**
 	 * Settings class
@@ -56,7 +56,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 * @var    string The capability required for the menu
 	 *                to be displayed to the user.
 	 */
-	protected $capability = 'read';
+	protected $capability = 'manage_options';
 
 	/**
 	 * Page slug
@@ -69,7 +69,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 *                dashes, and underscores characters to be
 	 *                compatible with sanitize_key().
 	 */
-	protected $menu_slug = SCP_BASENAME . '-sample-page';
+	protected $menu_slug = SCP_BASENAME . '-sample-settings';
 
 	/**
 	 * Menu icon
@@ -85,7 +85,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 *                * Pass 'none' to leave div.wp-menu-image empty so
 	 *                  an icon can be added via CSS.
 	 */
-	protected $icon_url = 'dashicons-welcome-learn-more';
+	protected $icon_url = 'dashicons-admin-settings';
 
 	/**
 	 * Menu position
@@ -94,7 +94,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
 	 */
-	protected $position = 3;
+	protected $position = 79;
 
 	/**
 	 * Page description
@@ -106,7 +106,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	 * @access protected
 	 * @var    string The description of the page diplayed below the title.
 	 */
-	protected $description = 'Demonstration of adding a menu page.';
+	protected $description = 'Demonstration of adding a settings page.';
 
 	/**
 	 * Help section
@@ -138,7 +138,7 @@ class Settings_Menu_Page extends Add_Menu_Page {
 	/**
 	 * Add settings page.
 	 */
-	public function add_page() {
+	public function temp_add_page() {
 		$this->settings->add_settings_page( array(
 			// 'parent_slug' => 'options-general.php',
 			'page_title'  => $this->page_title(),
@@ -146,6 +146,57 @@ class Settings_Menu_Page extends Add_Menu_Page {
 			'heading'     => $this->heading(),
 			'capability'  => 'develop',
 		) );
+	}
+
+	/**
+	 * Tabbed content
+	 *
+	 * Add content to the tabbed section of the page.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function tabs() {
+
+		$this->add_content_tab( [
+			'id'         => 'sample',
+			'capability' => '',
+			'tab'        => __( 'One' ),
+			'heading'    => __( 'Settings One' ),
+			'content'    => '',
+			'callback'   => [ $this, 'sample_tab' ]
+		] );
+	}
+
+	/**
+	 * Page content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the page content.
+	 */
+	public function callback() {
+		include SCP_PATH . 'views/backend/pages/settings-page-admin.php';
+	}
+
+	/**
+	 * Sample tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function sample_tab() {
+
+		ob_start();
+
+		include_once SCP_PATH . 'views/backend/pages/sample-page-content.php';
+
+		$html = ob_get_clean();
+
+		// Return the page markup.
+		return $html;
 	}
 
 	/**

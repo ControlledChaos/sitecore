@@ -1124,4 +1124,4 @@ function wpsf_delete_settings( $option_group ) {
 	delete_option( $option_group . '_settings' );
 }
 
-new Admin\Settings_Menu_Page;
+new Admin\Add_Settings_Page;
