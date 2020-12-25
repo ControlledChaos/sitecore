@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Add_Settings_Page extends Add_Menu_Page {
+class Add_Settings_Page extends Add_Page {
 
 	/**
 	 * Settings class

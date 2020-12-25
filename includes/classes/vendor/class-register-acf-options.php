@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_ACF_Options extends Admin\Add_Menu_Page {
+class Register_ACF_Options extends Admin\Add_Page {
 
 	/**
 	 * Menu icon

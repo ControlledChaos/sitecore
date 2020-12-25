@@ -83,8 +83,8 @@ define( 'SCP_CLASSES', [
 
 	// Backend/admin classes,
 	'SiteCore\Classes\Admin\Admin'                   => SCP_CLASS['admin'] . 'admin.php',
-	'SiteCore\Classes\Admin\Add_Menu_Page'           => SCP_CLASS['admin'] . 'add-menu-page.php',
-	'SiteCore\Classes\Admin\Add_Submenu_Page'        => SCP_CLASS['admin'] . 'add-submenu-page.php',
+	'SiteCore\Classes\Admin\Add_Page'           => SCP_CLASS['admin'] . 'add-page.php',
+	'SiteCore\Classes\Admin\Add_Subpage'        => SCP_CLASS['admin'] . 'add-subpage.php',
 	'SiteCore\Classes\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
 	'SiteCore\Classes\Admin\Add_Settings_Page'      => SCP_CLASS['admin'] . 'add-settings-page.php',
 	'SiteCore\Classes\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',

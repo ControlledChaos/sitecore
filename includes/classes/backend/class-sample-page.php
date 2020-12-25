@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_Menu_Page extends Add_Menu_Page {
+class Sample_Page extends Add_Page {
 
 	/**
 	 * Page title
@@ -100,7 +100,7 @@ class Sample_Menu_Page extends Add_Menu_Page {
 	 * @access protected
 	 * @var    string The description of the page diplayed below the title.
 	 */
-	protected $description = 'Demonstration of adding a menu page.';
+	protected $description = 'Demonstration of adding a page.';
 
 	/**
 	 * Help section

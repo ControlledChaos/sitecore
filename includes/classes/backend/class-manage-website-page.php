@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Manage_Website_Page extends Add_Submenu_Page {
+class Manage_Website_Page extends Add_Subpage {
 
 	/**
 	 * Parent slug

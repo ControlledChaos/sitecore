@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin_Settings_Page extends Add_Submenu_Page {
+class Admin_Settings_Page extends Add_Subpage {
 
 	/**
 	 * Parent slug

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_Submenu_Page extends Add_Submenu_Page {
+class Sample_Subpage extends Add_Subpage {
 
 	/**
 	 * Parent slug
@@ -41,7 +41,7 @@ class Sample_Submenu_Page extends Add_Submenu_Page {
 	 *                title tags of the page when the
 	 *                menu is selected.
 	 */
-	protected $page_title = 'Sample Submenu Page';
+	protected $page_title = 'Sample Subpage';
 
 	/**
 	 * Menu title
@@ -50,7 +50,7 @@ class Sample_Submenu_Page extends Add_Submenu_Page {
 	 * @access protected
 	 * @var    string The text to be used for the menu.
 	 */
-	protected $menu_title = 'Sample Page';
+	protected $menu_title = 'Sample Subpage';
 
 	/**
 	 * Capability
@@ -94,7 +94,7 @@ class Sample_Submenu_Page extends Add_Submenu_Page {
 	 * @access protected
 	 * @var    string The description of the page diplayed below the title.
 	 */
-	protected $description = 'Demonstration of adding a submenu page.';
+	protected $description = 'Demonstration of adding a subpage.';
 
 	/**
 	 * Help section

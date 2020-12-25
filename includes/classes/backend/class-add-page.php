@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Add_Menu_Page {
+class Add_Page {
 
 	/**
 	 * Page title
