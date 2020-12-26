@@ -119,10 +119,10 @@ class Add_Settings_Page extends Add_Page {
 
 		parent :: __construct();
 
-		$this->settings = new Settings\Settings( SCP_PATH . 'includes/settings/example-settings.php', 'my_example_settings' );
+		// $this->settings = new Settings\Settings( SCP_PATH . 'includes/settings/example-settings.php', 'my_example_settings' );
 
 		// Add an optional settings validation filter (recommended)
-		add_filter( $this->settings->get_option_group() . '_settings_validate', [ &$this, 'validate_settings' ] );
+		// add_filter( $this->settings->get_option_group() . '_settings_validate', [ &$this, 'validate_settings' ] );
 	}
 
 	/**
