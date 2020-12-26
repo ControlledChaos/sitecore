@@ -49,6 +49,8 @@ define( 'SCP_CLASS', [
  */
 define( 'SCP_CLASSES', [
 
+	'SiteCore\Classes\Base' => SCP_CLASS['general'] . 'base.php',
+
 	// Core classes.
 	'SiteCore\Classes\Core\Editor_Options'     => SCP_CLASS['core'] . 'editor-options.php',
 	'SiteCore\Classes\Core\Type_Tax'           => SCP_CLASS['core'] . 'type-tax.php',

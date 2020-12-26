@@ -9,13 +9,14 @@
  */
 
 namespace SiteCore\Classes\Admin;
+use SiteCore\Classes as Classes;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin {
+class Admin extends Classes\Base {
 
 	/**
 	 * Constructor method
@@ -25,6 +26,8 @@ class Admin {
 	 * @return self
 	 */
 	public function __construct() {
+
+		parent :: __construct();
 
 		// Get the filename of the current page.
 		global $pagenow;
@@ -52,12 +55,6 @@ class Admin {
 		if ( 'index.php' == $pagenow ) {
 			new Dashboard;
 		}
-
-		// Enqueue backend JavaScript.
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-
-		// Enqueue backend stylesheets.
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 
 		// Remove theme & plugin editor links.
 		add_action( 'admin_init', [ $this, 'remove_editor_links' ] );
@@ -88,7 +85,7 @@ class Admin {
 	 * @access public
 	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 
 		// wp_enqueue_script();
 	}
@@ -103,7 +100,7 @@ class Admin {
 	 * @access public
 	 * @return void
 	 */
-	public function enqueue_styles() {
+	public function admin_enqueue_styles() {
 
 		/**
 		 * Enqueue the general backend styles.

@@ -84,6 +84,15 @@ function sitecore() {
 	// Get constants & helpers.
 	require SCP_PATH . 'includes/config.php';
 
+	/**
+	 * Base class
+	 *
+	 * This offers methods that may be widely used
+	 * so other classes can extend this to add scripts
+	 * and styles, and other common operations.
+	 */
+	new General\Base;
+
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
 	new Core\Register_Site_Help;
