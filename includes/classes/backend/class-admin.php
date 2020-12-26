@@ -63,21 +63,7 @@ class Admin {
 	 */
 	public function enqueue_scripts() {
 
-		// Enqueue jQuery tabs from ClassicPress/WordPress.
-		wp_enqueue_script( 'jquery-ui-tabs' );
-
-		// Enqueue plugin tabs system.
-		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/app-tabs.min.js', [ 'jquery' ], '', true );
-
-		/**
-		 * Enqueue jQuery tooltips from ClassicPress/WordPress
-		 *
-		 * For more control over tooltips, replace jQuery tooltips with Tooltipster,
-		 * which is included with this plugin.
-		 *
-		 * @todo Conditionally enqueue this depending on backend Tooltipster.
-		 */
-		wp_enqueue_script( 'jquery-ui-tooltip' );
+		// wp_enqueue_script();
 	}
 
 	/**

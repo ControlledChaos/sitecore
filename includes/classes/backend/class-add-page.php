@@ -158,6 +158,33 @@ class Add_Page {
 
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ] );
+
+		// Add screen options.
+		add_action( 'admin_head', [ $this, 'screen_options' ] );
+
+		// Enqueue page parent scripts.
+		add_action( 'admin_enqueue_scripts', [ $this, 'parent_enqueue_scripts' ] );
+
+		// Print page parent scripts to head.
+		add_action( 'admin_head', [ $this, 'parent_print_scripts' ] );
+
+		// Enqueue page-specific scripts.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+
+		// Print page-specific scripts to head.
+		add_action( 'admin_head', [ $this, 'print_scripts' ] );
+
+		// Enqueue page parent styles.
+		add_action( 'admin_enqueue_scripts', [ $this, 'parent_enqueue_styles' ] );
+
+		// Print page parent styles to head.
+		add_action( 'admin_head', [ $this, 'parent_print_styles' ] );
+
+		// Enqueue page-specific styles.
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
+
+		// Print page-specific styles to head.
+		add_action( 'admin_head', [ $this, 'print_styles' ] );
 	}
 
 	/**
@@ -658,5 +685,153 @@ class Add_Page {
 
 		// Return the page markup.
 		return $html;
+	}
+
+	/**
+	 * Screen options
+	 *
+	 * Add to the screen option tab at the top of the page
+	 * for showing and hiding page elements.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function screen_options() {
+
+		// add_screen_option();
+	}
+
+	/**
+	 * Enqueue page parent scripts
+	 *
+	 * This is for scripts that shall not be
+	 * overridden by class extension. Specific
+	 * screens should use enqueue_scripts() to
+	 * enqueue scripts for its screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function parent_enqueue_scripts() {
+
+		// Enqueue plugin tabs system.
+		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/app-tabs.min.js', [ 'jquery' ], '', true );
+	}
+
+	/**
+	 * Print page parent scripts
+	 *
+	 * This is for scripts that shall not be
+	 * overridden by class extension. Specific
+	 * screens should use print_scripts() to
+	 * print scripts for its screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string
+	 */
+	public function parent_print_scripts() {
+
+		// <script></script>
+		// file_get_contents();
+	}
+
+	/**
+	 * Enqueue page-specific scripts
+	 *
+	 * This is for scripts that are
+	 * spefific to a screen class.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+
+		// wp_enqueue_script();
+	}
+
+	/**
+	 * Print page-specific scripts
+	 *
+	 * This is for scripts that are
+	 * spefific to a screen class.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string
+	 */
+	public function print_scripts() {
+
+		// <script></script>
+		// file_get_contents();
+	}
+
+	/**
+	 * Enqueue page parent styles
+	 *
+	 * This is for styles that shall not be
+	 * overridden by class extension. Specific
+	 * screens should use enqueue_styles() to
+	 * enqueue styles for its screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function parent_enqueue_styles() {
+
+		// wp_enqueue_style();
+	}
+
+	/**
+	 * Print page parent styles
+	 *
+	 * This is for styles that shall not be
+	 * overridden by class extension. Specific
+	 * screens should use print_styles() to
+	 * print styles for its screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string
+	 */
+	public function parent_print_styles() {
+
+		// <style></style>
+		// file_get_contents();
+	}
+
+	/**
+	 * Enqueue page-specific styles
+	 *
+	 * This is for styles that are
+	 * spefific to a screen class.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_styles() {
+
+		// wp_enqueue_style();
+	}
+
+	/**
+	 * Print page-specific styles
+	 *
+	 * This is for styles that are
+	 * spefific to a screen class.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return string
+	 */
+	public function print_styles() {
+
+		// <style></style>
+		// file_get_contents();
 	}
 }
