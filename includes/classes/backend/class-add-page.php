@@ -767,6 +767,9 @@ class Add_Page {
 
 		// <script></script>
 		// file_get_contents();
+
+		// Enqueue plugin tabs system.
+		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/app-tabs.min.js', [ 'jquery' ], '', true );
 	}
 
 	/**
@@ -800,8 +803,11 @@ class Add_Page {
 	 */
 	public function parent_print_styles() {
 
-		// <style></style>
-		// file_get_contents();
+		// Styles for the tabbed content.
+		$style  = '<style>';
+		$style .= file_get_contents( SCP_PATH . 'assets/css/app-tabs.min.css' );
+		$style .= '</style>';
+		echo $style;
 	}
 
 	/**
