@@ -199,7 +199,7 @@ class Add_Page extends Classes\Base {
 	 * @return string Returns the conditional menu label.
 	 */
 	protected function page_title() {
-		return $this->page_title;
+		return __( $this->page_title, SCP_DOMAIN );
 	}
 
 	/**
@@ -210,7 +210,7 @@ class Add_Page extends Classes\Base {
 	 * @return string Returns the conditional menu label.
 	 */
 	protected function menu_title() {
-		return ucwords( $this->menu_title );
+		return ucwords( __( $this->menu_title, SCP_DOMAIN ) );
 	}
 
 	/**
