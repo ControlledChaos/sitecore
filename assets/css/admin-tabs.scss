@@ -14,12 +14,12 @@
 /**
  * App tabs library
  *
- * .app-tabs is the container class.
+ * .admin-tabs is the container class.
  */
 
-.app-tabs {
+.admin-tabs {
 
-	.app-tabs-list {
+	.admin-tabs-list {
 		list-style: none;
 		margin: 3rem 0 0;
 		padding: 0 0 0 0.5em;
@@ -29,7 +29,7 @@
 			display: inline-block;
 			position: relative;
 
-			// Top offset same as the border-bottom width of .app-tabs-list.
+			// Top offset same as the border-bottom width of .admin-tabs-list.
 			top: 1px;
 			margin: 0 0.15em;
 			border: solid 1px #ccd0d4;
@@ -138,9 +138,9 @@
 		}
 	}
 
-	// .app-tabs[data-tab_mouseevent="hover"]
+	// .admin-tabs[data-tab_mouseevent="hover"]
 	&[data-tab_mouseevent="hover"] {
-		.app-tabs-list {
+		.admin-tabs-list {
 			.app-tab {
 				&.active {
 
@@ -155,15 +155,15 @@
 }
 
 .rtl {
-	.app-tabs {
-		.app-tabs-list {
+	.admin-tabs {
+		.admin-tabs-list {
 			padding: 0 0.5em 0 0;
 		}
 	}
 }
 
 .no-js {
-	.app-tabs {
+	.admin-tabs {
 		.app-tab-content {
 			display: block;
 		}
