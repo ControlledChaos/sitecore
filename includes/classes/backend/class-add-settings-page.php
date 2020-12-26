@@ -122,7 +122,7 @@ class Add_Settings_Page extends Add_Page {
 		$this->settings = new Settings\Settings( SCP_PATH . 'includes/settings/example-settings.php', 'my_example_settings' );
 
 		// Add an optional settings validation filter (recommended)
-		add_filter( $this->settings->get_option_group() . '_settings_validate', array( &$this, 'validate_settings' ) );
+		add_filter( $this->settings->get_option_group() . '_settings_validate', [ &$this, 'validate_settings' ] );
 	}
 
 	/**
@@ -165,15 +165,17 @@ class Add_Settings_Page extends Add_Page {
 	}
 
 	/**
-	 * Validate settings.
+	 * Validate settings
 	 *
-	 * @param $input
+	 * Same as $sanitize_callback.
+	 * @link http://codex.wordpress.org/Function_Reference/register_setting
 	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  $input
 	 * @return mixed
 	 */
 	public function validate_settings( $input ) {
-		// Do your settings validation here
-		// Same as $sanitize_callback from http://codex.wordpress.org/Function_Reference/register_setting
 		return $input;
 	}
 }
