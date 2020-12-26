@@ -26,6 +26,33 @@ class Admin {
 	 */
 	public function __construct() {
 
+		// Get the filename of the current page.
+		global $pagenow;
+
+		/**
+		 * Admin settings page
+		 *
+		 * Use an ACF options page if ACF Pro is active.
+		 *
+		 * @todo Review whether the ACF condition is desirable.
+		 */
+		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+			new Admin_ACF_Settings_Page;
+		} else {
+			new Admin_Settings_Page;
+		}
+
+		// Manage website page/help pages.
+		new Manage_Website_Page;
+
+		// @todo Remove when testing is finished.
+		new Add_Settings_Page;
+
+		// Run the dashboard only on the backend index screen.
+		if ( 'index.php' == $pagenow ) {
+			new Dashboard;
+		}
+
 		// Enqueue backend JavaScript.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 

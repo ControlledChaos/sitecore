@@ -26,6 +26,9 @@ class Media {
 	 */
 	public function __construct() {
 
+		// Register media type taxonomy.
+		new Register_Media_Type;
+
 		// Add categories and tags to media library items.
 		add_action( 'init' , [ $this, 'media_taxonomies' ] );
 

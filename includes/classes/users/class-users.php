@@ -26,6 +26,9 @@ class Users {
 	 */
 	public function __construct() {
 
+		// User roles & capabilities.
+		new User_Roles_Caps;
+
 		// Move the personal data menu items.
 		add_action( 'admin_menu', [ $this, 'menus_personal_data' ] );
 

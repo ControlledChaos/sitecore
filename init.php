@@ -117,7 +117,6 @@ function sitecore() {
 
 	// Instantiate media classes.
 	new Media\Media;
-	new Media\Register_Media_Type;
 
 	// Instantiate third-party plugin classes.
 	new Vendor\Plugins;
@@ -125,22 +124,10 @@ function sitecore() {
 	// Instantiate backend classes.
 	if ( is_admin() ) {
 		new Admin\Admin;
-		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
-			new Admin\Admin_ACF_Settings_Page;
-		} else {
-			new Admin\Admin_Settings_Page;
-		}
-		new Admin\Manage_Website_Page;
-	}
-
-	// Run the dashboard only on the backend index screen.
-	if ( 'index.php' == $pagenow ) {
-		new Admin\Dashboard;
 	}
 
 	// Instantiate users classes.
 	new Users\Users;
-	new Users\User_Roles_Caps;
 
 	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
 		new Users\User_Toolbar;
