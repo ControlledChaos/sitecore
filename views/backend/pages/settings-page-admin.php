@@ -8,6 +8,8 @@
  * @since      1.0.0
  */
 
+$page = get_plugin_page_hook( SCP_BASENAME, $this->parent_slug );
+
 ?>
 <div class="wrap admin-settings">
 
@@ -25,7 +27,7 @@
 	?>
 	<form method="post" action="options.php">
 
-		<?php do_action( 'render_screen_tabs' ); ?>
+		<?php echo do_action( 'render_screen_tabs_' . $page ); ?>
 
 		<p class="submit"><?php submit_button( __( 'Save Settings', SCP_DOMAIN ), 'button-primary', '', false, [] ); ?></p>
 	</form>

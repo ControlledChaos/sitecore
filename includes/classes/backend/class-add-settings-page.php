@@ -69,7 +69,7 @@ class Add_Settings_Page extends Add_Page {
 	 *                dashes, and underscores characters to be
 	 *                compatible with sanitize_key().
 	 */
-	protected $menu_slug = SCP_BASENAME . '-sample-settings';
+	protected $menu_slug = 'sample-settings';
 
 	/**
 	 * Menu icon
@@ -109,16 +109,6 @@ class Add_Settings_Page extends Add_Page {
 	protected $description = 'Demonstration of adding a settings page.';
 
 	/**
-	 * Help section
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Content is added to the contextual help
-	 *                 section if true.
-	 */
-	protected $add_help = true;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -136,19 +126,6 @@ class Add_Settings_Page extends Add_Page {
 	}
 
 	/**
-	 * Add settings page.
-	 */
-	public function temp_add_page() {
-		$this->settings->add_settings_page( array(
-			// 'parent_slug' => 'options-general.php',
-			'page_title'  => $this->page_title(),
-			'menu_title'  => $this->menu_title(),
-			'heading'     => $this->heading(),
-			'capability'  => 'develop',
-		) );
-	}
-
-	/**
 	 * Tabbed content
 	 *
 	 * Add content to the tabbed section of the page.
@@ -160,24 +137,20 @@ class Add_Settings_Page extends Add_Page {
 	public function tabs() {
 
 		$this->add_content_tab( [
-			'id'         => 'sample',
-			'capability' => '',
+			'id'         => 'sample-one',
 			'tab'        => __( 'One' ),
 			'heading'    => __( 'Settings One' ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
-	}
 
-	/**
-	 * Page content
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return mixed Returns the page content.
-	 */
-	public function callback() {
-		include SCP_PATH . 'views/backend/pages/settings-page-admin.php';
+		$this->add_content_tab( [
+			'id'         => 'sample-two',
+			'tab'        => __( 'Two' ),
+			'heading'    => __( 'Settings Two' ),
+			'content'    => '',
+			'callback'   => [ $this, 'sample_tab' ]
+		] );
 	}
 
 	/**
@@ -188,15 +161,7 @@ class Add_Settings_Page extends Add_Page {
 	 * @return mixed Returns the tab content.
 	 */
 	public function sample_tab() {
-
-		ob_start();
-
-		include_once SCP_PATH . 'views/backend/pages/sample-page-content.php';
-
-		$html = ob_get_clean();
-
-		// Return the page markup.
-		return $html;
+		include SCP_PATH . 'views/backend/pages/sample-page-content.php';
 	}
 
 	/**

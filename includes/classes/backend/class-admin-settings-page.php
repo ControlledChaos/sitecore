@@ -178,17 +178,6 @@ class Admin_Settings_Page extends Add_Subpage {
 	}
 
 	/**
-	 * Page content
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return mixed Returns the page content.
-	 */
-	public function callback() {
-		include SCP_PATH . 'views/backend/pages/settings-page-admin.php';
-	}
-
-	/**
 	 * Menu tab callback
 	 *
 	 * @since  1.0.0

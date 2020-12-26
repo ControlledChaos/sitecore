@@ -158,9 +158,6 @@ class Add_Page {
 
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ] );
-
-		// Render tabbed content.
-		add_action( 'render_screen_tabs', [ $this, 'render_tabs' ] );
 	}
 
 	/**
@@ -321,19 +318,8 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  array $args {
-	 *     Array of arguments used to display the content tab.
-	 *
-	 *     @type string $id Tab ID. Must be HTML-safe. Default null.
-	 *     @type string $url Tab URL. Link to use instead of tabbed content ID. Default null.
-	 *     @type string $tab Label for the tab. Default null.
-	 *     @type string $heading Heading for the tab content. Default null.
-	 *     @type string $heading_before Opening HTML tag for the heading. Default <h2>.
-	 *     @type string $heading_after Closing HTML tag for the heading. Default </h2>.
-	 *     @type string $content  Optional. Tab content in plain text or HTML. Default null.
-	 *     @type string $callback Optional. A callback to generate the tab content. Default null.
-	 *     @type int $priority Optional. The priority of the tab, used for ordering. Default 10.
-	 * }
+	 * @param  array $args Returns array of arguments used to
+	 *                     display the content tab.
 	 * @return void
 	 */
 	public function add_content_tab( $args ) {
@@ -571,7 +557,7 @@ class Add_Page {
 	 * @return mixed Returns the page content.
 	 */
 	protected function content() {
-		return '';
+		do_action( 'render_screen_tabs_' . $this->menu_slug );
 	}
 
 	/**
@@ -591,25 +577,24 @@ class Add_Page {
 	 */
 	public function callback() {
 
+		add_action( 'render_screen_tabs_' . $this->menu_slug, [ $this, 'render_tabs' ] );
+
 		// Native page wrap element/class.
-		$html = '<div class="wrap">';
+		echo  '<div class="wrap">';
 
 		// Print a heading using the menu title variable.
-		$html .= sprintf(
+		echo  sprintf(
 			'<h1>%s</h1>',
 			__( $this->heading(), SCP_DOMAIN )
 		);
 
 		// Print a paragraph with native description class using the description variable.
-		$html .= $this->description();
+		echo  $this->description();
 
-		$html .= $this->content();
+		$this->content();
 
 		// End page wrap.
-		$html .= '</div>';
-
-		// Return the page markup.
-		echo $html;
+		echo  '</div>';
 	}
 
 	/**
