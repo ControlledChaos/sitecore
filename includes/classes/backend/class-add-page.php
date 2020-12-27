@@ -160,7 +160,7 @@ class Add_Page extends Classes\Base {
 		parent :: __construct();
 
 		// Add an about page for the plugin.
-		add_action( 'admin_menu', [ $this, 'add_page' ] );
+		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
 
 		// Add screen options.
 		add_action( 'admin_head', [ $this, 'screen_options' ] );
