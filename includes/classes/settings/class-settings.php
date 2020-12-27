@@ -38,6 +38,9 @@ class Settings extends Classes\Base {
 
 		parent :: __construct();
 
+		// Content settings.
+		new Admin\Content_Settings;
+
 		// Register settings sections and fields.
 		add_action( 'admin_init', [ $this, 'settings' ] );
 	}

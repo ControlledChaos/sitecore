@@ -61,7 +61,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
 
 	// Settings classes.
-	'SiteCore\Classes\Settings\Settings' => SCP_CLASS['settings'] . 'settings.php',
+	'SiteCore\Classes\Settings\Settings'         => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
@@ -85,11 +85,12 @@ define( 'SCP_CLASSES', [
 
 	// Backend/admin classes,
 	'SiteCore\Classes\Admin\Admin'                   => SCP_CLASS['admin'] . 'admin.php',
-	'SiteCore\Classes\Admin\Add_Page'           => SCP_CLASS['admin'] . 'add-page.php',
-	'SiteCore\Classes\Admin\Add_Subpage'        => SCP_CLASS['admin'] . 'add-subpage.php',
+	'SiteCore\Classes\Admin\Add_Page'                => SCP_CLASS['admin'] . 'add-page.php',
+	'SiteCore\Classes\Admin\Add_Subpage'             => SCP_CLASS['admin'] . 'add-subpage.php',
 	'SiteCore\Classes\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
 	'SiteCore\Classes\Admin\Add_Settings_Page'       => SCP_CLASS['admin'] . 'add-settings-page.php',
 	'SiteCore\Classes\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
+	'SiteCore\Classes\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
 	'SiteCore\Classes\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 	'SiteCore\Classes\Admin\Dashboard'               => SCP_CLASS['admin'] . 'dashboard.php',
 
