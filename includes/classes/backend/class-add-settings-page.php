@@ -138,16 +138,16 @@ class Add_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'sample-one',
-			'tab'        => __( 'One' ),
-			'heading'    => __( 'Settings One' ),
+			'tab'        => __( 'One', SCP_DOMAIN ),
+			'heading'    => __( 'Settings One', SCP_DOMAIN ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
 
 		$this->add_content_tab( [
 			'id'         => 'sample-two',
-			'tab'        => __( 'Two' ),
-			'heading'    => __( 'Settings Two' ),
+			'tab'        => __( 'Two', SCP_DOMAIN ),
+			'heading'    => __( 'Settings Two', SCP_DOMAIN ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
