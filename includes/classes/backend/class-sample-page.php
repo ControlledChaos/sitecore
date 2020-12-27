@@ -124,21 +124,41 @@ class Sample_Page extends Add_Page {
 	}
 
 	/**
-	 * Page content
+	 * Tabbed content
+	 *
+	 * Add content to the tabbed section of the page.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @return mixed Returns the page content.
+	 * @access public
+	 * @return void
 	 */
-	protected function content() {
+	public function tabs() {
 
-		ob_start();
+		$this->add_content_tab( [
+			'id'         => 'sample-one',
+			'tab'        => __( 'One', SCP_DOMAIN ),
+			'heading'    => __( 'Settings One', SCP_DOMAIN ),
+			'content'    => '',
+			'callback'   => [ $this, 'sample_tab' ]
+		] );
 
-		include_once SCP_PATH . 'views/backend/pages/sample-page-content.php';
+		$this->add_content_tab( [
+			'id'         => 'sample-two',
+			'tab'        => __( 'Two', SCP_DOMAIN ),
+			'heading'    => __( 'Settings Two', SCP_DOMAIN ),
+			'content'    => '',
+			'callback'   => [ $this, 'sample_tab' ]
+		] );
+	}
 
-		$html = ob_get_clean();
-
-		// Return the page markup.
-		return $html;
+	/**
+	 * Sample tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function sample_tab() {
+		include SCP_PATH . 'views/backend/pages/sample-page-content.php';
 	}
 }
