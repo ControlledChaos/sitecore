@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample submenu page class
+ * Sample settings subpage class
  *
  * @package    Site_Core
  * @subpackage Classes

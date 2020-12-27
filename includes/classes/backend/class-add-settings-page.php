@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample menu page class
+ * Add settings page class
  *
  * @package    Site_Core
  * @subpackage Classes

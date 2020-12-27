@@ -1,6 +1,6 @@
 <?php
 /**
- * Add menu page class
+ * Add page class
  *
  * @package    Site_Core
  * @subpackage Classes
