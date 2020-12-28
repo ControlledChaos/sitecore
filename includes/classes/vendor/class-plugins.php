@@ -109,14 +109,7 @@ class Plugins {
 		 *
 		 * @since 1.0.0
 		 */
-		if (
-			(
-				! class_exists( 'acf' ) ||
-				! is_plugin_active( 'advanced-custom-fields/acf.php' ) ||
-				! is_plugin_active( 'advanced-custom-fields-pro/acf.php' )
-			)
-			&& SCP_USE_ACF
-		) {
+		if ( ! class_exists( 'acf' ) ) {
 			$acf = new ACF;
 		} else {
 			$acf = null;
