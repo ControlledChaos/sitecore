@@ -72,6 +72,64 @@ class Register_Admin extends Register_Type {
 	protected $menu_position = 99;
 
 	/**
+	 * Public type
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type is public.
+	 */
+	protected $public = false;
+
+	/**
+	 * Exclude from search
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type should be
+	 *                 excluded from search.
+	 */
+	protected $exclude_from_search = true;
+
+	/**
+	 * Show in admin menu
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type displays
+	 *                 links in the admin menu.
+	 */
+	protected $show_in_menu = false;
+
+	/**
+	 * Show in navigation menus
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type displays
+	 *                 in the navigation menus interface.
+	 */
+	protected $show_in_nav_menus = false;
+
+	/**
+	 * Show in admin/user toolbar
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether the post type displays
+	 *                 links in the admin/user toolbar.
+	 */
+	protected $show_in_admin_bar = false;
+
+	/**
+	 * Has archive
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether there should be post type archives.
+	 */
+	protected $has_archive = false;
+
+	/**
 	 * Register priority
 	 *
 	 * Attempt to display below other content entries.
@@ -125,6 +183,27 @@ class Register_Admin extends Register_Type {
 
 		// Run the parent constructor method.
 		parent :: __construct();
+
+		// Modify row actions in list UI.
+		add_filter( 'post_row_actions', [ $this, 'row_actions' ], 10, 1 );
+	}
+
+	/**
+	 * Modify row actions
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array Returns the array of actions.
+	 */
+	public function row_actions( $actions ) {
+
+		if ( $this->type_key === get_post_type() ) {
+
+			// Remove the view link.
+			unset( $actions['view'] );
+		}
+
+		return $actions;
 	}
 
 	/**
@@ -191,7 +270,11 @@ class Register_Admin extends Register_Type {
 	public function rewrite() {
 
 		// No rewrite rules.
-		$rewrite = [];
+		$rewrite = [
+			'with_front' => false,
+			'feeds'      => false,
+			'pages'      => false
+		];
 
 		return $rewrite;
 	}
