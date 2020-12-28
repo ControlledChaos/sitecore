@@ -11,10 +11,10 @@
  * @var $user_roles array An array of role names belonging to the current user.
  */
 // $creating       = isset( $_POST['createuser'] );
-// $selected_roles = $creating && isset( $_POST['md_multiple_roles'] ) ? wp_unslash( $_POST['md_multiple_roles'] ) : '';
+// $selected_roles = $creating && isset( $_POST['scp_multiple_roles'] ) ? wp_unslash( $_POST['scp_multiple_roles'] ) : '';
 
-if ( isset( $_POST['createuser'] ) && isset( $_POST['md_multiple_roles'] ) ) {
-	$selected_roles = wp_unslash( $_POST['md_multiple_roles'] );
+if ( isset( $_POST['createuser'] ) && isset( $_POST['scp_multiple_roles'] ) ) {
+	$selected_roles = wp_unslash( $_POST['scp_multiple_roles'] );
 } else {
 	$selected_roles = '';
 }
@@ -28,11 +28,11 @@ if ( isset( $_POST['createuser'] ) && isset( $_POST['md_multiple_roles'] ) ) {
 		<td>
 			<?php foreach( $roles as $name => $label ) :
 				$input_uniq_id = uniqid(); ?>
-				<label for="md-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>">
+				<label for="scp-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>">
 					<input
-						id="md-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>"
+						id="scp-multiple-roles-<?php echo esc_attr( $name ) . '-' . $input_uniq_id; ?>"
 						type="checkbox"
-						name="md_multiple_roles[]"
+						name="scp_multiple_roles[]"
 						value="<?php echo esc_attr( $name ); ?>"
 						<?php
 						// Edit user page.

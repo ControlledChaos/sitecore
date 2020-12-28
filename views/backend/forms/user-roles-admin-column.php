@@ -18,6 +18,6 @@
 		endforeach;
 		echo implode( ', ', $roles );
 	else : ?>
-		<span class="md-multiple-roles-no-role"><?php _e( 'None', 'multiple-roles' ); ?></span>
+		<span class="md-multiple-roles-no-role"><?php _e( 'None', SCP_DOMAIN ); ?></span>
 	<?php endif; ?>
 </div><!-- .md-multiple-roles -->

@@ -282,7 +282,7 @@ class User_Roles_Caps {
 			return;
 		}
 
-		wp_nonce_field( 'update-md-multiple-roles', 'scp_multiple_roles_nonce' );
+		wp_nonce_field( 'update-scp-multiple-roles', 'scp_multiple_roles_nonce' );
 
 		$roles = $this->get_editable_roles();
 
@@ -324,7 +324,7 @@ class User_Roles_Caps {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
+		if ( ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-scp-multiple-roles' ) ) {
 			return;
 		}
 
@@ -359,7 +359,7 @@ class User_Roles_Caps {
 	 */
 	public function network_add_roles_in_signup_meta( $meta, $domain, $path, $title, $user, $user_email, $key ) {
 
-		if ( isset( $_POST['scp_multiple_roles_nonce'] ) && ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-md-multiple-roles' ) ) {
+		if ( isset( $_POST['scp_multiple_roles_nonce'] ) && ! wp_verify_nonce( $_POST['scp_multiple_roles_nonce'], 'update-scp-multiple-roles' ) ) {
 			return;
 		}
 
@@ -414,7 +414,7 @@ class User_Roles_Caps {
 	public function list_role_column_replace( $columns ) {
 
 		unset( $columns['role'] );
-		$columns['scp_multiple_roles_column'] = __( 'Roles', 'multiple-roles' );
+		$columns['scp_multiple_roles_column'] = __( 'Roles', SCP_DOMAIN );
 
 		return $columns;
 	}
