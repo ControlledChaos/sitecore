@@ -343,6 +343,7 @@ class Add_Page extends Classes\Base {
 			'class'          => 'app-tab',
 			'icon'           => null,
 			'content'        => null,
+			'settings_tab'   => false,
 			'hide-if-no-js'  => false,
 			'callback'       => null,
 			'priority'       => 10,
