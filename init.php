@@ -95,6 +95,7 @@ function sitecore() {
 
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
+	new Core\Register_Admin;
 	new Core\Register_Site_Help;
 
 	// Instantiate settings plugin classes.
