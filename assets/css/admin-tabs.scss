@@ -25,7 +25,7 @@
 		padding: 0 0 0 0.5em;
 		border-bottom: solid 1px #ccd0d4;
 
-		.app-tab {
+		.content-tab {
 			display: inline-block;
 			position: relative;
 
@@ -64,7 +64,7 @@
 		}
 	}
 
-	.app-tab-content {
+	.tab-content {
 		display: none;
 		position: relative;
 		overflow: hidden;
@@ -96,7 +96,7 @@
 			}
 		}
 
-		.app-tab-columns {
+		.content-tab-columns {
 			display: flex;
 
 			@media screen and ( max-width: 768px ) {
@@ -115,7 +115,7 @@
 				}
 			}
 
-			&.app-tab-columns-two {
+			&.content-tab-columns-two {
 				& > div {
 					width: 50%;
 
@@ -125,7 +125,7 @@
 				}
 			}
 
-			&.app-tab-columns-three {
+			&.content-tab-columns-three {
 				& > div {
 					width: 33.33325%;
 					width: calc( 100% / 3 );
@@ -141,7 +141,7 @@
 	// .admin-tabs[data-tab_mouseevent="hover"]
 	&[data-tab_mouseevent="hover"] {
 		.admin-tabs-list {
-			.app-tab {
+			.content-tab {
 				&.active {
 
 					// Pointer when using hover.
@@ -164,7 +164,7 @@
 
 .no-js {
 	.admin-tabs {
-		.app-tab-content {
+		.tab-content {
 			display: block;
 		}
 	}

@@ -340,7 +340,7 @@ class Add_Page extends Classes\Base {
 			'heading'        => null,
 			'heading_before' => '<h2>',
 			'heading_after'  => '</h2>',
-			'class'          => 'app-tab',
+			'class'          => 'content-tab',
 			'icon'           => null,
 			'content'        => null,
 			'settings_tab'   => false,
@@ -410,7 +410,7 @@ class Add_Page extends Classes\Base {
 
 			$tabbed         = ' data-tabbed="tabbed"';
 			$wrap_class     = 'registered-content-wrap admin-tabs';
-			$content_class  = 'registered-content app-tab-content';
+			$content_class  = 'registered-content tab-content';
 
 		} else {
 			$tabbed         = '';
@@ -440,7 +440,7 @@ class Add_Page extends Classes\Base {
 
 					if ( ! empty( $tab['icon'] ) ) {
 						$icon = sprintf(
-							'<span class="app-tab-icon %1s"></span> ',
+							'<span class="content-tab-icon %1s"></span> ',
 							$tab['icon']
 						);
 					} else {
