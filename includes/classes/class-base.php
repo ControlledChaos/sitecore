@@ -128,8 +128,7 @@ class Base {
 	 */
 	public function admin_parent_enqueue_scripts() {
 
-		// Script for tabbed content.
-		wp_enqueue_script( 'app-tabs' );
+		// wp_enqueue_script();
 	}
 
 	/**
@@ -261,8 +260,7 @@ class Base {
 	 */
 	public function frontend_parent_enqueue_scripts() {
 
-		// Script for tabbed content.
-		wp_enqueue_script( 'app-tabs' );
+		// wp_enqueue_script();
 	}
 
 	/**
