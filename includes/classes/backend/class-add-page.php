@@ -351,7 +351,7 @@ class Add_Page extends Classes\Base {
 		$args       = wp_parse_args( $args, $defaults );
 		$args['id'] = sanitize_html_class( $args['id'] );
 
-		// Ensure we have an ID and tab.
+		// Ensure there is an an ID and tab.
 		if ( ! $args['id'] || ! $args['tab'] ) {
 			return;
 		}
