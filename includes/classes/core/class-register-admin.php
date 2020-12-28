@@ -83,6 +83,29 @@ class Register_Admin extends Register_Type {
 	protected $priority = 20;
 
 	/**
+	 * Supports
+	 *
+	 * The built in fields/metaboxes supported by the post type.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array The array of support.
+	 */
+	protected $supports = [
+		'title',
+		'thumbnail',
+	];
+
+	/**
+	 * Supported taxonomies
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array The array of supported taxonomies.
+	 */
+	protected $taxonomies = [];
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
