@@ -26,6 +26,15 @@ define( 'SCP_FORMS', [
 class Settings extends Classes\Base {
 
 	/**
+	 * Setting data
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    array
+	 */
+	private $setting = [];
+
+	/**
 	 * Constructor method
 	 *
 	 * Calls the parent constructor.
@@ -69,6 +78,53 @@ class Settings extends Classes\Base {
 	 * @return void
 	 */
 	public function settings() {}
+
+	/**
+	 * Settings section
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function section() {}
+
+	/**
+	 * Setting
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function setting( $args ) {
+
+		$defaults = [
+			'id'            => null,
+			'id_before'     => 'scp_',
+			'id_after'      => null,
+			'capability'    => 'read',
+			'section'       => null,
+			'label'         => null,
+			'label_before'  => null,
+			'label_after'   => null,
+			'class'         => 'scp-setting',
+			'icon'          => null,
+			'description'   => null,
+			'hide-if-no-js' => false,
+			'callback'      => null,
+			'priority'      => 10,
+		];
+
+		$args       = wp_parse_args( $args, $defaults );
+		$args['id'] = sanitize_html_class( $args['id'] );
+
+		// Ensure there is an an ID.
+		if ( ! $args['id'] ) {
+			return;
+		}
+
+		// Allows for overriding existing with that ID.
+		$this->setting[ $args['id'] ] = $args;
+	}
 }
 
 /**
