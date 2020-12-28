@@ -530,8 +530,5 @@ class Register_Type {
 
 		// Get labels for this post type.
 		$labels = $wp_post_types[ $this->type_key ]->labels;
-
-		// Example: new label for all items, the submenu label.
-		// $labels->all_items = __( 'New Label', SCP_DOMAIN );
 	}
 }
