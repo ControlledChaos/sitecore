@@ -56,6 +56,9 @@ class Admin extends Classes\Base {
 			new Dashboard;
 		}
 
+		// Post type menu options.
+		add_filter( 'register_post_type_args', [ $this, 'post_type_menu_options' ], 10, 2 );
+
 		// Remove theme & plugin editor links.
 		add_action( 'admin_init', [ $this, 'remove_editor_links' ] );
 
@@ -76,6 +79,25 @@ class Admin extends Classes\Base {
 
 		// Secondary footer text.
 		add_filter( 'update_footer', [ $this, 'admin_footer_secondary' ], 1 );
+	}
+
+	/**
+	 * Post type menu options
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $args Array of arguments for registering a post type.
+	 * @param  string $post_type Post type key.
+	 * @return array Returns an array of new option arguments.
+	 */
+	public function post_type_menu_options( $args, $post_type ) {
+
+		// ACFE dynamic options page post type.
+		if ( 'acfe-dop' == $post_type ) {
+			$args['show_in_menu'] = 'options-general.php';
+			return $args;
+		}
+		return $args;
 	}
 
 	/**
