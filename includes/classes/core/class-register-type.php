@@ -321,6 +321,8 @@ class Register_Type {
 	/**
 	 * Settings page
 	 *
+	 * Add a dettings page for the post type.
+	 *
 	 * @since  1.0.0
 	 * @access protected
 	 * @var    boolean Whether to create a settings page for this post type.
