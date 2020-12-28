@@ -319,6 +319,17 @@ class Register_Type {
 	protected $_builtin = false;
 
 	/**
+	 * Register priority
+	 *
+	 * When to register the post type.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    integer The numeral to set hook priority.
+	 */
+	protected $priority = 10;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -328,7 +339,13 @@ class Register_Type {
 	protected function __construct() {
 
 		// Register post type.
-		add_action( 'init', [ $this, 'register' ] );
+		add_action( 'init', [ $this, 'register' ], $this->priority );
+
+		// New post type options.
+		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], 10, 2 );
+
+		// New post type labels.
+		add_action( 'admin_menu', [ $this, 'post_type_labels' ], 9 );
 	}
 
 	/**
@@ -472,5 +489,38 @@ class Register_Type {
 		];
 
 		return $rewrite;
+	}
+
+	/**
+	 * New post type options
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $args Array of arguments for registering a post type.
+	 * @param  string $post_type Post type key.
+	 * @return array Returns an array of new option arguments.
+	 */
+	public function post_type_options( $args, $post_type ) {
+		return $args;
+	}
+
+	/**
+	 * New post type labels
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global $wp_post_types Gets registered post types.
+	 * @return array Returns an array of new label arguments.
+	 */
+	public function post_type_labels() {
+
+		// Get registered post types.
+		global $wp_post_types;
+
+		// Get labels for this post type.
+		$labels = $wp_post_types[ $this->type_key ]->labels;
+
+		// Example: new label for all items, the submenu label.
+		// $labels->all_items = __( 'New Label', SCP_DOMAIN );
 	}
 }
