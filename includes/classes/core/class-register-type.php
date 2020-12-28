@@ -356,7 +356,7 @@ class Register_Type {
 		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], 10, 2 );
 
 		// New post type labels.
-		add_action( 'admin_menu', [ $this, 'post_type_labels' ], 9 );
+		add_filter( $this->type_key . '_labels', [ $this, 'filter_labels' ] );
 	}
 
 	/**
@@ -464,7 +464,8 @@ class Register_Type {
 			'parent_item_colon'     => __( 'Parent ' . ucwords( $this->singular ), SCP_DOMAIN ),
 		];
 
-		return $labels;
+		// Filter for child classes to modify this array.
+		return apply_filters( $this->type_key . '_labels', $labels );
 	}
 
 	/**
@@ -512,23 +513,29 @@ class Register_Type {
 	 * @return array Returns an array of new option arguments.
 	 */
 	public function post_type_options( $args, $post_type ) {
+
+		// Only modify this post type.
+		if ( $this->type_key != $post_type ) {
+			return $args;
+		}
+
 		return $args;
 	}
 
 	/**
-	 * New post type labels
+	 * Filter post type labels
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @global $wp_post_types Gets registered post types.
-	 * @return array Returns an array of new label arguments.
+	 * @return mixed Returns new values for array label arguments.
 	 */
-	public function post_type_labels() {
+	public function filter_labels() {
 
-		// Get registered post types.
-		global $wp_post_types;
+		// Labels to change.
+		$labels = [
+			// $key => $value
+		];
 
-		// Get labels for this post type.
-		$labels = $wp_post_types[ $this->type_key ]->labels;
+		return $labels;
 	}
 }

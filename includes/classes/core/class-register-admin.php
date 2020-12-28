@@ -151,37 +151,34 @@ class Register_Admin extends Register_Type {
 
 			// Set content settings as menu parent.
 			$args['show_in_menu'] = 'content-settings';
-
-			// Only allow developer role to add & edit.
-			$args['capabilities'] = [
-				'edit_post'    => 'develop',
-				'delete_post'  => 'develop',
-				'edit_posts'   => 'develop',
-				'delete_posts' => 'develop',
-			];
 		}
+
+		// Only allow developer role to add & edit.
+		$args['capabilities'] = [
+			'edit_post'    => 'develop',
+			'delete_post'  => 'develop',
+			'edit_posts'   => 'develop',
+			'delete_posts' => 'develop',
+		];
 
 		return $args;
 	}
 
 	/**
-	 * New post type labels
+	 * Filter post type labels
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @global $wp_post_types Gets registered post types.
-	 * @return array Returns an array of new label arguments.
+	 * @return mixed Returns new values for array label arguments.
 	 */
-	public function post_type_labels() {
+	public function filter_labels() {
 
-		// Get registered post types.
-		global $wp_post_types;
+		// New post type labels.
+		$labels = [
+			'all_items' => 'Admin Pages'
+		];
 
-		// Get labels for this post type.
-		$labels = $wp_post_types[ $this->type_key ]->labels;
-
-		// New label for all items, the submenu label.
-		$labels->all_items = __( 'Admin Pages', SCP_DOMAIN );
+		return $labels;
 	}
 
 	/**

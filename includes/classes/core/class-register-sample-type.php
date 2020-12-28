@@ -59,6 +59,28 @@ class Register_Sample_Type extends Register_Type {
 	protected $menu_icon = 'dashicons-welcome-learn-more';
 
 	/**
+	 * Settings page
+	 *
+	 * Add a dettings page for the post type.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to create a settings page for this post type.
+	 */
+	protected $settings_page = false;
+
+	/**
+	 * Register priority
+	 *
+	 * When to register the post type.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    integer The numeral to set hook priority.
+	 */
+	protected $priority = 20;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -88,5 +110,45 @@ class Register_Sample_Type extends Register_Type {
 		];
 
 		return $rewrite;
+	}
+
+	/**
+	 * New post type options
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $args Array of arguments for registering a post type.
+	 * @param  string $post_type Post type key.
+	 * @return array Returns an array of new option arguments.
+	 */
+	public function post_type_options( $args, $post_type ) {
+
+		// Only modify this post type.
+		if ( $this->type_key != $post_type ) {
+			return $args;
+		}
+
+		// Sample option.
+		$args['menu_position'] = 3;
+
+		return $args;
+	}
+
+	/**
+	 * Filter post type labels
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns new values for array label arguments.
+	 */
+	public function filter_labels() {
+
+		// New post type labels.
+		$labels = [
+			'menu_name' => 'Sample',
+			'add_new'   => 'New Sample'
+		];
+
+		return $labels;
 	}
 }
