@@ -106,6 +106,15 @@ class Register_Admin extends Register_Type {
 	protected $taxonomies = [];
 
 	/**
+	 * Settings page
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to create a settings page for this post type.
+	 */
+	protected $settings_page = true;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0

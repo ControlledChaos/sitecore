@@ -286,7 +286,7 @@ class Register_Type {
 	protected $has_archive = true;
 
 	/**
-	 * Can_export
+	 * Can export
 	 *
 	 * @since  1.0.0
 	 * @access protected
@@ -317,6 +317,15 @@ class Register_Type {
 	 * @var    boolean True if this post type is a native or "built-in" post_type.
 	 */
 	protected $_builtin = false;
+
+	/**
+	 * Settings page
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to create a settings page for this post type.
+	 */
+	protected $settings_page = false;
 
 	/**
 	 * Register priority
