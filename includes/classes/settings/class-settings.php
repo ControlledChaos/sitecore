@@ -54,3 +54,31 @@ class Settings extends Classes\Base {
 	 */
 	public function settings() {}
 }
+
+/**
+ * Get settings
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+function get_settings() {
+
+	/**
+	 * Path to settings files
+	 *
+	 * Only gets files prefixed with `settings-`.
+	 *
+	 * This includes main directory (`/`) and any
+	 * subdirectories (`* /`).
+	 */
+	$dir_file = SCP_PATH .  'includes/settings' . "{/,/*/}" . 'settings-*.php';
+
+	// Include each file matching the path patterns.
+	foreach ( glob( $dir_file, GLOB_BRACE ) as $settings_file ) {
+		if ( is_file( $settings_file ) && is_readable( $settings_file ) ) {
+			require $settings_file;
+		}
+	}
+}
+get_settings();
