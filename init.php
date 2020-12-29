@@ -52,7 +52,7 @@ function sitecore() {
 	require SCP_PATH . 'includes/config.php';
 
 	// Get compatibility functions.
-	require SCP_PATH . 'vendor/compatibility.php';
+	require SCP_PATH . 'includes/vendor/compatibility.php';
 
 	/**
 	 * Base class
