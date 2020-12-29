@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample {
+class Sample extends Base {
 
 	/**
 	 * Sample string
@@ -100,7 +100,9 @@ class Sample {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {}
+	public function __construct() {
+		parent :: __construct();
+	}
 
 	/**
 	 * Sample method
