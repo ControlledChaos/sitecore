@@ -63,10 +63,10 @@ function sitecore() {
 	 */
 	new General\Base;
 
-	// Instantiate settings plugin classes.
+	// Instantiate settings classes.
 	new Settings\Settings;
 
-	// Instantiate core plugin classes.
+	// Instantiate core classes.
 	new Core\Type_Tax;
 	new Core\Register_Admin;
 	new Core\Register_Site_Help;
@@ -92,13 +92,12 @@ function sitecore() {
 	}
 
 	// Instantiate tools classes.
-	// @todo Put into a settings page. new Tools\RTL_Test;
-	// @todo Put into a settings page. new Tools\Customizer_Reset;
+	new Tools\Tools;
 
 	// Instantiate media classes.
 	new Media\Media;
 
-	// Instantiate third-party plugin classes.
+	// Instantiate third-party classes.
 	new Vendor\Plugins;
 
 	// Instantiate backend classes.

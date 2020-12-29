@@ -65,6 +65,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Settings\Settings'         => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
+	'SiteCore\Classes\Tools\Tools'            => SCP_CLASS['tools'] . 'tools.php',
 	'SiteCore\Classes\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
 	'SiteCore\Classes\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',
 
