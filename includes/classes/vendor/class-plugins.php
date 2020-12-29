@@ -41,10 +41,10 @@ class Plugins {
 		 * Set new directory for saving & loading ACF field groups.
 		 */
 		if ( class_exists( 'ACFE' ) ) {
-			remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
-			remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
-			remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
-			remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
+			// remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
+			// remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
+			// remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
+			// remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
 
 			add_filter( 'acfe/settings/json_save', [ $this, 'save_acf_json' ], 6 );
 			add_filter( 'acfe/settings/json_load', [ $this, 'load_acf_json' ], 6 );
