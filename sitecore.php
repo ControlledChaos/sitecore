@@ -115,6 +115,11 @@ define( 'SCP_VERSION', '1.0.0' );
 /**
  * Constant: Required PHP version
  *
+ * Used instead of the minimum PHP version
+ * in the plugin header.
+ *
+ * @see activate/classes/class-activate.php
+ *
  * @since 1.0.0
  * @var   string The minimum required PHP version.
  */
