@@ -108,7 +108,7 @@ function active_acfe_pro() {
  *
  * @since  1.0.0
  * @access public
- * @return boolean Returns true if the file is found.
+ * @return boolean Returns true if the core file is found.
  */
 function has_acf() {
 
@@ -132,7 +132,7 @@ function has_acf() {
  *
  * @since  1.0.0
  * @access public
- * @return boolean Returns true if the file is found.
+ * @return boolean Returns true if the core file is found.
  */
 function has_acfe() {
 
