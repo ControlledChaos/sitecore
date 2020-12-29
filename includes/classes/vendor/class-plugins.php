@@ -10,6 +10,9 @@
 
 namespace SiteCore\Classes\Vendor;
 
+// Alias namespaces.
+use SiteCore as SiteCore;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -54,36 +57,6 @@ class Plugins {
 	}
 
 	/**
-	 * Include plugins file from system
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	protected function plugins() {
-
-		/**
-		 * Get plugins path
-		 *
-		 * Used to check for active plugins with the `is_plugin_active` function.
-		 */
-
-		// Compatibility with ClassicPress and WordPress.
-		if ( file_exists( ABSPATH . 'wp-admin/includes/plugin.php' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-		// Compatibility with the antibrand system.
-		} elseif ( defined( 'APP_INC_PATH' ) && file_exists( APP_INC_PATH . '/backend/plugin.php' ) ) {
-			include_once( APP_INC_PATH . '/backend/plugin.php' );
-		}
-
-		// Stop here if the plugin functions file can not be accessed.
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			return;
-		}
-	}
-
-	/**
 	 * Compatability with other products
 	 *
 	 * @since  1.0.0
@@ -91,8 +64,6 @@ class Plugins {
 	 * @return void
 	 */
 	public function acf() {
-
-		$this->plugins();
 
 		/**
 		 * Compatability constants
@@ -130,7 +101,7 @@ class Plugins {
 		 *
 		 * @since 1.0.0
 		 */
-		if ( ! class_exists( 'acf' ) ) {
+		if ( true == SCP_USE_ACF && ! ( SiteCore\has_acf() || SiteCore\has_acf_pro() ) ) {
 			$acf = new ACF;
 		} else {
 			$acf = null;
@@ -146,8 +117,6 @@ class Plugins {
 	 * @return void
 	 */
 	public function acf_extended() {
-
-		$this->plugins();
 
 		/**
 		 * Compatability constants
@@ -185,7 +154,7 @@ class Plugins {
 		 *
 		 * @since 1.0.0
 		 */
-		if ( ! class_exists( 'ACFE' ) ) {
+		if ( true == SCP_USE_ACFE && ! ( SiteCore\has_acfe() || SiteCore\has_acfe_pro() ) ) {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 			// Remove pages in menu.

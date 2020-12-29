@@ -84,6 +84,9 @@ function sitecore() {
 	// Get constants & helpers.
 	require SCP_PATH . 'includes/config.php';
 
+	// Get compatibility functions.
+	require SCP_PATH . 'vendor/compatibility.php';
+
 	/**
 	 * Base class
 	 *
