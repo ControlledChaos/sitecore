@@ -63,13 +63,13 @@ function sitecore() {
 	 */
 	new General\Base;
 
+	// Instantiate settings plugin classes.
+	new Settings\Settings;
+
 	// Instantiate core plugin classes.
 	new Core\Type_Tax;
 	new Core\Register_Admin;
 	new Core\Register_Site_Help;
-
-	// Instantiate settings plugin classes.
-	new Settings\Settings;
 
 	// If the Customizer is disabled in the system config file.
 	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {
@@ -108,10 +108,6 @@ function sitecore() {
 
 	// Instantiate users classes.
 	new Users\Users;
-
-	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
-		new Users\User_Toolbar;
-	}
 
 	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
