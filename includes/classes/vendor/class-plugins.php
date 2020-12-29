@@ -30,6 +30,27 @@ class Plugins {
 		$this->acf();
 		$this->acf_extended();
 		$this->acf_columns();
+
+		/**
+		 * ACF local JSON
+		 *
+		 * Remove some of the JSON directory filters in ACFE.
+		 * Set new directory for saving & loading ACF field groups.
+		 */
+		if ( class_exists( 'ACFE' ) ) {
+			remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
+			remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'pre_update_field_group_json' ], 10 );
+			remove_action( 'acf/update_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
+			remove_action( 'acf/untrash_field_group', [ 'ACFE_AutoSync', 'post_update_field_group_json' ], 12 );
+
+			add_filter( 'acfe/settings/json_save', [ $this, 'save_acf_json' ], 6 );
+			add_filter( 'acfe/settings/json_load', [ $this, 'load_acf_json' ], 6 );
+		}
+
+		if ( class_exists( 'acf' ) ) {
+			add_filter( 'acf/settings/save_json', [ $this, 'save_acf_json' ] );
+			add_filter( 'acf/settings/load_json', [ $this, 'load_acf_json' ] );
+		}
 	}
 
 	/**
@@ -203,5 +224,36 @@ class Plugins {
 		if ( is_admin() ) {
 			return new ACF_Columns;
 		}
+	}
+
+	/**
+	 * Save ACF JSON directory
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $path
+	 * @return string Returns the directory path.
+	 */
+	public function save_acf_json( $path ) {
+
+		$path = SCP_PATH . 'includes/settings/acf-json';
+
+		return $path;
+	}
+
+	/**
+	 * Load ACF JSON directory
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $paths
+	 * @return array Returns an array of load paths.
+	 */
+	public function load_acf_json( $paths ) {
+
+		unset( $paths[0] );
+		$paths[] = SCP_PATH . 'includes/settings/acf-json';
+
+		return $paths;
 	}
 }

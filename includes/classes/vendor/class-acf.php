@@ -45,17 +45,40 @@ class ACF {
 		add_filter( 'acf/settings/show_admin', [ $this, 'acf_settings_show_admin' ] );
 	}
 
-	function include() {
+	/**
+	 * Include ACF files
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function include() {
 
 		// Include the ACF plugin.
 		include_once( SCP_ACF_PATH . 'acf.php' );
 	}
 
-	function acf_settings_url( $url ) {
+	/**
+	 * ACF settings URL
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $url
+	 * @return string Returns the URL for ACF files.
+	 */
+	public function acf_settings_url( $url ) {
 		return SCP_ACF_URL;
 	}
 
-	function acf_settings_show_admin( $show_admin ) {
+	/**
+	 * Show ACF in admin menu
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  boolean $show_admin
+	 * @return boolean ACF displays in menu if true.
+	 */
+	public function acf_settings_show_admin( $show_admin ) {
 		return true;
 	}
 }
