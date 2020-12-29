@@ -11,7 +11,7 @@
 namespace SiteCore;
 
 // Alias namespaces.
-use SiteCore\Classes          as General;
+use SiteCore\Classes          as Classes;
 use SiteCore\Classes\Activate as Activate;
 use SiteCore\Classes\Core     as Core;
 use SiteCore\Classes\Settings as Settings;
@@ -61,7 +61,7 @@ function sitecore() {
 	 * so other classes can extend this to add scripts
 	 * and styles, and other common operations.
 	 */
-	new General\Base;
+	new Classes\Base;
 
 	// Instantiate settings classes.
 	new Settings\Settings;
