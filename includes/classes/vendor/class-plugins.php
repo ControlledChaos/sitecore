@@ -101,7 +101,7 @@ class Plugins {
 		 *
 		 * @since 1.0.0
 		 */
-		if ( true == SCP_USE_ACF && ! ( SiteCore\has_acf() || SiteCore\has_acf_pro() ) ) {
+		if ( true == SCP_USE_ACF && ! ( SiteCore\active_acf() || SiteCore\active_acf_pro() ) ) {
 			$acf = new ACF;
 		} else {
 			$acf = null;
@@ -154,7 +154,7 @@ class Plugins {
 		 *
 		 * @since 1.0.0
 		 */
-		if ( true == SCP_USE_ACFE && ! ( SiteCore\has_acfe() || SiteCore\has_acfe_pro() ) ) {
+		if ( true == SCP_USE_ACFE && ! ( SiteCore\active_acfe() || SiteCore\active_acfe_pro() ) ) {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 			// Remove pages in menu.

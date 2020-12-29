@@ -48,7 +48,7 @@ function acfe_get_url($filename = ''){
 add_action('after_plugin_row_' . ACFE_BASENAME, 'acfe_plugin_row', 5, 3);
 function acfe_plugin_row($plugin_file, $plugin_data, $status){
     
-    if(acfe()->has_acf())
+    if(acfe()->active_acf())
         return;
     
     // >= WP 5.5

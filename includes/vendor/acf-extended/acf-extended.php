@@ -58,7 +58,7 @@ class ACFE{
      */
     function load(){
         
-        if(!$this->has_acf())
+        if(!$this->active_acf())
             return;
         
         // Vars
@@ -299,7 +299,7 @@ class ACFE{
     /*
      * Has ACF
      */
-    function has_acf(){
+    function active_acf(){
         
         if($this->acf)
             return true;

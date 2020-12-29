@@ -56,7 +56,7 @@ The following docblock replaces the plugin header in the main file.
 
 ### Updating ACFE #2
 
-Remove or comment out the following condition from the `has_acf()` function in the core ACFE file, `acf-extended.php`.
+Remove or comment out the following condition from the `active_acf()` function in the core ACFE file, `acf-extended.php`.
 
 Remove:
 `&& defined( 'ACF_PRO' )`
