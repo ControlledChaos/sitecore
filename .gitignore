@@ -11,7 +11,7 @@ wp-content/*
 # ignore these plugins
 wp-content/plugins/hello.php
 
-wp-content/plugins/sitecore/includes/settings/acf-json/*.json
+wp-content/plugins/sitecore/includes/settings/acf-json/
 
 # ignore specific themes
 wp-content/themes/twenty*/
