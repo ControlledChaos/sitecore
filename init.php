@@ -46,7 +46,7 @@ function sitecore() {
 	 * The autoloader registers plugin classes for later use,
 	 * such as running new instances below.
 	 */
-	require SCP_PATH . 'includes/autoloader.php';
+	require_once SCP_PATH . 'includes/autoloader.php';
 
 	// Get constants & helpers.
 	require SCP_PATH . 'includes/config.php';
