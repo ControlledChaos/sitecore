@@ -343,7 +343,7 @@ class Add_Page extends Classes\Base {
 			'class'          => 'content-tab',
 			'icon'           => null,
 			'content'        => null,
-			'settings_tab'   => false, // @todo Use or remove.
+			'settings'       => '', // @todo Use or remove.
 			'hide-if-no-js'  => false,
 			'callback'       => null,
 			'priority'       => 10,

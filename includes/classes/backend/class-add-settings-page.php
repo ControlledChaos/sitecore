@@ -131,19 +131,21 @@ class Add_Settings_Page extends Add_Page {
 	public function tabs() {
 
 		$this->add_content_tab( [
-			'id'         => 'sample-one',
-			'tab'        => __( 'One', SCP_DOMAIN ),
-			'heading'    => __( 'Settings One', SCP_DOMAIN ),
-			'content'    => '',
-			'callback'   => [ $this, 'sample_tab' ]
+			'id'           => 'sample-one',
+			'tab'          => __( 'One', SCP_DOMAIN ),
+			'heading'      => __( 'Settings One', SCP_DOMAIN ),
+			'settings'     => 'sample-settings',
+			'content'      => '',
+			'callback'     => [ $this, 'sample_tab' ]
 		] );
 
 		$this->add_content_tab( [
-			'id'         => 'sample-two',
-			'tab'        => __( 'Two', SCP_DOMAIN ),
-			'heading'    => __( 'Settings Two', SCP_DOMAIN ),
-			'content'    => '',
-			'callback'   => [ $this, 'sample_tab' ]
+			'id'           => 'sample-two',
+			'tab'          => __( 'Two', SCP_DOMAIN ),
+			'heading'      => __( 'Settings Two', SCP_DOMAIN ),
+			'settings'     => '',
+			'content'      => '',
+			'callback'     => [ $this, 'sample_tab' ]
 		] );
 	}
 
