@@ -27,7 +27,7 @@ function acfe_dpt_register(){
 		'hierarchical'          => false,
 		'public'                => false,
 		'show_ui'               => true,
-		'show_in_menu'          => 'content-settings',
+		'show_in_menu'          => 'tools.php',
 		'menu_icon'             => 'dashicons-layout',
 		'show_in_admin_bar'     => false,
 		'show_in_nav_menus'     => false,
