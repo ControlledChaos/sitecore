@@ -93,11 +93,10 @@ class Plugins {
 		/**
 		 * Use ACF
 		 *
-		 * Instatiates this plugin's ACF class to
-		 * include Advanced Custom Fields. Does so
-		 * only if the original, third party plugin
-		 * is not active and if the SCP_USE_ACF is
-		 * defined as true.
+		 * Instatiates this plugin's ACF class to include
+		 * Advanced Custom Fields. Does so only if the
+		 * original, third party plugin is not active and
+		 * if the SCP_USE_ACF constant is defined as true.
 		 *
 		 * @since 1.0.0
 		 */
@@ -146,15 +145,15 @@ class Plugins {
 		/**
 		 * Use ACF Extended
 		 *
-		 * Instatiates this plugin's ACF class to
-		 * include ACF  Extended. Does so only if
-		 * the original, third party plugin is not
-		 * active and if the SCP_USE_ACF is defined
-		 * as true.
+		 * Includes ACF Extended files. Does so only if
+		 * the original, third party plugin is not active,
+		 * if ACF or ACF PRO is available, and if the
+		 * SCP_USE_ACFE constant is defined as true.
 		 *
 		 * @since 1.0.0
 		 */
-		if ( true == SCP_USE_ACFE && ! ( SiteCore\active_acfe() || SiteCore\active_acfe_pro() ) ) {
+		if ( true == SCP_USE_ACFE && SiteCore\acf_ready() &&
+			! ( SiteCore\active_acfe() || SiteCore\active_acfe_pro() ) ) {
 			include_once( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 			// Remove pages in menu.

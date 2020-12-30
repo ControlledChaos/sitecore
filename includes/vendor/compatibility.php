@@ -119,19 +119,46 @@ function active_acfe_pro() {
  * ACF included
  *
  * Checks for Advanced Custom Fields files included
- * with this plugin.
+ * with this plugin or as activated original plugin.
  *
  * @since  1.0.0
  * @access public
- * @return boolean Returns true if the core file is found.
+ * @return boolean Returns true if the core file is found & included.
  */
 function has_acf() {
 
-	// Set core ACF file as a variable.
+	// Look for ACF files and set as a variable.
 	$acf = file_exists( SCP_PATH . 'includes/vendor/acf/acf.php' );
 
 	// Return true if the file is found.
-	if ( $acf ) {
+	if ( $acf && class_exists( 'acf' ) ) {
+		return true;
+	}
+
+	// Otherwise return false.
+	return false;
+}
+
+/**
+ * ACF PRO included
+ *
+ * Checks for Advanced Custom Fields PRO files included
+ * with this plugin.
+ *
+ * This is provided for custom versions of this
+ * plugin which may include the pro version.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return boolean Returns true if the core file is found & included.
+ */
+function has_acf_pro() {
+
+	// Look for ACF PRO files and set as a variable.
+	$acf_pro = file_exists( SCP_PATH . 'includes/vendor/acf-pro/acf.php' );
+
+	// Return true if the file is found.
+	if ( $acf_pro && class_exists( 'acf_pro' ) ) {
 		return true;
 	}
 
@@ -147,7 +174,7 @@ function has_acf() {
  *
  * @since  1.0.0
  * @access public
- * @return boolean Returns true if the core file is found.
+ * @return boolean Returns true if the core file is found & included.
  */
 function has_acfe() {
 
@@ -155,7 +182,74 @@ function has_acfe() {
 	$acfe = file_exists( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 	// Return true if the file is found.
-	if ( $acfe ) {
+	if ( $acfe && class_exists( 'ACFE' ) ) {
+		return true;
+	}
+
+	// Otherwise return false.
+	return false;
+}
+
+/**
+ * ACFE PRO included
+ *
+ * Checks for Advanced Custom Fields: Extended PRO
+ * files included with this plugin.
+ *
+ * This is provided for custom versions of this
+ * plugin which may include the pro version.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return boolean Returns true if the core file is found & included.
+ */
+function has_acfe_pro() {
+
+	// Set core ACF file as a variable.
+	$acfe_pro = file_exists( SCP_PATH . 'includes/vendor/acf-extended-pro/acf-extended.php' );
+
+	// Return true if the file is found & included.
+	if ( $acfe_pro && class_exists( 'ACFE_Pro' ) ) {
+		return true;
+	}
+
+	// Otherwise return false.
+	return false;
+}
+
+/**
+ * ACF ready
+ *
+ * Returns true if ACF or ACF PRO is found.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return boolean Returns true if ACF is found.
+ */
+function acf_ready() {
+
+	// Return true if the file is found.
+	if ( has_acf() || has_acf_pro() || active_acf() || active_acf_pro() ) {
+		return true;
+	}
+
+	// Otherwise return false.
+	return false;
+}
+
+/**
+ * ACFE ready
+ *
+ * Returns true if ACFE or ACFE PRO is found.
+ *
+ * @since  1.0.0
+ * @access public
+ * @return boolean Returns true if ACFE is found.
+ */
+function acfe_ready() {
+
+	// Return true if the file is found.
+	if ( has_acfe() || has_acfe_pro() || active_acfe() || active_acfe_pro() ) {
 		return true;
 	}
 
