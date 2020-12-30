@@ -54,6 +54,9 @@ class Plugins {
 			add_filter( 'acf/settings/save_json', [ $this, 'save_acf_json' ] );
 			add_filter( 'acf/settings/load_json', [ $this, 'load_acf_json' ] );
 		}
+
+		// New ACFE post type options.
+		add_filter( 'register_post_type_args', [ $this, 'acfe_post_type_options' ], 11, 2 );
 	}
 
 	/**
@@ -223,5 +226,33 @@ class Plugins {
 		$paths[] = SCP_PATH . 'includes/settings/acf-json';
 
 		return $paths;
+	}
+
+	/**
+	 * New ACFE post type options
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $args Array of arguments for registering a post type.
+	 * @param  string $post_type Post type key.
+	 * @return array Returns an array of new option arguments.
+	 */
+	public function acfe_post_type_options( $args, $post_type ) {
+
+		// Look for the content settings page and set as a variable.
+		$content = get_plugin_page_hookname( 'content-settings', 'content-settings' );
+
+		// Only modify dynamic post types & taxonomies.
+		if ( 'acfe-dpt' == $post_type || 'acfe-dt' == $post_type ) {
+
+			// Only show under content settings if the page exists.
+			if ( $content ) {
+
+				// Set content settings as menu parent.
+				$args['show_in_menu'] = 'content-settings';
+			}
+			return $args;
+		}
+		return $args;
 	}
 }
