@@ -40,6 +40,9 @@ class Admin extends Classes\Base {
 			new Dashboard;
 		}
 
+		// Posts list tables.
+		new Posts_List_Table;
+
 		// Post type menu options.
 		add_filter( 'register_post_type_args', [ $this, 'post_type_menu_options' ], 10, 2 );
 
@@ -57,12 +60,6 @@ class Admin extends Classes\Base {
 
 		// Remove Site Health from menu.
 		add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
-
-		// Add featured image to admin post columns.
-		add_filter( 'manage_posts_columns', [ $this, 'image_column_head' ] );
-		add_filter( 'manage_pages_columns', [ $this, 'image_column_head' ] );
-		add_action( 'manage_posts_custom_column', [ $this, 'image_column_content' ], 10, 2 );
-		add_action( 'manage_pages_custom_column', [ $this, 'image_column_content' ], 10, 2 );
 
 		// Primary footer text.
 		add_filter( 'admin_footer_text', [ $this, 'admin_footer_primary' ], 1 );
@@ -331,106 +328,5 @@ class Admin extends Classes\Base {
 		);
 
 		echo $dev_email;
-	}
-
-	/**
-	 * Get column image
-	 *
-	 * Gets post thumbnail for use in admin columns.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @param int $post_ID Returns the post ID.
-	 * @return string Returns the path to the featured image.
-	 */
-
-	// Get featured image.
-	private function get_column_image( $post_ID ) {
-
-		// Get the post thumbnail ID as a variable.
-		$post_thumbnail_id = get_post_thumbnail_id( $post_ID );
-
-		/**
-		 * Column thumbnail size.
-		 *
-		 * @see includes/classes/media/class-media.php
-		 */
-		$size  = 'column-thumbnail';
-
-		// Apply a filter for conditional modification.
-		$thumb = apply_filters( 'scp_column_thumbnail_size', $size );
-
-		// If there is an ID (if the post has a featured image).
-		if ( $post_thumbnail_id ) {
-
-			// Get the src for the Thumbnail size.
-			$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $thumb );
-
-			// Return the image src for use below.
-			return $post_thumbnail_img[0];
-		}
-	}
-
-	/**
-	 * Image column head
-	 *
-	 * Adds a new post admin column for the featured image.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $defaults Gets the array of default admin columns.
-	 * @return string Returns the name of the new column head.
-	 */
-	public function image_column_head( $defaults ) {
-
-		// The column heading name.
-		$name    = __( 'Featured Image', SCP_DOMAIN );
-
-		// Apply a filter for conditional modification.
-		$heading = apply_filters( 'scp_image_column_head', $name );
-
-		// The column heading name to new `featured_image` column.
-		$defaults['featured_image'] = esc_html__( $heading );
-
-		// Return the heading name.
-		return $defaults;
-	}
-
-	/**
-	 * Image column content
-	 *
-	 * Adds the featured image to post admin columns.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  string $column_name
-	 * @param  int $post_ID
-	 * @return string Returns the image tag for the featured image.
-	 */
-	public function image_column_content( $column_name, $post_ID ) {
-
-		// If the column is the `featured_image` column established above.
-		if ( 'featured_image' == $column_name ) {
-
-			// Get the image src established above.
-			$post_featured_image = $this->get_column_image( $post_ID );
-
-			/**
-			 * The image tag to be added to the column/post row.
-			 *
-			 * The tag uses a style attribute for the width, and no width
-			 * or height attributes are used, because the image size may
-			 * be filtered externally to use a different aspect ratio.
-			 */
-
-			// If the post has a featured image.
-			if ( $post_featured_image ) {
-				echo '<img src="' . esc_url( $post_featured_image ) . '" alt="' . get_the_title( $post_ID ) . __( ' — featured image', SCP_DOMAIN ) . '" width="48px" height="48px" />';
-
-			// If the post doen't have a featured image then use the fallback image.
-			} else {
-				echo '<img src="' . esc_url( SCP_URL . 'assets/images/featured-image-placeholder.png' ) . '" alt="' . __( 'No featured image available', SCP_DOMAIN ) . '" width="48px" height="48px" />';
-			}
-		}
 	}
 }

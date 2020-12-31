@@ -95,6 +95,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
 	'SiteCore\Classes\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 	'SiteCore\Classes\Admin\Dashboard'               => SCP_CLASS['admin'] . 'dashboard.php',
+	'SiteCore\Classes\Admin\Posts_List_Table'        => SCP_CLASS['admin'] . 'posts-list-table.php',
 
 	// Frontend classes.
 	'SiteCore\Classes\Front\Frontend' => SCP_CLASS['front'] . 'frontend.php',
