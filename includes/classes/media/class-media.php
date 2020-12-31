@@ -126,21 +126,15 @@ class Media {
 	/**
 	 * Default link when adding an image
 	 *
-	 * Note: As of this comment on June 21, 2018 the `image_default_link_type`
-	 * option only works with the rich text editor, not with the new block editor.
-	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
-	 *
-	 * @todo Review this after WordPress 5.0 is released or if/when the new block
-	 *       editor adds the option to link to the full size image.
 	 */
 	public function image_link() {
 
-		$image_set = get_option( 'image_default_link_type' );
+		$image_link = get_option( 'image_default_link_type' );
 
-		if ( $image_set !== 'file' ) { // Could be 'none'
+		if ( $image_link !== 'file' ) { // Could be 'none' or custom.
 			update_option( 'image_default_link_type', 'file' );
 		}
 	}
