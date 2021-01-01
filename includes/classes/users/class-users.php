@@ -58,8 +58,8 @@ class Users extends Classes\Base {
 		}
 
 		// Add rich text profile editor.
-		add_action( 'show_user_profile', [ $this, 'profile_editor' ] );
-		add_action( 'edit_user_profile', [ $this, 'profile_editor' ] );
+		add_action( 'show_user_profile', [ $this, 'profile_editor' ], 9 );
+		add_action( 'edit_user_profile', [ $this, 'profile_editor' ], 9 );
 
 		// Don't sanitize the data for display in a textarea.
 		add_action( 'admin_init', [ $this, 'editor_filters' ] );
@@ -106,13 +106,45 @@ class Users extends Classes\Base {
 			order: 100;
 		}
 
-		#profile-page > form h2:nth-of-type(4),
-		#profile-page > form table:nth-of-type(4) {
+		#profile-page > form table:nth-of-type(2),
+		#xprofile-page > form h2:nth-of-type(4),
+		#xprofile-page > form table:nth-of-type(4) {
 			display: none;
 		}
 		</style>
 		<?php
 		endif; // If profile.php or user-edit.php.
+	}
+
+	/**
+	 * Enqueue scripts
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_enqueue_scripts() {
+
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
+		// Access current admin page.
+		global $pagenow;
+
+		// Enqueue only on the profile and user edit pages.
+		if ( 'profile.php' == $pagenow || 'user-edit.php' == $pagenow ) {
+			wp_enqueue_script(
+				'visual-editor-biography',
+				SCP_URL . 'assets/js/user-bio' . $suffix . '.js',
+				[ 'jquery' ],
+				false,
+				true
+			);
+		}
 	}
 
 	/**
@@ -183,7 +215,21 @@ class Users extends Classes\Base {
 					<td>
 						<?php
 						$description = get_user_meta( $user->ID, 'description', true );
-						wp_editor( $description, 'description' );
+						wp_editor(
+							$description,
+							'description',
+							[
+								'default_editor'   => 'tinymce',
+								'quicktags'        => false,
+								'media_buttons'    => true,
+								'drag_drop_upload' => true,
+								'tinymce'          => [
+									'toolbar1' => 'bold,italic,underline,bullist,numlist,blockquote,hr,link,unlink,spellchecker,wp_fullscreen,wp_adv ',
+									'toolbar2' => 'formatselect,forecolor,backcolor,pastetext,removeformat,charmap,undo,redo'
+								],
+								'gecko_spellcheck' => true
+							]
+						);
 						?>
 						<p class="description"><?php _e( 'Share a little biographical information to fill out your profile. This may be shown publicly.', SCP_DOMAIN ); ?></p>
 					</td>
@@ -191,37 +237,6 @@ class Users extends Classes\Base {
 			</tbody>
 		</table>
 		<?php
-	}
-
-	/**
-	 * Enqueue scripts
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function admin_enqueue_scripts() {
-
-		// Script suffix.
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$suffix = '';
-		} else {
-			$suffix = '.min';
-		}
-
-		// Access current admin page.
-		global $pagenow;
-
-		// Enqueue only on the profile and user edit pages.
-		if ( 'profile.php' == $pagenow || 'user-edit.php' == $pagenow ) {
-			wp_enqueue_script(
-				'visual-editor-biography',
-				SCP_URL . 'assets/js/user-bio' . $suffix . '.js',
-				[ 'jquery' ],
-				false,
-				true
-			);
-		}
 	}
 
 	/**
