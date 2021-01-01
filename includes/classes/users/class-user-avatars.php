@@ -197,7 +197,7 @@ class User_Avatars {
 			return;
 		?>
 
-		<h3><?php _e( 'Avatar', SCP_DOMAIN ); ?></h3>
+		<h2><?php _e( 'Avatar', SCP_DOMAIN ); ?></h2>
 		<table class="form-table">
 			<tr>
 				<th><label for="basic-user-avatar"><?php _e( 'Upload Avatar', SCP_DOMAIN ); ?></label></th>

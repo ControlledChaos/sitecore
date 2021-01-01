@@ -20,7 +20,7 @@ if ( isset( $_POST['createuser'] ) && isset( $_POST['scp_multiple_roles'] ) ) {
 }
 
 ?>
-<h3><?php _e( 'Permissions', SCP_DOMAIN ); ?></h3>
+<h2><?php _e( 'Permissions', SCP_DOMAIN ); ?></h2>
 
 <table class="form-table">
 	<tr>
