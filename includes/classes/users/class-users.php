@@ -30,6 +30,9 @@ class Users extends Classes\Base {
 		// Run the parent constructor method.
 		parent :: __construct();
 
+		// Access current admin page.
+		global $pagenow;
+
 		// User roles & capabilities.
 		new User_Roles_Caps;
 
@@ -90,8 +93,16 @@ class Users extends Classes\Base {
 			flex-direction: column;
 		}
 
+		#wp-description-wrap {
+			max-width: 1024px;
+		}
+
 		#profile-page > form h2:first-of-type,
 		#profile-page > form table:first-of-type {
+			order: 99;
+		}
+
+		.submit {
 			order: 100;
 		}
 
@@ -191,6 +202,13 @@ class Users extends Classes\Base {
 	 */
 	public function admin_enqueue_scripts() {
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		// Access current admin page.
 		global $pagenow;
 
@@ -198,7 +216,7 @@ class Users extends Classes\Base {
 		if ( 'profile.php' == $pagenow || 'user-edit.php' == $pagenow ) {
 			wp_enqueue_script(
 				'visual-editor-biography',
-				SCP_URL . 'assets/js/user-bio.min.js',
+				SCP_URL . 'assets/js/user-bio' . $suffix . '.js',
 				[ 'jquery' ],
 				false,
 				true
