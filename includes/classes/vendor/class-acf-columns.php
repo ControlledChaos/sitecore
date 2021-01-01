@@ -114,9 +114,16 @@ class ACF_Columns {
 		// Get the current admin screen.
 		$screen = get_current_screen();
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		// Only hook on ACF field editor page.
 		if ( $screen && $screen->id == 'acf-field-group' ) {
-			wp_enqueue_script( 'acf-admin-column', SCP_URL . 'assets/js/acf-columns.min.js', [ 'acf-field-group' ], null, true );
+			wp_enqueue_script( 'acf-admin-column', SCP_URL . 'assets/js/acf-columns' . $suffix . '.js', [ 'acf-field-group' ], null, true );
 		}
 	}
 

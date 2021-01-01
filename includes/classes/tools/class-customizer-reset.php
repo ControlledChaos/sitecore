@@ -60,8 +60,15 @@ final class Customizer_Reset {
 	 */
 	public function scripts() {
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		// Enqueue the script for button and AJAX.
-		wp_enqueue_script( 'scp-customizer-reset', SCP_URL . 'assets/js/customizer-reset.min.js', [ 'jquery' ], '20150120' );
+		wp_enqueue_script( 'scp-customizer-reset', SCP_URL . 'assets/js/customizer-reset' . $suffix . '.js', [ 'jquery' ], '20150120' );
 
 		// Localize the above script.
 		wp_localize_script( 'scp-customizer-reset', 'SCP_CustomizerReset', [

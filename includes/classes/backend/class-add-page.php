@@ -696,8 +696,15 @@ class Add_Page extends Classes\Base {
 	 */
 	public function admin_parent_enqueue_scripts() {
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		// Enqueue plugin tabs system.
-		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/admin-tabs.min.js', [ 'jquery' ], '', true );
+		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
 	}
 
 	/**

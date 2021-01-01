@@ -816,9 +816,16 @@ class Editor_Options {
 			return;
 		}
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		wp_enqueue_script(
 			'editor-options',
-			SCP_URL . 'assets/js/editor-options.min.js',
+			SCP_URL . 'assets/js/editor-options' . $suffix . '.js',
 			[ 'wp-element', 'wp-components', 'lodash' ],
 			'1.4',
 			true
