@@ -75,6 +75,7 @@ class Users extends Classes\Base {
 	 *
 	 * @since  1.0.0
 	 * @access public
+	 * @global $pagenow Get the current admin screen.
 	 * @return string Returns one or more style blocks.
 	 */
 	public function admin_print_styles() {
@@ -207,7 +208,10 @@ class Users extends Classes\Base {
 	 */
 	public function profile_editor( $user ) {
 
+		ob_start();
 		?>
+		<h2><?php _e( 'User Details', SCP_DOMAIN ); ?></h2>
+
 		<table class="form-table">
 			<tbody>
 				<tr>
@@ -219,14 +223,16 @@ class Users extends Classes\Base {
 							$description,
 							'description',
 							[
+								'editor_class'     => 'profile-rich-text-editor',
 								'default_editor'   => 'tinymce',
 								'quicktags'        => false,
 								'media_buttons'    => true,
 								'drag_drop_upload' => true,
 								'tinymce'          => [
-									'toolbar1' => 'bold,italic,underline,bullist,numlist,blockquote,hr,link,unlink,spellchecker,wp_fullscreen,wp_adv ',
-									'toolbar2' => 'formatselect,forecolor,backcolor,pastetext,removeformat,charmap,undo,redo'
+									'toolbar1' => 'formatselect,bold,italic,underline,bullist,numlist,link,unlink,spellchecker,wp_fullscreen,wp_adv ',
+									'toolbar2' => 'blockquote,hr,forecolor,backcolor,pastetext,removeformat,undo,redo'
 								],
+								'textarea_rows'    => 10,
 								'gecko_spellcheck' => true
 							]
 						);
@@ -237,6 +243,7 @@ class Users extends Classes\Base {
 			</tbody>
 		</table>
 		<?php
+		echo ob_get_clean();
 	}
 
 	/**
