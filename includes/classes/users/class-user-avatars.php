@@ -4,6 +4,11 @@
  *
  * Also provides front-end avatar management via a shortcode and bbPress support.
  *
+ * @todo Provide default avatar upload interface on the
+ * Discussion Settings page.
+ *
+ * @todo Better upload & remove interface on profile edit screens.
+ *
  * @package    Site_Core
  * @subpackage Classes
  * @category   Users
@@ -11,6 +16,7 @@
  */
 
 namespace SiteCore\Classes\Users;
+use SiteCore\Classes as Classes;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0.0
  * @access public
  */
-class User_Avatars {
+class User_Avatars extends Classes\Base {
 
 	/**
 	 * User ID.
@@ -43,25 +49,60 @@ class User_Avatars {
 	 */
 	public function __construct() {
 
-		// Actions.
-		add_action( 'admin_init', [ $this, 'admin_init' ] );
-		add_action( 'show_user_profile', [ $this, 'edit_user_profile' ] );
-		add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ] );
-		add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
-		add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
+		// Run the parent constructor method.
+		parent :: __construct();
+
+		// Avatar upload capability.
+		add_action( 'admin_init', [ $this, 'capability' ] );
+
+		// Add avatar upload form to profile screens.
+		add_action( 'show_user_profile', [ $this, 'user_avatar_form' ], 9 );
+		add_action( 'edit_user_profile', [ $this, 'user_avatar_form' ], 9 );
+
+		// Update profile with new avatar.
+		add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ], 9 );
+		add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ], 9 );
+
+		// Add bbPress forum support.
 		add_action( 'bbp_user_edit_after_about', [ $this, 'bbpress_user_profile' ] );
 
-		// Shortcode.
-		add_shortcode( SCP_DOMAIN, [ $this, 'shortcode' ] );
-
-		// Filters.
+		// Disable the connection to Gravater.
+		add_filter( 'get_avatar', [ $this, 'disable_gravatar' ], 9, 5 );
 		add_filter( 'get_avatar', [ $this, 'get_avatar' ], 10, 5 );
-		add_filter( 'avatar_defaults', [ $this, 'avatar_defaults' ] );
 
-		add_action( 'admin_print_styles', [ $this, 'admin_head' ] );
+		// Update options.
+		add_action( 'plugins_loaded', [ $this, 'avatar_default' ] );
+
+		// New default avatars.
+		add_filter( 'avatar_defaults', [ $this, 'avatar_defaults' ], 10, 1 );
 	}
 
-	public function admin_head() {
+	/**
+	 * Print styles
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global $pagenow Get the current admin screen.
+	 * @return string Returns one or more style blocks.
+	 */
+	public function admin_print_styles() {
+
+		// Access current admin page.
+		global $pagenow;
+
+		// Print styles only on the discussion settings page.
+		if ( 'options-discussion.php' == $pagenow ) :
+		?>
+		<style>
+		.defaultavatarpicker p {
+			display: none;
+		}
+		</style>
+		<?php
+		endif; // If options-discussion.php.
+
+		// Print styles only on the profile and user edit pages.
+		if ( 'profile.php' == $pagenow || 'user-edit.php' == $pagenow ) :
 
 		?>
 		<style>
@@ -70,22 +111,51 @@ class User_Avatars {
 		}
 		</style>
 		<?php
+		endif; // If profile.php or user-edit.php.
 	}
 
 	/**
-	 * Start the admin engine.
+	 * Print scripts
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global $pagenow Get the current admin screen.
+	 * @return string Returns one or more script blocks.
+	 */
+	public function admin_print_scripts() {
+
+		// Access current admin page.
+		global $pagenow;
+
+		// Print styles only on the discussion settings page.
+		if ( 'options-discussion.php' == $pagenow ) :
+		?>
+		<script>
+		jQuery(document).ready( function ($) {
+			$( 'td.defaultavatarpicker p' ).remove();
+		});
+		</script>
+		<?php
+		endif; // If options-discussion.php.
+	}
+
+	/**
+	 * Upload capability
+	 *
+	 * Only allow users with file upload capabilities to upload local avatars.
+	 *
+	 * @todo Create multi-checkbox field of available user roles.
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function admin_init() {
+	public function capability() {
 
-		// Discussion setting to restrict avatar upload capabilites.
 		add_settings_field(
 			'basic-user-avatars-caps',
-			__( 'Local Avatar Permissions',	SCP_DOMAIN ),
-			[ $this, 'avatar_settings_field' ],
+			__( 'Avatar Upload Permission',	SCP_DOMAIN ),
+			[ $this, 'capability_field' ],
 			'discussion',
 			'avatars',
 			[ esc_html__( 'Only allow users with file upload capabilities to upload local avatars (Authors and above).', SCP_DOMAIN ) ]
@@ -95,17 +165,16 @@ class User_Avatars {
 			'discussion',
 			'scp_user_avatars_caps'
 		);
-
 	}
 
 	/**
-	 * Discussion settings option.
+	 * Upload capability settings field
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return mixed
+	 * @return string Returns the field markup.
 	 */
-	public function avatar_settings_field( $args ) {
+	public function capability_field( $args ) {
 
 		$option = get_option( 'scp_user_avatars_caps' );
 
@@ -114,11 +183,12 @@ class User_Avatars {
 		$html .= '<label for="scp_user_avatars_caps"> ' . $args[0] . '</label></p>';
 
 		echo $html;
-
 	}
 
 	/**
-	 * Filter the avatar WordPress returns.
+	 * Get avatar
+	 *
+	 * Filters the avatar markup.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -127,30 +197,36 @@ class User_Avatars {
 	 * @param  int $size
 	 * @param  string $default
 	 * @param  boolean $alt
-	 * @return string
+	 * @return string Returns the avatar markup.
 	 */
-	public function get_avatar( $avatar = '', $id_or_email, $size = 96, $default = '', $alt = false ) {
+	public function get_avatar( $avatar = '', $id_or_email, $size = 48, $default = '', $alt = false ) {
 
 		// Determine if we recive an ID or string.
-		if ( is_numeric( $id_or_email ) )
+		if ( is_numeric( $id_or_email ) ) {
 			$user_id = (int) $id_or_email;
-		elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) )
-			$user_id = $user->ID;
-		elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) )
-			$user_id = (int) $id_or_email->user_id;
 
-		if ( empty( $user_id ) )
+		} elseif ( is_string( $id_or_email ) && ( $user = get_user_by( 'email', $id_or_email ) ) ) {
+			$user_id = $user->ID;
+
+		} elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) ) {
+			$user_id = (int) $id_or_email->user_id;
+		}
+
+		if ( empty( $user_id ) ) {
 			return $avatar;
+		}
 
 		$local_avatars = get_user_meta( $user_id, 'scp_user_avatar', true );
 
-		if ( empty( $local_avatars ) || empty( $local_avatars['full'] ) )
+		if ( empty( $local_avatars ) || empty( $local_avatars['full'] ) ) {
 			return $avatar;
+		}
 
 		$size = (int) $size;
 
-		if ( empty( $alt ) )
+		if ( empty( $alt ) ) {
 			$alt = get_the_author_meta( 'display_name', $user_id );
+		}
 
 		// Generate a new size.
 		if ( empty( $local_avatars[$size] ) ) {
@@ -164,8 +240,11 @@ class User_Avatars {
 				$image_sized = $image->save();
 			}
 
-			// Deal with original being >= to original image (or lack of sizing ability).
-			$local_avatars[$size] = is_wp_error( $image_sized ) ? $local_avatars[$size] = $local_avatars['full'] : str_replace( $upload_path['basedir'], $upload_path['baseurl'], $image_sized['path'] );
+			if ( is_wp_error( $image_sized ) ) {
+				$local_avatars[$size] = $local_avatars[$size] = $local_avatars['full'];
+			} else {
+				$local_avatars[$size] = str_replace( $upload_path['basedir'], $upload_path['baseurl'], $image_sized['path'] );
+			}
 
 			// Save updated avatar sizes
 			update_user_meta( $user_id, 'scp_user_avatar', $local_avatars );
@@ -178,67 +257,84 @@ class User_Avatars {
 		$avatar       = "<img alt='" . esc_attr( $alt ) . "' src='" . $local_avatars[$size] . "' class='avatar avatar-{$size}{$author_class} photo' height='{$size}' width='{$size}' />";
 
 		return apply_filters( 'scp_user_avatar', $avatar );
-
 	}
 
 	/**
+	 * User avatar form
+	 *
 	 * Form to display on the user profile edit screen.
+	 *
+	 * @todo Avatar preview after selection from device, before update.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 * @param object $profileuser
-	 * @return mixed
+	 * @return mixed Returns the form markup.
 	 */
-	public function edit_user_profile( $profileuser ) {
+	public function user_avatar_form( $profileuser ) {
 
 		// bbPress will try to auto-add this to user profiles - don't let it.
 		// Instead we hook our own proper function that displays cleaner.
-		if ( function_exists( 'is_bbpress') && is_bbpress() )
+		if ( function_exists( 'is_bbpress') && is_bbpress() ) {
 			return;
+		}
+
 		?>
+		<h2><?php _e( 'User Avatar', SCP_DOMAIN ); ?></h2>
 
-		<h2><?php _e( 'Avatar', SCP_DOMAIN ); ?></h2>
 		<table class="form-table">
-			<tr>
-				<th><label for="basic-user-avatar"><?php _e( 'Upload Avatar', SCP_DOMAIN ); ?></label></th>
-				<td style="width: 50px;" valign="top">
-					<?php echo get_avatar( $profileuser->ID ); ?>
-				</td>
-				<td>
-				<?php
-				$options = get_option( 'scp_user_avatars_caps' );
-				if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
-					// Nonce security ftw.
-					wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
+			<tbody>
+				<tr>
+					<th><label for="basic-user-avatar"><?php _e( 'Upload or Delete', SCP_DOMAIN ); ?></label></th>
+					<td style="width: 50px;" valign="top">
+						<?php echo get_avatar( $profileuser->ID ); ?>
+					</td>
+					<td>
+					<?php
+					$options = get_option( 'scp_user_avatars_caps' );
 
-					// File upload input.
-					echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
+					if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
 
-					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_DOMAIN ) . '</span>';
+						// Nonce security.
+						wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
+
+						// File upload input.
+						echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
+
+						if ( empty( $profileuser->scp_user_avatar ) ) {
+							echo '<span class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_DOMAIN ) . '</span>';
+
+						} else {
+							echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', SCP_DOMAIN ) . '<br />';
+							echo '<span class="description">' . __( 'Replace the local avatar by uploading a new avatar or erase the current avatar by checking the delete option.', SCP_DOMAIN ) . '</span>';
+						}
+
 					} else {
-						echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', SCP_DOMAIN ) . '<br />';
-						echo '<span class="description">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', SCP_DOMAIN ) . '</span>';
-					}
 
-				} else {
-					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</span>';
-					} else {
-						echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</span>';
+						if ( empty( $profileuser->scp_user_avatar ) ) {
+							echo '<span class="description">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</span>';
+
+						} else {
+							echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</span>';
+						}
 					}
-				}
-				?>
-				</td>
-			</tr>
+					?>
+					</td>
+				</tr>
+			</tbody>
 		</table>
-		<script type="text/javascript">var form = document.getElementById('your-profile');form.encoding = 'multipart/form-data';form.setAttribute('enctype', 'multipart/form-data');</script>
+		<script>
+			var form = document.getElementById( 'your-profile' );
+			form.encoding = 'multipart/form-data';
+			form.setAttribute( 'enctype', 'multipart/form-data' );
+		</script>
 		<?php
-
 	}
 
 	/**
-	 * Update the user's avatar setting.
+	 * Update avatar
+	 *
+	 * Updates the user's avatar setting.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -248,8 +344,9 @@ class User_Avatars {
 	public function edit_user_profile_update( $user_id ) {
 
 		// Check for nonce otherwise bail.
-		if ( ! isset( $_POST['_scp_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_scp_user_avatar_nonce'], 'scp_user_avatar_nonce' ) )
+		if ( ! isset( $_POST['_scp_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_scp_user_avatar_nonce'], 'scp_user_avatar_nonce' ) ) {
 			return;
+		}
 
 		if ( ! empty( $_FILES['basic-user-avatar']['name'] ) ) {
 
@@ -261,15 +358,17 @@ class User_Avatars {
 			];
 
 			// Front end support - shortcode, bbPress, etc.
-			if ( ! function_exists( 'wp_handle_upload' ) )
+			if ( ! function_exists( 'wp_handle_upload' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
 
 			// Delete old images if successful.
 			$this->avatar_delete( $user_id );
 
 			// Need to be more secure since low privelege users can upload.
-			if ( strstr( $_FILES['basic-user-avatar']['name'], '.php' ) )
+			if ( strstr( $_FILES['basic-user-avatar']['name'], '.php' ) ) {
 				wp_die( 'For security reasons, the extension ".php" cannot be in your file name.' );
+			}
 
 			// Make user_id known to unique_filename_callback function.
 			$this->user_id_being_edited = $user_id;
@@ -277,84 +376,30 @@ class User_Avatars {
 
 			// Handle failures.
 			if ( empty( $avatar['file'] ) ) {
+
 				switch ( $avatar['error'] ) {
-				case 'File type does not meet security guidelines. Try another.' :
-					add_action( 'user_profile_update_errors', create_function( '$a', '$a->add("avatar_error",__("Please upload a valid image file for the avatar.","basic-user-avatars"));' ) );
-					break;
-				default :
-					add_action( 'user_profile_update_errors', create_function( '$a', '$a->add("avatar_error","<strong>".__("There was an error uploading the avatar:","basic-user-avatars")."</strong> ' . esc_attr( $avatar['error'] ) . '");' ) );
+
+					case 'File type does not meet security guidelines. Try another.' :
+						add_action( 'user_profile_update_errors', create_function( '$a', '$a->add("avatar_error",__("Please upload a valid image file for the avatar.","basic-user-avatars"));' ) );
+						break;
+
+					default :
+						add_action( 'user_profile_update_errors', create_function( '$a', '$a->add("avatar_error","<strong>".__("There was an error uploading the avatar:","basic-user-avatars")."</strong> ' . esc_attr( $avatar['error'] ) . '");' ) );
 				}
 				return;
 			}
 
-			// Save user information (overwriting previous).
+			// Save user information, overwriting previous.
 			update_user_meta( $user_id, 'scp_user_avatar', [ 'full' => $avatar['url'] ] );
 
 		} elseif ( ! empty( $_POST['basic-user-avatar-erase'] ) ) {
-			// Nuke the current avatar
 			$this->avatar_delete( $user_id );
 		}
-
 	}
 
 	/**
-	 * Enable avatar management on the frontend via this shortocde.
+	 * bbPress support
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return mixed
-	 */
-	function shortcode() {
-
-		// Don't bother if the user isn't logged in.
-		if ( ! is_user_logged_in() )
-			return;
-
-		$user_id     = get_current_user_id();
-		$profileuser = get_userdata( $user_id );
-
-		if ( isset( $_POST['manage_avatar_submit'] ) ){
-			$this->edit_user_profile_update( $user_id );
-		}
-
-		ob_start();
-		?>
-		<form id="basic-user-avatar-form" action="<?php the_permalink(); ?>" method="post" enctype="multipart/form-data">
-			<?php
-			echo get_avatar( $profileuser->ID );
-
-			$options = get_option( 'scp_user_avatars_caps' );
-			if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
-				// Nonce security ftw.
-				wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
-
-				// File upload input.
-				echo '<p><input type="file" name="basic-user-avatar" id="basic-local-avatar" /></p>';
-
-				if ( empty( $profileuser->scp_user_avatar ) ) {
-					echo '<p class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_DOMAIN ) . '</p>';
-				} else {
-					echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', SCP_DOMAIN ) . '<br />';
-					echo '<p class="description">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', SCP_DOMAIN ) . '</p>';
-				}
-
-			} else {
-				if ( empty( $profileuser->scp_user_avatar ) ) {
-					echo '<p class="description">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</p>';
-				} else {
-					echo '<p class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</p>';
-				}
-			}
-			?>
-			<input type="submit" name="manage_avatar_submit" value="<?php _e( 'Update Avatar', SCP_DOMAIN ); ?>" />
-		</form>
-		<?php
-
-		return ob_get_clean();
-
-	}
-
-	/**
 	 * Form to display on the bbPress user profile edit screen.
 	 *
 	 * @since  1.0.0
@@ -363,20 +408,23 @@ class User_Avatars {
 	 */
 	public function bbpress_user_profile() {
 
-		if ( !bbp_is_user_home_edit() )
+		if ( ! bbp_is_user_home_edit() ) {
 			return;
+		}
 
 		$user_id     = get_current_user_id();
 		$profileuser = get_userdata( $user_id );
 
 		echo '<div>';
-			echo '<label for="basic-local-avatar">' . __( 'Avatar', SCP_DOMAIN ) . '</label>';
- 			echo '<fieldset class="bbp-form avatar">';
+		echo '<label for="basic-local-avatar">' . __( 'Avatar', SCP_DOMAIN ) . '</label>';
+		echo '<fieldset class="bbp-form avatar">';
 
 	 			echo get_avatar( $profileuser->ID );
 				$options = get_option( 'scp_user_avatars_caps' );
+
 				if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
-					// Nonce security ftw.
+
+					// Nonce security.
 					wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
 
 					// File upload input.
@@ -384,53 +432,155 @@ class User_Avatars {
 
 					if ( empty( $profileuser->scp_user_avatar ) ) {
 						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_DOMAIN ) . '</span>';
+
 					} else {
 						echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" style="width:auto" /> ' . __( 'Delete local avatar', SCP_DOMAIN ) . '<br />';
 						echo '<span class="description" style="margin-left:0;">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', SCP_DOMAIN ) . '</span>';
 					}
 
 				} else {
+
 					if ( empty( $profileuser->scp_user_avatar ) ) {
 						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</span>';
+
 					} else {
 						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</span>';
 					}
 				}
 
-			echo '</fieldset>';
+		echo '</fieldset>';
 		echo '</div>';
 		?>
 		<script type="text/javascript">var form = document.getElementById('bbp-your-profile');form.encoding = 'multipart/form-data';form.setAttribute('enctype', 'multipart/form-data');</script>
 		<?php
-
 	}
 
 	/**
-	 * Remove the custom get_avatar hook for the default avatar list output on
-	 * the Discussion Settings page.
+	 * Disable Gravatar
+	 *
+	 * Replaces the gravatar.com URL for the local server.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $avatar
+	 * @param  integer $id_or_email
+	 * @param  string $size
+	 * @param  string $default
+	 * @param  string $alt
+	 * @return array
+	 */
+	function disable_gravatar( $avatar, $id_or_email, $default, $alt ) {
+
+		$localhost = array( 'localhost', '127.0.0.1' );
+		$size      = (int) 48;
+
+		if ( ! in_array( $_SERVER['SERVER_ADDR'] , $localhost ) ) {
+			return $avatar;
+		}
+
+		$document = new \DOMDocument;
+		$document->loadHTML( $avatar );
+
+		$images = $document->getElementsByTagName( 'img' );
+
+		if ( $images && $images->length > 0 ) {
+			$url_1  = urldecode( $images->item(0)->getAttribute( 'src' ) );
+			$url_2  = explode( 'd=', $url_1 );
+			$url_3  = explode( '&', $url_2[1] );
+			$avatar = "<img src='{$url_3[0]}' alt='' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+		}
+
+		return $avatar;
+	}
+
+	/**
+	 * Default avatar option
+	 *
+	 * Updates the default option to a local avatar
+	 * if the option is set to use a Gravatar image.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function avatar_default() {
+
+		// Get default avatar option.
+		$default = get_option( 'avatar_default' );
+
+		$mystery = esc_url( SCP_URL . 'assets/images/mystery.png' );
+		$blank   = esc_url( SCP_URL . 'assets/images/blank.png' );
+
+		if ( ! $default || 'mystery' == $default || true == get_option( 'fresh_site' ) ) {
+			update_option( 'avatar_default', $mystery );
+
+		} elseif ( 'blank' == $default ) {
+			update_option( 'avatar_default', $blank );
+		}
+	}
+
+	/**
+	 * Get default avatar options
+	 *
+	 * Some these are simply provided as sample avatar options.
+	 * Add or edit for your needs. To implement these defaults,
+	 * add them to the array in the `avatar_defaults()` method.
+	 *
+	 * @see `avatar_defaults()`
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @param  array $avatar_defaults
-	 * @return array
+	 * @return array Returns an array of new avatar options.
 	 */
-	public function avatar_defaults( $avatar_defaults = [] ) {
+	public function get_avatar_defaults( $defaults = [] ) {
 
-		// remove_action( 'get_avatar', [ $this, 'get_avatar' ] );
+		// Local avatar options.
+		$defaults = [
+			'mystery' => esc_url( SCP_URL . 'assets/images/mystery.png' ),
+			'generic' => esc_url( SCP_URL . 'assets/images/generic.png' ),
+			'yellow'  => esc_url( SCP_URL . 'assets/images/yellow.png' ),
+			'pink'    => esc_url( SCP_URL . 'assets/images/pink.png' ),
+			'blue'    => esc_url( SCP_URL . 'assets/images/blue.png' ),
+			'violet'  => esc_url( SCP_URL . 'assets/images/violet.png' ),
+			'green'   => esc_url( SCP_URL . 'assets/images/green.png' ),
+			'orange'  => esc_url( SCP_URL . 'assets/images/orange.png' ),
+			'blank'   => esc_url( SCP_URL . 'assets/images/blank.png' )
+		];
 
-		$new_avatar_defaults = $avatar_defaults;
+		// Return avatar types.
+		return apply_filters( 'scp_get_avatar_defaults', $defaults );
+	}
 
-		// Maybe block Gravatars
-		if ( get_option( 'scp_block_gravatar' ) ) {
-			$new_avatar_defaults = [
-				'mystery' => __( 'Mystery Person', SCP_DOMAIN ),
-				'blank'   => __( 'Blank', SCP_DOMAIN )
-			];
-		}
+	/**
+	 * Default avatar options
+	 *
+	 * Replaces the default avatar list on the Discussion Settings page.
+	 *
+	 * @see `get_avatar_defaults()`
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $avatar_defaults
+	 * @return array Returns an array of new avatar options.
+	 */
+	public function avatar_defaults( $options = [] ) {
 
-		// Return avatar types, maybe without Gravatar options
-		return $new_avatar_defaults;
+		// Get available default avatars.
+		$defaults = $this->get_avatar_defaults();
 
+		// Remove the action to get current user's avatar.
+		remove_action( 'get_avatar', [ $this, 'get_avatar' ] );
+
+		// Array of new avatar options.
+		$options = [
+			$defaults['mystery'] => __( 'Mystery', SCP_DOMAIN ),
+			$defaults['generic'] => __( 'Generic', SCP_DOMAIN ),
+			$defaults['blank']   => __( 'Blank', SCP_DOMAIN )
+		];
+
+		// Return new avatar options.
+		return $options;
 	}
 
 	/**
@@ -453,7 +603,6 @@ class User_Avatars {
 		}
 
 		delete_user_meta( $user_id, 'scp_user_avatar' );
-
 	}
 
 	/**
@@ -468,8 +617,8 @@ class User_Avatars {
 	 */
 	public function unique_filename_callback( $dir, $name, $ext ) {
 
-		$user = get_user_by( 'id', (int) $this->user_id_being_edited );
-		$name = $base_name = sanitize_file_name( $user->display_name . '_avatar' );
+		$user   = get_user_by( 'id', (int) $this->user_id_being_edited );
+		$name   = $base_name = sanitize_file_name( $user->display_name . '_avatar' );
 		$number = 1;
 
 		while ( file_exists( $dir . "/$name$ext" ) ) {
@@ -478,7 +627,5 @@ class User_Avatars {
 		}
 
 		return $name . $ext;
-
 	}
-
 }
