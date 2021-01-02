@@ -507,15 +507,37 @@ class User_Avatars extends Classes\Base {
 
 		// Get default avatar option.
 		$default = get_option( 'avatar_default' );
+		$fresh   = get_option( 'fresh_site' );
 
+		// Gravatar options to update/override.
+		$gravatar = [
+			'mystery',
+			'blank',
+			'gravatar_default',
+			'identicon',
+			'wavatar',
+			'monsterid',
+			'retro'
+		];
+
+		// Local avatars for option update.
 		$mystery = esc_url( SCP_URL . 'assets/images/mystery.png' );
 		$blank   = esc_url( SCP_URL . 'assets/images/blank.png' );
 
-		if ( ! $default || 'mystery' == $default || true == get_option( 'fresh_site' ) ) {
+		/**
+		 * If this is a fresh site, if no default is set, or if mystery Gravatar
+		 * is set then update to the local mystery person avatar.
+		 */
+		if ( true == $fresh || ! $default || 'mystery' == $default ) {
 			update_option( 'avatar_default', $mystery );
 
+		// If the blank Gravatar is set then update to the local blank avatar.
 		} elseif ( 'blank' == $default ) {
 			update_option( 'avatar_default', $blank );
+
+		// If any Gravatar is set then update to the local mystery person avatar.
+		} elseif ( in_array( $default, $gravatar ) ) {
+			update_option( 'avatar_default', $mystery );
 		}
 	}
 
@@ -580,7 +602,7 @@ class User_Avatars extends Classes\Base {
 		];
 
 		// Return new avatar options.
-		return $options;
+		return apply_filters( 'scp_avatar_defaults', $options );
 	}
 
 	/**
