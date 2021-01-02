@@ -67,25 +67,25 @@ class Base {
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_parent_enqueue_scripts' ] );
 
 			// Print admin parent scripts to head.
-			add_action( 'admin_head', [ $this, 'admin_parent_print_scripts' ] );
+			add_action( 'admin_print_scripts', [ $this, 'admin_parent_print_scripts', 20 ] );
 
 			// Enqueue admin scripts.
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
 			// Print admin scripts to head.
-			add_action( 'admin_print_scripts', [ $this, 'admin_print_scripts' ] );
+			add_action( 'admin_print_scripts', [ $this, 'admin_print_scripts' ], 20 );
 
 			// Enqueue admin parent styles.
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_parent_enqueue_styles' ] );
 
 			// Print admin parent styles to head.
-			add_action( 'admin_head', [ $this, 'admin_parent_print_styles' ] );
+			add_action( 'admin_print_styles', [ $this, 'admin_parent_print_styles' ], 20 );
 
 			// Enqueue admin styles.
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_styles' ] );
 
 			// Print admin styles to head.
-			add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
+			add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
 		} else {
 
 			// Enqueue frontend parent scripts.
