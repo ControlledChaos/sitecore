@@ -153,7 +153,7 @@ class User_Avatars extends Classes\Base {
 	public function capability() {
 
 		add_settings_field(
-			'basic-user-avatars-caps',
+			'scp_user_avatars_caps',
 			__( 'Avatar Upload Permission',	SCP_DOMAIN ),
 			[ $this, 'capability_field' ],
 			'discussion',
@@ -293,7 +293,7 @@ class User_Avatars extends Classes\Base {
 					<?php
 					$options = get_option( 'scp_user_avatars_caps' );
 
-					if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
+					if ( empty( $options ) || current_user_can( 'upload_files' ) ) {
 
 						// Nonce security.
 						wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
@@ -312,7 +312,7 @@ class User_Avatars extends Classes\Base {
 					} else {
 
 						if ( empty( $profileuser->scp_user_avatar ) ) {
-							echo '<span class="description">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</span>';
+							echo '<span class="description">' . __( 'You do not have permission to upload an avatar.', SCP_DOMAIN ) . '</span>';
 
 						} else {
 							echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</span>';
@@ -422,7 +422,7 @@ class User_Avatars extends Classes\Base {
 	 			echo get_avatar( $profileuser->ID );
 				$options = get_option( 'scp_user_avatars_caps' );
 
-				if ( empty( $options['scp_user_avatars_caps'] ) || current_user_can( 'upload_files' ) ) {
+				if ( empty( $options ) || current_user_can( 'upload_files' ) ) {
 
 					// Nonce security.
 					wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
@@ -441,7 +441,7 @@ class User_Avatars extends Classes\Base {
 				} else {
 
 					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Set up your avatar at Gravatar.com.', SCP_DOMAIN ) . '</span>';
+						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have permission to upload an avatar.', SCP_DOMAIN ) . '</span>';
 
 					} else {
 						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_DOMAIN ) . '</span>';
