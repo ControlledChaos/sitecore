@@ -67,7 +67,7 @@ class Base {
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_parent_enqueue_scripts' ] );
 
 			// Print admin parent scripts to head.
-			add_action( 'admin_print_scripts', [ $this, 'admin_parent_print_scripts', 20 ] );
+			add_action( 'admin_print_scripts', [ $this, 'admin_parent_print_scripts' ], 20 );
 
 			// Enqueue admin scripts.
 			add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
