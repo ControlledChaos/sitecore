@@ -79,8 +79,8 @@ class Posts_List_Table extends Classes\Base {
 		// The HTML of the dropdown select box abave the table.
 		?>
 		<select name="page_template_filter" id="page_template_filter">
-			<option value="all"><?php _e( 'All Page Templates', 'controlled-chaos-plugin' ); ?></option>
-			<option value="default" <?php echo ( $template == 'default' ) ? ' selected="selected" ' : ''; ?>><?php echo _e( 'Default Template', 'controlled-chaos-plugin' ); ?></option>
+			<option value="all"><?php _e( 'All Page Templates', SCP_DOMAIN ); ?></option>
+			<option value="default" <?php echo ( $template == 'default' ) ? ' selected="selected" ' : ''; ?>><?php echo _e( 'Default Template', SCP_DOMAIN ); ?></option>
 			<?php page_template_dropdown( $template ); ?>
 		</select>
 		<?php
@@ -132,7 +132,7 @@ class Posts_List_Table extends Classes\Base {
 	public function template_columns_head( $columns ) {
 
 		// The column heading name to new `template` column.
-		$columns['template'] = __( 'Template', 'controlled-chaos-plugin' );
+		$columns['template'] = __( 'Template', SCP_DOMAIN );
 
 		// Return the heading name.
 		return $columns;
@@ -163,8 +163,8 @@ class Posts_List_Table extends Classes\Base {
 
 					echo sprintf(
 						'<span title="%1s">%2s</span>',
-						__( 'Default Template', 'controlled-chaos-plugin' ),
-						__( 'Default Template', 'controlled-chaos-plugin' )
+						__( 'Default Template', SCP_DOMAIN ),
+						__( 'Default Template', SCP_DOMAIN )
 					);
 
 				// If it's not the default template.
@@ -177,7 +177,7 @@ class Posts_List_Table extends Classes\Base {
 	        		if ( isset( $templates[ $template ] ) ) {
 	        			echo sprintf(
 							'<span title="%1s %2s">%3s</span>',
-							__( 'Template file:', 'controlled-chaos-plugin' ),
+							__( 'Template file:', SCP_DOMAIN ),
 							$template,
 							$templates[ $template ]
 						);
@@ -186,7 +186,7 @@ class Posts_List_Table extends Classes\Base {
 	        		} else {
 	        			echo sprintf(
 							'<span title="%1s">%2s</span>',
-							__( 'This template file does not exist', 'controlled-chaos-plugin' ),
+							__( 'This template file does not exist', SCP_DOMAIN ),
 							$template
 						);
 					}

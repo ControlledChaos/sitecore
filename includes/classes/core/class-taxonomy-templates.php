@@ -1,17 +1,15 @@
 <?php
 /**
- * Taxonomy templates.
+ * Taxonomy templates
  *
- * Enables themes to use custom templates for taxonomies in
- * the same way that templates can be used for post types.
+ * Enables themes to use custom templates for posts in taxonomies,
+ * in the same way that templates can be used for post types.
  * The template is registered in the file header.
  *
- * @package    Controlled_Chaos_Plugin
- * @subpackage Includes\Post_Types_Taxes
- *
+ * @package    Site_Core
+ * @subpackage Classes
+ * @category   Core
  * @since      1.0.0
- * @author     Hassan Derakhshandeh
- * @author     Greg Sweet <greg@ccdzine.com>
  *
  * @example    In the template header: {Taxonomy Singular Label} Template: Grid
  */
@@ -120,7 +118,7 @@ final class Taxonomy_Templates {
 	public function save_option( $term_id ) {
 
 		if ( isset( $_POST['custom-taxonomy-template'] ) ) {
-			
+
 			$template = trim( $_POST['custom-taxonomy-template'] );
 
 			if ( 'default' == $template ) {
@@ -147,9 +145,9 @@ final class Taxonomy_Templates {
 
 		?>
 		<div class="form-field custom-taxonomy-template">
-			<label for="custom-taxonomy-template"><?php _e( 'Template', 'controlled-chaos-plugin' ); ?></label>
+			<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_DOMAIN ); ?></label>
 			<select name="custom-taxonomy-template" id="custom-taxonomy-template" class="postform">
-				<option value="default"><?php _e( 'Default Template', 'controlled-chaos-plugin' ); ?></option>
+				<option value="default"><?php _e( 'Default Template', SCP_DOMAIN ); ?></option>
 				<?php $this->templates_dropdown( $taxonomy ) ?>
 			</select>
 		</div><?php
@@ -174,11 +172,11 @@ final class Taxonomy_Templates {
 
 		<tr class="form-field custom-taxonomy-template">
 			<th scope="row" valign="top">
-				<label for="custom-taxonomy-template"><?php _e( 'Template', 'controlled-chaos-plugin' ); ?></label>
+				<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_DOMAIN ); ?></label>
 			</th>
 			<td>
 				<select name="custom-taxonomy-template" id="custom-taxonomy-template" class="postform">
-					<option value="default"><?php _e( 'Default Template', 'controlled-chaos-plugin' ); ?></option>
+					<option value="default"><?php _e( 'Default Template', SCP_DOMAIN ); ?></option>
 					<?php $this->templates_dropdown( $taxonomy, $template ) ?>
 				</select>
 			</td>
