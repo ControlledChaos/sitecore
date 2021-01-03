@@ -15,6 +15,6 @@ use SiteCore\Classes\Admin as Admin;
 $page = new Admin\Admin_Settings_Page;
 
 
-settings_fields( 'ccp-site-admin-menu' );
-do_settings_sections( 'ccp-site-admin-menu' );
+settings_fields( 'scp-site-admin-menu' );
+do_settings_sections( 'scp-site-admin-menu' );
 
