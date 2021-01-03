@@ -58,6 +58,7 @@ define( 'SCP_CLASSES', [
 	'SiteCore\Classes\Core\Register_Admin'     => SCP_CLASS['core'] . 'register-admin.php',
 	'SiteCore\Classes\Core\Register_Site_Help' => SCP_CLASS['core'] . 'register-site-help.php',
 	'SiteCore\Classes\Core\Register_Tax'       => SCP_CLASS['core'] . 'register-tax.php',
+	'SiteCore\Classes\Core\Taxonomy_Templates' => SCP_CLASS['core'] . 'taxonomy-templates.php',
 	'SiteCore\Classes\Core\Remove_Blog'        => SCP_CLASS['core'] . 'remove-blog.php',
 	'SiteCore\Classes\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
 

@@ -24,17 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Type_Tax {
 
 	/**
-	 * Class instance
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return object Returns the instance.
-	 */
-	public static function instance() {
-		return new self;
-	}
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -42,6 +31,9 @@ class Type_Tax {
 	 * @return self
 	 */
 	public function __construct() {
+
+		// Taxonomy templates.
+		new Taxonomy_Templates;
 
 		// Replace default post title placeholders.
 		add_filter( 'enter_title_here', [ $this, 'title_placeholders' ] );
