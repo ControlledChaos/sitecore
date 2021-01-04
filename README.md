@@ -71,3 +71,59 @@ In the works.
 ### User Options, Roles, & Capabilities
 
 Much is complete, documentaion coming.
+
+## Renaming the Plugin
+
+First change the name of this file to reflect the new name of your plugin. Or leave the name since it clearly describes the purpose of the plugin.
+
+Next change the information above in the plugin header and either change the plugin name in the License & Warranty notice or remove it.
+
+Following is a list of strings to find and replace in all plugin files.
+
+1. **Plugin name**  
+   Find `Site Core` and replace with your plugin name.
+
+2. **Package**  
+   Find `Site_Core` and replace with your plugin name, include underscores between words. This will change the package name
+   in file headers.
+
+3. **Namespace**  
+   Find `SiteCore` and replace with something unique to your plugin name.
+
+4. **Text domain**  
+   Find `sitecore` and replace with the new name of your primary plugin file (this file). It is standard to match the domain with the file name but this is not required to run the code.
+
+5. **Admin page slug**  
+   Find `site-core` and replace with the new base slug of your plugin's admin pages.
+
+6. **Constants prefix**  
+   Find `SCP` and replace with something unique to your plugin name. Use only uppercase letters.
+
+7. **General prefix**  
+   Find `scp` and replace with something unique to your plugin name. Use only lowercase letters. This will change the prefix of all filters and settings, and the prefix of functions outside of a class.
+
+8. **Author**  
+   Find `Greg Sweet <greg@ccdzine.com>` and replace with your name and email address or those of your organization.
+
+9. **Constants**
+   See the `includes/config.php` file to change developer/agency details, plugin name & URL, plus more personal or white-label constants.
+
+Edit the README file in the root directory as needed, or delete it.
+
+Finally, remember to modify or remove the instructional information in admin pages, including contextual help tabs. Remove these renaming instructions as desired.
+
+## License & Warranty
+
+Site Core is free software. It can be redistributed and/or modified ad libidum. There is no license distributed with this product.
+
+Site Core is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+## Disclaimer of Legalities
+
+This document is a disclaimer of all legalities concerning creative works. We reject the notion and the force of copyright law, and thus reject its presumed authority over our works. We therefore disclaim legalities including but not limited to access to copy and distribution protections provided by law, and we disclaim consent to be regulated by copy and distribution law.
+
+## Distribution & Modification
+
+This product, including images, graphical vector markup, documentation, and any works not described here, are released for public consumption ad libitum, ad infinitum.
+
+In other words, this product shall remain available for use and for modification free of charge, free of regulation, and free of reprisal.
