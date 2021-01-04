@@ -89,9 +89,6 @@ use SiteCore\Classes\Activate as Activate;
  * Finally, remember to modify or remove the instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
- *
- * @see admin\partials - Check all files.
- * @see admin\partials\help - Check all files.
  */
 
 // Stop if this file is called directly.
