@@ -18,10 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define forms directory.
-define( 'SCP_FORMS', [
-	'forms'    => SCP_PATH . 'views/backend/forms/',
-	'partials' => SCP_PATH . 'views/backend/forms/partials'
-] );
+if ( ! defined( 'SCP_FORMS' ) ) {
+	define( 'SCP_FORMS', [
+		'forms'    => SCP_PATH . 'views/backend/forms/',
+		'partials' => SCP_PATH . 'views/backend/forms/partials'
+	] );
+}
 
 class Settings extends Classes\Base {
 
@@ -46,6 +48,8 @@ class Settings extends Classes\Base {
 	public function __construct() {
 
 		parent :: __construct();
+
+		new Settings_API;
 
 		/**
 		 * Admin settings page
