@@ -8,10 +8,6 @@
  * @subpackage Classes
  * @category   Tools
  * @since      1.0.0
- * @author     WPZOOM
- * @author     Greg Sweet <greg@ccdzine.com>
- *
- * @link       https://github.com/wpzoom/customizer-reset
  */
 
 namespace SiteCore\Classes\Tools;
