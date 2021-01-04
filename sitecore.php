@@ -43,7 +43,7 @@ use SiteCore\Classes\Activate as Activate;
  * Or leave the name since it clearly describes the purpose of the plugin.
  *
  * Next change the information above in the plugin header and either change
- * the plugin name in the License & Warranty notice above or remove it.
+ * the plugin name in the License & Warranty notice or remove it.
  *
  * Following is a list of strings to find and replace in all plugin files.
  *
