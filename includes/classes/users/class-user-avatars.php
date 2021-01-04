@@ -512,6 +512,7 @@ class User_Avatars extends Classes\Base {
 		// Gravatar options to update/override.
 		$gravatar = [
 			'mystery',
+			'mm',
 			'blank',
 			'gravatar_default',
 			'identicon',
