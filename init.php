@@ -27,6 +27,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Load plugin text domain
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+function text_domain() {
+	load_plugin_textdomain(
+		'sitecore',
+		false,
+		dirname( SCP_BASENAME ) . '/languages'
+	);
+}
+
+/**
  * Core plugin function
  *
  * Loads and runs PHP classes.
@@ -37,6 +52,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function sitecore() {
+
+	// Load text domain.
+	add_action( 'init', __NAMESPACE__ . '\text_domain' );
 
 	/**
 	 * Class autoloader
