@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Get plugin configuration file.
-require plugin_dir_path( __FILE__ ) . 'includes/config.php';
+require plugin_dir_path( __FILE__ ) . 'config.php';
 
 /**
  * Activation & deactivation

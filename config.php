@@ -12,8 +12,8 @@
  * or incorrectly configuring the site built by developers.
  *
  * @package    Site_Core
- * @subpackage Includes
- * @category   Configuration
+ * @subpackage Configuration
+ * @category   Core
  * @since      1.0.0
  */
 
@@ -75,7 +75,7 @@ define( 'SCP_DOMAIN', 'sitecore' );
  * @var   string The filesystem directory path (with trailing slash)
  *               for the plugin __FILE__ passed in.
  */
-define( 'SCP_PATH', plugin_dir_path( dirname( __FILE__ ) ) );
+define( 'SCP_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
  * Constant: Plugin folder URL
@@ -84,7 +84,7 @@ define( 'SCP_PATH', plugin_dir_path( dirname( __FILE__ ) ) );
  * @var   string The URL directory path (with trailing slash)
  *               for the plugin __FILE__ passed in.
  */
-define( 'SCP_URL', plugin_dir_url( dirname( __FILE__ ) ) );
+define( 'SCP_URL', plugin_dir_url(__FILE__ ) );
 
 /**
  * Constant: Plugin configuration.
