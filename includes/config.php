@@ -75,9 +75,7 @@ define( 'SCP_DOMAIN', 'sitecore' );
  * @var   string The filesystem directory path (with trailing slash)
  *               for the plugin __FILE__ passed in.
  */
-if ( ! defined( 'SCP_PATH' ) ) {
-	define( 'SCP_PATH', plugin_dir_path( dirname( __FILE__ ) ) );
-}
+define( 'SCP_PATH', plugin_dir_path( dirname( __FILE__ ) ) );
 
 /**
  * Constant: Plugin folder URL
@@ -86,9 +84,7 @@ if ( ! defined( 'SCP_PATH' ) ) {
  * @var   string The URL directory path (with trailing slash)
  *               for the plugin __FILE__ passed in.
  */
-if ( ! defined( 'SCP_URL' ) ) {
-	define( 'SCP_URL', plugin_dir_url( dirname( __FILE__ ) ) );
-}
+define( 'SCP_URL', plugin_dir_url( dirname( __FILE__ ) ) );
 
 /**
  * Constant: Plugin configuration.
@@ -97,17 +93,18 @@ if ( ! defined( 'SCP_URL' ) ) {
  * @var   array Plugin identification, support, settintgs.
  */
 if ( ! defined( 'SCP_CONFIG' ) ) {
+
 	define( 'SCP_CONFIG', [
 
 		/**
-		 * Constant: Text domain
+		 * Text domain
 		 *
 		 * Remember to freplace in the plugin header above.
 		 *
 		 * @since 1.0.0
 		 * @var   string The text domain of the plugin.
 		 */
-		'domain' => 'sitecore',
+		'domain' => SCP_DOMAIN,
 
 		/**
 		 * Plugin name
@@ -152,7 +149,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
 
 		/**
-		 * Constant: Universal slug
+		 * Universal slug
 		 *
 		 * This URL slug is used for various plugin admin & settings pages.
 		 *
