@@ -704,7 +704,7 @@ class Add_Page extends Classes\Base {
 		}
 
 		// Enqueue plugin tabs system.
-		wp_enqueue_script( SCP_ADMIN_SLUG . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
+		wp_enqueue_script( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
 	}
 
 	/**

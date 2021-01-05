@@ -72,9 +72,6 @@ function sitecore() {
 	 */
 	require_once SCP_PATH . 'includes/autoloader.php';
 
-	// Get constants & helpers.
-	require SCP_PATH . 'includes/config.php';
-
 	// Get compatibility functions.
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 

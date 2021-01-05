@@ -118,7 +118,7 @@ class Admin extends Classes\Base {
 		 *
 		 * @since 1.0.0
 		 */
-		wp_enqueue_style( SCP_ADMIN_SLUG . '-admin', SCP_URL . 'assets/css/admin.min.css', [], '', 'all' );
+		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-admin', SCP_URL . 'assets/css/admin.min.css', [], '', 'all' );
 	}
 
 	/**

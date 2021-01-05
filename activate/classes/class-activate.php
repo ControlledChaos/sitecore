@@ -20,9 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-// Get constants & helpers.
-require SCP_PATH . 'includes/config.php';
-
 class Activate {
 
 	/**
@@ -87,7 +84,7 @@ class Activate {
 					<?php echo sprintf(
 						'<p>%s %s %s %s %s %s</p>',
 						__( 'Functionality of the', SCP_DOMAIN ),
-						esc_html( SCP_NAME ),
+						SCP_NAME,
 						__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
 						SCP_PHP_VERSION,
 						__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
@@ -113,7 +110,7 @@ class Activate {
 			<?php echo sprintf(
 				'<p>%s %s %s %s %s %s</p>',
 				__( 'Functionality of the', SCP_DOMAIN ),
-				esc_html( SCP_NAME ),
+				SCP_NAME,
 				__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
 				SCP_PHP_VERSION,
 				__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
