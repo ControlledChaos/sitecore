@@ -34,9 +34,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function text_domain() {
+
+	// Standard plugin installation.
 	load_plugin_textdomain(
-		'sitecore',
+		SCP_DOMAIN,
 		false,
+		dirname( SCP_BASENAME ) . '/languages'
+	);
+
+	// If this is in the must-use plugins directory.
+	load_muplugin_textdomain(
+		SCP_DOMAIN,
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 }
