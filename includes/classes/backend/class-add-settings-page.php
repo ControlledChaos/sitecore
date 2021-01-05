@@ -145,7 +145,7 @@ class Add_Settings_Page extends Add_Page {
 			'heading'      => __( 'Settings Two', SCP_CONFIG['domain'] ),
 			'settings'     => '',
 			'content'      => '',
-			'callback'     => [ $this, 'sample_two' ]
+			'callback'     => [ $this, 'sample_tab' ]
 		] );
 	}
 
