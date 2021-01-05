@@ -228,7 +228,7 @@ function has_acfe_pro() {
  */
 function acf_ready() {
 
-	// Return true if the file is found.
+	// Return true if ready.
 	if ( has_acf() || has_acf_pro() || active_acf() || active_acf_pro() ) {
 		return true;
 	}
@@ -248,7 +248,7 @@ function acf_ready() {
  */
 function acfe_ready() {
 
-	// Return true if the file is found.
+	// Return true if ready.
 	if ( has_acfe() || has_acfe_pro() || active_acfe() || active_acfe_pro() ) {
 		return true;
 	}
