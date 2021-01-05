@@ -96,6 +96,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+/**
+ * Constant: Plugin base name
+ *
+ * @since 1.0.0
+ * @var   string The base name of this plugin file.
+ */
+define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
+
 // Get plugin configuration file.
 require plugin_dir_path( __FILE__ ) . 'config.php';
 

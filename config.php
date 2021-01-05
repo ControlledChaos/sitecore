@@ -51,14 +51,6 @@ define( 'SCP_VERSION', '1.0.0' );
 define( 'SCP_PHP_VERSION', '7.4' );
 
 /**
- * Constant: Plugin base name
- *
- * @since 1.0.0
- * @var   string The base name of this plugin file.
- */
-define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
-
-/**
  * Constant: Text domain
  *
  * Remember to freplace in the plugin header above.
@@ -97,9 +89,23 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 	define( 'SCP_CONFIG', [
 
 		/**
-		 * Text domain
+		 * Plugin version
 		 *
-		 * Remember to freplace in the plugin header above.
+		 * @since 1.0.0
+		 * @var   string The latest plugin version.
+		 */
+		'version' => SCP_VERSION,
+
+		/**
+		 * Required PHP version
+		 *
+		 * @since 1.0.0
+		 * @var   string The minimum required PHP version.
+		 */
+		'php_version' => SCP_PHP_VERSION,
+
+		/**
+		 * Text domain
 		 *
 		 * @since 1.0.0
 		 * @var   string The text domain of the plugin.
