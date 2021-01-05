@@ -35,7 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since  1.0.0
  * @access public
- * @global string $pagenow Gets the filename of the current page.
  * @return void
  */
 function sitecore() {
