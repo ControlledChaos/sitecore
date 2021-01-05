@@ -145,7 +145,7 @@ class Add_Settings_Page extends Add_Page {
 			'heading'      => __( 'Settings Two', SCP_DOMAIN ),
 			'settings'     => '',
 			'content'      => '',
-			'callback'     => [ $this, 'sample_tab' ]
+			'callback'     => [ $this, 'sample_two' ]
 		] );
 	}
 
@@ -158,20 +158,5 @@ class Add_Settings_Page extends Add_Page {
 	 */
 	public function sample_tab() {
 		include SCP_PATH . 'views/backend/pages/sample-page-content.php';
-	}
-
-	/**
-	 * Validate settings
-	 *
-	 * Same as $sanitize_callback.
-	 * @link http://codex.wordpress.org/Function_Reference/register_setting
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  $input
-	 * @return mixed
-	 */
-	public function validate_settings( $input ) {
-		return $input;
 	}
 }
