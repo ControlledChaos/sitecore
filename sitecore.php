@@ -84,9 +84,9 @@ use SiteCore\Classes\Activate as Activate;
  *    See the `includes/config.php` file to change developer/agency details,
  *    plugin name & URL, plus more personal or white-label constants.
  *
- * Edit the README file in the root directory as needed, or delete it.
+ * 10. Edit the README file in the root directory as needed, or delete it.
  *
- * Finally, remember to modify or remove the instructional information in
+ * 11. Finally, remember to modify or remove the instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
  */
