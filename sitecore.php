@@ -91,9 +91,9 @@ use SiteCore\Classes\Activate as Activate;
  * instructions as desired.
  */
 
-// Stop if this file is called directly.
+// Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	die;
 }
 
 /**
