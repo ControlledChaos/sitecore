@@ -68,8 +68,8 @@ final class Customizer_Reset {
 
 		// Localize the above script.
 		wp_localize_script( 'scp-customizer-reset', 'SCP_CustomizerReset', [
-			'reset'   => __( 'Reset', SCP_DOMAIN ),
-			'confirm' => __( 'Warning! This will remove all changes made to this theme via the Customizer. This action is irreversible.', SCP_DOMAIN ),
+			'reset'   => __( 'Reset', SCP_CONFIG['domain'] ),
+			'confirm' => __( 'Warning! This will remove all changes made to this theme via the Customizer. This action is irreversible.', SCP_CONFIG['domain'] ),
 			'nonce'   => [
 				'reset' => wp_create_nonce( 'customizer-reset' ),
 			]

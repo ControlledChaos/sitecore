@@ -73,9 +73,9 @@ class Type_Tax {
 
 		if ( $post_type_obj ) {
 			$name = $post_type_obj->labels->singular_name;
-			$post_title = esc_html__( $name . ' Title', SCP_DOMAIN );
+			$post_title = esc_html__( $name . ' Title', SCP_CONFIG['domain'] );
 		} else {
-			$post_title = esc_html__('Title', SCP_DOMAIN );
+			$post_title = esc_html__('Title', SCP_CONFIG['domain'] );
 		}
 
 		// Apply a filter conditional modification.
@@ -115,48 +115,48 @@ class Type_Tax {
 				0  => '', // Unused. Messages start at index 1.
 
 				1  => sprintf(
-					__( '%1s updated. <a href="%2s">View %3s</a>', SCP_DOMAIN ), $post_object->labels->singular_name,
+					__( '%1s updated. <a href="%2s">View %3s</a>', SCP_CONFIG['domain'] ), $post_object->labels->singular_name,
 					esc_url( get_permalink( $post_ID ) ),
 					$post_object->labels->singular_name
 				),
-				2  => __( 'Custom field updated.', SCP_DOMAIN ),
-				3  => __( 'Custom field deleted.', SCP_DOMAIN ),
+				2  => __( 'Custom field updated.', SCP_CONFIG['domain'] ),
+				3  => __( 'Custom field deleted.', SCP_CONFIG['domain'] ),
 				4  => sprintf(
-					__( '1%s updated.', SCP_DOMAIN ),
+					__( '1%s updated.', SCP_CONFIG['domain'] ),
 					$post_object->labels->singular_name
 				),
 				5  => isset( $_GET['revision']) ? sprintf(
-					__( '%1s restored to revision from %2s', SCP_DOMAIN ),
+					__( '%1s restored to revision from %2s', SCP_CONFIG['domain'] ),
 					$post_object->labels->singular_name,
 					wp_post_revision_title( (int) $_GET['revision'], false )
 					) : false,
 				6  => sprintf(
-					__( '%1s published. <a href="%2s">View %3s</a>', SCP_DOMAIN ),
+					__( '%1s published. <a href="%2s">View %3s</a>', SCP_CONFIG['domain'] ),
 					$post_object->labels->singular_name,
 					esc_url( get_permalink( $post_ID ) ),
 					$post_object->labels->singular_name
 				),
 				7  => sprintf(
-					__( '%1s saved.', SCP_DOMAIN ),
+					__( '%1s saved.', SCP_CONFIG['domain'] ),
 					$post_object->labels->singular_name
 				),
 				8  => sprintf(
-					__( '%1s submitted. <a target="_blank" href="%2s">Preview %3s</a>', SCP_DOMAIN ),
+					__( '%1s submitted. <a target="_blank" href="%2s">Preview %3s</a>', SCP_CONFIG['domain'] ),
 					$post_object->labels->singular_name,
 					esc_url( add_query_arg( 'preview', 'true',
 					get_permalink( $post_ID ) ) ),
 					$post_object->labels->singular_name
 				),
 				9  => sprintf(
-					__( '%1s scheduled for: <strong>%2s</strong>. <a target="_blank" href="%3s">Preview %4s</a>', SCP_DOMAIN  ),
+					__( '%1s scheduled for: <strong>%2s</strong>. <a target="_blank" href="%3s">Preview %4s</a>', SCP_CONFIG['domain']  ),
 					$post_object->labels->singular_name,
-					date_i18n( __( 'M j, Y @ G:i', SCP_DOMAIN ),
+					date_i18n( __( 'M j, Y @ G:i', SCP_CONFIG['domain'] ),
 					strtotime( $post->post_date ) ),
 					esc_url( get_permalink( $post_ID ) ),
 					$post_object->labels->singular_name
 				),
 				10 => sprintf(
-					__( '%1s draft updated. <a target="_blank" href="%2s">Preview %3s</a>', SCP_DOMAIN  ),
+					__( '%1s draft updated. <a target="_blank" href="%2s">Preview %3s</a>', SCP_CONFIG['domain']  ),
 					$post_object->labels->singular_name,
 					esc_url( add_query_arg( 'preview', 'true',
 					get_permalink( $post_ID ) ) ),

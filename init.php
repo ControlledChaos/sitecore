@@ -37,14 +37,14 @@ function text_domain() {
 
 	// Standard plugin installation.
 	load_plugin_textdomain(
-		SCP_DOMAIN,
+		SCP_CONFIG['domain'],
 		false,
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 
 	// If this is in the must-use plugins directory.
 	load_muplugin_textdomain(
-		SCP_DOMAIN,
+		SCP_CONFIG['domain'],
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 }

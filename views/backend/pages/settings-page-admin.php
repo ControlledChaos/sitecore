@@ -16,12 +16,12 @@ $page = get_plugin_page_hook( SCP_BASENAME, $this->parent_slug );
 	<?php
 	printf(
 		'<h1>%s</h1>',
-		__( $this->heading(), SCP_DOMAIN )
+		__( $this->heading(), SCP_CONFIG['domain'] )
 	);
 
 	printf(
 		'<p class="description">%s</p>',
-		__( $this->description(), SCP_DOMAIN )
+		__( $this->description(), SCP_CONFIG['domain'] )
 	);
 
 	?>
@@ -29,6 +29,6 @@ $page = get_plugin_page_hook( SCP_BASENAME, $this->parent_slug );
 
 		<?php echo do_action( 'render_screen_tabs_' . $page ); ?>
 
-		<p class="submit"><?php submit_button( __( 'Save Settings', SCP_DOMAIN ), 'button-primary', '', false, [] ); ?></p>
+		<p class="submit"><?php submit_button( __( 'Save Settings', SCP_CONFIG['domain'] ), 'button-primary', '', false, [] ); ?></p>
 	</form>
 </div>

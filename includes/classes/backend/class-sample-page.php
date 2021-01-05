@@ -136,16 +136,16 @@ class Sample_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'sample-one',
-			'tab'        => __( 'One', SCP_DOMAIN ),
-			'heading'    => __( 'Settings One', SCP_DOMAIN ),
+			'tab'        => __( 'One', SCP_CONFIG['domain'] ),
+			'heading'    => __( 'Settings One', SCP_CONFIG['domain'] ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
 
 		$this->add_content_tab( [
 			'id'         => 'sample-two',
-			'tab'        => __( 'Two', SCP_DOMAIN ),
-			'heading'    => __( 'Settings Two', SCP_DOMAIN ),
+			'tab'        => __( 'Two', SCP_CONFIG['domain'] ),
+			'heading'    => __( 'Settings Two', SCP_CONFIG['domain'] ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );

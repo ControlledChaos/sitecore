@@ -191,7 +191,7 @@ class Register_Tax {
 	public function options() {
 
 		$options = [
-			'label'                 => __( ucwords( $this->plural ), SCP_DOMAIN ),
+			'label'                 => __( ucwords( $this->plural ), SCP_CONFIG['domain'] ),
 			'labels'                => $this->labels(),
 			'public'                => $this->public,
 			'hierarchical'          => $this->hierarchical,
@@ -223,25 +223,25 @@ class Register_Tax {
 	public function labels() {
 
 		$labels = [
-			'name'                       => __( ucwords( $this->plural ), SCP_DOMAIN ),
-			'singular_name'              => __( ucwords( $this->singular ), SCP_DOMAIN ),
-			'menu_name'                  => __( ucwords( $this->plural ), SCP_DOMAIN ),
-			'all_items'                  => __( 'All ' . ucwords( $this->plural ), SCP_DOMAIN ),
-			'edit_item'                  => __( 'Edit ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'view_item'                  => __( 'View ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'update_item'                => __( 'Update ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'add_new_item'               => __( 'Add New ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'new_item_name'              => __( 'New ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'parent_item'                => __( 'Parent ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'parent_item_colon'          => __( 'Parent ' . ucwords( $this->singular ), SCP_DOMAIN ),
-			'popular_items'              => __( 'Popular ' . ucwords( $this->plural ), SCP_DOMAIN ),
-			'separate_items_with_commas' => __( 'Separate ' . ucwords( $this->plural ) . ' with commas', SCP_DOMAIN ),
-			'add_or_remove_items'        => __( 'Add or Remove ' . ucwords( $this->plural ), SCP_DOMAIN ),
-			'choose_from_most_used'      => __( 'Choose from the most used ' . ucwords( $this->plural ), SCP_DOMAIN ),
-			'not_found'                  => __( 'No ' . ucwords( $this->plural ) . ' Found', SCP_DOMAIN ),
-			'no_terms'                   => __( 'No ' . ucwords( $this->plural ), SCP_DOMAIN ),
-			'items_list_navigation'      => __( ucwords( $this->plural ) . ' list navigation', SCP_DOMAIN ),
-			'items_list'                 => __( ucwords( $this->plural ) . ' List', SCP_DOMAIN ),
+			'name'                       => __( ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'singular_name'              => __( ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'menu_name'                  => __( ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'all_items'                  => __( 'All ' . ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'edit_item'                  => __( 'Edit ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'view_item'                  => __( 'View ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'update_item'                => __( 'Update ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'add_new_item'               => __( 'Add New ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'new_item_name'              => __( 'New ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'parent_item'                => __( 'Parent ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'parent_item_colon'          => __( 'Parent ' . ucwords( $this->singular ), SCP_CONFIG['domain'] ),
+			'popular_items'              => __( 'Popular ' . ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'separate_items_with_commas' => __( 'Separate ' . ucwords( $this->plural ) . ' with commas', SCP_CONFIG['domain'] ),
+			'add_or_remove_items'        => __( 'Add or Remove ' . ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'choose_from_most_used'      => __( 'Choose from the most used ' . ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'not_found'                  => __( 'No ' . ucwords( $this->plural ) . ' Found', SCP_CONFIG['domain'] ),
+			'no_terms'                   => __( 'No ' . ucwords( $this->plural ), SCP_CONFIG['domain'] ),
+			'items_list_navigation'      => __( ucwords( $this->plural ) . ' list navigation', SCP_CONFIG['domain'] ),
+			'items_list'                 => __( ucwords( $this->plural ) . ' List', SCP_CONFIG['domain'] ),
 		];
 
 		return $labels;

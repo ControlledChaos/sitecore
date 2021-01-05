@@ -108,7 +108,7 @@ class Admin_Settings_Page extends Add_Subpage {
 	 * @return string Returns the page heading.
 	 */
 	protected function heading() {
-		return __( 'Administration Settings', SCP_DOMAIN );
+		return __( 'Administration Settings', SCP_CONFIG['domain'] );
 	}
 
 	/**

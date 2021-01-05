@@ -83,10 +83,10 @@ class Media {
 	public function image_sizes() {
 
 		// For link embedding and sharing on social sites.
-		add_image_size( __( 'meta-image', SCP_DOMAIN ), 1280, 720, true );
+		add_image_size( __( 'meta-image', SCP_CONFIG['domain'] ), 1280, 720, true );
 
 		// For use as featured image in admin columns.
-		add_image_size( __( 'column-thumbnail', SCP_DOMAIN ), 48, 48, true );
+		add_image_size( __( 'column-thumbnail', SCP_CONFIG['domain'] ), 48, 48, true );
 	}
 
 	/**

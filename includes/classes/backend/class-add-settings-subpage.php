@@ -120,7 +120,7 @@ class Add_Settings_Subpage extends Add_Subpage {
 	 * @return string Returns the page heading.
 	 */
 	protected function heading() {
-		return __( 'Sample Submenu Page', SCP_DOMAIN );
+		return __( 'Sample Submenu Page', SCP_CONFIG['domain'] );
 	}
 
 	/**

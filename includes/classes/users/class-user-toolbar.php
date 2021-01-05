@@ -53,12 +53,12 @@ class User_Toolbar {
 
 		register_nav_menus(
 			[
-			'backend_toolbar_site'  => esc_html__( 'Admin Toolbar: Site Name', SCP_DOMAIN ),
-			'backend_toolbar_main'  => esc_html__( 'Admin Toolbar: Main', SCP_DOMAIN ),
-			'backend_toolbar_user'  => esc_html__( 'Admin Toolbar: User', SCP_DOMAIN ),
-			'frontend_toolbar_site' => esc_html__( 'Frontend Toolbar: Site Name', SCP_DOMAIN ),
-			'frontend_toolbar_main' => esc_html__( 'Frontend Toolbar: Main', SCP_DOMAIN ),
-			'frontend_toolbar_user' => esc_html__( 'Frontend Toolbar: User', SCP_DOMAIN )
+			'backend_toolbar_site'  => esc_html__( 'Admin Toolbar: Site Name', SCP_CONFIG['domain'] ),
+			'backend_toolbar_main'  => esc_html__( 'Admin Toolbar: Main', SCP_CONFIG['domain'] ),
+			'backend_toolbar_user'  => esc_html__( 'Admin Toolbar: User', SCP_CONFIG['domain'] ),
+			'frontend_toolbar_site' => esc_html__( 'Frontend Toolbar: Site Name', SCP_CONFIG['domain'] ),
+			'frontend_toolbar_main' => esc_html__( 'Frontend Toolbar: Main', SCP_CONFIG['domain'] ),
+			'frontend_toolbar_user' => esc_html__( 'Frontend Toolbar: User', SCP_CONFIG['domain'] )
 			]
 		);
 	}

@@ -14,7 +14,7 @@ use SiteCore\Classes\Core as Core;
 ?>
 <table class="form-table">
 	<tr class="editor-options-user-options">
-		<th scope="row"><?php _e( 'Default Editor', SCP_DOMAIN ); ?></th>
+		<th scope="row"><?php _e( 'Default Editor', SCP_CONFIG['domain'] ); ?></th>
 		<td>
 		<?php wp_nonce_field( 'allow-user-settings', 'editor-options-user-settings' ); ?>
 		<?php Core\Editor_Options :: editor_settings_default(); ?>

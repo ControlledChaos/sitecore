@@ -431,8 +431,8 @@ class Editor_Options {
 			add_option_whitelist( $allowed_options );
 		}
 
-		$heading_default = __( 'Default editor for all users', SCP_DOMAIN );
-		$heading_allow   = __( 'Allow users to switch editors', SCP_DOMAIN );
+		$heading_default = __( 'Default editor for all users', SCP_CONFIG['domain'] );
+		$heading_allow   = __( 'Allow users to switch editors', SCP_CONFIG['domain'] );
 
 		add_settings_field( 'editor-options-default', $heading_default, [ __CLASS__, 'editor_settings_default' ], 'writing' );
 		add_settings_field( 'editor-options-choose', $heading_allow, [ __CLASS__, 'editor_settings_allow' ], 'writing' );
@@ -766,7 +766,7 @@ class Editor_Options {
 		}
 
 		$id       = 'editor-options-switch-editor';
-		$title    = __( 'Editor', SCP_DOMAIN );
+		$title    = __( 'Editor', SCP_CONFIG['domain'] );
 		$callback = [ __CLASS__, 'do_meta_box' ];
 		$args     = [
 			'__back_compat_meta_box' => true,
@@ -795,7 +795,7 @@ class Editor_Options {
 
 		?>
 		<p style="margin: 1em 0;">
-			<a href="<?php echo esc_url( $edit_url ); ?>"><?php _e( 'Switch to block editor ', SCP_DOMAIN ); ?></a>
+			<a href="<?php echo esc_url( $edit_url ); ?>"><?php _e( 'Switch to block editor ', SCP_CONFIG['domain'] ); ?></a>
 		</p>
 		<?php
 	}
@@ -834,7 +834,7 @@ class Editor_Options {
 		wp_localize_script(
 			'editor-options',
 			'editorOptionsL10n',
-			[ 'linkText' => __( 'Switch to rich text editor ', SCP_DOMAIN ) ]
+			[ 'linkText' => __( 'Switch to rich text editor ', SCP_CONFIG['domain'] ) ]
 		);
 	}
 
@@ -969,14 +969,14 @@ class Editor_Options {
 
 		// Link to the block editor.
 		$url        = remove_query_arg( 'editor-options', $edit_url );
-		$text       = _x( 'Edit Blocks', 'Editor Name', SCP_DOMAIN );
-		$label      = sprintf( __( 'Edit &#8220;%s&#8221; in the block editor', SCP_DOMAIN ), $title );
+		$text       = _x( 'Edit Blocks', 'Editor Name', SCP_CONFIG['domain'] );
+		$label      = sprintf( __( 'Edit &#8220;%s&#8221; in the block editor', SCP_CONFIG['domain'] ), $title );
 		$edit_block = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 
 		// Link to the rich text editor.
 		$url          = add_query_arg( 'editor-options', '', $edit_url );
-		$text         = _x( 'Edit Rich Text', 'Editor Name', SCP_DOMAIN );
-		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the rich text editor', SCP_DOMAIN ), $title );
+		$text         = _x( 'Edit Rich Text', 'Editor Name', SCP_CONFIG['domain'] );
+		$label        = sprintf( __( 'Edit &#8220;%s&#8221; in the rich text editor', SCP_CONFIG['domain'] ), $title );
 		$edit_rich    = sprintf( '<a href="%s" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), $text );
 		$edit_actions = [
 			'editor-options-tinymce' => $edit_rich,
@@ -1013,12 +1013,12 @@ class Editor_Options {
 		} elseif ( $editors['editor_options'] && ! $editors['block_editor'] ) {
 
 			// Forced to rich text editor.
-			$state = '<span class="editor-options-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
+			$state = '<span class="editor-options-forced-state">' . _x( 'rich text editor', 'Editor Name', SCP_CONFIG['domain'] ) . '</span>';
 
 		} elseif ( ! $editors['editor_options'] && $editors['block_editor'] ) {
 
 			// Forced to block editor.
-			$state = '<span class="editor-options-forced-state">' . _x( 'block editor', 'Editor Name', SCP_DOMAIN ) . '</span>';
+			$state = '<span class="editor-options-forced-state">' . _x( 'block editor', 'Editor Name', SCP_CONFIG['domain'] ) . '</span>';
 
 		} else {
 
@@ -1033,7 +1033,7 @@ class Editor_Options {
 				$is_tinymce = ( $settings['editor'] === 'tinymce' );
 			}
 
-			$state = $is_tinymce ? _x( 'Rich Text', 'Editor Name', SCP_DOMAIN ) : _x( 'Blocks', 'Editor Name', SCP_DOMAIN );
+			$state = $is_tinymce ? _x( 'Rich Text', 'Editor Name', SCP_CONFIG['domain'] ) : _x( 'Blocks', 'Editor Name', SCP_CONFIG['domain'] );
 		}
 
 		// Fix PHP 7+ warnings if another plugin returns unexpected type.

@@ -14,6 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<h4><?php _e( 'Help Sidebar', SCP_DOMAIN ); ?></h4>
+<h4><?php _e( 'Help Sidebar', SCP_CONFIG['domain'] ); ?></h4>
 
-<p><?php _e( 'Demonstration help sidebar.', SCP_DOMAIN ); ?></p>
+<p><?php _e( 'Demonstration help sidebar.', SCP_CONFIG['domain'] ); ?></p>

@@ -199,7 +199,7 @@ class Add_Page extends Classes\Base {
 	 * @return string Returns the conditional menu label.
 	 */
 	protected function page_title() {
-		return __( $this->page_title, SCP_DOMAIN );
+		return __( $this->page_title, SCP_CONFIG['domain'] );
 	}
 
 	/**
@@ -210,7 +210,7 @@ class Add_Page extends Classes\Base {
 	 * @return string Returns the conditional menu label.
 	 */
 	protected function menu_title() {
-		return ucwords( __( $this->menu_title, SCP_DOMAIN ) );
+		return ucwords( __( $this->menu_title, SCP_CONFIG['domain'] ) );
 	}
 
 	/**
@@ -235,7 +235,7 @@ class Add_Page extends Classes\Base {
 
 		$description = sprintf(
 			'<p class="description">%s</p>',
-			__( $this->description, SCP_DOMAIN )
+			__( $this->description, SCP_CONFIG['domain'] )
 		);
 
 		if ( ! empty( $this->description ) ) {
@@ -592,7 +592,7 @@ class Add_Page extends Classes\Base {
 		// Print a heading using the menu title variable.
 		echo  sprintf(
 			'<h1>%s</h1>',
-			__( $this->heading(), SCP_DOMAIN )
+			__( $this->heading(), SCP_CONFIG['domain'] )
 		);
 
 		// Print a paragraph with native description class using the description variable.
@@ -621,7 +621,7 @@ class Add_Page extends Classes\Base {
 		// More information tab.
 		$screen->add_help_tab( [
 			'id'       => 'more_info',
-			'title'    => __( 'More Information', SCP_DOMAIN ),
+			'title'    => __( 'More Information', SCP_CONFIG['domain'] ),
 			'content'  => null,
 			'callback' => [ $this, 'more_info' ]
 		] );

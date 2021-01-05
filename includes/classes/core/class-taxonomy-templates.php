@@ -145,9 +145,9 @@ final class Taxonomy_Templates {
 
 		?>
 		<div class="form-field custom-taxonomy-template">
-			<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_DOMAIN ); ?></label>
+			<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_CONFIG['domain'] ); ?></label>
 			<select name="custom-taxonomy-template" id="custom-taxonomy-template" class="postform">
-				<option value="default"><?php _e( 'Default Template', SCP_DOMAIN ); ?></option>
+				<option value="default"><?php _e( 'Default Template', SCP_CONFIG['domain'] ); ?></option>
 				<?php $this->templates_dropdown( $taxonomy ) ?>
 			</select>
 		</div><?php
@@ -172,11 +172,11 @@ final class Taxonomy_Templates {
 
 		<tr class="form-field custom-taxonomy-template">
 			<th scope="row" valign="top">
-				<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_DOMAIN ); ?></label>
+				<label for="custom-taxonomy-template"><?php _e( 'Template', SCP_CONFIG['domain'] ); ?></label>
 			</th>
 			<td>
 				<select name="custom-taxonomy-template" id="custom-taxonomy-template" class="postform">
-					<option value="default"><?php _e( 'Default Template', SCP_DOMAIN ); ?></option>
+					<option value="default"><?php _e( 'Default Template', SCP_CONFIG['domain'] ); ?></option>
 					<?php $this->templates_dropdown( $taxonomy, $template ) ?>
 				</select>
 			</td>

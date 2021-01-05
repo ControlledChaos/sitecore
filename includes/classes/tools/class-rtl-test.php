@@ -105,7 +105,7 @@ class RTL_Test {
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'RTL',
-		 		'title' => sprintf( __( 'Switch to %s', SCP_DOMAIN ), strtoupper( $direction ) ),
+		 		'title' => sprintf( __( 'Switch to %s', SCP_CONFIG['domain'] ), strtoupper( $direction ) ),
 		 		'href'  => add_query_arg( [ 'd' => $direction ] )
 			]
 		);

@@ -79,8 +79,8 @@ class Posts_List_Table extends Classes\Base {
 		// The HTML of the dropdown select box abave the table.
 		?>
 		<select name="page_template_filter" id="page_template_filter">
-			<option value="all"><?php _e( 'All Page Templates', SCP_DOMAIN ); ?></option>
-			<option value="default" <?php echo ( $template == 'default' ) ? ' selected="selected" ' : ''; ?>><?php echo _e( 'Default Template', SCP_DOMAIN ); ?></option>
+			<option value="all"><?php _e( 'All Page Templates', SCP_CONFIG['domain'] ); ?></option>
+			<option value="default" <?php echo ( $template == 'default' ) ? ' selected="selected" ' : ''; ?>><?php echo _e( 'Default Template', SCP_CONFIG['domain'] ); ?></option>
 			<?php page_template_dropdown( $template ); ?>
 		</select>
 		<?php
@@ -132,7 +132,7 @@ class Posts_List_Table extends Classes\Base {
 	public function template_columns_head( $columns ) {
 
 		// The column heading name to new `template` column.
-		$columns['template'] = __( 'Template', SCP_DOMAIN );
+		$columns['template'] = __( 'Template', SCP_CONFIG['domain'] );
 
 		// Return the heading name.
 		return $columns;
@@ -163,8 +163,8 @@ class Posts_List_Table extends Classes\Base {
 
 					echo sprintf(
 						'<span title="%1s">%2s</span>',
-						__( 'Default Template', SCP_DOMAIN ),
-						__( 'Default Template', SCP_DOMAIN )
+						__( 'Default Template', SCP_CONFIG['domain'] ),
+						__( 'Default Template', SCP_CONFIG['domain'] )
 					);
 
 				// If it's not the default template.
@@ -177,7 +177,7 @@ class Posts_List_Table extends Classes\Base {
 	        		if ( isset( $templates[ $template ] ) ) {
 	        			echo sprintf(
 							'<span title="%1s %2s">%3s</span>',
-							__( 'Template file:', SCP_DOMAIN ),
+							__( 'Template file:', SCP_CONFIG['domain'] ),
 							$template,
 							$templates[ $template ]
 						);
@@ -186,7 +186,7 @@ class Posts_List_Table extends Classes\Base {
 	        		} else {
 	        			echo sprintf(
 							'<span title="%1s">%2s</span>',
-							__( 'This template file does not exist', SCP_DOMAIN ),
+							__( 'This template file does not exist', SCP_CONFIG['domain'] ),
 							$template
 						);
 					}
@@ -246,7 +246,7 @@ class Posts_List_Table extends Classes\Base {
 	public function image_column_head( $defaults ) {
 
 		// The column heading name.
-		$name    = __( 'Featured Image', SCP_DOMAIN );
+		$name    = __( 'Featured Image', SCP_CONFIG['domain'] );
 
 		// Apply a filter for conditional modification.
 		$heading = apply_filters( 'scp_image_column_head', $name );
@@ -287,11 +287,11 @@ class Posts_List_Table extends Classes\Base {
 
 			// If the post has a featured image.
 			if ( $post_featured_image ) {
-				echo '<img src="' . esc_url( $post_featured_image ) . '" alt="' . get_the_title( $post_ID ) . __( ' — featured image', SCP_DOMAIN ) . '" width="48px" height="48px" />';
+				echo '<img src="' . esc_url( $post_featured_image ) . '" alt="' . get_the_title( $post_ID ) . __( ' — featured image', SCP_CONFIG['domain'] ) . '" width="48px" height="48px" />';
 
 			// If the post doen't have a featured image then use the fallback image.
 			} else {
-				echo '<img src="' . esc_url( SCP_URL . 'assets/images/featured-image-placeholder.png' ) . '" alt="' . __( 'No featured image available', SCP_DOMAIN ) . '" width="48px" height="48px" />';
+				echo '<img src="' . esc_url( SCP_URL . 'assets/images/featured-image-placeholder.png' ) . '" alt="' . __( 'No featured image available', SCP_CONFIG['domain'] ) . '" width="48px" height="48px" />';
 			}
 		}
 	}
