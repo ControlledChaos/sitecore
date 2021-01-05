@@ -49,6 +49,7 @@ define( 'SCP_CLASS', [
  */
 define( 'SCP_CLASSES', [
 
+	// Base class.
 	'SiteCore\Classes\Base' => SCP_CLASS['general'] . 'base.php',
 
 	// Core classes.
