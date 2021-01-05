@@ -43,5 +43,17 @@ class Settings_API extends Classes\Base {
 	 */
 	public function __construct() {
 		parent :: __construct();
+
+		// Register settings.
+		add_action( 'admin_init', [ $this, 'settings' ] );
 	}
+
+	/**
+	 * Register settings via the WordPress/ClassicPress Settings API.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function settings() {}
 }
