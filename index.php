@@ -1,6 +1,6 @@
 <?php
 /**
- * Site Core Plugin
+ * Site Core plugin
  *
  * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
  *
