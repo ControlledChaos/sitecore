@@ -241,7 +241,6 @@ deactivate_plugin();
  * Prevents breaking sites running older PHP versions.
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
