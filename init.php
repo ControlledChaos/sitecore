@@ -11,15 +11,16 @@
 namespace SiteCore;
 
 // Alias namespaces.
-use SiteCore\Classes          as Classes;
-use SiteCore\Classes\Core     as Core;
-use SiteCore\Classes\Settings as Settings;
-use SiteCore\Classes\Tools    as Tools;
-use SiteCore\Classes\Media    as Media;
-use SiteCore\Classes\Users    as Users;
-use SiteCore\Classes\Admin    as Admin;
-use SiteCore\Classes\Front    as Front;
-use SiteCore\Classes\Vendor   as Vendor;
+use
+SiteCore\Classes          as Classes,
+SiteCore\Classes\Core     as Core,
+SiteCore\Classes\Settings as Settings,
+SiteCore\Classes\Tools    as Tools,
+SiteCore\Classes\Media    as Media,
+SiteCore\Classes\Users    as Users,
+SiteCore\Classes\Admin    as Admin,
+SiteCore\Classes\Front    as Front,
+SiteCore\Classes\Vendor   as Vendor;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
