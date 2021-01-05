@@ -20,6 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+// Get constants & helpers.
+require SCP_PATH . 'includes/config.php';
+
 class Activate {
 
 	/**
