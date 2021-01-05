@@ -4,10 +4,10 @@
  *
  * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
  *
- * @package Site_Core
- * @version 1.0.0
- * @author  Greg Sweet <greg@ccdzine.com>
- * @link    https://github.com/ControlledChaos/sitecore
+ * @package    Site_More
+ * @subpackage Init
+ * @category   Core
+ * @since      1.0.0
  *
  * This file is provided for security. In keeping with tradition
  * the main plugin file with the necessary plugin header is in
