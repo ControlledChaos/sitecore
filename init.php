@@ -62,7 +62,7 @@ function text_domain() {
  */
 function sitecore() {
 
-	// Load text domain.
+	// Load text domain. Hook to `init` rather than `plugins_loaded`.
 	add_action( 'init', __NAMESPACE__ . '\text_domain' );
 
 	/**
