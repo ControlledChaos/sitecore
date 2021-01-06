@@ -67,27 +67,27 @@ class Activate {
 
 			<?php if ( isset( $plugin_data['update'] ) && ! empty( $plugin_data['update'] ) ) : ?>
 
-				.plugins tr.<?php echo SCP_CONFIG['domain']; ?>-plugin-tr td {
+				.plugins tr.<?php echo SCP_DOMAIN; ?>-plugin-tr td {
 					box-shadow: none ! important;
 				}
 
-				.plugins tr.<?php echo SCP_CONFIG['domain']; ?>-plugin-tr .update-message {
+				.plugins tr.<?php echo SCP_DOMAIN; ?>-plugin-tr .update-message {
 					margin-bottom: 0;
 				}
 
 			<?php endif; ?>
 		</style>
 
-		<tr id="plugin-php-notice" class="plugin-update-tr active <?php echo SCP_CONFIG['domain']; ?>-plugin-tr">
+		<tr id="plugin-php-notice" class="plugin-update-tr active <?php echo SCP_DOMAIN; ?>-plugin-tr">
 			<td colspan="<?php echo $colspan; ?>" class="plugin-update colspanchange">
 				<div class="update-message notice inline notice-error notice-alt">
 					<?php echo sprintf(
 						'<p>%s %s %s %s %s %s</p>',
-						__( 'Functionality of the', SCP_CONFIG['domain'] ),
+						__( 'Functionality of the', SCP_DOMAIN ),
 						SCP_NAME,
-						__( 'plugin has been disabled because it requires PHP version', SCP_CONFIG['domain'] ),
+						__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
 						SCP_PHP_VERSION,
-						__( 'or greater. Your system is running PHP version', SCP_CONFIG['domain'] ),
+						__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 						phpversion()
 					); ?>
 				</div>
@@ -109,11 +109,11 @@ class Activate {
 		<div id="plugin-php-notice" class="notice notice-error is-dismissible">
 			<?php echo sprintf(
 				'<p>%s %s %s %s %s %s</p>',
-				__( 'Functionality of the', SCP_CONFIG['domain'] ),
+				__( 'Functionality of the', SCP_DOMAIN ),
 				SCP_NAME,
-				__( 'plugin has been disabled because it requires PHP version', SCP_CONFIG['domain'] ),
+				__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
 				SCP_PHP_VERSION,
-				__( 'or greater. Your system is running PHP version', SCP_CONFIG['domain'] ),
+				__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 				phpversion()
 			); ?>
 		</div>

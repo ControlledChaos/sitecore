@@ -61,6 +61,16 @@ define( 'SCP_PHP_VERSION', '7.4' );
 define( 'SCP_DOMAIN', 'sitecore' );
 
 /**
+ * Plugin name
+ *
+ * @since 1.0.0
+ * @var   string The name of the plugin.
+ */
+if ( ! defined( 'SCP_NAME' ) ) {
+	define( 'SCP_NAME', __( 'Site Core', SCP_DOMAIN ) );
+}
+
+/**
  * Constant: Plugin folder path
  *
  * @since 1.0.0
@@ -120,7 +130,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The name of the plugin.
 		 */
-		'name' => __( 'Site Core', SCP_DOMAIN ),
+		'name' => SCP_NAME,
 
 		/**
 		 * Developer name
@@ -184,16 +194,6 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 */
 		'color_picker' => true
 	] );
-}
-
-/**
- * Plugin name
- *
- * @since 1.0.0
- * @var   string The name of the plugin.
- */
-if ( ! defined( 'SCP_NAME' ) ) {
-	define( 'SCP_NAME', SCP_CONFIG['name'] );
 }
 
 /**
