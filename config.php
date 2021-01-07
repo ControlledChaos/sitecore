@@ -89,6 +89,20 @@ define( 'SCP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SCP_URL', plugin_dir_url(__FILE__ ) );
 
 /**
+ * PHP version check
+ *
+ * Stop here if the minimum PHP version is not met.
+ * The following array definitions wi break sites
+ * running older PHP versions.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
+	return;
+}
+
+/**
  * Constant: Plugin configuration.
  *
  * @since 1.0.0
