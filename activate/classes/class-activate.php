@@ -15,6 +15,9 @@
 
 namespace SiteCore\Classes\Activate;
 
+// Alias namespaces.
+use SiteCore\Classes as Classes;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -32,7 +35,7 @@ class Activate {
 	public function __construct() {
 
 		// Add notice(s) if the PHP version is insufficient.
-		if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
+		if ( ! Classes\scp_php()->version() ) {
 
 			// Add notice to plugin row.
 			add_action( 'after_plugin_row_' . SCP_BASENAME, [ $this, 'php_deactivate_notice_row' ], 5, 3 );
@@ -86,7 +89,7 @@ class Activate {
 						__( 'Functionality of the', SCP_DOMAIN ),
 						SCP_NAME,
 						__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
-						SCP_PHP_VERSION,
+						Classes\scp_php()->minimum(),
 						__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 						phpversion()
 					); ?>
@@ -112,7 +115,7 @@ class Activate {
 				__( 'Functionality of the', SCP_DOMAIN ),
 				SCP_NAME,
 				__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
-				SCP_PHP_VERSION,
+				scp_php()->minimum(),
 				__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 				phpversion()
 			); ?>

@@ -104,6 +104,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 
+// Get the PHP version class.
+require_once plugin_dir_path( __FILE__ ) . 'includes/classes/class-php-version.php';
+
 // Get plugin configuration file.
 require plugin_dir_path( __FILE__ ) . 'config.php';
 
@@ -172,7 +175,7 @@ deactivate_plugin();
  * @since  1.0.0
  * @return void
  */
-if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
+if ( ! Classes\scp_php()->version() ) {
 	return;
 }
 

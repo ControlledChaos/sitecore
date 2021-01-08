@@ -19,6 +19,9 @@
 
 namespace SiteCore;
 
+// Alias namespaces.
+use SiteCore\Classes as Classes;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -36,19 +39,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var   string The latest plugin version.
  */
 define( 'SCP_VERSION', '1.0.0' );
-
-/**
- * Constant: Required PHP version
- *
- * Used instead of the minimum PHP version
- * in the plugin header.
- *
- * @see activate/classes/class-activate.php
- *
- * @since 1.0.0
- * @var   string The minimum required PHP version.
- */
-define( 'SCP_PHP_VERSION', '7.4' );
 
 /**
  * Constant: Text domain
@@ -98,7 +88,7 @@ define( 'SCP_URL', plugin_dir_url(__FILE__ ) );
  * @since  1.0.0
  * @return void
  */
-if ( version_compare( phpversion(), SCP_PHP_VERSION, '<' ) ) {
+if ( ! Classes\scp_php()->version() ) {
 	return;
 }
 
@@ -126,7 +116,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The minimum required PHP version.
 		 */
-		'php_version' => SCP_PHP_VERSION,
+		'php_version' => Classes\scp_php()->minimum(),
 
 		/**
 		 * Text domain
