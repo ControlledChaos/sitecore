@@ -139,7 +139,9 @@ function sitecore() {
 	 *
 	 * @todo Put into an option.
 	 */
-	add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+	if ( defined( 'SCP_ALLOW_LINKS_MANAGER' ) && SCP_ALLOW_LINKS_MANAGER ) {
+		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+	}
 
 	// Remove the Draconian capital P filter.
 	remove_filter( 'the_title', 'capital_P_dangit', 11 );

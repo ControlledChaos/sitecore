@@ -191,6 +191,14 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'site_health' => false,
 
 		/**
+		 * Allow links manager
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Whether to allow the links manager feature.
+		 */
+		'links_manager' => false,
+
+		/**
 		 * Allow Customizer
 		 *
 		 * @since 1.0.0
@@ -256,6 +264,16 @@ if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
  */
 if ( ! defined( 'SCP_ALLOW_SITE_HEALTH' ) ) {
 	define( 'SCP_ALLOW_SITE_HEALTH', SCP_CONFIG['site_health'] );
+}
+
+/**
+ * Allow links manager
+ *
+ * @since 1.0.0
+ * @var   boolean Whether to allow the links manager feature.
+ */
+if ( ! defined( 'SCP_ALLOW_LINKS_MANAGER' ) ) {
+	define( 'SCP_ALLOW_LINKS_MANAGER', SCP_CONFIG['links_manager'] );
 }
 
 /**
