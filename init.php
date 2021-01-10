@@ -143,7 +143,7 @@ function sitecore() {
 		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 	}
 
-	// Remove the Draconian capital P filter.
+	// Remove the Draconian capital P filters.
 	remove_filter( 'the_title', 'capital_P_dangit', 11 );
 	remove_filter( 'the_content', 'capital_P_dangit', 11 );
 	remove_filter( 'comment_text', 'capital_P_dangit', 31 );
