@@ -130,7 +130,9 @@ function sitecore() {
 	add_filter( 'admin_email_check_interval', '__return_false' );
 
 	// Disable Site Health notifications.
-	add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
+	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
+		add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
+	}
 
 	// Remove the Draconian capital P filter.
 	remove_filter( 'the_title', 'capital_P_dangit', 11 );

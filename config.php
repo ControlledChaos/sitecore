@@ -183,7 +183,15 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'admin_slug' => 'site-core',
 
 		/**
-		 * Disable Customizer
+		 * Allow Site Health
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Whether to allow the Site Health feature.
+		 */
+		'site_health' => false,
+
+		/**
+		 * Allow Customizer
 		 *
 		 * @since 1.0.0
 		 * @var   boolean Whether to allow the Customizer.
@@ -241,7 +249,17 @@ if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
 }
 
 /**
- * Disable Customizer
+ * Allow Site Health
+ *
+ * @since 1.0.0
+ * @var   boolean Whether to allow the Site Health feature.
+ */
+if ( ! defined( 'SCP_ALLOW_SITE_HEALTH' ) ) {
+	define( 'SCP_ALLOW_SITE_HEALTH', SCP_CONFIG['site_health'] );
+}
+
+/**
+ * Allow Customizer
  *
  * @since 1.0.0
  * @var   boolean Whether to allow the Customizer.

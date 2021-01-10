@@ -59,7 +59,9 @@ class Admin extends Classes\Base {
 		add_action( 'admin_head', [ $this, 'admin_only_updates' ], 1 );
 
 		// Remove Site Health from menu.
-		add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
+		if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
+			add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
+		}
 
 		// Primary footer text.
 		add_filter( 'admin_footer_text', [ $this, 'admin_footer_primary' ], 1 );
