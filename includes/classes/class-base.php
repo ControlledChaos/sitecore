@@ -1,6 +1,10 @@
 <?php
 /**
- * Sample/starter class
+ * Base class
+ *
+ * This offers methods that may be widely used
+ * so other classes can extend this to add scripts
+ * and styles, and other common operations.
  *
  * @see `includes/classes/README.md`;
  *
