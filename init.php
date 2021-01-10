@@ -135,7 +135,7 @@ function sitecore() {
 	}
 
 	/**
-	 * Restore links manager
+	 * Allow links manager
 	 *
 	 * @todo Put into an option.
 	 */
