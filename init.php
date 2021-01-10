@@ -76,15 +76,6 @@ function sitecore() {
 	// Get compatibility functions.
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 
-	/**
-	 * Base class
-	 *
-	 * This offers methods that may be widely used
-	 * so other classes can extend this to add scripts
-	 * and styles, and other common operations.
-	 */
-	new Classes\Base;
-
 	// Instantiate settings classes.
 	new Settings\Settings;
 
