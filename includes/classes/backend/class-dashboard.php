@@ -45,13 +45,13 @@ class Dashboard {
 	public function at_glance() {
 
 		// Post type query arguments.
-		$args       = [
+		$query = [
 			'public'   => true,
 			'_builtin' => false
 		];
 
 		// Get post types according to above.
-		$post_types = get_post_types( $args, 'object', 'and' );
+		$post_types = get_post_types( $query, 'object', 'and' );
 
 		// Prepare an entry for each post type mathing the query.
 		foreach ( $post_types as $post_type ) {
@@ -66,7 +66,7 @@ class Dashboard {
 			$name = _n( $post_type->labels->singular_name, $post_type->labels->name, intval( $count->publish ) );
 
 			// Supply an edit link if the user can edit posts.
-			if ( current_user_can( 'edit_posts' ) ) {
+			if ( current_user_can( $post_type->cap->edit_posts ) ) {
 				echo sprintf(
 					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: currentColor; }</style>',
 					$post_type->name . '-count',
