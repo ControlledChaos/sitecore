@@ -57,7 +57,7 @@ class Dashboard {
 		foreach ( $post_types as $post_type ) {
 
 			// Count the number of posts.
-			$count  = wp_count_posts( $post_type->name );
+			$count = wp_count_posts( $post_type->name );
 
 			// Get the number of published posts.
 			$number = number_format_i18n( $count->publish );
@@ -68,7 +68,7 @@ class Dashboard {
 			// Supply an edit link if the user can edit posts.
 			if ( current_user_can( 'edit_posts' ) ) {
 				echo sprintf(
-					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: inherit; }</style>',
+					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: currentColor; }</style>',
 					$post_type->name . '-count',
 					$post_type->name . '-count'
 				);
@@ -84,7 +84,7 @@ class Dashboard {
 			// Otherwise just the count and post type name.
 			} else {
 				echo sprintf(
-					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: inherit; }</style>',
+					'<style>#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before{ display: none; } #dashboard_right_now li a:before, #dashboard_right_now li span:before { color: currentColor; }</style>',
 					$post_type->name . '-count',
 					$post_type->name . '-count'
 				);
