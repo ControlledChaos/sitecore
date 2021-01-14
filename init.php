@@ -152,7 +152,7 @@ function sitecore() {
 	 * Disable emoji script
 	 *
 	 * Emojis will still work in modern browsers. This removes the script
-	 * that makes emojis work in old browser.
+	 * that makes emojis work in old browsers.
 	 */
 	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
