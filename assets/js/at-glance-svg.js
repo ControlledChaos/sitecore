@@ -38,7 +38,7 @@ scp.atGlanceSVG = ( function( $, window, document, undefined ) {
 				scheme = window._atGlanceSVG;
 			}
 
-			if ( scheme && scheme.colors && scheme.colors.link && scheme.colors.action ) {
+			if ( scheme && scheme.colors && scheme.colors.link && scheme.colors.hover && scheme.colors.focus ) {
 				colorscheme = scheme.colors;
 			}
 		},
@@ -65,10 +65,17 @@ scp.atGlanceSVG = ( function( $, window, document, undefined ) {
 				// Set hover callbacks.
 				$glance_item.parent().hover(
 					function() {
-						painter.paintElement( $element, 'action' );
+						painter.paintElement( $element, 'hover' );
 					},
 					function() {
 						painter.paintElement( $element, 'link' );
+					}
+				);
+
+				// Set focus callbacks.
+				$glance_item.parent().focus(
+					function() {
+						painter.paintElement( $element, 'focus' );
 					}
 				);
 			});

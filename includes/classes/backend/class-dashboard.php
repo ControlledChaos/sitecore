@@ -96,15 +96,15 @@ class Dashboard extends Classes\Base {
 
 			/**
 			 * The Fresh (default) scheme in older WordPress & in ClassicPress
-			 * has a link action color different than the others.
+			 * has a link hover/focus color different than the others.
 			 */
 			if ( ! $color_scheme || 'fresh'== $color_scheme ){
 				$colors = [ 'colors' =>
-					[ 'link'   => '#0073aa', 'action' => '#00a0d2' ]
+					[ 'link' => '#0073aa', 'hover' => '#00a0d2', 'focus' => '#00a0d2' ]
 				];
 			} else {
 				$colors = [ 'colors' =>
-					[ 'link'   => '#0073aa', 'action' => '#0096dd' ]
+					[ 'link' => '#0073aa', 'hover' => '#0096dd', 'focus' => '#0096dd' ]
 				];
 			}
 
@@ -114,13 +114,13 @@ class Dashboard extends Classes\Base {
 		 */
 		} elseif ( 'modern' == $color_scheme ) {
 			$colors = [ 'colors' =>
-				[ 'link'   => '#3858e9', 'action' => '#183ad6' ]
+				[ 'link' => '#3858e9', 'hover' => '#183ad6', 'focus' => '#183ad6' ]
 			];
 
 		// All other default color schemes.
 		} else {
 			$colors = [ 'colors' =>
-				[ 'link'   => '#0073aa', 'action' => '#006799' ]
+				[ 'link' => '#0073aa', 'hover' => '#006799', 'focus' => '#006799' ]
 			];
 		}
 
