@@ -32,6 +32,7 @@ class Dashboard extends Classes\Base {
 
 		// "At a Glance" dashboard widget.
 		add_action( 'dashboard_glance_items', [ $this, 'at_glance' ] );
+		add_action( 'rightnow_end', [ $this, 'at_glance_end' ] );
 
 		// Remove widgets.
 		add_action( 'wp_dashboard_setup', [ $this, 'remove_widgets' ] );
@@ -264,6 +265,26 @@ class Dashboard extends Classes\Base {
 
 			}
 		}
+	}
+
+	/**
+	 * At a Glance end
+	 *
+	 * Adds content to the end of the
+	 * "At a Glance" dashboard widget.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function at_glance_end() {
+
+		// PHP version notice.
+		echo sprintf(
+			'<p>%s %s</p>',
+			__( 'Your website is running PHP version', SCP_DOMAIN ),
+			phpversion()
+		);
 	}
 
 	/**
