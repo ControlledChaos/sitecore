@@ -83,7 +83,7 @@ class Content_Settings extends Add_Settings_Page {
 	 * @access protected
 	 * @var    integer The position in the menu order this item should appear.
 	 */
-	protected $position = 74;
+	protected $position = 26;
 
 	/**
 	 * Page description
