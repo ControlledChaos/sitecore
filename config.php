@@ -43,7 +43,7 @@ define( 'SCP_VERSION', '1.0.0' );
 /**
  * Constant: Text domain
  *
- * Remember to freplace in the plugin header above.
+ * Remember to replace in the plugin header above.
  *
  * @since 1.0.0
  * @var   string The text domain of the plugin.
