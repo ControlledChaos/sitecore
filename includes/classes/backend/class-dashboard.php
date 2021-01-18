@@ -61,6 +61,28 @@ class Dashboard extends Classes\Base {
 	}
 
 	/**
+	 * At a Glance taxonomies
+	 *
+	 * Taxonomies to be displayed in the
+	 * "At a Glance" dashboard widget.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array Returns an array of queried taxonomies.
+	 */
+	public function at_glance_taxonomies() {
+
+		// Taxonomy query arguments.
+		$query = [
+			'public'  => true,
+			'show_ui' => true
+		];
+
+		// Return taxonomies according to above.
+		return get_taxonomies( $query, 'object', 'and' );
+	}
+
+	/**
 	 * At a Glance SVG colors
 	 *
 	 * Returns CSS hex codes for admin user schemes.
@@ -186,12 +208,31 @@ class Dashboard extends Classes\Base {
 			);
 		}
 
+		// Get taxonomies.
+		$taxonomies = $this->at_glance_taxonomies();
+
+		// Prepare styles each taxonomy matching the query.
+		$tax_count = '';
+		if ( $taxonomies ) {
+			foreach ( $taxonomies as $taxonomy ) {
+				$type_count .= sprintf(
+					'#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before { display: none; }',
+					$post_type->name . '-count',
+					$post_type->name . '-count'
+				);
+			}
+		}
+
 		// At a Glance icons style block.
 		$glance  = '<!-- Begin At a Glance icon styles -->' . '<style>';
 		$glance .= '#dashboard_right_now li a:before, #dashboard_right_now li span:before { color: currentColor; } ';
 		$glance .= '.at-glance-cpt-icons { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background-repeat: no-repeat; background-position: center; background-size: 20px auto; } ';
 		$glance .= '.at-glance-cpt-icons img { display: inline-block; max-width: 20px; } ';
 		$glance .= $type_count;
+		$glance .= '.at-glance-taxonomy-list { width: 100%; font-weight: 600; }';
+		$glance .= '#dashboard_right_now li.at-glance-taxonomy a:before, #dashboard_right_now li.at-glance-taxonomy > span:before { content: "\f323"; }';
+		$glance .= '#dashboard_right_now li.at-glance-taxonomy.category a:before, #dashboard_right_now li.at-glance-taxonomy.category > span:before { content: "\f318"; }';
+		$glance .= '#dashboard_right_now li.at-glance-taxonomy.media_type a:before, #dashboard_right_now li.at-glance-taxonomy.media_type > span:before { content: "\f104"; }';
 		$glance .= '</style>' . '<!-- End At a Glance icon styles -->';
 
 		echo $glance;
@@ -210,6 +251,9 @@ class Dashboard extends Classes\Base {
 
 		// Get post types.
 		$post_types = $this->at_glance_post_types();
+
+		// Get taxonomies.
+		$taxonomies = $this->at_glance_taxonomies();
 
 		// Prepare an entry for each post type matching the query.
 		foreach ( $post_types as $post_type ) {
@@ -264,6 +308,19 @@ class Dashboard extends Classes\Base {
 				);
 
 			}
+		}
+
+		if ( $taxonomies ) {
+			echo '<li class="at-glance-taxonomy-list">Taxonomies:</li><ul>';
+			foreach ( $taxonomies as $taxonomy ) {
+				echo sprintf(
+					'<li class="at-glance-taxonomy %s"><a href="%s">%s</a></li>',
+					$taxonomy->name,
+					admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name ),
+					$taxonomy->labels->name
+				);
+			}
+			echo '</ul>';
 		}
 	}
 
