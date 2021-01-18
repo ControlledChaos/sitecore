@@ -229,7 +229,6 @@ class Dashboard extends Classes\Base {
 		$glance .= '.at-glance-cpt-icons { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background-repeat: no-repeat; background-position: center; background-size: 20px auto; } ';
 		$glance .= '.at-glance-cpt-icons img { display: inline-block; max-width: 20px; } ';
 		$glance .= $type_count;
-		$glance .= '.at-glance-taxonomy-list { width: 100%; font-weight: 600; }';
 		$glance .= '#dashboard_right_now li.at-glance-taxonomy a:before, #dashboard_right_now li.at-glance-taxonomy > span:before { content: "\f323"; }';
 		$glance .= '#dashboard_right_now li.at-glance-taxonomy.category a:before, #dashboard_right_now li.at-glance-taxonomy.category > span:before { content: "\f318"; }';
 		$glance .= '#dashboard_right_now li.at-glance-taxonomy.media_type a:before, #dashboard_right_now li.at-glance-taxonomy.media_type > span:before { content: "\f104"; }';
@@ -311,16 +310,21 @@ class Dashboard extends Classes\Base {
 		}
 
 		if ( $taxonomies ) {
-			echo '<li class="at-glance-taxonomy-list">Taxonomies:</li><ul>';
 			foreach ( $taxonomies as $taxonomy ) {
+
+				if ( 'media_type' === $taxonomy->name ) {
+					$type = 'attachment';
+				} else {
+					$type = 'post';
+				}
 				echo sprintf(
-					'<li class="at-glance-taxonomy %s"><a href="%s">%s</a></li>',
+					'<li class="at-glance-taxonomy %s"><a href="%s">%s %s</a></li>',
 					$taxonomy->name,
-					admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name ),
+					admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name . '&post_type=' . $type ),
+					wp_count_terms( [ $taxonomy->name ] ),
 					$taxonomy->labels->name
 				);
 			}
-			echo '</ul>';
 		}
 	}
 
