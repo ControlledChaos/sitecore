@@ -140,6 +140,34 @@ class Dashboard extends Classes\Base {
 				[ 'link' => '#3858e9', 'hover' => '#183ad6', 'focus' => '#183ad6' ]
 			];
 
+		/**
+		 * Color schemes from WordPress' Admin Color Schemes plugin.
+		 * The High Contrast Blue scheme is different than the others
+		 * in the plugin. All others are the same link colors as older
+		 * versions of WordPress and the same as ClassicPress.
+		 */
+		} elseif ( 'contrast-blue' == $color_scheme ) {
+			$colors = [ 'colors' =>
+				[ 'link' => '#22466d', 'hover' => '#2e5f94', 'focus' => '#2e5f94' ]
+			];
+
+		// Old link colors are still in the plugin.
+		} elseif (
+			'80s-kid'   == $color_scheme ||
+			'adderley'  == $color_scheme ||
+			'aubergine' == $color_scheme ||
+			'cruise'    == $color_scheme ||
+			'flat'      == $color_scheme ||
+			'kirk'      == $color_scheme ||
+			'lawn'      == $color_scheme ||
+			'primary'   == $color_scheme ||
+			'seashore'  == $color_scheme ||
+			'vinyard'   == $color_scheme
+			) {
+			$colors = [ 'colors' =>
+				[ 'link' => '#0073aa', 'hover' => '#0096dd', 'focus' => '#0096dd' ]
+			];
+
 		// All other default color schemes.
 		} else {
 			$colors = [ 'colors' =>
