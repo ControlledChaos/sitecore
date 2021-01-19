@@ -309,18 +309,31 @@ class Dashboard extends Classes\Base {
 			}
 		}
 
+		// Prepare an entry for each taxonomy matching the query.
 		if ( $taxonomies ) {
 			foreach ( $taxonomies as $taxonomy ) {
 
-				if ( 'media_type' === $taxonomy->name ) {
-					$type = 'attachment';
+				// Get the first supported post type in the array.
+				if ( ! empty( $taxonomy->object_type ) ) {
+					$types = $taxonomy->object_type[0];
 				} else {
-					$type = 'post';
+					$types = null;
 				}
+
+				// Set `post_type` URL parameter for menu highlighting.
+				if ( $types && 'post' === $types ) {
+					$post_type = '&post_type=post';
+				} elseif ( $types ) {
+					$post_type = '&post_type=' . $types;
+				} else {
+					$post_type = '';
+				}
+
+				// Print a list item for the taxonomy.
 				echo sprintf(
 					'<li class="at-glance-taxonomy %s"><a href="%s">%s %s</a></li>',
 					$taxonomy->name,
-					admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name . '&post_type=' . $type ),
+					admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name . $post_type ),
 					wp_count_terms( [ $taxonomy->name ] ),
 					$taxonomy->labels->name
 				);
