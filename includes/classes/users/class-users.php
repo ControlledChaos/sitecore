@@ -30,9 +30,6 @@ class Users extends Classes\Base {
 		// Run the parent constructor method.
 		parent :: __construct();
 
-		// Access current admin page.
-		global $pagenow;
-
 		// User roles & capabilities.
 		new User_Roles_Caps;
 
