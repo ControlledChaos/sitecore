@@ -257,8 +257,8 @@ class Dashboard extends Classes\Base {
 		$glance .= '.at-glance-cpt-icons { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background-repeat: no-repeat; background-position: center; background-size: 20px auto; } ';
 		$glance .= '.at-glance-cpt-icons img { display: inline-block; max-width: 20px; } ';
 		$glance .= $type_count;
-		$glance .= '#dashboard_right_now li.at-glance-taxonomy a:before, #dashboard_right_now li.at-glance-taxonomy > span:before { content: "\f323"; }';
-		$glance .= '#dashboard_right_now li.at-glance-taxonomy.category a:before, #dashboard_right_now li.at-glance-taxonomy.category > span:before { content: "\f318"; }';
+		$glance .= '#dashboard_right_now li.at-glance-taxonomy a:before, #dashboard_right_now li.at-glance-taxonomy > span:before { content: "\f318"; }';
+		$glance .= '#dashboard_right_now li.at-glance-taxonomy.post_tag a:before, #dashboard_right_now li.at-glance-taxonomy.post_tag > span:before { content: "\f323"; }';
 		$glance .= '#dashboard_right_now li.at-glance-taxonomy.media_type a:before, #dashboard_right_now li.at-glance-taxonomy.media_type > span:before { content: "\f104"; }';
 		$glance .= '</style>' . '<!-- End At a Glance icon styles -->';
 
