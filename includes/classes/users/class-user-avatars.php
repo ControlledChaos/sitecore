@@ -486,7 +486,11 @@ class User_Avatars extends Classes\Base {
 		if ( $images && $images->length > 0 ) {
 			$url_1  = urldecode( $images->item(0)->getAttribute( 'src' ) );
 			$url_2  = explode( 'd=', $url_1 );
-			$url_3  = explode( '&', $url_2[1] );
+			if ( is_array( $url_2 ) && isset( $url_2[ 1 ] ) ) {
+				$url_3 = explode( '&', $url_2[1] );
+			} else {
+				$url_3 = $url_2;
+			}
 			$avatar = "<img src='{$url_3[0]}' alt='' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 		}
 
