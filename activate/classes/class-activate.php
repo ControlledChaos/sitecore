@@ -32,16 +32,20 @@ class Activate {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct() {}
 
-		// Add notice(s) if the PHP version is insufficient.
-		if ( ! Classes\scp_php()->version() ) {
+	/**
+	 * Get plugin row notice
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function get_row_notice() {
 
-			// Add notice to plugin row.
-			add_action( 'after_plugin_row_' . SCP_BASENAME, [ $this, 'php_deactivate_notice_row' ], 5, 3 );
-
-			// Add notice to admin header, uncomment to implement.
-			// add_action( 'admin_notices', [ $this, 'php_deactivate_notice_header' ] );
+		// Add notice if the PHP version is insufficient.
+		if ( ! Classes\php()->version() ) {
+			add_action( 'after_plugin_row_' . SCP_BASENAME, [ $this, 'row_notice' ], 5, 3 );
 		}
 	}
 
@@ -52,7 +56,7 @@ class Activate {
 	 * @access public
 	 * @return string Returns the markup of the plugin row notice.
 	 */
-	public function php_deactivate_notice_row( $plugin_file, $plugin_data, $status ) {
+	public function row_notice( $plugin_file, $plugin_data, $status ) {
 
 		$colspan = 4;
 
@@ -89,7 +93,7 @@ class Activate {
 						__( 'Functionality of the', SCP_DOMAIN ),
 						SCP_NAME,
 						__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
-						Classes\scp_php()->minimum(),
+						Classes\php()->minimum(),
 						__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 						phpversion()
 					); ?>
@@ -115,7 +119,7 @@ class Activate {
 				__( 'Functionality of the', SCP_DOMAIN ),
 				SCP_NAME,
 				__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
-				scp_php()->minimum(),
+				php()->minimum(),
 				__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
 				phpversion()
 			); ?>

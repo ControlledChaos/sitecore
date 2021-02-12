@@ -88,7 +88,7 @@ define( 'SCP_URL', plugin_dir_url(__FILE__ ) );
  * @since  1.0.0
  * @return void
  */
-if ( ! Classes\scp_php()->version() ) {
+if ( ! Classes\php()->version() ) {
 	return;
 }
 
@@ -116,7 +116,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The minimum required PHP version.
 		 */
-		'php_version' => Classes\scp_php()->minimum(),
+		'php_version' => Classes\php()->minimum(),
 
 		/**
 		 * Text domain

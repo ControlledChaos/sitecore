@@ -148,7 +148,9 @@ include_once SCP_PATH . 'activate/classes/class-deactivate.php';
  * @return void
  */
 function activate_plugin() {
-	Activate\activation_class();
+
+	// Instantiate the Activate class.
+	$activate = new Activate\Activate;
 }
 activate_plugin();
 
@@ -162,7 +164,9 @@ activate_plugin();
  * @return void
  */
 function deactivate_plugin() {
-	Activate\deactivation_class();
+
+	// Instantiate the Activate class.
+	$deactivate = new Activate\Deactivate;
 }
 deactivate_plugin();
 
@@ -175,7 +179,12 @@ deactivate_plugin();
  * @since  1.0.0
  * @return void
  */
-if ( ! Classes\scp_php()->version() ) {
+if ( ! Classes\php()->version() ) {
+
+	// First add a notice to the plugin row.
+	$activate = new Activate\Activate;
+	$activate->get_row_notice();
+
 	return;
 }
 

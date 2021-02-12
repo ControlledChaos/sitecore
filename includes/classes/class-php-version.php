@@ -22,6 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class PHP_Version {
 
 	/**
+	 * Minimum PHP version
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string The version number.
+	 */
+	protected $minimum = '8.4';
+
+	/**
 	 * Instance of the class
 	 *
 	 * This method can be used to call an instance
@@ -36,15 +45,6 @@ final class PHP_Version {
 	}
 
 	/**
-	 * Constructor method
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @return self
-	 */
-	private function __construct() {}
-
-	/**
 	 * Minimum PHP version
 	 *
 	 * @since  1.0.0
@@ -52,7 +52,7 @@ final class PHP_Version {
 	 * @return self
 	 */
 	public function minimum() {
-		return '7.4';
+		return $this->minimum;
 	}
 
 	/**
@@ -79,6 +79,6 @@ final class PHP_Version {
  * @access public
  * @return object PHP_Version Returns an instance of the class.
  */
-function scp_php() {
+function php() {
 	return PHP_Version :: instance();
 }
