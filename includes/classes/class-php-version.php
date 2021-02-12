@@ -28,7 +28,7 @@ final class PHP_Version {
 	 * @access protected
 	 * @var    string The version number.
 	 */
-	protected $minimum = '8.4';
+	protected $minimum = '7.4';
 
 	/**
 	 * Instance of the class
