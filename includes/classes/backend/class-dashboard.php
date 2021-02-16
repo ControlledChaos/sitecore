@@ -189,7 +189,7 @@ class Dashboard extends Classes\Base {
 	public function admin_enqueue_scripts() {
 
 		// Script to fill base64 background images with current link colors.
-		wp_enqueue_script( 'scp-svg-painter', SCP_URL . 'assets/js/at-glance-svg.min.js', [ 'jquery' ], '', true );
+		wp_enqueue_script( 'scp-svg-painter', SCP_URL . 'assets/js/svg-icon-colors.min.js', [ 'jquery' ], '', true );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Dashboard extends Classes\Base {
 	public function admin_print_scripts() {
 
 		// Script to fill base64 background images with current link colors.
-		echo '<script type="text/javascript">var _atGlanceSVG = ' . wp_json_encode( $this->at_glance_svg() ) . ";</script>\n";
+		echo '<script type="text/javascript">var _dashboard_svg_icons = ' . wp_json_encode( $this->at_glance_svg() ) . ";</script>\n";
 	}
 
 	/**

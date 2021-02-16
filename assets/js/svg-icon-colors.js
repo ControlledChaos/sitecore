@@ -1,32 +1,33 @@
 /**
- * At a Glance SVG colors
+ * SVG icon colors
  *
  * Used to fill base64/SVG background images with colors
  * corresponding to current user's color scheme preference.
  *
- * @see includes/classes/backend/class-dashboard.php
+ * Forked from the WordPress SVG Painter used in the admin menu.
  *
  * @package    Site_Core
  * @subpackage Assets
  * @category   JavaScript
+ * @since      1.0.0
  */
 
 window.scp = window.scp || {};
 
-scp.atGlanceSVG = ( function( $, window, document, undefined ) {
+scp.dashboard_svg_icons = ( function( $, window, document, undefined ) {
 	'use strict';
 	var selector, base64, painter,
 		colorscheme = {},
 		elements    = [];
 
 	$(document).ready( function() {
-		scp.atGlanceSVG.init();
+		scp.dashboard_svg_icons.init();
 	});
 
 	return {
 		init: function() {
 			painter  = this;
-			selector = $( '#dashboard_right_now .at-glance-cpt-icons' );
+			selector = $( '.scp-content-list .scp-cpt-icons, #dashboard_right_now .at-glance-cpt-icons' );
 
 			this.setColors();
 			this.findElements();
@@ -34,8 +35,8 @@ scp.atGlanceSVG = ( function( $, window, document, undefined ) {
 		},
 
 		setColors: function( scheme ) {
-			if ( typeof scheme === 'undefined' && typeof window._atGlanceSVG !== 'undefined' ) {
-				scheme = window._atGlanceSVG;
+			if ( typeof scheme === 'undefined' && typeof window._dashboard_svg_icons !== 'undefined' ) {
+				scheme = window._dashboard_svg_icons;
 			}
 
 			if ( scheme && scheme.colors && scheme.colors.link && scheme.colors.hover && scheme.colors.focus ) {
