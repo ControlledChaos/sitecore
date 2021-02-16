@@ -189,7 +189,7 @@ class Dashboard extends Classes\Base {
 	public function admin_enqueue_scripts() {
 
 		// Script to fill base64 background images with current link colors.
-		wp_enqueue_script( 'scp-svg-painter', SCP_URL . 'assets/js/svg-icon-colors.min.js', [ 'jquery' ], '', true );
+		wp_enqueue_script( 'scp-svg-icon-colors', SCP_URL . 'assets/js/svg-icon-colors.min.js', [ 'jquery' ], '', true );
 	}
 
 	/**
