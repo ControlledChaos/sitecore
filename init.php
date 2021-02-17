@@ -62,6 +62,9 @@ function text_domain() {
  */
 function sitecore() {
 
+	// Access current admin page.
+	global $pagenow;
+
 	// Load text domain. Hook to `init` rather than `plugins_loaded`.
 	add_action( 'init', __NAMESPACE__ . '\text_domain' );
 
