@@ -75,7 +75,7 @@ class Type_Tax {
 			$name = $post_type_obj->labels->singular_name;
 			$post_title = esc_html__( $name . ' Title', SCP_CONFIG['domain'] );
 		} else {
-			$post_title = esc_html__('Title', SCP_CONFIG['domain'] );
+			$post_title = esc_html__( 'Title', SCP_CONFIG['domain'] );
 		}
 
 		// Apply a filter conditional modification.
