@@ -164,6 +164,11 @@ function sitecore() {
 	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
 	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
 	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+
+	// System email filters.
+	add_filter( 'wp_mail_from_name', function( $name ) {
+		return apply_filters( 'scp_mail_from_name', get_bloginfo( 'name' ) );
+	});
 }
 
 // Run the plugin.
