@@ -112,7 +112,8 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Posts_List_Table'        => SCP_CLASS['admin'] . 'posts-list-table.php',
 
 	// Frontend classes.
-	SCP_CLASS_NS . '\Front\Frontend' => SCP_CLASS['front'] . 'frontend.php',
+	SCP_CLASS_NS . '\Front\Frontend'       => SCP_CLASS['front'] . 'frontend.php',
+	SCP_CLASS_NS . '\Front\Content_Filter' => SCP_CLASS['front'] . 'content-filter.php',
 
 	// General/miscellaneos classes.
 
