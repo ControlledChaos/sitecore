@@ -1,6 +1,9 @@
 <?php
 /**
- * Frontend class
+ * Content filter class
+ *
+ * Extend this class to filter the post title
+ * and the default post content by post types.
  *
  * @package    Site_Core
  * @subpackage Classes
