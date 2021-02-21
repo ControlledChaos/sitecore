@@ -113,6 +113,7 @@ define( 'SCP_CLASSES', [
 
 	// Frontend classes.
 	SCP_CLASS_NS . '\Front\Frontend'       => SCP_CLASS['front'] . 'frontend.php',
+	SCP_CLASS_NS . '\Front\Title_Filter'   => SCP_CLASS['front'] . 'title-filter.php',
 	SCP_CLASS_NS . '\Front\Content_Filter' => SCP_CLASS['front'] . 'content-filter.php',
 
 	// General/miscellaneos classes.

@@ -1,11 +1,9 @@
 <?php
 /**
- * Post content filter
+ * Post title filter
  *
- * Extend this class to filter the
- * post content by post types.
- * Content is from the default rich text
- * editor or block editor in WordPress 5.0+.
+ * Extend this class to filter the post title
+ * by post types.
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -20,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Content_Filter {
+class Title_Filter {
 
 	/**
 	 * Post types
@@ -37,9 +35,9 @@ class Content_Filter {
 	private $post_types = [];
 
 	/**
-	 * Content filter priority
+	 * Title filter priority
 	 *
-	 * When to filter the content.
+	 * When to filter the title.
 	 *
 	 * @since  1.0.0
 	 * @access private
@@ -56,9 +54,9 @@ class Content_Filter {
 	 */
 	public function __construct() {
 
-		// Add content filter if post types are set.
+		// Add title filter if post types are set.
 		if ( $this->post_types() ) {
-			add_filter( 'the_content', [ $this, 'the_content' ], $this->priority, 1 );
+			add_filter( 'the_title', [ $this, 'the_title' ], $this->priority, 2 );
 		}
 	}
 
@@ -78,15 +76,15 @@ class Content_Filter {
 	}
 
 	/**
-	 * Filter content
+	 * Title text
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  string $content The value of the content field.
-	 * @return mixed Returns the content to be filtered or
-	 *               returns the unfiltered content if post types don't match.
+	 * @param  string $title The value of the title field.
+	 * @param  integer $id The ID of the post.
+	 * @return string Returns the text of the post title.
 	 */
-	public function the_content( $content ) {
-		return $content;
+	public function the_title( $title, $id ) {
+		return $title;
 	}
 }
