@@ -109,6 +109,10 @@ class Content_Sample extends Content_Filter {
 	/**
 	 * Post type archive content
 	 *
+	 * A partials subdirectory is used because many themes
+	 * have more markup in the content directory files than
+	 * simply the content section, which this replaces.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
@@ -131,6 +135,10 @@ class Content_Sample extends Content_Filter {
 	/**
 	 * Single post type content
 	 *
+	 * A partials subdirectory is used because many themes
+	 * have more markup in the content directory files than
+	 * simply the content section, which this replaces.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
@@ -152,6 +160,10 @@ class Content_Sample extends Content_Filter {
 
 	/**
 	 * Taxonomy archive content
+	 *
+	 * A partials subdirectory is used because many themes
+	 * have more markup in the content directory files than
+	 * simply the content section, which this replaces.
 	 *
 	 * @since  1.0.0
 	 * @access public
