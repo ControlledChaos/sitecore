@@ -45,7 +45,8 @@ class Register_Sample_Tax extends Register_Tax {
 	 * @var    array The array of associated post types.
 	 */
 	protected $post_types = [
-		'post'
+		'post',
+		'sample_type'
 	];
 
 	/**
