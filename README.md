@@ -4,7 +4,7 @@ Develop site-specific plugins for ClassicPress, WordPress, and the antibrand sys
 
 ![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_min-7.4-8892bf.svg?style=flat-square)
 ![ClassicPress tested on version 1.2.0](https://img.shields.io/badge/ClassicPress-1.2.0-03768e.svg?style=flat-square)
-![WordPress tested on version 5.6](https://img.shields.io/badge/WordPress-5.6-0073aa.svg?style=flat-square)
+![WordPress tested on version 5.6.1](https://img.shields.io/badge/WordPress-5.6.1-0073aa.svg?style=flat-square)
 ![Compatible with the antibrand system](https://img.shields.io/badge/antibrand-Ready-ffe000.svg?style=flat-square)
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
 
@@ -52,21 +52,24 @@ Included is the basic version of the Advanced Custom Fields: Extended enhancemen
 
 [https://www.acf-extended.com](https://www.acf-extended.com)
 
-### Post Types & Taxonomies
-
-Documentaion coming.
-
 ### Editor Options
 
 If the plugin is used with WordPress 5.0 or higher then it provides various content editing options. Set the block editor or the rich text editor as default. Allow users to choose their editor preference to override the default editor. In networks, all site administrators to override editor defaults.
 
-### Admin Pages Framework
+### Base Classes
 
-Easily add administration pages, including settings pages, as top-level menu entries or submenu entries. Simply extend the relevant class. Sample, starter files for each are provided to copy, rename, and provide details.
+Included are several base classes for adding features for your website project. Simply extend the relevant class. Sample, starter files for each are provided to copy, rename, and develop for your needs.
 
-### Settings API Framework
+These classes include:
 
-In the works.
+* Register post types
+* Register taxonomies
+* Admin pages
+* Admin subpages
+* Title filters
+* Content filters
+* ACF options pages
+* ACF options subpages
 
 ### User Options, Roles, & Capabilities
 
