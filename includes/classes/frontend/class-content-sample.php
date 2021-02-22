@@ -88,33 +88,15 @@ class Content_Sample extends Content_Filter {
 				 * and if the content is in the loop.
 				 */
 				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
-
-					// Text specific to the archive.
-					$content = sprintf(
-						'<p>%s%s</p>',
-						__( 'Content for archived post #', SCP_DOMAIN ),
-						$id
-					);
-
-				// If the post is in the main blog pages.
-				} elseif ( is_home() && is_main_query() && in_the_loop() ) {
-
-					// Text specific to the blog.
-					$content = sprintf(
-						'<p>%s%s</p>',
-						__( 'Content for blog post #', SCP_DOMAIN ),
-						$id
-					);
+					$content = $this->archive_content();
 
 				// If the post is singular and if it is in the loop.
 				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
+					$content = $this->single_content();
 
-					// Text specific to the single post.
-					$content = sprintf(
-						'<p>%s%s</p>',
-						__( 'Content for post #', SCP_DOMAIN ),
-						$id
-					);
+				// If the post is in taxonomy archive pages and if it is in the loop.
+				} elseif ( is_tax( 'sample_tax' ) && is_main_query() && in_the_loop() ) {
+					$content = $this->taxonomy_content();
 
 				}
 			}
@@ -122,5 +104,71 @@ class Content_Sample extends Content_Filter {
 
 		// Return the modified or unmodified content.
 		return $content;
+	}
+
+	/**
+	 * Post type archive content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function archive_content() {
+
+		// Look for a archive content template in the active theme.
+		$template = locate_template( 'template-parts/content/partials/archive-sample.php' );
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $template ) ) {
+			get_template_part( 'template-parts/content/partials/archive-sample' );
+
+		// Use the plugin template if no theme template is found.
+		} else {
+			include SCP_PATH . '/views/frontend/archive-sample.php';
+		}
+	}
+
+	/**
+	 * Single post type content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	 public function single_content() {
+
+		// Look for a single content template in the active theme.
+		$template = locate_template( 'template-parts/content/partials/single-sample.php' );
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $template ) ) {
+			get_template_part( 'template-parts/content/partials/single-sample' );
+
+		// Use the plugin template if no theme template is found.
+		} else {
+			include SCP_PATH . '/views/frontend/single-sample.php';
+		}
+	}
+
+	/**
+	 * Taxonomy archive content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function taxonomy_content() {
+
+		// Look for a taxonomy content template in the active theme.
+		$template = locate_template( 'template-parts/content/partials/taxonomy-sample.php' );
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $template ) ) {
+			get_template_part( 'template-parts/content/partials/taxonomy-sample' );
+
+		// Use the plugin template if no theme template is found.
+		} else {
+			include SCP_PATH . '/views/frontend/taxonomy-sample.php';
+		}
 	}
 }
