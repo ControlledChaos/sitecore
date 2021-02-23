@@ -35,9 +35,6 @@ class Media {
 		// Add image sizes.
 		add_action( 'init', [ $this, 'image_sizes' ] );
 
-		// Fallback image sizes.
-		add_action( 'after_setup_theme', [ $this, 'fallback_image_sizes' ], 20 );
-
 		// Add image sizes to insert media UI.
 		add_filter( 'image_size_names_choose', [ $this, 'insert_custom_image_sizes' ] );
 
@@ -100,23 +97,6 @@ class Media {
 		 * 1:1 aspect ratio.
 		 */
 		add_image_size( 'column-thumbnail', 48, 48, true );
-	}
-
-	/**
-	 * Fallback image sizes
-	 *
-	 * Checks first for theme images before adding these sizes.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function fallback_image_sizes() {
-
-		// Add image size if not found.
-		if ( ! has_image_size( 'sample-size' ) ) {
-			// add_image_size( 'sample-size', 320, 320, true );
-		}
 	}
 
 	/**
