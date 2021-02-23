@@ -35,6 +35,9 @@ class Media {
 		// Add image sizes.
 		add_action( 'init', [ $this, 'image_sizes' ] );
 
+		// Fallback image sizes.
+		add_action( 'after_setup_theme', [ $this, 'fallback_image_sizes' ], 20 );
+
 		// Add image sizes to insert media UI.
 		add_filter( 'image_size_names_choose', [ $this, 'insert_custom_image_sizes' ] );
 
@@ -82,11 +85,38 @@ class Media {
 	 */
 	public function image_sizes() {
 
-		// For link embedding and sharing on social sites.
-		add_image_size( __( 'meta-image', SCP_CONFIG['domain'] ), 1280, 720, true );
+		/**
+		 * Meta image
+		 *
+		 * For link embedding and sharing on social sites.
+		 * 16:9 aspect ratio.
+		 */
+		add_image_size( 'meta-image', 1280, 720, true );
 
-		// For use as featured image in admin columns.
-		add_image_size( __( 'column-thumbnail', SCP_CONFIG['domain'] ), 48, 48, true );
+		/**
+		 * Column thumnail
+		 *
+		 * For use as featured image in admin columns.
+		 * 1:1 aspect ratio.
+		 */
+		add_image_size( 'column-thumbnail', 48, 48, true );
+	}
+
+	/**
+	 * Fallback image sizes
+	 *
+	 * Checks first for theme images before adding these sizes.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function fallback_image_sizes() {
+
+		// Add image size if not found.
+		if ( ! has_image_size( 'sample-size' ) ) {
+			// add_image_size( 'sample-size', 320, 320, true );
+		}
 	}
 
 	/**
