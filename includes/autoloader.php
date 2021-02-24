@@ -97,8 +97,10 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Vendor\Plugins'     => SCP_CLASS['vendor'] . 'plugins.php',
 	SCP_CLASS_NS . '\Vendor\ACF'         => SCP_CLASS['vendor'] . 'acf.php',
 	SCP_CLASS_NS . '\Vendor\ACF_Columns' => SCP_CLASS['vendor'] . 'acf-columns.php',
-	SCP_CLASS_NS . '\Vendor\Add_ACF_Options'     => SCP_CLASS['vendor'] . 'add-acf-options.php',
-	SCP_CLASS_NS . '\Vendor\Add_ACF_Suboptions' => SCP_CLASS['vendor'] . 'add-acf-suboptions.php',
+	SCP_CLASS_NS . '\Vendor\Add_ACF_Options'       => SCP_CLASS['vendor'] . 'add-acf-options.php',
+	SCP_CLASS_NS . '\Vendor\Add_ACF_Suboptions'    => SCP_CLASS['vendor'] . 'add-acf-suboptions.php',
+	// SCP_CLASS_NS . '\Vendor\Sample_ACF_Options'    => SCP_CLASS['vendor'] . 'sample-acf-options.php',
+	// SCP_CLASS_NS . '\Vendor\Sample_ACF_Suboptions' => SCP_CLASS['vendor'] . 'sample-acf-suboptions.php',
 
 	// Backend/admin classes,
 	SCP_CLASS_NS . '\Admin\Admin'                   => SCP_CLASS['admin'] . 'admin.php',

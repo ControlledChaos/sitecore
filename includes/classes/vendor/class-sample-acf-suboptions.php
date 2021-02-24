@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_ACF_Sub_Options extends Add_ACF_Suboptions {
+class Sample_ACF_Suboptions extends Add_ACF_Suboptions {
 
 	/**
 	 * Parent slug
@@ -41,7 +41,7 @@ class Sample_ACF_Sub_Options extends Add_ACF_Suboptions {
 	 *                title tags of the page when the
 	 *                menu is selected.
 	 */
-	protected $page_title = 'Sample Options Page';
+	protected $page_title = 'Sample Options Subpage';
 
 	/**
 	 * Menu title
@@ -63,7 +63,7 @@ class Sample_ACF_Sub_Options extends Add_ACF_Suboptions {
 	 *                dashes, and underscores characters to be
 	 *                compatible with sanitize_key().
 	 */
-	protected $menu_slug = 'sample-options-sub-page';
+	protected $menu_slug = 'sample-options-subpage';
 
 	/**
 	 * Menu position
@@ -95,11 +95,6 @@ class Sample_ACF_Sub_Options extends Add_ACF_Suboptions {
 	 * @return void
 	 */
 	public function field_groups() {
-
-		/**
-		 * Include from another file or use the
-		 * `acf_add_local_field_group` function
-		 * here, as exported.
-		 */
+		include_once SCP_PATH . '/includes/fields/acf-sample-suboptions.php';
 	}
 }

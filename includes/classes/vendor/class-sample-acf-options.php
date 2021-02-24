@@ -81,11 +81,6 @@ class Sample_ACF_Options extends Add_ACF_Options {
 	 * @return void
 	 */
 	public function field_groups() {
-
-		/**
-		 * Include from another file or use the
-		 * `acf_add_local_field_group` function
-		 * here, as exported.
-		 */
+		include_once SCP_PATH . '/includes/fields/acf-sample-options.php';
 	}
 }

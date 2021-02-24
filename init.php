@@ -56,6 +56,8 @@ function text_domain() {
  * Loads and runs PHP classes.
  * Removes unwanted features.
  *
+ * SAMPLES: Uncomment sample classes to run them.
+ *
  * @since  1.0.0
  * @access public
  * @return void
@@ -115,6 +117,8 @@ function sitecore() {
 
 	// Instantiate third-party classes.
 	new Vendor\Plugins;
+	// new Vendor\Sample_ACF_Options;
+	// new Vendor\Sample_ACF_Suboptions;
 
 	// Instantiate backend classes.
 	if ( is_admin() ) {
