@@ -124,6 +124,6 @@ This statement is a disclaimer of all legalities concerning creative works. We r
 
 ## Distribution & Modification
 
-This product, including images, graphical vector markup, documentation, and any works not described here, are released for public consumption ad libitum, ad infinitum.
+This product, including images, graphical vector markup, documentation, and any works not described here, is released for public consumption ad libitum, ad infinitum.
 
 In other words, this product shall remain available for use and for modification free of charge, free of regulation, and free of reprisal.
