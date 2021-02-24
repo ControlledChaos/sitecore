@@ -69,6 +69,9 @@ class Sample_ACF_Options extends Register_ACF_Options {
 	 */
 	public function __construct() {
 		parent :: __construct();
+
+		// Field groups.
+		add_action( 'acf/init', [ $this, 'field_groups' ] );
 	}
 
 	/**

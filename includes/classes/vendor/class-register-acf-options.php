@@ -52,7 +52,7 @@ class Register_ACF_Options extends Admin\Add_Page {
 		parent :: __construct();
 
 		// Field groups.
-		add_action( 'acf/init', 'field_groups' );
+		add_action( 'acf/init', [ $this, 'field_groups' ] );
 	}
 
 	/**
