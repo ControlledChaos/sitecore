@@ -22,6 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_ACF_Sub_Options extends Admin\Add_Subpage {
 
 	/**
+	 * ACF options page
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Nullifies the parent `add_page()` method.
+	 */
+	protected $acf_options = true;
+
+	/**
 	 * Menu position
 	 *
 	 * @since  1.0.0
@@ -45,19 +54,6 @@ class Register_ACF_Sub_Options extends Admin\Add_Subpage {
 
 		// Field groups.
 		add_action( 'acf/init', [ $this, 'field_groups' ] );
-	}
-
-	/**
-	 * Nullify parent class page
-	 *
-	 * The `options_page` method is used instead.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function add_page() {
-		return null;
 	}
 
 	/**

@@ -57,6 +57,11 @@ class Add_Subpage extends Add_Page {
 	 */
 	public function add_page() {
 
+		// Return null for ACF options pages.
+		if ( true == $this->acf_options ) {
+			return null;
+		}
+
 		$this->help = add_submenu_page(
 			strtolower( $this->parent_slug ),
 			$this->page_title(),

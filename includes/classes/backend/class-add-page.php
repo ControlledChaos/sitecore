@@ -149,6 +149,16 @@ class Add_Page extends Classes\Base {
 	protected $add_help = false;
 
 	/**
+	 * ACF options page
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean True is the page is an ACF options page.
+	 *                  Default is false.
+	 */
+	protected $acf_options = false;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -174,6 +184,11 @@ class Add_Page extends Classes\Base {
 	 * @return void
 	 */
 	public function add_page() {
+
+		// Return null for ACF options pages.
+		if ( true == $this->acf_options ) {
+			return null;
+		}
 
 		$this->help = add_menu_page(
 			$this->page_title(),
