@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_ACF_Sub_Options extends Admin\Add_Page {
+class Register_ACF_Sub_Options extends Admin\Add_Subpage {
 
 	/**
 	 * Menu position
