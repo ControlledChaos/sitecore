@@ -357,6 +357,9 @@ class Register_Type {
 
 		// New post type labels.
 		add_filter( $this->type_key . '_labels', [ $this, 'filter_labels' ] );
+
+		// Field groups.
+		add_action( 'acf/init', [ $this, 'field_groups' ] );
 	}
 
 	/**
@@ -537,5 +540,23 @@ class Register_Type {
 		];
 
 		return $labels;
+	}
+
+	/**
+	 * Field groups
+	 *
+	 * Register field groups for this post type.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function field_groups() {
+
+		/**
+		 * Include from another file or use the
+		 * `acf_add_local_field_group` function
+		 * here, as exported.
+		 */
 	}
 }
