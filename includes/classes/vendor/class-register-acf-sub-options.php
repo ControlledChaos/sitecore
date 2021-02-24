@@ -40,18 +40,34 @@ class Register_ACF_Sub_Options extends Admin\Add_Page {
 	public function __construct() {
 		parent :: __construct();
 
+		// Register options page.
+		add_action( 'acf/init', [ $this, 'add_options_page' ] );
+
 		// Field groups.
 		add_action( 'acf/init', [ $this, 'field_groups' ] );
 	}
 
 	/**
-	 * Register menu page
+	 * Nullify parent class page
+	 *
+	 * The `options_page` method is used instead.
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function menu_page() {
+	public function add_page() {
+		return null;
+	}
+
+	/**
+	 * Register options page
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function add_options_page() {
 
 		// Stop here if ACF Pro is not active.
 		if ( ! function_exists( 'acf_add_options_sub_page' ) ) {
