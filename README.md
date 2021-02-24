@@ -79,7 +79,7 @@ Much is complete, documentaion coming.
 
 First change the name of the core plugin file to reflect the new name of your plugin. Or leave the name since it clearly describes the purpose of the plugin.
 
-Next change the information above in the plugin header and either change the plugin name in the License & Warranty notice or remove it.
+Next change the information in the plugin header of the core plugin file and either change the plugin name in the License & Warranty notice or remove it.
 
 Following is a list of strings to find and replace in all plugin files.
 
@@ -105,15 +105,12 @@ Following is a list of strings to find and replace in all plugin files.
 7. **General prefix**  
    Find `scp` and replace with something unique to your plugin name. Use only lowercase letters. This will change the prefix of all filters and settings, and the prefix of functions outside of a class.
 
-8. **Author**  
-   Find `Greg Sweet <greg@ccdzine.com>` and replace with your name and email address or those of your organization.
-
-9. **Constants**
+8. **Constants**
    See the `includes/config.php` file to change developer/agency details, plugin name & URL, plus more personal or white-label constants.
 
 Edit the README file in the root directory as needed, or delete it.
 
-Finally, remember to modify or remove the instructional information in admin pages, including contextual help tabs. Remove these renaming instructions as desired.
+Finally, remember to modify or remove any instructional information in admin pages, including contextual help tabs. Remove these renaming instructions as desired.
 
 ## License & Warranty
 
