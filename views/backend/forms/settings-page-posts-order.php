@@ -2,11 +2,10 @@
 /**
  * Settings for drag & drop custom post and taxonomy orders.
  *
- * @package    Controlled_Chaos_Plugin
- * @subpackage Includes\Post_Types_Taxes
- *
+ * @package    Site_Core
+ * @subpackage Views
+ * @category   Forms
  * @since      1.0.0
- * @author     Greg Sweet <greg@ccdzine.com>
  */
 
 // If this file is called directly, abort.
