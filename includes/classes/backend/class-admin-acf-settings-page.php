@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin_ACF_Settings_Page extends Vendor\Register_ACF_Sub_Options {
+class Admin_ACF_Settings_Page extends Vendor\Add_ACF_Suboptions {
 
 	/**
 	 * Parent slug

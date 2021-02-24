@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_ACF_Sub_Options extends Register_ACF_Sub_Options {
+class Sample_ACF_Sub_Options extends Add_ACF_Suboptions {
 
 	/**
 	 * Parent slug

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_ACF_Options extends Register_ACF_Options {
+class Sample_ACF_Options extends Add_ACF_Options {
 
 	/**
 	 * Page title

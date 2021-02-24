@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_ACF_Options extends Admin\Add_Page {
+class Add_ACF_Options extends Admin\Add_Page {
 
 	/**
 	 * ACF options page
