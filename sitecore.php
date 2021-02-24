@@ -76,17 +76,13 @@ use SiteCore\Classes\Activate as Activate;
  *    only lowercase letters. This will change the prefix of all filters and
  *    settings, and the prefix of functions outside of a class.
  *
- * 8. Author
- *    Find `Greg Sweet <greg@ccdzine.com>` and replace with your name and
- *    email address or those of your organization.
- *
- * 9. Constants
+ * 8. Constants
  *    See the `includes/config.php` file to change developer/agency details,
  *    plugin name & URL, plus more personal or white-label constants.
  *
- * 10. Edit the README file in the root directory as needed, or delete it.
+ * 9. Edit the README file in the root directory as needed, or delete it.
  *
- * 11. Finally, remember to modify or remove the instructional information in
+ * 10. Finally, remember to modify or remove any instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
  */
