@@ -120,7 +120,7 @@ Site Core is distributed WITHOUT ANY WARRANTY; without even the implied warranty
 
 ## Disclaimer of Legalities
 
-This document is a disclaimer of all legalities concerning creative works. We reject the notion and the force of copyright law, and thus reject its presumed authority over our works. We therefore disclaim legalities including but not limited to access to copy and distribution protections provided by law, and we disclaim consent to be regulated by copy and distribution law.
+This statement is a disclaimer of all legalities concerning creative works. We reject the notion and the force of copyright law, and thus reject its presumed authority over our works. We therefore disclaim legalities including but not limited to access to copy and distribution protections provided by law, and we disclaim consent to be regulated by copy and distribution law.
 
 ## Distribution & Modification
 
