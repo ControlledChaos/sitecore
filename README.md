@@ -77,7 +77,7 @@ Much is complete, documentaion coming.
 
 ## Renaming the Plugin
 
-First change the name of this file to reflect the new name of your plugin. Or leave the name since it clearly describes the purpose of the plugin.
+First change the name of the core plugin file to reflect the new name of your plugin. Or leave the name since it clearly describes the purpose of the plugin.
 
 Next change the information above in the plugin header and either change the plugin name in the License & Warranty notice or remove it.
 
