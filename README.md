@@ -118,6 +118,8 @@ Site Core is free software. It can be redistributed and/or modified ad libidum. 
 
 Site Core is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+This project is an exercise in true open source code without the inherent ownership implied by the issuance of a license, however non-restrictive the license is.
+
 ## Disclaimer of Legalities
 
 This statement is a disclaimer of all legalities concerning creative works. We reject the notion and the force of copyright law, and thus reject its presumed authority over our works. We therefore disclaim legalities including but not limited to access to copy and distribution protections provided by law, and we disclaim consent to be regulated by copy and distribution law.
