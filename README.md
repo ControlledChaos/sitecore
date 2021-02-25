@@ -30,9 +30,9 @@ If you would like to request development of a custom version of this plugin for 
 
 This is a complete overhaul of my years-old starter plugin. Many of the features in the old plugin are being tranferred over and rewritten as necessary and proper. These features and new ones will be listed here as they are implemented.
 
-## Plugin Logo
+## Cover Image
 
-Anyone who wants to submit a replacement for the logo into which I put three minutes of effort is welcome to do so.
+Anyone who wants to submit a replacement for the plugin's cover image into which I put three minutes of effort is welcome to do so.
 
 ---
 
