@@ -57,6 +57,7 @@ function text_domain() {
  * Removes unwanted features.
  *
  * SAMPLES: Uncomment sample classes to run them.
+ * Make sure to also uncomment in the autoloader.
  *
  * @since  1.0.0
  * @access public
@@ -118,9 +119,10 @@ function sitecore() {
 	new Media\Media;
 
 	// Instantiate third-party classes.
-	new Vendor\Plugins;
 	// new Vendor\Sample_ACF_Options;
 	// new Vendor\Sample_ACF_Suboptions;
+	new Vendor\ACF;
+	new Vendor\ACFE;
 
 	// Instantiate backend classes.
 	if ( is_admin() ) {
@@ -174,7 +176,7 @@ function sitecore() {
 	// System email filters.
 	add_filter( 'wp_mail_from_name', function( $name ) {
 		return apply_filters( 'scp_mail_from_name', get_bloginfo( 'name' ) );
-	});
+	} );
 }
 
 // Run the plugin.
