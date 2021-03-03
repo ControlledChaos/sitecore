@@ -96,10 +96,11 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Users\User_Avatars'    => SCP_CLASS['users'] . 'user-avatars.php',
 
 	// Vendor classes.
-	SCP_CLASS_NS . '\Vendor\Plugin'      => SCP_CLASS['vendor'] . 'plugin.php',
-	SCP_CLASS_NS . '\Vendor\ACF'         => SCP_CLASS['vendor'] . 'acf.php',
-	SCP_CLASS_NS . '\Vendor\ACFE'        => SCP_CLASS['vendor'] . 'acfe.php',
-	SCP_CLASS_NS . '\Vendor\ACF_Columns' => SCP_CLASS['vendor'] . 'acf-columns.php',
+	SCP_CLASS_NS . '\Vendor\Plugin'        => SCP_CLASS['vendor'] . 'plugin.php',
+	// SCP_CLASS_NS . '\Vendor\Sample_Plugin' => SCP_CLASS['vendor'] . 'sample-plugin.php',
+	SCP_CLASS_NS . '\Vendor\ACF'           => SCP_CLASS['vendor'] . 'acf.php',
+	SCP_CLASS_NS . '\Vendor\ACFE'          => SCP_CLASS['vendor'] . 'acfe.php',
+	SCP_CLASS_NS . '\Vendor\ACF_Columns'   => SCP_CLASS['vendor'] . 'acf-columns.php',
 	SCP_CLASS_NS . '\Vendor\Add_ACF_Options'       => SCP_CLASS['vendor'] . 'add-acf-options.php',
 	SCP_CLASS_NS . '\Vendor\Add_ACF_Suboptions'    => SCP_CLASS['vendor'] . 'add-acf-suboptions.php',
 	// SCP_CLASS_NS . '\Vendor\Sample_ACF_Options'    => SCP_CLASS['vendor'] . 'sample-acf-options.php',
