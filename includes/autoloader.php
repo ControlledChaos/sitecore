@@ -78,7 +78,6 @@ define( 'SCP_CLASSES', [
 
 	// Settings classes.
 	SCP_CLASS_NS . '\Settings\Settings'     => SCP_CLASS['settings'] . 'settings.php',
-	SCP_CLASS_NS . '\Settings\Settings_API' => SCP_CLASS['settings'] . 'settings-api.php',
 
 	// Tools classes.
 	SCP_CLASS_NS . '\Tools\Tools'            => SCP_CLASS['tools'] . 'tools.php',

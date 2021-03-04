@@ -26,7 +26,7 @@ if ( ! defined( 'SCP_FORMS' ) ) {
 	] );
 }
 
-class Settings extends Classes\Base {
+class Settings {
 
 	/**
 	 * Setting data
@@ -46,34 +46,7 @@ class Settings extends Classes\Base {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
-
-		parent :: __construct();
-
-		new Settings_API;
-
-		/**
-		 * Admin settings page
-		 *
-		 * Use an ACF options page if ACF Pro is active.
-		 *
-		 * @todo Review whether the ACF condition is desirable.
-		 */
-		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
-			new Admin\Admin_ACF_Settings_Page;
-		} else {
-			new Admin\Admin_Settings_Page;
-		}
-
-		// @todo Remove when testing is finished.
-		new Admin\Add_Settings_Page;
-
-		// Content settings.
-		new Admin\Content_Settings;
-
-		// Register settings sections and fields.
-		add_action( 'admin_init', [ $this, 'settings' ] );
-	}
+	public function __construct() {}
 
 	/**
 	 * Settings
@@ -158,4 +131,4 @@ function get_settings() {
 		}
 	}
 }
-get_settings();
+// get_settings();
