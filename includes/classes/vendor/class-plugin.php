@@ -247,11 +247,11 @@ class Plugin {
 	 * is installed and active.
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @return boolean Returns true if either version of the
 	 *                 installed plugin is acive.
 	 */
-	protected function is_active() {
+	public function is_active() {
 
 		if ( is_plugin_active( $this->basic_basename() ) ) {
 			return true;
