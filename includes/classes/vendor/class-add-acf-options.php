@@ -77,10 +77,10 @@ class Add_ACF_Options extends Admin\Add_Page {
 	public function add_options_page() {
 
 		// Stop here if ACF Pro is not active.
-		if ( ! function_exists( 'acf_add_options_sub_page' ) ) {
+		if ( ! function_exists( 'acf_add_options_page' ) ) {
 			return;
 		}
-		acf_add_options_sub_page( $this->options_page() );
+		acf_add_options_page( $this->options_page() );
 	}
 
 	/**
@@ -96,9 +96,10 @@ class Add_ACF_Options extends Admin\Add_Page {
 			'page_title' => $this->page_title(),
 			'menu_title' => $this->menu_title(),
 			'menu_slug'  => strtolower( $this->menu_slug ),
-			'capability' => strtolower( $this->capability ),
 			'icon_url'   => strtolower( $this->icon_url ),
-			'position'   => (integer)$this->position
+			'position'   => (integer)$this->position,
+			'capability' => strtolower( $this->capability ),
+			'redirect'   => false
 		];
 		return $options;
 	}
