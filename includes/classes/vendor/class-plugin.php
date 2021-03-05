@@ -190,9 +190,17 @@ class Plugin {
 		$file = $this->upgrade_file;
 		$path = '';
 
-		if ( defined( 'WPMU_PLUGIN_DIR' ) && is_file( WPMU_PLUGIN_DIR . '/' . $dir . '/' . $file ) ) {
+		if (
+			defined( 'WPMU_PLUGIN_DIR' ) &&
+			is_file( WPMU_PLUGIN_DIR . '/' . $dir . '/' . $file ) &&
+			is_readable( WPMU_PLUGIN_DIR . '/' . $dir . '/' . $file ) ) {
 			$path = WPMU_PLUGIN_DIR . '/' . $dir . '/' . $file;
-		} elseif ( defined( 'WP_PLUGIN_DIR' ) && is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) ) {
+
+		} elseif (
+			defined( 'WP_PLUGIN_DIR' ) &&
+			is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) &&
+			is_readable( WP_PLUGIN_DIR . '/' . $dir . '/' . $file )
+		) {
 			$path = WP_PLUGIN_DIR . '/' . $dir . '/' . $file;
 		}
 		return apply_filters( 'scp_plugin_upgrade_path', $path );
@@ -213,7 +221,11 @@ class Plugin {
 		$file     = $this->installed_file;
 		$basename = '';
 
-		if ( defined( 'WP_PLUGIN_DIR' ) && is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) ) {
+		if (
+			defined( 'WP_PLUGIN_DIR' ) &&
+			is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) &&
+			is_readable( WP_PLUGIN_DIR . '/' . $dir . '/' . $file )
+		) {
 			$basename = $dir . '/' . $file;
 		}
 		return apply_filters( 'scp_plugin_basic_basename', $basename );
@@ -234,7 +246,11 @@ class Plugin {
 		$file     = $this->upgrade_file;
 		$basename = '';
 
-		if ( defined( 'WP_PLUGIN_DIR' ) && is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) ) {
+		if (
+			defined( 'WP_PLUGIN_DIR' ) &&
+			is_file( WP_PLUGIN_DIR . '/' . $dir . '/' . $file ) &&
+			is_readable( WP_PLUGIN_DIR . '/' . $dir . '/' . $file )
+		) {
 			$basename = $dir . '/' . $file;
 		}
 		return apply_filters( 'scp_plugin_upgrade_basename', $basename );
@@ -281,7 +297,7 @@ class Plugin {
 		$bundled = $this->bundled_path();
 
 		// Include the core file.
-		if ( is_file( $bundled ) ) {
+		if ( is_file( $bundled ) && is_readable( $bundled ) ) {
 			include( $bundled );
 		}
 	}
