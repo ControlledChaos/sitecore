@@ -2,9 +2,9 @@
 
 Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
 
-![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_min-7.4-8892bf.svg?style=flat-square)
-![ClassicPress tested on version 1.2.0](https://img.shields.io/badge/ClassicPress-1.2.0-03768e.svg?style=flat-square)
-![WordPress tested on version 5.6.1](https://img.shields.io/badge/WordPress-5.6.1-0073aa.svg?style=flat-square)
+![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_minimum-7.4-8892bf.svg?style=flat-square)
+![ClassicPress tested on version 1.2.0](https://img.shields.io/badge/ClassicPress_tested-1.2.0-03768e.svg?style=flat-square)
+![WordPress tested on version 5.7](https://img.shields.io/badge/WordPress_tested-5.7-2271b1.svg?style=flat-square)
 ![Compatible with the antibrand system](https://img.shields.io/badge/antibrand-Ready-ffe000.svg?style=flat-square)
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
 
@@ -18,7 +18,7 @@ This plugin is opinionated. However, many of the enhancements included are very 
 
 ## Approach
 
-I have made every effort to use a simple, uniform naming system that can be quicky renamed for your project. Instructions are included in the plugin's core file.
+I have made every effort to use a simple, uniform naming system that can be quickly renamed for your project. Instructions are included in the plugin's core file.
 
 Not every feature included with this plugin will be needed for my projects or yours. And one big reason for writing a site-specific plugin is to include only what the site needs and eliminate the overhead of plugins and themes that offer things that you don't need. So why have I packed so much into this plugin? Well, I find it to be much quicker and easier to remove unnecessary code that it is to write, or even copy & paste, new code into a project. And being that you will rename this plugin and that it will not update to overwrite your changes, modifications can be made ad libidum.
 
@@ -73,7 +73,7 @@ These classes include:
 
 ### User Options, Roles, & Capabilities
 
-Much is complete, documentaion coming.
+Much is complete, documentation coming.
 
 ## Renaming the Plugin
 
