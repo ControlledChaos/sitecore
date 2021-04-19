@@ -1,0 +1,640 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Site Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-19 01:27+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.2; wp-5.7.1\n"
+"X-Domain: sitecore"
+
+#: includes/classes/core/class-register-type.php:460
+msgid " archives"
+msgstr ""
+
+#: includes/classes/core/class-register-type.php:466
+msgid " Attributes"
+msgstr ""
+
+#: includes/classes/core/class-register-tax.php:241
+#: includes/classes/core/class-register-type.php:453
+msgid " Found"
+msgstr ""
+
+#: includes/classes/core/class-register-type.php:454
+msgid " Found in Trash"
+msgstr ""
+
+#: includes/classes/core/class-register-tax.php:244
+#: includes/classes/core/class-register-type.php:465
+msgid " List"
+msgstr ""
+
+#: includes/classes/core/class-register-tax.php:243
+#: includes/classes/core/class-register-type.php:464
+msgid " list navigation"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:76
+msgid " Title"
+msgstr ""
+
+#: includes/classes/core/class-register-tax.php:238
+msgid " with commas"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:290
+msgid " — featured image"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:159
+#, php-format
+msgid "%1s draft updated. <a target=\"_blank\" href=\"%2s\">Preview %3s</a>"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:134
+#, php-format
+msgid "%1s published. <a href=\"%2s\">View %3s</a>"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:129
+#, php-format
+msgid "%1s restored to revision from %2s"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:140
+#, php-format
+msgid "%1s saved."
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:151
+#, php-format
+msgid ""
+"%1s scheduled for: <strong>%2s</strong>. <a target=\"_blank\" href=\"%3s\">"
+"Preview %4s</a>"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:144
+#, php-format
+msgid "%1s submitted. <a target=\"_blank\" href=\"%2s\">Preview %3s</a>"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:118
+#, php-format
+msgid "%1s updated. <a href=\"%2s\">View %3s</a>"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:125
+#, php-format
+msgid "1%s updated."
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:38
+msgid "Add drag & drop sort order functionality to post types and taxonomies."
+msgstr ""
+
+#: includes/classes/core/class-register-type.php:446
+msgid "Add New"
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:57
+msgid "Admin Toolbar: Main"
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:56
+msgid "Admin Toolbar: Site Name"
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:58
+msgid "Admin Toolbar: User"
+msgstr ""
+
+#: includes/classes/backend/class-admin-settings-page.php:111
+msgid "Administration Settings"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:82
+msgid "All Page Templates"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:37
+msgid "Allow site admins to change settings"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:435
+msgid "Allow users to switch editors"
+msgstr ""
+
+#: includes/classes/frontend/class-title-sample.php:88
+msgid "Archived Post #"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:419
+msgid "Avatar"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:157
+msgid "Avatar Upload Permission"
+msgstr ""
+
+#: includes/classes/users/class-users.php:215
+msgid "Biographical Info"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:606
+msgid "Blank"
+msgstr ""
+
+#: includes/classes/frontend/class-title-sample.php:98
+msgid "Blog Post #"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:38
+msgid ""
+"By default the block editor is replaced with the rich text editor and users "
+"cannot switch editors."
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:34
+msgid "Change settings"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:60
+#: views/backend/forms/settings-page-posts-order.php:97
+msgid "Check All"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:58
+msgid "Check to Sort Post Types"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:95
+msgid "Check to Sort Taxonomies"
+msgstr ""
+
+#: views/frontend/archive-sample.php:13
+msgid "Content for archived post #"
+msgstr ""
+
+#: views/frontend/single-sample.php:13
+msgid "Content for post #"
+msgstr ""
+
+#: views/frontend/taxonomy-sample.php:13
+msgid "Content for taxonomy post #"
+msgstr ""
+
+#: includes/classes/backend/class-content-settings.php:139
+msgid "Content Settings"
+msgstr ""
+
+#: config.php:127
+msgid "Controlled Chaos"
+msgstr ""
+
+#. Author of the plugin
+msgid "Controlled Chaos Design"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:123
+msgid "Custom field deleted."
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:122
+msgid "Custom field updated."
+msgstr ""
+
+#: views/backend/forms/partials/settings-user-editor-default.php:17
+msgid "Default Editor"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:21
+msgid "Default editor for all sites"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:434
+msgid "Default editor for all users"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:83
+#: includes/classes/backend/class-posts-list-table.php:166
+#: includes/classes/backend/class-posts-list-table.php:167
+#: includes/classes/core/class-taxonomy-templates.php:150
+#: includes/classes/core/class-taxonomy-templates.php:179
+msgid "Default Template"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:308
+#: includes/classes/users/class-user-avatars.php:437
+msgid "Delete local avatar"
+msgstr ""
+
+#: views/backend/help/sample-more-info.php:19
+msgid "Demonstration help information."
+msgstr ""
+
+#: views/backend/help/sample-sidebar.php:19
+msgid "Demonstration help sidebar."
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Develop site-specific plugins for ClassicPress, WordPress, and the antibrand "
+"system."
+msgstr ""
+
+#: includes/classes/users/class-user-roles-caps.php:214
+msgid "Developer"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:973
+#, php-format
+msgid "Edit &#8220;%s&#8221; in the block editor"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:979
+#, php-format
+msgid "Edit &#8220;%s&#8221; in the rich text editor"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:769
+msgid "Editor"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:29
+#: views/backend/forms/partials/settings-writing-editor-default.php:25
+msgctxt "Editor Name"
+msgid "Block editor"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:1021
+msgctxt "Editor Name"
+msgid "block editor"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:1036
+msgctxt "Editor Name"
+msgid "Blocks"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:972
+msgctxt "Editor Name"
+msgid "Edit Blocks"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:978
+msgctxt "Editor Name"
+msgid "Edit Rich Text"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:1036
+msgctxt "Editor Name"
+msgid "Rich Text"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:25
+#: views/backend/forms/partials/settings-writing-editor-default.php:21
+msgctxt "Editor Name"
+msgid "Rich text editor"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:1016
+msgctxt "Editor Name"
+msgid "rich text editor"
+msgstr ""
+
+#: views/backend/forms/partials/settings-network-editor-default.php:16
+msgid "Editor Settings"
+msgstr ""
+
+#: includes/classes/users/class-users.php:190
+msgid "Erase Data"
+msgstr ""
+
+#: includes/classes/users/class-users.php:183
+msgid "Export Data"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:249
+msgid "Featured Image"
+msgstr ""
+
+#: includes/fields/acf-sample-options.php:75
+msgid "Field group provided as a sample for the sample options page."
+msgstr ""
+
+#: includes/fields/acf-sample-suboptions.php:75
+msgid "Field group provided as a sample for the sample options subpage."
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:60
+msgid "Frontend Toolbar: Main"
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:59
+msgid "Frontend Toolbar: Site Name"
+msgstr ""
+
+#: includes/classes/users/class-user-toolbar.php:61
+msgid "Frontend Toolbar: User"
+msgstr ""
+
+#: activate/classes/class-activate.php:93
+#: activate/classes/class-activate.php:119
+msgid "Functionality of the"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:605
+msgid "Generic"
+msgstr ""
+
+#: views/backend/help/sample-sidebar.php:17
+msgid "Help Sidebar"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://ccdzine.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/ControlledChaos/sitecore"
+msgstr ""
+
+#: includes/classes/backend/class-content-settings.php:126
+msgid "In development"
+msgstr ""
+
+#: includes/classes/backend/class-content-settings.php:124
+msgid "Intro"
+msgstr ""
+
+#: includes/classes/backend/class-content-settings.php:125
+msgid "Introduction"
+msgstr ""
+
+#: includes/fields/acf-sample-options.php:52
+#: includes/fields/acf-sample-suboptions.php:52
+msgid "Just a text field."
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:153
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: includes/classes/backend/class-add-page.php:639
+#: views/backend/help/sample-more-info.php:17
+msgid "More Information"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:604
+msgid "Mystery"
+msgstr ""
+
+#: views/backend/forms/partials/settings-writing-editor-allow.php:25
+msgid "No"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:294
+msgid "No featured image available"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:305
+#: includes/classes/users/class-user-avatars.php:434
+msgid "No local avatar is set. Use the upload field to add a local avatar."
+msgstr ""
+
+#: views/backend/forms/user-roles-admin-column.php:21
+msgid "None"
+msgstr ""
+
+#: includes/classes/backend/class-add-settings-page.php:135
+#: includes/classes/backend/class-sample-page.php:139
+#: includes/classes/backend/class-sample-subpage.php:143
+msgid "One"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:161
+msgid ""
+"Only allow users with file upload capabilities to upload local avatars "
+"(Authors and above)."
+msgstr ""
+
+#: activate/classes/class-activate.php:97
+#: activate/classes/class-activate.php:123
+msgid "or greater. Your system is running PHP version"
+msgstr ""
+
+#: views/backend/forms/user-roles-checklist.php:23
+msgid "Permissions"
+msgstr ""
+
+#: activate/classes/class-activate.php:95
+#: activate/classes/class-activate.php:121
+msgid "plugin has been disabled because it requires PHP version"
+msgstr ""
+
+#: includes/classes/vendor/class-plugin.php:452
+msgid "plugin to be activated."
+msgstr ""
+
+#: includes/classes/frontend/class-title-sample.php:108
+msgid "Post #"
+msgstr ""
+
+#: includes/classes/core/class-types-taxes-order.php:86
+msgid "Posts & Taxonomies Sort Order"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:37
+msgid "Posts & Taxonomies Sort Orders"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:309
+msgid ""
+"Replace the local avatar by uploading a new avatar or erase the current "
+"avatar by checking the delete option."
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:438
+msgid ""
+"Replace the local avatar by uploading a new avatar, or erase the local "
+"avatar (falling back to a gravatar) by checking the delete option."
+msgstr ""
+
+#: includes/classes/tools/class-customizer-reset.php:71
+msgid "Reset"
+msgstr ""
+
+#: includes/classes/users/class-user-roles-caps.php:417
+#: views/backend/forms/user-roles-checklist.php:27
+msgid "Roles"
+msgstr ""
+
+#: includes/fields/acf-sample-options.php:33
+#: includes/fields/acf-sample-suboptions.php:33
+msgid "Sample instructions."
+msgstr ""
+
+#: includes/fields/acf-sample-options.php:26
+msgid "Sample Options Page"
+msgstr ""
+
+#: includes/fields/acf-sample-options.php:30
+msgid "Sample Options Page Field"
+msgstr ""
+
+#: includes/fields/acf-sample-suboptions.php:26
+msgid "Sample Options Subpage"
+msgstr ""
+
+#: includes/fields/acf-sample-suboptions.php:30
+msgid "Sample Options Subpage Field"
+msgstr ""
+
+#: includes/classes/backend/class-add-settings-subpage.php:123
+#: includes/classes/backend/class-sample-subpage.php:127
+msgid "Sample Submenu Page"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:127
+msgid "Save Changes"
+msgstr ""
+
+#: views/backend/pages/settings-page-admin.php:32
+msgid "Save Settings"
+msgstr ""
+
+#: includes/classes/backend/class-add-settings-page.php:136
+#: includes/classes/backend/class-sample-page.php:140
+#: includes/classes/backend/class-sample-subpage.php:144
+msgid "Settings One"
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:47
+msgid "Settings saved."
+msgstr ""
+
+#: includes/classes/backend/class-add-settings-page.php:145
+#: includes/classes/backend/class-sample-page.php:148
+#: includes/classes/backend/class-sample-subpage.php:152
+msgid "Settings Two"
+msgstr ""
+
+#: includes/classes/users/class-users.php:237
+msgid ""
+"Share a little biographical information to fill out your profile. This may "
+"be shown publicly."
+msgstr ""
+
+#. Name of the plugin
+#: config.php:50
+msgid "Site Core"
+msgstr ""
+
+#: includes/classes/core/class-types-taxes-order.php:87
+msgid "Sort Order"
+msgstr ""
+
+#: includes/classes/tools/class-rtl-test.php:108
+#, php-format
+msgid "Switch to %s"
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:798
+msgid "Switch to block editor "
+msgstr ""
+
+#: includes/classes/core/class-editor-options.php:837
+msgid "Switch to rich text editor "
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:135
+#: includes/classes/core/class-taxonomy-templates.php:148
+#: includes/classes/core/class-taxonomy-templates.php:175
+msgid "Template"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:180
+msgid "Template file:"
+msgstr ""
+
+#: includes/classes/core/class-remove-customizer.php:63
+msgid "The Customizer is currently disabled."
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:41
+msgid ""
+"The order you set on the admin management screens will automatically set the "
+"order of the posts in the blog index pages and in archive pages."
+msgstr ""
+
+#: includes/classes/vendor/class-plugin.php:450
+msgid "This plugin is not allowed by the"
+msgstr ""
+
+#: includes/classes/backend/class-posts-list-table.php:189
+msgid "This template file does not exist"
+msgstr ""
+
+#: includes/classes/core/class-type-tax.php:78
+msgid "Title"
+msgstr ""
+
+#: includes/classes/backend/class-add-settings-page.php:144
+#: includes/classes/backend/class-sample-page.php:147
+#: includes/classes/backend/class-sample-subpage.php:151
+msgid "Two"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:288
+msgid "Upload or Delete"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:283
+msgid "User Avatar"
+msgstr ""
+
+#: includes/classes/users/class-users.php:210
+msgid "User Details"
+msgstr ""
+
+#: includes/classes/tools/class-customizer-reset.php:72
+msgid ""
+"Warning! This will remove all changes made to this theme via the Customizer. "
+"This action is irreversible."
+msgstr ""
+
+#: views/backend/forms/settings-page-posts-order.php:40
+msgid ""
+"When posts and taxonomies are selected for custom sort order functionality, "
+"the table rows on their respective admin management screen can be dragged up "
+"or down."
+msgstr ""
+
+#: views/backend/forms/partials/settings-writing-editor-allow.php:21
+msgid "Yes"
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:318
+#: includes/classes/users/class-user-avatars.php:447
+msgid ""
+"You do not have media management permissions. To change your local avatar, "
+"contact the site administrator."
+msgstr ""
+
+#: includes/classes/users/class-user-avatars.php:315
+#: includes/classes/users/class-user-avatars.php:444
+msgid "You do not have permission to upload an avatar."
+msgstr ""
+
+#: includes/classes/backend/class-dashboard.php:372
+msgid "Your website is running PHP version"
+msgstr ""
