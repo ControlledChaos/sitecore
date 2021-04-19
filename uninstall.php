@@ -17,6 +17,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// Register uninstall hook.
+register_uninstall_hook( __FILE__, 'scp_sample_uninstall' );
+
 /**
  * Sample uninstall function
  *
@@ -30,4 +33,3 @@ function scp_sample_uninstall() {
 
 	// Add uninstall operations here.
 }
-register_uninstall_hook( __FILE__, 'scp_sample_uninstall' );
