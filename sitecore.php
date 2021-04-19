@@ -24,6 +24,11 @@ namespace SiteCore;
 // Alias namespaces.
 use SiteCore\Classes\Activate as Activate;
 
+// Restrict direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
+
 /**
  * License & Warranty
  *
@@ -34,6 +39,35 @@ use SiteCore\Classes\Activate as Activate;
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @see DISCLAIMER.md
+ */
+
+/**
+ * Author's Note
+ *
+ * To all who may read this,
+ *
+ * I hope you find this code to be easily deciphered. I have
+ * learned much by examining the code of well written & well
+ * documented products so I have done my best to document this
+ * code with comments where necessary, even where not necessary,
+ * and by using logical, descriptive names for PHP classes &
+ * methods, HTML IDs, CSS classes, etc.
+ *
+ * Beginners, note that the short array syntax ( `[]` rather than
+ * array()` ) is used. Use of the `array()` function is encouraged
+ * by some to make the code more easily read by beginners. I argue
+ * that beginners will inevitably encounter the short array syntax
+ * so they may as well learn to recognize this early. If the code
+ * is well documented then it will be clear when the brackets (`[]`)
+ * represent an array. And someday you too will be writing many
+ * arrays in your code and you will find the short syntax to be
+ * a time saver. Let's not unnecessarily dumb-down code; y'all
+ * are smart folk if you are reading this and you'll figure it out
+ * like I did.
+ *
+ * Greg Sweet, Controlled Chaos Design, former mule packer, cook,
+ * landscaper, & janitor who learned PHP by breaking stuff and by
+ * reading code comments.
  */
 
 /**
@@ -87,11 +121,6 @@ use SiteCore\Classes\Activate as Activate;
  * instructions as desired.
  */
 
-// Restrict direct access.
-if ( ! defined( 'ABSPATH' ) ) {
-	die;
-}
-
 /**
  * Constant: Plugin base name
  *
@@ -121,7 +150,7 @@ include_once SCP_PATH . 'activate/classes/class-activate.php';
 include_once SCP_PATH . 'activate/classes/class-deactivate.php';
 
 /**
- * Register the activaction & deactivation hooks
+ * Register the activation & deactivation hooks
  *
  * The namspace of this file must remain escaped by use of the
  * backslash (`\`) prepending the acivation hooks and corresponding
@@ -148,10 +177,9 @@ function activate_plugin() {
 	// Instantiate the Activate class.
 	$activate = new Activate\Activate;
 }
-activate_plugin();
 
 /**
- * Run daactivation class
+ * Run deactivation class
  *
  * The code that runs during plugin deactivation.
  *
@@ -164,13 +192,21 @@ function deactivate_plugin() {
 	// Instantiate the Activate class.
 	$deactivate = new Activate\Deactivate;
 }
-deactivate_plugin();
 
 /**
  * Disable plugin for PHP version
  *
- * Stop here if the minimum PHP version is not met.
- * Prevents breaking sites running older PHP versions.
+ * Stop here if the minimum PHP version in the config
+ * file is not met. Prevents breaking sites running
+ * older PHP versions.
+ *
+ * A notice is added to the plugin row on the Plugins
+ * screen as a more elegant and more informative way
+ * of disabling the plugin than putting the PHP minimum
+ * in the plugin header, which activates a die() message.
+ * However, the Requires PHP tag is included in the
+ * plugin header with a minimum of version 5.3
+ * because of the namespaces.
  *
  * @since  1.0.0
  * @return void
@@ -181,6 +217,7 @@ if ( ! Classes\php()->version() ) {
 	$activate = new Activate\Activate;
 	$activate->get_row_notice();
 
+	// Stop here.
 	return;
 }
 
