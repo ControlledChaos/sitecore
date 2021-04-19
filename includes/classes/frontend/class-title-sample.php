@@ -85,7 +85,7 @@ class Title_Sample extends Title_Filter {
 					// Text specific to the archive.
 					$title = sprintf(
 						'%s%s',
-						__( 'Archived Post #', SCP_DOMAIN ),
+						__( 'Archived Post #', 'sitecore' ),
 						$id
 					);
 
@@ -95,7 +95,7 @@ class Title_Sample extends Title_Filter {
 					// Text specific to the blog.
 					$title = sprintf(
 						'%s%s',
-						__( 'Blog Post #', SCP_DOMAIN ),
+						__( 'Blog Post #', 'sitecore' ),
 						$id
 					);
 
@@ -105,7 +105,7 @@ class Title_Sample extends Title_Filter {
 					// Text specific to the single post.
 					$title = sprintf(
 						'%s%s',
-						__( 'Post #', SCP_DOMAIN ),
+						__( 'Post #', 'sitecore' ),
 						$id
 					);
 

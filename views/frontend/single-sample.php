@@ -10,6 +10,6 @@
 
 printf(
 	'<p>%s%s</p>',
-	__( 'Content for post #', SCP_DOMAIN ),
+	__( 'Content for post #', 'sitecore' ),
 	get_the_ID()
 );

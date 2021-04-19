@@ -19,12 +19,12 @@ $page = new Admin\Manage_Website_Page;
 	<?php
 	printf(
 		'<h1>%s</h1>',
-		__( $page->heading(), SCP_CONFIG['domain'] )
+		__( $page->heading(), 'sitecore' )
 	);
 
 	printf(
 		'<p class="description">%s</p>',
-		__( $page->description(), SCP_CONFIG['domain'] )
+		__( $page->description(), 'sitecore' )
 	);
 	?>
 

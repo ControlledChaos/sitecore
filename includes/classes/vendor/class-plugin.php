@@ -447,9 +447,9 @@ class Plugin {
 				<div class="update-message notice inline notice-error notice-alt">
 					<?php echo sprintf(
 						'<p>%s %s %s</p>',
-						__( 'This plugin is not allowed by the', SCP_DOMAIN ),
+						__( 'This plugin is not allowed by the', 'sitecore' ),
 						SCP_NAME,
-						__( 'plugin to be activated.', SCP_DOMAIN )
+						__( 'plugin to be activated.', 'sitecore' )
 					); ?>
 				</div>
 			</td>

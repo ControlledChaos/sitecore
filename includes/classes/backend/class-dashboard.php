@@ -369,7 +369,7 @@ class Dashboard extends Classes\Base {
 		// PHP version notice.
 		echo sprintf(
 			'<p>%s %s</p>',
-			__( 'Your website is running PHP version', SCP_DOMAIN ),
+			__( 'Your website is running PHP version', 'sitecore' ),
 			phpversion()
 		);
 	}

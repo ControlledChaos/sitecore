@@ -60,7 +60,7 @@ class Remove_Customizer {
 	 * @return void
 	 */
 	public function direct_access() {
-		wp_die( __( 'The Customizer is currently disabled.', SCP_CONFIG['domain'] ) );
+		wp_die( __( 'The Customizer is currently disabled.', 'sitecore' ) );
 	}
 
 	/**

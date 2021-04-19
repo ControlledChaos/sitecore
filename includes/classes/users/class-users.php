@@ -180,14 +180,14 @@ class Users extends Classes\Base {
 
 		// New Export Data submenu entry.
 		$submenu['users.php'][25] = [
-			__( 'Export Data', SCP_CONFIG['domain'] ),
+			__( 'Export Data', 'sitecore' ),
 			'export_others_personal_data',
 			'export-personal-data.php'
 		];
 
 		// New Erase Data submenu entry.
 		$submenu['users.php'][30] = [
-			__( 'Erase Data', SCP_CONFIG['domain'] ),
+			__( 'Erase Data', 'sitecore' ),
 			'erase_others_personal_data',
 			'erase-personal-data.php'
 		];
@@ -207,12 +207,12 @@ class Users extends Classes\Base {
 
 		ob_start();
 		?>
-		<h2><?php _e( 'User Details', SCP_CONFIG['domain'] ); ?></h2>
+		<h2><?php _e( 'User Details', 'sitecore' ); ?></h2>
 
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th><label for="description"><?php _e( 'Biographical Info', SCP_CONFIG['domain'] ); ?></label></th>
+					<th><label for="description"><?php _e( 'Biographical Info', 'sitecore' ); ?></label></th>
 					<td>
 						<?php
 						$description = get_user_meta( $user->ID, 'description', true );
@@ -234,7 +234,7 @@ class Users extends Classes\Base {
 							]
 						);
 						?>
-						<p class="description"><?php _e( 'Share a little biographical information to fill out your profile. This may be shown publicly.', SCP_CONFIG['domain'] ); ?></p>
+						<p class="description"><?php _e( 'Share a little biographical information to fill out your profile. This may be shown publicly.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
 			</tbody>

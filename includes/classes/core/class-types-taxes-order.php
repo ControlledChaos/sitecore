@@ -83,8 +83,8 @@ class Types_Taxes_Order {
 	public function admin_menu() {
 
 		add_options_page(
-			__( 'Posts & Taxonomies Sort Order', SCP_CONFIG['domain'] ),
-			__( 'Sort Order', SCP_CONFIG['domain'] ),
+			__( 'Posts & Taxonomies Sort Order', 'sitecore' ),
+			__( 'Sort Order', 'sitecore' ),
 			'manage_options',
 			'sort-order-settings',
 			[ $this, 'admin_page' ]

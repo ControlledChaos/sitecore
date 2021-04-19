@@ -121,9 +121,9 @@ class Content_Settings extends Add_Settings_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'content-settings-intro',
-			'tab'        => __( 'Intro', SCP_CONFIG['domain'] ),
-			'heading'    => __( 'Introduction', SCP_CONFIG['domain'] ),
-			'content'    => __( 'In development', SCP_CONFIG['domain'] ),
+			'tab'        => __( 'Intro', 'sitecore' ),
+			'heading'    => __( 'Introduction', 'sitecore' ),
+			'content'    => __( 'In development', 'sitecore' ),
 			'callback'   => ''
 		] );
 	}
@@ -136,6 +136,6 @@ class Content_Settings extends Add_Settings_Page {
 	 * @return string Returns the page heading.
 	 */
 	protected function heading() {
-		return __( 'Content Settings', SCP_CONFIG['domain'] );
+		return __( 'Content Settings', 'sitecore' );
 	}
 }

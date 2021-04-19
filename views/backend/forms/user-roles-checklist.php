@@ -20,11 +20,11 @@ if ( isset( $_POST['createuser'] ) && isset( $_POST['scp_multiple_roles'] ) ) {
 }
 
 ?>
-<h2><?php _e( 'Permissions', SCP_CONFIG['domain'] ); ?></h2>
+<h2><?php _e( 'Permissions', 'sitecore' ); ?></h2>
 
 <table class="form-table">
 	<tr>
-		<th><?php _e( 'Roles', SCP_CONFIG['domain'] ); ?></th>
+		<th><?php _e( 'Roles', 'sitecore' ); ?></th>
 		<td>
 			<?php foreach( $roles as $name => $label ) :
 				$input_uniq_id = uniqid(); ?>

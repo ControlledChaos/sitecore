@@ -14,6 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<h3><?php _e( 'More Information', SCP_CONFIG['domain'] ); ?></h3>
+<h3><?php _e( 'More Information', 'sitecore' ); ?></h3>
 
-<p><?php _e( 'Demonstration help information.', SCP_CONFIG['domain'] ); ?></p>
+<p><?php _e( 'Demonstration help information.', 'sitecore' ); ?></p>

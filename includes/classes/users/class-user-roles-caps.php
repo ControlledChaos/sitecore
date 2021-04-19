@@ -211,7 +211,7 @@ class User_Roles_Caps {
 		 */
 		add_role(
 			'developer',
-			__( 'Developer', SCP_CONFIG['domain'] ),
+			__( 'Developer', 'sitecore' ),
 			get_role( 'administrator' )->capabilities
 		);
 	}
@@ -414,7 +414,7 @@ class User_Roles_Caps {
 	public function list_role_column_replace( $columns ) {
 
 		unset( $columns['role'] );
-		$columns['scp_multiple_roles_column'] = __( 'Roles', SCP_CONFIG['domain'] );
+		$columns['scp_multiple_roles_column'] = __( 'Roles', 'sitecore' );
 
 		return $columns;
 	}

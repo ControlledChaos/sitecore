@@ -124,7 +124,7 @@ class Sample_Subpage extends Add_Subpage {
 	 * @return string Returns the page heading.
 	 */
 	protected function heading() {
-		return __( 'Sample Submenu Page', SCP_CONFIG['domain'] );
+		return __( 'Sample Submenu Page', 'sitecore' );
 	}
 
 	/**
@@ -140,16 +140,16 @@ class Sample_Subpage extends Add_Subpage {
 
 		$this->add_content_tab( [
 			'id'         => 'sample-one',
-			'tab'        => __( 'One', SCP_CONFIG['domain'] ),
-			'heading'    => __( 'Settings One', SCP_CONFIG['domain'] ),
+			'tab'        => __( 'One', 'sitecore' ),
+			'heading'    => __( 'Settings One', 'sitecore' ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
 
 		$this->add_content_tab( [
 			'id'         => 'sample-two',
-			'tab'        => __( 'Two', SCP_CONFIG['domain'] ),
-			'heading'    => __( 'Settings Two', SCP_CONFIG['domain'] ),
+			'tab'        => __( 'Two', 'sitecore' ),
+			'heading'    => __( 'Settings Two', 'sitecore' ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );

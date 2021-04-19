@@ -154,11 +154,11 @@ class User_Avatars extends Classes\Base {
 
 		add_settings_field(
 			'scp_user_avatars_caps',
-			__( 'Avatar Upload Permission',	SCP_CONFIG['domain'] ),
+			__( 'Avatar Upload Permission',	'sitecore' ),
 			[ $this, 'capability_field' ],
 			'discussion',
 			'avatars',
-			[ esc_html__( 'Only allow users with file upload capabilities to upload local avatars (Authors and above).', SCP_CONFIG['domain'] ) ]
+			[ esc_html__( 'Only allow users with file upload capabilities to upload local avatars (Authors and above).', 'sitecore' ) ]
 		);
 
 		register_setting(
@@ -280,12 +280,12 @@ class User_Avatars extends Classes\Base {
 		}
 
 		?>
-		<h2><?php _e( 'User Avatar', SCP_CONFIG['domain'] ); ?></h2>
+		<h2><?php _e( 'User Avatar', 'sitecore' ); ?></h2>
 
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th><label for="basic-user-avatar"><?php _e( 'Upload or Delete', SCP_CONFIG['domain'] ); ?></label></th>
+					<th><label for="basic-user-avatar"><?php _e( 'Upload or Delete', 'sitecore' ); ?></label></th>
 					<td style="width: 50px;" valign="top">
 						<?php echo get_avatar( $profileuser->ID ); ?>
 					</td>
@@ -302,20 +302,20 @@ class User_Avatars extends Classes\Base {
 						echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
 
 						if ( empty( $profileuser->scp_user_avatar ) ) {
-							echo '<span class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_CONFIG['domain'] ) . '</span>';
+							echo '<span class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', 'sitecore' ) . '</span>';
 
 						} else {
-							echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', SCP_CONFIG['domain'] ) . '<br />';
-							echo '<span class="description">' . __( 'Replace the local avatar by uploading a new avatar or erase the current avatar by checking the delete option.', SCP_CONFIG['domain'] ) . '</span>';
+							echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', 'sitecore' ) . '<br />';
+							echo '<span class="description">' . __( 'Replace the local avatar by uploading a new avatar or erase the current avatar by checking the delete option.', 'sitecore' ) . '</span>';
 						}
 
 					} else {
 
 						if ( empty( $profileuser->scp_user_avatar ) ) {
-							echo '<span class="description">' . __( 'You do not have permission to upload an avatar.', SCP_CONFIG['domain'] ) . '</span>';
+							echo '<span class="description">' . __( 'You do not have permission to upload an avatar.', 'sitecore' ) . '</span>';
 
 						} else {
-							echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_CONFIG['domain'] ) . '</span>';
+							echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' ) . '</span>';
 						}
 					}
 					?>
@@ -416,7 +416,7 @@ class User_Avatars extends Classes\Base {
 		$profileuser = get_userdata( $user_id );
 
 		echo '<div>';
-		echo '<label for="basic-local-avatar">' . __( 'Avatar', SCP_CONFIG['domain'] ) . '</label>';
+		echo '<label for="basic-local-avatar">' . __( 'Avatar', 'sitecore' ) . '</label>';
 		echo '<fieldset class="bbp-form avatar">';
 
 	 			echo get_avatar( $profileuser->ID );
@@ -431,20 +431,20 @@ class User_Avatars extends Classes\Base {
 					echo '<br /><input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
 
 					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', SCP_CONFIG['domain'] ) . '</span>';
+						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', 'sitecore' ) . '</span>';
 
 					} else {
-						echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" style="width:auto" /> ' . __( 'Delete local avatar', SCP_CONFIG['domain'] ) . '<br />';
-						echo '<span class="description" style="margin-left:0;">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', SCP_CONFIG['domain'] ) . '</span>';
+						echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" style="width:auto" /> ' . __( 'Delete local avatar', 'sitecore' ) . '<br />';
+						echo '<span class="description" style="margin-left:0;">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', 'sitecore' ) . '</span>';
 					}
 
 				} else {
 
 					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have permission to upload an avatar.', SCP_CONFIG['domain'] ) . '</span>';
+						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have permission to upload an avatar.', 'sitecore' ) . '</span>';
 
 					} else {
-						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', SCP_CONFIG['domain'] ) . '</span>';
+						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' ) . '</span>';
 					}
 				}
 
@@ -601,9 +601,9 @@ class User_Avatars extends Classes\Base {
 
 		// Array of new avatar options.
 		$options = [
-			$defaults['mystery'] => __( 'Mystery', SCP_CONFIG['domain'] ),
-			$defaults['generic'] => __( 'Generic', SCP_CONFIG['domain'] ),
-			$defaults['blank']   => __( 'Blank', SCP_CONFIG['domain'] )
+			$defaults['mystery'] => __( 'Mystery', 'sitecore' ),
+			$defaults['generic'] => __( 'Generic', 'sitecore' ),
+			$defaults['blank']   => __( 'Blank', 'sitecore' )
 		];
 
 		// Return new avatar options.

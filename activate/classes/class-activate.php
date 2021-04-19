@@ -74,27 +74,27 @@ class Activate {
 
 			<?php if ( isset( $plugin_data['update'] ) && ! empty( $plugin_data['update'] ) ) : ?>
 
-				.plugins tr.<?php echo SCP_DOMAIN; ?>-plugin-tr td {
+				.plugins tr.<?php echo 'sitecore'; ?>-plugin-tr td {
 					box-shadow: none ! important;
 				}
 
-				.plugins tr.<?php echo SCP_DOMAIN; ?>-plugin-tr .update-message {
+				.plugins tr.<?php echo 'sitecore'; ?>-plugin-tr .update-message {
 					margin-bottom: 0;
 				}
 
 			<?php endif; ?>
 		</style>
 
-		<tr id="plugin-php-notice" class="plugin-update-tr active <?php echo SCP_DOMAIN; ?>-plugin-tr">
+		<tr id="plugin-php-notice" class="plugin-update-tr active <?php echo 'sitecore'; ?>-plugin-tr">
 			<td colspan="<?php echo $colspan; ?>" class="plugin-update colspanchange">
 				<div class="update-message notice inline notice-error notice-alt">
 					<?php echo sprintf(
 						'<p>%s %s %s %s %s %s</p>',
-						__( 'Functionality of the', SCP_DOMAIN ),
+						__( 'Functionality of the', 'sitecore' ),
 						SCP_NAME,
-						__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
+						__( 'plugin has been disabled because it requires PHP version', 'sitecore' ),
 						Classes\php()->minimum(),
-						__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
+						__( 'or greater. Your system is running PHP version', 'sitecore' ),
 						phpversion()
 					); ?>
 				</div>
@@ -116,11 +116,11 @@ class Activate {
 		<div id="plugin-php-notice" class="notice notice-error is-dismissible">
 			<?php echo sprintf(
 				'<p>%s %s %s %s %s %s</p>',
-				__( 'Functionality of the', SCP_DOMAIN ),
+				__( 'Functionality of the', 'sitecore' ),
 				SCP_NAME,
-				__( 'plugin has been disabled because it requires PHP version', SCP_DOMAIN ),
+				__( 'plugin has been disabled because it requires PHP version', 'sitecore' ),
 				php()->minimum(),
-				__( 'or greater. Your system is running PHP version', SCP_DOMAIN ),
+				__( 'or greater. Your system is running PHP version', 'sitecore' ),
 				phpversion()
 			); ?>
 		</div>

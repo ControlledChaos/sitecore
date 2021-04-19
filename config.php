@@ -41,23 +41,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SCP_VERSION', '1.0.0' );
 
 /**
- * Constant: Text domain
- *
- * Remember to replace in the plugin header above.
- *
- * @since 1.0.0
- * @var   string The text domain of the plugin.
- */
-define( 'SCP_DOMAIN', 'sitecore' );
-
-/**
  * Plugin name
  *
  * @since 1.0.0
  * @var   string The name of the plugin.
  */
 if ( ! defined( 'SCP_NAME' ) ) {
-	define( 'SCP_NAME', __( 'Site Core', SCP_DOMAIN ) );
+	define( 'SCP_NAME', __( 'Site Core', 'sitecore' ) );
 }
 
 /**
@@ -119,14 +109,6 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'php_version' => Classes\php()->minimum(),
 
 		/**
-		 * Text domain
-		 *
-		 * @since 1.0.0
-		 * @var   string The text domain of the plugin.
-		 */
-		'domain' => SCP_DOMAIN,
-
-		/**
 		 * Plugin name
 		 *
 		 * Remember to replace in the plugin header.
@@ -142,7 +124,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The name of the developer/agency.
 		 */
-		'dev_name' => __( 'Controlled Chaos', SCP_DOMAIN ),
+		'dev_name' => __( 'Controlled Chaos', 'sitecore' ),
 
 		/**
 		 * Developer URL

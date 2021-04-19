@@ -34,17 +34,17 @@ if ( isset( $scp_order_options['tags'] ) ) {
     $scp_order_taxonomies = [];
 } ?>
 <div class="wrap">
-    <h1><?php _e( 'Posts & Taxonomies Sort Orders', SCP_CONFIG['domain'] ); ?></h1>
-    <p class="description"><?php _e( 'Add drag & drop sort order functionality to post types and taxonomies.', SCP_CONFIG['domain'] ); ?></p>
+    <h1><?php _e( 'Posts & Taxonomies Sort Orders', 'sitecore' ); ?></h1>
+    <p class="description"><?php _e( 'Add drag & drop sort order functionality to post types and taxonomies.', 'sitecore' ); ?></p>
     <hr />
-    <p><?php _e( 'When posts and taxonomies are selected for custom sort order functionality, the table rows on their respective admin management screen can be dragged up or down.', SCP_CONFIG['domain'] ); ?></p>
-    <p><?php _e( 'The order you set on the admin management screens will automatically set the order of the posts in the blog index pages and in archive pages.', SCP_CONFIG['domain'] ); ?></p>
+    <p><?php _e( 'When posts and taxonomies are selected for custom sort order functionality, the table rows on their respective admin management screen can be dragged up or down.', 'sitecore' ); ?></p>
+    <p><?php _e( 'The order you set on the admin management screens will automatically set the order of the posts in the blog index pages and in archive pages.', 'sitecore' ); ?></p>
     <?php if ( isset( $_GET['msg'] ) ) : ?>
         <div id="message" class="notice notice-success is-dismissible">
             <?php if ( $_GET['msg'] == 'updated' ) {
                 echo sprintf(
                     '<p>%1s</p>',
-                    __( 'Settings saved.', SCP_CONFIG['domain'] )
+                    __( 'Settings saved.', 'sitecore' )
                 );
             } ?>
         </div>
@@ -55,9 +55,9 @@ if ( isset( $scp_order_options['tags'] ) ) {
             <table class="form-table">
                 <tbody>
                     <tr valign="top">
-                        <th scope="row"><?php _e( 'Check to Sort Post Types', SCP_CONFIG['domain'] ) ?></th>
+                        <th scope="row"><?php _e( 'Check to Sort Post Types', 'sitecore' ) ?></th>
                         <td>
-                            <label><input type="checkbox" id="scp_order_check_all_post_types"> <?php _e( 'Check All', SCP_CONFIG['domain'] ) ?></label><br>
+                            <label><input type="checkbox" id="scp_order_check_all_post_types"> <?php _e( 'Check All', 'sitecore' ) ?></label><br>
                             <?php
                             // Get all registered public post types.
                             $post_types = get_post_types(
@@ -92,9 +92,9 @@ if ( isset( $scp_order_options['tags'] ) ) {
             <table class="form-table">
                 <tbody>
                     <tr valign="top">
-                        <th scope="row"><?php _e( 'Check to Sort Taxonomies', SCP_CONFIG['domain'] ) ?></th>
+                        <th scope="row"><?php _e( 'Check to Sort Taxonomies', 'sitecore' ) ?></th>
                         <td>
-                            <label><input type="checkbox" id="scp_order_check_all_taxonomies"> <?php _e( 'Check All', SCP_CONFIG['domain'] ) ?></label><br>
+                            <label><input type="checkbox" id="scp_order_check_all_taxonomies"> <?php _e( 'Check All', 'sitecore' ) ?></label><br>
                             <?php
                             // Get all registered public taxonomies.
                             $taxonomies = get_taxonomies(
@@ -124,7 +124,7 @@ if ( isset( $scp_order_options['tags'] ) ) {
             </table>
         </div>
         <p class="submit">
-            <input type="submit" class="button-primary" name="scp_posts_order_submit" value="<?php _e( 'Save Changes', SCP_CONFIG['domain'] ); ?>">
+            <input type="submit" class="button-primary" name="scp_posts_order_submit" value="<?php _e( 'Save Changes', 'sitecore' ); ?>">
         </p>
     </form>
 </div>

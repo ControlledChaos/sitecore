@@ -10,6 +10,6 @@
 
 printf(
 	'<p>%s%s</p>',
-	__( 'Content for archived post #', SCP_DOMAIN ),
+	__( 'Content for archived post #', 'sitecore' ),
 	get_the_ID()
 );

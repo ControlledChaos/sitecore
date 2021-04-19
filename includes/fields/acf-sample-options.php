@@ -23,14 +23,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 acf_add_local_field_group( [
 	'key'    => 'group_6036c0197044c',
-	'title'  => __( 'Sample Options Page', SCP_DOMAIN ),
+	'title'  => __( 'Sample Options Page', 'sitecore' ),
 	'fields' => [
 		[
 			'key'               => 'field_6036c02cad870',
-			'label'             => __( 'Sample Options Page Field', SCP_DOMAIN ),
+			'label'             => __( 'Sample Options Page Field', 'sitecore' ),
 			'name'              => 'sample_options_page_field',
 			'type'              => 'text',
-			'instructions'      => __( 'Sample instructions.', SCP_DOMAIN ),
+			'instructions'      => __( 'Sample instructions.', 'sitecore' ),
 			'required'          => 0,
 			'conditional_logic' => 0,
 			'wrapper'           => [
@@ -49,9 +49,9 @@ acf_add_local_field_group( [
 				5 => 'test_tax_one',
 			],
 			'default_value' => '',
-			'placeholder'   => __( 'Just a text field.', SCP_DOMAIN ),
-			'prepend'       => __( '', SCP_DOMAIN ),
-			'append'        => __( '', SCP_DOMAIN ),
+			'placeholder'   => __( 'Just a text field.', 'sitecore' ),
+			'prepend'       => __( '', 'sitecore' ),
+			'append'        => __( '', 'sitecore' ),
 			'maxlength'     => '',
 			'acfe_field_group_condition' => 0,
 		],
@@ -72,7 +72,7 @@ acf_add_local_field_group( [
 	'instruction_placement' => 'field',
 	'hide_on_screen'        => '',
 	'active'                => true,
-	'description'           => __( 'Field group provided as a sample for the sample options page.', SCP_DOMAIN ),
+	'description'           => __( 'Field group provided as a sample for the sample options page.', 'sitecore' ),
 	'acfe_autosync'         => [
 		0 => 'json',
 	],
