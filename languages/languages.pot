@@ -1,9 +1,0 @@
-# Translation of Site Core
-msgid ""
-msgstr ""
-"Project-Id-Version: Site Core 1.0.0\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: None\n"
-"Language: en_US\n"
