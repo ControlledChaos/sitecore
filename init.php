@@ -27,14 +27,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+// Hook initialization functions.
+add_action( 'init', __NAMESPACE__ . '\init' );
+add_action( 'admin_init', __NAMESPACE__ . '\admin_init' );
+
 /**
- * Load plugin text domain
+ * Initialization function
+ *
+ * Loads PHP classes and text domain.
+ * Instantiates various classes.
+ * Adds settings link in the plugin row.
  *
  * @since  1.0.0
  * @access public
  * @return void
  */
-function text_domain() {
+function init() {
 
 	// Standard plugin installation.
 	load_plugin_textdomain(
@@ -48,25 +56,6 @@ function text_domain() {
 		'sitecore',
 		dirname( SCP_BASENAME ) . '/languages'
 	);
-}
-
-/**
- * Core plugin function
- *
- * Loads and runs PHP classes.
- * Removes unwanted features.
- *
- * SAMPLES: Uncomment sample classes to run them.
- * Make sure to also uncomment in the autoloader.
- *
- * @since  1.0.0
- * @access public
- * @return void
- */
-function sitecore() {
-
-	// Load text domain. Hook to `init` rather than `plugins_loaded`.
-	add_action( 'init', __NAMESPACE__ . '\text_domain' );
 
 	/**
 	 * Class autoloader
@@ -177,5 +166,18 @@ function sitecore() {
 	} );
 }
 
-// Run the plugin.
-sitecore();
+/**
+ * Admin initialization function
+ *
+ * Instantiates various classes.
+ *
+ * @since  1.0.0
+ * @access public
+ * @global $pagenow Get the current admin screen.
+ * @return void
+ */
+function admin_init() {
+
+	// Access current admin page.
+	global $pagenow;
+}
