@@ -82,6 +82,9 @@ class Tools extends Classes\Base {
 
 		// @todo Put into a settings page.
 		new Customizer_Reset;
+
+		// Disable Google's FloC tracking.
+		new Disable_FloC;
 	}
 
 	/**
