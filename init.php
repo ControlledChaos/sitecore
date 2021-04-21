@@ -27,10 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-// Hook initialization functions.
-add_action( 'init', __NAMESPACE__ . '\init' );
-add_action( 'admin_init', __NAMESPACE__ . '\admin_init' );
-
 /**
  * Initialization function
  *
@@ -70,6 +66,7 @@ function init() {
 
 	// Instantiate settings classes.
 	new Settings\Settings;
+	new Admin\Content_Settings;
 
 	// Instantiate core classes.
 	new Core\Type_Tax;
@@ -166,6 +163,9 @@ function init() {
 	} );
 }
 
+// Run initialization function.
+init();
+
 /**
  * Admin initialization function
  *
@@ -181,3 +181,4 @@ function admin_init() {
 	// Access current admin page.
 	global $pagenow;
 }
+add_action( 'admin_init', __NAMESPACE__ . '\admin_init' );
