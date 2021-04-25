@@ -114,9 +114,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    See the `includes/config.php` file to change developer/agency details,
  *    plugin name & URL, plus more personal or white-label constants.
  *
- * 9. Edit the README file in the root directory as needed, or delete it.
+ * 9. Plugin URI:
+ *    Find `https://github.com/ControlledChaos/sitecore` and replace with the
+ *    URI of your plugin.
  *
- * 10. Finally, remember to modify or remove any instructional information in
+ * 10. Edit the README file in the root directory as needed, or delete it.
+ *
+ * 11. Finally, remember to modify or remove any instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
  */
