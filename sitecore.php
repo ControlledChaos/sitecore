@@ -157,7 +157,7 @@ include_once SCP_PATH . 'activate/classes/class-deactivate.php';
  * Register the activation & deactivation hooks
  *
  * The namspace of this file must remain escaped by use of the
- * backslash (`\`) prepending the acivation hooks and corresponding
+ * backslash (`\`) prepending the activation hooks and corresponding
  * functions.
  *
  * @since  1.0.0
