@@ -22,6 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class PHP_Version {
 
 	/**
+	 * The class object
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string
+	 */
+	protected static $class_object;
+
+	/**
 	 * Minimum PHP version
 	 *
 	 * @since  1.0.0
@@ -41,7 +50,13 @@ final class PHP_Version {
 	 * @return object Returns an instance of the class.
 	 */
 	public static function instance() {
-		return new self;
+
+		if ( is_null( self :: $class_object ) ) {
+			self :: $class_object = new self();
+		}
+
+		// Return the instance.
+		return self :: $class_object;
 	}
 
 	/**

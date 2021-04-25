@@ -22,6 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Sample_Extends extends Sample {
 
 	/**
+	 * The class object
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string
+	 */
+	protected static $class_object;
+
+	/**
 	 * Sample string
 	 *
 	 * This overrides the property in the parent class.
@@ -53,24 +62,18 @@ class Sample_Extends extends Sample {
 	 * This method can be used to call an instance
 	 * of the class from outside the class.
 	 *
-	 * Delete this method if not needed.
-	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return object Returns an instance of the class.
 	 */
 	public static function instance() {
 
-		// Varialbe for the instance of the class.
-		static $sample_extends_instance = null;
-
-		// Set variable for new instance.
-		if ( is_null( $sample_extends_instance ) ) {
-			$sample_extends_instance = new self;
+		if ( is_null( self :: $class_object ) ) {
+			self :: $class_object = new self();
 		}
 
 		// Return the instance.
-		return $sample_extends_instance;
+		return self :: $class_object;
 	}
 
 	/**

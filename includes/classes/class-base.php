@@ -24,6 +24,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Base {
 
 	/**
+	 * The class object
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string
+	 */
+	protected static $class_object;
+
+	/**
 	 * Instance of the class
 	 *
 	 * This method can be used to call an instance
@@ -35,16 +44,12 @@ class Base {
 	 */
 	public static function instance() {
 
-		// Varialbe for the instance of the class.
-		static $class_instance = null;
-
-		// Set variable for new instance.
-		if ( is_null( $class_instance ) ) {
-			$class_instance = new self;
+		if ( is_null( self :: $class_object ) ) {
+			self :: $class_object = new self();
 		}
 
 		// Return the instance.
-		return $class_instance;
+		return self :: $class_object;
 	}
 
 	/**
