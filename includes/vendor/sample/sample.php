@@ -4,7 +4,7 @@
  *
  * Included for demonstration of bundling a plugin in the Site Core plugin.
  *
- * @package  Site_More
+ * @package  Site_Core
  * @category Core
  * @since    1.0.0
  *

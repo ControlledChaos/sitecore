@@ -4,7 +4,7 @@
  *
  * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
  *
- * @package  Site_More
+ * @package  Site_Core
  * @category Core
  * @since    1.0.0
  * @link     https://github.com/ControlledChaos/sitecore
