@@ -142,7 +142,13 @@ class ACF extends Plugin {
 	 * @return boolean ACF displays in menu if true.
 	 */
 	public function acf_settings_show_admin( $show_admin ) {
-		return true;
+
+		// Hide if in multisite mode & not the main site.
+		$show_admin = true;
+		if ( is_multisite() && ! is_main_site() && ! is_super_admin( get_current_user_id() ) ) {
+			$show_admin = false;
+		}
+		return apply_filters( 'scp_acf_settings_show_admin', $show_admin );
 	}
 
 	/**
