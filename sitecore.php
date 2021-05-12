@@ -17,6 +17,7 @@
  * Author URI:   https://ccdzine.com/
  * Text Domain:  sitecore
  * Domain Path:  /languages
+ * Requires PHP  5.4
  */
 
 namespace SiteCore;
@@ -200,16 +201,15 @@ function deactivate_plugin() {
 /**
  * Disable plugin for PHP version
  *
- * Stop here if the minimum PHP version in the config
- * file is not met. Prevents breaking sites running
- * older PHP versions.
+ * Stop here if the minimum PHP version is not met.
+ * Prevents breaking sites running older PHP versions.
  *
  * A notice is added to the plugin row on the Plugins
  * screen as a more elegant and more informative way
  * of disabling the plugin than putting the PHP minimum
  * in the plugin header, which activates a die() message.
  * However, the Requires PHP tag is included in the
- * plugin header with a minimum of version 5.3
+ * plugin header with a minimum of version 5.4
  * because of the namespaces.
  *
  * @since  1.0.0
