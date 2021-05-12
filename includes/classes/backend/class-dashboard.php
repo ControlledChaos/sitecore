@@ -56,5 +56,8 @@ class Dashboard extends Classes\Base {
 		if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
 			remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
 		}
+
+		// PHP update nag.
+		unset( $wp_meta_boxes['dashboard']['normal']['high']['dashboard_php_nag'] );
 	}
 }
