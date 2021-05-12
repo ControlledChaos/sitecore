@@ -2,7 +2,7 @@
 /**
  * Plugin configuration
  *
- * The constants defined here do not override any default bavavior
+ * The constants defined here do not override any default behavior
  * or default user interfaces. However, the corresponding behavior
  * can be overridden in the system config file (e.g. `wp-config`,
  * `app-config` ).
@@ -66,7 +66,7 @@ define( 'SCP_PATH', plugin_dir_path( __FILE__ ) );
  * @var   string The URL directory path (with trailing slash)
  *               for the plugin __FILE__ passed in.
  */
-define( 'SCP_URL', plugin_dir_url(__FILE__ ) );
+define( 'SCP_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * PHP version check
@@ -86,7 +86,7 @@ if ( ! Classes\php()->version() ) {
  * Constant: Plugin configuration.
  *
  * @since 1.0.0
- * @var   array Plugin identification, support, settintgs.
+ * @var   array Plugin identification, support, settings.
  */
 if ( ! defined( 'SCP_CONFIG' ) ) {
 

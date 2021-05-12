@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample plugin compatability
+ * Sample plugin compatibility
  *
  * @package    Site_Core
  * @subpackage Classes

@@ -1,6 +1,6 @@
 <?php
 /**
- * Advanced Custom Fields Extended compatability
+ * Advanced Custom Fields Extended compatibility
  *
  * @package    Site_Core
  * @subpackage Classes
