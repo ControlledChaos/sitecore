@@ -158,6 +158,9 @@ class Register_Tax {
 		// Register taxonomy.
 		add_action( 'init', [ $this, 'register' ] );
 
+		// New taxonomy labels.
+		add_filter( $this->tax_key . '_labels', [ $this, 'filter_labels' ] );
+
 	}
 
 	/**
@@ -244,7 +247,8 @@ class Register_Tax {
 			'items_list'                 => __( ucwords( $this->plural ) . ' List', 'sitecore' ),
 		];
 
-		return $labels;
+		// Filter for child classes to modify this array.
+		return apply_filters( $this->tax_key . '_labels', $labels );
 	}
 
 	/**
@@ -262,5 +266,22 @@ class Register_Tax {
 		];
 
 		return $rewrite;
+	}
+
+	/**
+	 * Filter taxonomy labels
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns new values for array label arguments.
+	 */
+	public function filter_labels() {
+
+		// Labels to change.
+		$labels = [
+			// $key => $value
+		];
+
+		return $labels;
 	}
 }
