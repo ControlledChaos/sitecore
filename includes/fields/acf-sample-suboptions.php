@@ -8,13 +8,13 @@
  * This is sample has been made consistent with
  * the rest of this plugin.
  *
- * @package    Pack_Station
+ * @package    Site_Core
  * @subpackage Fields
  * @category   ACF
  * @since      1.0.0
  */
 
-namespace PackStation\Fields\ACF;
+namespace SiteCore\Fields\ACF;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
