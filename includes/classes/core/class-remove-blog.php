@@ -154,6 +154,7 @@ class Remove_Blog {
 	 * @return void
 	 */
 	public function dashboard_metaboxes(){
+		remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );
 		remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
 		remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'normal' );
 	}
