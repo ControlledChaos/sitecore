@@ -171,6 +171,12 @@ class Remove_Blog {
 	public function remove_widgets() {
 		unregister_widget( 'WP_Widget_Recent_Posts' );
 		unregister_widget( 'WP_Widget_Recent_Comments' );
+
+		// If the Custom Post Type Widgets plugin is active.
+		if ( is_plugin_active( 'custom-post-type-widgets/custom-post-type-widgets.php' ) ) {
+			unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Posts' );
+			unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Comments' );
+		}
 	}
 
 	/**
