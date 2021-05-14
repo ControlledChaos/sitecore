@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 acf_add_local_field_group( [
-	'key'    => 'group_6036c0197044c',
+	'key'    => 'group_sample_options_page',
 	'title'  => __( 'Sample Options Page', 'sitecore' ),
 	'fields' => [
 		[

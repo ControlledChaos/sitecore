@@ -99,6 +99,9 @@ class ACF extends Plugin {
 		// Hide/show the ACF admin menu item.
 		add_filter( 'acf/settings/show_admin', [ $this, 'acf_settings_show_admin' ] );
 
+		// Add ACF field groups.
+		$this->field_groups();
+
 		// Admin columns for ACF fields.
 		$this->acf_columns();
 	}
@@ -176,6 +179,26 @@ class ACF extends Plugin {
 		unset( $paths[0] );
 		$paths[] = SCP_PATH . 'includes/settings/acf-json';
 		return $paths;
+	}
+
+	/**
+	 * Add ACF field groups
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	function field_groups() {
+
+		// Only gets files prefixed with `acf-`.
+		$dir_file = SCP_PATH . 'includes/fields' . '/*' . 'acf-*.php';
+
+		// Include each file matching the path patterns.
+		foreach ( glob( $dir_file, GLOB_BRACE ) as $fields_file ) {
+			if ( is_file( $fields_file ) && is_readable( $fields_file ) ) {
+				include $fields_file;
+			}
+		}
 	}
 
 	/**
