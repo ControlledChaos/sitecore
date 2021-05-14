@@ -172,10 +172,15 @@ class Remove_Blog {
 		unregister_widget( 'WP_Widget_Recent_Posts' );
 		unregister_widget( 'WP_Widget_Recent_Comments' );
 
-		// If the Custom Post Type Widgets plugin is active.
+		/**
+		 * If the Custom Post Type Widgets plugin is active then
+		 * remove the Recent Posts and Recent Comments widgets
+		 * for custom post types. Provided as a courtesy, uncomment
+		 * to unregister the widgets or delete this condition.
+		 */
 		if ( is_plugin_active( 'custom-post-type-widgets/custom-post-type-widgets.php' ) ) {
-			unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Posts' );
-			unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Comments' );
+			// unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Posts' );
+			// unregister_widget( 'WP_Custom_Post_Type_Widgets_Recent_Comments' );
 		}
 	}
 
