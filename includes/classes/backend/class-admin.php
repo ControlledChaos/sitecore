@@ -63,6 +63,9 @@ class Admin extends Classes\Base {
 			add_action( 'admin_menu', [ $this, 'menu_remove_site_health' ] );
 		}
 
+		// Menus & Widgets admin menu items.
+		add_action( 'admin_menu', [ $this, 'menus_widgets' ] );
+
 		// Primary footer text.
 		add_filter( 'admin_footer_text', [ $this, 'admin_footer_primary' ], 1 );
 
@@ -224,6 +227,70 @@ class Admin extends Classes\Base {
 			wp_redirect( admin_url( '/', 'http' ), 302 );
 			exit;
 		}
+	}
+
+	/**
+	 * Menus & Widgets admin menu items
+	 *
+	 * Removes the Menus & Widgets links as submenu items
+	 * of the Appearance link and makes them top-level items.
+	 * Navigation and widgets are more content than style so
+	 * this is a logical move. Leave the Appearance entry for
+	 * headers, background, theme options, customizer, etc.
+	 *
+	 * This also provides the opportunity to have submenus for each.
+	 *
+	 * @todo Make this optional via settings, top-level being default.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global array menu The admin menu array.
+	 * @global array submenu The admin submenu array.
+	 * @return void
+	 */
+	public function menus_widgets() {
+
+		global $menu, $submenu;
+
+		// Remove Menus and Widgets as submenu items of Appearances.
+		if ( isset( $submenu['themes.php'] ) ) {
+
+			// Look for menu items under Appearances.
+			foreach ( $submenu['themes.php'] as $key => $item ) {
+
+				// Unset Menus if it is found.
+				if ( $item[2] === 'nav-menus.php' ) {
+					unset($submenu['themes.php'][$key] );
+				}
+
+				// Unset Widgets if it is found.
+				if ( $item[2] === 'widgets.php' ) {
+					unset( $submenu['themes.php'][$key] );
+				}
+			}
+		}
+
+		// Add a new top-level Menus page.
+		add_menu_page(
+			__( 'Menus', 'sitecore' ),
+			__( 'Menus', 'sitecore' ),
+			'delete_others_pages',
+			'nav-menus.php',
+			'',
+			'dashicons-menu-alt',
+			61
+		);
+
+		// Add a new top-level Widgets page.
+		add_menu_page(
+			__( 'Widgets', 'sitecore' ),
+			__( 'Widgets', 'sitecore' ),
+			'delete_others_pages',
+			'widgets.php',
+			'',
+			'dashicons-screenoptions',
+			62
+		);
 	}
 
 	/**
