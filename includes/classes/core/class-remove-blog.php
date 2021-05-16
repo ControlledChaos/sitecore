@@ -29,6 +29,9 @@ class Remove_Blog {
 		// Remove from admin menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 9999 );
 
+		// Update home page options.
+		add_action( 'init', [ $this, 'home_options' ] );
+
 		// Delete default post.
 		add_action( 'init', [ $this, 'delete_default' ] );
 
@@ -49,6 +52,9 @@ class Remove_Blog {
 
 		// Hide dashboard components with JS.
 		add_action( 'admin_print_footer_scripts-index.php', [ $this, 'dashboard_js_hide' ] );
+
+		// Hide items on the Reading Settings page.
+		add_action( 'admin_head', [ $this, 'settings_css_hide' ] );
 
 		// Close comments.
 		add_action( 'template_redirect', [ $this, 'comment_feed' ], 9 );
@@ -94,6 +100,63 @@ class Remove_Blog {
 		remove_menu_page( 'edit.php' );
 		remove_menu_page( 'edit-comments.php' );
 		remove_submenu_page( 'options-general.php', 'options-discussion.php' );
+	}
+
+	/**
+	 * Update home page options
+	 *
+	 * Try to set a static page rather than latest posts
+	 * as the home page.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function home_options() {
+
+		/**
+		 * Look for post ID 2, which is the ID of the sample page
+		 * when the system is first installed. If found, use that
+		 * page as the ID of the front page until or unless the
+		 * option is changed by a user.
+		 */
+		if ( get_post( 2 ) ) {
+			$page_id = 2;
+
+		// If page ID 2 is not found.
+		} else {
+
+			// Get a random array of pages.
+			$pages = get_pages( [ 'sort_column' => 'rand' ] );
+
+			// Get the ID of the first page in the random array.
+			if ( is_array( $pages ) && ! empty( $pages ) ) {
+				$page_id = $pages[0]->ID;
+
+			/**
+			 * Use `2` as the ID if the random array is empty.
+			 * This will not display a page
+			 */
+			} else {
+				$page_id = 2;
+			}
+		}
+
+		/**
+		 * If the home page is set to latest posts and there is at least one page
+		 * then update the option to show a static page using an ID from above.
+		 */
+		if ( 'posts' === get_option( 'show_on_front' ) && ! empty( get_pages() ) ) {
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $page_id );
+
+		/**
+		 * If the home page is set to a static page yet there are no pages published
+		 * then update the option to show latest posts.
+		 */
+		} elseif ( 'page' === get_option( 'show_on_front' ) && empty( get_pages() ) ) {
+			update_option( 'show_on_front', 'posts' );
+		}
 	}
 
 	/**
@@ -229,6 +292,39 @@ class Remove_Blog {
 		});
 		</script>
 		<?php
+	}
+
+	/**
+	 * Hide reading settings components with CSS
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @global string $pagenow Gets the filename of the current page.
+	 * @return string Returns the style block.
+	 */
+	public function settings_css_hide() {
+
+		global $pagenow;
+
+		if ( 'options-reading.php' == $pagenow ) :
+
+		?>
+		<style>
+		.form-table > tbody tr:nth-of-type(2),
+		.form-table > tbody tr:nth-of-type(3),
+		.form-table > tbody tr:nth-of-type(4) {
+			display: none !important;
+		}
+		<?php if ( 'page' == get_option( 'show_on_front' ) ) : ?>
+		#front-static-pages fieldset p:first-of-type,
+		#front-static-pages fieldset ul li:last-of-type {
+			display: none !important;
+		}
+		<?php endif; ?>
+		</style>
+		<?php
+
+		endif;
 	}
 
 	/**
