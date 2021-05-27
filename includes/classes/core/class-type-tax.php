@@ -41,6 +41,9 @@ class Type_Tax {
 		// Replace default post title placeholders.
 		add_filter( 'enter_title_here', [ $this, 'title_placeholders' ] );
 
+		// Add taxonomies to the page post type.
+		add_action( 'init', [ $this, 'page_taxonomies' ] );
+
 		// Add excerpts to pages for use in meta data.
 		add_action( 'init', [ $this, 'add_page_excerpts' ] );
 
@@ -83,6 +86,20 @@ class Type_Tax {
 
 		// Return the new placeholder.
 		return $title;
+	}
+
+	/**
+	 * Page taxonomies
+	 *
+	 * Adds taxonomies to the page post type.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function page_taxonomies() {
+		register_taxonomy_for_object_type( 'category', 'page' );
+		register_taxonomy_for_object_type( 'post_tag', 'page' );
 	}
 
 	/**
