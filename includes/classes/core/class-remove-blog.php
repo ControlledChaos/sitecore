@@ -371,12 +371,18 @@ class Remove_Blog {
 	 */
 	public function comments_number( $post_id ) {
 
+		global $post;
+
 		$post = get_post( $post_id );
+
+		if ( ! post_type_supports( get_post_type( $post_id ), 'comments' ) ) {
+			return null;
+		}
 
 		if ( 'post' == get_post_type() ) {
 			return 0;
 		}
-		return $post->comment_count;
+		return get_comment_count( $post_id );
 	}
 
 	/**
