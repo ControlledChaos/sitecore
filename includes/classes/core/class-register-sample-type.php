@@ -135,20 +135,21 @@ class Register_Sample_Type extends Register_Type {
 	}
 
 	/**
-	 * Filter post type labels
+	 * Rewrite post type labels
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return mixed Returns new values for array label arguments.
+	 * @return mixed Returns new values for array label keys.
 	 */
-	public function filter_labels() {
+	public function rewrite_labels() {
+
+		// Post type.
+		$post_type = $this->type_key;
+		$type_obj  = get_post_type_object( $post_type );
 
 		// New post type labels.
-		$labels = [
-			'menu_name' => 'Sample',
-			'add_new'   => 'New Sample'
-		];
-
-		return $labels;
+		$type_obj->labels->menu_name = __( 'Sample', 'spr-core' );
+		$type_obj->labels->all_items = __( 'All Samples', 'spr-core' );
+		$type_obj->labels->add_new   = __( 'New Sample', 'spr-core' );
 	}
 }

@@ -355,8 +355,8 @@ class Register_Type {
 		// New post type options.
 		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], 10, 2 );
 
-		// New post type labels.
-		add_filter( $this->type_key . '_labels', [ $this, 'filter_labels' ] );
+		// Rewrite post type labels.
+		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );
 
 		// Field groups.
 		add_action( 'acf/init', [ $this, 'field_groups' ] );
@@ -468,7 +468,7 @@ class Register_Type {
 		];
 
 		// Filter for child classes to modify this array.
-		return apply_filters( $this->type_key . '_labels', $labels );
+		return $labels;
 	}
 
 	/**
@@ -526,21 +526,13 @@ class Register_Type {
 	}
 
 	/**
-	 * Filter post type labels
+	 * Rewrite post type labels
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return mixed Returns new values for array label arguments.
+	 * @return mixed Returns new values for array label keys.
 	 */
-	public function filter_labels() {
-
-		// Labels to change.
-		$labels = [
-			// $key => $value
-		];
-
-		return $labels;
-	}
+	public function rewrite_labels() {}
 
 	/**
 	 * Field groups
