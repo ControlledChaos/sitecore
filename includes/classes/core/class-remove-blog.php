@@ -396,12 +396,10 @@ class Remove_Blog {
 	 */
 	public function disable_posts_comments( $open, $post_id ) {
 
-		$post = get_post( $post_id );
-
-		if ( 'post' == get_post_type() ) {
-			return false;
+		if ( 'post' != get_post_type() ) {
+			return;
 		}
-		return $open;
+		return false;
 	}
 
 	/**
@@ -415,12 +413,10 @@ class Remove_Blog {
 	 */
 	public function disable_media_comments( $open, $post_id ) {
 
-		$post = get_post( $post_id );
-
-		if ( 'attachment' == $post->post_type ) {
-			return false;
+		if ( 'attachment' != get_post_type() ) {
+			return;
 		}
-		return $open;
+		return false;
 	}
 
 	/**
