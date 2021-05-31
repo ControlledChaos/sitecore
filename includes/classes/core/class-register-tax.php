@@ -243,7 +243,7 @@ class Register_Tax {
 			'choose_from_most_used'      => __( 'Choose from the most used ' . ucwords( $this->plural ), 'sitecore' ),
 			'not_found'                  => __( 'No ' . ucwords( $this->plural ) . ' Found', 'sitecore' ),
 			'no_terms'                   => __( 'No ' . ucwords( $this->plural ), 'sitecore' ),
-			'filter_by_item'             => __( 'Filter by Category' 'sitecore' ),
+			'filter_by_item'             => __( 'Filter by Category', 'sitecore' ),
 			'items_list_navigation'      => __( ucwords( $this->plural ) . ' list navigation', 'sitecore' ),
 			'items_list'                 => __( ucwords( $this->plural ) . ' List', 'sitecore' ),
 			'most_used'                  => __( 'Most Used ' . ucwords( $this->plural ), 'sitecore' ),
