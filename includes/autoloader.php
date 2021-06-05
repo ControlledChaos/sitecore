@@ -118,6 +118,7 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\User_Colors'             => SCP_CLASS['admin'] . 'user-colors.php',
 	SCP_CLASS_NS . '\Admin\Dashboard'               => SCP_CLASS['admin'] . 'dashboard.php',
 	SCP_CLASS_NS . '\Admin\Posts_List_Table'        => SCP_CLASS['admin'] . 'posts-list-table.php',
+	SCP_CLASS_NS . '\Admin\Post_Edit'               => SCP_CLASS['admin'] . 'post-edit.php',
 
 	// Frontend classes.
 	SCP_CLASS_NS . '\Front\Frontend'       => SCP_CLASS['front'] . 'frontend.php',

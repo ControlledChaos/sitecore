@@ -35,6 +35,9 @@ class Admin extends Classes\Base {
 		// Manage website page/help pages.
 		new Manage_Website_Page;
 
+		// Post edit screens
+		new Post_Edit;
+
 		// Run the dashboard only on the backend index screen.
 		if ( 'index.php' == $pagenow ) {
 			new Dashboard;
