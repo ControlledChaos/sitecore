@@ -190,6 +190,15 @@ class ACF extends Plugin {
 	 */
 	function field_groups() {
 
+		/**
+		 * Stop if ACF Pro is not available or the
+		 * `acf_add_local_field_group` function
+		 * does not exists elsewhere.
+		 */
+		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+			return;
+		}
+
 		// Only gets files prefixed with `acf-`.
 		$dir_file = SCP_PATH . 'includes/fields' . '/*' . 'acf-*.php';
 
