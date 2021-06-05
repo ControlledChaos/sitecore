@@ -163,7 +163,7 @@ class ACF extends Plugin {
 	 * @return string Returns the directory path.
 	 */
 	public function save_acf_json( $path ) {
-		$path = SCP_PATH . 'includes/settings/acf-json';
+		$path = SCP_PATH . 'includes/fields/acf-json';
 		return $path;
 	}
 
@@ -177,7 +177,7 @@ class ACF extends Plugin {
 	 */
 	public function load_acf_json( $paths ) {
 		unset( $paths[0] );
-		$paths[] = SCP_PATH . 'includes/settings/acf-json';
+		$paths[] = SCP_PATH . 'includes/fields/acf-json';
 		return $paths;
 	}
 
