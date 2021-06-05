@@ -12,15 +12,16 @@ namespace SiteCore;
 
 // Alias namespaces.
 use
-SiteCore\Classes          as Classes,
-SiteCore\Classes\Core     as Core,
-SiteCore\Classes\Settings as Settings,
-SiteCore\Classes\Tools    as Tools,
-SiteCore\Classes\Media    as Media,
-SiteCore\Classes\Users    as Users,
-SiteCore\Classes\Admin    as Admin,
-SiteCore\Classes\Front    as Front,
-SiteCore\Classes\Vendor   as Vendor;
+SiteCore\Classes            as Classes,
+SiteCore\Classes\Core       as Core,
+SiteCore\Classes\Settings   as Settings,
+SiteCore\Classes\Tools      as Tools,
+SiteCore\Classes\Media      as Media,
+SiteCore\Classes\Users      as Users,
+SiteCore\Classes\Admin      as Admin,
+SiteCore\Classes\Front      as Front,
+SiteCore\Classes\Front\Meta as Meta,
+SiteCore\Classes\Vendor     as Vendor;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -119,6 +120,8 @@ function init() {
 	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
 		new Front\Frontend;
+		new Meta\Meta_Data;
+		new Meta\Meta_Tags;
 	}
 
 	// Disable WordPress administration email verification prompt.
