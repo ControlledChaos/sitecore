@@ -251,7 +251,7 @@ class Register_Tax {
 		];
 
 		// Filter for child classes to modify this array.
-		return $labels );
+		return $labels;
 	}
 
 	/**
