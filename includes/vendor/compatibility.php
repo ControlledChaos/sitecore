@@ -8,7 +8,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore;
+namespace SiteCore\Compatibility;
 
 /**
  * Get pluggable path
