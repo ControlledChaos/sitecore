@@ -4,7 +4,7 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   General
+ * @category   Admin
  * @since      1.0.0
  */
 
