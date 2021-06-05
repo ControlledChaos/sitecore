@@ -27,11 +27,18 @@ class Meta_Tags {
 	public function __construct() {
 
 		// Print meta tags to the head.
-		add_action( 'wp_head', [ $this, 'meta' ] );
-		add_action( 'wp_head', [ $this, 'schema' ] );
-		add_action( 'wp_head', [ $this, 'open_graph' ] );
-		add_action( 'wp_head', [ $this, 'twitter' ] );
-		add_action( 'wp_head', [ $this, 'dublin' ] );
+		add_action( 'wp_head', [ $this, 'print_meta_tags' ] );
+	}
+
+	/**
+	 * Use meta tags
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function use_meta_tags() {
+		return apply_filters( 'scp_meta_use_tags', true );
 	}
 
 	/**
@@ -39,10 +46,21 @@ class Meta_Tags {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return boolean
+	 * @return void
 	 */
 	public function print_meta_tags() {
-		return apply_filters( 'scp_meta_print_tags', true );
+
+		// Stop if `use_meta_tags` returns false.
+		if ( ! $this->use_meta_tags() ) {
+			return;
+		}
+
+		// Get meta tags.
+		$this->meta();
+		$this->schema();
+		$this->open_graph();
+		$this->twitter();
+		$this->dublin();
 	}
 
 	/**
