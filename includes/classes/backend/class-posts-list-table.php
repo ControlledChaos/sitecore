@@ -144,16 +144,15 @@ class Posts_List_Table extends Classes\Base {
 	 * @since  1.0.0
 	 * @access public
 	 * @param  string $column_name
-	 * @param  int $post_id
 	 * @return void
 	 */
-	public function template_columns_content( $column_name, $post_id ) {
+	public function template_columns_content( $column_name ) {
 
 		// If the column is the `template` column established above.
 	    if ( $column_name == 'template' ) {
 
 			// Get the post template by post ID.
-			$template = get_post_meta( $post_id, '_wp_page_template' , true );
+			$template = get_post_meta( get_the_ID(), '_wp_page_template' , true );
 
 			// If a template has been applied to the post.
 	        if ( $template ) {
@@ -171,7 +170,7 @@ class Posts_List_Table extends Classes\Base {
 	        	} else {
 
 					// Get theme templates as a variable.
-	        		$templates = wp_get_theme()->get_page_templates();
+	        		$templates = wp_get_theme()->get_page_templates( get_the_ID(), get_post_type() );
 
 					// If the template is found.
 	        		if ( isset( $templates[ $template ] ) ) {
