@@ -354,6 +354,10 @@ class Remove_Blog {
 
 		$post = get_post( $post_id );
 
+		if ( ! post_type_supports( get_post_type( $post_id ), 'comments' ) ) {
+			return;
+		}
+
 		if ( 'post' == get_post_type() ) {
 			return [];
 		}
@@ -373,7 +377,8 @@ class Remove_Blog {
 
 		global $post;
 
-		$post = get_post( $post_id );
+		$post  = get_post( $post_id );
+		$count = get_comment_count( $post_id );
 
 		if ( ! post_type_supports( get_post_type( $post_id ), 'comments' ) ) {
 			return null;
@@ -381,8 +386,9 @@ class Remove_Blog {
 
 		if ( 'post' == get_post_type() ) {
 			return 0;
+		} elseif ( 1 >= $count ) {
+			return $count;
 		}
-		return get_comment_count( $post_id );
 	}
 
 	/**
