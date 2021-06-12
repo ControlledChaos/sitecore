@@ -86,9 +86,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    Find `Site Core` and replace with your plugin name.
  *
  * 2. Package
- *    Find `Site_Core` and replace with your plugin name, include
- *    underscores between words. This will change the package name
- *    in file headers.
+ *    Find `Site_Core` and replace with your plugin name. This will
+ *    change the package name in file headers.
  *
  * 3. Namespace
  *    Find `SiteCore` and replace with something unique to your plugin.
