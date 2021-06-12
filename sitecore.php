@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    in file headers.
  *
  * 3. Namespace
- *    Find `SiteCore` and replace with something unique to your plugin name.
+ *    Find `SiteCore` and replace with something unique to your plugin.
  *
  * 4. Text domain
  *    Find `sitecore` and replace with the new name of your
@@ -103,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    plugin's admin pages.
  *
  * 6. Constants prefix
- *    Find `SCP` and replace with something unique to your plugin name. Use
+ *    Find `SCP` and replace with something unique to your plugin. Use
  *    only uppercase letters.
  *
  * 7. General prefix
