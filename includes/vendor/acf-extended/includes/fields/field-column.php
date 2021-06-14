@@ -13,15 +13,13 @@ class acfe_field_column extends acf_field{
         $this->label = __('Column', 'acfe');
         $this->category = 'layout';
         $this->defaults = array(
-            'columns' => '6/12',
-            'endpoint' => false,
+            'columns'       => '6/12',
+            'endpoint'      => false,
         );
         
-        // Field wrapper
-        add_filter('acfe/field_wrapper_attributes/type=acfe_column', array($this, 'field_wrapper_attributes'), 10, 2);
-        
-        // New sizes compatibility
-        add_filter('acf/validate_field/type=acfe_column', array($this, 'new_validate_field'), 20);
+        // Hooks
+        add_filter('acfe/field_wrapper_attributes/type=acfe_column',    array($this, 'field_wrapper_attributes'), 10, 2);
+        add_filter('acf/validate_field/type=acfe_column',               array($this, 'new_validate_field'), 20);
         
         parent::__construct();
         
@@ -82,17 +80,17 @@ class acfe_field_column extends acf_field{
                     )
                 )
             )
-		));
+        ));
         
         // endpoint
-		acf_render_field_setting( $field, array(
-			'label'			=> __('Endpoint','acf'),
-			'instructions'	=> __('Define an endpoint for the previous columns to stop.', 'acf'),
-			'name'			=> 'endpoint',
-			'type'			=> 'true_false',
-			'ui'			=> 1,
+        acf_render_field_setting( $field, array(
+            'label'         => __('Endpoint','acf'),
+            'instructions'  => __('Define an endpoint for the previous columns to stop.', 'acf'),
+            'name'          => 'endpoint',
+            'type'          => 'true_false',
+            'ui'            => 1,
             'class'         => 'acfe-field-columns-endpoint',
-		));
+        ));
         
     }
     
@@ -118,13 +116,13 @@ class acfe_field_column extends acf_field{
     function render_field($field){
         
         // vars
-		$atts = array(
-			'class' => 'acf-fields',
-		);
-		
-		?>
-		<div <?php acf_esc_attr_e($atts); ?>></div>
-		<?php
+        $atts = array(
+            'class' => 'acf-fields',
+        );
+        
+        ?>
+        <div <?php acf_esc_attr_e($atts); ?>></div>
+        <?php
         
     }
 
@@ -151,8 +149,12 @@ class acfe_field_column extends acf_field{
     
         global $pagenow;
         
-        // Do not render on User/Term views (because of Table render)
-        if(acf_is_screen(array('profile', 'user', 'user-edit')) || $pagenow === 'edit-tags.php' || $pagenow === 'term.php')
+        // Do not render on User/Term views without Enhanced UI module (because of Table render)
+        if((acf_is_screen(array('profile', 'user-edit')) || (acf_is_screen('user') && !is_multisite()) || $pagenow === 'term.php') && !acf_get_setting('acfe/modules/ui'))
+            return false;
+        
+        // Do not render on New Term page (forced to left)
+        if($pagenow === 'edit-tags.php')
             return false;
         
         $field['label'] = false;

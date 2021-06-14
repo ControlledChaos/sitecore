@@ -4,7 +4,7 @@ if(!defined('ABSPATH'))
     exit;
 
 // Check setting
-if(!acfe_is_dev() && !acfe_is_super_dev())
+if((!acfe_is_dev() && !acfe_is_super_dev()) || !acf_current_user_can_admin())
     return;
 
 if(!class_exists('acfe_dev')):
@@ -14,7 +14,7 @@ class acfe_dev{
     public $wp_meta = array();
     public $acf_meta = array();
     
-	function __construct(){
+    function __construct(){
         
         // Script debug
         if(!defined('SCRIPT_DEBUG'))
@@ -24,27 +24,27 @@ class acfe_dev{
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         
         // Post
-        add_action('load-post.php',		    array($this, 'load_post'));
-		add_action('load-post-new.php',	    array($this, 'load_post'));
+        add_action('load-post.php',         array($this, 'load_post'));
+        add_action('load-post-new.php',     array($this, 'load_post'));
         
         // Term
         add_action('load-term.php',         array($this, 'load_term'));
         
         // User
-        add_action('show_user_profile',     array($this, 'load_user'), 99);
-		add_action('edit_user_profile',     array($this, 'load_user'), 99);
+        add_action('show_user_profile',     array($this, 'load_user'), 20);
+        add_action('edit_user_profile',     array($this, 'load_user'), 20);
         
         // Options
-        add_action('acf/options_page/submitbox_before_major_actions',   array($this, 'load_admin'));
+        add_action('acf/options_page/submitbox_before_major_actions',   array($this, 'load_options'));
         
         add_action('wp_ajax_acfe/delete_meta',                          array($this, 'ajax_delete_meta'));
         add_action('wp_ajax_acfe/bulk_delete_meta',                     array($this, 'ajax_bulk_delete_meta'));
         
-	}
+    }
  
-	/*
-	 * Enqueue Scripts
-	 */
+    /*
+     * Enqueue Scripts
+     */
     function admin_enqueue_scripts(){
         
         // bail early if not valid screen
@@ -64,29 +64,26 @@ class acfe_dev{
         
         global $typenow;
         
-        $post_type = $typenow;
-        
         // Remove WP post meta box
         remove_meta_box('postcustom', false, 'normal');
         
-        if(!acfe_is_super_dev()){
+        $reserved = acfe_get_setting('reserved_post_types', array());
         
-            $restricted = array('acf-field-group', 'acfe-dbt', 'acfe-dop', 'acfe-dpt', 'acfe-dt', 'acfe-form', 'acfe-template');
-            
-            if(in_array($post_type, $restricted))
-                return;
-        
-        }
+        if(!acfe_is_super_dev() && in_array($typenow, $reserved))
+            return;
         
         // actions
-        add_action('add_meta_boxes', array($this, 'add_post_meta_boxes'), 10, 2);
+        add_action('add_meta_boxes', array($this, 'edit_post'), 10, 2);
         
     }
     
-    function add_post_meta_boxes($post_type, $post){
+    function edit_post($post_type, $post){
+    
+        // Get Post ID
+        $post_id = $post->ID;
         
         // Add Meta Boxes
-        $this->add_meta_boxes(0, $post_type);
+        $this->add_meta_boxes($post_id, $post_type);
         
     }
     
@@ -96,10 +93,10 @@ class acfe_dev{
     function load_term(){
         
         $screen = get_current_screen();
-		$taxonomy = $screen->taxonomy;
+        $taxonomy = $screen->taxonomy;
         
         // actions
-        add_action("{$taxonomy}_edit_form", array($this, 'edit_term'), 99, 2);
+        add_action("{$taxonomy}_edit_form", array($this, 'edit_term'), 10, 2);
         
     }
     
@@ -109,45 +106,26 @@ class acfe_dev{
         $post_id = 'term_' . $term->term_id;
         
         // Add Meta Boxes
-        $this->add_meta_boxes($post_id, 'edit-term');
-        
-        // Poststuff
-        echo '<div id="poststuff">';
-        
-            do_meta_boxes('edit-term', 'normal', array());
-            
-        echo '</div>';
+        $this->add_meta_boxes($post_id, "edit-{$taxonomy}");
         
     }
     
     /*
      * User
      */
-    function load_user(){
+    function load_user($user){
         
-        // Get User ID
-        global $user_id;
-        $user_id = (int) $user_id;
-        
-        if(empty($user_id))
-            return;
+        $post_id = 'user_' . $user->ID;
         
         // Add Meta Boxes
-        $this->add_meta_boxes('user_' . $user_id, 'edit-user');
-        
-        // Poststuff
-        echo '<div id="poststuff">';
-        
-            do_meta_boxes('edit-user', 'normal', array());
-            
-        echo '</div>';
+        $this->add_meta_boxes($post_id, array('profile', 'user-edit'));
         
     }
     
     /*
      * Admin
      */
-    function load_admin($page){
+    function load_options($page){
         
         $this->add_meta_boxes($page['post_id'], 'acf_options_page');
         
@@ -156,10 +134,12 @@ class acfe_dev{
     /*
      * Add Meta Boxes
      */
-    function add_meta_boxes($post_id = 0, $object_type){
+    function add_meta_boxes($post_id, $object_type){
         
         // Get Meta
         $this->get_meta($post_id);
+        
+        do_action('acfe/dev/add_meta_boxes', $post_id, $object_type);
         
         $render_bulk = false;
         
@@ -170,10 +150,10 @@ class acfe_dev{
                 $render_bulk = true;
             
             $id = 'acfe-wp-custom-fields';
-            $title = 'WP Custom fields';
+            $title = 'WP Custom Fields';
             
             if($object_type === 'acf_options_page'){
-                $title = 'WP Options';
+                $title = 'WP Options Meta';
             }
             
             $title .= '<span class="acfe_dev_meta_count">' . count($this->wp_meta) . '</span>';
@@ -191,10 +171,10 @@ class acfe_dev{
                 $render_bulk = true;
             
             $id = 'acfe-acf-custom-fields';
-            $title = 'ACF Custom fields';
-    
+            $title = 'ACF Custom Fields';
+            
             if($object_type === 'acf_options_page'){
-                $title = 'ACF Options';
+                $title = 'ACF Options Meta';
             }
             
             $title .= '<span class="acfe_dev_meta_count">' . count($this->acf_meta) . '</span>';
@@ -371,7 +351,7 @@ class acfe_dev{
         elseif(is_serialized($value)){
             
             $return = '<pre style="max-height:200px; overflow:auto; white-space: pre;">' . print_r(maybe_unserialize($value), true) . '</pre>';
-            $return .= '<pre style="max-height:200px; overflow:auto; white-space: pre; margin-top:10px;">' . print_r($value, true) . '</pre>';
+            $return .= '<pre style="max-height:200px; overflow:auto; white-space: unset; margin-top:10px; max-width:100%;">' . print_r($value, true) . '</pre>';
             
         }
         
@@ -386,7 +366,7 @@ class acfe_dev{
         elseif(acfe_is_json($value)){
             
             $return = '<pre style="max-height:200px; overflow:auto; white-space: pre;">' . print_r(json_decode($value), true) . '</pre>';
-            $return .= '<pre style="max-height:200px; overflow:auto; white-space: pre; margin-top:10px;">' . print_r($value, true) . '</pre>';
+            $return .= '<pre style="max-height:200px; overflow:auto; white-space: unset; margin-top:10px; max-width:100%;">' . print_r($value, true) . '</pre>';
             
         }
         

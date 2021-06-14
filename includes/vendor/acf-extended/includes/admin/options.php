@@ -20,13 +20,10 @@ require_once(ACFE_PATH . 'includes/admin/options.class.php');
 add_action('admin_menu', 'acfe_options_menu');
 function acfe_options_menu(){
     
-    $hook = add_submenu_page(
-        'options-general.php', 
-        __('Options'), 
-        __('Options'), 
-        acf_get_setting('capability'), 
-        'acfe-options'
-    );
+    if(!acf_get_setting('show_admin'))
+        return;
+    
+    add_submenu_page('options-general.php', __('Options'), __('Options'), acf_get_setting('capability'), 'acfe-options' );
     
 }
 
@@ -250,7 +247,7 @@ function acfe_options_load_edit($action){
     
     // Add columns support
     add_screen_option('layout_columns', array(
-        'max'	=> 2,
+        'max'    => 2,
         'default' => 2
     ));
     
@@ -500,13 +497,13 @@ function acfe_options_edit_metabox(){
         
         // vars
         $o = array(
-            'id'			=> $id,
-            'key'			=> $field_group['key'],
-            'style'			=> $field_group['style'],
-            'label'			=> $field_group['label_placement'],
-            'editLink'		=> '',
-            'editTitle'		=> __('Edit field group', 'acf'),
-            'visibility'	=> true
+            'id'            => $id,
+            'key'           => $field_group['key'],
+            'style'         => $field_group['style'],
+            'label'         => $field_group['label_placement'],
+            'editLink'      => '',
+            'editTitle'     => __('Edit field group', 'acf'),
+            'visibility'    => true
         );
         
         // load fields

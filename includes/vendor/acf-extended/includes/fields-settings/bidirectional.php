@@ -21,8 +21,8 @@ class acfe_bidirectional{
             
         }
     
-        add_action('wp_ajax_acfe/fields_settings/bidirectional/query',			array($this, 'ajax_query'));
-        add_action('wp_ajax_nopriv_acfe/fields_settings/bidirectional/query',	array($this, 'ajax_query'));
+        add_action('wp_ajax_acfe/fields_settings/bidirectional/query',          array($this, 'ajax_query'));
+        add_action('wp_ajax_nopriv_acfe/fields_settings/bidirectional/query',   array($this, 'ajax_query'));
     
         add_filter('acf/prepare_field/name=acfe_bidirectional_related',         array($this, 'field_settings_default_value'));
         
@@ -141,12 +141,14 @@ class acfe_bidirectional{
         if(empty($r_field_groups))
             return false;
     
+        // Vars
+        $hidden = acfe_get_setting('reserved_field_groups', array());
         $choices = array();
-    
+        
         foreach($r_field_groups as $r_field_group){
         
             // Bypass ACFE native groups
-            if(in_array($r_field_group['key'], array('group_acfe_author', 'group_acfe_dynamic_post_type', 'group_acfe_dynamic_taxonomy')))
+            if(in_array($r_field_group['key'], $hidden))
                 continue;
         
             // Get related fields
@@ -445,12 +447,16 @@ class acfe_bidirectional{
      */
     function update_value($value, $post_id, $field){
         
-        $bypass = acf_is_filter_enabled('acfe/bidirectional');
-        if($bypass)
+        // Bail early if updating a relation
+        if(acf_is_filter_enabled('acfe/bidirectional'))
             return $value;
         
-        // Check if bidirectional
+        // Bail early if no bidirectional setting
         if(!$this->get_field_bidirectional($field))
+            return $value;
+    
+        // Bail early if local meta
+        if(acfe_is_local_post_id($post_id))
             return $value;
         
         // Decode current post_id (ie: user_1)
@@ -519,7 +525,7 @@ class acfe_bidirectional{
      * $p_field: the parent field
      * $p_id: the relationship to add
      */
-    function relationship($type = 'add', $r_id, $p_field, $p_value){
+    function relationship($type, $r_id, $p_field, $p_value){
         
         // Get Related Field Configuration
         $r_fields = acf_get_array($p_field['acfe_bidirectional']['acfe_bidirectional_related']);

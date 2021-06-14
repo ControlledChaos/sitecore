@@ -15,6 +15,26 @@ class ACFE_Field_Group{
         // Actions
         add_action('acf/field_group/admin_head',    array($this, 'admin_head'));
         add_filter('acf/validate_field_group',      array($this, 'validate_default_autosync'));
+        add_filter('acf/get_field_types',           array($this, 'reorder_field_types'));
+        
+    }
+    
+    /*
+     * Reorder Field Types
+     */
+    function reorder_field_types($groups){
+        
+        foreach($groups as $group => &$fields){
+            asort($fields);
+        }
+        
+        if(isset($groups['ACF']))
+            $groups = acfe_array_insert_after('jQuery', $groups, 'ACF', $groups['ACF']);
+    
+        if(isset($groups['WordPress']))
+            $groups = acfe_array_insert_after('jQuery', $groups, 'WordPress', $groups['WordPress']);
+    
+        return $groups;
         
     }
     
@@ -248,7 +268,7 @@ class ACFE_Field_Group{
                     'name'          => 'acfe_permissions',
                     'prefix'        => 'acf_field_group',
                     'type'          => 'checkbox',
-                    'instructions'	=> __('Select user roles that are allowed to view and edit this field group in post edition'),
+                    'instructions'  => __('Select user roles that are allowed to view and edit this field group in post edition'),
                     'required'      => false,
                     'default_value' => false,
                     'choices'       => acfe_get_roles(),
@@ -338,8 +358,8 @@ class ACFE_Field_Group{
                         method: 'POST',
                         dataType: 'json',
                         data: acf.prepareForAjax({
-                            action:	'acf/ajax/local_json_diff',
-                            id: props.id
+                            action: 'acf/ajax/local_json_diff',
+                            id:     props.id
                         })
                     })
                         .done(function( data, textStatus, jqXHR ) {

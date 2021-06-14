@@ -59,30 +59,6 @@ The following docblock replaces the plugin header in the main file.
 Remove or comment out the following condition from the `active_acf()` function in the core ACFE file, `acf-extended.php`.
 
 Remove:
-`&& defined( 'ACF_PRO' )`
-
-### Updating ACFE #3
-
-The following code is added to the files listed below.
-
-```php
-if ( ! defined( 'ACF_PRO' ) ) {
-    return;
-}
-```
-
-* includes/admin/tools/dbt-export.php
-* includes/admin/tools/dbt-import.php
-* includes/admin/tools/dop-export.php
-* includes/admin/tools/dop-import.php
-* includes/admin/tools/form-export.php
-* includes/admin/tools/form-import.php
-* includes/fields/field-flexible-content.php
-* includes/modules/dynamic-block-type.php
-* includes/modules/dynamic-form.php
-* includes/modules/dynamic-options-page.php
-* includes/locations/post-type-archive.php
-
-The `dynamic-post-type.php` file must be updated to a conditional array for the `acfe_dpt_admin_archive` field. Use the `if ( ! defined( 'ACF_PRO' ) )` code to assign a variable to the full array if ACF Pro is active, else an empty array.
+`&& defined('ACF_PRO')`
 
 It is recommended to retain the `index.php` security file in the `acf-extended` directory.

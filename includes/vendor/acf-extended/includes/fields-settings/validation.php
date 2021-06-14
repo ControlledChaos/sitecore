@@ -7,7 +7,7 @@ if(!class_exists('acfe_field_validation')):
 
 class acfe_field_validation{
     
-	function __construct(){
+    function __construct(){
         
         // Actions
         add_action('acf/field_group/admin_head',                        array($this, 'load'));
@@ -16,11 +16,11 @@ class acfe_field_validation{
         // Filters
         add_filter('acf/validate_value',                                array($this, 'validate_value'), 99, 4);
         
-	}
+    }
     
     /*
-	 * Admin Head
-	 */
+     * Admin Head
+     */
     function load(){
         
         if(!acf_is_filter_enabled('acfe/field_group/advanced'))
@@ -417,14 +417,14 @@ class acfe_field_validation{
             }
             
             // Screen: Admin
-            elseif($screen === 'admin' && acfe_form_is_admin()){
+            elseif($screen === 'admin' && acfe_is_admin()){
                 
                 $screen_allow = true;
                 
             }
             
             // Screen: Front
-            elseif($screen === 'front' && acfe_form_is_front()){
+            elseif($screen === 'front' && acfe_is_front()){
                 
                 $screen_allow = true;
                 

@@ -3,10 +3,6 @@
 if(!defined('ABSPATH'))
     exit;
 
-if ( ! defined( 'ACF_PRO' ) ) {
-    return;
-}
-
 if(!class_exists('acfe_location_post_type_archive')):
 
 class acfe_location_post_type_archive{
@@ -14,7 +10,7 @@ class acfe_location_post_type_archive{
     public $post_type = false;
     public $post_types = array();
     
-	function __construct(){
+    function __construct(){
         
         add_action('init',                                          array($this, 'init'), 99);
         add_action('current_screen',                                array($this, 'current_screen'));
@@ -27,7 +23,7 @@ class acfe_location_post_type_archive{
         add_filter('acf/location/rule_values/post_type_archive',    array($this, 'location_values'));
         add_filter('acf/location/rule_match/post_type_archive',     array($this, 'location_match'), 10, 3);
         
-	}
+    }
     
     function init(){
         
@@ -46,13 +42,23 @@ class acfe_location_post_type_archive{
             if($name === 'post')
                 $parent_slug = 'edit.php';
             
+            // label
+            $label = __('Archive <span class="count">(%s)</span>');
+            $label = preg_replace('/ <span(.*?)<\/span>/', '', $label);
+            
+            // Capability
+            $capability = acf_get_setting('capability');
+            $capability = apply_filters("acfe/post_type_archive_capability",                $capability, $name);
+            $capability = apply_filters("acfe/post_type_archive_capability/name={$name}",   $capability, $name);
+            
+            // Register
             acf_add_options_page(array(
-                'page_title' 	            => $object->label . ' ' . __('Archive'),
-                'menu_title'	            => __('Archive'),
-                'menu_slug' 	            => $name . '-archive',
+                'page_title'                => $object->label . ' ' . $label,
+                'menu_title'                => $label,
+                'menu_slug'                 => $name . '-archive',
                 'post_id'                   => $name . '_archive',
-                'capability'	            => acf_get_setting('capability'),
-                'redirect'		            => false,
+                'capability'                => $capability,
+                'redirect'                  => false,
                 'parent_slug'               => $parent_slug,
                 'updated_message'           => $object->label . ' Archive Saved.',
                 'acfe_post_type_archive'    => true
@@ -96,15 +102,15 @@ class acfe_location_post_type_archive{
     }
     
     function location_screen($screen){
-	    
-	    $screen['acfe_dpt_admin_page'] = true;
-	    
-	    return $screen;
-	    
+        
+        $screen['acfe_dpt_admin_page'] = true;
+        
+        return $screen;
+        
     }
     
     function admin_footer(){
-	    
+        
         ?>
         <div id="tmpl-acf-after-title">
             <div style="margin-top:7px;">
@@ -124,29 +130,42 @@ class acfe_location_post_type_archive{
     }
     
     function admin_bar($wp_admin_bar){
-	    
-	    if(is_admin() || !is_post_type_archive())
-	        return;
-	    
-	    $post_type = get_query_var('post_type');
-	    
-	    if(!$post_type)
-	        return;
-	    
-        $post_type_obj = get_post_type_object($post_type);
         
-        $has_archive = isset($post_type_obj->has_archive) && !empty($post_type_obj->has_archive);
-        $has_archive_page = isset($post_type_obj->acfe_admin_archive) && !empty($post_type_obj->acfe_admin_archive);
+        // Bail early
+        if(is_admin() || !is_post_type_archive())
+            return;
+        
+        // Get Post Type
+        $post_type = get_query_var('post_type');
+        
+        if(!$post_type)
+            return;
+        
+        // Object
+        $object = get_post_type_object($post_type);
+        
+        // Check has archive
+        $has_archive = acfe_maybe_get($object, 'has_archive');
+        $has_archive_page = acfe_maybe_get($object, 'acfe_admin_archive');
         
         if(!$has_archive || !$has_archive_page)
             return;
+    
+        // Check capability
+        $capability = acf_get_setting('capability');
+        $capability = apply_filters("acfe/post_type_archive_capability",                    $capability, $post_type);
+        $capability = apply_filters("acfe/post_type_archive_capability/name={$post_type}",  $capability, $post_type);
         
+        if(!current_user_can($capability))
+            return;
+        
+        // Add menu item
         $wp_admin_bar->add_node(array(
-            'id'    	=> 'edit',
-            'title' 	=> 'Edit ' . $post_type_obj->label . ' ' . __('Archive'),
-            'parent' 	=> false,
-            'href' 		=> add_query_arg(array('post_type' => $post_type_obj->name, 'page' => $post_type_obj->name . '-archive'), admin_url('edit.php')),
-            'meta'		=> array('class' => 'ab-item')
+            'id'        => 'edit',
+            'title'     => 'Edit ' . $object->label . ' ' . __('Archive'),
+            'parent'    => false,
+            'href'      => add_query_arg(array('post_type' => $object->name, 'page' => $object->name . '-archive'), admin_url('edit.php')),
+            'meta'      => array('class' => 'ab-item')
         ));
         
     }
@@ -196,7 +215,7 @@ class acfe_location_post_type_archive{
         }
         
         $choices = array('all' => __('All', 'acf'));
-		$choices = array_merge($choices, $pretty_post_types);
+        $choices = array_merge($choices, $pretty_post_types);
         
         return $choices;
         

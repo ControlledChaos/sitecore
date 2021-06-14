@@ -10,13 +10,11 @@ if(!defined('ABSPATH'))
  */
 function acfe_include($filename = ''){
     
-	$file_path = ACFE_PATH . ltrim($filename, '/');
+    $file_path = ACFE_PATH . ltrim($filename, '/');
     
-	if(file_exists($file_path)){
-        
-		include_once($file_path);
-        
-	}
+    if(file_exists($file_path)){
+        include_once($file_path);
+    }
     
 }
 
@@ -29,13 +27,11 @@ function acfe_include($filename = ''){
  */
 function acfe_get_url($filename = ''){
     
-	if(!defined('ACFE_URL')){
-        
-		define('ACFE_URL', acf_get_setting('acfe/url'));
-        
-	}
+    if(!defined('ACFE_URL')){
+        define('ACFE_URL', acf_get_setting('acfe/url'));
+    }
     
-	return ACFE_URL . ltrim($filename, '/');
+    return ACFE_URL . ltrim($filename, '/');
 }
 
 /**
@@ -48,7 +44,7 @@ function acfe_get_url($filename = ''){
 add_action('after_plugin_row_' . ACFE_BASENAME, 'acfe_plugin_row', 5, 3);
 function acfe_plugin_row($plugin_file, $plugin_data, $status){
     
-    if(acfe()->active_acf())
+    if(acfe()->has_acf())
         return;
     
     // >= WP 5.5
