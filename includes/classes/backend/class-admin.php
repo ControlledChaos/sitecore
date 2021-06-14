@@ -9,7 +9,9 @@
  */
 
 namespace SiteCore\Classes\Admin;
-use SiteCore\Classes as Classes;
+use SiteCore\Classes as Classes,
+	SiteCore\Compatibility  as Compat,
+	SiteCore\Classes\Vendor as Vendor;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,8 +34,11 @@ class Admin extends Classes\Base {
 		// Get the filename of the current page.
 		global $pagenow;
 
-		// Manage website page/help pages.
-		new Manage_Website_Page;
+		if ( Compat\active_acf_pro() ) {
+			new Vendor\ACF_Manage_Site;
+		} else {
+			new Manage_Website_Page;
+		}
 
 		// Post edit screens
 		new Post_Edit;
