@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * methods, HTML IDs, CSS classes, etc.
  *
  * Beginners, note that the short array syntax ( `[]` rather than
- * array()` ) is used. Use of the `array()` function is encouraged
+ * `array()` ) is used. Use of the `array()` function is encouraged
  * by some to make the code more easily read by beginners. I argue
  * that beginners will inevitably encounter the short array syntax
  * so they may as well learn to recognize this early. If the code
