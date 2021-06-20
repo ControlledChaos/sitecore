@@ -94,8 +94,40 @@ class User_Avatars extends Classes\Base {
 		if ( 'options-discussion.php' == $pagenow ) :
 		?>
 		<style>
-		.defaultavatarpicker p {
+		.form-table td.defaultavatarpicker {
+			display: block;
+			max-width: 1024px;
+			padding: 15px 0;
+		}
+
+		.defaultavatarpicker p,
+		.defaultavatarpicker br {
 			display: none;
+		}
+
+		.defaultavatarpicker label {
+			display: block !important;
+			width: 25%;
+			float: left;
+		}
+
+		.defaultavatarpicker .avatar {
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 50%;
+		}
+
+		@media screen and ( max-width: 800px ) {
+			.defaultavatarpicker label {
+				width: 33.33325%;
+				width: calc( 100% / 3 );
+			}
+		}
+
+		@media screen and ( max-width: 480px ) {
+			.defaultavatarpicker label {
+				width: 50%;
+			}
 		}
 		</style>
 		<?php
