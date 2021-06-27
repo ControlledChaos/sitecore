@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) exit;  
+if( !defined('ABSPATH') ) exit;  
 
 // Register notices store.
 acf_register_store( 'notices' );
@@ -22,7 +22,7 @@ acf_register_store( 'notices' );
  * @date	10/1/19
  * @since	5.7.10
  */
-if ( ! class_exists( 'ACF_Admin_Notice' ) ) :
+if( ! class_exists('ACF_Admin_Notice') ) :
 
 class ACF_Admin_Notice extends ACF_Data {
 	
@@ -31,9 +31,6 @@ class ACF_Admin_Notice extends ACF_Data {
 		
 		/** @type string Text displayed in notice. */
 		'text' => '',
-		
-		/** @type string Optional HTML alternative to text. 
-		'html' => '', */
 		
 		/** @type string The type of notice (warning, error, success, info). */
 		'type' => 'info',
@@ -54,25 +51,14 @@ class ACF_Admin_Notice extends ACF_Data {
 	*  @return	void
 	*/
 	function render() {
+		$notice_text = $this->get('text');
+		$notice_type = $this->get('type');
+		$is_dismissible = $this->get('dismissible');
 		
-		// Ensure text contains punctuation.
-		// todo: Remove this after updating translations.
-		$text = $this->get( 'text' );
-		if ( substr( $text, -1) !== '.' && substr( $text, -1) !== '>' ) {
-			$text .= '.';
-		} 
-		
-		// Print HTML.
-		printf( '<div class="acf-admin-notice notice notice-%s %s">%s</div>',
-			
-			// Type class.
-			$this->get( 'type' ),
-			
-			// Dismissible class.
-			$this->get( 'dismissible' ) ? 'is-dismissible' : '',
-			
-			// InnerHTML
-			$this->has( 'html' ) ? $this->get( 'html' ) : wpautop( $text)
+		printf('<div class="acf-admin-notice notice notice-%s %s">%s</div>',
+			esc_attr( $notice_type ),
+			$is_dismissible ? 'is-dismissible' : '',
+			acf_esc_html( wpautop( acf_punctify( $notice_text ) ) )
 		);
 	}
 }
@@ -119,7 +105,7 @@ function acf_render_admin_notices() {
 	$notices = acf_get_store( 'notices' )->get_data();
 	
 	// Loop over notices and render.
-	if ( $notices ) {
+	if( $notices ) {
 		foreach( $notices as $notice ) {
 			$notice->render();
 		}
@@ -127,7 +113,7 @@ function acf_render_admin_notices() {
 }
 
 // Render notices during admin action.
-add_action( 'admin_notices', 'acf_render_admin_notices', 99);
+add_action('admin_notices', 'acf_render_admin_notices', 99);
 
 /**
  * acf_add_admin_notice

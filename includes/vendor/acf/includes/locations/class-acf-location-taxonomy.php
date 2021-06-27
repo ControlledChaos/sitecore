@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Taxonomy' ) ) :
+if( ! class_exists('ACF_Location_Taxonomy') ) :
 
 class ACF_Location_Taxonomy extends ACF_Location {
 	
@@ -36,7 +36,7 @@ class ACF_Location_Taxonomy extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['taxonomy']) ) {
+		if( isset($screen['taxonomy']) ) {
 			$taxonomy = $screen['taxonomy'];
 		} else {
 			return false;
@@ -58,7 +58,7 @@ class ACF_Location_Taxonomy extends ACF_Location {
 	public function get_values( $rule ) {
 		return array_merge(
 			array(
-				'all' => __( 'All', 'acf' )
+				'all' => __('All', 'acf')
 			),
 			acf_get_taxonomy_labels()
 		);
@@ -74,7 +74,7 @@ class ACF_Location_Taxonomy extends ACF_Location {
 	 * @return	string|array
 	 */
 	function get_object_subtype( $rule ) {
-		if ( $rule['operator'] === '==' ) {
+		if( $rule['operator'] === '==' ) {
 			return $rule['value'];
 		}
 		return '';

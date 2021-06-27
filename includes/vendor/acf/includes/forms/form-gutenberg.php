@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
-if ( ! class_exists( 'ACF_Form_Gutenberg' ) ) :
+if( ! class_exists('ACF_Form_Gutenberg') ) :
 
 class ACF_Form_Gutenberg {
 	
@@ -21,10 +21,10 @@ class ACF_Form_Gutenberg {
 	function __construct() {
 		
 		// Add actions.
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action('enqueue_block_editor_assets', array($this, 'enqueue_block_editor_assets'));
 		
 		// Ignore validation during meta-box-loader AJAX request.
-		add_action( 'acf/validate_save_post', array( $this, 'acf_validate_save_post' ), 999);
+		add_action('acf/validate_save_post', array($this, 'acf_validate_save_post'), 999);
 	}
 	
 	/**
@@ -41,13 +41,13 @@ class ACF_Form_Gutenberg {
 	function enqueue_block_editor_assets() {
 		
 		// Remove edit_form_after_title.
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 0 );
+		add_action( 'add_meta_boxes', array($this, 'add_meta_boxes'), 20, 0 );
 		
 		// Call edit_form_after_title manually.
-		add_action( 'block_editor_meta_box_hidden_fields', array( $this, 'block_editor_meta_box_hidden_fields' ) );
+		add_action( 'block_editor_meta_box_hidden_fields', array($this, 'block_editor_meta_box_hidden_fields') );
 		
 		// Cusotmize editor metaboxes.
-		add_filter( 'filter_block_editor_meta_boxes', array( $this, 'filter_block_editor_meta_boxes' ) );
+		add_filter( 'filter_block_editor_meta_boxes', array($this, 'filter_block_editor_meta_boxes') );
 	}
 	
 	/**
@@ -64,7 +64,7 @@ class ACF_Form_Gutenberg {
 	function add_meta_boxes() {
 		
 		// Remove 'edit_form_after_title' action.
-		remove_action( 'edit_form_after_title', array(acf_get_instance( 'ACF_Form_Post' ), 'edit_form_after_title' ) );
+		remove_action('edit_form_after_title', array(acf_get_instance('ACF_Form_Post'), 'edit_form_after_title'));
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class ACF_Form_Gutenberg {
 	function block_editor_meta_box_hidden_fields() {
 	
 		// Manually call 'edit_form_after_title' function.
-		acf_get_instance( 'ACF_Form_Post' )->edit_form_after_title();
+		acf_get_instance('ACF_Form_Post')->edit_form_after_title();
 	}
 	
 	/**
@@ -101,14 +101,14 @@ class ACF_Form_Gutenberg {
 		global $current_screen;
 		
 		// Move 'acf_after_title' metaboxes into 'normal' location.
-		if ( isset( $wp_meta_boxes[ $current_screen->id ][ 'acf_after_title' ]) ) {
+		if( isset($wp_meta_boxes[ $current_screen->id ][ 'acf_after_title' ]) ) {
 			
 			// Extract locations.
 			$locations = $wp_meta_boxes[ $current_screen->id ];
 			
 			// Ensure normal location exists.
-			if ( ! isset( $locations['normal']) ) $locations['normal'] = [];
-			if ( ! isset( $locations['normal']['high']) ) $locations['normal']['high'] = [];
+			if( !isset($locations['normal']) ) $locations['normal'] = array();
+			if( !isset($locations['normal']['high']) ) $locations['normal']['high'] = array();
 			
 			// Append metaboxes.
 			foreach( $locations['acf_after_title'] as $priority => $meta_boxes ) {
@@ -120,7 +120,7 @@ class ACF_Form_Gutenberg {
 			unset( $wp_meta_boxes[ $current_screen->id ]['acf_after_title'] );
 			
 			// Avoid conflicts with saved metabox order.
-			add_filter( 'get_user_option_meta-box-order_' . $current_screen->id, array( $this, 'modify_user_option_meta_box_order' ) );
+			add_filter( 'get_user_option_meta-box-order_' . $current_screen->id, array($this, 'modify_user_option_meta_box_order') );
 		}
 		
 		// Return
@@ -140,13 +140,13 @@ class ACF_Form_Gutenberg {
 	 * @return	array Modified array with meta boxes moved around.
 	 */
 	function modify_user_option_meta_box_order( $locations ) {
-		if ( !empty( $locations['acf_after_title']) ) {
-			if ( !empty( $locations['normal']) ) {
+		if( !empty($locations['acf_after_title']) ) {
+			if( !empty($locations['normal']) ) {
 				$locations['normal'] = $locations['acf_after_title'] . ',' . $locations['normal'];
 			} else {
 				$locations['normal'] = $locations['acf_after_title'];
 			}
-			unset( $locations['acf_after_title']);
+			unset($locations['acf_after_title']);
 		}
 		return $locations;
 	}
@@ -166,12 +166,12 @@ class ACF_Form_Gutenberg {
 	function acf_validate_save_post() {
 		
 		// Check if current request came from Gutenberg.
-		if ( isset( $_GET['meta-box-loader']) ) {
+		if( isset($_GET['meta-box-loader']) ) {
 			acf_reset_validation_errors();
 		}
 	}
 }
 
-acf_new_instance( 'ACF_Form_Gutenberg' );
+acf_new_instance('ACF_Form_Gutenberg');
 
 endif;

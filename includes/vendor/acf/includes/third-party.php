@@ -10,7 +10,7 @@
 *  @subpackage	Core
 */
 
-if ( ! class_exists( 'acf_third_party' ) ) :
+if( ! class_exists('acf_third_party') ) :
 
 class acf_third_party {
 	
@@ -31,24 +31,24 @@ class acf_third_party {
 	function __construct() {
 		
 		// Tabify Edit Screen - http://wordpress.org/extend/plugins/tabify-edit-screen/
-		if ( class_exists( 'Tabify_Edit_Screen' ) ) {
-			add_filter( 'tabify_posttypes',			array( $this, 'tabify_posttypes' ) );
-			add_action( 'tabify_add_meta_boxes',		array( $this, 'tabify_add_meta_boxes' ) );
+		if( class_exists('Tabify_Edit_Screen') ) {
+			add_filter('tabify_posttypes',			array($this, 'tabify_posttypes'));
+			add_action('tabify_add_meta_boxes',		array($this, 'tabify_add_meta_boxes'));
 		}
 		
 		// Post Type Switcher - http://wordpress.org/extend/plugins/post-type-switcher/
-		if ( class_exists( 'Post_Type_Switcher' ) ) {
-			add_filter( 'pts_allowed_pages', array( $this, 'pts_allowed_pages' ) );
+		if( class_exists('Post_Type_Switcher') ) {
+			add_filter('pts_allowed_pages', array($this, 'pts_allowed_pages'));
 		}
 		
 		// Event Espresso - https://wordpress.org/plugins/event-espresso-decaf/
-		if ( function_exists( 'espresso_version' ) ) {
-			add_filter( 'acf/get_post_types', array( $this, 'ee_get_post_types' ), 10, 2);
+		if( function_exists('espresso_version') ) {
+			add_filter('acf/get_post_types', array($this, 'ee_get_post_types'), 10, 2);
 		}
 		
 		// Dark Mode
-		if ( class_exists( 'Dark_Mode' ) ) {
-			add_action( 'doing_dark_mode', array( $this, 'doing_dark_mode' ) );
+		if( class_exists('Dark_Mode') ) {
+			add_action('doing_dark_mode', array($this, 'doing_dark_mode'));
 		}
 	}
 	
@@ -69,11 +69,11 @@ class acf_third_party {
 	
 	function ee_get_post_types( $post_types, $args ) {
 		
-		if ( !empty( $args['show_ui']) ) {
-			$ee_post_types = get_post_types(array( 'show_ee_ui' => 1) );
-			$ee_post_types = array_keys( $ee_post_types);
-			$post_types = array_merge( $post_types, $ee_post_types);
-			$post_types = array_unique( $post_types);
+		if( !empty($args['show_ui']) ) {
+			$ee_post_types = get_post_types(array('show_ee_ui' => 1));
+			$ee_post_types = array_keys($ee_post_types);
+			$post_types = array_merge($post_types, $ee_post_types);
+			$post_types = array_unique($post_types);
 		}
 		
 		// return
@@ -125,7 +125,7 @@ class acf_third_party {
 		$field_groups = acf_get_field_groups();
 		
 		
-		if ( !empty( $field_groups) ) {
+		if( !empty($field_groups) ) {
 			
 			foreach( $field_groups as $field_group ) {
 				
@@ -136,7 +136,7 @@ class acf_third_party {
 				
 				
 				// add meta box
-				add_meta_box( $id, $title, '__return_true', $post_type );
+				add_meta_box( $id, acf_esc_html( $title ), '__return_true', $post_type );
 				
 			}
 			
@@ -165,11 +165,11 @@ class acf_third_party {
 		
 		
 		// check $_GET becuase it is too early to use functions / global vars
-		if ( !empty( $_GET['post_type']) ) {
+		if( !empty($_GET['post_type']) ) {
 			
 			$post_type = $_GET['post_type'];
 			
-		} elseif ( !empty( $_GET['post']) ) {
+		} elseif( !empty($_GET['post']) ) {
 			
 			$post_type = get_post_type( $_GET['post'] );
 			
@@ -177,9 +177,9 @@ class acf_third_party {
 				
 		
 		// check post type
-		if ( $post_type == 'acf-field-group' ) {
+		if( $post_type == 'acf-field-group' ) {
 			
-			$pages = [];
+			$pages = array();
 			
 		}
 		
@@ -202,7 +202,7 @@ class acf_third_party {
 	*/
 	
 	function doing_dark_mode() {
-		wp_enqueue_style( 'acf-dark', acf_get_url( 'assets/css/acf-dark.css' ), [], ACF_VERSION );
+		wp_enqueue_style('acf-dark', acf_get_url('assets/css/acf-dark.css'), array(), ACF_VERSION );
 	}
 	
 }

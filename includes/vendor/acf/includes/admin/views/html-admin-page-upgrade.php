@@ -23,17 +23,17 @@
 </style>
 <div id="acf-upgrade-wrap" class="wrap">
 	
-	<h1><?php _e("Upgrade Database", 'acf' ); ?></h1>
+	<h1><?php _e("Upgrade Database", 'acf'); ?></h1>
 	
-<?php if ( acf_has_upgrade() ): ?>
+<?php if( acf_has_upgrade() ): ?>
 
-	<p><?php _e( 'Reading upgrade tasks...', 'acf' ); ?></p>
-	<p class="step-1"><i class="acf-loading"></i> <?php printf(__( 'Upgrading data to version %s', 'acf' ), ACF_VERSION); ?></p>
+	<p><?php _e('Reading upgrade tasks...', 'acf'); ?></p>
+	<p class="step-1"><i class="acf-loading"></i> <?php printf(__('Upgrading data to version %s', 'acf'), ACF_VERSION); ?></p>
 	<p class="step-2"></p>
-	<p class="step-3"><?php echo sprintf( __( 'Database upgrade complete. <a href="%s">See what\'s new</a>', 'acf' ), admin_url( 'edit.php?post_type=acf-field-group' ) ); ?></p>
+	<p class="step-3"><?php echo sprintf( __('Database upgrade complete. <a href="%s">See what\'s new</a>', 'acf' ), admin_url('edit.php?post_type=acf-field-group') ); ?></p>
 	
 	<script type="text/javascript">
-	(function( $) {
+	(function($) {
 		
 		var upgrader = new acf.Model({
 			initialize: function(){
@@ -44,7 +44,7 @@
 			upgrade: function(){
 				
 				// show step 1
-				$( '.step-1' ).show();
+				$('.step-1').show();
 				
 				// vars
 				var response = '';
@@ -52,7 +52,7 @@
 				
 				// send ajax request to upgrade DB
 			    $.ajax({
-			    	url: acf.get( 'ajaxurl' ),
+			    	url: acf.get('ajaxurl'),
 					dataType: 'json',
 					type: 'post',
 					data: acf.prepareForAjax({
@@ -62,24 +62,24 @@
 						success = true;
 					},
 					error: function( jqXHR, textStatus, errorThrown ){
-						response = '<?php _e( 'Upgrade failed.', 'acf' ); ?>';
-						if ( error = acf.getXhrError(jqXHR) ) {
+						response = '<?php _e('Upgrade failed.', 'acf'); ?>';
+						if( error = acf.getXhrError(jqXHR) ) {
 							response += ' <code>' + error +  '</code>';
 						}
 					},
 					complete: this.proxy(function(){
 						
 						// remove spinner
-						$( '.acf-loading' ).hide();
+						$('.acf-loading').hide();
 						
 						// display response
-						if ( response ) {
-							$( '.step-2' ).show().html( response );
+						if( response ) {
+							$('.step-2').show().html( response );
 						}
 						
 						// display success
-						if ( success ) {
-							$( '.step-3' ).show();
+						if( success ) {
+							$('.step-3').show();
 						}
 					})
 				});
@@ -91,7 +91,7 @@
 
 <?php else: ?>
 
-	<p><?php _e( 'No updates available.', 'acf' ); ?></p>
+	<p><?php _e('No updates available.', 'acf'); ?></p>
 	
 <?php endif; ?>
 </div>

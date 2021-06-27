@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Attachment' ) ) :
+if( ! class_exists('ACF_Location_Attachment') ) :
 
 class ACF_Location_Attachment extends ACF_Location {
 	
@@ -36,7 +36,7 @@ class ACF_Location_Attachment extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['attachment']) ) {
+		if( isset($screen['attachment']) ) {
 			$attachment = $screen['attachment'];
 		} else {
 			return false;
@@ -46,11 +46,11 @@ class ACF_Location_Attachment extends ACF_Location {
 		$mime_type = get_post_mime_type( $attachment );
 		
 		// Allow for unspecific mim_type matching such as "image" or "video".
-		if ( !strpos( $rule['value'], '/' ) ) {
+		if( !strpos($rule['value'], '/') ) {
 			
 			// Explode mime_type into bits ([0] => type, [1] => subtype) and match type.
 			$bits = explode( '/', $mime_type );
-			if ( $bits[0] === $rule['value'] ) {
+			if( $bits[0] === $rule['value'] ) {
 				$mime_type = $rule['value'];
 			}
 		}
@@ -68,7 +68,7 @@ class ACF_Location_Attachment extends ACF_Location {
 	 */
 	public function get_values( $rule ) {
 		$choices = array(
-			'all' => __( 'All', 'acf' )
+			'all' => __('All', 'acf')
 		);
 		
 		// Get mime types and append into optgroups.
@@ -76,11 +76,11 @@ class ACF_Location_Attachment extends ACF_Location {
 		foreach( $mime_types as $regex => $mime_type ) {
 			
 			// Get type "image" from mime_type "image/jpeg".
-			$type = current( explode( '/', $mime_type) );
+			$type = current( explode('/', $mime_type) );
 			
 			// Append group and mimetype.
-			$choices[ $type ][ $type ] = sprintf( __( 'All %s formats', 'acf' ), $type);
-			$choices[ $type ][ $mime_type ] = "$regex ( $mime_type)";
+			$choices[ $type ][ $type ] = sprintf( __('All %s formats', 'acf'), $type);
+			$choices[ $type ][ $mime_type ] = "$regex ($mime_type)";
 		}
 		
 		// return

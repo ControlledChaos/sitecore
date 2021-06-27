@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Admin_Upgrade' ) ) :
+if( ! class_exists('ACF_Admin_Upgrade') ) :
 
 class ACF_Admin_Upgrade {
 	
@@ -20,9 +20,9 @@ class ACF_Admin_Upgrade {
 	function __construct() {
 		
 		// actions
-		add_action( 'admin_menu', 			array( $this,'admin_menu' ), 20 );
-		if ( is_multisite() ) {
-			add_action( 'network_admin_menu',	array( $this,'network_admin_menu' ), 20 );
+		add_action( 'admin_menu', 			array($this,'admin_menu'), 20 );
+		if( is_multisite() ) {
+			add_action( 'network_admin_menu',	array($this,'network_admin_menu'), 20 );
 		}
 	}
 	
@@ -40,16 +40,16 @@ class ACF_Admin_Upgrade {
 	function admin_menu() {
 		
 		// check if upgrade is avaialble
-		if ( acf_has_upgrade() ) {
+		if( acf_has_upgrade() ) {
 			
 			// add notice
-			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+			add_action('admin_notices', array($this, 'admin_notices'));
 			
 			// add page
-			$page = add_submenu_page( 'index.php', __( 'Upgrade Database','acf' ), __( 'Upgrade Database','acf' ), acf_get_setting( 'capability' ), 'acf-upgrade', array( $this,'admin_html' ) );
+			$page = add_submenu_page('index.php', __('Upgrade Database','acf'), __('Upgrade Database','acf'), acf_get_setting('capability'), 'acf-upgrade', array($this,'admin_html') );
 			
 			// actions
-			add_action( 'load-' . $page, array( $this,'admin_load' ) );
+			add_action('load-' . $page, array($this,'admin_load'));
 		}
 	}
 	
@@ -71,7 +71,7 @@ class ACF_Admin_Upgrade {
 		
 		// Loop over sites and check for upgrades.
 		$sites = get_sites( array( 'number' => 0 ) );
-		if ( $sites ) {
+		if( $sites ) {
 			
 			// Unhook action to avoid memory issue (as seen in wp-includes/ms-site.php).
 			remove_action( 'switch_blog', 'wp_switch_roles_and_user', 1 );
@@ -89,7 +89,7 @@ class ACF_Admin_Upgrade {
 				restore_current_blog();
 				
 				// Check if upgrade was found.
-				if ( $site_upgrade ) {
+				if( $site_upgrade ) {
 					$upgrade = true;
 					break;
 				}
@@ -98,19 +98,19 @@ class ACF_Admin_Upgrade {
 		}
 		
 		// Bail early if no upgrade is needed.
-		if ( ! $upgrade ) {
+		if( !$upgrade ) {
 			return;
 		}
 		
 		// Add notice.
-		add_action( 'network_admin_notices', array( $this, 'network_admin_notices' ) );
+		add_action('network_admin_notices', array($this, 'network_admin_notices'));
 		
 		// Add page.
 		$page = add_submenu_page(
 			'index.php', 
-			__( 'Upgrade Database','acf' ), 
-			__( 'Upgrade Database','acf' ), 
-			acf_get_setting( 'capability' ), 
+			__('Upgrade Database','acf'), 
+			__('Upgrade Database','acf'), 
+			acf_get_setting('capability'), 
 			'acf-upgrade-network', 
 			array( $this,'network_admin_html' )
 		);
@@ -131,7 +131,7 @@ class ACF_Admin_Upgrade {
 	function admin_load() {
 		
 		// remove prompt 
-		remove_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		remove_action('admin_notices', array($this, 'admin_notices'));
 		
 		// Enqueue core script.
 		acf_enqueue_script( 'acf' );
@@ -151,7 +151,7 @@ class ACF_Admin_Upgrade {
 	function network_admin_load() {
 		
 		// remove prompt 
-		remove_action( 'network_admin_notices', array( $this, 'network_admin_notices' ) );
+		remove_action('network_admin_notices', array($this, 'network_admin_notices'));
 		
 		// Enqueue core script.
 		acf_enqueue_script( 'acf' );
@@ -172,13 +172,13 @@ class ACF_Admin_Upgrade {
 		
 		// vars
 		$view = array(
-			'button_text'	=> __("Upgrade Database", 'acf' ),
-			'button_url'	=> admin_url( 'index.php?page=acf-upgrade' ),
+			'button_text'	=> __("Upgrade Database", 'acf'),
+			'button_url'	=> admin_url('index.php?page=acf-upgrade'),
 			'confirm'		=> true
 		);
 		
 		// view
-		acf_get_view( 'html-notice-upgrade', $view);
+		acf_get_view('html-notice-upgrade', $view);
 	}
 	
 	/**
@@ -196,13 +196,13 @@ class ACF_Admin_Upgrade {
 		
 		// vars
 		$view = array(
-			'button_text'	=> __("Review sites & upgrade", 'acf' ),
-			'button_url'	=> network_admin_url( 'index.php?page=acf-upgrade-network' ),
+			'button_text'	=> __("Review sites & upgrade", 'acf'),
+			'button_url'	=> network_admin_url('index.php?page=acf-upgrade-network'),
 			'confirm'		=> false
 		);
 		
 		// view
-		acf_get_view( 'html-notice-upgrade', $view);
+		acf_get_view('html-notice-upgrade', $view);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ class ACF_Admin_Upgrade {
 	*  @return	void
 	*/
 	function admin_html() {
-		acf_get_view( 'html-admin-page-upgrade' );
+		acf_get_view('html-admin-page-upgrade');
 	}
 	
 	/**
@@ -232,12 +232,12 @@ class ACF_Admin_Upgrade {
 	*  @return	void
 	*/
 	function network_admin_html() {
-		acf_get_view( 'html-admin-page-upgrade-network' );
+		acf_get_view('html-admin-page-upgrade-network');
 	}
 }
 
 // instantiate
-acf_new_instance( 'ACF_Admin_Upgrade' );
+acf_new_instance('ACF_Admin_Upgrade');
 
 endif; // class_exists check
 

@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_url' ) ) :
+if( ! class_exists('acf_field_url') ) :
 
 class acf_field_url extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_url extends acf_field {
 		
 		// vars
 		$this->name = 'url';
-		$this->label = __("Url",'acf' );
+		$this->label = __("Url",'acf');
 		$this->defaults = array(
 			'default_value'	=> '',
 			'placeholder'	=> '',
@@ -46,7 +46,7 @@ class acf_field_url extends acf_field {
 	function render_field( $field ) {
 		
 		// vars
-		$atts = [];
+		$atts = array();
 		$keys = array( 'type', 'id', 'class', 'name', 'value', 'placeholder', 'pattern' );
 		$keys2 = array( 'readonly', 'disabled', 'required' );
 		$html = '';
@@ -54,13 +54,13 @@ class acf_field_url extends acf_field {
 		
 		// atts (value="123")
 		foreach( $keys as $k ) {
-			if ( isset( $field[ $k ]) ) $atts[ $k ] = $field[ $k ];
+			if( isset($field[ $k ]) ) $atts[ $k ] = $field[ $k ];
 		}
 		
 		
 		// atts2 (disabled="disabled")
 		foreach( $keys2 as $k ) {
-			if ( !empty( $field[ $k ]) ) $atts[ $k ] = $k;
+			if( !empty($field[ $k ]) ) $atts[ $k ] = $k;
 		}
 		
 		
@@ -97,20 +97,20 @@ class acf_field_url extends acf_field {
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Default Value','acf' ),
-			'instructions'	=> __( 'Appears when creating a new post','acf' ),
+			'label'			=> __('Default Value','acf'),
+			'instructions'	=> __('Appears when creating a new post','acf'),
 			'type'			=> 'text',
 			'name'			=> 'default_value',
-		) );
+		));
 		
 		
 		// placeholder
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Placeholder Text','acf' ),
-			'instructions'	=> __( 'Appears within the input','acf' ),
+			'label'			=> __('Placeholder Text','acf'),
+			'instructions'	=> __('Appears within the input','acf'),
 			'type'			=> 'text',
 			'name'			=> 'placeholder',
-		) );
+		));
 		
 	}
 	
@@ -131,24 +131,24 @@ class acf_field_url extends acf_field {
 	function validate_value( $valid, $value, $field, $input ){
 		
 		// bail early if empty		
-		if ( empty( $value) ) {
+		if( empty($value) ) {
 				
 			return $valid;
 			
 		}
 		
 		
-		if ( strpos( $value, '://' ) !== false ) {
+		if( strpos($value, '://') !== false ) {
 			
 			// url
 			
-		} elseif ( strpos( $value, '//' ) === 0 ) {
+		} elseif( strpos($value, '//') === 0 ) {
 			
 			// protocol relative url
 			
 		} else {
 			
-			$valid = __( 'Value must be a valid URL', 'acf' );
+			$valid = __('Value must be a valid URL', 'acf');
 			
 		}
 		

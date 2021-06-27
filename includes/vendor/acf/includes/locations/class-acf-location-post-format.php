@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Post_Format' ) ) :
+if( ! class_exists('ACF_Location_Post_Format') ) :
 
 class ACF_Location_Post_Format extends ACF_Location {
 	
@@ -36,14 +36,14 @@ class ACF_Location_Post_Format extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['post_format']) ) {
+		if( isset($screen['post_format']) ) {
 			$post_format = $screen['post_format'];
-		} elseif ( isset( $screen['post_id']) ) {
+		} elseif( isset($screen['post_id']) ) {
 			$post_type = get_post_type( $screen['post_id'] );
 			$post_format = get_post_format( $screen['post_id'] );
 			
 			// Treat new posts (that support post-formats) without a saved format as "standard".
-			if ( ! $post_format && post_type_supports( $post_type, 'post-formats' ) ) {
+			if( !$post_format && post_type_supports($post_type, 'post-formats') ) {
 				$post_format = 'standard';
 			}
 		} else {

@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_image' ) ) :
+if( ! class_exists('acf_field_image') ) :
 
 class acf_field_image extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_image extends acf_field {
 		
 		// vars
 		$this->name = 'image';
-		$this->label = __("Image",'acf' );
+		$this->label = __("Image",'acf');
 		$this->category = 'content';
 		$this->defaults = array(
 			'return_format'	=> 'array',
@@ -38,7 +38,7 @@ class acf_field_image extends acf_field {
 		);
 		
 		// filters
-		add_filter( 'get_media_item_args',				array( $this, 'get_media_item_args' ) );
+		add_filter('get_media_item_args',				array($this, 'get_media_item_args'));
     
     }
     
@@ -60,11 +60,11 @@ class acf_field_image extends acf_field {
 		
 		// localize
 		acf_localize_text(array(
-		   	'Select Image'	=> __( 'Select Image', 'acf' ),
-			'Edit Image'	=> __( 'Edit Image', 'acf' ),
-			'Update Image'	=> __( 'Update Image', 'acf' ),
-			'All images'	=> __( 'All images', 'acf' ),
-	   	) );
+		   	'Select Image'	=> __('Select Image', 'acf'),
+			'Edit Image'	=> __('Edit Image', 'acf'),
+			'Update Image'	=> __('Update Image', 'acf'),
+			'All images'	=> __('All images', 'acf'),
+	   	));
 	}
 	
 	/**
@@ -77,10 +77,10 @@ class acf_field_image extends acf_field {
 	 * @return	void
 	 */
 	function render_field( $field ) {
-		$uploader = acf_get_setting( 'uploader' );
+		$uploader = acf_get_setting('uploader');
 		
 		// Enqueue uploader scripts
-		if ( $uploader === 'wp' ) {
+		if( $uploader === 'wp' ) {
 			acf_enqueue_uploader();
 		}
 
@@ -100,9 +100,9 @@ class acf_field_image extends acf_field {
 		);
 		
 		// Detect value.
-		if ( $field['value'] && is_numeric( $field['value']) ) {
+		if( $field['value'] && is_numeric($field['value']) ) {
 			$image = wp_get_attachment_image_src( $field['value'], $field['preview_size'] );
-			if ( $image ) {
+			if( $image ) {
 				$value = $field['value'];
 				$img_attrs['src'] = $image[0];
 				$img_attrs['alt'] = get_post_meta( $field['value'], '_wp_attachment_image_alt', true );
@@ -123,26 +123,26 @@ class acf_field_image extends acf_field {
 	<?php acf_hidden_input(array( 
 		'name' => $field['name'],
 		'value' => $value
-	) ); ?>
+	)); ?>
 	<div class="show-if-value image-wrap" style="max-width: <?php echo esc_attr( $size_w ); ?>">
 		<img <?php echo acf_esc_attrs( $img_attrs ); ?> />
 		<div class="acf-actions -hover">
-			<?php if ( $uploader !== 'basic' ): ?>
+			<?php if( $uploader !== 'basic' ): ?>
 			<a class="acf-icon -pencil dark" data-name="edit" href="#" title="<?php _e( 'Edit', 'acf' ); ?>"></a>
 			<?php endif; ?>
 			<a class="acf-icon -cancel dark" data-name="remove" href="#" title="<?php _e( 'Remove', 'acf' ); ?>"></a>
 		</div>
 	</div>
 	<div class="hide-if-value">
-		<?php if ( $uploader === 'basic' ): ?>
-			<?php if ( $field['value'] && ! is_numeric( $field['value']) ): ?>
+		<?php if( $uploader === 'basic' ): ?>
+			<?php if( $field['value'] && !is_numeric($field['value']) ): ?>
 				<div class="acf-error-message"><p><?php echo acf_esc_html( $field['value'] ); ?></p></div>
 			<?php endif; ?>
 			<label class="acf-basic-uploader">
 				<?php acf_file_input(array(
 					'name' => $field['name'], 
 					'id' => $field['id']
-				) ); ?>
+				)); ?>
 			</label>
 		<?php else: ?>
 			<p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button" href="#"><?php _e( 'Add Image', 'acf' ); ?></a></p>
@@ -180,7 +180,7 @@ class acf_field_image extends acf_field {
 		
 		foreach( $clear as $k ) {
 			
-			if ( empty( $field[$k]) ) {
+			if( empty($field[$k]) ) {
 				
 				$field[$k] = '';
 				
@@ -191,108 +191,108 @@ class acf_field_image extends acf_field {
 		
 		// return_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Return Format','acf' ),
+			'label'			=> __('Return Format','acf'),
 			'instructions'	=> '',
 			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'layout'		=> 'horizontal',
 			'choices'		=> array(
-				'array'			=> __("Image Array",'acf' ),
-				'url'			=> __("Image URL",'acf' ),
-				'id'			=> __("Image ID",'acf' )
+				'array'			=> __("Image Array",'acf'),
+				'url'			=> __("Image URL",'acf'),
+				'id'			=> __("Image ID",'acf')
 			)
-		) );
+		));
 		
 		
 		// preview_size
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Preview Size','acf' ),
+			'label'			=> __('Preview Size','acf'),
 			'instructions'	=> '',
 			'type'			=> 'select',
 			'name'			=> 'preview_size',
 			'choices'		=> acf_get_image_sizes()
-		) );
+		));
 		
 		
 		// library
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Library','acf' ),
-			'instructions'	=> __( 'Limit the media library choice','acf' ),
+			'label'			=> __('Library','acf'),
+			'instructions'	=> __('Limit the media library choice','acf'),
 			'type'			=> 'radio',
 			'name'			=> 'library',
 			'layout'		=> 'horizontal',
 			'choices' 		=> array(
-				'all'			=> __( 'All', 'acf' ),
-				'uploadedTo'	=> __( 'Uploaded to post', 'acf' )
+				'all'			=> __('All', 'acf'),
+				'uploadedTo'	=> __('Uploaded to post', 'acf')
 			)
-		) );
+		));
 		
 		
 		// min
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Minimum','acf' ),
-			'instructions'	=> __( 'Restrict which images can be uploaded','acf' ),
+			'label'			=> __('Minimum','acf'),
+			'instructions'	=> __('Restrict which images can be uploaded','acf'),
 			'type'			=> 'text',
 			'name'			=> 'min_width',
-			'prepend'		=> __( 'Width', 'acf' ),
+			'prepend'		=> __('Width', 'acf'),
 			'append'		=> 'px',
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
 			'label'			=> '',
 			'type'			=> 'text',
 			'name'			=> 'min_height',
-			'prepend'		=> __( 'Height', 'acf' ),
+			'prepend'		=> __('Height', 'acf'),
 			'append'		=> 'px',
 			'_append' 		=> 'min_width'
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
 			'label'			=> '',
 			'type'			=> 'text',
 			'name'			=> 'min_size',
-			'prepend'		=> __( 'File size', 'acf' ),
+			'prepend'		=> __('File size', 'acf'),
 			'append'		=> 'MB',
 			'_append' 		=> 'min_width'
-		) );	
+		));	
 		
 		
 		// max
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Maximum','acf' ),
-			'instructions'	=> __( 'Restrict which images can be uploaded','acf' ),
+			'label'			=> __('Maximum','acf'),
+			'instructions'	=> __('Restrict which images can be uploaded','acf'),
 			'type'			=> 'text',
 			'name'			=> 'max_width',
-			'prepend'		=> __( 'Width', 'acf' ),
+			'prepend'		=> __('Width', 'acf'),
 			'append'		=> 'px',
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
 			'label'			=> '',
 			'type'			=> 'text',
 			'name'			=> 'max_height',
-			'prepend'		=> __( 'Height', 'acf' ),
+			'prepend'		=> __('Height', 'acf'),
 			'append'		=> 'px',
 			'_append' 		=> 'max_width'
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
 			'label'			=> '',
 			'type'			=> 'text',
 			'name'			=> 'max_size',
-			'prepend'		=> __( 'File size', 'acf' ),
+			'prepend'		=> __('File size', 'acf'),
 			'append'		=> 'MB',
 			'_append' 		=> 'max_width'
-		) );	
+		));	
 		
 		
 		// allowed type
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Allowed file types','acf' ),
-			'instructions'	=> __( 'Comma separated list. Leave blank for all types','acf' ),
+			'label'			=> __('Allowed file types','acf'),
+			'instructions'	=> __('Comma separated list. Leave blank for all types','acf'),
 			'type'			=> 'text',
 			'name'			=> 'mime_types',
-		) );
+		));
 		
 	}
 	
@@ -316,23 +316,23 @@ class acf_field_image extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// bail early if no value
-		if ( empty( $value) ) return false;
+		if( empty($value) ) return false;
 		
 		
 		// bail early if not numeric (error message)
-		if ( ! is_numeric( $value) ) return false;
+		if( !is_numeric($value) ) return false;
 		
 		
 		// convert to int
-		$value = intval( $value);
+		$value = intval($value);
 		
 		
 		// format
-		if ( $field['return_format'] == 'url' ) {
+		if( $field['return_format'] == 'url' ) {
 		
 			return wp_get_attachment_url( $value );
 			
-		} elseif ( $field['return_format'] == 'array' ) {
+		} elseif( $field['return_format'] == 'array' ) {
 			
 			return acf_get_attachment( $value );
 			
@@ -361,7 +361,7 @@ class acf_field_image extends acf_field {
 	function get_media_item_args( $vars ) {
 	
 	    $vars['send'] = true;
-	    return( $vars);
+	    return($vars);
 	    
 	}
 	
@@ -384,7 +384,7 @@ class acf_field_image extends acf_field {
 	
 	function update_value( $value, $post_id, $field ) {
 		
-		return acf_get_field_type( 'file' )->update_value( $value, $post_id, $field );
+		return acf_get_field_type('file')->update_value( $value, $post_id, $field );
 		
 	}
 	
@@ -404,7 +404,7 @@ class acf_field_image extends acf_field {
 	
 	function validate_value( $valid, $value, $field, $input ){
 		
-		return acf_get_field_type( 'file' )->validate_value( $valid, $value, $field, $input );
+		return acf_get_field_type('file')->validate_value( $valid, $value, $field, $input );
 		
 	}
 	

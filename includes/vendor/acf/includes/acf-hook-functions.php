@@ -16,14 +16,14 @@ acf_register_store( 'hook-variations' );
  * @param	int $index The param index to find variation values.
  * @return	void
  */
-function acf_add_filter_variations( $filter = '', $variations = [], $index = 0 ) {
+function acf_add_filter_variations( $filter = '', $variations = array(), $index = 0 ) {
 	
 	// Store replacement data.
-	acf_get_store( 'hook-variations' )->set( $filter, array(
+	acf_get_store('hook-variations')->set( $filter, array(
 		'type'			=> 'filter',
 		'variations' 	=> $variations,
 		'index' 		=> $index,
-	) );
+	));
 	
 	// Add generic handler.
 	// Use a priotiry of 10, and accepted args of 10 (ignored by WP).
@@ -43,14 +43,14 @@ function acf_add_filter_variations( $filter = '', $variations = [], $index = 0 )
  * @param	int $index The param index to find variation values.
  * @return	void
  */
-function acf_add_action_variations( $action = '', $variations = [], $index = 0 ) {
+function acf_add_action_variations( $action = '', $variations = array(), $index = 0 ) {
 	
 	// Store replacement data.
-	acf_get_store( 'hook-variations' )->set( $action, array(
+	acf_get_store('hook-variations')->set( $action, array(
 		'type'			=> 'action',
 		'variations' 	=> $variations,
 		'index' 		=> $index,
-	) );
+	));
 	
 	// Add generic handler.
 	// Use a priotiry of 10, and accepted args of 10 (ignored by WP).
@@ -77,7 +77,7 @@ function _acf_apply_hook_variations() {
 	$args = func_get_args();
 	
 	// Get variation information.
-	$variations = acf_get_store( 'hook-variations' )->get( $filter );
+	$variations = acf_get_store('hook-variations')->get( $filter );
 	extract( $variations );
 	
 	// Find field in args using index.
@@ -88,16 +88,16 @@ function _acf_apply_hook_variations() {
 		
 		// Get value from field.
 		// First look for "backup" value ("_name", "_key").
-		if ( isset( $field[ "_$variation" ]) ) {
+		if( isset($field[ "_$variation" ]) ) {
 			$value = $field[ "_$variation" ];
-		} elseif ( isset( $field[ $variation ]) ) {
+		} elseif( isset($field[ $variation ]) ) {
 			$value = $field[ $variation ];
 		} else {
 			continue;
 		}
 		
 		// Apply filters.
-		if ( $type === 'filter' ) {
+		if( $type === 'filter' ) {
 			$args[0] = apply_filters_ref_array( "$filter/$variation=$value", $args );
 		
 		// Or do action.
@@ -129,12 +129,12 @@ acf_register_store( 'deprecated-hooks' );
 function acf_add_deprecated_filter( $deprecated, $version, $replacement ) {
 	
 	// Store replacement data.
-	acf_get_store( 'deprecated-hooks' )->append(array(
+	acf_get_store('deprecated-hooks')->append(array(
 		'type'			=> 'filter',
 		'deprecated' 	=> $deprecated,
 		'replacement' 	=> $replacement,
 		'version'		=> $version
-	) );
+	));
 	
 	// Add generic handler.
 	// Use a priotiry of 10, and accepted args of 10 (ignored by WP).
@@ -157,12 +157,12 @@ function acf_add_deprecated_filter( $deprecated, $version, $replacement ) {
 function acf_add_deprecated_action( $deprecated, $version, $replacement ) {
 	
 	// Store replacement data.
-	acf_get_store( 'deprecated-hooks' )->append(array(
+	acf_get_store('deprecated-hooks')->append(array(
 		'type'			=> 'action',
 		'deprecated' 	=> $deprecated,
 		'replacement' 	=> $replacement,
 		'version'		=> $version
-	) );
+	));
 	
 	// Add generic handler.
 	// Use a priotiry of 10, and accepted args of 10 (ignored by WP).
@@ -189,7 +189,7 @@ function _acf_apply_deprecated_hook() {
 	$args = func_get_args();
 	
 	// Get deprecated items for this hook.
-	$items = acf_get_store( 'deprecated-hooks' )->query(array( 'replacement' => $hook ) );
+	$items = acf_get_store('deprecated-hooks')->query(array( 'replacement' => $hook ));
 	
 	// Loop over results.
 	foreach( $items as $item ) {
@@ -198,13 +198,13 @@ function _acf_apply_deprecated_hook() {
 		extract( $item );
 		
 		// Check if anyone is hooked into this deprecated hook.
-		if ( has_filter( $deprecated) ) {
+		if( has_filter($deprecated) ) {
 			
 			// Log warning.
 			//_deprecated_hook( $deprecated, $version, $hook );
 		
 			// Apply filters.
-			if ( $type === 'filter' ) {
+			if( $type === 'filter' ) {
 				$args[0] = apply_filters_ref_array( $deprecated, $args );
 			
 			// Or do action.

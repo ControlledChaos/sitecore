@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Local_JSON' ) ) :
+if( ! class_exists('ACF_Local_JSON') ) :
 
 class ACF_Local_JSON {
 	
@@ -12,7 +12,7 @@ class ACF_Local_JSON {
 	 * @since 5.9.0
 	 * @var array
 	 */
-	private $files = [];
+	private $files = array();
 	
 	/**
 	 * Constructor.
@@ -64,7 +64,7 @@ class ACF_Local_JSON {
 	public function update_field_group( $field_group ) {
 		
 		// Bail early if disabled.
-		if ( ! $this->is_enabled() ) {
+		if( !$this->is_enabled() ) {
 			return false;
 		}
 		
@@ -87,7 +87,7 @@ class ACF_Local_JSON {
 	public function delete_field_group( $field_group ) {
 		
 		// Bail early if disabled.
-		if ( ! $this->is_enabled() ) {
+		if( !$this->is_enabled() ) {
 			return false;
 		}
 		
@@ -110,7 +110,7 @@ class ACF_Local_JSON {
 	public function include_fields() {
 		
 		// Bail early if disabled.
-		if ( ! $this->is_enabled() ) {
+		if( !$this->is_enabled() ) {
 			return false;
 		}
 		
@@ -134,36 +134,36 @@ class ACF_Local_JSON {
 	 * @return	array
 	 */
 	function scan_field_groups() {
-		$json_files = [];
+		$json_files = array();
 		
 		// Loop over "local_json" paths and parse JSON files.
 		$paths = (array) acf_get_setting( 'load_json' );
 		foreach( $paths as $path ) {
-			if ( is_dir( $path ) ) {
+			if( is_dir( $path ) ) {
 				$files = scandir( $path );
-				if ( $files ) {
+				if( $files ) {
 					foreach( $files as $filename ) {
 						
 						// Ignore hidden files.
-						if ( $filename[0] === '.' ) {
+						if( $filename[0] === '.' ) {
 							continue;
 						}
 						
 						// Ignore sub directories.
 						$file = untrailingslashit( $path ) . '/' . $filename;
-						if ( is_dir( $file) ) {
+						if( is_dir($file) ) {
 							continue;
 						}
 						
 						// Ignore non JSON files.
 						$ext = pathinfo( $filename, PATHINFO_EXTENSION );
-						if ( $ext !== 'json' ) {
+						if( $ext !== 'json' ) {
 							continue;
 						}
 						
 						// Read JSON data.
 				    	$json = json_decode( file_get_contents( $file ), true );
-				    	if ( ! is_array( $json) || ! isset( $json['key']) ) {
+				    	if( !is_array($json) || !isset($json['key']) ) {
 					    	continue;
 				    	}
 				    	
@@ -205,15 +205,15 @@ class ACF_Local_JSON {
 	public function save_file( $key, $field_group ) {
 		$path = acf_get_setting( 'save_json' );
 		$file = untrailingslashit( $path ) . '/' . $key . '.json';
-		if ( ! is_writable( $path) ) {
+		if( !is_writable($path) ) {
 			return false;
 		}
 		
 		// Append modified time.
-		if ( $field_group['ID'] ) {
+		if( $field_group['ID'] ) {
 			$field_group['modified'] = get_post_modified_time( 'U', true, $field_group['ID'] );
 		} else {
-			$field_group['modified'] = strtotime();
+			$field_group['modified'] = strtotime( 'now' );
 		}
 		
 		// Prepare for export.
@@ -236,7 +236,7 @@ class ACF_Local_JSON {
 	public function delete_file( $key ) {
 		$path = acf_get_setting( 'save_json' );
 		$file = untrailingslashit( $path ) . '/' . $key . '.json';
-		if ( is_readable( $file) ) {
+		if( is_readable($file) ) {
 			unlink( $file );
 			return true;
 		}
@@ -275,7 +275,7 @@ class ACF_Local_JSON {
 }
 
 // Initialize.
-acf_new_instance( 'ACF_Local_JSON' );
+acf_new_instance('ACF_Local_JSON');
 
 endif; // class_exists check
 

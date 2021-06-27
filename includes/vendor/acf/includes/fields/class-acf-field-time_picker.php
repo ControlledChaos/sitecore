@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_time_picker' ) ) :
+if( ! class_exists('acf_field_time_picker') ) :
 
 class acf_field_time_picker extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_time_picker extends acf_field {
 		
 		// vars
 		$this->name = 'time_picker';
-		$this->label = __("Time Picker",'acf' );
+		$this->label = __("Time Picker",'acf');
 		$this->category = 'jquery';
 		$this->defaults = array(
 			'display_format'		=> 'g:i a',
@@ -46,18 +46,17 @@ class acf_field_time_picker extends acf_field {
 	
 	function render_field( $field ) {
 		
-		// format value
+		// Set value.
 		$display_value = '';
 		
-		if ( $field['value'] ) {
+		if( $field['value'] ) {
 			$display_value = acf_format_date( $field['value'], $field['display_format'] );
 		}
 		
-		
-		// vars
+		// Elements.
 		$div = array(
 			'class'					=> 'acf-time-picker acf-input-wrap',
-			'data-time_format'		=> acf_convert_time_to_js( $field['display_format'])
+			'data-time_format'		=> acf_convert_time_to_js($field['display_format'])
 		);
 		$hidden_input = array(
 			'id'					=> $field['id'],
@@ -71,9 +70,14 @@ class acf_field_time_picker extends acf_field {
 			'type'					=> 'text',
 			'value'					=> $display_value,
 		);
+		foreach( array( 'readonly', 'disabled' ) as $k ) {
+			if( !empty($field[ $k ]) ) {
+				$hidden_input[ $k ] = $k;
+				$text_input[ $k ] = $k;
+			}
+		}
 		
-		
-		// html
+		// Output.
 		?>
 		<div <?php acf_esc_attr_e( $div ); ?>>
 			<?php acf_hidden_input( $hidden_input ); ?>
@@ -100,38 +104,38 @@ class acf_field_time_picker extends acf_field {
 	function render_field_settings( $field ) {
 		
 		// vars
-		$g_i_a = date_i18n( 'g:i a' );
-		$H_i_s = date_i18n( 'H:i:s' );
+		$g_i_a = date_i18n('g:i a');
+		$H_i_s = date_i18n('H:i:s');
 		
 		
 		// display_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Display Format','acf' ),
-			'instructions'	=> __( 'The format displayed when editing a post','acf' ),
+			'label'			=> __('Display Format','acf'),
+			'instructions'	=> __('The format displayed when editing a post','acf'),
 			'type'			=> 'radio',
 			'name'			=> 'display_format',
 			'other_choice'	=> 1,
 			'choices'		=> array(
 				'g:i a'	=> '<span>' . $g_i_a . '</span><code>g:i a</code>',
 				'H:i:s'	=> '<span>' . $H_i_s . '</span><code>H:i:s</code>',
-				'other'	=> '<span>' . __( 'Custom:','acf' ) . '</span>'
+				'other'	=> '<span>' . __('Custom:','acf') . '</span>'
 			)
-		) );
+		));
 				
 		
 		// return_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Return Format','acf' ),
-			'instructions'	=> __( 'The format returned via template functions','acf' ),
+			'label'			=> __('Return Format','acf'),
+			'instructions'	=> __('The format returned via template functions','acf'),
 			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'other_choice'	=> 1,
 			'choices'		=> array(
 				'g:i a'	=> '<span>' . $g_i_a . '</span><code>g:i a</code>',
 				'H:i:s'	=> '<span>' . $H_i_s . '</span><code>H:i:s</code>',
-				'other'	=> '<span>' . __( 'Custom:','acf' ) . '</span>'
+				'other'	=> '<span>' . __('Custom:','acf') . '</span>'
 			)
-		) );
+		));
 		
 	}
 	

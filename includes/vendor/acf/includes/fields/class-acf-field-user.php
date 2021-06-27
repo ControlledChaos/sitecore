@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'ACF_Field_User' ) ) :
+if( ! class_exists('ACF_Field_User') ) :
 
 class ACF_Field_User extends ACF_Field {
 	
@@ -17,7 +17,7 @@ class ACF_Field_User extends ACF_Field {
 		
 		// Props.
 		$this->name = 'user';
-		$this->label = __("User",'acf' );
+		$this->label = __("User",'acf');
 		$this->category = 'relational';
 		$this->defaults = array(
 			'role' 			=> '',
@@ -27,9 +27,9 @@ class ACF_Field_User extends ACF_Field {
 		);
 		
 		// Register filter variations.
-		acf_add_filter_variations( 'acf/fields/user/query', array( 'name', 'key' ), 1 );
-		acf_add_filter_variations( 'acf/fields/user/result', array( 'name', 'key' ), 2 );
-		acf_add_filter_variations( 'acf/fields/user/search_columns', array( 'name', 'key' ), 3 );
+		acf_add_filter_variations( 'acf/fields/user/query', array('name', 'key'), 1 );
+		acf_add_filter_variations( 'acf/fields/user/result', array('name', 'key'), 2 );
+		acf_add_filter_variations( 'acf/fields/user/search_columns', array('name', 'key'), 3 );
 		
 		// Add AJAX query.
 		add_action( 'wp_ajax_acf/fields/user/query', array( $this, 'ajax_query' ) );
@@ -48,7 +48,7 @@ class ACF_Field_User extends ACF_Field {
 	function render_field_settings( $field ) {
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Filter by role','acf' ),
+			'label'			=> __('Filter by role','acf'),
 			'instructions'	=> '',
 			'type'			=> 'select',
 			'name'			=> 'role',
@@ -56,37 +56,37 @@ class ACF_Field_User extends ACF_Field {
 			'multiple'		=> 1,
 			'ui'			=> 1,
 			'allow_null'	=> 1,
-			'placeholder'	=> __("All user roles",'acf' ),
-		) );
+			'placeholder'	=> __("All user roles",'acf'),
+		));
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Allow Null?','acf' ),
+			'label'			=> __('Allow Null?','acf'),
 			'instructions'	=> '',
 			'name'			=> 'allow_null',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Select multiple values?','acf' ),
+			'label'			=> __('Select multiple values?','acf'),
 			'instructions'	=> '',
 			'name'			=> 'multiple',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-		) );
+		));
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Return Format','acf' ),
+			'label'			=> __('Return Format','acf'),
 			'instructions'	=> '',
 			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'choices'		=> array(
-				'array'			=> __("User Array",'acf' ),
-				'object'		=> __("User Object",'acf' ),
-				'id'			=> __("User ID",'acf' ),
+				'array'			=> __("User Array",'acf'),
+				'object'		=> __("User Object",'acf'),
+				'id'			=> __("User ID",'acf'),
 			),
 			'layout'	=>	'horizontal',
-		) );
+		));
 	}
 	
 	/**
@@ -104,21 +104,21 @@ class ACF_Field_User extends ACF_Field {
 		$field['type'] = 'select';
 		$field['ui'] = 1;
 		$field['ajax'] = 1;
-		$field['choices'] = [];
+		$field['choices'] = array();
 		
 		// Populate choices.
-		if ( $field['value'] ) {
+		if( $field['value'] ) {
 			
 			// Clean value into an array of IDs.
-			$user_ids = array_map( 'intval', acf_array( $field['value']) );
+			$user_ids = array_map('intval', acf_array($field['value']));
 			
 			// Find users in database (ensures all results are real).
 			$users = acf_get_users(array(
 				'include' => $user_ids
-			) );
+			));
 			
 			// Append.
-			if ( $users ) {
+			if( $users ) {
 				foreach( $users as $user ) {
 					$field['choices'][ $user->ID ] = $this->get_result( $user, $field );
 				}
@@ -146,7 +146,7 @@ class ACF_Field_User extends ACF_Field {
 		$item = acf_get_user_result( $user );
 		
 		// Default $post_id to current post being edited.
-		$post_id = $post_id ? $post_id : acf_get_form_data( 'post_id' );
+		$post_id = $post_id ? $post_id : acf_get_form_data('post_id');
 		
 		/**
 		 * Filters the result text.
@@ -175,7 +175,7 @@ class ACF_Field_User extends ACF_Field {
 	function load_value( $value, $post_id, $field ) {
 		
 		// Add compatibility for version 4.
-		if ( $value === 'null' ) {
+		if( $value === 'null' ) {
 			return false;
 		}
 		return $value;
@@ -195,33 +195,33 @@ class ACF_Field_User extends ACF_Field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// Bail early if no value.
-		if ( ! $value ) {
+		if( !$value ) {
 			return false;
 		}
 		
 		// Clean value into an array of IDs.
-		$user_ids = array_map( 'intval', acf_array( $value) );
+		$user_ids = array_map('intval', acf_array($value));
 		
 		// Find users in database (ensures all results are real).
 		$users = acf_get_users(array(
 			'include' => $user_ids
-		) );
+		));
 		
 		// Bail early if no users found.
-		if ( ! $users ) {
+		if( !$users ) {
 			return false;
 		}
 		
 		// Format values using field settings.
-		$value = [];
+		$value = array();
 		foreach( $users as $user ) {
 			
 			// Return object.
-			if ( $field['return_format'] == 'object' ) {
+			if( $field['return_format'] == 'object' ) {
 				$item = $user;
 				
 			// Return array.		
-			} elseif ( $field['return_format'] == 'array' ) {
+			} elseif( $field['return_format'] == 'array' ) {
 				$item = array(
 					'ID'				=> $user->ID,
 					'user_firstname'	=> $user->user_firstname,
@@ -246,7 +246,7 @@ class ACF_Field_User extends ACF_Field {
 		}
 		
 		// Convert to single.
-		if ( ! $field['multiple'] ) {
+		if( !$field['multiple'] ) {
 			$value = array_shift( $value );
 		}
 		
@@ -268,16 +268,16 @@ class ACF_Field_User extends ACF_Field {
 	function update_value( $value, $post_id, $field ) {
 		
 		// Bail early if no value.
-		if ( empty( $value) ) {
+		if( empty($value) ) {
 			return $value;
 		}
 		
 		// Format array of values.
 		// - ensure each value is an id.
 		// - Parse each id as string for SQL LIKE queries.
-		if ( acf_is_sequential_array( $value) ) {
-			$value = array_map( 'acf_idval', $value);
-			$value = array_map( 'strval', $value);
+		if( acf_is_sequential_array($value) ) {
+			$value = array_map('acf_idval', $value);
+			$value = array_map('strval', $value);
 		
 		// Parse single value for id.
 		} else {
@@ -300,10 +300,10 @@ class ACF_Field_User extends ACF_Field {
 	function ajax_query() {
 		
 		// Modify Request args.
-		if ( isset( $_REQUEST['s']) ) {
+		if( isset($_REQUEST['s']) ) {
 			$_REQUEST['search'] = $_REQUEST['s'];
 		}
-		if ( isset( $_REQUEST['paged']) ) {
+		if( isset($_REQUEST['paged']) ) {
 			$_REQUEST['page'] = $_REQUEST['paged'];
 		}
 		
@@ -314,7 +314,7 @@ class ACF_Field_User extends ACF_Field {
 		add_filter( 'acf/ajax/query_users/search_columns', array( $this, 'ajax_query_search_columns' ), 10, 4 );
 		
 		// Simulate AJAX request.
-		acf_get_instance( 'ACF_Ajax_Query_Users' )->request();
+		acf_get_instance('ACF_Ajax_Query_Users')->request();
 	}
 	
 	/**
@@ -330,7 +330,7 @@ class ACF_Field_User extends ACF_Field {
 	function ajax_query_init( $request, $query ) {
 		
 		// Require field.
-		if ( ! $query->field ) {
+		if( !$query->field ) {
 			$query->send( new WP_Error( 'acf_missing_field', __( 'Error loading field.', 'acf' ), array( 'status' => 404 ) ) );
 		}
 	}
@@ -349,7 +349,7 @@ class ACF_Field_User extends ACF_Field {
 	function ajax_query_args( $args, $request, $query ) {
 		
 		// Add specific roles.
-		if ( $query->field['role'] ) {
+		if( $query->field['role'] ) {
 			$args['role__in'] = acf_array( $query->field['role'] );
 		}
 		
@@ -431,9 +431,9 @@ class ACF_Field_User extends ACF_Field {
 	 * @param	array $args An array of query args.
 	 * @return	array
 	 */
-	function get_ajax_query( $options = [] ) {
+	function get_ajax_query( $options = array() ) {
 		_deprecated_function( __FUNCTION__, '5.8.9' );
-		return [];
+		return array();
 	}
 	
 	/**

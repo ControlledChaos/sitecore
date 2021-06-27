@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Page' ) ) :
+if( ! class_exists('ACF_Location_Page') ) :
 
 class ACF_Location_Page extends ACF_Location {
 	
@@ -48,18 +48,18 @@ class ACF_Location_Page extends ACF_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
-		$choices = [];
+		$choices = array();
 		
 		// Get grouped posts.
 		$groups = acf_get_grouped_posts(array(
 			'post_type' => array( 'page' )
-		) );
+		));
 		
 		// Get first group.
 		$posts = reset( $groups );
 		
 		// Append to choices.
-		if ( $posts ) {
+		if( $posts ) {
 			foreach( $posts as $post ) {
 				$choices[ $post->ID ] = acf_get_post_title( $post );
 			}

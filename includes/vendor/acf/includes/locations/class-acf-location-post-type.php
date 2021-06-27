@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Post_Type' ) ) :
+if( ! class_exists('ACF_Location_Post_Type') ) :
 
 class ACF_Location_Post_Type extends ACF_Location {
 	
@@ -36,9 +36,9 @@ class ACF_Location_Post_Type extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['post_type']) ) {
+		if( isset($screen['post_type']) ) {
 			$post_type = $screen['post_type'];
-		} elseif ( isset( $screen['post_id']) ) {
+		} elseif( isset($screen['post_id']) ) {
 			$post_type = get_post_type( $screen['post_id'] );
 		} else {
 			return false;
@@ -63,7 +63,7 @@ class ACF_Location_Post_Type extends ACF_Location {
 		$post_types = acf_get_post_types(array(
 			'show_ui'	=> 1, 
 			'exclude'	=> array( 'attachment' )
-		) );
+		));
 		
 		// Return array of [type => label].
 		return acf_get_pretty_post_types( $post_types );
@@ -79,7 +79,7 @@ class ACF_Location_Post_Type extends ACF_Location {
 	 * @return	string|array
 	 */
 	public function get_object_subtype( $rule ) {
-		if ( $rule['operator'] === '==' ) {
+		if( $rule['operator'] === '==' ) {
 			return $rule['value'];
 		}
 		return '';

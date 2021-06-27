@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Ajax_User_Setting' ) ) :
+if( ! class_exists('ACF_Ajax_User_Setting') ) :
 
 class ACF_Ajax_User_Setting extends ACF_Ajax {
 	
@@ -26,16 +26,16 @@ class ACF_Ajax_User_Setting extends ACF_Ajax {
 	function get_response( $request ) {
 		
 		// update
-		if ( $this->has( 'value' ) ) {
-			return acf_update_user_setting( $this->get( 'name' ), $this->get( 'value' ) );
+		if( $this->has('value') ) {
+			return acf_update_user_setting( $this->get('name'), $this->get('value') );
 		
 		// get
 		} else {
-			return acf_get_user_setting( $this->get( 'name' ) );
+			return acf_get_user_setting( $this->get('name') );
 		}
 	}
 }
 
-acf_new_instance( 'ACF_Ajax_User_Setting' );
+acf_new_instance('ACF_Ajax_User_Setting');
 
 endif; // class_exists check

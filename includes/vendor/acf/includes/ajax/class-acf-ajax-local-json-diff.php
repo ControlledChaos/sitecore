@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Ajax_Local_JSON_Diff' ) ) :
+if( ! class_exists('ACF_Ajax_Local_JSON_Diff') ) :
 
 class ACF_Ajax_Local_JSON_Diff extends ACF_Ajax {
 	
@@ -24,20 +24,20 @@ class ACF_Ajax_Local_JSON_Diff extends ACF_Ajax {
 	 * @return	mixed The response data or WP_Error.
 	 */
 	function get_response( $request ) {
-		$json = [];
+		$json = array();
 		
 		// Extract props.
 		$id = isset( $request['id'] ) ? intval( $request['id'] ) : 0;
 		
 		// Bail ealry if missing props.
-		if ( ! $id ) {
+		if( !$id ) {
 			return new WP_Error( 'acf_invalid_param', __( 'Invalid field group parameter(s).', 'acf' ), array( 'status' => 404 ) );
 		}
 		
 		// Disable filters and load field group directly from database.
 		acf_disable_filters();
 		$field_group = acf_get_field_group( $id );
-		if ( ! $field_group ) {
+		if( !$field_group ) {
 			return new WP_Error( 'acf_invalid_id', __( 'Invalid field group ID.', 'acf' ), array( 'status' => 404 ) );
 		}
 		$field_group['fields'] = acf_get_fields( $field_group );
@@ -47,7 +47,7 @@ class ACF_Ajax_Local_JSON_Diff extends ACF_Ajax {
 		// Load local field group file.
 		$files = acf_get_local_json_files();
 		$key = $field_group['key'];
-		if ( ! isset( $files[ $key ] ) ) {
+		if( !isset( $files[ $key ] ) ) {
 			return new WP_Error( 'acf_cannot_compare', __( 'Sorry, this field group is unavailable for diff comparison.', 'acf' ), array( 'status' => 404 ) );
 		}
 		$local_field_group = json_decode( file_get_contents( $files[ $key ] ), true );
@@ -75,6 +75,6 @@ class ACF_Ajax_Local_JSON_Diff extends ACF_Ajax {
 	}
 }
 
-acf_new_instance( 'ACF_Ajax_Local_JSON_Diff' );
+acf_new_instance('ACF_Ajax_Local_JSON_Diff');
 
 endif; // class_exists check

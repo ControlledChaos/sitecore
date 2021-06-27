@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Compatibility' ) ) :
+if( ! class_exists('ACF_Compatibility') ) :
 
 class ACF_Compatibility {
 	
@@ -20,29 +20,29 @@ class ACF_Compatibility {
 	function __construct() {
 		
 		// actions
-		add_filter( 'acf/validate_field',						array( $this, 'validate_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=textarea',			array( $this, 'validate_textarea_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=relationship',		array( $this, 'validate_relationship_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=post_object',		array( $this, 'validate_relationship_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=page_link',			array( $this, 'validate_relationship_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=image',				array( $this, 'validate_image_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=file',				array( $this, 'validate_image_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=wysiwyg',			array( $this, 'validate_wysiwyg_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=date_picker',		array( $this, 'validate_date_picker_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=taxonomy',			array( $this, 'validate_taxonomy_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=date_time_picker',	array( $this, 'validate_date_time_picker_field' ), 20, 1);
-		add_filter( 'acf/validate_field/type=user',				array( $this, 'validate_user_field' ), 20, 1);
-		add_filter( 'acf/validate_field_group',					array( $this, 'validate_field_group' ), 20, 1);
+		add_filter('acf/validate_field',						array($this, 'validate_field'), 20, 1);
+		add_filter('acf/validate_field/type=textarea',			array($this, 'validate_textarea_field'), 20, 1);
+		add_filter('acf/validate_field/type=relationship',		array($this, 'validate_relationship_field'), 20, 1);
+		add_filter('acf/validate_field/type=post_object',		array($this, 'validate_relationship_field'), 20, 1);
+		add_filter('acf/validate_field/type=page_link',			array($this, 'validate_relationship_field'), 20, 1);
+		add_filter('acf/validate_field/type=image',				array($this, 'validate_image_field'), 20, 1);
+		add_filter('acf/validate_field/type=file',				array($this, 'validate_image_field'), 20, 1);
+		add_filter('acf/validate_field/type=wysiwyg',			array($this, 'validate_wysiwyg_field'), 20, 1);
+		add_filter('acf/validate_field/type=date_picker',		array($this, 'validate_date_picker_field'), 20, 1);
+		add_filter('acf/validate_field/type=taxonomy',			array($this, 'validate_taxonomy_field'), 20, 1);
+		add_filter('acf/validate_field/type=date_time_picker',	array($this, 'validate_date_time_picker_field'), 20, 1);
+		add_filter('acf/validate_field/type=user',				array($this, 'validate_user_field'), 20, 1);
+		add_filter('acf/validate_field_group',					array($this, 'validate_field_group'), 20, 1);
 		
 		// Modify field wrapper attributes
-		add_filter( 'acf/field_wrapper_attributes',				array( $this, 'field_wrapper_attributes' ), 20, 2);
+		add_filter('acf/field_wrapper_attributes',				array($this, 'field_wrapper_attributes'), 20, 2);
 		
 		// location
-		add_filter( 'acf/location/validate_rule/type=post_taxonomy', array( $this, 'validate_post_taxonomy_location_rule' ), 20, 1);
-		add_filter( 'acf/location/validate_rule/type=post_category', array( $this, 'validate_post_taxonomy_location_rule' ), 20, 1);
+		add_filter('acf/location/validate_rule/type=post_taxonomy', array($this, 'validate_post_taxonomy_location_rule'), 20, 1);
+		add_filter('acf/location/validate_rule/type=post_category', array($this, 'validate_post_taxonomy_location_rule'), 20, 1);
 		
 		// Update settings
-		add_action( 'acf/init', array( $this, 'init' ) );
+		add_action('acf/init', array($this, 'init'));
 	}
 	
 	/**
@@ -59,7 +59,7 @@ class ACF_Compatibility {
 	function init() {
 		
 		// Update "show_admin" setting based on defined constant.
-		if ( defined( 'ACF_LITE' ) && ACF_LITE ) {
+		if( defined('ACF_LITE') && ACF_LITE ) {
 			acf_update_setting( 'show_admin', false );
 		}
 	}
@@ -78,9 +78,9 @@ class ACF_Compatibility {
 	function field_wrapper_attributes( $wrapper, $field ) {
 		
 		// Check compatibility setting.
-		if ( acf_get_compatibility( 'field_wrapper_class' ) ) {
+		if( acf_get_compatibility('field_wrapper_class') ) {
 			$wrapper['class'] .= " field_type-{$field['type']}";
-			if ( $field['key'] ) {
+			if( $field['key'] ) {
 				$wrapper['class'] .= " field_key-{$field['key']}";
 			}
 		}
@@ -104,11 +104,11 @@ class ACF_Compatibility {
 		
 		// conditional logic data structure changed to groups in version 5.0.0
 		// convert previous data (status, rules, allorany) into groups
-		if ( isset( $field['conditional_logic']['status']) ) {
+		if( isset($field['conditional_logic']['status']) ) {
 			
 			// check status
-			if ( $field['conditional_logic']['status'] ) {
-				$field['conditional_logic'] = acf_convert_rules_to_groups( $field['conditional_logic']['rules'], $field['conditional_logic']['allorany']);
+			if( $field['conditional_logic']['status'] ) {
+				$field['conditional_logic'] = acf_convert_rules_to_groups($field['conditional_logic']['rules'], $field['conditional_logic']['allorany']);
 			} else {
 				$field['conditional_logic'] = 0;
 			}
@@ -133,7 +133,7 @@ class ACF_Compatibility {
 		
 		// formatting has been removed
 		$formatting = acf_extract_var( $field, 'formatting' );
-		if ( $formatting === 'br' ) {
+		if( $formatting === 'br' ) {
 			$field['new_lines'] = 'br';
 		}
 		
@@ -155,17 +155,17 @@ class ACF_Compatibility {
 	function validate_relationship_field( $field ) {
 		
 		// remove 'all' from post_type
-		if ( acf_in_array( 'all', $field['post_type']) ) {
-			$field['post_type'] = [];
+		if( acf_in_array('all', $field['post_type']) ) {
+			$field['post_type'] = array();
 		}
 		
 		// remove 'all' from taxonomy
-		if ( acf_in_array( 'all', $field['taxonomy']) ) {
-			$field['taxonomy'] = [];
+		if( acf_in_array('all', $field['taxonomy']) ) {
+			$field['taxonomy'] = array();
 		}
 		
 		// result_elements is now elements
-		if ( isset( $field['result_elements']) ) {
+		if( isset($field['result_elements']) ) {
 			$field['elements'] = acf_extract_var( $field, 'result_elements' );
 		}
 		
@@ -187,12 +187,12 @@ class ACF_Compatibility {
 	function validate_image_field( $field ) {
 		
 		// save_format is now return_format
-		if ( isset( $field['save_format']) ) {
+		if( isset($field['save_format']) ) {
 			$field['return_format'] = acf_extract_var( $field, 'save_format' );
 		}
 		
 		// object is now array
-		if ( $field['return_format'] == 'object' ) {
+		if( $field['return_format'] == 'object' ) {
 			$field['return_format'] = 'array';
 		}
 		
@@ -214,9 +214,9 @@ class ACF_Compatibility {
 	function validate_wysiwyg_field( $field ) {
 		
 		// media_upload is now numeric
-		if ( $field['media_upload'] === 'yes' ) {
+		if( $field['media_upload'] === 'yes' ) {
 			$field['media_upload'] = 1;
-		} elseif ( $field['media_upload'] === 'no' ) {
+		} elseif( $field['media_upload'] === 'no' ) {
 			$field['media_upload'] = 0;
 		}
 		
@@ -238,7 +238,7 @@ class ACF_Compatibility {
 	function validate_date_picker_field( $field ) {
 		
 		// date_format has changed to display_format
-		if ( isset( $field['date_format']) ) {
+		if( isset($field['date_format']) ) {
 			
 			// extract vars
 			$date_format = $field['date_format'];
@@ -252,7 +252,7 @@ class ACF_Compatibility {
 			$field['save_format'] = $date_format;
 			
 			// clean up
-			unset( $field['date_format']);
+			unset($field['date_format']);
 		}
 		
 		// return
@@ -273,7 +273,7 @@ class ACF_Compatibility {
 	function validate_taxonomy_field( $field ) {
 		
 		// load_save_terms deprecated in favour of separate save_terms
-		if ( isset( $field['load_save_terms']) ) {
+		if( isset($field['load_save_terms']) ) {
 			$field['save_terms'] = acf_extract_var( $field, 'load_save_terms' );
 		}
 		
@@ -296,7 +296,7 @@ class ACF_Compatibility {
 		
 		// 3rd party date time picker
 		// https://github.com/soderlind/acf-field-date-time-picker
-		if ( !empty( $field['time_format']) ) {
+		if( !empty($field['time_format']) ) {
 			
 			// extract vars
 			$time_format = acf_extract_var( $field, 'time_format' );
@@ -312,7 +312,7 @@ class ACF_Compatibility {
 			$field['display_format'] = $date_format . ' ' . $time_format;
 			
 			// timestamp
-			if ( $get_as_timestamp === 'true' ) {
+			if( $get_as_timestamp === 'true' ) {
 				$field['return_format'] = 'U';
 			}
 		}
@@ -335,18 +335,18 @@ class ACF_Compatibility {
 	function validate_user_field( $field ) {
 		
 		// remove 'all' from roles
-		if ( acf_in_array( 'all', $field['role']) ) {
+		if( acf_in_array('all', $field['role']) ) {
 			$field['role'] = '';
 		}
 		
 		// field_type removed in favour of multiple
-		if ( isset( $field['field_type']) ) {
+		if( isset($field['field_type']) ) {
 			
 			// extract vars
 			$field_type = acf_extract_var( $field, 'field_type' );
 			
 			// multiple
-			if ( $field_type === 'multi_select' ) {
+			if( $field_type === 'multi_select' ) {
 				$field['multiple'] = true;
 			}
 		}
@@ -374,22 +374,22 @@ class ACF_Compatibility {
 		
 		// field group key was added in version 5.0.0
 		// detect ACF4 data and generate key
-		if ( ! $field_group['key'] ) {
+		if( !$field_group['key'] ) {
 			$version = 4;
-			$field_group['key'] = isset( $field_group['id']) ? "group_{$field_group['id']}" : uniqid( 'group_' );
+			$field_group['key'] = isset($field_group['id']) ? "group_{$field_group['id']}" : uniqid('group_');
 		}
 		
 		// prior to version 5.0.0, settings were saved in an 'options' array
 		// extract and merge options into the field group
-		if ( isset( $field_group['options']) ) {
-			$options = acf_extract_var( $field_group, 'options' );
-			$field_group = array_merge( $field_group, $options);
+		if( isset($field_group['options']) ) {
+			$options = acf_extract_var($field_group, 'options');
+			$field_group = array_merge($field_group, $options);
 		}
 		
 		// location data structure changed to groups in version 4.1.0
 		// convert previous data (rules, allorany) into groups
-		if ( isset( $field_group['location']['rules']) ) {
-			$field_group['location'] = acf_convert_rules_to_groups( $field_group['location']['rules'], $field_group['location']['allorany']);
+		if( isset($field_group['location']['rules']) ) {
+			$field_group['location'] = acf_convert_rules_to_groups($field_group['location']['rules'], $field_group['location']['allorany']);
 		}
 		
 		// some location rule names have changed in version 5.0.0
@@ -403,32 +403,32 @@ class ACF_Compatibility {
 	 	);
 	 	
 	 	// only replace 'taxonomy' rule if is an ACF4 field group
-	 	if ( $version > 4 ) {
-		 	unset( $replace['taxonomy']);
+	 	if( $version > 4 ) {
+		 	unset($replace['taxonomy']);
 	 	}
 	 	
 	 	// loop over location groups
-		if ( $field_group['location'] ) {
+		if( $field_group['location'] ) {
 		foreach( $field_group['location'] as $i => $group ) {
 			
 			// loop over group rules
-			if ( $group ) {
+			if( $group ) {
 			foreach( $group as $j => $rule ) {
 				
 				// migrate param
-				if ( isset( $replace[ $rule['param'] ]) ) {
+				if( isset($replace[ $rule['param'] ]) ) {
 					$field_group['location'][ $i ][ $j ]['param'] = $replace[ $rule['param'] ];
 				}
 			}}
 		}}
 		
 		// change layout to style (v5.0.0)
-		if ( isset( $field_group['layout']) ) {
-			$field_group['style'] = acf_extract_var( $field_group, 'layout' );
+		if( isset($field_group['layout']) ) {
+			$field_group['style'] = acf_extract_var($field_group, 'layout');
 		}
 		
 		// change no_box to seamless (v5.0.0)
-		if ( $field_group['style'] === 'no_box' ) {
+		if( $field_group['style'] === 'no_box' ) {
 			$field_group['style'] = 'seamless';
 		}
 		
@@ -451,10 +451,10 @@ class ACF_Compatibility {
 		
 		// previous versions of ACF (v4.4.12) saved value as term_id
 		// convert term_id into "taxonomy:slug" string
-		if ( is_numeric( $rule['value']) ) {
+		if( is_numeric($rule['value']) ) {
 			$term = acf_get_term( $rule['value'] );
-			if ( $term ) {
-				$rule['value'] = acf_encode_term( $term);
+			if( $term ) {
+				$rule['value'] = acf_encode_term($term);
 			}
 		}
 		
@@ -464,7 +464,7 @@ class ACF_Compatibility {
 	
 }
 
-acf_new_instance( 'ACF_Compatibility' );
+acf_new_instance('ACF_Compatibility');
 
 endif; // class_exists check
 

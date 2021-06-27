@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Post_Category' ) ) :
+if( ! class_exists('ACF_Location_Post_Category') ) :
 
 class ACF_Location_Post_Category extends ACF_Location {
 	
@@ -47,11 +47,11 @@ class ACF_Location_Post_Category extends ACF_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
-		$choices = acf_get_taxonomy_terms(array( 'category' ) );
-		if ( $choices ) {
+		$choices = acf_get_taxonomy_terms(array( 'category' ));
+		if( $choices ) {
 			return reset( $choices );
 		}
-		return [];
+		return array();
 	}
 	
 	/**

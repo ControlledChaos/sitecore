@@ -19,7 +19,7 @@ function acf_get_reference( $field_name, $post_id ) {
 	
 	// Allow filter to short-circuit load_value logic.
 	$reference = apply_filters( "acf/pre_load_reference", null, $field_name, $post_id );
-    if ( $reference !== null ) {
+    if( $reference !== null ) {
 	    return $reference;
     }
     
@@ -40,22 +40,20 @@ function acf_get_reference( $field_name, $post_id ) {
 }
 
 /**
- * acf_get_value
- *
  * Retrieves the value for a given field and post_id.
  *
  * @date	28/09/13
  * @since	5.0.0
  *
- * @param	(int|string) $post_id The post id.
+ * @param	int|string $post_id The post id.
  * @param	array $field The field array.
- * @return	mixed.
+ * @return	mixed
  */
-function acf_get_value( $post_id = 0, $field ) {
+function acf_get_value( $post_id, $field ) {
 	
 	// Allow filter to short-circuit load_value logic.
 	$value = apply_filters( "acf/pre_load_value", null, $post_id, $field );
-    if ( $value !== null ) {
+    if( $value !== null ) {
 	    return $value;
     }
     
@@ -64,7 +62,7 @@ function acf_get_value( $post_id = 0, $field ) {
     
     // Check store.
 	$store = acf_get_store( 'values' );
-	if ( $store->has( "$post_id:$field_name" ) ) {
+	if( $store->has( "$post_id:$field_name" ) ) {
 		return $store->get( "$post_id:$field_name" );
 	}
 	
@@ -72,7 +70,7 @@ function acf_get_value( $post_id = 0, $field ) {
 	$value = acf_get_metadata( $post_id, $field_name );
 	
 	// Use field's default_value if no meta was found.
-	if ( $value === null && isset( $field['default_value']) ) {
+	if( $value === null && isset($field['default_value']) ) {
 		$value = $field['default_value'];
 	}
 	
@@ -96,7 +94,7 @@ function acf_get_value( $post_id = 0, $field ) {
 }
 
 // Register variation.
-acf_add_filter_variations( 'acf/load_value', array( 'type', 'name', 'key' ), 2 );
+acf_add_filter_variations( 'acf/load_value', array('type', 'name', 'key'), 2 );
 
 /**
  * acf_format_value
@@ -115,7 +113,7 @@ function acf_format_value( $value, $post_id, $field ) {
 	
 	// Allow filter to short-circuit load_value logic.
 	$check = apply_filters( "acf/pre_format_value", null, $value, $post_id, $field );
-    if ( $check !== null ) {
+    if( $check !== null ) {
 	    return $check;
     }
     
@@ -124,7 +122,7 @@ function acf_format_value( $value, $post_id, $field ) {
     
     // Check store.
 	$store = acf_get_store( 'values' );
-	if ( $store->has( "$post_id:$field_name:formatted" ) ) {
+	if( $store->has( "$post_id:$field_name:formatted" ) ) {
 		return $store->get( "$post_id:$field_name:formatted" );
 	}
 	
@@ -148,7 +146,7 @@ function acf_format_value( $value, $post_id, $field ) {
 }
 
 // Register variation.
-acf_add_filter_variations( 'acf/format_value', array( 'type', 'name', 'key' ), 2 );
+acf_add_filter_variations( 'acf/format_value', array('type', 'name', 'key'), 2 );
 
 /**
  * acf_update_value
@@ -163,11 +161,11 @@ acf_add_filter_variations( 'acf/format_value', array( 'type', 'name', 'key' ), 2
  * @param	array $field The field array.
  * @return	bool.
  */
-function acf_update_value( $value = null, $post_id = 0, $field ) {
+function acf_update_value( $value, $post_id, $field ) {
 	
 	// Allow filter to short-circuit update_value logic.
 	$check = apply_filters( "acf/pre_update_value", null, $value, $post_id, $field );
-	if ( $check !== null ) {
+	if( $check !== null ) {
 		 return $check;
 	}
     
@@ -185,7 +183,7 @@ function acf_update_value( $value = null, $post_id = 0, $field ) {
 	$value = apply_filters( "acf/update_value", $value, $post_id, $field, $value );
 	
 	// Allow null to delete value.
-	if ( $value === null ) {
+	if( $value === null ) {
 		return acf_delete_value( $post_id, $field );
 	}
 	
@@ -203,7 +201,7 @@ function acf_update_value( $value = null, $post_id = 0, $field ) {
 }
 
 // Register variation.
-acf_add_filter_variations( 'acf/update_value', array( 'type', 'name', 'key' ), 2 );
+acf_add_filter_variations( 'acf/update_value', array('type', 'name', 'key'), 2 );
 
 /**
  * acf_update_values
@@ -217,7 +215,7 @@ acf_add_filter_variations( 'acf/update_value', array( 'type', 'name', 'key' ), 2
  * @param	(int|string) $post_id The post id.
  * @return	void
  */
-function acf_update_values( $values = [], $post_id = 0 ) {
+function acf_update_values( $values, $post_id ) {
 	
 	// Loop over values.
 	foreach( $values as $key => $value ) {
@@ -226,7 +224,7 @@ function acf_update_values( $values = [], $post_id = 0 ) {
 		$field = acf_get_field( $key );
 		
 		// Update value.
-		if ( $field ) {
+		if( $field ) {
 			acf_update_value( $value, $post_id, $field );
 		}
 	}
@@ -292,7 +290,7 @@ function acf_delete_value( $post_id, $field ) {
 }
 
 // Register variation.
-acf_add_filter_variations( 'acf/delete_value', array( 'type', 'name', 'key' ), 2 );
+acf_add_filter_variations( 'acf/delete_value', array('type', 'name', 'key'), 2 );
 
 /**
  * acf_preview_value
@@ -323,4 +321,4 @@ function acf_preview_value( $value, $post_id, $field ) {
 }
 
 // Register variation.
-acf_add_filter_variations( 'acf/preview_value', array( 'type', 'name', 'key' ), 2 );
+acf_add_filter_variations( 'acf/preview_value', array('type', 'name', 'key'), 2 );

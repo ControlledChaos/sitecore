@@ -20,7 +20,7 @@ acf_enable_filter( 'local' );
  * @return	void
  */
 function acf_enable_local() {
-	acf_enable_filter( 'local' );
+	acf_enable_filter('local');
 }
 
 /**
@@ -35,7 +35,7 @@ function acf_enable_local() {
  * @return	void
  */
 function acf_disable_local() {
-	acf_disable_filter( 'local' );
+	acf_disable_filter('local');
 }
 
 /**
@@ -50,7 +50,7 @@ function acf_disable_local() {
  * @return	bool
  */
 function acf_is_local_enabled() {
-	return ( acf_is_filter_enabled( 'local' ) && acf_get_setting( 'local' ) );
+	return ( acf_is_filter_enabled('local') && acf_get_setting('local') );
 }
 
 /**
@@ -67,7 +67,7 @@ function acf_is_local_enabled() {
 function acf_get_local_store( $name = '' ) {
 	
 	// Check if enabled.
-	if ( acf_is_local_enabled() ) {
+	if( acf_is_local_enabled() ) {
 		return acf_get_store( "local-$name" );
 	
 	// Return dummy store if not enabled.
@@ -151,20 +151,20 @@ function acf_count_local_field_groups() {
 function acf_add_local_field_group( $field_group ) {
 	
 	// Apply default properties needed for import.
-	$field_group = wp_parse_args( $field_group, array(
+	$field_group = wp_parse_args($field_group, array(
 		'key'		=> '',
 		'title'		=> '',
-		'fields'	=> [],
+		'fields'	=> array(),
 		'local'		=> 'php'
-	) );
+	));
 	
 	// Generate key if only name is provided.
-	if ( ! $field_group['key'] ) {
-		$field_group['key'] = 'group_' . acf_slugify( $field_group['title'], '_' );
+	if( !$field_group['key'] ) {
+		$field_group['key'] = 'group_' . acf_slugify($field_group['title'], '_');
 	}
 	
 	// Bail early if field group already exists.
-	if ( acf_is_local_field_group( $field_group['key']) ) {
+	if( acf_is_local_field_group($field_group['key']) ) {
 		return false;
 	}
 	
@@ -178,7 +178,7 @@ function acf_add_local_field_group( $field_group ) {
 	acf_get_local_store( 'groups' )->set( $field_group['key'], $field_group );
 	
 	// Add fields
-	if ( $fields ) {
+	if( $fields ) {
 		acf_add_local_fields( $fields );
 	}
 	
@@ -272,7 +272,7 @@ function acf_get_local_field_group( $key = '' ) {
  * @param	array $fields An array of un prepared fields.
  * @return	array
  */
-function acf_add_local_fields( $fields = [] ) {
+function acf_add_local_fields( $fields = array() ) {
 	
 	// Prepare for import (allows parent fields to offer up children).
 	$fields = acf_prepare_fields_for_import( $fields );
@@ -297,10 +297,10 @@ function acf_add_local_fields( $fields = [] ) {
 function acf_get_local_fields( $parent = '' ) {
 	
 	// Return children
-	if ( $parent ) {
+	if( $parent ) {
 		return acf_get_local_store( 'fields' )->query(array(
 			'parent' => $parent
-		) );
+		));
 	
 	// Return all.
 	} else {
@@ -320,7 +320,7 @@ function acf_get_local_fields( $parent = '' ) {
  * @return	bool
  */
 function acf_have_local_fields( $parent = '' ) {
-	return acf_get_local_fields( $parent) ? true : false;
+	return acf_get_local_fields($parent) ? true : false;
 }
 
 /**
@@ -335,7 +335,7 @@ function acf_have_local_fields( $parent = '' ) {
  * @return	int
  */
 function acf_count_local_fields( $parent = '' ) {
-	return count( acf_get_local_fields( $parent) );
+	return count( acf_get_local_fields($parent) );
 }
 
 /**
@@ -353,20 +353,20 @@ function acf_count_local_fields( $parent = '' ) {
 function acf_add_local_field( $field, $prepared = false ) {
 	
 	// Apply default properties needed for import.
-	$field = wp_parse_args( $field, array(
+	$field = wp_parse_args($field, array(
 		'key'		=> '',
 		'name'		=> '',
 		'type'		=> '',
 		'parent'	=> '',
-	) );
+	));
 	
 	// Generate key if only name is provided.
-	if ( ! $field['key'] ) {
+	if( !$field['key'] ) {
 		$field['key'] = 'field_' . $field['name'];
 	}
 	
 	// If called directly, allow sub fields to be correctly prepared.
-	if ( ! $prepared ) {
+	if( !$prepared ) {
 		return acf_add_local_fields( array( $field ) );
 	}
 	
@@ -376,10 +376,10 @@ function acf_add_local_field( $field, $prepared = false ) {
 	
 	// Allow sub field to be added multipel times to different parents.
 	$store = acf_get_local_store( 'fields' );
-	if ( $store->is( $key) ) {
-		$old_key = _acf_generate_local_key( $store->get( $key) );
+	if( $store->is($key) ) {
+		$old_key = _acf_generate_local_key( $store->get($key) );
 		$new_key = _acf_generate_local_key( $field );
-		if ( $old_key !== $new_key ) {
+		if( $old_key !== $new_key ) {
 			$key = $new_key;
 		}
 	}
@@ -474,14 +474,14 @@ function acf_get_local_field( $key = '' ) {
  * @param	array $field_groups An array of field groups.
  * @return	array
  */
-function _acf_apply_get_local_field_groups( $groups = [] ) {
+function _acf_apply_get_local_field_groups( $groups = array() ) {
 	
 	// Get local groups
 	$local = acf_get_local_field_groups();
-	if ( $local ) {
+	if( $local ) {
 		
 		// Generate map of "index" => "key" data.
-		$map = wp_list_pluck( $groups, 'key' );
+		$map = wp_list_pluck($groups, 'key');
 		
 		// Loop over groups and update/append local.
 		foreach( $local as $group ) {
@@ -490,10 +490,10 @@ function _acf_apply_get_local_field_groups( $groups = [] ) {
 			//$group = acf_get_field_group( $group['key'] );
 			
 			// Update.
-			$i = array_search( $group['key'], $map);
-			if ( $i !== false ) {
-				unset( $group['ID']);
-				$groups[ $i ] = array_merge( $groups[ $i ], $group);
+			$i = array_search($group['key'], $map);
+			if( $i !== false ) {
+				unset($group['ID']);
+				$groups[ $i ] = array_merge($groups[ $i ], $group);
 				
 			// Append	
 			} else {
@@ -502,7 +502,7 @@ function _acf_apply_get_local_field_groups( $groups = [] ) {
 		}
 		
 		// Sort list via menu_order and title.
-		$groups = wp_list_sort( $groups, array( 'menu_order' => 'ASC', 'title' => 'ASC' ) );
+		$groups = wp_list_sort( $groups, array('menu_order' => 'ASC', 'title' => 'ASC') );
 	}
 	
 	// Return groups.
@@ -567,7 +567,7 @@ function _acf_do_prepare_local_fields() {
 	$fields = acf_get_local_fields();
 	
 	// If fields have been registered early, re-add to correctly prepare them.
-	if ( $fields ) {
+	if( $fields ) {
 		acf_add_local_fields( $fields );
 	}
 }

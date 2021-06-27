@@ -10,7 +10,7 @@
 *  @subpackage	Forms
 */
 
-if ( ! class_exists( 'acf_form_taxonomy' ) ) :
+if( ! class_exists('acf_form_taxonomy') ) :
 
 class acf_form_taxonomy {
 	
@@ -33,16 +33,16 @@ class acf_form_taxonomy {
 	function __construct() {
 		
 		// actions
-		add_action( 'admin_enqueue_scripts',	array( $this, 'admin_enqueue_scripts' ) );
+		add_action('admin_enqueue_scripts',	array($this, 'admin_enqueue_scripts'));
 		
 		
 		// save
-		add_action( 'create_term',			array( $this, 'save_term' ), 10, 3);
-		add_action( 'edit_term',				array( $this, 'save_term' ), 10, 3);
+		add_action('create_term',			array($this, 'save_term'), 10, 3);
+		add_action('edit_term',				array($this, 'save_term'), 10, 3);
 		
 		
 		// delete
-		add_action( 'delete_term',			array( $this, 'delete_term' ), 10, 4);
+		add_action('delete_term',			array($this, 'delete_term'), 10, 4);
 		
 	}
 	
@@ -67,7 +67,7 @@ class acf_form_taxonomy {
 		
 		
 		// validate page
-		if ( $pagenow === 'edit-tags.php' || $pagenow === 'term.php' ) {
+		if( $pagenow === 'edit-tags.php' || $pagenow === 'term.php' ) {
 			
 			return true;
 			
@@ -96,7 +96,7 @@ class acf_form_taxonomy {
 	function admin_enqueue_scripts() {
 		
 		// validate page
-		if ( ! $this->validate_page() ) {
+		if( !$this->validate_page() ) {
 			
 			return;
 			
@@ -113,9 +113,9 @@ class acf_form_taxonomy {
 		
 		
 		// actions
-		add_action( 'admin_footer',					array( $this, 'admin_footer' ), 10, 1);
-		add_action("{$taxonomy}_add_form_fields", 	array( $this, 'add_term' ), 10, 1);
-		add_action("{$taxonomy}_edit_form", 		array( $this, 'edit_term' ), 10, 2);
+		add_action('admin_footer',					array($this, 'admin_footer'), 10, 1);
+		add_action("{$taxonomy}_add_form_fields", 	array($this, 'add_term'), 10, 1);
+		add_action("{$taxonomy}_edit_form", 		array($this, 'edit_term'), 10, 2);
 		
 	}
 	
@@ -146,17 +146,17 @@ class acf_form_taxonomy {
 		// get field groups
 		$field_groups = acf_get_field_groups(array(
 			'taxonomy' => $taxonomy
-		) );
+		));
 		
 		
 		// render
-		if ( !empty( $field_groups) ) {
+		if( !empty($field_groups) ) {
 			
 			// data
 			acf_form_data(array( 
 				'screen'	=> 'taxonomy',
 				'post_id'	=> $post_id, 
-			) );
+			));
 			
 			// wrap
 			echo '<div id="acf-term-fields" class="acf-fields -clear">';
@@ -201,21 +201,21 @@ class acf_form_taxonomy {
 		// get field groups
 		$field_groups = acf_get_field_groups(array(
 			'taxonomy' => $taxonomy
-		) );
+		));
 		
 		
 		// render
-		if ( !empty( $field_groups) ) {
+		if( !empty($field_groups) ) {
 			
 			acf_form_data(array( 
 				'screen'	=> 'taxonomy',
 				'post_id'	=> $post_id,
-			) );
+			));
 			
 			foreach( $field_groups as $field_group ) {
 				
 				// title
-				if ( $field_group['style'] == 'default' ) {
+				if( $field_group['style'] == 'default' ) {
 					echo '<h2>' . $field_group['title'] . '</h2>';
 				}
 				
@@ -249,36 +249,36 @@ class acf_form_taxonomy {
 		
 ?>
 <script type="text/javascript">
-(function( $) {
+(function($) {
 	
 	// Define vars.
 	var view = '<?php echo $this->view; ?>';
-	var $form = $( '#' + view + 'tag' );
-	var $submit = $( '#' + view + 'tag input[type="submit"]:last' );
+	var $form = $('#' + view + 'tag');
+	var $submit = $('#' + view + 'tag input[type="submit"]:last');
 	
 	// Add missing spinner.
-	if ( ! $submit.next( '.spinner' ).length ) {
-		$submit.after( '<span class="spinner"></span>' );
+	if( !$submit.next('.spinner').length ) {
+		$submit.after('<span class="spinner"></span>');
 	}
 	
 <?php 
 	
 // View: Add.
-if ( $this->view == 'add' ): ?>
+if( $this->view == 'add' ): ?>
 	
 	// vars
-	var $fields = $( '#acf-term-fields' );
+	var $fields = $('#acf-term-fields');
 	var html = '';
 	
 	// Store a copy of the $fields html used later to replace after AJAX request.
 	// Hook into 'prepare' action to allow ACF core helpers to first modify DOM.
 	// Fixes issue where hidden #acf-hidden-wp-editor is initialized again.
-	acf.addAction( 'prepare', function(){
+	acf.addAction('prepare', function(){
 		html = $fields.html();
 	}, 6);
 		
 	// WP triggers click as primary action
-	$submit.on( 'click', function( e ){
+	$submit.on('click', function( e ){
 		
 		// validate
 		var valid = acf.validateForm({
@@ -288,7 +288,7 @@ if ( $this->view == 'add' ): ?>
 		});
 		
 		// if not valid, stop event and allow validation to continue
-		if ( !valid ) {
+		if( !valid ) {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 		}
@@ -298,23 +298,23 @@ if ( $this->view == 'add' ): ?>
 	$(document).ajaxComplete(function(event, xhr, settings) {
 		
 		// bail early if is other ajax call
-		if ( settings.data.indexOf( 'action=add-tag' ) == -1 ) {
+		if( settings.data.indexOf('action=add-tag') == -1 ) {
 			return;
 		}
 		
 		// bail early if response contains error
-		if ( xhr.responseText.indexOf( 'wp_error' ) !== -1 ) {
+		if( xhr.responseText.indexOf('wp_error') !== -1 ) {
 			return;
 		}
 		
 		// action for 3rd party customization
-		acf.doAction( 'remove', $fields);
+		acf.doAction('remove', $fields);
 		
 		// reset HTML
 		$fields.html( html );
 		
 		// action for 3rd party customization
-		acf.doAction( 'append', $fields);
+		acf.doAction('append', $fields);
 		
 		// reset unload
 		acf.unload.reset();
@@ -349,7 +349,7 @@ if ( $this->view == 'add' ): ?>
 		
 		
 		// verify and remove nonce
-		if ( !acf_verify_nonce( 'taxonomy' ) ) return $term_id;
+		if( !acf_verify_nonce('taxonomy') ) return $term_id;
 		
 	    
 	    // valied and show errors
@@ -378,7 +378,7 @@ if ( $this->view == 'add' ): ?>
 	function delete_term( $term, $tt_id, $taxonomy, $deleted_term ) {
 		
 		// bail early if termmeta table exists
-		if ( acf_isset_termmeta() ) return $term;
+		if( acf_isset_termmeta() ) return $term;
 		
 		
 		// globals
@@ -392,16 +392,16 @@ if ( $this->view == 'add' ): ?>
 		
 		// escape '_'
 		// http://stackoverflow.com/questions/2300285/how-do-i-escape-in-sql-server
-		$search = str_replace( '_', '\_', $search);
-		$_search = str_replace( '_', '\_', $_search);
+		$search = str_replace('_', '\_', $search);
+		$_search = str_replace('_', '\_', $_search);
 		
 		
 		// delete
-		$result = $wpdb->query( $wpdb->prepare(
+		$result = $wpdb->query($wpdb->prepare(
 			"DELETE FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s",
 			$search,
 			$_search 
-		) );
+		));
 		
 	}
 			

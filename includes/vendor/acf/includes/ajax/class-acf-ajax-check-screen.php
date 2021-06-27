@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Ajax_Check_Screen' ) ) :
+if( ! class_exists('ACF_Ajax_Check_Screen') ) :
 
 class ACF_Ajax_Check_Screen extends ACF_Ajax {
 	
@@ -26,16 +26,16 @@ class ACF_Ajax_Check_Screen extends ACF_Ajax {
 	function get_response( $request ) {
 		
 		// vars
-		$args = wp_parse_args( $this->request, array(
+		$args = wp_parse_args($this->request, array(
 			'screen'	=> '',
 			'post_id'	=> 0,
 			'ajax'		=> true,
-			'exists'	=> []
-		) );
+			'exists'	=> array()
+		));
 		
 		// vars
 		$response = array(
-			'results'	=> [],
+			'results'	=> array(),
 			'style'		=> ''
 		);
 		
@@ -43,7 +43,7 @@ class ACF_Ajax_Check_Screen extends ACF_Ajax {
 		$field_groups = acf_get_field_groups( $args );
 		
 		// loop through field groups
-		if ( $field_groups ) {
+		if( $field_groups ) {
 			foreach( $field_groups as $i => $field_group ) {
 				
 				// vars
@@ -59,7 +59,7 @@ class ACF_Ajax_Check_Screen extends ACF_Ajax {
 				);
 				
 				// append html if doesnt already exist on page
-				if ( ! in_array( $field_group['key'], $args['exists']) ) {
+				if( !in_array($field_group['key'], $args['exists']) ) {
 					
 					// load fields
 					$fields = acf_get_fields( $field_group );
@@ -82,8 +82,8 @@ class ACF_Ajax_Check_Screen extends ACF_Ajax {
 		}
 		
 		// Custom metabox order.
-		if ( $this->get( 'screen' ) == 'post' ) {
-			$response['sorted'] = get_user_option( 'meta-box-order_' . $this->get( 'post_type' ) );
+		if( $this->get('screen') == 'post' ) {
+			$response['sorted'] = get_user_option('meta-box-order_' . $this->get('post_type'));
 		}
 		
 		// return
@@ -91,7 +91,7 @@ class ACF_Ajax_Check_Screen extends ACF_Ajax {
 	}
 }
 
-acf_new_instance( 'ACF_Ajax_Check_Screen' );
+acf_new_instance('ACF_Ajax_Check_Screen');
 
 endif; // class_exists check
 

@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_WPML_Compatibility' ) ) :
+if( ! class_exists('ACF_WPML_Compatibility') ) :
 
 class ACF_WPML_Compatibility {
 	
@@ -23,30 +23,30 @@ class ACF_WPML_Compatibility {
 		global $sitepress;
 		
 		// update settings
-		acf_update_setting( 'default_language', $sitepress->get_default_language() );
-		acf_update_setting( 'current_language', $sitepress->get_current_language() );
+		acf_update_setting('default_language', $sitepress->get_default_language());
+		acf_update_setting('current_language', $sitepress->get_current_language());
 		
 		// localize data
 		acf_localize_data(array(
 		   	'language' => $sitepress->get_current_language()
-	   	) );
+	   	));
 		
 		// switch lang during AJAX action
-		add_action( 'acf/verify_ajax', array( $this, 'verify_ajax' ) );
+		add_action('acf/verify_ajax', array($this, 'verify_ajax'));
 		
 		// prevent 'acf-field' from being translated
-		add_filter( 'get_translatable_documents', array( $this, 'get_translatable_documents' ) );
+		add_filter('get_translatable_documents', array($this, 'get_translatable_documents'));
 		
 		// check if 'acf-field-group' is translatable
-		if ( $this->is_translatable() ) {
+		if( $this->is_translatable() ) {
 			
 			// actions
-			add_action( 'acf/upgrade_500_field_group',		array( $this, 'upgrade_500_field_group' ), 10, 2);
-			add_action( 'icl_make_duplicate',				array( $this, 'icl_make_duplicate' ), 10, 4);
+			add_action('acf/upgrade_500_field_group',		array($this, 'upgrade_500_field_group'), 10, 2);
+			add_action('icl_make_duplicate',				array($this, 'icl_make_duplicate'), 10, 4);
 			
 			// filters
-			add_filter( 'acf/settings/save_json',			array( $this, 'settings_save_json' ) );
-			add_filter( 'acf/settings/load_json',			array( $this, 'settings_load_json' ) );
+			add_filter('acf/settings/save_json',			array($this, 'settings_save_json'));
+			add_filter('acf/settings/load_json',			array($this, 'settings_load_json'));
 		}
 	}
 	
@@ -68,28 +68,28 @@ class ACF_WPML_Compatibility {
 		global $sitepress;
 		
 		// vars
-		$post_types = $sitepress->get_setting( 'custom_posts_sync_option' );
+		$post_types = $sitepress->get_setting('custom_posts_sync_option');
 		
 		// return false if no post types
-		if ( !acf_is_array( $post_types) ) {
+		if( !acf_is_array($post_types) ) {
 			return false;
 		}
 		
 		// prevent 'acf-field' from being translated
-		if ( !empty( $post_types['acf-field']) ) {
+		if( !empty($post_types['acf-field']) ) {
 			$post_types['acf-field'] = 0;
-			$sitepress->set_setting( 'custom_posts_sync_option', $post_types);
+			$sitepress->set_setting('custom_posts_sync_option', $post_types);
 		}
 		
 		// when upgrading to version 5, review 'acf' setting
 		// update 'acf-field-group' if 'acf' is translatable, and 'acf-field-group' does not yet exist
-		if ( !empty( $post_types['acf']) && ! isset( $post_types['acf-field-group']) ) {
+		if( !empty($post_types['acf']) && !isset($post_types['acf-field-group']) ) {
 			$post_types['acf-field-group'] = 1;
-			$sitepress->set_setting( 'custom_posts_sync_option', $post_types);
+			$sitepress->set_setting('custom_posts_sync_option', $post_types);
 		}
 		
 		// return true if acf-field-group is translatable
-		if ( !empty( $post_types['acf-field-group']) ) {
+		if( !empty($post_types['acf-field-group']) ) {
 			return true;
 		}
 		
@@ -109,35 +109,35 @@ class ACF_WPML_Compatibility {
 	*  @param	object $ofg The old field group WP_Post object.
 	*  @return	void
 	*/
-	function upgrade_500_field_group( $field_group, $ofg) {
+	function upgrade_500_field_group($field_group, $ofg) {
 		
 		// global
 		global $wpdb;
 		
 		// get translation rows (old acf4 and new acf5)
-		$old_row = $wpdb->get_row( $wpdb->prepare(
+		$old_row = $wpdb->get_row($wpdb->prepare(
 			"SELECT * FROM {$wpdb->prefix}icl_translations WHERE element_type=%s AND element_id=%d", 
 			'post_acf', $ofg->ID
 		), ARRAY_A);
 		
-		$new_row = $wpdb->get_row( $wpdb->prepare(
+		$new_row = $wpdb->get_row($wpdb->prepare(
 			"SELECT * FROM {$wpdb->prefix}icl_translations WHERE element_type=%s AND element_id=%d", 
 			'post_acf-field-group', $field_group['ID']
 		), ARRAY_A);
 		
 		// bail ealry if no rows
-		if ( ! $old_row || ! $new_row ) {
+		if( !$old_row || !$new_row ) {
 			return;
 		}
 		
 		// create reference of old trid to new trid
 		// trid is a simple int used to find associated objects
-		if ( empty( $this->trid_ref) ) {
-			$this->trid_ref = [];
+		if( empty($this->trid_ref) ) {
+			$this->trid_ref = array();
 		}
 		
 		// update trid
-		if ( isset( $this->trid_ref[ $old_row['trid'] ]) ) {
+		if( isset($this->trid_ref[ $old_row['trid'] ]) ) {
 			
 			// this field group is a translation of another, update it's trid to match the previously inserted group
 			$new_row['trid'] = $this->trid_ref[ $old_row['trid'] ];
@@ -156,7 +156,7 @@ class ACF_WPML_Compatibility {
 		$where_format = array( '%d' );
 		
 		// allow source_language_code to equal NULL
-		if ( $old_row['source_language_code'] ) {
+		if( $old_row['source_language_code'] ) {
 			
 			$data['source_language_code'] = $old_row['source_language_code'];
 			$data_format[] = '%s';
@@ -180,16 +180,16 @@ class ACF_WPML_Compatibility {
 	function settings_save_json( $path ) {	
 
 		// bail early if dir does not exist
-		if ( ! is_writable( $path) ) {
+		if( !is_writable($path) ) {
 			return $path;
 		}
 		
 		// ammend
-		$path = untrailingslashit( $path) . '/' . acf_get_setting( 'current_language' );
+		$path = untrailingslashit($path) . '/' . acf_get_setting('current_language');
 		
 		// make dir if does not exist
-		if ( !file_exists( $path) ) {
-			mkdir( $path, 0777, true);
+		if( !file_exists($path) ) {
+			mkdir($path, 0777, true);
 		}
 		
 		// return
@@ -210,9 +210,9 @@ class ACF_WPML_Compatibility {
 	function settings_load_json( $paths ) {
 		
 		// loop
-		if ( $paths ) {
+		if( $paths ) {
 		foreach( $paths as $i => $path ) {
-			$paths[ $i ] = untrailingslashit( $path) . '/' . acf_get_setting( 'current_language' );
+			$paths[ $i ] = untrailingslashit($path) . '/' . acf_get_setting('current_language');
 		}}
 		
 		// return
@@ -233,12 +233,12 @@ class ACF_WPML_Compatibility {
 	function icl_make_duplicate( $master_post_id, $lang, $postarr, $id ) {
 		
 		// bail early if not acf-field-group
-		if ( $postarr['post_type'] != 'acf-field-group' ) {
+		if( $postarr['post_type'] != 'acf-field-group' ) {
 			return;
 		}
 		
 		// update the lang
-		acf_update_setting( 'current_language', $lang);
+		acf_update_setting('current_language', $lang);
 		
 		// duplicate field group specifying the $post_id
 		acf_duplicate_field_group( $master_post_id, $id );
@@ -267,7 +267,7 @@ class ACF_WPML_Compatibility {
 		
 		// set the language for this AJAX request
 		// this will allow get_posts to work as expected (load posts from the correct language)
-		if ( isset( $_REQUEST['lang']) ) {
+		if( isset($_REQUEST['lang']) ) {
 			global $sitepress;
 			$sitepress->switch_lang( $_REQUEST['lang'] );
 		}
@@ -295,7 +295,7 @@ class ACF_WPML_Compatibility {
 	}
 }
 
-acf_new_instance( 'ACF_WPML_Compatibility' );
+acf_new_instance('ACF_WPML_Compatibility');
 
 endif; // class_exists check
 

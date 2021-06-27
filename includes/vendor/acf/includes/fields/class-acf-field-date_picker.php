@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_date_picker' ) ) :
+if( ! class_exists('acf_field_date_picker') ) :
 
 class acf_field_date_picker extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_date_picker extends acf_field {
 		
 		// vars
 		$this->name = 'date_picker';
-		$this->label = __("Date Picker",'acf' );
+		$this->label = __("Date Picker",'acf');
 		$this->category = 'jquery';
 		$this->defaults = array(
 			'display_format'	=> 'd/m/Y',
@@ -48,7 +48,7 @@ class acf_field_date_picker extends acf_field {
 	function input_admin_enqueue_scripts() {
 		
 		// bail ealry if no enqueue
-	   	if ( !acf_get_setting( 'enqueue_datepicker' ) ) {
+	   	if( !acf_get_setting('enqueue_datepicker') ) {
 		   	return;
 	   	}
 	   	
@@ -56,24 +56,24 @@ class acf_field_date_picker extends acf_field {
 	   	global $wp_locale;
 	   	acf_localize_data(array(
 		   	'datePickerL10n'	=> array(
-				'closeText'			=> _x( 'Done',	'Date Picker JS closeText',		'acf' ),
-				'currentText'		=> _x( 'Today',	'Date Picker JS currentText',	'acf' ),
-				'nextText'			=> _x( 'Next',	'Date Picker JS nextText',		'acf' ),
-				'prevText'			=> _x( 'Prev',	'Date Picker JS prevText',		'acf' ),
-				'weekHeader'		=> _x( 'Wk',		'Date Picker JS weekHeader',	'acf' ),
+				'closeText'			=> _x('Done',	'Date Picker JS closeText',		'acf'),
+				'currentText'		=> _x('Today',	'Date Picker JS currentText',	'acf'),
+				'nextText'			=> _x('Next',	'Date Picker JS nextText',		'acf'),
+				'prevText'			=> _x('Prev',	'Date Picker JS prevText',		'acf'),
+				'weekHeader'		=> _x('Wk',		'Date Picker JS weekHeader',	'acf'),
 				'monthNames'        => array_values( $wp_locale->month ),
 				'monthNamesShort'   => array_values( $wp_locale->month_abbrev ),
 				'dayNames'          => array_values( $wp_locale->weekday ),
 				'dayNamesMin'       => array_values( $wp_locale->weekday_initial ),
 				'dayNamesShort'     => array_values( $wp_locale->weekday_abbrev )
 			)
-	   	) );
+	   	));
 	   	
 		// script
-		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script('jquery-ui-datepicker');
 		
 		// style
-		wp_enqueue_style( 'acf-datepicker', acf_get_url( 'assets/inc/datepicker/jquery-ui.min.css' ), [], '1.11.4' );
+		wp_enqueue_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css'), array(), '1.11.4' );
 	}
 	
 	
@@ -96,7 +96,7 @@ class acf_field_date_picker extends acf_field {
 		$display_value = '';
 		
 		// format value
-		if ( $field['value'] ) {
+		if( $field['value'] ) {
 			$hidden_value = acf_format_date( $field['value'], 'Ymd' );
 			$display_value = acf_format_date( $field['value'], $field['display_format'] );
 		}
@@ -104,7 +104,7 @@ class acf_field_date_picker extends acf_field {
 		// elements
 		$div = array(
 			'class'					=> 'acf-date-picker acf-input-wrap',
-			'data-date_format'		=> acf_convert_date_to_js( $field['display_format']),
+			'data-date_format'		=> acf_convert_date_to_js($field['display_format']),
 			'data-first_day'		=> $field['first_day'],
 		);
 		$hidden_input = array(
@@ -119,13 +119,14 @@ class acf_field_date_picker extends acf_field {
 		
 		// special attributes
 		foreach( array( 'readonly', 'disabled' ) as $k ) {
-			if ( !empty( $field[ $k ]) ) {
+			if( !empty($field[ $k ]) ) {
+				$hidden_input[ $k ] = $k;
 				$text_input[ $k ] = $k;
 			}
 		}
 		
 		// save_format - compatibility with ACF < 5.0.0
-		if ( !empty( $field['save_format']) ) {
+		if( !empty($field['save_format']) ) {
 			
 			// add custom JS save format
 			$div['data-save_format'] = $field['save_format'];
@@ -167,16 +168,16 @@ class acf_field_date_picker extends acf_field {
 		
 		
 		// vars
-		$d_m_Y = date_i18n( 'd/m/Y' );
-		$m_d_Y = date_i18n( 'm/d/Y' );
-		$F_j_Y = date_i18n( 'F j, Y' );
-		$Ymd = date_i18n( 'Ymd' );
+		$d_m_Y = date_i18n('d/m/Y');
+		$m_d_Y = date_i18n('m/d/Y');
+		$F_j_Y = date_i18n('F j, Y');
+		$Ymd = date_i18n('Ymd');
 		
 		
 		// display_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Display Format','acf' ),
-			'instructions'	=> __( 'The format displayed when editing a post','acf' ),
+			'label'			=> __('Display Format','acf'),
+			'instructions'	=> __('The format displayed when editing a post','acf'),
 			'type'			=> 'radio',
 			'name'			=> 'display_format',
 			'other_choice'	=> 1,
@@ -184,29 +185,29 @@ class acf_field_date_picker extends acf_field {
 				'd/m/Y'			=> '<span>' . $d_m_Y . '</span><code>d/m/Y</code>',
 				'm/d/Y'			=> '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
 				'F j, Y'		=> '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
-				'other'			=> '<span>' . __( 'Custom:','acf' ) . '</span>'
+				'other'			=> '<span>' . __('Custom:','acf') . '</span>'
 			)
-		) );
+		));
 				
 		
 		// save_format - compatibility with ACF < 5.0.0
-		if ( !empty( $field['save_format']) ) {
+		if( !empty($field['save_format']) ) {
 			
 			// save_format
 			acf_render_field_setting( $field, array(
-				'label'			=> __( 'Save Format','acf' ),
-				'instructions'	=> __( 'The format used when saving a value','acf' ),
+				'label'			=> __('Save Format','acf'),
+				'instructions'	=> __('The format used when saving a value','acf'),
 				'type'			=> 'text',
 				'name'			=> 'save_format',
 				//'readonly'		=> 1 // this setting was not readonly in v4
-			) );
+			));
 			
 		} else {
 			
 			// return_format
 			acf_render_field_setting( $field, array(
-				'label'			=> __( 'Return Format','acf' ),
-				'instructions'	=> __( 'The format returned via template functions','acf' ),
+				'label'			=> __('Return Format','acf'),
+				'instructions'	=> __('The format returned via template functions','acf'),
 				'type'			=> 'radio',
 				'name'			=> 'return_format',
 				'other_choice'	=> 1,
@@ -215,21 +216,21 @@ class acf_field_date_picker extends acf_field {
 					'm/d/Y'			=> '<span>' . $m_d_Y . '</span><code>m/d/Y</code>',
 					'F j, Y'		=> '<span>' . $F_j_Y . '</span><code>F j, Y</code>',
 					'Ymd'			=> '<span>' . $Ymd . '</span><code>Ymd</code>',
-					'other'			=> '<span>' . __( 'Custom:','acf' ) . '</span>'
+					'other'			=> '<span>' . __('Custom:','acf') . '</span>'
 				)
-			) );
+			));
 			
 		}
 		
 		
 		// first_day
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Week Starts On','acf' ),
+			'label'			=> __('Week Starts On','acf'),
 			'instructions'	=> '',
 			'type'			=> 'select',
 			'name'			=> 'first_day',
 			'choices'		=> array_values( $wp_locale->weekday )
-		) );
+		));
 		
 	}
 	
@@ -253,7 +254,7 @@ class acf_field_date_picker extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// save_format - compatibility with ACF < 5.0.0
-		if ( !empty( $field['save_format']) ) {
+		if( !empty($field['save_format']) ) {
 			
 			return $value;
 			

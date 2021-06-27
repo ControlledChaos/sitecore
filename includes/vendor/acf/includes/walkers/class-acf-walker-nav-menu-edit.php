@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Walker_Nav_Menu_Edit' ) ) :
+if( ! class_exists('ACF_Walker_Nav_Menu_Edit') ) :
 
 class ACF_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
 
@@ -20,7 +20,7 @@ class ACF_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
      * @param stdClass $args   An object of wp_nav_menu() arguments.
      * @param int      $id     Current item ID.
      */
-	function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		
 		// vars
 		$item_output = '';
@@ -50,7 +50,7 @@ class ACF_Walker_Nav_Menu_Edit extends Walker_Nav_Menu_Edit {
 	 * @param int    $id     Nav menu ID.
 	 * @return string
 	 */
-	function get_fields( $item, $depth, $args = [], $id = 0 ) {
+	function get_fields( $item, $depth, $args = array(), $id = 0 ) {
 		ob_start();
 		
 		/**

@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Page_Template' ) ) :
+if( ! class_exists('ACF_Location_Page_Template') ) :
 
 class ACF_Location_Page_Template extends ACF_Location {
 	
@@ -37,9 +37,9 @@ class ACF_Location_Page_Template extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['post_type']) ) {
+		if( isset($screen['post_type']) ) {
 			$post_type = $screen['post_type'];
-		} elseif ( isset( $screen['post_id']) ) {
+		} elseif( isset($screen['post_id']) ) {
 			$post_type = get_post_type( $screen['post_id'] );
 		} else {
 			return false;
@@ -47,7 +47,7 @@ class ACF_Location_Page_Template extends ACF_Location {
 		
 		// Page templates were extended in WordPress version 4.7 for all post types.
 		// Prevent this rule (which is scoped to the "page" post type) appearing on all post types without a template selected (default template).
-		if ( $rule['value'] === 'default' && $post_type !== 'page' ) {
+		if( $rule['value'] === 'default' && $post_type !== 'page' ) {
 			return false;
 		}
 		
@@ -68,7 +68,7 @@ class ACF_Location_Page_Template extends ACF_Location {
 		$post_templates = acf_get_post_templates();
 		return array_merge(
 			array(
-				'default' => apply_filters( 'default_page_template_title',  __( 'Default Template', 'acf' ) )
+				'default' => apply_filters( 'default_page_template_title',  __('Default Template', 'acf') )
 			),
 			$post_templates[ 'page' ]
 		);

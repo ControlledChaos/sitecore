@@ -15,29 +15,29 @@ function acf_get_meta( $post_id = 0 ) {
 	
 	// Allow filter to short-circuit load_value logic.
 	$null = apply_filters( "acf/pre_load_meta", null, $post_id );
-	if ( $null !== null ) {
+	if( $null !== null ) {
 		return ( $null === '__return_null' ) ? null : $null;
 	}
 	
 	// Decode $post_id for $type and $id.
-	extract( acf_decode_post_id( $post_id) );
+	extract( acf_decode_post_id($post_id) );
 	
 	// Determine CRUD function.
 	// - Relies on decoded post_id result to identify option or meta types.
 	// - Uses xxx_metadata(type) instead of xxx_type_meta() to bypass additional logic that could alter the ID.
-	if ( $type === 'option' ) {
+	if( $type === 'option' ) {
 		$allmeta = acf_get_option_meta( $id );
 	} else {
 		$allmeta = get_metadata( $type, $id, '' );
 	}
 	
 	// Loop over meta and check that a reference exists for each value.
-	$meta = [];
-	if ( $allmeta ) {
+	$meta = array();
+	if( $allmeta ) {
 		foreach( $allmeta as $key => $value ) {
 			
 			// If a reference exists for this value, add it to the meta array.
-			if ( isset( $allmeta["_$key"]) ) {
+			if( isset($allmeta["_$key"]) ) {
 				$meta[ $key ] = $allmeta[ $key ][0];
 				$meta[ "_$key" ] = $allmeta[ "_$key" ][0];
 			}
@@ -45,7 +45,7 @@ function acf_get_meta( $post_id = 0 ) {
 	}
 	
 	// Unserialized results (get_metadata does not unserialize if $key is empty).
-	$meta = array_map( 'maybe_unserialize', $meta);
+	$meta = array_map('maybe_unserialize', $meta);
 	
 	/**
 	 * Filters the $meta array after it has been loaded.
@@ -77,16 +77,16 @@ function acf_get_option_meta( $prefix = '' ) {
 	global $wpdb;
 	
 	// Vars.
-	$meta = [];
+	$meta = array();
 	$search = "{$prefix}_%";
 	$_search = "_{$prefix}_%";
 	
 	// Escape underscores for LIKE.
-	$search = str_replace( '_', '\_', $search);
-	$_search = str_replace( '_', '\_', $_search);
+	$search = str_replace('_', '\_', $search);
+	$_search = str_replace('_', '\_', $_search);
 	
 	// Query database for results.
-	$rows = $wpdb->get_results( $wpdb->prepare(
+	$rows = $wpdb->get_results($wpdb->prepare(
 		"SELECT * 
 		FROM $wpdb->options 
 		WHERE option_name LIKE %s 
@@ -98,7 +98,7 @@ function acf_get_option_meta( $prefix = '' ) {
 	// Loop over results and append meta (removing the $prefix from the option name).
 	$len = strlen("{$prefix}_");
 	foreach( $rows as $row ) {
-		$meta[ substr( $row['option_name'], $len) ][] = $row['option_value'];
+		$meta[ substr($row['option_name'], $len) ][] = $row['option_value'];
 	}
 	
 	// Return results.
@@ -122,29 +122,29 @@ function acf_get_metadata( $post_id = 0, $name = '', $hidden = false ) {
 	
 	// Allow filter to short-circuit logic.
 	$null = apply_filters( "acf/pre_load_metadata", null, $post_id, $name, $hidden );
-	if ( $null !== null ) {
+	if( $null !== null ) {
 		return ( $null === '__return_null' ) ? null : $null;
 	}
 	
 	// Decode $post_id for $type and $id.
-	extract( acf_decode_post_id( $post_id) );
+	extract( acf_decode_post_id($post_id) );
 	
 	// Hidden meta uses an underscore prefix.
 	$prefix = $hidden ? '_' : '';
 	
 	// Bail early if no $id (possible during new acf_form).
-	if ( ! $id ) {
+	if( !$id ) {
 		return null;
 	}
 	
 	// Determine CRUD function.
 	// - Relies on decoded post_id result to identify option or meta types.
 	// - Uses xxx_metadata(type) instead of xxx_type_meta() to bypass additional logic that could alter the ID.
-	if ( $type === 'option' ) {
+	if( $type === 'option' ) {
 		return get_option( "{$prefix}{$id}_{$name}", null );
 	} else {
 		$meta = get_metadata( $type, $id, "{$prefix}{$name}", false );
-		return isset( $meta[0]) ? $meta[0] : null;
+		return isset($meta[0]) ? $meta[0] : null;
 	}
 }
 
@@ -166,27 +166,27 @@ function acf_update_metadata( $post_id = 0, $name = '', $value = '', $hidden = f
 	
 	// Allow filter to short-circuit logic.
 	$pre = apply_filters( "acf/pre_update_metadata", null, $post_id, $name, $value, $hidden );
-	if ( $pre !== null ) {
+	if( $pre !== null ) {
 		return $pre;
 	}
 	
 	// Decode $post_id for $type and $id.
-	extract( acf_decode_post_id( $post_id) );
+	extract( acf_decode_post_id($post_id) );
 	
 	// Hidden meta uses an underscore prefix.
 	$prefix = $hidden ? '_' : '';
 	
 	// Bail early if no $id (possible during new acf_form).
-	if ( ! $id ) {
+	if( !$id ) {
 		return false;
 	}
 	
 	// Determine CRUD function.
 	// - Relies on decoded post_id result to identify option or meta types.
 	// - Uses xxx_metadata(type) instead of xxx_type_meta() to bypass additional logic that could alter the ID.
-	if ( $type === 'option' ) {
+	if( $type === 'option' ) {
 		$value = wp_unslash( $value );
-		$autoload = (bool) acf_get_setting( 'autoload' );
+		$autoload = (bool) acf_get_setting('autoload');
 		return update_option( "{$prefix}{$id}_{$name}", $value, $autoload );
 	} else {
 		return update_metadata( $type, $id, "{$prefix}{$name}", $value );
@@ -210,25 +210,25 @@ function acf_delete_metadata( $post_id = 0, $name = '', $hidden = false ) {
 	
 	// Allow filter to short-circuit logic.
 	$pre = apply_filters( "acf/pre_delete_metadata", null, $post_id, $name, $hidden );
-	if ( $pre !== null ) {
+	if( $pre !== null ) {
 		return $pre;
 	}
 	
 	// Decode $post_id for $type and $id.
-	extract( acf_decode_post_id( $post_id) );
+	extract( acf_decode_post_id($post_id) );
 	
 	// Hidden meta uses an underscore prefix.
 	$prefix = $hidden ? '_' : '';
 	
 	// Bail early if no $id (possible during new acf_form).
-	if ( ! $id ) {
+	if( !$id ) {
 		return false;
 	}
 	
 	// Determine CRUD function.
 	// - Relies on decoded post_id result to identify option or meta types.
 	// - Uses xxx_metadata(type) instead of xxx_type_meta() to bypass additional logic that could alter the ID.
-	if ( $type === 'option' ) {
+	if( $type === 'option' ) {
 		return delete_option( "{$prefix}{$id}_{$name}" );
 	} else {
 		return delete_metadata( $type, $id, "{$prefix}{$name}" );
@@ -253,7 +253,7 @@ function acf_copy_metadata( $from_post_id = 0, $to_post_id = 0 ) {
 	$meta = acf_get_meta( $from_post_id );
 	
 	// Check meta.
-	if ( $meta ) {
+	if( $meta ) {
 		
 		// Slash data. WP expects all data to be slashed and will unslash it (fixes '\' character issues).
 		$meta = wp_slash( $meta );
@@ -300,9 +300,9 @@ function acf_get_meta_field( $key = 0, $post_id = 0 ) {
 	// Try reference.
 	$field_key = acf_get_reference( $key, $post_id );
 	
-	if ( $field_key ) {
+	if( $field_key ) {
 		$field = acf_get_field( $field_key );
-		if ( $field ) {
+		if( $field ) {
 			$field['name'] = $key;
 			return $field;
 		}
@@ -331,13 +331,13 @@ function acf_get_metaref( $post_id = 0, $type = 'fields', $name = '' ) {
 	$meta = acf_get_metadata( $post_id, "_acf_$type" );
 	
 	// Handle no meta.
-	if ( ! $meta ) {
-		return $name ? '' : [];
+	if( !$meta ) {
+		return $name ? '' : array();
 	}
 	
 	// Return specific reference.
-	if ( $name ) {
-		return isset( $meta[ $name ]) ? $meta[ $name ] : '';
+	if( $name ) {
+		return isset($meta[ $name ]) ? $meta[ $name ] : '';
 	
 	// Or return all references.
 	} else {
@@ -358,7 +358,7 @@ function acf_get_metaref( $post_id = 0, $type = 'fields', $name = '' ) {
  * @param	array $references An array of references.
  * @return	(int|bool) Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-function acf_update_metaref( $post_id = 0, $type = 'fields', $references = [] ) {
+function acf_update_metaref( $post_id = 0, $type = 'fields', $references = array() ) {
 	
 	// Get current references.
 	$current = acf_get_metaref( $post_id, $type );
@@ -367,12 +367,12 @@ function acf_update_metaref( $post_id = 0, $type = 'fields', $references = [] ) 
 	$references = array_merge( $current, $references );
 	
 	// Simplify groups
-	if ( $type === 'groups' ) {
-		$references = array_values( $references);
+	if( $type === 'groups' ) {
+		$references = array_values($references);
 	}
 	
 	// Remove duplicate references.
-	$references = array_unique( $references);
+	$references = array_unique($references);
 	
 	// Update metadata.
 	return acf_update_metadata( $post_id, "_acf_$type", $references );

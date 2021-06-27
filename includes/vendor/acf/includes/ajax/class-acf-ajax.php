@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Ajax' ) ) :
+if( ! class_exists('ACF_Ajax') ) :
 
 class ACF_Ajax {
 	
@@ -43,7 +43,7 @@ class ACF_Ajax {
 	 * @return	boolean
 	 */
 	function has( $key = '' ) {
-		return isset( $this->request[$key]);
+		return isset($this->request[$key]);
 	}
 	
 	/**
@@ -58,12 +58,10 @@ class ACF_Ajax {
 	 * @return	mixed
 	 */
 	function get( $key = '' ) {
-		return isset( $this->request[$key]) ? $this->request[$key] : null;
+		return isset($this->request[$key]) ? $this->request[$key] : null;
 	}
 	
 	/**
-	 * set
-	 *
 	 * Sets request data for the given key.
 	 *
 	 * @date	31/7/18
@@ -73,7 +71,7 @@ class ACF_Ajax {
 	 * @param	mixed $value The data value.
 	 * @return	ACF_Ajax
 	 */
-	function set( $key = '', $value ) {
+	function set( $key = '', $value = null ) {
 		$this->request[$key] = $value;
 		return $this;
 	}
@@ -107,11 +105,11 @@ class ACF_Ajax {
 	function add_actions() {
 		
 		// add action for logged-in users
-		add_action( "wp_ajax_{$this->action}", array( $this, 'request' ) );
+		add_action( "wp_ajax_{$this->action}", array($this, 'request') );
 		
 		// add action for non logged-in users
-		if ( $this->public ) {
-			add_action( "wp_ajax_nopriv_{$this->action}", array( $this, 'request' ) );
+		if( $this->public ) {
+			add_action( "wp_ajax_nopriv_{$this->action}", array($this, 'request') );
 		}
 	}
 	
@@ -129,11 +127,11 @@ class ACF_Ajax {
 	function request() {
 		
 		// Store data for has() and get() functions.
-		$this->request = wp_unslash( $_REQUEST);
+		$this->request = wp_unslash($_REQUEST);
 		
 		// Verify request and handle error.
 		$error = $this->verify_request( $this->request );
-		if ( is_wp_error( $error ) ) {
+		if( is_wp_error( $error ) ) {
 			$this->send( $error );
 		}
 		
@@ -153,7 +151,7 @@ class ACF_Ajax {
 	function verify_request( $request ) {
 		
 		// Verify nonce.
-		if ( !acf_verify_ajax() ) {
+		if( !acf_verify_ajax() ) {
 			return new WP_Error( 'acf_invalid_nonce', __( 'Invalid nonce.', 'acf' ), array( 'status' => 404 ) );
 		}
 		return true;
@@ -188,7 +186,7 @@ class ACF_Ajax {
 	function send( $response ) {
 		
 		// Return error.
-		if ( is_wp_error( $response) ) {
+		if( is_wp_error($response) ) {
 			$this->send_error( $response );
 		
 		// Return success.
@@ -210,7 +208,7 @@ class ACF_Ajax {
 		
 		// Get error status
 		$error_data = $error->get_error_data();
-		if ( is_array( $error_data) && isset( $error_data['status']) ) {
+		if( is_array($error_data) && isset($error_data['status']) ) {
 			$status_code = $error_data['status'];
 		} else {
 			$status_code = 500;

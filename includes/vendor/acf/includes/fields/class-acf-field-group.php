@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field__group' ) ) :
+if( ! class_exists('acf_field__group') ) :
 
 class acf_field__group extends acf_field {
 	
@@ -22,18 +22,18 @@ class acf_field__group extends acf_field {
 		
 		// vars
 		$this->name = 'group';
-		$this->label = __("Group",'acf' );
+		$this->label = __("Group",'acf');
 		$this->category = 'layout';
 		$this->defaults = array(
-			'sub_fields'	=> [],
+			'sub_fields'	=> array(),
 			'layout'		=> 'block'
 		);
 		$this->have_rows = 'single';
 		
 		
 		// field filters
-		$this->add_field_filter( 'acf/prepare_field_for_export', array( $this, 'prepare_field_for_export' ) );
-		$this->add_field_filter( 'acf/prepare_field_for_import', array( $this, 'prepare_field_for_import' ) );
+		$this->add_field_filter('acf/prepare_field_for_export', array($this, 'prepare_field_for_export'));
+		$this->add_field_filter('acf/prepare_field_for_import', array($this, 'prepare_field_for_import'));
 		
 	}
 		
@@ -59,7 +59,7 @@ class acf_field__group extends acf_field {
 		
 		
 		// append
-		if ( $sub_fields ) {
+		if( $sub_fields ) {
 			
 			$field['sub_fields'] = $sub_fields;
 			
@@ -90,7 +90,7 @@ class acf_field__group extends acf_field {
 	function load_value( $value, $post_id, $field ) {
 		
 		// bail early if no sub fields
-		if ( empty( $field['sub_fields']) ) return $value;
+		if( empty($field['sub_fields']) ) return $value;
 		
 		
 		// modify names
@@ -98,7 +98,7 @@ class acf_field__group extends acf_field {
 		
 		
 		// load sub fields
-		$value = [];
+		$value = array();
 		
 		
 		// loop
@@ -135,7 +135,7 @@ class acf_field__group extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// bail early if no value
-		if ( empty( $value) ) return false;
+		if( empty($value) ) return false;
 		
 		
 		// modify names
@@ -184,11 +184,11 @@ class acf_field__group extends acf_field {
 	function update_value( $value, $post_id, $field ) {
 		
 		// bail early if no value
-		if ( !acf_is_array( $value) ) return null;
+		if( !acf_is_array($value) ) return null;
 		
 		
 		// bail ealry if no sub fields
-		if ( empty( $field['sub_fields']) ) return null;
+		if( empty($field['sub_fields']) ) return null;
 		
 		
 		// modify names
@@ -203,12 +203,12 @@ class acf_field__group extends acf_field {
 			
 			
 			// key (backend)
-			if ( isset( $value[ $sub_field['key'] ]) ) {
+			if( isset($value[ $sub_field['key'] ]) ) {
 				
 				$v = $value[ $sub_field['key'] ];
 			
 			// name (frontend)
-			} elseif ( isset( $value[ $sub_field['_name'] ]) ) {
+			} elseif( isset($value[ $sub_field['_name'] ]) ) {
 				
 				$v = $value[ $sub_field['_name'] ];
 			
@@ -249,7 +249,7 @@ class acf_field__group extends acf_field {
 	function prepare_field_for_db( $field ) {
 		
 		// bail early if no sub fields
-		if ( empty( $field['sub_fields']) ) return $field;
+		if( empty($field['sub_fields']) ) return $field;
 		
 		
 		// loop
@@ -282,19 +282,19 @@ class acf_field__group extends acf_field {
 	function render_field( $field ) {
 		
 		// bail early if no sub fields
-		if ( empty( $field['sub_fields']) ) return;
+		if( empty($field['sub_fields']) ) return;
 		
 		
 		// load values
 		foreach( $field['sub_fields'] as &$sub_field ) {
 			
 			// add value
-			if ( isset( $field['value'][ $sub_field['key'] ]) ) {
+			if( isset($field['value'][ $sub_field['key'] ]) ) {
 				
 				// this is a normal value
 				$sub_field['value'] = $field['value'][ $sub_field['key'] ];
 				
-			} elseif ( isset( $sub_field['default_value']) ) {
+			} elseif( isset($sub_field['default_value']) ) {
 				
 				// no value, but this sub field has a default value
 				$sub_field['value'] = $sub_field['default_value'];
@@ -307,13 +307,13 @@ class acf_field__group extends acf_field {
 			
 			
 			// restore required
-			if ( $field['required'] ) $sub_field['required'] = 0;
+			if( $field['required'] ) $sub_field['required'] = 0;
 		
 		}
 		
 		
 		// render
-		if ( $field['layout'] == 'table' ) {
+		if( $field['layout'] == 'table' ) {
 			
 			$this->render_field_table( $field );
 			
@@ -342,7 +342,7 @@ class acf_field__group extends acf_field {
 	function render_field_block( $field ) {
 		
 		// vars
-		$label_placement = ( $field['layout'] == 'block' ) ? 'top' : 'left';
+		$label_placement = ($field['layout'] == 'block') ? 'top' : 'left';
 		
 		
 		// html
@@ -381,15 +381,15 @@ class acf_field__group extends acf_field {
 		<?php foreach( $field['sub_fields'] as $sub_field ): 
 			
 			// prepare field (allow sub fields to be removed)
-			$sub_field = acf_prepare_field( $sub_field);
+			$sub_field = acf_prepare_field($sub_field);
 			
 			
 			// bail ealry if no field
-			if ( ! $sub_field ) continue;
+			if( !$sub_field ) continue;
 			
 			
 			// vars
-			$atts = [];
+			$atts = array();
 			$atts['class'] = 'acf-th';
 			$atts['data-name'] = $sub_field['_name'];
 			$atts['data-type'] = $sub_field['type'];
@@ -397,7 +397,7 @@ class acf_field__group extends acf_field {
 			
 			
 			// Add custom width
-			if ( $sub_field['wrapper']['width'] ) {
+			if( $sub_field['wrapper']['width'] ) {
 			
 				$atts['data-width'] = $sub_field['wrapper']['width'];
 				$atts['style'] = 'width: ' . $sub_field['wrapper']['width'] . '%;';
@@ -456,12 +456,12 @@ class acf_field__group extends acf_field {
 		
 		?><tr class="acf-field acf-field-setting-sub_fields" data-setting="group" data-name="sub_fields">
 			<td class="acf-label">
-				<label><?php _e("Sub Fields",'acf' ); ?></label>	
+				<label><?php _e("Sub Fields",'acf'); ?></label>	
 			</td>
 			<td class="acf-input">
 				<?php 
 				
-				acf_get_view( 'field-group-fields', $args);
+				acf_get_view('field-group-fields', $args);
 				
 				?>
 			</td>
@@ -471,17 +471,17 @@ class acf_field__group extends acf_field {
 			
 		// layout
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Layout','acf' ),
-			'instructions'	=> __( 'Specify the style used to render the selected fields', 'acf' ),
+			'label'			=> __('Layout','acf'),
+			'instructions'	=> __('Specify the style used to render the selected fields', 'acf'),
 			'type'			=> 'radio',
 			'name'			=> 'layout',
 			'layout'		=> 'horizontal',
 			'choices'		=> array(
-				'block'			=> __( 'Block','acf' ),
-				'table'			=> __( 'Table','acf' ),
-				'row'			=> __( 'Row','acf' )
+				'block'			=> __('Block','acf'),
+				'table'			=> __('Table','acf'),
+				'row'			=> __('Row','acf')
 			)
-		) );
+		));
 		
 	}
 	
@@ -502,11 +502,11 @@ class acf_field__group extends acf_field {
 	function validate_value( $valid, $value, $field, $input ){
 		
 		// bail early if no $value
-		if ( empty( $value) ) return $valid;
+		if( empty($value) ) return $valid;
 		
 		
 		// bail early if no sub fields
-		if ( empty( $field['sub_fields']) ) return $valid;
+		if( empty($field['sub_fields']) ) return $valid;
 		
 		
 		// loop
@@ -517,11 +517,11 @@ class acf_field__group extends acf_field {
 			
 			
 			// bail early if value not set (conditional logic?)
-			if ( ! isset( $value[ $k ]) ) continue;
+			if( !isset($value[ $k ]) ) continue;
 			
 			
 			// required
-			if ( $field['required'] ) {
+			if( $field['required'] ) {
 				$sub_field['required'] = 1;
 			}
 			
@@ -585,7 +585,7 @@ class acf_field__group extends acf_field {
 	function prepare_field_for_export( $field ) {
 		
 		// Check for sub fields.
-		if ( !empty( $field['sub_fields']) ) {
+		if( !empty($field['sub_fields']) ) {
 			$field['sub_fields'] = acf_prepare_fields_for_export( $field['sub_fields'] );
 		}
 		return $field;
@@ -605,7 +605,7 @@ class acf_field__group extends acf_field {
 	function prepare_field_for_import( $field ) {
 		
 		// Check for sub fields.
-		if ( !empty( $field['sub_fields']) ) {
+		if( !empty($field['sub_fields']) ) {
 			$sub_fields = acf_extract_var( $field, 'sub_fields' );
 			
 			// Modify sub fields.
@@ -615,7 +615,7 @@ class acf_field__group extends acf_field {
 			}
 			
 			// Return array of [field, sub_1, sub_2, ...].
-			return array_merge( array( $field), $sub_fields );
+			return array_merge( array($field), $sub_fields );
 			
 		}
 		return $field;
@@ -639,7 +639,7 @@ class acf_field__group extends acf_field {
 	function delete_value( $post_id, $meta_key, $field ) {
 		
 		// bail ealry if no sub fields
-		if ( empty( $field['sub_fields']) ) return null;
+		if( empty($field['sub_fields']) ) return null;
 		
 		// modify names
 		$field = $this->prepare_field_for_db( $field );
@@ -664,7 +664,7 @@ class acf_field__group extends acf_field {
 	function delete_field( $field ) {
 		
 		// loop over sub fields and delete them
-		if ( $field['sub_fields'] ) {
+		if( $field['sub_fields'] ) {
 			foreach( $field['sub_fields'] as $sub_field ) {
 				acf_delete_field( $sub_field['ID'] );
 			}

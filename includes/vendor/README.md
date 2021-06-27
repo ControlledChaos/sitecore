@@ -12,17 +12,17 @@ The following docblock replaces the plugin header in the main file.
 
 ```php
 /**
-Advanced Custom Fields
+ * Advanced Custom Fields
  *
-"Customize WordPress with powerful, professional and intuitive fields."
+ * "Customize WordPress with powerful, professional and intuitive fields."
  *
-@package    Site_Core
-@subpackage Vendor
-@category   Plugins
-@version    x.x.x
-@since      1.0.0
-@author     Elliot Condon
-@link       https://www.advancedcustomfields.com
+ * @package    Site_Core
+ * @subpackage Vendor
+ * @category   Plugins
+ * @version    x.x.x
+ * @since      1.0.0
+ * @author     Elliot Condon
+ * @link       https://www.advancedcustomfields.com
  */
 ```
 

@@ -9,7 +9,7 @@
  *
  * @return string The determined locale.
  */
-if ( !function_exists( 'determine_locale' ) ):
+if( !function_exists('determine_locale') ):
 function determine_locale() {
 	/**
 	 * Filters the locale for the current request prior to the default determination process.
@@ -27,11 +27,11 @@ function determine_locale() {
 	
 	$determined_locale = get_locale();
 	
-	if ( function_exists( 'get_user_locale' ) && is_admin() ) {
+	if ( function_exists('get_user_locale') && is_admin() ) {
 		$determined_locale = get_user_locale();
 	}
 	
-	if ( function_exists( 'get_user_locale' ) && isset( $_GET['_locale'] ) && 'user' === $_GET['_locale'] ) {
+	if ( function_exists('get_user_locale') && isset( $_GET['_locale'] ) && 'user' === $_GET['_locale'] ) {
 		$determined_locale = get_user_locale();
 	}
 	
@@ -77,7 +77,7 @@ function acf_get_locale() {
 		'fa_AF'	=> 'fa_IR',		// Persian (Afghanistan)
 		'ru_UA'	=> 'ru_RU',		// Russian (Ukraine)
 	);
-	if ( isset( $langs[ $locale ]) ) {
+	if( isset($langs[ $locale ]) ) {
 		$locale = $langs[ $locale ];
 	}
 	
@@ -118,7 +118,7 @@ function acf_load_textdomain( $domain = 'acf' ) {
 	$mofile = $domain . '-' . $locale . '.mo';
 	
 	// Try to load from the languages directory first.
-	if ( load_textdomain( $domain, WP_LANG_DIR . '/plugins/' . $mofile ) ) {
+	if( load_textdomain( $domain, WP_LANG_DIR . '/plugins/' . $mofile ) ) {
 		return true;
 	}
 	
@@ -140,8 +140,8 @@ function acf_load_textdomain( $domain = 'acf' ) {
 function _acf_apply_language_cache_key( $key ) {
 	
 	// Get current language.
-	$current_language = acf_get_setting( 'current_language' );
-	if ( $current_language ) {
+	$current_language = acf_get_setting('current_language');
+	if( $current_language ) {
 		$key = "{$key}:{$current_language}";
 	}
 	

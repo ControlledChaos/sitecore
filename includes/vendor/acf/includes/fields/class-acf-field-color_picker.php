@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_color_picker' ) ) :
+if( ! class_exists('acf_field_color_picker') ) :
 
 class acf_field_color_picker extends acf_field {
 	
@@ -22,7 +22,7 @@ class acf_field_color_picker extends acf_field {
 		
 		// vars
 		$this->name = 'color_picker';
-		$this->label = __("Color Picker",'acf' );
+		$this->label = __("Color Picker",'acf');
 		$this->category = 'jquery';
 		$this->defaults = array(
 			'default_value'	=> '',
@@ -48,15 +48,15 @@ class acf_field_color_picker extends acf_field {
 
 		// Register scripts for non-admin.
 		// Applies logic from wp_default_scripts() function defined in "wp-includes/script-loader.php".
-		if ( ! is_admin() ) {
-			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		if( !is_admin() ) {
+			$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 			$scripts = wp_scripts();
 			$scripts->add( 'iris', '/wp-admin/js/iris.min.js', array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), '1.0.7', 1 );
 			$scripts->add( 'wp-color-picker', "/wp-admin/js/color-picker$suffix.js", array( 'iris' ), false, 1 );
 			
 			// Handle localisation across multiple WP versions. 
 			// WP 5.0+
-			if ( method_exists( $scripts, 'set_translations' ) ) {
+			if( method_exists($scripts, 'set_translations') ) {
 				$scripts->set_translations( 'wp-color-picker' );
 			// WP 4.9
 			} else {
@@ -67,7 +67,7 @@ class acf_field_color_picker extends acf_field {
 					'defaultAriaLabel' => __( 'Select default color' ),
 					'pick'             => __( 'Select Color' ),
 					'defaultLabel'     => __( 'Color value' ),
-				) );
+				));
 			}
 			
 		}
@@ -93,8 +93,8 @@ class acf_field_color_picker extends acf_field {
 	function render_field( $field ) {
 		
 		// vars
-		$text_input = acf_get_sub_array( $field, array( 'id', 'class', 'name', 'value' ) );
-		$hidden_input = acf_get_sub_array( $field, array( 'name', 'value' ) );
+		$text_input = acf_get_sub_array( $field, array('id', 'class', 'name', 'value') );
+		$hidden_input = acf_get_sub_array( $field, array('name', 'value') );
 		
 		
 		// html
@@ -124,12 +124,12 @@ class acf_field_color_picker extends acf_field {
 		
 		// display_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Default Value','acf' ),
+			'label'			=> __('Default Value','acf'),
 			'instructions'	=> '',
 			'type'			=> 'text',
 			'name'			=> 'default_value',
 			'placeholder'	=> '#FFFFFF'
-		) );
+		));
 		
 	}
 	

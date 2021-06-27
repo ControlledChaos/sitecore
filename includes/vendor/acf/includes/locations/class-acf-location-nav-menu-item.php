@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Nav_Menu_Item' ) ) :
+if( ! class_exists('ACF_Location_Nav_Menu_Item') ) :
 
 class ACF_Location_Nav_Menu_Item extends ACF_Location {
 	
@@ -36,15 +36,15 @@ class ACF_Location_Nav_Menu_Item extends ACF_Location {
 	public function match( $rule, $screen, $field_group ) {
 		
 		// Check screen args.
-		if ( isset( $screen['nav_menu_item']) ) {
+		if( isset($screen['nav_menu_item']) ) {
 			$nav_menu_item = $screen['nav_menu_item'];
 		} else {
 			return false;
 		}
 		
 		// Append "nav_menu" global data to $screen and call 'nav_menu' logic.
-		if ( ! isset( $screen['nav_menu']) ) {
-			$screen['nav_menu'] = acf_get_data( 'nav_menu_id' );
+		if( !isset($screen['nav_menu']) ) {
+			$screen['nav_menu'] = acf_get_data('nav_menu_id');
 		}
 		return acf_get_location_type( 'nav_menu' )->match( $rule, $screen, $field_group );
 	}

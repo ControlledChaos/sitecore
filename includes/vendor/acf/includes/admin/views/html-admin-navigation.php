@@ -6,7 +6,7 @@
  * @since	5.9.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if( ! defined( 'ABSPATH' ) ) exit;
 
 global $submenu, $parent_file, $submenu_file, $plugin_page, $pagenow;
 
@@ -14,8 +14,8 @@ global $submenu, $parent_file, $submenu_file, $plugin_page, $pagenow;
 $parent_slug = 'edit.php?post_type=acf-field-group';
 
 // Generate array of navigation items.
-$tabs = [];
-if ( isset( $submenu[ $parent_slug ]) ) {
+$tabs = array();
+if( isset($submenu[ $parent_slug ]) ) {
 	foreach( $submenu[ $parent_slug ] as $i => $sub_item ) {
 		
 		// Check user can access page.
@@ -24,7 +24,7 @@ if ( isset( $submenu[ $parent_slug ]) ) {
 		}
 		
 		// Ignore "Add New".
-		if ( $i === 1 ) {
+		if( $i === 1 ) {
 			continue;
 		}
 		
@@ -35,17 +35,17 @@ if ( isset( $submenu[ $parent_slug ]) ) {
 		);
 		
 		// Convert submenu slug "test" to "$parent_slug&page=test".
-		if ( !strpos( $sub_item[2], '.php' ) ) {
+		if( !strpos($sub_item[2], '.php') ) {
 			$tab['url'] = add_query_arg( array( 'page' => $sub_item[2] ), $parent_slug );
 		}
 		
 		// Detect active state.
-		if ( $submenu_file === $sub_item[2] || $plugin_page === $sub_item[2] ) {
+		if( $submenu_file === $sub_item[2] || $plugin_page === $sub_item[2] ) {
 			$tab['is_active'] = true;
 		}
 		
 		// Special case for "Add New" page.
-		if ( $i === 0 && $submenu_file === 'post-new.php?post_type=acf-field-group' ) {
+		if( $i === 0 && $submenu_file === 'post-new.php?post_type=acf-field-group' ) {
 			$tab['is_active'] = true;
 		}
 		$tabs[] = $tab;
@@ -63,13 +63,13 @@ if ( isset( $submenu[ $parent_slug ]) ) {
 $tabs = apply_filters( 'acf/admin/toolbar', $tabs );
 
 // Bail early if set to false.
-if ( $tabs === false ) {
+if( $tabs === false ) {
 	return;
 }
 
 ?>
 <div class="acf-admin-toolbar">
-	<h2><i class="acf-tab-icon dashicons dashicons-welcome-widgets-menus"></i> <?php echo acf_get_setting( 'name' ); ?></h2>
+	<h2><i class="acf-tab-icon dashicons dashicons-welcome-widgets-menus"></i> <?php echo acf_get_setting('name'); ?></h2>
 	<?php foreach( $tabs as $tab ) {
 		printf(
 			'<a class="acf-tab%s" href="%s">%s</a>',

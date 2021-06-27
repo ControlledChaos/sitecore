@@ -1,8 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Ajax_Query_Users' ) ) :
+if( ! class_exists('ACF_Ajax_Query_Users') ) :
 
 class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 	
@@ -53,7 +53,7 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 		$args = parent::get_args( $request );
 		$args['number'] = $this->per_page;
 		$args['paged'] = $this->page;
-		if ( $this->is_search ) {
+		if( $this->is_search ) {
 			$args['search'] = "*{$this->search}*";
 		}
 		
@@ -82,22 +82,22 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 	function prepare_args( $args ) {
 		
 		// Parse pagination args that may have been modified.
-		if ( isset( $args['users_per_page']) ) {
-			$this->per_page = intval( $args['users_per_page']);
+		if( isset($args['users_per_page']) ) {
+			$this->per_page = intval($args['users_per_page']);
 			unset( $args['users_per_page'] );
 			
-		} elseif ( isset( $args['number']) ) {
-			$this->per_page = intval( $args['number']);
+		} elseif( isset($args['number']) ) {
+			$this->per_page = intval($args['number']);
 		}
 		
-		if ( isset( $args['paged']) ) {
-			$this->page = intval( $args['paged']);
+		if( isset($args['paged']) ) {
+			$this->page = intval($args['paged']);
 			unset( $args['paged'] );
 		}
 		
 		// Set pagination args for fine control.
 		$args['number'] = $this->per_page;
-		$args['offset'] = $this->per_page * ( $this->page - 1);
+		$args['offset'] = $this->per_page * ($this->page - 1);
 		$args['count_total'] = true;
 		return $args;
 	}
@@ -114,20 +114,20 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 	 * @return	array
 	 */
 	function get_results( $args ) {
-		$results = [];
+		$results = array();
 		
 		// Prepare args for quey.
 		$args = $this->prepare_args( $args );
 		
 		// Get result groups.
-		if ( !empty( $args['role__in']) ) {
+		if( !empty( $args['role__in']) ) {
 			$roles = acf_get_user_role_labels( $args['role__in'] );
 		} else {
 			$roles = acf_get_user_role_labels();
 		}
 		
 		// Return a flat array of results when searching or when queriying one group only.
-		if ( $this->is_search || count( $roles) === 1 ) {
+		if( $this->is_search || count($roles) === 1 ) {
 		
 			// Query users and append to results.
 			$wp_user_query = new WP_User_Query( $args );
@@ -139,7 +139,7 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 			
 			// Determine if more results exist.
 			// As this query does not return grouped results, the calculation can be exact (">").
-			$this->more = ( $total_users > count( $users) + $args['offset'] );
+			$this->more = ( $total_users > count($users) + $args['offset'] );
 			
 		// Otherwise, group results via role.
 		} else {
@@ -157,14 +157,14 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 				$total_users = $wp_user_query->get_total();
 				
 				//acf_log( $args );
-				//acf_log( '- ', count( $users) );
+				//acf_log( '- ', count($users) );
 				//acf_log( '- ', $total_users );
 				
 				// If users were found for this query...
-				if ( $users ) {
+				if( $users ) {
 					
 					// Append optgroup of results.
-					$role_results = [];
+					$role_results = array();
 					foreach( $users as $user ) {
 						$role_results[] = $this->get_result( $user );
 					}
@@ -174,22 +174,22 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 					);
 					
 					// End loop when enough results have been found.
-					if ( count( $users) === $args['number'] ) {
+					if( count($users) === $args['number'] ) {
 						
 						// Determine if more results exist.
 						// As this query does return grouped results, the calculation is best left fuzzy to avoid querying the next group (">=").
-						$this->more = ( $total_users >= count( $users) + $args['offset'] );
+						$this->more = ( $total_users >= count($users) + $args['offset'] );
 						break;
 					
 					// Otherwise, modify the args so that the next query can continue on correctly.
 					} else {
 						$args['offset'] = 0;
-						$args['number'] -= count( $users);
+						$args['number'] -= count($users);
 					}
 				
 				// If no users were found (for the current pagination args), but there were users found for previous pages...
 				// Modify the args so that the next query is offset slightly less (the number of total users) and can continue on correctly.
-				} elseif ( $total_users ) {
+				} elseif( $total_users ) {
 					$args['offset'] -= $total_users;
 					continue;
 					
@@ -268,6 +268,6 @@ class ACF_Ajax_Query_Users extends ACF_Ajax_Query {
 	}
 }
 
-acf_new_instance( 'ACF_Ajax_Query_Users' );
+acf_new_instance('ACF_Ajax_Query_Users');
 
 endif; // class_exists check

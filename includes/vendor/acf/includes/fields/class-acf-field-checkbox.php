@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'acf_field_checkbox' ) ) :
+if( ! class_exists('acf_field_checkbox') ) :
 
 class acf_field_checkbox extends acf_field {
 	
@@ -22,11 +22,11 @@ class acf_field_checkbox extends acf_field {
 		
 		// vars
 		$this->name = 'checkbox';
-		$this->label = __("Checkbox",'acf' );
+		$this->label = __("Checkbox",'acf');
 		$this->category = 'choice';
 		$this->defaults = array(
 			'layout'			=> 'vertical',
-			'choices'			=> [],
+			'choices'			=> array(),
 			'default_value'		=> '',
 			'allow_custom'		=> 0,
 			'save_custom'		=> 0,
@@ -55,17 +55,17 @@ class acf_field_checkbox extends acf_field {
 	function render_field( $field ) {
 		
 		// reset vars
-		$this->_values = [];
+		$this->_values = array();
 		$this->_all_checked = true;
 		
 		
 		// ensure array
-		$field['value'] = acf_get_array( $field['value']);
-		$field['choices'] = acf_get_array( $field['choices']);
+		$field['value'] = acf_get_array($field['value']);
+		$field['choices'] = acf_get_array($field['choices']);
 		
 		
 		// hiden input
-		acf_hidden_input( array( 'name' => $field['name']) );
+		acf_hidden_input( array('name' => $field['name']) );
 		
 		
 		// vars
@@ -76,7 +76,7 @@ class acf_field_checkbox extends acf_field {
 		
 		
 		// append to class
-		$ul['class'] .= ' ' . ( $field['layout'] == 'horizontal' ? 'acf-hl' : 'acf-bl' );
+		$ul['class'] .= ' ' . ($field['layout'] == 'horizontal' ? 'acf-hl' : 'acf-bl');
 		$ul['class'] .= ' ' . $field['class'];
 		
 		
@@ -85,14 +85,14 @@ class acf_field_checkbox extends acf_field {
 		
 		
 		// choices
-		if ( !empty( $field['choices']) ) {
+		if( !empty($field['choices']) ) {
 			
 			// choices
 			$li .= $this->render_field_choices( $field );
 			
 			
 			// toggle
-			if ( $field['toggle'] ) {
+			if( $field['toggle'] ) {
 				$li = $this->render_field_toggle( $field ) . $li;
 			}
 			
@@ -100,7 +100,7 @@ class acf_field_checkbox extends acf_field {
 		
 		
 		// custom
-		if ( $field['allow_custom'] ) {
+		if( $field['allow_custom'] ) {
 			$li .= $this->render_field_custom( $field );
 		}
 		
@@ -151,24 +151,24 @@ class acf_field_checkbox extends acf_field {
 		$atts = array(
 			'type'	=> 'checkbox',
 			'class'	=> 'acf-checkbox-toggle',
-			'label'	=> __("Toggle All", 'acf' )
+			'label'	=> __("Toggle All", 'acf')
 		);
 		
 		
 		// custom label
-		if ( is_string( $field['toggle']) ) {
+		if( is_string($field['toggle']) ) {
 			$atts['label'] = $field['toggle'];
 		}
 		
 		
 		// checked
-		if ( $this->_all_checked ) {
+		if( $this->_all_checked ) {
 			$atts['checked'] = 'checked';
 		}
 		
 		
 		// return
-		return '<li>' . acf_get_checkbox_input( $atts) . '</li>' . "\n";
+		return '<li>' . acf_get_checkbox_input($atts) . '</li>' . "\n";
 		
 	}
 	
@@ -196,11 +196,11 @@ class acf_field_checkbox extends acf_field {
 		foreach( $field['value'] as $value ) {
 			
 			// ignore if already eixsts
-			if ( isset( $field['choices'][ $value ]) ) continue;
+			if( isset($field['choices'][ $value ]) ) continue;
 			
 			
 			// vars
-			$esc_value = esc_attr( $value);
+			$esc_value = esc_attr($value);
 			$text_input = array(
 				'name'	=> $field['name'],
 				'value'	=> $value,
@@ -208,17 +208,17 @@ class acf_field_checkbox extends acf_field {
 			
 			
 			// bail ealry if choice already exists
-			if ( in_array( $esc_value, $this->_values ) ) continue;
+			if( in_array( $esc_value, $this->_values ) ) continue;
 			
 			
 			// append
-			$html .= '<li><input class="acf-checkbox-custom" type="checkbox" checked="checked" />' . acf_get_text_input( $text_input) . '</li>' . "\n";
+			$html .= '<li><input class="acf-checkbox-custom" type="checkbox" checked="checked" />' . acf_get_text_input($text_input) . '</li>' . "\n";
 			
 		}
 		
 		
 		// append button
-		$html .= '<li><a href="#" class="button acf-add-checkbox">' . esc_attr__( 'Add new choice', 'acf' ) . '</a></li>' . "\n";
+		$html .= '<li><a href="#" class="button acf-add-checkbox">' . esc_attr__('Add new choice', 'acf') . '</a></li>' . "\n";
 		
 		
 		// return
@@ -227,20 +227,20 @@ class acf_field_checkbox extends acf_field {
 	}
 	
 	
-	function walk( $choices = [], $args = [], $depth = 0 ) {
+	function walk( $choices = array(), $args = array(), $depth = 0 ) {
 		
 		// bail ealry if no choices
-		if ( empty( $choices) ) return '';
+		if( empty($choices) ) return '';
 		
 		
 		// defaults
-		$args = wp_parse_args( $args, array(
+		$args = wp_parse_args($args, array(
 			'id'		=> '',
 			'type'		=> 'checkbox',
 			'name'		=> '',
-			'value'		=> [],
-			'disabled'	=> [],
-		) );
+			'value'		=> array(),
+			'disabled'	=> array(),
+		));
 		
 		
 		// vars
@@ -248,9 +248,9 @@ class acf_field_checkbox extends acf_field {
 		
 		
 		// sanitize values for 'selected' matching
-		if ( $depth == 0 ) {
-			$args['value'] = array_map( 'esc_attr', $args['value']);
-			$args['disabled'] = array_map( 'esc_attr', $args['disabled']);
+		if( $depth == 0 ) {
+			$args['value'] = array_map('esc_attr', $args['value']);
+			$args['disabled'] = array_map('esc_attr', $args['disabled']);
 		}
 		
 		
@@ -262,7 +262,7 @@ class acf_field_checkbox extends acf_field {
 			
 			
 			// optgroup
-			if ( is_array( $label) ){
+			if( is_array($label) ){
 				
 				$html .= '<ul>' . "\n";
 				$html .= $this->walk( $label, $args, $depth+1 );
@@ -272,9 +272,9 @@ class acf_field_checkbox extends acf_field {
 			} else {
 				
 				// vars
-				$esc_value = esc_attr( $value);
+				$esc_value = esc_attr($value);
 				$atts = array(
-					'id'	=> $args['id'] . '-' . str_replace( ' ', '-', $value),
+					'id'	=> $args['id'] . '-' . str_replace(' ', '-', $value),
 					'type'	=> $args['type'],
 					'name'	=> $args['name'],
 					'value' => $value,
@@ -283,7 +283,7 @@ class acf_field_checkbox extends acf_field {
 				
 				
 				// selected
-				if ( in_array( $esc_value, $args['value'] ) ) {
+				if( in_array( $esc_value, $args['value'] ) ) {
 					$atts['checked'] = 'checked';
 				} else {
 					$this->_all_checked = false;
@@ -291,7 +291,7 @@ class acf_field_checkbox extends acf_field {
 				
 				
 				// disabled
-				if ( in_array( $esc_value, $args['disabled'] ) ) {
+				if( in_array( $esc_value, $args['disabled'] ) ) {
 					$atts['disabled'] = 'disabled';
 				}
 				
@@ -301,7 +301,7 @@ class acf_field_checkbox extends acf_field {
 				
 				
 				// append
-				$html .= acf_get_checkbox_input( $atts);
+				$html .= acf_get_checkbox_input($atts);
 				
 			}
 			
@@ -335,92 +335,92 @@ class acf_field_checkbox extends acf_field {
 	function render_field_settings( $field ) {
 		
 		// encode choices (convert from array)
-		$field['choices'] = acf_encode_choices( $field['choices']);
-		$field['default_value'] = acf_encode_choices( $field['default_value'], false);
+		$field['choices'] = acf_encode_choices($field['choices']);
+		$field['default_value'] = acf_encode_choices($field['default_value'], false);
 				
 		
 		// choices
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Choices','acf' ),
-			'instructions'	=> __( 'Enter each choice on a new line.','acf' ) . '<br /><br />' . __( 'For more control, you may specify both a value and label like this:','acf' ). '<br /><br />' . __( 'red : Red','acf' ),
+			'label'			=> __('Choices','acf'),
+			'instructions'	=> __('Enter each choice on a new line.','acf') . '<br /><br />' . __('For more control, you may specify both a value and label like this:','acf'). '<br /><br />' . __('red : Red','acf'),
 			'type'			=> 'textarea',
 			'name'			=> 'choices',
-		) );	
+		));	
 		
 		
 		// other_choice
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Allow Custom','acf' ),
+			'label'			=> __('Allow Custom','acf'),
 			'instructions'	=> '',
 			'name'			=> 'allow_custom',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-			'message'		=> __("Allow 'custom' values to be added", 'acf' ),
-		) );
+			'message'		=> __("Allow 'custom' values to be added", 'acf'),
+		));
 		
 		
 		// save_other_choice
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Save Custom','acf' ),
+			'label'			=> __('Save Custom','acf'),
 			'instructions'	=> '',
 			'name'			=> 'save_custom',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-			'message'		=> __("Save 'custom' values to the field's choices", 'acf' ),
+			'message'		=> __("Save 'custom' values to the field's choices", 'acf'),
 			'conditions'	=> array(
 				'field'		=> 'allow_custom',
 				'operator'	=> '==',
 				'value'		=> 1
 			)
-		) );
+		));
 		
 		
 		// default_value
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Default Value','acf' ),
-			'instructions'	=> __( 'Enter each default value on a new line','acf' ),
+			'label'			=> __('Default Value','acf'),
+			'instructions'	=> __('Enter each default value on a new line','acf'),
 			'type'			=> 'textarea',
 			'name'			=> 'default_value',
-		) );
+		));
 		
 		
 		// layout
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Layout','acf' ),
+			'label'			=> __('Layout','acf'),
 			'instructions'	=> '',
 			'type'			=> 'radio',
 			'name'			=> 'layout',
 			'layout'		=> 'horizontal', 
 			'choices'		=> array(
-				'vertical'		=> __("Vertical",'acf' ), 
-				'horizontal'	=> __("Horizontal",'acf' )
+				'vertical'		=> __("Vertical",'acf'), 
+				'horizontal'	=> __("Horizontal",'acf')
 			)
-		) );
+		));
 		
 		
 		// layout
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Toggle','acf' ),
-			'instructions'	=> __( 'Prepend an extra checkbox to toggle all choices','acf' ),
+			'label'			=> __('Toggle','acf'),
+			'instructions'	=> __('Prepend an extra checkbox to toggle all choices','acf'),
 			'name'			=> 'toggle',
 			'type'			=> 'true_false',
 			'ui'			=> 1,
-		) );
+		));
 		
 		
 		// return_format
 		acf_render_field_setting( $field, array(
-			'label'			=> __( 'Return Value','acf' ),
-			'instructions'	=> __( 'Specify the returned value on front end','acf' ),
+			'label'			=> __('Return Value','acf'),
+			'instructions'	=> __('Specify the returned value on front end','acf'),
 			'type'			=> 'radio',
 			'name'			=> 'return_format',
 			'layout'		=> 'horizontal',
 			'choices'		=> array(
-				'value'			=> __( 'Value','acf' ),
-				'label'			=> __( 'Label','acf' ),
-				'array'			=> __( 'Both (Array)','acf' )
+				'value'			=> __('Value','acf'),
+				'label'			=> __('Label','acf'),
+				'array'			=> __('Both (Array)','acf')
 			)
-		) );		
+		));		
 		
 	}
 	
@@ -468,42 +468,42 @@ class acf_field_checkbox extends acf_field {
 	function update_value( $value, $post_id, $field ) {
 		
 		// bail early if is empty
-		if ( empty( $value) ) return $value;
+		if( empty($value) ) return $value;
 		
 		
 		// select -> update_value()
-		$value = acf_get_field_type( 'select' )->update_value( $value, $post_id, $field );
+		$value = acf_get_field_type('select')->update_value( $value, $post_id, $field );
 		
 		
 		// save_other_choice
-		if ( $field['save_custom'] ) {
+		if( $field['save_custom'] ) {
 			
 			// get raw $field (may have been changed via repeater field)
 			// if field is local, it won't have an ID
 			$selector = $field['ID'] ? $field['ID'] : $field['key'];
 			$field = acf_get_field( $selector );
-			if ( ! $field ) {
+			if( !$field ) {
 				return false;
 			}
 			
 			
 			// bail early if no ID (JSON only)
-			if ( ! $field['ID'] ) return $value;
+			if( !$field['ID'] ) return $value;
 			
 			
 			// loop
 			foreach( $value as $v ) {
 				
 				// ignore if already eixsts
-				if ( isset( $field['choices'][ $v ]) ) continue;
+				if( isset($field['choices'][ $v ]) ) continue;
 				
 				
 				// unslash (fixes serialize single quote issue)
-				$v = wp_unslash( $v);
+				$v = wp_unslash($v);
 				
 				
 				// sanitize (remove tags)
-				$v = sanitize_text_field( $v);
+				$v = sanitize_text_field($v);
 				
 				
 				// append
@@ -539,7 +539,7 @@ class acf_field_checkbox extends acf_field {
 	
 	function translate_field( $field ) {
 		
-		return acf_get_field_type( 'select' )->translate_field( $field );
+		return acf_get_field_type('select')->translate_field( $field );
 		
 	}
 	
@@ -563,15 +563,15 @@ class acf_field_checkbox extends acf_field {
 	function format_value( $value, $post_id, $field ) {
 		
 		// Bail early if is empty.
-		if ( acf_is_empty( $value) ) {
-			return [];
+		if( acf_is_empty($value) ) {
+			return array();
 		}
 		
 		// Always convert to array of items.
-		$value = acf_array( $value);
+		$value = acf_array($value);
 		
 		// Return.
-		return acf_get_field_type( 'select' )->format_value( $value, $post_id, $field );
+		return acf_get_field_type('select')->format_value( $value, $post_id, $field );
 	}
 	
 }

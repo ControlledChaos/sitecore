@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Location_Current_User' ) ) :
+if( ! class_exists('ACF_Location_Current_User') ) :
 
 class ACF_Location_Current_User extends ACF_Location {
 	
@@ -38,7 +38,7 @@ class ACF_Location_Current_User extends ACF_Location {
 				$result = is_user_logged_in();
 				break;
 			case 'viewing_front':
-				$result = ! is_admin();
+				$result = !is_admin();
 				break;
 			case 'viewing_back':
 				$result = is_admin();
@@ -49,8 +49,8 @@ class ACF_Location_Current_User extends ACF_Location {
 		}
 		
 		// Reverse result for "!=" operator.
-        if ( $rule['operator'] === '!=' ) {
-        	return ! $result;
+        if( $rule['operator'] === '!=' ) {
+        	return !$result;
         }
 		return $result;
 	}

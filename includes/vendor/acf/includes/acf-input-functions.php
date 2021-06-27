@@ -17,9 +17,9 @@ function acf_filter_attrs( $attrs ) {
 	$filtered = array_filter( $attrs, 'acf_not_empty' );
 	
 	// Correct specific attributes (required="required").
-	foreach( array( 'required', 'readonly', 'disabled', 'multiple' ) as $key ) {
-		unset( $filtered[ $key ]);
-		if ( !empty( $attrs[ $key ]) ) {
+	foreach( array('required', 'readonly', 'disabled', 'multiple') as $key ) {
+		unset($filtered[ $key ]);
+		if( !empty($attrs[ $key ]) ) {
 			$filtered[ $key ] = $key;
 		}
 	}
@@ -44,46 +44,88 @@ function acf_esc_attrs( $attrs ) {
 	foreach( $attrs as $k => $v ) {
 		
 		// String (but don't trim value).
-		if ( is_string( $v) && ( $k !== 'value' ) ) {
-			$v = trim( $v);
+		if( is_string($v) && ($k !== 'value') ) {
+			$v = trim($v);
 			
 		// Boolean	
-		} elseif ( is_bool( $v) ) {
+		} elseif( is_bool($v) ) {
 			$v = $v ? 1 : 0;
 			
 		// Object
-		} elseif ( is_array( $v) || is_object( $v) ) {
-			$v = json_encode( $v);
+		} elseif( is_array($v) || is_object($v) ) {
+			$v = json_encode($v);
 		}
 		
 		// Generate HTML.
-		$html .= sprintf( ' %s="%s"', esc_attr( $k), esc_attr( $v) );
+		$html .= sprintf( ' %s="%s"', esc_attr($k), esc_attr($v) );
 	}
 	
 	// Return trimmed.
 	return trim( $html );
 }
 
-/**
- * acf_esc_html
- *
- * Encodes <script> tags for safe HTML output.
- *
- * @date	12/6/19
- * @since	5.8.1
- *
- * @param	string $string
- * @return	string
- */
-function acf_esc_html( $string = '' ) {
-	$string = strval( $string);
-	
-	// Encode "<script" tags to invalidate DOM elements.
-	if ( strpos( $string, '<script' ) !== false ) {
-		$string = str_replace( '<script', htmlspecialchars( '<script' ), $string);
-		$string = str_replace( '</script', htmlspecialchars( '</script' ), $string);
+if ( defined('ACF_EXPERIMENTAL_ESC_HTML') && ACF_EXPERIMENTAL_ESC_HTML ) {
+
+	/**
+	 * Sanitizes text content and strips out disallowed HTML.
+	 *
+	 * This function emulates `wp_kses_post()` with a context of "acf" for extensibility.
+	 *
+	 * @date	16/4/21
+	 * @since	5.9.6
+	 *
+	 * @param	string $string
+	 * @return	string
+	 */
+	function acf_esc_html( $string = '' ) {
+		return wp_kses( (string) $string, 'acf' );
 	}
-	return $string;
+	
+	/**
+	 * Private callback for the "wp_kses_allowed_html" filter used to return allowed HTML for "acf" context.
+	 *
+	 * @date	16/4/21
+	 * @since	5.9.6
+	 *
+	 * @param	array $tags An array of allowed tags.
+	 * @param	string $context The context name.
+	 * @return	array.
+	 */
+	
+	function _acf_kses_allowed_html( $tags, $context ) {
+		global $allowedposttags;
+		
+		if( $context === 'acf' ) {
+			return $allowedposttags;
+		}
+		return $tags;
+	}
+	
+	add_filter( 'wp_kses_allowed_html', '_acf_kses_allowed_html', 0, 2 );
+
+} else {
+	
+	/**
+	 * acf_esc_html
+	 *
+	 * Encodes <script> tags for safe HTML output.
+	 *
+	 * @date	12/6/19
+	 * @since	5.8.1
+	 *
+	 * @param	string $string
+	 * @return	string
+	 */
+	function acf_esc_html( $string = '' ) {
+		$string = strval($string);
+		
+		// Encode "<script" tags to invalidate DOM elements.
+		if( strpos($string, '<script') !== false ) {
+			$string = str_replace('<script', htmlspecialchars('<script'), $string);
+			$string = str_replace('</script', htmlspecialchars('</script'), $string);
+		}
+		return $string;
+	}
 }
 
 /**
@@ -97,8 +139,8 @@ function acf_esc_html( $string = '' ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-//function acf_html_input( $attrs = [] ) {
-//	return sprintf( '<input %s/>', acf_esc_attrs( $attrs) );
+//function acf_html_input( $attrs = array() ) {
+//	return sprintf( '<input %s/>', acf_esc_attrs($attrs) );
 //}
 
 /**
@@ -112,7 +154,7 @@ function acf_esc_html( $string = '' ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_hidden_input( $attrs = [] ) {
+function acf_hidden_input( $attrs = array() ) {
 	echo acf_get_hidden_input( $attrs );
 }
 
@@ -127,8 +169,8 @@ function acf_hidden_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_hidden_input( $attrs = [] ) {
-	return sprintf( '<input type="hidden" %s/>', acf_esc_attrs( $attrs) );
+function acf_get_hidden_input( $attrs = array() ) {
+	return sprintf( '<input type="hidden" %s/>', acf_esc_attrs($attrs) );
 }
 
 /**
@@ -142,7 +184,7 @@ function acf_get_hidden_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_text_input( $attrs = [] ) {
+function acf_text_input( $attrs = array() ) {
 	echo acf_get_text_input( $attrs );
 }
 
@@ -157,11 +199,11 @@ function acf_text_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_text_input( $attrs = [] ) {
-	$attrs = wp_parse_args( $attrs, array(
+function acf_get_text_input( $attrs = array() ) {
+	$attrs = wp_parse_args($attrs, array(
 		'type' => 'text'
-	) );
-	return sprintf( '<input %s/>', acf_esc_attrs( $attrs) );
+	));
+	return sprintf( '<input %s/>', acf_esc_attrs($attrs) );
 }
 
 /**
@@ -175,7 +217,7 @@ function acf_get_text_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_file_input( $attrs = [] ) {
+function acf_file_input( $attrs = array() ) {
 	echo acf_get_file_input( $attrs );
 }
 
@@ -190,8 +232,8 @@ function acf_file_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_file_input( $attrs = [] ) {
-	return sprintf( '<input type="file" %s/>', acf_esc_attrs( $attrs) );
+function acf_get_file_input( $attrs = array() ) {
+	return sprintf( '<input type="file" %s/>', acf_esc_attrs($attrs) );
 }
 
 /**
@@ -205,7 +247,7 @@ function acf_get_file_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_textarea_input( $attrs = [] ) {
+function acf_textarea_input( $attrs = array() ) {
 	echo acf_get_textarea_input( $attrs );
 }
 
@@ -220,13 +262,13 @@ function acf_textarea_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_textarea_input( $attrs = [] ) {
+function acf_get_textarea_input( $attrs = array() ) {
 	$value = '';
-	if ( isset( $attrs['value']) ) {
+	if( isset($attrs['value']) ) {
 		$value = $attrs['value'];
 		unset( $attrs['value'] );
 	}
-	return sprintf( '<textarea %s>%s</textarea>', acf_esc_attrs( $attrs), esc_textarea( $value) );
+	return sprintf( '<textarea %s>%s</textarea>', acf_esc_attrs($attrs), esc_textarea($value) );
 }
 
 /**
@@ -240,7 +282,7 @@ function acf_get_textarea_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_checkbox_input( $attrs = [] ) {
+function acf_checkbox_input( $attrs = array() ) {
 	echo acf_get_checkbox_input( $attrs );
 }
 
@@ -255,23 +297,23 @@ function acf_checkbox_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_checkbox_input( $attrs = [] ) {
+function acf_get_checkbox_input( $attrs = array() ) {
 	
 	// Allow radio or checkbox type.
-	$attrs = wp_parse_args( $attrs, array(
+	$attrs = wp_parse_args($attrs, array(
 		'type' => 'checkbox'
-	) );
+	));
 	
 	// Get label.
 	$label = '';
-	if ( isset( $attrs['label']) ) {
+	if( isset($attrs['label']) ) {
 		$label= $attrs['label'];
 		unset( $attrs['label'] );
 	}
 	
 	// Render.
-	$checked = isset( $attrs['checked']);
-	return '<label' . ( $checked ? ' class="selected"' : '' ) . '><input ' . acf_esc_attr( $attrs) . '/> ' . acf_esc_html( $label) . '</label>';
+	$checked = isset($attrs['checked']);
+	return '<label' . ($checked ? ' class="selected"' : '') . '><input ' . acf_esc_attr($attrs) . '/> ' . acf_esc_html($label) . '</label>';
 }
 
 /**
@@ -285,7 +327,7 @@ function acf_get_checkbox_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_radio_input( $attrs = [] ) {
+function acf_radio_input( $attrs = array() ) {
 	echo acf_get_radio_input( $attrs );
 }
 
@@ -300,7 +342,7 @@ function acf_radio_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_radio_input( $attrs = [] ) {
+function acf_get_radio_input( $attrs = array() ) {
 	$attrs['type'] = 'radio';
 	return acf_get_checkbox_input( $attrs );
 }
@@ -316,7 +358,7 @@ function acf_get_radio_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_select_input( $attrs = [] ) {
+function acf_select_input( $attrs = array() ) {
 	echo acf_get_select_input( $attrs );
 }
 
@@ -331,13 +373,13 @@ function acf_select_input( $attrs = [] ) {
  * @param	array $attrs The array of attrs.
  * @return	string
  */
-function acf_get_select_input( $attrs = [] ) {
+function acf_get_select_input( $attrs = array() ) {
 	$value = (array) acf_extract_var( $attrs, 'value' );
 	$choices = (array) acf_extract_var( $attrs, 'choices' );
 	return sprintf(
 		'<select %s>%s</select>',
-		acf_esc_attrs( $attrs),
-		acf_walk_select_input( $choices, $value)
+		acf_esc_attrs($attrs),
+		acf_walk_select_input($choices, $value)
 	);
 }
 
@@ -354,23 +396,23 @@ function acf_get_select_input( $attrs = [] ) {
  * @param	array $depth The current walk depth.
  * @return	string
  */
-function acf_walk_select_input( $choices = [], $values = [], $depth = 0 ) {
+function acf_walk_select_input( $choices = array(), $values = array(), $depth = 0 ) {
 	$html = '';
 	
 	// Sanitize values for 'selected' matching (only once).
-	if ( $depth == 0 ) {
-		$values = array_map( 'esc_attr', $values);
+	if( $depth == 0 ) {
+		$values = array_map('esc_attr', $values);
 	}
 	
 	// Loop over choices and append to html.
-	if ( $choices ) {
+	if( $choices ) {
 		foreach( $choices as $value => $label ) {
 			
 			// Multiple (optgroup)
-			if ( is_array( $label) ){
+			if( is_array($label) ){
 				$html .= sprintf(
 					'<optgroup label="%s">%s</optgroup>',
-					esc_attr( $value),
+					esc_attr($value),
 					acf_walk_select_input( $label, $values, $depth+1 )
 				);
 			
@@ -381,12 +423,12 @@ function acf_walk_select_input( $choices = [], $values = [], $depth = 0 ) {
 				);
 				
 				// If is selected.
-				$pos = array_search( esc_attr( $value), $values );
-				if ( $pos !== false ) {
+				$pos = array_search( esc_attr($value), $values );
+				if( $pos !== false ) {
 					$attrs['selected'] = 'selected';
 					$attrs['data-i'] = $pos;
 				}
-				$html .= sprintf( '<option %s>%s</option>', acf_esc_attr( $attrs), esc_html( $label) );
+				$html .= sprintf( '<option %s>%s</option>', acf_esc_attr($attrs), esc_html($label) );
 			}
 		}
 	}

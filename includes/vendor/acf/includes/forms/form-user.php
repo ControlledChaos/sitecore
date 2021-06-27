@@ -1,8 +1,8 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! class_exists( 'ACF_Form_User' ) ) :
+if( ! class_exists('ACF_Form_User') ) :
 
 class ACF_Form_User {
 	
@@ -26,21 +26,21 @@ class ACF_Form_User {
 	function __construct() {
 		
 		// enqueue
-		add_action( 'admin_enqueue_scripts',			array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'login_form_register', 			array( $this, 'login_form_register' ) );
+		add_action('admin_enqueue_scripts',			array($this, 'admin_enqueue_scripts'));
+		add_action('login_form_register', 			array($this, 'login_form_register'));
 		
 		// render
-		add_action( 'show_user_profile', 			array( $this, 'render_edit' ) );
-		add_action( 'edit_user_profile',				array( $this, 'render_edit' ) );
-		add_action( 'user_new_form',					array( $this, 'render_new' ) );
-		add_action( 'register_form',					array( $this, 'render_register' ) );
+		add_action('show_user_profile', 			array($this, 'render_edit'));
+		add_action('edit_user_profile',				array($this, 'render_edit'));
+		add_action('user_new_form',					array($this, 'render_new'));
+		add_action('register_form',					array($this, 'render_register'));
 		
 		// save
-		add_action( 'user_register',					array( $this, 'save_user' ) );
-		add_action( 'profile_update',				array( $this, 'save_user' ) );
+		add_action('user_register',					array($this, 'save_user'));
+		add_action('profile_update',				array($this, 'save_user'));
 		
 		// Perform validation before new user is registered.
-		add_filter( 'registration_errors',			array( $this, 'filter_registration_errors' ), 10, 3);
+		add_filter('registration_errors',			array($this, 'filter_registration_errors'), 10, 3);
 	}
 	
 	
@@ -59,7 +59,7 @@ class ACF_Form_User {
 	function admin_enqueue_scripts() {
 		
 		// bail early if not valid screen
-		if ( !acf_is_screen(array( 'profile', 'user', 'user-edit' ) ) ) {
+		if( !acf_is_screen(array('profile', 'user', 'user-edit')) ) {
 			return;
 		}
 		
@@ -85,7 +85,7 @@ class ACF_Form_User {
 		// customize action prefix so that "admin_head" = "login_head"
 		acf_enqueue_scripts(array(
 			'context' => 'login'
-		) );
+		));
 	}
 	
 	
@@ -109,7 +109,7 @@ class ACF_Form_User {
 			'user_id'	=> 0,
 			'view'		=> 'register',
 			'el'		=> 'div'
-		) );
+		));
 	}
 	
 	
@@ -129,7 +129,7 @@ class ACF_Form_User {
 	function render_edit( $user ) {
 		
 		// add compatibility with front-end user profile edit forms such as bbPress
-		if ( ! is_admin() ) {
+		if( !is_admin() ) {
 			acf_enqueue_scripts();
 		}
 		
@@ -138,7 +138,7 @@ class ACF_Form_User {
 			'user_id'	=> $user->ID,
 			'view'		=> 'edit',
 			'el'		=> 'tr'
-		) );
+		));
 	}
 	
 	
@@ -158,7 +158,7 @@ class ACF_Form_User {
 	function render_new() {
 		
 		// Multisite uses a different 'user-new.php' form. Don't render fields here
-		if ( is_multisite() ) {
+		if( is_multisite() ) {
 			return;
 		}
 		
@@ -167,7 +167,7 @@ class ACF_Form_User {
 			'user_id'	=> 0,
 			'view'		=> 'add',
 			'el'		=> 'tr'
-		) );
+		));
 	}
 	
 	
@@ -186,19 +186,19 @@ class ACF_Form_User {
 	*  @return	n/a
 	*/
 	
-	function render( $args = [] ) {
+	function render( $args = array() ) {
 		
 		// Allow $_POST data to persist across form submission attempts.
-		if ( isset( $_POST['acf']) ) {
-			add_filter( 'acf/pre_load_value', array( $this, 'filter_pre_load_value' ), 10, 3);
+		if( isset($_POST['acf']) ) {
+			add_filter('acf/pre_load_value', array($this, 'filter_pre_load_value'), 10, 3);
 		}
 		
 		// defaults
-		$args = wp_parse_args( $args, array(
+		$args = wp_parse_args($args, array(
 			'user_id'	=> 0,
 			'view'		=> 'edit',
 			'el'		=> 'tr',
-		) );
+		));
 		
 		// vars
 		$post_id = 'user_' . $args['user_id'];
@@ -207,10 +207,10 @@ class ACF_Form_User {
 		$field_groups = acf_get_field_groups(array(
 			'user_id'	=> $args['user_id'] ? $args['user_id'] : 'new',
 			'user_form'	=> $args['view']
-		) );
+		));
 		
 		// bail early if no field groups
-		if ( empty( $field_groups) ) {
+		if( empty($field_groups) ) {
 			return;
 		}
 		
@@ -218,14 +218,14 @@ class ACF_Form_User {
 		acf_form_data(array(
 			'screen'		=> 'user',
 			'post_id'		=> $post_id,
-			'validation'	=> ( $args['view'] == 'register' ) ? 0 : 1
-		) );
+			'validation'	=> ($args['view'] == 'register') ? 0 : 1
+		));
 		
 		// elements
 		$before = '<table class="form-table"><tbody>';
 		$after = '</tbody></table>';
 				
-		if ( $args['el'] == 'div' ) {
+		if( $args['el'] == 'div') {
 			$before = '<div class="acf-user-' . $args['view'] . '-fields acf-fields -clear">';
 			$after = '</div>';
 		}
@@ -237,7 +237,7 @@ class ACF_Form_User {
 			$fields = acf_get_fields( $field_group );
 			
 			// title
-			if ( $field_group['style'] === 'default' ) {
+			if( $field_group['style'] === 'default' ) {
 				echo '<h2>' . $field_group['title'] . '</h2>';
 			}
 			
@@ -248,7 +248,7 @@ class ACF_Form_User {
 		}
 				
 		// actions
-		add_action( 'acf/input/admin_footer', array( $this, 'admin_footer' ), 10, 1);
+		add_action('acf/input/admin_footer', array($this, 'admin_footer'), 10, 1);
 	}
 	
 	
@@ -270,15 +270,15 @@ class ACF_Form_User {
 		// script
 		?>
 <script type="text/javascript">
-(function( $) {
+(function($) {
 	
 	// vars
 	var view = '<?php echo $this->view; ?>';
 	
 	// add missing spinners
-	var $submit = $( 'input.button-primary' );
-	if ( ! $submit.next( '.spinner' ).length ) {
-		$submit.after( '<span class="spinner"></span>' );
+	var $submit = $('input.button-primary');
+	if( !$submit.next('.spinner').length ) {
+		$submit.after('<span class="spinner"></span>');
 	}
 	
 })(jQuery);	
@@ -304,12 +304,12 @@ class ACF_Form_User {
 	function save_user( $user_id ) {
 		
 		// verify nonce
-		if ( !acf_verify_nonce( 'user' ) ) {
+		if( !acf_verify_nonce('user') ) {
 			return $user_id;
 		}
 		
 	    // save
-	    if ( acf_validate_save_post(true) ) {
+	    if( acf_validate_save_post(true) ) {
 			acf_save_post( "user_$user_id" );
 		}
 	}
@@ -328,12 +328,12 @@ class ACF_Form_User {
 	 * @return	WP_Error
 	 */
 	function filter_registration_errors( $errors, $sanitized_user_login, $user_email ) {
-		if ( !acf_validate_save_post() ) {
+		if( !acf_validate_save_post() ) {
 			$acf_errors = acf_get_validation_errors();
 			foreach( $acf_errors as $acf_error ) {
 				$errors->add(
 					acf_idify( $acf_error['input'] ), 
-					acf_punctify( sprintf( __( '<strong>ERROR</strong>: %s', 'acf' ), $acf_error['message'] ) )
+					acf_esc_html( acf_punctify( sprintf( __('<strong>Error</strong>: %s', 'acf'), $acf_error['message'] ) ) )
 				);
 			}
 		}
@@ -355,7 +355,7 @@ class ACF_Form_User {
 	 */
 	function filter_pre_load_value( $null, $post_id, $field ) {
 		$field_key = $field['key'];
-		if ( isset( $_POST['acf'][ $field_key ] ) ) {
+		if( isset( $_POST['acf'][ $field_key ] )) {
 			return $_POST['acf'][ $field_key ];
 		}
 		return $null;
@@ -363,7 +363,7 @@ class ACF_Form_User {
 }
 
 // instantiate
-acf_new_instance( 'ACF_Form_User' );
+acf_new_instance('ACF_Form_User');
 
 endif; // class_exists check
 
