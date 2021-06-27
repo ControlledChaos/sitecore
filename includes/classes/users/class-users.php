@@ -39,7 +39,7 @@ class Users extends Classes\Base {
 		}
 
 		// Local user avatars.
-		new User_Avatars;
+		// new User_Avatars;
 
 		// Move the personal data menu items.
 		add_action( 'admin_menu', [ $this, 'menus_personal_data' ] );
