@@ -124,13 +124,14 @@ function init() {
 		new Meta\Meta_Tags;
 	}
 
-	// Disable WordPress administration email verification prompt.
-	add_filter( 'admin_email_check_interval', '__return_false' );
-
 	// Disable Site Health notifications.
 	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
 		add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
 	}
+
+	// Disable block widgets.
+	add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+	add_filter( 'use_widgets_block_editor', '__return_false' );
 
 	/**
 	 * Allow links manager
@@ -160,10 +161,12 @@ function init() {
 	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
 	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
-	// System email filters.
+	// System email from text.
 	add_filter( 'wp_mail_from_name', function( $name ) {
 		return apply_filters( 'scp_mail_from_name', get_bloginfo( 'name' ) );
 	} );
+
+	// Disable WordPress administration email verification prompt.
 	add_filter( 'admin_email_check_interval', '__return_false' );
 }
 
