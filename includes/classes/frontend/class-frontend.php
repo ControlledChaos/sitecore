@@ -119,8 +119,6 @@ class Frontend {
 	 * @access public
 	 * @param  object $wp_admin_bar The WP_Admin_Bar class.
 	 * @return void
-	 *
-	 * @todo Make this optional.
 	 */
 	public function remove_toolbar_items( $wp_admin_bar ) {
 		$wp_admin_bar->remove_node( 'wp-logo' );
