@@ -173,6 +173,14 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'site_health' => false,
 
 		/**
+		 * Allow block widgets
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Whether to allow block widgets.
+		 */
+		'block_widgets' => true,
+
+		/**
 		 * Allow links manager
 		 *
 		 * @since 1.0.0
@@ -246,6 +254,16 @@ if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
  */
 if ( ! defined( 'SCP_ALLOW_SITE_HEALTH' ) ) {
 	define( 'SCP_ALLOW_SITE_HEALTH', SCP_CONFIG['site_health'] );
+}
+
+/**
+ * Allow block widgets
+ *
+ * @since 1.0.0
+ * @var   boolean Whether to allow block widgets.
+ */
+if ( ! defined( 'SCP_ALLOW_BLOCK_WIDGETS' ) ) {
+	define( 'SCP_ALLOW_BLOCK_WIDGETS', SCP_CONFIG['block_widgets'] );
 }
 
 /**

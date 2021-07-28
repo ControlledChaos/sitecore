@@ -130,8 +130,10 @@ function init() {
 	}
 
 	// Disable block widgets.
-	add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
-	add_filter( 'use_widgets_block_editor', '__return_false' );
+	if ( defined( 'SCP_ALLOW_BLOCK_WIDGETS' ) && ! SCP_ALLOW_BLOCK_WIDGETS ) {
+		add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+		add_filter( 'use_widgets_block_editor', '__return_false' );
+	}
 
 	/**
 	 * Allow links manager
