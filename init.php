@@ -164,6 +164,7 @@ function init() {
 	add_filter( 'wp_mail_from_name', function( $name ) {
 		return apply_filters( 'scp_mail_from_name', get_bloginfo( 'name' ) );
 	} );
+	add_filter( 'admin_email_check_interval', '__return_false' );
 }
 
 // Run initialization function.
