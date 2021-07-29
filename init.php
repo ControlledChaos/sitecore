@@ -71,8 +71,8 @@ function init() {
 
 	// Instantiate core classes.
 	new Core\Type_Tax;
-	// new Core\Register_Sample_Type;
-	// new Core\Register_Sample_Tax;
+	new Core\Register_Sample_Type;
+	new Core\Register_Sample_Tax;
 	new Core\Register_Admin;
 	new Core\Register_Site_Help;
 
@@ -105,8 +105,8 @@ function init() {
 	// Instantiate third-party classes.
 	new Vendor\ACF;
 	new Vendor\ACFE;
-	// new Vendor\Sample_ACF_Options;
-	// new Vendor\Sample_ACF_Suboptions;
+	new Vendor\Sample_ACF_Options;
+	new Vendor\Sample_ACF_Suboptions;
 	// new Vendor\Sample_Plugin;
 
 	// Instantiate backend classes.

@@ -34,6 +34,9 @@ class Admin extends Classes\Base {
 		// Get the filename of the current page.
 		global $pagenow;
 
+		// Admin settings.
+		new Admin_Settings_Page;
+
 		if ( Compat\active_acf_pro() ) {
 			new Vendor\ACF_Manage_Site;
 		} else {
