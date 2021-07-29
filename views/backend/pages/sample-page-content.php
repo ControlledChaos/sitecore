@@ -1,6 +1,6 @@
 <?php
 /**
- * Output of the sample page content
+ * Output for sample page content
  *
  * @package    Site_Core
  * @subpackage Views

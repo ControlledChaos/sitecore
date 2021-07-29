@@ -123,8 +123,16 @@ class Content_Settings extends Add_Settings_Page {
 			'id'         => 'content-settings-intro',
 			'tab'        => __( 'Intro', 'sitecore' ),
 			'heading'    => __( 'Introduction', 'sitecore' ),
-			'content'    => __( 'In development', 'sitecore' ),
-			'callback'   => ''
+			'content'    => '',
+			'callback'   => [ $this, 'intro_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'id'         => 'content-settings-sample',
+			'tab'        => __( 'Another', 'sitecore' ),
+			'heading'    => __( 'Sample Tab', 'sitecore' ),
+			'content'    => '',
+			'callback'   => [ $this, 'sample_tab' ]
 		] );
 	}
 
@@ -137,5 +145,27 @@ class Content_Settings extends Add_Settings_Page {
 	 */
 	protected function heading() {
 		return __( 'Content Settings', 'sitecore' );
+	}
+
+	/**
+	 * Intro tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function intro_tab() {
+		include SCP_PATH . 'views/backend/pages/partials/settings-content-intro.php';
+	}
+
+	/**
+	 * Sample tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function sample_tab() {
+		include SCP_PATH . 'views/backend/pages/partials/settings-content-sample.php';
 	}
 }
