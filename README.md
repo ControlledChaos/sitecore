@@ -76,6 +76,17 @@ These classes include:
 
 Much is complete, documentation coming.
 
+## Configuration Constants
+
+Several native features of Word/ClassicPress can be enabled or disabled by this plugin using constants in the system config file.
+
+* Disable block widgets in WordPress 5.8+
+* Enable Site Health page & widget in WordPress 5.2+ (this plugin disables them by default)
+* Disable Site Health notifications in WordPress 5.2+
+* Disable the user admin color picker
+* Enable the old links manager
+* Disable the bundled ACF plugin (activating via Plugins page does the same)
+
 ## Renaming the Plugin
 
 First change the name of the core plugin file to reflect the new name of your plugin. Or leave the name since it clearly describes the purpose of the plugin.
