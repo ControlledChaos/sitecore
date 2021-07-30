@@ -57,6 +57,8 @@ class Editor_Options {
 	 */
 	public static function init_actions() {
 
+		global $wp_version;
+
 		$block_editor = has_action( 'enqueue_block_assets' );
 		$gutenberg    = function_exists( 'gutenberg_register_scripts_and_styles' );
 
@@ -108,7 +110,11 @@ class Editor_Options {
 			add_action( 'edit_form_top', [ __CLASS__, 'add_redirect_helper' ] );
 			add_action( 'admin_head-edit.php', [ __CLASS__, 'add_edit_php_inline_style' ] );
 			add_action( 'edit_form_top', [ __CLASS__, 'remember_tinymce_editor' ] );
-			add_filter( 'block_editor_settings', [ __CLASS__, 'remember_block_editor' ], 10, 2 );
+			if ( version_compare( $wp_version, '5.8', '>=' ) ) {
+				add_filter( 'block_editor_settings_all', [ __CLASS__, 'remember_block_editor' ], 10, 2 );
+			} else {
+				add_filter( 'block_editor_settings', [ __CLASS__, 'remember_block_editor' ], 10, 2 );
+			}
 
 			// Post state (edit.php).
 			add_filter( 'display_post_states', [ __CLASS__, 'add_post_state' ], 10, 2 );
@@ -191,9 +197,11 @@ class Editor_Options {
 		remove_action( 'admin_notices', 'gutenberg_build_files_notice' );
 		remove_filter( 'load_script_translation_file', 'gutenberg_override_translation_file' );
 		remove_filter( 'block_editor_settings', 'gutenberg_extend_block_editor_styles' );
+		remove_filter( 'block_editor_settings_all', 'gutenberg_extend_block_editor_styles' );
 		remove_filter( 'default_content', 'gutenberg_default_demo_content' );
 		remove_filter( 'default_title', 'gutenberg_default_demo_title' );
 		remove_filter( 'block_editor_settings', 'gutenberg_legacy_widget_settings' );
+		remove_filter( 'block_editor_settings_all', 'gutenberg_legacy_widget_settings' );
 		remove_filter( 'rest_request_after_callbacks', 'gutenberg_filter_oembed_result' );
 
 		// Previously used, compat for older Gutenberg versions.
