@@ -817,6 +817,11 @@ class Editor_Options {
 	 */
 	public static function enqueue_block_editor_scripts() {
 
+		// get_enabled_editors_for_post() needs a WP_Post or post_ID.
+		if ( empty( $GLOBALS['post'] ) ) {
+			return;
+		}
+
 		$editors = self :: get_enabled_editors_for_post( $GLOBALS['post'] );
 
 		if ( ! $editors['editor_options'] ) {
