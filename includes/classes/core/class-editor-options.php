@@ -634,12 +634,20 @@ class Editor_Options {
 	 * @access public
 	 * @return void
 	 */
-	public static function remember_block_editor( $editor_settings, $post ) {
+	public static function remember_block_editor( $editor_settings, $context ) {
+
+		if ( is_a( $context, 'WP_Post' ) ) {
+			$post = $context;
+		} elseif ( ! empty( $context->post ) ) {
+			$post = $context->post;
+		} else {
+			return $editor_settings;
+		}
 
 		$post_type = get_post_type( $post );
 
-		if ( $post_type && self :: can_edit_post_type( $post_type ) ) {
-			self :: remember( $post->ID, 'block-editor' );
+		if ( $post_type && self::can_edit_post_type( $post_type ) ) {
+			self::remember( $post->ID, 'block-editor' );
 		}
 
 		return $editor_settings;
