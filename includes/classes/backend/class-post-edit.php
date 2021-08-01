@@ -185,9 +185,7 @@ class Post_Edit {
 		<?php _e( 'Summary Description', 'sitecore' ); ?>
 	</label>
 
-	<textarea rows="1" cols="40" name="excerpt" id="excerpt">
-		<?php echo $post->post_excerpt; ?>
-	</textarea>
+	<textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; ?></textarea>
 	<?php
 
 	}
