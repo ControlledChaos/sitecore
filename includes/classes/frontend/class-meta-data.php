@@ -313,21 +313,25 @@ class Meta_Data {
 
 		// Get the current post.
 		global $post;
-		$post_id = $post->ID;
 
-		$post = get_post( $post_id );
+		if ( is_null( $post ) ) {
+			return;
+		}
+
+		$post_id = $post->ID;
+		$post    = get_post( $post_id );
 
 		// Get the author ID.
-		$author_id = $post->post_author;
-
+		$author_id = '';
 		if ( is_singular() && post_type_supports( get_post_type( $post_id ), 'author' ) ) {
-			$author = get_the_author_meta( 'display_name', $author_id );
+			$author_id = $post->post_author;
+			$author    = get_the_author_meta( 'display_name', $author_id );
 
 		// Otherwise use the website name.
 		} else {
 			$author = get_bloginfo( 'name' );
 		}
-		return apply_filters( 'scp_meta_data_author', $author );
+		return apply_filters( 'tmg_meta_data_author', $author );
 	}
 
 	/**
