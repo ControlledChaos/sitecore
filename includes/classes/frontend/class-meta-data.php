@@ -306,15 +306,11 @@ class Meta_Data {
 	 */
 	public function author() {
 
-		// Stop if on error page.
-		if ( is_404() ) {
-			return;
-		}
-
 		// Get the current post.
 		global $post;
 
-		if ( is_null( $post ) ) {
+		// Stop if on error page.
+		if ( is_404() || is_null( $post ) ) {
 			return;
 		}
 
@@ -331,6 +327,7 @@ class Meta_Data {
 		} else {
 			$author = get_bloginfo( 'name' );
 		}
+
 		return apply_filters( 'tmg_meta_data_author', $author );
 	}
 
