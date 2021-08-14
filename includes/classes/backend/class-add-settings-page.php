@@ -104,7 +104,7 @@ class Add_Settings_Page extends Add_Page {
 	 *
 	 * @since 1.0.0
 	 * @access protected
-	 * @var    string The description of the page diplayed below the title.
+	 * @var    string The description of the page displayed below the title.
 	 */
 	protected $description = 'Demonstration of adding a settings page.';
 

@@ -74,7 +74,7 @@ class Admin_Settings_Page extends Add_Subpage {
 	 *
 	 * @since 1.0.0
 	 * @access protected
-	 * @var    string The description of the page diplayed below the title.
+	 * @var    string The description of the page displayed below the title.
 	 */
 	protected $description = 'Customize the content and user interfaces of administration pages.';
 

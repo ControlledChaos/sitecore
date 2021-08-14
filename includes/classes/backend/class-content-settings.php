@@ -93,7 +93,7 @@ class Content_Settings extends Add_Settings_Page {
 	 *
 	 * @since 1.0.0
 	 * @access protected
-	 * @var    string The description of the page diplayed below the title.
+	 * @var    string The description of the page displayed below the title.
 	 */
 	protected $description = 'Manage how the content of this website is edited and displayed.';
 
