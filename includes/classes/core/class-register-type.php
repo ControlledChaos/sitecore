@@ -199,15 +199,6 @@ class Register_Type {
 	protected $menu_icon = 'dashicons-admin-post';
 
 	/**
-	 * Capability type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The capabilitiy type.
-	 */
-	protected $capability_type = 'post';
-
-	/**
 	 * Capabilities
 	 *
 	 * @since  1.0.0
@@ -474,14 +465,24 @@ class Register_Type {
 	/**
 	 * Capability type
 	 *
+	 * @link https://wordpress.stackexchange.com/a/108375
+	 *
 	 * @since  1.0.0
 	 * @access protected
 	 * @return string Returns the post type capability.
 	 */
 	protected function capability_type() {
 
-		if ( post_type_exists( $this->capability_type ) ) {
-			return $this->capability_type;
+		/**
+		 * Use another post type to inherit its capabilities.
+		 * Using this post type defaults to `post` post type
+		 * capabilities unless custom capabilities have been
+		 * applied. Also, the conditional statement defaults
+		 * to `post` in case a different post type capability
+		 * is used but that post type does not exists.
+		 */
+		if ( post_type_exists( $this->type_key ) ) {
+			return $this->type_key;
 		} else {
 			return 'post';
 		}
