@@ -119,6 +119,21 @@ class Register_Tax {
 	protected $show_in_quick_edit = true;
 
 	/**
+	 * Metabox callback
+	 *
+	 * Callback function for metabox markup on edit screens.
+	 * False will disable the metabox. Null will use the
+	 * core callback function.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    mixed The callback function name or
+	 *               false or null. Error on false
+	 *               or empty string.
+	 */
+	protected $meta_box_cb = null;
+
+	/**
 	 * Show in navigation menus
 	 *
 	 * @since  1.0.0
@@ -201,6 +216,7 @@ class Register_Tax {
 			'show_ui'               => $this->show_ui,
 			'show_admin_column'     => $this->show_admin_column,
 			'show_in_quick_edit'    => $this->show_in_quick_edit,
+			'meta_box_cb'           => $this->meta_box_cb,
 			'show_in_menu'          => $this->show_in_menu,
 			'show_in_nav_menus'     => $this->show_in_nav_menus,
 			'rewrite'               => $this->rewrite(),
