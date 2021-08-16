@@ -330,11 +330,16 @@ class Admin extends Classes\Base {
 		);
 
 		// Site name & description option.
-		$name_desc = sprintf(
-			'%s - %s',
-			get_bloginfo( 'name' ),
-			get_bloginfo( 'description' )
-		);
+		$site_description = get_bloginfo( 'description', 'display' );
+		if ( $site_description ) {
+			$name = sprintf(
+				'%s - %s',
+				get_bloginfo( 'name' ),
+				get_bloginfo( 'description' )
+			);
+		} else {
+			$name = get_bloginfo( 'name' );
+		}
 
 		// Developer website option.
 		$dev_url = sprintf(
@@ -355,7 +360,7 @@ class Admin extends Classes\Base {
 			esc_html( SCP_DEV_EMAIL )
 		);
 
-		echo $name_desc;
+		echo $name;
 	}
 
 	/**
@@ -382,11 +387,16 @@ class Admin extends Classes\Base {
 		);
 
 		// Site name & description option.
-		$name_desc = sprintf(
-			'%s - %s',
-			get_bloginfo( 'name' ),
-			get_bloginfo( 'description' )
-		);
+		$site_description = get_bloginfo( 'description', 'display' );
+		if ( $site_description ) {
+			$name = sprintf(
+				'%s - %s',
+				get_bloginfo( 'name' ),
+				get_bloginfo( 'description' )
+			);
+		} else {
+			$name = get_bloginfo( 'name' );
+		}
 
 		// Developer website option.
 		$dev_url = sprintf(
