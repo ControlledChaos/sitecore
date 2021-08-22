@@ -119,21 +119,6 @@ class Register_Tax {
 	protected $show_in_quick_edit = true;
 
 	/**
-	 * Metabox callback
-	 *
-	 * Callback function for metabox markup on edit screens.
-	 * False will disable the metabox. Null will use the
-	 * core callback function.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    mixed The callback function name or
-	 *               false or null. Error on false
-	 *               or empty string.
-	 */
-	protected $meta_box_cb = null;
-
-	/**
 	 * Show in navigation menus
 	 *
 	 * @since  1.0.0
@@ -150,7 +135,7 @@ class Register_Tax {
 	 * @access protected
 	 * @var    boolean Whether to show in REST API.
 	 */
-	protected $show_in_rest = false;
+	protected $show_in_rest = true;
 
 	/**
 	 * REST controller class
@@ -216,14 +201,14 @@ class Register_Tax {
 			'show_ui'               => $this->show_ui,
 			'show_admin_column'     => $this->show_admin_column,
 			'show_in_quick_edit'    => $this->show_in_quick_edit,
-			'meta_box_cb'           => $this->meta_box_cb,
+			'meta_box_cb'           => $this->meta_box_cb(),
 			'show_in_menu'          => $this->show_in_menu,
 			'show_in_nav_menus'     => $this->show_in_nav_menus,
 			'rewrite'               => $this->rewrite(),
 			'show_in_rest'          => $this->show_in_rest,
 			'rest_base'             => $this->tax_key . '_rest_api',
 			'rest_controller_class' => $this->rest_controller_class,
-			'query_var'             => $this->tax_key,
+			'query_var'             => $this->tax_key
 		];
 
 		return $options;
@@ -268,6 +253,21 @@ class Register_Tax {
 
 		// Filter for child classes to modify this array.
 		return $labels;
+	}
+
+	/**
+	 * Metabox callback
+	 *
+	 * Callback function for metabox markup on edit screens.
+	 * False will disable the metabox. Null will use the
+	 * core tags callback function, `post_tags_meta_box`.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    mixed The callback function name or false or null.
+	 */
+	protected function meta_box_cb() {
+		return null;
 	}
 
 	/**

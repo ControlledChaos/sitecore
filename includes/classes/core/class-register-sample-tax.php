@@ -80,4 +80,24 @@ class Register_Sample_Tax extends Register_Tax {
 		parent :: __construct();
 
 	}
+
+	/**
+	 * Metabox callback
+	 *
+	 * Callback function for metabox markup on edit screens.
+	 * False will disable the metabox. Null will use the
+	 * core tags callback function, `post_tags_meta_box`.
+	 *
+	 * This sample uses the categories metabox as a template.
+	 *
+	 * @todo Categories metabox not working in the WordPress block editor.
+	 * Uses the tags metabox.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    mixed The callback function name or false or null.
+	 */
+	protected function meta_box_cb() {
+		return 'post_categories_meta_box';
+	}
 }
