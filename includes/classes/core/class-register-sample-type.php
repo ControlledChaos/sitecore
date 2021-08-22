@@ -4,7 +4,7 @@
  *
  * Copy this file and rename it to reflect
  * its new class name. Add to the autoloader
- * and intantiate where appropriate.
+ * and instantiate where appropriate.
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -59,9 +59,18 @@ class Register_Sample_Type extends Register_Type {
 	protected $menu_icon = 'dashicons-welcome-learn-more';
 
 	/**
+	 * Show in REST API
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to show in REST API.
+	 */
+	protected $show_in_rest = true;
+
+	/**
 	 * Settings page
 	 *
-	 * Add a dettings page for the post type.
+	 * Add a settings page for the post type.
 	 *
 	 * @since  1.0.0
 	 * @access protected
@@ -151,5 +160,37 @@ class Register_Sample_Type extends Register_Type {
 		$type_obj->labels->menu_name = __( 'Sample', 'sitecore' );
 		$type_obj->labels->all_items = __( 'All Samples', 'sitecore' );
 		$type_obj->labels->add_new   = __( 'New Sample', 'sitecore' );
+	}
+
+	/**
+	 * Template
+	 *
+	 * Array of blocks to use as the default initial state for an editor session.
+	 * Each item should be an array containing block name and optional attributes.
+	 *
+	 * Only used by WordPress 5.0.0 and greater.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return array Returns the array of blocks in the template.
+	 */
+	protected function template() {
+
+		$template = [
+			[
+				'core/heading',
+				[
+					'level'       => 2,
+					'placeholder' => __( 'Sample Heading', 'sitecore' )
+				]
+			],
+			[
+				'core/paragraph',
+				[
+					'placeholder' => __( 'This is a sample paragraph included by the template() method in the class that registers this post type.', 'sitecore' )
+				]
+			],
+		];
+		return $template;
 	}
 }

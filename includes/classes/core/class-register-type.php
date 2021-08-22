@@ -189,9 +189,9 @@ class Register_Type {
 	 *                * Pass a base64-encoded SVG using a data URI,
 	 *                  which will be colored to match the color scheme.
 	 *                  This should begin with 'data:image/svg+xml;base64,'.
-     *                * Pass the name of a Dashicons helper class to use
+	 *                * Pass the name of a Dashicons helper class to use
 	 *                  a font icon, e.g. 'dashicons-chart-pie'.
-     *                * Pass 'none' to leave div.wp-menu-image empty so
+	 *                * Pass 'none' to leave div.wp-menu-image empty so
 	 *                  an icon can be added via CSS.
 	 *
 	 *                Defaults to use the posts icon.
@@ -301,6 +301,25 @@ class Register_Type {
 	protected $delete_with_user = null;
 
 	/**
+	 * Template lock
+	 *
+	 * Whether the block template should be locked if $template is set.
+	 *
+	 * Only used by WordPress 5.0.0 and greater.
+	 *
+	 * If set to 'all', the user is unable to insert new blocks,
+	 * move existing blocks and delete blocks.
+	 *
+	 * If set to 'insert', the user is able to move existing blocks but
+	 * is unable to insert new blocks and delete blocks.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    mixed Returns the lock type or false for no lock.
+	 */
+	protected $template_lock = false;
+
+	/**
 	 * Builtin
 	 *
 	 * @since  1.0.0
@@ -312,7 +331,7 @@ class Register_Type {
 	/**
 	 * Settings page
 	 *
-	 * Add a dettings page for the post type.
+	 * Add a settings page for the post type.
 	 *
 	 * @since  1.0.0
 	 * @access protected
@@ -354,17 +373,17 @@ class Register_Type {
 	}
 
 	/**
-     * Register post type
-     *
-     * Note for WordPress 5.0 or greater:
-     * If you want your post type to adopt the block edit_form_image_editor
-     * rather than using the rich text editor then set `show_in_rest` to `true`.
-     *
-     * @since  1.0.0
+	 * Register post type
+	 *
+	 * Note for WordPress 5.0 or greater:
+	 * If you want your post type to adopt the block edit_form_image_editor
+	 * rather than using the rich text editor then set `show_in_rest` to `true`.
+	 *
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
-     */
-    public function register() {
+	 */
+	public function register() {
 
 		register_post_type(
 			strtolower( $this->type_key ),
@@ -410,6 +429,8 @@ class Register_Type {
 			'query_var'             => $this->type_key,
 			'can_export'            => $this->can_export,
 			'delete_with_user'      => $this->delete_with_user,
+			'template'              => $this->template(),
+			'template_lock'         => $this->template_lock,
 			'_builtin'              => $this->_builtin,
 			'_edit_link'            => 'post.php?post=%d'
 		];
@@ -534,6 +555,23 @@ class Register_Type {
 	 * @return mixed Returns new values for array label keys.
 	 */
 	public function rewrite_labels() {}
+
+	/**
+	 * Template
+	 *
+	 * Array of blocks to use as the default initial state for an editor session.
+	 * Each item should be an array containing block name and optional attributes.
+	 *
+	 * Only used by WordPress 5.0.0 and greater.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return array Returns the array of blocks in the template.
+	 */
+	protected function template() {
+		$template = [];
+		return $template;
+	}
 
 	/**
 	 * Field groups
