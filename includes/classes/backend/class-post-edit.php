@@ -178,7 +178,7 @@ class Post_Edit {
 
 	?>
 	<p class="description">
-		<?php _e( 'Add a brief summary of this page to be used in search engine metadata and for display in social media embeds.', 'sitecore' ); ?>
+		<?php _e( 'Add a brief summary of this content to be used in archive pages, depending upon the active theme, and to be used in search engine metadata and for display in social media embeds.', 'sitecore' ); ?>
 	</p>
 
 	<label class="screen-reader-text" for="excerpt">
