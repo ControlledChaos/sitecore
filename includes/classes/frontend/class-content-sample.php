@@ -120,15 +120,15 @@ class Content_Sample extends Content_Filter {
 	public function archive_content() {
 
 		// Look for a archive content template in the active theme.
-		$template = locate_template( 'template-parts/content/partials/archive-sample.php' );
+		$template = locate_template( 'template-parts/content/content-archive-sample.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/partials/archive-sample' );
+			get_template_part( 'template-parts/content/content-archive-sample' );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/archive-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-archive-sample.php';
 		}
 	}
 
@@ -146,15 +146,15 @@ class Content_Sample extends Content_Filter {
 	 public function single_content() {
 
 		// Look for a single content template in the active theme.
-		$template = locate_template( 'template-parts/content/partials/single-sample.php' );
+		$template = locate_template( 'template-parts/content/content-single-sample.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/partials/single-sample' );
+			get_template_part( 'template-parts/content/content-single-sample' );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/single-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-single-sample.php';
 		}
 	}
 
@@ -172,15 +172,15 @@ class Content_Sample extends Content_Filter {
 	public function taxonomy_content() {
 
 		// Look for a taxonomy content template in the active theme.
-		$template = locate_template( 'template-parts/content/partials/taxonomy-sample.php' );
+		$template = locate_template( 'template-parts/content/content-taxonomy-sample.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/partials/taxonomy-sample' );
+			get_template_part( 'template-parts/content/content-taxonomy-sample' );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/taxonomy-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-taxonomy-sample.php';
 		}
 	}
 }
