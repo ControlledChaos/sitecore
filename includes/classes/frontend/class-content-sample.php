@@ -10,6 +10,9 @@
 
 namespace SiteCore\Classes\Front;
 
+// Alias namespaces.
+use SiteCore\Classes\Vendor as Vendor;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -119,16 +122,19 @@ class Content_Sample extends Content_Filter {
 	 */
 	public function archive_content() {
 
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
 		// Look for a archive content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-archive-sample.php' );
+		$template = locate_template( 'template-parts/content/content-archive-sample' . $acf->suffix() . '.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-archive-sample' );
+			get_template_part( 'template-parts/content/content-archive-sample' . $acf->suffix() );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/content/content-archive-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-archive-sample' . $acf->suffix() . '.php';
 		}
 	}
 
@@ -145,16 +151,19 @@ class Content_Sample extends Content_Filter {
 	 */
 	 public function single_content() {
 
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
 		// Look for a single content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-single-sample.php' );
+		$template = locate_template( 'template-parts/content/content-single-sample' . $acf->suffix() . '.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-single-sample' );
+			get_template_part( 'template-parts/content/content-single-sample' . $acf->suffix() );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/content/content-single-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-single-sample' . $acf->suffix() . '.php';
 		}
 	}
 
@@ -171,16 +180,19 @@ class Content_Sample extends Content_Filter {
 	 */
 	public function taxonomy_content() {
 
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
 		// Look for a taxonomy content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-taxonomy-sample.php' );
+		$template = locate_template( 'template-parts/content/content-taxonomy-sample' . $acf->suffix() . '.php' );
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-taxonomy-sample' );
+			get_template_part( 'template-parts/content/content-taxonomy-sample' . $acf->suffix() );
 
 		// Use the plugin template if no theme template is found.
 		} else {
-			include SCP_PATH . '/views/frontend/content/content-taxonomy-sample.php';
+			include SCP_PATH . '/views/frontend/content/content-taxonomy-sample' . $acf->suffix() . '.php';
 		}
 	}
 }

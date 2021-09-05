@@ -10,6 +10,6 @@
 
 printf(
 	'<p>%s%s</p>',
-	__( 'Content for taxonomy post #', 'sitecore' ),
+	__( 'Filtered content for taxonomy post #', 'sitecore' ),
 	get_the_ID()
 );

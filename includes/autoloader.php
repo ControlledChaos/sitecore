@@ -63,21 +63,21 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Base' => SCP_CLASS['general'] . 'base.php',
 
 	// Core classes.
-	SCP_CLASS_NS . '\Core\Editor_Options'     => SCP_CLASS['core'] . 'editor-options.php',
-	SCP_CLASS_NS . '\Core\Type_Tax'           => SCP_CLASS['core'] . 'type-tax.php',
-	SCP_CLASS_NS . '\Core\Register_Type'      => SCP_CLASS['core'] . 'register-type.php',
+	SCP_CLASS_NS . '\Core\Editor_Options'       => SCP_CLASS['core'] . 'editor-options.php',
+	SCP_CLASS_NS . '\Core\Type_Tax'             => SCP_CLASS['core'] . 'type-tax.php',
+	SCP_CLASS_NS . '\Core\Register_Type'        => SCP_CLASS['core'] . 'register-type.php',
 	SCP_CLASS_NS . '\Core\Register_Sample_Type' => SCP_CLASS['core'] . 'register-sample-type.php',
-	SCP_CLASS_NS . '\Core\Register_Admin'     => SCP_CLASS['core'] . 'register-admin.php',
-	SCP_CLASS_NS . '\Core\Register_Site_Help' => SCP_CLASS['core'] . 'register-site-help.php',
-	SCP_CLASS_NS . '\Core\Register_Tax'       => SCP_CLASS['core'] . 'register-tax.php',
-	SCP_CLASS_NS . '\Core\Register_Sample_Tax' => SCP_CLASS['core'] . 'register-sample-tax.php',
-	SCP_CLASS_NS . '\Core\Types_Taxes_Order'  => SCP_CLASS['core'] . 'types-taxes-order.php',
-	SCP_CLASS_NS . '\Core\Taxonomy_Templates' => SCP_CLASS['core'] . 'taxonomy-templates.php',
-	SCP_CLASS_NS . '\Core\Remove_Blog'        => SCP_CLASS['core'] . 'remove-blog.php',
-	SCP_CLASS_NS . '\Core\Remove_Customizer'  => SCP_CLASS['core'] . 'remove-customizer.php',
+	SCP_CLASS_NS . '\Core\Register_Admin'       => SCP_CLASS['core'] . 'register-admin.php',
+	SCP_CLASS_NS . '\Core\Register_Site_Help'   => SCP_CLASS['core'] . 'register-site-help.php',
+	SCP_CLASS_NS . '\Core\Register_Tax'         => SCP_CLASS['core'] . 'register-tax.php',
+	SCP_CLASS_NS . '\Core\Register_Sample_Tax'  => SCP_CLASS['core'] . 'register-sample-tax.php',
+	SCP_CLASS_NS . '\Core\Types_Taxes_Order'    => SCP_CLASS['core'] . 'types-taxes-order.php',
+	SCP_CLASS_NS . '\Core\Taxonomy_Templates'   => SCP_CLASS['core'] . 'taxonomy-templates.php',
+	SCP_CLASS_NS . '\Core\Remove_Blog'          => SCP_CLASS['core'] . 'remove-blog.php',
+	SCP_CLASS_NS . '\Core\Remove_Customizer'    => SCP_CLASS['core'] . 'remove-customizer.php',
 
 	// Settings classes.
-	SCP_CLASS_NS . '\Settings\Settings'     => SCP_CLASS['settings'] . 'settings.php',
+	SCP_CLASS_NS . '\Settings\Settings' => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
 	SCP_CLASS_NS . '\Tools\Tools'            => SCP_CLASS['tools'] . 'tools.php',
@@ -98,7 +98,7 @@ define( 'SCP_CLASSES', [
 	// Vendor classes.
 	SCP_CLASS_NS . '\Vendor\Plugin'        => SCP_CLASS['vendor'] . 'plugin.php',
 	SCP_CLASS_NS . '\Vendor\Sample_Plugin' => SCP_CLASS['vendor'] . 'sample-plugin.php',
-	SCP_CLASS_NS . '\Vendor\ACF'           => SCP_CLASS['vendor'] . 'acf.php',
+	SCP_CLASS_NS . '\Vendor\Plugin_ACF'    => SCP_CLASS['vendor'] . 'acf.php',
 	SCP_CLASS_NS . '\Vendor\ACFE'          => SCP_CLASS['vendor'] . 'acfe.php',
 	SCP_CLASS_NS . '\Vendor\ACF_Columns'   => SCP_CLASS['vendor'] . 'acf-columns.php',
 	SCP_CLASS_NS . '\Vendor\Add_ACF_Options'    => SCP_CLASS['vendor'] . 'add-acf-options.php',
@@ -125,6 +125,7 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Front\Frontend'       => SCP_CLASS['front'] . 'frontend.php',
 	SCP_CLASS_NS . '\Front\Title_Filter'   => SCP_CLASS['front'] . 'title-filter.php',
 	SCP_CLASS_NS . '\Front\Content_Filter' => SCP_CLASS['front'] . 'content-filter.php',
+	SCP_CLASS_NS . '\Front\Content_Sample' => SCP_CLASS['front'] . 'content-sample.php',
 	SCP_CLASS_NS . '\Front\Meta\Meta_Data' => SCP_CLASS['front'] . 'meta-data.php',
 	SCP_CLASS_NS . '\Front\Meta\Meta_Tags' => SCP_CLASS['front'] . 'meta-tags.php'
 

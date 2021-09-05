@@ -103,7 +103,7 @@ function init() {
 	new Media\Media;
 
 	// Instantiate third-party classes.
-	new Vendor\ACF;
+	new Vendor\Plugin_ACF;
 	new Vendor\ACFE;
 	new Vendor\Sample_ACF_Options;
 	new Vendor\Sample_ACF_Suboptions;
@@ -120,6 +120,7 @@ function init() {
 	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
 		new Front\Frontend;
+		new Front\Content_Sample;
 		new Meta\Meta_Data;
 		new Meta\Meta_Tags;
 	}

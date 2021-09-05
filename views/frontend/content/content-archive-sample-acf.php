@@ -1,6 +1,6 @@
 <?php
 /**
- * Content for singular sample post type
+ * ACF content for sample post type archive
  *
  * @package    Site_Core
  * @subpackage Views
@@ -10,6 +10,6 @@
 
 printf(
 	'<p>%s%s</p>',
-	__( 'Filtered content for post #', 'sitecore' ),
+	__( 'ACF content for archived post #', 'sitecore' ),
 	get_the_ID()
 );

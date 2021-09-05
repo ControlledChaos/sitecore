@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class ACF extends Plugin {
+class Plugin_ACF extends Plugin {
 
 	/**
 	 * Installed plugin directory
@@ -208,6 +208,30 @@ class ACF extends Plugin {
 				include $fields_file;
 			}
 		}
+	}
+
+	/**
+	 * ACF file suffix
+	 *
+	 * Returns `-acf` if ACF is active.
+	 * Used to look for template parts with that suffix.
+	 *
+	 * @example `front-page-acf.php`
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  array $paths
+	 * @return string Returns the suffix or empty.
+	 */
+	public function suffix( $suffix = '' ) {
+
+		// If ACF is active.
+		if ( $this->is_active() || $this->use_bundled() ) {
+			$suffix = '-acf';
+		}
+
+		// Return the suffix.
+		return $suffix;
 	}
 
 	/**
