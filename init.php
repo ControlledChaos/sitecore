@@ -102,9 +102,11 @@ function init() {
 	// Instantiate media class.
 	new Media\Media;
 
+	// Include Advanced Custom Fields.
 	$scp_acf = new Vendor\Plugin_ACF;
 	$scp_acf->include();
 
+	// Include Advanced Custom Fields: Extended.
 	$scp_acfe = new Vendor\Plugin_ACFE;
 	$scp_acfe->include();
 
