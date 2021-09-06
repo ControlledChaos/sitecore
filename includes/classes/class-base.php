@@ -24,35 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Base {
 
 	/**
-	 * The class object
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string
-	 */
-	protected static $class_object;
-
-	/**
-	 * Instance of the class
-	 *
-	 * This method can be used to call an instance
-	 * of the class from outside the class.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return object Returns an instance of the class.
-	 */
-	public static function instance() {
-
-		if ( is_null( self :: $class_object ) ) {
-			self :: $class_object = new self();
-		}
-
-		// Return the instance.
-		return self :: $class_object;
-	}
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
