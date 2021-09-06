@@ -13,3 +13,6 @@ printf(
 	__( 'Filtered content for taxonomy post #', 'sitecore' ),
 	get_the_ID()
 );
+
+// Or use...
+// echo get_the_content( get_the_ID() );

@@ -13,3 +13,7 @@ printf(
 	__( 'Filtered content for archived post #', 'sitecore' ),
 	get_the_ID()
 );
+
+// Or use...
+// echo get_the_excerpt( get_the_ID() );
+// echo get_the_content( get_the_ID() );
