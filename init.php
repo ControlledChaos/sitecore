@@ -112,7 +112,6 @@ function init() {
 
 	new Vendor\Sample_ACF_Options;
 	new Vendor\Sample_ACF_Suboptions;
-	// new Vendor\Sample_Plugin;
 
 	// Instantiate backend classes.
 	if ( is_admin() ) {
