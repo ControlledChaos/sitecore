@@ -270,8 +270,6 @@ class Plugin {
 			return true;
 		} elseif ( is_plugin_active( $this->upgrade_basename() ) ) {
 			return true;
-		} elseif ( $this->use_bundled() ) {
-			return true;
 		}
 		return false;
 	}
