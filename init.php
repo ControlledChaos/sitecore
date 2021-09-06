@@ -96,15 +96,18 @@ function init() {
 		}
 	}
 
-	// Instantiate tools classes.
+	// Instantiate tools class.
 	new Tools\Tools;
 
-	// Instantiate media classes.
+	// Instantiate media class.
 	new Media\Media;
 
-	// Instantiate third-party classes.
-	new Vendor\Plugin_ACF;
-	new Vendor\ACFE;
+	$scp_acf = new Vendor\Plugin_ACF;
+	$scp_acf->include();
+
+	$scp_acfe = new Vendor\Plugin_ACFE;
+	$scp_acfe->include();
+
 	new Vendor\Sample_ACF_Options;
 	new Vendor\Sample_ACF_Suboptions;
 	// new Vendor\Sample_Plugin;

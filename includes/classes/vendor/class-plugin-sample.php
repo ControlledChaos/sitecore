@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_Plugin extends Plugin {
+class Plugin_Sample extends Plugin {
 
 	/**
 	 * Installed plugin directory

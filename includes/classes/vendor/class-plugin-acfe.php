@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class ACFE extends Plugin {
+class Plugin_ACFE extends Plugin {
 
 	/**
 	 * Installed plugin directory

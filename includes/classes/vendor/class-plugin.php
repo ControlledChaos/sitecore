@@ -112,9 +112,6 @@ class Plugin {
 	 */
 	public function __construct() {
 
-		// Include the bundled files.
-		$this->include();
-
 		// Deactivate installed versions if not allowed.
 		$this->deactivate_installed();
 		$this->deactivate_upgrade();
@@ -283,10 +280,10 @@ class Plugin {
 	 * Include the bundled files
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
-	protected function include() {
+	public function include() {
 
 		// Stop here if bundled is disabled.
 		if ( ! $this->use_bundled() ) {
