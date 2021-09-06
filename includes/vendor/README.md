@@ -21,12 +21,14 @@ The following docblock replaces the plugin header in the main file.
  * @category   Plugins
  * @version    x.x.x
  * @since      1.0.0
- * @author     Elliot Condon
+ * @author     Elliot Condon, Delicious Brains
  * @link       https://www.advancedcustomfields.com
  */
 ```
 
-Other than the above file header there are no changes made to the Advanced Custom Fields plugin. Everything inside the `acf` directory can be replaced with all files from a new copy of the plugin.
+### Updating ACF #2
+
+Remove the upsell (since Delicious Brains) in `includes/admin/views/html-admin-navigation.php`.
 
 It is recommended to retain the `index.php` security file in the `acf` directory.
 
