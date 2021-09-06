@@ -102,6 +102,9 @@ function init() {
 	// Instantiate media class.
 	new Media\Media;
 
+	// Register media type taxonomy.
+	new Media\Register_Media_Type;
+
 	// Include Advanced Custom Fields.
 	$scp_acf = new Vendor\Plugin_ACF;
 	$scp_acf->include();
