@@ -3,7 +3,7 @@
 if(!defined('ABSPATH'))
     exit;
 
-if(!class_exists('acfe_field_flexible_content')):
+if ( ! class_exists( 'acfe_field_flexible_content' ) && class_exists( 'acf_pro' ) ) :
 
 class acfe_field_flexible_content{
     
@@ -52,7 +52,7 @@ class acfe_field_flexible_content{
         echo '</li>';
         
         acf_render_field_wrap(array(
-            'label' => __('Settings'),
+            'label' => __('Settings', 'acfe'),
             'type'  => 'hidden',
             'name'  => 'acfe_flexible_settings_label'
         ), 'ul');
@@ -247,7 +247,7 @@ class acfe_field_flexible_content{
         
         // defaults
         if(empty($field['button_label'])){
-            $field['button_label'] = __("Add Row", 'acf');
+            $field['button_label'] = __('Add Row', 'acf');
         }
         
         // sort layouts into names

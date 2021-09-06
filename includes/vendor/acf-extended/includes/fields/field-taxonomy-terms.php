@@ -16,23 +16,24 @@ class acfe_field_taxonomy_terms extends acf_field{
         $this->label = __('Taxonomy Terms', 'acfe');
         $this->category = 'relational';
         $this->defaults = array(
-            'taxonomy'      => array(),
-            'allow_terms'   => array(),
-            'field_type'    => 'checkbox',
-            'choices'       => array(),
-            'default_value' => '',
-            'return_format' => 'id',
-            'ui'            => 0,
-            'multiple'      => 0,
-            'allow_null'    => 0,
-            'ajax'          => 0,
-            'placeholder'   => '',
-            'layout'        => '',
-            'toggle'        => 0,
-            'load_terms'    => 0,
-            'save_terms'    => 0,
-            'allow_custom'  => 0,
-            'other_choice'  => 0,
+            'taxonomy'              => array(),
+            'allow_terms'           => array(),
+            'field_type'            => 'checkbox',
+            'choices'               => array(),
+            'default_value'         => '',
+            'return_format'         => 'id',
+            'ui'                    => 0,
+            'multiple'              => 0,
+            'allow_null'            => 0,
+            'ajax'                  => 0,
+            'placeholder'           => '',
+            'search_placeholder'    => '',
+            'layout'                => '',
+            'toggle'                => 0,
+            'load_terms'            => 0,
+            'save_terms'            => 0,
+            'allow_custom'          => 0,
+            'other_choice'          => 0,
         );
         
         // ajax
@@ -52,8 +53,7 @@ class acfe_field_taxonomy_terms extends acf_field{
     function ajax_query_allowed_terms(){
         
         // validate
-        if(!acf_verify_ajax())
-            die();
+        if(!acf_verify_ajax()) die();
         
         // get choices
         $response = $this->get_ajax_query_allowed_terms($_POST);
@@ -205,20 +205,31 @@ class acfe_field_taxonomy_terms extends acf_field{
     
     function get_terms($field, $args = array()){
         
-        // Allow Terms
+        // choices
         $choices = array();
+    
+        // get allowed taxonomies
+        $taxonomies = acf_get_array($field['taxonomy']);
+        $taxonomies = array_filter($taxonomies, 'taxonomy_exists');
+        $taxonomies = array_values($taxonomies);
         
-        // Get allowed taxonomies
-        $taxonomies = acf_get_taxonomy_labels(acf_get_array($field['taxonomy']));
+        // append all taxonomies if empty
+        $taxonomies = acf_get_taxonomy_labels($taxonomies);
+        $taxonomies = array_keys($taxonomies);
         
-        $args['taxonomy'] = array_keys($taxonomies);
+        // parse args
+        $args = wp_parse_args($args, array(
+            'taxonomy' => $taxonomies
+        ));
         
-        // Get terms
+        // get terms
         $all_terms = acf_get_terms($args);
         
-        if(empty($all_terms))
+        if(empty($all_terms)){
             return $choices;
+        }
         
+        // add to choices
         $choices = $this->filter_terms($all_terms, $field);
         
         return $choices;
@@ -233,7 +244,7 @@ class acfe_field_taxonomy_terms extends acf_field{
     
             $terms = array_unique($terms);
     
-            $choices = $this->convert_terms_to_choices($terms);
+            $choices = $this->convert_terms_to_choices($terms, $field);
     
             return $choices;
             
@@ -248,8 +259,7 @@ class acfe_field_taxonomy_terms extends acf_field{
     
             foreach($all_terms as $term){
                 
-                if(!in_array($term->taxonomy, $field['taxonomy']))
-                    continue;
+                if(!in_array($term->taxonomy, $field['taxonomy'])) continue;
     
                 $allowed_tax_terms[] = $term;
         
@@ -412,25 +422,62 @@ class acfe_field_taxonomy_terms extends acf_field{
         
         $terms = array_unique($terms);
     
-        $choices = $this->convert_terms_to_choices($terms);
+        $choices = $this->convert_terms_to_choices($terms, $field);
         
         return $choices;
         
     }
     
-    function convert_terms_to_choices($terms = array()){
+    function convert_terms_to_choices($terms, $field){
         
         $choices = array();
         
-        if(!empty($terms)){
+        if(empty($terms)){
+            return $choices;
+        }
+    
+        // get terms grouped by taxonomy
+        //
+        // array(
+        //     Category => array(
+        //         25 => WP_Term Object(...),
+        //         26 => WP_Term Object(...),
+        //     )
+        // )
+        $terms = acf_get_grouped_terms(array(
+            'include' => $terms,
+            'orderby' => 'include'
+        ));
+    
+        // list terms grouped by taxonomy with names
+        //
+        // array(
+        //     Category => array(
+        //         25 => Category 1,
+        //         26 => - Sub Category A,
+        //     )
+        // )
+        $choices = acf_get_choices_from_grouped_terms($terms, 'name');
+    
+        //vars
+        $name = $field['_name'];
+        $key = $field['key'];
+        $post_id = acfe_get_post_id();
+    
+        foreach($choices as $taxonomy => &$terms){
+        
+            foreach($terms as $term_id => &$text){
             
-            $terms = acf_get_grouped_terms(array(
-                'include' => $terms,
-                'orderby' => 'include'
-            ));
+                //vars
+                $term = get_term($term_id);
             
-            $choices = acf_get_choices_from_grouped_terms($terms, 'name');
+                // filters
+                $text = apply_filters("acfe/fields/taxonomy_terms/result",              $text, $term, $field, $post_id);
+                $text = apply_filters("acfe/fields/taxonomy_terms/result/name={$name}", $text, $term, $field, $post_id);
+                $text = apply_filters("acfe/fields/taxonomy_terms/result/key={$key}",   $text, $term, $field, $post_id);
             
+            }
+        
         }
         
         return $choices;
@@ -483,11 +530,16 @@ class acfe_field_taxonomy_terms extends acf_field{
             $args['search'] = $s;
         
         }
+        
+        //vars
+        $name = $field['name'];
+        $key = $field['key'];
+        $post_id = $options['post_id'];
     
         // filters
-        $args = apply_filters('acfe/fields/taxonomy_terms/query',                           $args, $field, $options['post_id']);
-        $args = apply_filters('acfe/fields/taxonomy_terms/query/name=' . $field['name'],    $args, $field, $options['post_id']);
-        $args = apply_filters('acfe/fields/taxonomy_terms/query/key=' . $field['key'],      $args, $field, $options['post_id']);
+        $args = apply_filters("acfe/fields/taxonomy_terms/query",               $args, $field, $post_id);
+        $args = apply_filters("acfe/fields/taxonomy_terms/query/name={$name}",  $args, $field, $post_id);
+        $args = apply_filters("acfe/fields/taxonomy_terms/query/key={$key}",    $args, $field, $post_id);
         
         $terms = $this->get_terms($field, $args);
         
@@ -554,8 +606,19 @@ class acfe_field_taxonomy_terms extends acf_field{
     
         // Normal choices
         if($field['type'] !== 'select' || !$field['ui'] || !$field['ajax']){
+            
+            //vars
+            $name = $field['_name'];
+            $key = $field['key'];
+            $post_id = acfe_get_post_id();
     
-            $choices = $this->get_terms($field);
+            // filters
+            $args = array();
+            $args = apply_filters("acfe/fields/taxonomy_terms/query",               $args, $field, $post_id);
+            $args = apply_filters("acfe/fields/taxonomy_terms/query/name={$name}",  $args, $field, $post_id);
+            $args = apply_filters("acfe/fields/taxonomy_terms/query/key={$key}",    $args, $field, $post_id);
+    
+            $choices = $this->get_terms($field, $args);
     
             $keys = array_keys($choices);
             
@@ -795,7 +858,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // Select: ui
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Stylised UI','acf'),
             'instructions'  => '',
             'name'          => 'ui',
@@ -836,10 +899,10 @@ class acfe_field_taxonomy_terms extends acf_field{
                 ),
             )
         ));
-        
-        // placeholder
+    
+        // Select: Placeholder
         acf_render_field_setting($field, array(
-            'label'             => __('Placeholder Text','acf'),
+            'label'             => __('Placeholder','acf'),
             'instructions'      => __('Appears within the input','acf'),
             'type'              => 'text',
             'name'              => 'placeholder',
@@ -854,9 +917,18 @@ class acfe_field_taxonomy_terms extends acf_field{
                     array(
                         'field'     => 'ui',
                         'operator'  => '==',
+                        'value'     => '0',
+                    ),
+                    array(
+                        'field'     => 'allow_null',
+                        'operator'  => '==',
                         'value'     => '1',
                     ),
-                    
+                    array(
+                        'field'     => 'multiple',
+                        'operator'  => '==',
+                        'value'     => '0',
+                    ),
                 ),
                 array(
                     array(
@@ -865,17 +937,66 @@ class acfe_field_taxonomy_terms extends acf_field{
                         'value'     => 'select',
                     ),
                     array(
+                        'field'     => 'ui',
+                        'operator'  => '==',
+                        'value'     => '1',
+                    ),
+                    array(
                         'field'     => 'allow_null',
                         'operator'  => '==',
                         'value'     => '1',
                     ),
-                    
+                ),
+                array(
+                    array(
+                        'field'     => 'field_type',
+                        'operator'  => '==',
+                        'value'     => 'select',
+                    ),
+                    array(
+                        'field'     => 'ui',
+                        'operator'  => '==',
+                        'value'     => '1',
+                    ),
+                    array(
+                        'field'     => 'multiple',
+                        'operator'  => '==',
+                        'value'     => '1',
+                    ),
+                ),
+            )
+        ));
+    
+        // Select: Search Placeholder
+        acf_render_field_setting($field, array(
+            'label'             => __('Search Input Placeholder','acf'),
+            'instructions'      => __('Appears within the search input','acf'),
+            'type'              => 'text',
+            'name'              => 'search_placeholder',
+            'placeholder'       => '',
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field'     => 'field_type',
+                        'operator'  => '==',
+                        'value'     => 'select',
+                    ),
+                    array(
+                        'field'     => 'ui',
+                        'operator'  => '==',
+                        'value'     => '1',
+                    ),
+                    array(
+                        'field'     => 'multiple',
+                        'operator'  => '==',
+                        'value'     => '0',
+                    ),
                 ),
             )
         ));
         
         // Select: multiple
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Select multiple values?','acf'),
             'instructions'  => '',
             'name'          => 'multiple',
@@ -893,7 +1014,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // Select: ajax
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Use AJAX to lazy load choices?','acf'),
             'instructions'  => '',
             'name'          => 'ajax',
@@ -916,7 +1037,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // Checkbox: layout
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Layout','acf'),
             'instructions'  => '',
             'type'          => 'radio',
@@ -945,7 +1066,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // Checkbox: toggle
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Toggle','acf'),
             'instructions'  => __('Prepend an extra checkbox to toggle all choices','acf'),
             'name'          => 'toggle',
@@ -963,7 +1084,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // save_terms
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Save Terms','acf'),
             'instructions'  => __('Connect selected terms to the post','acf'),
             'name'          => 'save_terms',
@@ -972,7 +1093,7 @@ class acfe_field_taxonomy_terms extends acf_field{
         ));
         
         // load_terms
-        acf_render_field_setting( $field, array(
+        acf_render_field_setting($field, array(
             'label'         => __('Load Terms','acf'),
             'instructions'  => __('Load value from posts terms','acf'),
             'name'          => 'load_terms',
@@ -1000,8 +1121,9 @@ class acfe_field_taxonomy_terms extends acf_field{
             $term_ids = wp_get_object_terms($info['id'], $taxonomy, array('fields' => 'ids', 'orderby' => 'none'));
             
             // bail early if no terms
-            if(empty($term_ids) || is_wp_error($term_ids))
+            if(empty($term_ids) || is_wp_error($term_ids)){
                 return false;
+            }
             
             // sort
             if(!empty($value)){
@@ -1050,8 +1172,9 @@ class acfe_field_taxonomy_terms extends acf_field{
             // vars
             $taxonomies = $field['taxonomy'];
             
-            if(empty($taxonomies))
+            if(empty($taxonomies)){
                 $taxonomies = acf_get_taxonomies();
+            }
             
             // force value to array
             $term_ids = acf_get_array($value);
@@ -1066,10 +1189,10 @@ class acfe_field_taxonomy_terms extends acf_field{
                 foreach($term_ids as $term_id){
                     
                     $term = get_term($term_id);
-                    $term_taxonomy = $term->taxonomy;
                     
-                    if($term_taxonomy !== $taxonomy)
-                        continue;
+                    if(!$term || is_wp_error($term)) continue;
+                    
+                    if($term->taxonomy !== $taxonomy) continue;
                     
                     $terms[] = $term_id;
                     

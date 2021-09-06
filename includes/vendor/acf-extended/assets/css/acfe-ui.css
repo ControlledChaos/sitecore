@@ -107,8 +107,7 @@ body:not(.taxonomy-product_cat):not(.woocommerce-page) .wrap {
 .wrap>form>h2,
 .wrap>form>h3 {
     background: #fff;
-    border: 1px solid #ccd0d4;
-    border-bottom: 0;
+    border: 1px solid #c3c4c7;
     margin: 0;
     color: #23282d;
     font-size: 14px;
@@ -116,34 +115,39 @@ body:not(.taxonomy-product_cat):not(.woocommerce-page) .wrap {
     line-height: 1.4
 }
 
-.wrap>form>div>div>h2+p,
-.wrap>form>div>div>h3+p,
-.wrap>form>h2+p,
-.wrap>form>h3+p {
+.wrap>form>div>div>h2~p,
+.wrap>form>div>div>h3~p,
+.wrap>form>h2~p,
+.wrap>form>h3~p {
     margin: 0;
-    border: 1px solid #ccd0d4;
-    border-bottom: 0;
+    border: 1px solid #c3c4c7;
+    border-top: 0;
     padding: 15px 12px
 }
 
 .wrap>form>div>div>h2+.form-table,
-.wrap>form>div>div>h2+p+.form-table,
+.wrap>form>div>div>h2~p+.form-table,
 .wrap>form>div>div>h3+.form-table,
-.wrap>form>div>div>h3+p+.form-table,
+.wrap>form>div>div>h3~p+.form-table,
 .wrap>form>h2+.form-table,
-.wrap>form>h2+p+.form-table,
+.wrap>form>h2~p+.form-table,
 .wrap>form>h3+.form-table,
-.wrap>form>h3+p+.form-table {
+.wrap>form>h3~p+.form-table {
     margin-top: 0
 }
 
 .wrap>form .form-table {
     background: #fff;
     width: 100%;
-    border: 1px solid #ccd0d4;
+    border: 1px solid #c3c4c7;
+    border-top: 0;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     margin-bottom: 20px
+}
+
+.wrap>form .form-table.rank-math-metabox-frame {
+    border-top: 1px solid #c3c4c7
 }
 
 .wrap>form .form-table>tbody>tr.acf-field {
@@ -198,7 +202,7 @@ body:not(.taxonomy-product_cat):not(.woocommerce-page) .wrap {
 
 .wrap>form .form-table>tbody>tr:first-of-type td,
 .wrap>form .form-table>tbody>tr:first-of-type th {
-    border-top: 1px solid #ccd0d4
+    border-top: 0
 }
 
 .wrap>form .form-table textarea {
@@ -513,19 +517,6 @@ body:not(.taxonomy-product_cat):not(.woocommerce-page) .wrap {
     width: 100%
 }
 
-.wrap .rank-math-metabox-frame {
-    max-width: 100%
-}
-
-.wrap .rankmath>.acf-fields>.acf-field>.acf-input {
-    padding: 0 0 0 1px !important
-}
-
-.wrap .rankmath>.acf-fields>.acf-field>.acf-input>.rank-math-metabox-frame {
-    margin: -15px 0;
-    border: 0
-}
-
 .wrap #add-term-translations,
 .wrap #edit-term-translations {
     border: none;
@@ -692,7 +683,54 @@ body:not(.taxonomy-product_cat):not(.woocommerce-page) .wrap {
 
 .edit-tags-php #col-left .col-wrap #poststuff #addtag .submit {
     display: block;
-    margin: 0
+    position: relative;
+    margin: 0;
+    padding: 15px 12px;
+    border-top: #eee solid 1px;
+    padding-left: 20%
+}
+
+.edit-tags-php #col-left .col-wrap #poststuff #addtag .submit::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background: #f9f9f9;
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 20%
+}
+
+.edit-tags-php #col-left .col-wrap #poststuff #addtag .submit::after {
+    content: "";
+    display: block;
+    clear: both
+}
+
+.edit-tags-php #col-left .col-wrap #poststuff #addtag .submit>.acf-input {
+    vertical-align: top;
+    float: left;
+    width: 80%;
+    margin: 0;
+    padding: 0 12px
+}
+
+@media screen and (max-width:640px) {
+    .edit-tags-php #col-left .col-wrap #poststuff #addtag .submit {
+        padding: 15px 0
+    }
+
+    .edit-tags-php #col-left .col-wrap #poststuff #addtag .submit::before {
+        display: none
+    }
+
+    .edit-tags-php #col-left .col-wrap #poststuff #addtag .submit>.acf-input {
+        width: 100%
+    }
 }
 
 .edit-tags-php #col-container #col-right {
