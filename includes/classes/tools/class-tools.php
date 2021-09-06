@@ -74,16 +74,39 @@ class Tools extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-
 		parent :: __construct();
+	}
 
-		// @todo Put into a settings page.
+	/**
+	 * Instantiate the RTL_Test class
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function rtl_test() {
 		new RTL_Test;
+	}
 
-		// @todo Put into a settings page.
+	/**
+	 * Instantiate the Customizer_Reset class
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function customizer_reset() {
 		new Customizer_Reset;
+	}
 
-		// Disable Google's FloC tracking.
+	/**
+	 * Instantiate the Disable_FloC class
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function disable_floc() {
 		new Disable_FloC;
 	}
 

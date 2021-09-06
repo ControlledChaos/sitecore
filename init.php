@@ -96,8 +96,12 @@ function init() {
 		}
 	}
 
-	// Instantiate tools class.
-	new Tools\Tools;
+	// Run tools.
+	// @todo Put into a settings page.
+	$scp_tools = new Tools\Tools;
+	$scp_tools->rtl_test();
+	$scp_tools->customizer_reset();
+	$scp_tools->disable_floc();
 
 	// Instantiate media class.
 	new Media\Media;
