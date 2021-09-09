@@ -87,6 +87,31 @@ class Content_Filter {
 	 *               returns the unfiltered content if post types don't match.
 	 */
 	public function the_content( $content ) {
-		return $content;
+		$filtered  = $this->before_content();
+		$filtered .= $content;
+		$filtered .= $this->after_content();
+		return $filtered;
+	}
+
+	/**
+	 * Before content
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function before_content() {
+		$before_content = do_action( 'SiteCore\before_content_filter' );
+		return apply_filters( 'scp_before_content_filter', $before_content );
+	}
+
+	/**
+	 * After content
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function after_content() {
+		$after_content = do_action( 'SiteCore\after_content_filter' );
+		return apply_filters( 'scp_after_content_filter', $after_content );
 	}
 }
