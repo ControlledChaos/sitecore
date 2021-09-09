@@ -103,7 +103,7 @@ class Meta_Data {
 
 		// Use the archive title for the archive pages.
 		} elseif ( is_archive() ) {
-			$title = the_archive_title();
+			$title = wp_strip_all_tags( get_the_archive_title(), true );
 
 		// Use custom text for search pages.
 		} elseif ( is_search() ) {
