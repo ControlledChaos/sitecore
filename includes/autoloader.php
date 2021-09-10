@@ -122,12 +122,13 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Post_Edit'               => SCP_CLASS['admin'] . 'post-edit.php',
 
 	// Frontend classes.
-	SCP_CLASS_NS . '\Front\Frontend'       => SCP_CLASS['front'] . 'frontend.php',
-	SCP_CLASS_NS . '\Front\Title_Filter'   => SCP_CLASS['front'] . 'title-filter.php',
-	SCP_CLASS_NS . '\Front\Content_Filter' => SCP_CLASS['front'] . 'content-filter.php',
-	SCP_CLASS_NS . '\Front\Content_Sample' => SCP_CLASS['front'] . 'content-sample.php',
-	SCP_CLASS_NS . '\Front\Meta\Meta_Data' => SCP_CLASS['front'] . 'meta-data.php',
-	SCP_CLASS_NS . '\Front\Meta\Meta_Tags' => SCP_CLASS['front'] . 'meta-tags.php'
+	SCP_CLASS_NS . '\Front\Frontend'         => SCP_CLASS['front'] . 'frontend.php',
+	SCP_CLASS_NS . '\Front\Title_Filter'     => SCP_CLASS['front'] . 'title-filter.php',
+	SCP_CLASS_NS . '\Front\Content_Filter'   => SCP_CLASS['front'] . 'content-filter.php',
+	SCP_CLASS_NS . '\Front\Template_Filters' => SCP_CLASS['front'] . 'template-filters.php',
+	SCP_CLASS_NS . '\Front\Content_Sample'   => SCP_CLASS['front'] . 'content-sample.php',
+	SCP_CLASS_NS . '\Front\Meta\Meta_Data'   => SCP_CLASS['front'] . 'meta-data.php',
+	SCP_CLASS_NS . '\Front\Meta\Meta_Tags'   => SCP_CLASS['front'] . 'meta-tags.php'
 
 	// General/miscellaneous classes.
 

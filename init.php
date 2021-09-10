@@ -131,6 +131,7 @@ function init() {
 	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
 		new Front\Frontend;
+		new Front\Template_Filters;
 		new Meta\Meta_Data;
 		new Meta\Meta_Tags;
 	}
