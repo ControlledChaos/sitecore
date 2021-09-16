@@ -61,6 +61,9 @@ The following docblock replaces the plugin header in the main file.
 * Remove or comment out the following condition from the `acf()` function in the core ACFE file, `acf-extended.php`.  
   Remove: `&& defined('ACF_PRO')`
 
+* Replace the condition for the `acfe_dynamic_block_types` class in `acf-extended/includes/modules/block-types.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_dynamic_block_types' ) && class_exists( 'acf_pro' ) ) :`
+
 * Replace the condition for the `acfe_dynamic_options_pages` class in `acf-extended/includes/modules/options-pages.php`.  
   Replace with: `if ( ! class_exists( 'acfe_dynamic_options_pages' ) && class_exists( 'acf_pro' ) ) :`
 

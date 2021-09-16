@@ -3,7 +3,7 @@
 if(!defined('ABSPATH'))
     exit;
 
-if(!class_exists('acfe_dynamic_block_types')):
+if ( ! class_exists( 'acfe_dynamic_block_types' ) && class_exists( 'acf_pro' ) ) :
 
 class acfe_dynamic_block_types extends acfe_dynamic_module{
     
