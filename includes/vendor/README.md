@@ -67,6 +67,9 @@ The following docblock replaces the plugin header in the main file.
 * Replace the condition for the `acfe_dynamic_options_pages` class in `acf-extended/includes/modules/options-pages.php`.  
   Replace with: `if ( ! class_exists( 'acfe_dynamic_options_pages' ) && class_exists( 'acf_pro' ) ) :`
 
+* Replace the condition for the `acfe_screen_options_page` class in `acf-extended/includes/forms/form-options-page.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_screen_options_page' ) && class_exists( 'acf_pro' ) ) :`
+
 * Replace the condition for the `acfe_field_flexible_content` class in `acf-extended/includes/fields/field-flexible-content.php`.  
   Replace with: `if ( ! class_exists( 'acfe_field_flexible_content' ) && class_exists( 'acf_pro' ) ) :`
 
