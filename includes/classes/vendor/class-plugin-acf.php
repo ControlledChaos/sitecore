@@ -102,6 +102,15 @@ class Plugin_ACF extends Plugin {
 		// Add ACF field groups.
 		$this->field_groups();
 
+		/**
+		 * Remove the ACF toolbar.
+		 *
+		 * The toolbar is not consistent with the layout of
+		 * other admin pages and may conflict with a custom
+		 * admin header or other admin theme elements.
+		 */
+		add_filter( 'acf/admin/toolbar', '__return_false' );
+
 		// Admin columns for ACF fields.
 		$this->acf_columns();
 	}
