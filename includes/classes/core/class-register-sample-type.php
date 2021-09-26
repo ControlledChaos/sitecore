@@ -54,7 +54,7 @@ class Register_Sample_Type extends Register_Type {
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    string The dashicon class for book.
+	 * @var    string The dashicon class or custom URL.
 	 */
 	protected $menu_icon = 'dashicons-welcome-learn-more';
 
