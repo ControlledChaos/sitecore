@@ -224,7 +224,6 @@ class Register_Admin extends Register_Type {
 		if ( $this->type_key != $post_type ) {
 			return $args;
 		}
-		$args = [];
 
 		// Only show under content settings if the page exists.
 		if ( $content ) {
@@ -238,7 +237,7 @@ class Register_Admin extends Register_Type {
 			'edit_post'    => 'develop',
 			'delete_post'  => 'develop',
 			'edit_posts'   => 'develop',
-			'delete_posts' => 'develop',
+			'delete_posts' => 'develop'
 		];
 
 		return $args;
