@@ -225,20 +225,22 @@ class Register_Admin extends Register_Type {
 			return $args;
 		}
 
-		// Only show under content settings if the page exists.
-		if ( $content ) {
+		// Only show under content settings if the page exists & if developer.
+		if ( $content && current_user_can( 'develop' ) ) {
 
 			// Set content settings as menu parent.
 			$args['show_in_menu'] = 'content-settings';
 		}
 
 		// Only allow developer role to add & edit.
-		$args['capabilities'] = [
-			'edit_post'    => 'develop',
-			'delete_post'  => 'develop',
-			'edit_posts'   => 'develop',
-			'delete_posts' => 'develop'
-		];
+		if ( ! current_user_can( 'develop' ) ) {
+			$args['capabilities'] = [
+				'edit_'   . $this->type_key => false,
+				'delete_' . $this->type_key => false,
+				'edit_posts'   => false,
+				'delete_posts' => false
+			];
+		}
 
 		return $args;
 	}
