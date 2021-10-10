@@ -47,7 +47,7 @@ class Admin extends Classes\Base {
 		new Post_Edit;
 
 		// Run the dashboard only on the backend index screen.
-		if ( 'index.php' == $pagenow ) {
+		if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
 			new Dashboard;
 		}
 
