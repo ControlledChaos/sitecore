@@ -51,7 +51,7 @@ class Settings {
 	 * @access protected
 	 * @var    string Namespace & class.
 	 */
-	protected $api_page_class = 'SiteCore\Classes\Admin\Add_Settings_Page';
+	protected $api_page_class = '';
 
 	/**
 	 * ACF settings page class
@@ -64,7 +64,7 @@ class Settings {
 	 * @access protected
 	 * @var    string Namespace & class.
 	 */
-	protected $acf_page_class = 'SiteCore\Classes\Vendor\Add_ACF_Options';
+	protected $acf_page_class = '';
 
 	/**
 	 * Constructor method
