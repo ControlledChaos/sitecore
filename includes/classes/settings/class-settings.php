@@ -64,7 +64,7 @@ class Settings {
 	 * @access protected
 	 * @var    string Namespace & class.
 	 */
-	protected $acf_page_class = 'SiteCore\Classes\Vendor\Sample_ACF_Options';
+	protected $acf_page_class = 'SiteCore\Classes\Vendor\Add_ACF_Options';
 
 	/**
 	 * Constructor method
