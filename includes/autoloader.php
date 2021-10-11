@@ -34,6 +34,7 @@ define( 'SCP_CLASS', [
 	'vendor'   => SCP_PATH . 'includes/classes/vendor/class-',
 	'admin'    => SCP_PATH . 'includes/classes/backend/class-',
 	'front'    => SCP_PATH . 'includes/classes/frontend/class-',
+	'widgets'  => SCP_PATH . 'includes/classes/widgets/class-',
 	'general'  => SCP_PATH . 'includes/classes/class-',
 ] );
 
@@ -128,7 +129,12 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Front\Template_Filters' => SCP_CLASS['front'] . 'template-filters.php',
 	SCP_CLASS_NS . '\Front\Content_Sample'   => SCP_CLASS['front'] . 'content-sample.php',
 	SCP_CLASS_NS . '\Front\Meta\Meta_Data'   => SCP_CLASS['front'] . 'meta-data.php',
-	SCP_CLASS_NS . '\Front\Meta\Meta_Tags'   => SCP_CLASS['front'] . 'meta-tags.php'
+	SCP_CLASS_NS . '\Front\Meta\Meta_Tags'   => SCP_CLASS['front'] . 'meta-tags.php',
+
+	// Widget classes.
+	SCP_CLASS_NS . '\Widgets\Add_Widget'    => SCP_CLASS['widgets'] . 'add-widget.php',
+	SCP_CLASS_NS . '\Widgets\Sample_Widget' => SCP_CLASS['widgets'] . 'sample-widget.php'
+
 
 	// General/miscellaneous classes.
 

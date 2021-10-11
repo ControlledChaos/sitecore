@@ -21,6 +21,7 @@ SiteCore\Classes\Users      as Users,
 SiteCore\Classes\Admin      as Admin,
 SiteCore\Classes\Front      as Front,
 SiteCore\Classes\Front\Meta as Meta,
+SiteCore\Classes\Widgets    as Widgets,
 SiteCore\Classes\Vendor     as Vendor;
 
 // Restrict direct access.
@@ -135,6 +136,9 @@ function init() {
 		new Meta\Meta_Data;
 		new Meta\Meta_Tags;
 	}
+
+	// Instantiate widget classes.
+	new Widgets\Sample_Widget;
 
 	// Disable Site Health notifications.
 	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
