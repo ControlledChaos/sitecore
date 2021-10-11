@@ -18,7 +18,7 @@ if ( ! empty( $title ) ) {
 ?>
 <?php echo $args['before_widget']; ?>
 
-	<?php echo $args['before_title'] . $title . $args['after_title']; ?>
+	<?php echo $title; ?>
 
 	<div class="<?php echo $this->type_class() . '-inner' ?>">
 		<?php echo wpautop( $instance['content'] ); ?>
