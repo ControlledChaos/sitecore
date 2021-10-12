@@ -20,7 +20,7 @@
  * Override the `labels()` and `options()` methods if
  * more detailed replacement is needed.
  *
- * @see includes/classes/class-register-sample.php
+ * @see includes/classes/core/class-register-sample.php
  */
 
 declare( strict_types = 1 );
