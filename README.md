@@ -65,6 +65,7 @@ These classes include:
 
 * Register post types
 * Register taxonomies
+* Register widget types
 * Admin pages
 * Admin subpages
 * Title filters
