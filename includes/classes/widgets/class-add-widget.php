@@ -332,7 +332,13 @@ class Add_Widget extends \WP_Widget {
 	 * @return string
 	 */
 	protected function widget_views() {
-		return apply_filters( $this->prefix() . 'views_directory', trailingslashit( 'views/frontend/widgets' ) );
+
+		if ( is_admin() ) {
+			$dir = 'views/backend/widgets';
+		} else {
+			$dir = 'views/frontend/widgets';
+		}
+		return apply_filters( $this->prefix() . 'views_directory', trailingslashit( $dir ) );
 	}
 
 	/**
