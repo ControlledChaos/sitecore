@@ -59,13 +59,14 @@ class Register_Sample_Type extends Register_Type {
 	protected $menu_icon = 'dashicons-welcome-learn-more';
 
 	/**
-	 * Show in REST API
+	 * Use block editor
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    boolean Whether to show in REST API.
+	 * @var    boolean Whether the post type uses the block editor
+	 * 				   rather than the rich text editor.
 	 */
-	protected $show_in_rest = true;
+	protected $use_block_editor = false;
 
 	/**
 	 * Settings page
