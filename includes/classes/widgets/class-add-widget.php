@@ -27,6 +27,15 @@ class Add_Widget extends \WP_Widget {
 	protected $type_base = '';
 
 	/**
+	 * Whether or not the widget has been registered yet.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean
+	 */
+	protected $registered = false;
+
+	/**
 	 * Name for this widget type
 	 *
 	 * @since  1.0.0
@@ -320,6 +329,168 @@ class Add_Widget extends \WP_Widget {
 	protected function filter_controls() {
 		return apply_filters( $this->prefix() . 'widget_control_options', $this->controls() );
 	}
+
+	/**
+	 * Add hooks for enqueueing assets when registering all widget instances of this widget class.
+	 *
+	 * @param int $number Optional. The unique order number of this widget instance
+	 *                    compared to other instances of the same class. Default -1.
+	 */
+	public function _register_one( $number = -1 ) {
+
+		parent::_register_one( $number );
+		if ( $this->registered ) {
+			return;
+		}
+		$this->registered = true;
+
+		// wp_add_inline_script( 'text-widgets', sprintf( 'wp.textWidgets.idBases.push( %s );', wp_json_encode( $this->id_base ) ) );
+
+		if ( $this->is_preview() ) {
+			add_action( 'wp_enqueue_scripts', [ $this, 'preview_enqueue_scripts' ] );
+		}
+
+		// Enqueue admin scripts.
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+
+		// Print admin widgets scripts.
+		add_action( 'admin_print_scripts-widgets.php', [ $this, 'admin_print_widgets_scripts' ] );
+
+		// Print admin scripts.
+		add_action( 'admin_print_scripts', [ $this, 'admin_print_scripts' ] );
+
+		// Enqueue admin styles.
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_styles' ] );
+
+		// Print admin widgets styles.
+		add_action( 'admin_print_styles-widgets.php', [ $this, 'admin_print_widgets_styles' ] );
+
+		// Print admin styles.
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
+
+		// Print admin footer widgets scripts.
+		add_action( 'admin_print_footer_scripts-widgets.php', [ $this, 'admin_print_footer_widgets_scripts' ] );
+
+		// Print admin footer scripts.
+		add_action( 'admin_print_footer_scripts', [ $this, 'admin_print_footer_scripts' ] );
+
+		// Widgets footer.
+		add_action( 'admin_footer-widgets.php', [ $this, 'admin_footer_widgets' ] );
+	}
+
+	/**
+	 * Enqueue preview scripts
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function preview_enqueue_scripts() {}
+
+	/**
+	 * Enqueue admin scripts
+	 *
+	 * Fires on all admin screens.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_enqueue_scripts() {}
+
+	/**
+	 * Print admin widgets scripts
+	 *
+	 * Fires on the widgets screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_widgets_scripts() {}
+
+	/**
+	 * Print admin scripts
+	 *
+	 * Fires on all admin screens.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_scripts() {}
+
+	/**
+	 * Enqueue admin scripts
+	 *
+	 * Fires on all admin screens.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_enqueue_styles() {}
+
+	/**
+	 * Print admin widgets scripts
+	 *
+	 * Fires on the widgets screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_widgets_styles() {}
+
+	/**
+	 * Print admin scripts
+	 *
+	 * Fires on all admin screens.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_styles() {}
+
+	/**
+	 * Print admin footer widgets scripts
+	 *
+	 * Fires on the widgets screen.
+	 * Also fires in the customizer via
+	 * `WP_Customize_Widgets :: print_scripts()`.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_footer_widgets_scripts() {}
+
+	/**
+	 * Print admin footer scripts
+	 *
+	 * Fires on all screens.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_footer_scripts() {}
+
+	/**
+	 * Widgets footer
+	 *
+	 * Last hook to fire on the widgets screen.
+	 * Use for whatever needs to run late.
+	 *
+	 * Also fires in the customizer via
+	 * `WP_Customize_Widgets :: print_footer_scripts()`.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_footer_widgets() {}
 
 	/**
 	 * Widget views directory
