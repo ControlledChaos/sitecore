@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Dashboard extends Classes\Base {
+class Dashboard {
 
 	/**
 	 * Constructor method
@@ -26,9 +26,6 @@ class Dashboard extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-
-		// Run the parent constructor method.
-		parent :: __construct();
 
 		// Remove widgets.
 		add_action( 'wp_dashboard_setup', [ $this, 'remove_widgets' ] );

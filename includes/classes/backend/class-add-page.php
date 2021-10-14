@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Add_Page extends Classes\Base {
+class Add_Page {
 
 	/**
 	 * Page title
@@ -166,8 +166,6 @@ class Add_Page extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-
-		parent :: __construct();
 
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );

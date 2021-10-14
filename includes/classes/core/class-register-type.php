@@ -385,15 +385,6 @@ class Register_Type {
 		add_action( 'acf/init', [ $this, 'field_groups' ] );
 	}
 
-	public function use_block_editor( $post_type ) {
-
-		// Only modify this post type.
-		if ( $this->type_key != $post_type ) {
-			return;
-		}
-		return $this->use_block_editor;
-	}
-
 	/**
 	 * Register post type
 	 *
@@ -529,6 +520,23 @@ class Register_Type {
 		} else {
 			return 'post';
 		}
+	}
+
+	/**
+	 * Use block editor
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $post_type
+	 * @return boolean Returns true if the `$use_block_editor` property is true.
+	 */
+	public function use_block_editor( $post_type ) {
+
+		// Only modify this post type.
+		if ( $this->type_key != $post_type ) {
+			return;
+		}
+		return $this->use_block_editor;
 	}
 
 	/**

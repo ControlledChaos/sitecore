@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Tools extends Classes\Base {
+class Tools {
 
 	/**
 	 * Sample string
@@ -73,9 +73,7 @@ class Tools extends Classes\Base {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
-		parent :: __construct();
-	}
+	public function __construct() {}
 
 	/**
 	 * Instantiate the RTL_Test class

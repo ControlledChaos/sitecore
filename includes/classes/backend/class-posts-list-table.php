@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Posts_List_Table extends Classes\Base {
+class Posts_List_Table {
 
 	/**
 	 * Constructor method
@@ -28,7 +28,6 @@ class Posts_List_Table extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
 
 		// Dropdown select box.
 		add_action( 'restrict_manage_posts', [ $this, 'filter_dropdown' ] );

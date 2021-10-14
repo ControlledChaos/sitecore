@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since  1.0.0
  * @access public
  */
-class User_Avatars extends Classes\Base {
+class User_Avatars {
 
 	/**
 	 * User ID.
@@ -48,9 +48,6 @@ class User_Avatars extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-
-		// Run the parent constructor method.
-		parent :: __construct();
 
 		// Avatar upload capability.
 		add_action( 'admin_init', [ $this, 'capability' ] );

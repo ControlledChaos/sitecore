@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample extends Base {
+class Sample {
 
 	/**
 	 * The class object

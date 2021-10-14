@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Users extends Classes\Base {
+class Users {
 
 	/**
 	 * Constructor method
@@ -27,9 +27,6 @@ class Users extends Classes\Base {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
-
 		// User roles & capabilities.
 		new User_Roles_Caps;
 
@@ -37,6 +34,12 @@ class Users extends Classes\Base {
 		if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
 			new User_Toolbar;
 		}
+
+		// Print admin styles to head.
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
+
+		// Enqueue admin scripts.
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
 		// Local user avatars.
 		// new User_Avatars;

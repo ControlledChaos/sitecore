@@ -60,9 +60,6 @@ define( 'SCP_CLASS_NS', __NAMESPACE__ . '\Classes' );
  */
 define( 'SCP_CLASSES', [
 
-	// Base class.
-	SCP_CLASS_NS . '\Base' => SCP_CLASS['general'] . 'base.php',
-
 	// Core classes.
 	SCP_CLASS_NS . '\Core\Editor_Options'       => SCP_CLASS['core'] . 'editor-options.php',
 	SCP_CLASS_NS . '\Core\Type_Tax'             => SCP_CLASS['core'] . 'type-tax.php',

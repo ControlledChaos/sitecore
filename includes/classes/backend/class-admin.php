@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin extends Classes\Base {
+class Admin {
 
 	/**
 	 * Constructor method
@@ -28,8 +28,6 @@ class Admin extends Classes\Base {
 	 * @return self
 	 */
 	public function __construct() {
-
-		parent :: __construct();
 
 		// Get the filename of the current page.
 		global $pagenow;
