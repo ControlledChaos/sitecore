@@ -1,9 +1,9 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- *
- * @todo Nest this properly.
- */
+///
+/// All of the CSS for your admin-specific functionality should be
+/// included in this file.
+///
+/// @todo Nest this properly.
+///
 
 @import 'partials/_settings';
 
@@ -11,9 +11,7 @@
 	max-width: 1024px;
 }
 
-/**
- * Admin Header
- */
+// Admin header
 .scp-admin-header {
 
 	.admin-site-branding {
@@ -33,19 +31,17 @@
 	}
 }
 
-/**
- * Admin Menu
- */
+// Admin menu
 .dashicons-admin-media:before {
 	content: '\f161' !important;
 }
 
-/**
- * Plugins
- *
- * For the installed plugins and the add new plugins screens.
- */
-/* This provides better distinction between active and inactive plugins. */
+///
+/// Plugins
+///
+/// For the installed plugins and the add new plugins screens.
+/// This provides better distinction between active and inactive plugins.
+///
 .plugins tr.inactive *,
 .plugins .plugins a.delete {
 	background: #f3f3f3;
@@ -74,19 +70,18 @@
 	color: #aa0000 !important;
 }
 
-/**
- * Media
- *
- * For the media library and media uploads screens.
- */
-/* Fix SVGs not showing correctly as featured images. */
+///
+/// Media
+///
+/// For the media library and media uploads screens.
+///
+
+// Fix SVGs not showing correctly as featured images.
 #postimagediv .inside .svg img {
 	width: 100%;
 }
 
-/**
- * JQUERY TABS
- */
+// jQuery tabs
 .nav-tab-wrapper a .dashicons {
 	vertical-align: bottom;
 }
@@ -95,9 +90,6 @@
 	max-width: 1200px;
 }
 
-/**
- * jQuery tabs.
- */
 .backend-tabbed-content.ui-widget-content,
 .backend-tabbed-content.ui-widget.ui-widget-content {
 	border: none;
@@ -126,7 +118,9 @@
 }
 
 .backend-tabbed-content {
-	/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	/// position: relative prevents IE scroll bug (element with
+	/// position: relative inside container with
+	/// overflow: auto appear as "fixed").
 	position: relative;
 	padding: 0;
 }
@@ -228,9 +222,7 @@ html .backend-tabbed-content .ui-button.ui-state-disabled:hover {
 	background: none;
 }
 
-/**
- * Post types order.
- */
+// Post types order
 .ui-sortable tr:hover {
 	cursor: move;
 }
@@ -244,10 +236,11 @@ html .backend-tabbed-content .ui-button.ui-state-disabled:hover {
 	border-top: 1px solid #dfdfdf;
 }
 
-/**
- * Miscellaneous
- */
-/* Easily copy the code of registered ACF fields on the Registered Fields screen. */
+///
+/// Miscellaneous
+///
+/// Easily copy the code of registered ACF fields on the Registered Fields screen.
+///
 .import-registered-field-groups-arrays {
 	-webkit-user-select: all;
 	-moz-user-select: all;
@@ -255,10 +248,7 @@ html .backend-tabbed-content .ui-button.ui-state-disabled:hover {
 	user-select: all;
 }
 
-/**
- * Some of the unordered lists in the admin pages
- * look better with bullets.
- */
+// Some of the unordered lists in the admin pages look better with bullets.
 .scp-bullet-list {
 	list-style: disc;
 	margin-left: 1em;
