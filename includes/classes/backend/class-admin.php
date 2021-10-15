@@ -55,6 +55,12 @@ class Admin {
 		// Post type menu options.
 		add_filter( 'register_post_type_args', [ $this, 'post_type_menu_options' ], 10, 2 );
 
+		// Enqueue scripts.
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+
+		// Enqueue styles.
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_styles' ] );
+
 		// Remove theme & plugin editor links.
 		add_action( 'admin_init', [ $this, 'remove_editor_links' ] );
 
