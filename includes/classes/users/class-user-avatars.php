@@ -230,7 +230,7 @@ class User_Avatars {
 	 */
 	public function get_avatar( $id_or_email, $avatar = '', $size = 48, $default = '', $alt = false ) {
 
-		// Determine if we recive an ID or string.
+		// Determine if we receive an ID or string.
 		if ( is_numeric( $id_or_email ) ) {
 			$user_id = (int) $id_or_email;
 
@@ -394,7 +394,7 @@ class User_Avatars {
 			// Delete old images if successful.
 			$this->avatar_delete( $user_id );
 
-			// Need to be more secure since low privelege users can upload.
+			// Need to be more secure since low privilege users can upload.
 			if ( strstr( $_FILES['basic-user-avatar']['name'], '.php' ) ) {
 				wp_die( 'For security reasons, the extension ".php" cannot be in your file name.' );
 			}
