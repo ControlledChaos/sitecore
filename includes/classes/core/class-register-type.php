@@ -364,10 +364,10 @@ class Register_Type {
 	 * Constructor method
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @return self
 	 */
-	protected function __construct() {
+	public function __construct() {
 
 		// Register post type.
 		add_action( 'init', [ $this, 'register' ], $this->priority );
