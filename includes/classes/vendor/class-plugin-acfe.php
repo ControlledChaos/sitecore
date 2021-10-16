@@ -82,6 +82,9 @@ class Plugin_ACFE extends Plugin {
 
 		parent :: __construct();
 
+		// Dequeue ACFE UI changes.
+		add_action( 'admin_enqueue_scripts', [ $this, 'dequeue_acfe_ui' ] );
+
 		/**
 		 * ACF local JSON
 		 *
@@ -104,6 +107,18 @@ class Plugin_ACFE extends Plugin {
 
 		// New ACFE post type options.
 		add_filter( 'register_post_type_args', [ $this, 'acfe_post_type_options' ], 11, 2 );
+	}
+
+	/**
+	 * Dequeue ACFE UI changes
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function dequeue_acfe_ui() {
+		wp_dequeue_style( 'acf-extended-ui' );
+        wp_dequeue_script( 'acf-extended-ui' );
 	}
 
 	/**
