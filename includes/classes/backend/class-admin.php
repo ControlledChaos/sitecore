@@ -81,6 +81,9 @@ class Admin {
 		// Menus & Widgets admin menu items.
 		add_action( 'admin_menu', [ $this, 'menus_widgets' ] );
 
+		// Admin menu highlighting.
+		add_action( 'parent_file', [ $this, 'parent_file' ] );
+
 		// Primary footer text.
 		add_filter( 'admin_footer_text', [ $this, 'admin_footer_primary' ], 1 );
 
@@ -306,6 +309,27 @@ class Admin {
 			'dashicons-screenoptions',
 			62
 		);
+	}
+
+	/**
+	 * Admin menu highlighting
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param string $parent_file
+	 * @return string Returns the parent file.
+	 */
+	public function parent_file( $parent_file ) {
+
+		// Access global variables.
+		global $pagenow;
+
+		if ( 'widgets.php' == $pagenow ) {
+			$parent_file = 'widgets.php';
+		}elseif ( 'nav-menus.php' == $pagenow ) {
+			$parent_file = 'nav-menus.php';
+		}
+		return $parent_file;
 	}
 
 	/**
