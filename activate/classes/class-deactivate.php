@@ -24,20 +24,16 @@ class Deactivate {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
-		// Add actions & filters.
-	}
-}
+	public function __construct() {}
 
-/**
- * Deactivate plugin
- *
- * Puts an instance of the class into a function.
- *
- * @since  1.0.0
- * @access public
- * @return object Returns an instance of the class.
- */
-function deactivation_class() {
-	return new Deactivate;
+	/**
+	 * Add & update options
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return self
+	 */
+	public function options() {
+		update_option( 'avatar_default', 'mystery' );
+	}
 }

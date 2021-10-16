@@ -33,10 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * License & Warranty
  *
- * Site Core is free software. It can be redistributed and/or modified
+ * This product is free software. It can be redistributed and/or modified
  * ad libidum. There is no license distributed with this product.
  *
- * Site Core is distributed WITHOUT ANY WARRANTY; without even the implied
+ * This product is distributed WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @see DISCLAIMER.md
@@ -180,6 +180,9 @@ function activate_plugin() {
 
 	// Instantiate the Activate class.
 	$activate = new Activate\Activate;
+
+	// Update options.
+	$activate->options();
 }
 
 /**
@@ -195,6 +198,9 @@ function deactivate_plugin() {
 
 	// Instantiate the Activate class.
 	$deactivate = new Activate\Deactivate;
+
+	// Update options.
+	$deactivate->options();
 }
 
 /**

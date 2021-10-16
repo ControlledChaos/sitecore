@@ -49,6 +49,12 @@ class User_Avatars {
 	 */
 	public function __construct() {
 
+		// Print admin styles to head.
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
+
+		// Print admin scripts to head.
+		add_action( 'admin_print_scripts', [ $this, 'admin_print_scripts' ], 20 );
+
 		// Avatar upload capability.
 		add_action( 'admin_init', [ $this, 'capability' ] );
 
@@ -112,16 +118,19 @@ class User_Avatars {
 			display: inline-block;
 			border: 1px solid #ccc;
 			border-radius: 50%;
+			/* The background image is for the blank avatar to display something. */
+			background-image: url( <?php echo SCP_URL . 'assets/images/checker-bg.png' ?> );
+			background-size: contain;
 		}
 
-		@media screen and ( max-width: 800px ) {
+		@media screen and ( max-width: 1082px ) {
 			.defaultavatarpicker label {
 				width: 33.33325%;
 				width: calc( 100% / 3 );
 			}
 		}
 
-		@media screen and ( max-width: 480px ) {
+		@media screen and ( max-width: 570px ) {
 			.defaultavatarpicker label {
 				width: 50%;
 			}
@@ -137,6 +146,12 @@ class User_Avatars {
 		<style>
 		.user-profile-picture {
 			display: none;
+		}
+
+		.avatar-upload-button input {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
 		}
 		</style>
 		<?php
@@ -182,7 +197,7 @@ class User_Avatars {
 	public function capability() {
 
 		add_settings_field(
-			'scp_user_avatars_caps',
+			'uap_user_avatars_caps',
 			__( 'Avatar Upload Permission',	'sitecore' ),
 			[ $this, 'capability_field' ],
 			'discussion',
@@ -192,7 +207,7 @@ class User_Avatars {
 
 		register_setting(
 			'discussion',
-			'scp_user_avatars_caps'
+			'uap_user_avatars_caps'
 		);
 	}
 
@@ -205,11 +220,11 @@ class User_Avatars {
 	 */
 	public function capability_field( $args ) {
 
-		$option = get_option( 'scp_user_avatars_caps' );
+		$option = get_option( 'uap_user_avatars_caps' );
 
-		$html = '<p><input type="checkbox" id="scp_user_avatars_caps" name="scp_user_avatars_caps" value="1" ' . checked( 1, $option, false ) . '/>';
+		$html = '<p><input type="checkbox" id="uap_user_avatars_caps" name="uap_user_avatars_caps" value="1" ' . checked( 1, $option, false ) . '/>';
 
-		$html .= '<label for="scp_user_avatars_caps"> ' . $args[0] . '</label></p>';
+		$html .= '<label for="uap_user_avatars_caps"> ' . $args[0] . '</label></p>';
 
 		echo $html;
 	}
@@ -228,7 +243,7 @@ class User_Avatars {
 	 * @param  boolean $alt
 	 * @return string Returns the avatar markup.
 	 */
-	public function get_avatar( $id_or_email, $avatar = '', $size = 48, $default = '', $alt = false ) {
+	public function get_avatar( $avatar = '', $id_or_email = '', $size = 48, $default = '', $alt = false ) {
 
 		// Determine if we receive an ID or string.
 		if ( is_numeric( $id_or_email ) ) {
@@ -245,7 +260,7 @@ class User_Avatars {
 			return $avatar;
 		}
 
-		$local_avatars = get_user_meta( $user_id, 'scp_user_avatar', true );
+		$local_avatars = get_user_meta( $user_id, 'uap_user_avatar', true );
 
 		if ( empty( $local_avatars ) || empty( $local_avatars['full'] ) ) {
 			return $avatar;
@@ -276,7 +291,7 @@ class User_Avatars {
 			}
 
 			// Save updated avatar sizes
-			update_user_meta( $user_id, 'scp_user_avatar', $local_avatars );
+			update_user_meta( $user_id, 'uap_user_avatar', $local_avatars );
 
 		} elseif ( substr( $local_avatars[$size], 0, 4 ) != 'http' ) {
 			$local_avatars[$size] = home_url( $local_avatars[$size] );
@@ -285,7 +300,7 @@ class User_Avatars {
 		$author_class = is_author( $user_id ) ? ' current-author' : '' ;
 		$avatar       = "<img alt='" . esc_attr( $alt ) . "' src='" . $local_avatars[$size] . "' class='avatar avatar-{$size}{$author_class} photo' height='{$size}' width='{$size}' />";
 
-		return apply_filters( 'scp_user_avatar', $avatar );
+		return apply_filters( 'uap_user_avatar', $avatar );
 	}
 
 	/**
@@ -320,33 +335,56 @@ class User_Avatars {
 					</td>
 					<td>
 					<?php
-					$options = get_option( 'scp_user_avatars_caps' );
+					$options = get_option( 'uap_user_avatars_caps' );
 
-					if ( empty( $options ) || current_user_can( 'upload_files' ) ) {
+					if ( empty( $options ) || current_user_can( 'upload_files' ) ) :
 
 						// Nonce security.
-						wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
+						wp_nonce_field( 'uap_user_avatar_nonce', '_uap_user_avatar_nonce', false );
 
 						// File upload input.
-						echo '<input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
+						$upload = sprintf(
+							'<label class="not-button avatar-upload-button" for="basic-user-avatar"><input class="not-screen-reader-text" type="file" name="basic-user-avatar" id="basic-user-avatar" aria-label="%s" /><span class="screen-reader-text">%s</span></label>',
+							__( 'Upload Avatar', 'sitecore' ),
+							__( 'Upload Avatar', 'sitecore' )
+						);
+						echo "<p>{$upload}</p>";
 
-						if ( empty( $profileuser->scp_user_avatar ) ) {
-							echo '<span class="description">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', 'sitecore' ) . '</span>';
+						if ( empty( $profileuser->uap_user_avatar ) ) {
+
+							printf(
+								'<p class="description">%s</p>',
+								__( 'No user avatar is set. Use the upload button to add an avatar.', 'sitecore' )
+							);
 
 						} else {
-							echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" /> ' . __( 'Delete local avatar', 'sitecore' ) . '<br />';
-							echo '<span class="description">' . __( 'Replace the local avatar by uploading a new avatar or erase the current avatar by checking the delete option.', 'sitecore' ) . '</span>';
+
+							$delete = sprintf(
+								'<label for="basic-user-avatar-erase"><input type="checkbox" name="basic-user-avatar-erase" value="1" /> %s</label>',
+								__( 'Delete local avatar', 'sitecore' )
+							);
+							echo "<p>{$delete}</p>";
+
+							printf(
+								'<p class="description">%s</p>',
+								__( 'Replace the avatar by uploading a new avatar or erase the current avatar by checking the delete option.', 'sitecore' )
+							);
 						}
 
-					} else {
-
-						if ( empty( $profileuser->scp_user_avatar ) ) {
-							echo '<span class="description">' . __( 'You do not have permission to upload an avatar.', 'sitecore' ) . '</span>';
+					else :
+						if ( empty( $profileuser->uap_user_avatar ) ) {
+							printf(
+								'<p class="description">%s</p>',
+								__( 'You do not have permission to upload an avatar.', 'sitecore' )
+							);
 
 						} else {
-							echo '<span class="description">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' ) . '</span>';
+							printf(
+								'<p class="description">%s</p>',
+								__( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' )
+							);
 						}
-					}
+					endif;
 					?>
 					</td>
 				</tr>
@@ -373,7 +411,7 @@ class User_Avatars {
 	public function edit_user_profile_update( $user_id ) {
 
 		// Check for nonce otherwise bail.
-		if ( ! isset( $_POST['_scp_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_scp_user_avatar_nonce'], 'scp_user_avatar_nonce' ) ) {
+		if ( ! isset( $_POST['_uap_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_uap_user_avatar_nonce'], 'uap_user_avatar_nonce' ) ) {
 			return;
 		}
 
@@ -394,7 +432,7 @@ class User_Avatars {
 			// Delete old images if successful.
 			$this->avatar_delete( $user_id );
 
-			// Need to be more secure since low privilege users can upload.
+			// Need to be more secure since low privelege users can upload.
 			if ( strstr( $_FILES['basic-user-avatar']['name'], '.php' ) ) {
 				wp_die( 'For security reasons, the extension ".php" cannot be in your file name.' );
 			}
@@ -419,7 +457,7 @@ class User_Avatars {
 			}
 
 			// Save user information, overwriting previous.
-			update_user_meta( $user_id, 'scp_user_avatar', [ 'full' => $avatar['url'] ] );
+			update_user_meta( $user_id, 'uap_user_avatar', [ 'full' => $avatar['url'] ] );
 
 		} elseif ( ! empty( $_POST['basic-user-avatar-erase'] ) ) {
 			$this->avatar_delete( $user_id );
@@ -449,33 +487,57 @@ class User_Avatars {
 		echo '<fieldset class="bbp-form avatar">';
 
 	 			echo get_avatar( $profileuser->ID );
-				$options = get_option( 'scp_user_avatars_caps' );
+				$options = get_option( 'uap_user_avatars_caps' );
 
-				if ( empty( $options ) || current_user_can( 'upload_files' ) ) {
+				if ( empty( $options ) || current_user_can( 'upload_files' ) ) :
 
 					// Nonce security.
-					wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
+					wp_nonce_field( 'uap_user_avatar_nonce', '_uap_user_avatar_nonce', false );
 
 					// File upload input.
-					echo '<br /><input type="file" name="basic-user-avatar" id="basic-local-avatar" /><br />';
+					$upload = sprintf(
+						'<label class="not-button avatar-upload-button" for="basic-user-avatar"><input class="not-screen-reader-text" type="file" name="basic-user-avatar" id="basic-user-avatar" aria-label="%s" /><span class="screen-reader-text">%s</span></label>',
+						__( 'Upload Avatar', 'sitecore' ),
+						__( 'Upload Avatar', 'sitecore' )
+					);
+					echo "<p>{$upload}</p>";
 
-					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . __( 'No local avatar is set. Use the upload field to add a local avatar.', 'sitecore' ) . '</span>';
+					if ( empty( $profileuser->uap_user_avatar ) ) {
+
+						printf(
+							'<p class="description">%s</p>',
+							__( 'No user avatar is set. Use the upload button to add an avatar.', 'sitecore' )
+						);
 
 					} else {
-						echo '<input type="checkbox" name="basic-user-avatar-erase" value="1" style="width:auto" /> ' . __( 'Delete local avatar', 'sitecore' ) . '<br />';
-						echo '<span class="description" style="margin-left:0;">' . __( 'Replace the local avatar by uploading a new avatar, or erase the local avatar (falling back to a gravatar) by checking the delete option.', 'sitecore' ) . '</span>';
+
+						$delete = sprintf(
+							'<label for="basic-user-avatar-erase"><input type="checkbox" name="basic-user-avatar-erase" value="1" /> %s</label>',
+							__( 'Delete local avatar', 'sitecore' )
+						);
+						echo "<p>{$delete}</p>";
+
+						printf(
+							'<p class="description">%s</p>',
+							__( 'Replace the avatar by uploading a new avatar or erase the current avatar by checking the delete option.', 'sitecore' )
+						);
 					}
 
-				} else {
+				else :
 
-					if ( empty( $profileuser->scp_user_avatar ) ) {
-						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have permission to upload an avatar.', 'sitecore' ) . '</span>';
+					if ( empty( $profileuser->uap_user_avatar ) ) {
+						printf(
+							'<p class="description">%s</p>',
+							__( 'You do not have permission to upload an avatar.', 'sitecore' )
+						);
 
 					} else {
-						echo '<span class="description" style="margin-left:0;">' . __( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' ) . '</span>';
+						printf(
+							'<p class="description">%s</p>',
+							__( 'You do not have media management permissions. To change your local avatar, contact the site administrator.', 'sitecore' )
+						);
 					}
-				}
+				endif;
 
 		echo '</fieldset>';
 		echo '</div>';
@@ -594,18 +656,26 @@ class User_Avatars {
 		// Local avatar options.
 		$defaults = [
 			'mystery' => esc_url( SCP_URL . 'assets/images/mystery.png' ),
+			'light'   => esc_url( SCP_URL . 'assets/images/mystery-light.png' ),
+			'dark'    => esc_url( SCP_URL . 'assets/images/mystery-dark.png' ),
 			'generic' => esc_url( SCP_URL . 'assets/images/generic.png' ),
 			'yellow'  => esc_url( SCP_URL . 'assets/images/yellow.png' ),
 			'pink'    => esc_url( SCP_URL . 'assets/images/pink.png' ),
 			'blue'    => esc_url( SCP_URL . 'assets/images/blue.png' ),
 			'violet'  => esc_url( SCP_URL . 'assets/images/violet.png' ),
+			'red'     => esc_url( SCP_URL . 'assets/images/red.png' ),
 			'green'   => esc_url( SCP_URL . 'assets/images/green.png' ),
 			'orange'  => esc_url( SCP_URL . 'assets/images/orange.png' ),
+			'black'   => esc_url( SCP_URL . 'assets/images/black.png' ),
+			'white'   => esc_url( SCP_URL . 'assets/images/white.png' ),
+			'gray'    => esc_url( SCP_URL . 'assets/images/gray.png' ),
+			'brown'   => esc_url( SCP_URL . 'assets/images/brown.png' ),
+			'tan'     => esc_url( SCP_URL . 'assets/images/tan.png' ),
 			'blank'   => esc_url( SCP_URL . 'assets/images/blank.png' )
 		];
 
 		// Return avatar types.
-		return apply_filters( 'scp_get_avatar_defaults', $defaults );
+		return apply_filters( 'uap_get_avatar_defaults', $defaults );
 	}
 
 	/**
@@ -631,12 +701,25 @@ class User_Avatars {
 		// Array of new avatar options.
 		$options = [
 			$defaults['mystery'] => __( 'Mystery', 'sitecore' ),
-			$defaults['generic'] => __( 'Generic', 'sitecore' ),
+			$defaults['light']   => __( 'Mystery Light', 'sitecore' ),
+			$defaults['dark']    => __( 'Mystery Dark', 'sitecore' ),
+			$defaults['yellow']  => __( 'Yellow', 'sitecore' ),
+			$defaults['pink']    => __( 'Pink', 'sitecore' ),
+			$defaults['blue']    => __( 'Blue', 'sitecore' ),
+			$defaults['violet']  => __( 'Violet', 'sitecore' ),
+			$defaults['red']     => __( 'Red', 'sitecore' ),
+			$defaults['green']   => __( 'Green', 'sitecore' ),
+			$defaults['orange']  => __( 'Orange', 'sitecore' ),
+			$defaults['brown']   => __( 'Brown', 'sitecore' ),
+			$defaults['tan']     => __( 'Tan', 'sitecore' ),
+			$defaults['black']   => __( 'Black', 'sitecore' ),
+			$defaults['white']   => __( 'White', 'sitecore' ),
+			$defaults['gray']    => __( 'Gray', 'sitecore' ),
 			$defaults['blank']   => __( 'Blank', 'sitecore' )
 		];
 
 		// Return new avatar options.
-		return apply_filters( 'scp_avatar_defaults', $options );
+		return apply_filters( 'uap_avatar_defaults', $options );
 	}
 
 	/**
@@ -648,7 +731,7 @@ class User_Avatars {
 	 */
 	public function avatar_delete( $user_id ) {
 
-		$old_avatars = get_user_meta( $user_id, 'scp_user_avatar', true );
+		$old_avatars = get_user_meta( $user_id, 'uap_user_avatar', true );
 		$upload_path = wp_upload_dir();
 
 		if ( is_array( $old_avatars ) ) {
@@ -658,7 +741,7 @@ class User_Avatars {
 			}
 		}
 
-		delete_user_meta( $user_id, 'scp_user_avatar' );
+		delete_user_meta( $user_id, 'uap_user_avatar' );
 	}
 
 	/**

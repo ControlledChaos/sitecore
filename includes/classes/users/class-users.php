@@ -42,7 +42,9 @@ class Users {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
 		// Local user avatars.
-		// new User_Avatars;
+		if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
+			new User_Avatars;
+		}
 
 		// Move the personal data menu items.
 		add_action( 'admin_menu', [ $this, 'menus_personal_data' ] );
