@@ -320,8 +320,8 @@ class Admin {
 
 		// Add a new top-level Menus page.
 		add_menu_page(
-			__( 'Menus', 'sitecore' ),
-			__( 'Menus', 'sitecore' ),
+			__( 'Navigation Menus', 'sitecore' ),
+			__( 'Navigation', 'sitecore' ),
 			'delete_others_pages',
 			'nav-menus.php',
 			'',
