@@ -119,7 +119,21 @@ class Admin {
 	 */
 	public function admin_enqueue_scripts() {
 
-		// wp_enqueue_script();
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
+		/**
+		 * Enqueue plugin tabs system
+		 *
+		 * The tabs script is required for the content tabs added by
+		 * child classes of the `Add_Page` class. This creates tabbed
+		 * content on admin pages, settings pages, & the dashboard.
+		 */
+		wp_enqueue_script( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
 	}
 
 	/**
@@ -134,14 +148,30 @@ class Admin {
 	 */
 	public function admin_enqueue_styles() {
 
+		// Script suffix.
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			$suffix = '';
+		} else {
+			$suffix = '.min';
+		}
+
 		/**
-		 * Enqueue the general backend styles.
+		 * Enqueue general backend styles
 		 *
 		 * Included are just a few style rules for features added by this plugin.
 		 *
 		 * @since 1.0.0
 		 */
-		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-admin', SCP_URL . 'assets/css/admin.min.css', [], '', 'all' );
+		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-admin', SCP_URL . 'assets/css/admin' . $suffix . '.css', [], '', 'all' );
+
+		/**
+		 * Enqueue admin tabs styles
+		 *
+		 * The tabs stylesheet is required for the content tabs added by
+		 * child classes of the `Add_Page` class. This creates tabbed
+		 * content on admin pages, settings pages, & the dashboard.
+		 */
+		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/css/admin-tabs' . $suffix . '.css', [], '', 'all' );
 	}
 
 	/**
@@ -326,7 +356,7 @@ class Admin {
 
 		if ( 'widgets.php' == $pagenow ) {
 			$parent_file = 'widgets.php';
-		}elseif ( 'nav-menus.php' == $pagenow ) {
+		} elseif ( 'nav-menus.php' == $pagenow ) {
 			$parent_file = 'nav-menus.php';
 		}
 		return $parent_file;
