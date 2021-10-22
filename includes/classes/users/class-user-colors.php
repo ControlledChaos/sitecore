@@ -51,7 +51,7 @@ class User_Colors {
 
 		// Rename "Default" as "Fresh".
 		if ( 'fresh' == $scheme ) {
-			return __( 'Fresh', 'dashboard-summary' );
+			return __( 'Fresh', 'sitecore' );
 		}
 
 		// The name if not the default scheme.
