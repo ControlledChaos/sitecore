@@ -8,7 +8,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes;
+namespace SiteCore\Classes\Users;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
