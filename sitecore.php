@@ -72,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /**
- * Renaming the plugin
+ * Renaming & rebranding the plugin
  *
  * First change the name of this file to reflect the new name of your plugin.
  * Or leave the name since it clearly describes the purpose of the plugin.
@@ -118,9 +118,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    Find `https://github.com/ControlledChaos/sitecore` and replace with the
  *    URI of your plugin.
  *
- * 10. Edit the README file in the root directory as needed, or delete it.
+ * 10. Change the developer backup account info in the `Users` class.
+ *     @see includes/classes/users/class-users.php
  *
- * 11. Finally, remember to modify or remove any instructional information in
+ * 11. Edit the README file in the root directory as needed, or delete it.
+ *
+ * 12. Finally, remember to modify or remove any instructional information in
  * admin pages, including contextual help tabs. Remove these renaming
  * instructions as desired.
  */
