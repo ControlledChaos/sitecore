@@ -75,8 +75,8 @@ $avatar = get_avatar(
 				<li><?php _e( 'User roles:', 'sitecore' ); ?> <strong><?php echo $user->user_roles(); ?></strong></li>
 				<li><?php _e( 'Account email:', 'sitecore' ); ?> <strong><?php echo $user->email(); ?></strong></li>
 				<li><?php _e( 'Your website:', 'sitecore' ); ?> <strong><?php echo $user->website(); ?></strong></li>
-				<li><?php _e( 'Admin color scheme:', 'sitecore' ); ?> <strong><?php echo $colors->get_user_color_scheme(); ?></strong></li>
-				<li><?php _e( 'Frontend toolbar:', 'sitecore' ); ?> <strong><?php echo $user->toolbar(); ?></strong></li>
+				<li><?php _e( 'Admin color scheme:', 'sitecore' ); ?> <a href="<?php echo admin_url( 'profile.php' ); ?>#color-picker"><strong><?php echo $colors->get_user_color_scheme(); ?></strong></a></li>
+				<li><?php _e( 'Frontend toolbar:', 'sitecore' ); ?> <a href="<?php echo admin_url( 'profile.php' ); ?>#admin_bar_front"><strong><?php echo $user->toolbar(); ?></strong></a></li>
 			</ul>
 		</div>
 
