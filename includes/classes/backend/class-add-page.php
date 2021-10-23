@@ -713,18 +713,7 @@ class Add_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function admin_enqueue_scripts() {
-
-		// Script suffix.
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			$suffix = '';
-		} else {
-			$suffix = '.min';
-		}
-
-		// Enqueue plugin tabs system.
-		wp_enqueue_script( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
-	}
+	public function admin_enqueue_scripts() {}
 
 	/**
 	 * Print page styles
@@ -738,12 +727,5 @@ class Add_Page {
 	 * @access public
 	 * @return string
 	 */
-	public function admin_print_styles() {
-
-		// Styles for the tabbed content.
-		$style  = '<style>';
-		$style .= file_get_contents( SCP_PATH . 'assets/css/admin-tabs.min.css' );
-		$style .= '</style>';
-		echo $style;
-	}
+	public function admin_print_styles() {}
 }
