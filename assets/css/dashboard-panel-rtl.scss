@@ -1,0 +1,30 @@
+///
+/// Dashboard panel
+///
+/// These RTL styles are for the widget that
+/// replaces the core welcome panel.
+///
+
+#dashboard-panel {
+
+	.dashboard-panel-column {
+		float: right;
+
+		&:not( :last-of-type ) {
+			padding-right: unset;
+			padding-left: 1rem;
+		}
+	}
+
+	.dashboard-panel-section-intro {
+		padding: 1rem 0 0 2rem;
+
+		figure {
+			margin: 0 0 0 1em;
+
+			@media screen and ( max-width: 799px ) {
+				float: right;
+			}
+		}
+	}
+}
