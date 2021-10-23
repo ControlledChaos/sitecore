@@ -326,7 +326,7 @@ class User_Avatars {
 		?>
 		<h2><?php _e( 'User Avatar', 'sitecore' ); ?></h2>
 
-		<table class="form-table">
+		<table id="avatar-profile-screen" class="form-table">
 			<tbody>
 				<tr>
 					<th><label for="basic-user-avatar"><?php _e( 'Upload or Delete', 'sitecore' ); ?></label></th>
@@ -482,7 +482,7 @@ class User_Avatars {
 		$user_id     = get_current_user_id();
 		$profileuser = get_userdata( $user_id );
 
-		echo '<div>';
+		echo '<div id="avatar-profile-screen">';
 		echo '<label for="basic-local-avatar">' . __( 'Avatar', 'sitecore' ) . '</label>';
 		echo '<fieldset class="bbp-form avatar">';
 
