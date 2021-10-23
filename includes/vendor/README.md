@@ -64,6 +64,12 @@ The following docblock replaces the plugin header in the main file.
 * Replace the condition for the `acfe_dynamic_block_types` class in `acf-extended/includes/modules/block-types.php`.  
   Replace with: `if ( ! class_exists( 'acfe_dynamic_block_types' ) && class_exists( 'acf_pro' ) ) :`
 
+* Replace the condition for the `acfe_dynamic_block_types_import` class in `acf-extended/includes/admin/tools/block-types-import.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_dynamic_block_types_import' ) && class_exists( 'acf_pro' ) ) :`
+
+* Replace the condition for the `acfe_dynamic_block_types_export` class in `acf-extended/includes/admin/tools/block-types-export.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_dynamic_block_types_export' ) && class_exists( 'acf_pro' ) ) :`
+
 * Replace the condition for the `acfe_dynamic_options_pages` class in `acf-extended/includes/modules/options-pages.php`.  
   Replace with: `if ( ! class_exists( 'acfe_dynamic_options_pages' ) && class_exists( 'acf_pro' ) ) :`
 
@@ -72,5 +78,14 @@ The following docblock replaces the plugin header in the main file.
 
 * Replace the condition for the `acfe_field_flexible_content` class in `acf-extended/includes/fields/field-flexible-content.php`.  
   Replace with: `if ( ! class_exists( 'acfe_field_flexible_content' ) && class_exists( 'acf_pro' ) ) :`
+
+* In the `acfe_upgrades` class add a check for ACF Pro in the `do_reset()` method.
+  ```
+  // Modules
+  if ( class_exists( 'acf_pro' ) ) {
+      acf_get_instance('acfe_dynamic_block_types')->reset();
+      acf_get_instance('acfe_dynamic_options_pages')->reset();
+  }
+  ```
 
 It is recommended to retain the `index.php` security file in the `acf-extended` directory.
