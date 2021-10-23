@@ -376,7 +376,7 @@ class Register_Type {
 		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], 10, 2 );
 
 		// Use block editor.
-		add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], 10, 1 );
+		// add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], 10, 1 );
 
 		// Rewrite post type labels.
 		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );
@@ -534,7 +534,7 @@ class Register_Type {
 
 		// Only modify this post type.
 		if ( $this->type_key != $post_type ) {
-			return;
+			return true;
 		}
 		return $this->use_block_editor;
 	}
