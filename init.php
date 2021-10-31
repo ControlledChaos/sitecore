@@ -189,7 +189,8 @@ function init() {
 }
 
 // Run initialization function.
-init();
+// init();
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 
 /**
  * Admin initialization function
