@@ -160,7 +160,22 @@ class Post_Edit {
 
 				$type = get_post_type_object( $post_type );
 
-				$wp_meta_boxes[ $type->name ]['normal']['core']['postexcerpt']['title'] = __( 'Content Summary', 'sitecore' );
+				// Metabox title with post type name.
+				if (
+					isset( $type->labels->singular_name ) &&
+					is_string( $type->labels->singular_name ) &&
+					! empty( $type->labels->singular_name )
+				) {
+					$title = sprintf(
+						'%s %s',
+						$type->labels->singular_name,
+						__( 'Summary', 'sitecore' )
+					);
+				} else {
+					$title = __( 'Content Summary', 'sitecore' );
+				}
+
+				$wp_meta_boxes[ $type->name ]['normal']['core']['postexcerpt']['title']    = $title;
 				$wp_meta_boxes[ $type->name ]['normal']['core']['postexcerpt']['callback'] = [ $this, 'excerpt_metabox_callback' ];
 			}
 		}
