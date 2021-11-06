@@ -23,7 +23,7 @@ use SiteCore\Classes\Front\Meta as Meta;
 <meta name="DC.Relation" content="<?php echo esc_attr( esc_url( site_url() ) ); ?>" scheme="IsPartOf" />
 <meta name="DC.Creator" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 <meta name="DC.Subject" content="<?php echo esc_attr( Meta\data()->description() ); ?>" />
-<meta name="DC.Contributor" content="<?php esc_attr( Meta\data()->author() ); ?>" />
+<meta name="DC.Contributor" content="<?php echo esc_attr( Meta\data()->author() ); ?>" />
 <?php if ( is_singular() ) : ?>
 <meta name="DC.Date" content="<?php echo esc_attr( get_the_date() ); ?>" />
 <?php endif; ?>
