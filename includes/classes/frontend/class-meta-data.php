@@ -129,7 +129,14 @@ class Meta_Data {
 	 */
 	public function description() {
 
+		// Site description (tagline).
 		$site_description = wp_strip_all_tags( get_bloginfo( 'description' ) );
+
+		// Get the manual excerpt from the metabox.
+		$manual_excerpt   = get_post( get_the_ID() )->post_excerpt;
+
+		// Auto excerpt from content as a fallback.
+		$auto_excerpt = wp_strip_all_tags( wp_trim_words( get_the_content(), 40, '&hellp;' ) );
 
 		$search = wp_strip_all_tags(
 			sprintf(
@@ -139,20 +146,14 @@ class Meta_Data {
 			)
 		);
 
-		// Look for a manual excerpt.
-		$manual_excerpt = wp_strip_all_tags( get_the_excerpt() );
-
-		// Auto excerpt from content as a fallback.
-		$auto_excerpt = wp_strip_all_tags( wp_trim_words( get_the_content(), 40, '&hellp;' ) );
-
 		if ( ! empty( $site_description ) && ( is_front_page() || is_home() ) ) {
 			$description = $site_description;
 
 		} elseif ( is_search() ) {
 			$description = $search;
 
-		} elseif ( has_excerpt() ) {
-			$description = $manual_excerpt;
+		} elseif ( has_excerpt() && ! ctype_space( $manual_excerpt ) ) {
+			$description = wp_strip_all_tags( $manual_excerpt );
 
 		} elseif ( ! empty( $auto_excerpt ) ) {
 			$description = $auto_excerpt;
