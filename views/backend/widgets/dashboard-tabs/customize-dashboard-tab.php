@@ -132,9 +132,6 @@ if ( $get_theme_domain ) {
 				<?php if ( $get_template ) : ?>
 				<li><strong><?php _e( 'Template: ', 'sitecore' ); ?></strong><?php echo $parent_name; ?></li>
 				<?php endif; ?>
-				<li><strong><?php esc_html_e( 'Theme URI: ', 'sitecore' ); ?></strong><?php echo $theme_uri; ?></li>
-				<li><strong><?php esc_html_e( 'Author: ', 'sitecore' ); ?></strong><?php echo $author; ?></li>
-				<li><strong><?php esc_html_e( 'Author URI: ', 'sitecore' ); ?></strong><?php echo $author_uri; ?></li>
 				<li><strong><?php esc_html_e( 'Version: ', 'sitecore' ); ?></strong><?php echo $version; ?></li>
 				<?php if ( $get_theme_min_wp ) : ?>
 				<li><strong><?php _e( 'System Minimum: ', 'sitecore' ); ?></strong><?php echo $get_theme_min_wp; ?></li>
@@ -143,6 +140,9 @@ if ( $get_theme_domain ) {
 				<li><strong><?php _e( 'PHP Minimum: ', 'sitecore' ); ?></strong><?php echo $get_theme_min_php; ?></li>
 				<?php endif; ?>
 				<li><strong><?php esc_html_e( 'Text Domain: ', 'sitecore' ); ?></strong><?php echo $domain; ?></li>
+				<li><strong><?php esc_html_e( 'Theme URI: ', 'sitecore' ); ?></strong><?php echo $theme_uri; ?></li>
+				<li><strong><?php esc_html_e( 'Author: ', 'sitecore' ); ?></strong><?php echo $author; ?></li>
+				<li><strong><?php esc_html_e( 'Author URI: ', 'sitecore' ); ?></strong><?php echo $author_uri; ?></li>
 			</ul>
 		</div>
 
