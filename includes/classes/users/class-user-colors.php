@@ -49,10 +49,23 @@ class User_Colors {
 		$option = get_user_option( 'admin_color' );
 		$scheme = array_key_exists( $option, $_wp_admin_css_colors );
 
+		/**
+		 * Default or unknown scheme
+		 *
+		 * If `fresh` is the user option then change the label from
+		 * "Default" to "Fresh". If the option is unknown — if the
+		 * user option is from a plugin or theme that has been
+		 * deactivated — then the system uses the default scheme so
+		 * use the "Fresh" label is applied in that instance.
+		 */
 		if ( ! $scheme || 'fresh' == $option ) {
 			$name = __( 'Fresh', 'sitecore' );
+
+		// Use the scheme name if available.
 		} elseif ( $scheme ) {
 			$name = $_wp_admin_css_colors[$option]->name;
+
+		// A fallback that is likely unnecessary.
 		} else {
 			$name = __( 'Not available', 'sitecore' );
 		}
