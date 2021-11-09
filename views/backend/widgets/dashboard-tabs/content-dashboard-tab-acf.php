@@ -9,6 +9,6 @@
  */
 
  ?>
- <div id="content" class="dashboard-panel-content dashboard-content-content">
+ <div id="content" class="dashboard-panel-content dashboard-content-content" style="display: none;">
 Hello.
 </div>
