@@ -346,7 +346,7 @@ class Meta_Data {
 			return;
 		}
 
-		$date = get_the_date( 'Y-m-d' );
+		$date = get_the_date( 'M d, Y' );
 		return apply_filters( 'scp_meta_data_published', $date );
 
 	}
@@ -365,8 +365,39 @@ class Meta_Data {
 			return;
 		}
 
-		$date = get_post_modified_time( 'Y-m-d' );
+		$date = get_post_modified_time( 'M d, Y' );
 		return apply_filters( 'scp_meta_data_modified', $date );
+	}
+
+	/**
+	 * Get image ID from URL
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $url
+	 * @return mixed Returns an attachment ID or null.
+	 */
+	public function image_url_id( $url ) {
+
+		// Split the $url into two parts with the wp-content directory as the separator.
+		$parsed_url = explode( parse_url( WP_CONTENT_URL, PHP_URL_PATH ), $url );
+
+		// Get the host of the current site and the host of the $url, ignoring www.
+		$this_host = str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
+		$file_host = str_ireplace( 'www.', '', parse_url( $url, PHP_URL_HOST ) );
+
+		// Return nothing if there aren't any $url parts or if the current host and $url host do not match.
+		if ( ! isset( $parsed_url[1] ) || empty( $parsed_url[1] ) || ( $this_host != $file_host ) ) {
+			return;
+		}
+
+		// Search the database for any attachment GUID with a partial path match.
+		// Example: /uploads/2021/10/example-image.jpg
+		global $wpdb;
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->prefix}posts WHERE guid RLIKE %s;", $parsed_url[1] ) );
+
+		// Return attachment ID or null.
+		return $attachment[0];
 	}
 
 	/**
