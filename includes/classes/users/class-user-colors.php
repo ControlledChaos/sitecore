@@ -46,15 +46,18 @@ class User_Colors {
 		global $_wp_admin_css_colors;
 
 		// Get the name of the user's color scheme.
-		$scheme = get_user_option( 'admin_color' );
-		$name   = $_wp_admin_css_colors[$scheme]->name;
+		$option = get_user_option( 'admin_color' );
+		$scheme = array_key_exists( $option, $_wp_admin_css_colors );
 
-		// Rename "Default" as "Fresh".
-		if ( 'fresh' == $scheme ) {
-			return __( 'Fresh', 'sitecore' );
+		if ( ! $scheme || 'fresh' == $option ) {
+			$name = __( 'Fresh', 'sitecore' );
+		} elseif ( $scheme ) {
+			$name = $_wp_admin_css_colors[$option]->name;
+		} else {
+			$name = __( 'Not available', 'sitecore' );
 		}
 
-		// The name if not the default scheme.
+		// The name of the color scheme.
 		return $name;
 	}
 
