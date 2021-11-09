@@ -197,11 +197,12 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
  * @since  1.0.0
  * @access public
  * @global $pagenow Get the current admin screen.
+ * @global $typenow Get the current post type screen.
  * @return void
  */
 function admin_init() {
 
-	// Access current admin page.
-	global $pagenow;
+	// Access global variables.
+	global $pagenow, $typenow;
 }
 add_action( 'plugins_loaded', __NAMESPACE__ . '\admin_init' );
