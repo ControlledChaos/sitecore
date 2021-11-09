@@ -187,9 +187,6 @@ function init() {
 	// Disable WordPress administration email verification prompt.
 	add_filter( 'admin_email_check_interval', '__return_false' );
 }
-
-// Run initialization function.
-// init();
 add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 
 /**
@@ -207,4 +204,4 @@ function admin_init() {
 	// Access current admin page.
 	global $pagenow;
 }
-add_action( 'admin_init', __NAMESPACE__ . '\admin_init' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\admin_init' );
