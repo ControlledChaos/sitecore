@@ -23,19 +23,21 @@ if ( $theme_icon ) {
 }
 
 // Get theme data as variables.
-$get_theme        = wp_get_theme();
-$get_theme_name   = $get_theme->get( 'Name' );
-$get_template     = $get_theme->get( 'Template' );
-$get_parent       = wp_get_theme( get_template() );
-$parent_name      = $get_parent->get( 'Name' );
-$get_theme_uri    = $get_theme->get( 'ThemeURI' );
-$get_author       = $get_theme->get( 'Author' );
-$get_author_uri   = $get_theme->get( 'AuthorURI' );
-$get_theme_desc   = $get_theme->get( 'Description' );
-$get_theme_vers   = $get_theme->get( 'Version' );
-$get_theme_domain = $get_theme->get( 'TextDomain' );
-$get_theme_tags   = $get_theme->get( 'Tags' );
-$screenshot_src   = $get_theme->get_screenshot();
+$get_theme         = wp_get_theme();
+$get_theme_name    = $get_theme->get( 'Name' );
+$get_template      = $get_theme->get( 'Template' );
+$get_parent        = wp_get_theme( get_template() );
+$parent_name       = $get_parent->get( 'Name' );
+$get_theme_uri     = $get_theme->get( 'ThemeURI' );
+$get_author        = $get_theme->get( 'Author' );
+$get_author_uri    = $get_theme->get( 'AuthorURI' );
+$get_theme_desc    = $get_theme->get( 'Description' );
+$get_theme_vers    = $get_theme->get( 'Version' );
+$get_theme_min_wp  = $get_theme->get( 'RequiresWP' );
+$get_theme_min_php = $get_theme->get( 'RequiresPHP' );
+$get_theme_domain  = $get_theme->get( 'TextDomain' );
+$get_theme_tags    = $get_theme->get( 'Tags' );
+$screenshot_src    = $get_theme->get_screenshot();
 
 // Text if data is not provided by the theme.
 $not_provided = __( 'Not provided in the stylesheet header', 'sitecore' );
@@ -75,7 +77,7 @@ if ( $get_theme_vers ) {
 	$version = $not_provided;
 }
 
-// Theme text domain;
+// Theme text domain.
 if ( $get_theme_domain ) {
 	$domain = $get_theme_domain;
 } else {
@@ -127,7 +129,20 @@ if ( $get_theme_domain ) {
 			<h3><?php _e( 'Theme Details', 'sitecore' ); ?></h3>
 
 			<ul>
-				<?php do_action( 'customize_dashboard_tab_content_options' ); ?>
+				<?php if ( $get_template ) : ?>
+				<li><strong><?php _e( 'Template: ', 'sitecore' ); ?></strong><?php echo $parent_name; ?></li>
+				<?php endif; ?>
+				<li><strong><?php esc_html_e( 'Theme URI: ', 'sitecore' ); ?></strong><?php echo $theme_uri; ?></li>
+				<li><strong><?php esc_html_e( 'Author: ', 'sitecore' ); ?></strong><?php echo $author; ?></li>
+				<li><strong><?php esc_html_e( 'Author URI: ', 'sitecore' ); ?></strong><?php echo $author_uri; ?></li>
+				<li><strong><?php esc_html_e( 'Version: ', 'sitecore' ); ?></strong><?php echo $version; ?></li>
+				<?php if ( $get_theme_min_wp ) : ?>
+				<li><strong><?php _e( 'System Minimum: ', 'sitecore' ); ?></strong><?php echo $get_theme_min_wp; ?></li>
+				<?php endif; ?>
+				<?php if ( $get_theme_min_php ) : ?>
+				<li><strong><?php _e( 'PHP Minimum: ', 'sitecore' ); ?></strong><?php echo $get_theme_min_php; ?></li>
+				<?php endif; ?>
+				<li><strong><?php esc_html_e( 'Text Domain: ', 'sitecore' ); ?></strong><?php echo $domain; ?></li>
 			</ul>
 		</div>
 
