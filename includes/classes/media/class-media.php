@@ -86,6 +86,14 @@ class Media {
 		add_image_size( 'meta-image', 1280, 720, true );
 
 		/**
+		 * Admin avatar & icon
+		 *
+		 * For use as with user avatars and admin icons.
+		 * 1:1 aspect ratio.
+		 */
+		add_image_size( 'admin-avatar', 160, 160, true );
+
+		/**
 		 * Column thumbnail
 		 *
 		 * For use as featured image in admin columns.
