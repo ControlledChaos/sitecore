@@ -22,9 +22,6 @@
 
 namespace SiteCore;
 
-// Alias namespaces.
-use SiteCore\Classes\Activate as Activate;
-
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -149,12 +146,8 @@ require plugin_dir_path( __FILE__ ) . 'config.php';
  * for PHP version which otherwise disables the functionality of
  * the plugin.
  */
-
-// Get the plugin activation class.
-include_once SCP_PATH . 'activate/classes/class-activate.php';
-
-// Get the plugin deactivation class.
-include_once SCP_PATH . 'activate/classes/class-deactivate.php';
+include_once SCP_PATH . 'includes/activate/activate.php';
+include_once SCP_PATH . 'includes/activate/deactivate.php';
 
 /**
  * Register the activation & deactivation hooks
@@ -181,11 +174,8 @@ include_once SCP_PATH . 'activate/classes/class-deactivate.php';
  */
 function activate_plugin() {
 
-	// Instantiate the Activate class.
-	$activate = new Activate\Activate;
-
 	// Update options.
-	$activate->options();
+	Activate\options();
 }
 
 /**
@@ -199,11 +189,8 @@ function activate_plugin() {
  */
 function deactivate_plugin() {
 
-	// Instantiate the Activate class.
-	$deactivate = new Activate\Deactivate;
-
 	// Update options.
-	$deactivate->options();
+	Deactivate\options();
 }
 
 /**
@@ -226,8 +213,7 @@ function deactivate_plugin() {
 if ( ! Classes\php()->version() ) {
 
 	// First add a notice to the plugin row.
-	$activate = new Activate\Activate;
-	$activate->get_row_notice();
+	Activate\get_row_notice();
 
 	// Stop here.
 	return;
