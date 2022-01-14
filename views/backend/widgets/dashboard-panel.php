@@ -8,47 +8,59 @@
  * @since      1.0.0
  */
 
-// Get the current user data for the greeting.
-$current_user = wp_get_current_user();
-$user_id      = get_current_user_id();
-$user_name    = $current_user->display_name;
-$avatar       = get_avatar(
-	$user_id,
-	64,
-	'',
-	$current_user->display_name,
-	[
-		'class'         => 'welcome-panel-avatar alignnone',
-		'force_display' => true
-		]
+/**
+ * Panel tabs
+ *
+ * The customize panel is only available
+ * to user who can customize themes.
+ */
+if ( current_user_can( 'customize' ) ) {
+	$customize = sprintf(
+        '<li class="content-tab"><a href="%1s"><span class="dashicons dashicons-art"></span> %2s</a></li>',
+		'#customize',
+       __( 'Customize', 'sitecore' )
+	);
+} else {
+	$customize = null;
+}
+
+$content = sprintf(
+	'<li class="content-tab"><a href="%1s"><span class="dashicons dashicons-edit-page"></span> %2s</a></li>',
+	'#content',
+   __( 'Content', 'sitecore' )
 );
 
+$tabs = apply_filters( 'scp_dashboard_panel_tabs', [
+
+    // Welcome tab, initially active.
+    sprintf(
+        '<li class="content-tab active"><a href="%1s"><span class="dashicons dashicons-welcome-learn-more"></span> %2s</a></li>',
+        '#welcome',
+        __( 'Welcome', 'sitecore' )
+	),
+	$content,
+	$customize
+] );
+
 ?>
-<div class="welcome-panel welcome-panel-custom">
-	<div class="dashboard-content-wrapper">
-		<div id="dashboard-get-started" class="welcome-panel-column">
-			<h3><?php _e( 'Get Started', 'sitecore' ); ?></h3>
-			<div class="dashboard-panel-section-intro dashboard-panel-user-greeting">
+<div id="dashboard-panel" class="dashboard-panel">
+	<div class="admin-tabs" data-tabbed="tabbed" data-tabdeeplinking="falsee">
 
-				<figure>
-					<a href="<?php echo esc_url( admin_url( 'profile.php' ) ); ?>">
-						<?php echo $avatar; ?>
-					</a>
-					<figcaption class="screen-reader-text"><?php echo $user_name; ?></figcaption>
-				</figure>
+		<ul class="admin-tabs-list hide-if-no-js">
+			<?php echo implode( $tabs ); ?>
+		</ul>
+		<?php
 
-				<div>
-					<?php echo sprintf(
-						'<h4>%1s %2s.</h4>',
-						esc_html__( 'Howdy,', 'sitecore' ),
-						$user_name
-					); ?>
-					<p><?php _e( 'This site may display your profile in posts that you author, and it offers user-defined color schemes.', 'sitecore' ); ?></p>
-					<p class="dashboard-panel-call-to-action"><a class="button button-primary button-hero" href="<?php echo esc_url( admin_url( 'profile.php' ) ); ?>"><?php _e( 'Manage Your Profile' ); ?></a></p>
-					<p class="description"><?php _e( 'Edit your display name & bio.', 'sitecore' ); ?></p>
-				</div>
+		// Welcome tab.
+		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/welcome-dashboard-tab' . $acf->suffix() . '.php' );
 
-			</div>
-		</div>
+		// Customize tab.
+		if ( current_user_can( 'customize' ) ) {
+			include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/customize-dashboard-tab' . $acf->suffix() . '.php' );
+		}
+
+		// Content tab.
+		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/content-dashboard-tab' . $acf->suffix() . '.php' );
+		?>
 	</div>
 </div>

@@ -10,11 +10,11 @@
 
 // Get icon URL or fallback.
 $theme_icon = get_theme_file_uri( '/assets/images/theme-icon.jpg' );
-$brush_icon = SCP_URL . 'assets/images/brush-icon.svg';
+$brush_icon = SCP_URL . 'assets/images/theme-brush-icon.svg';
 $get_logo   = get_theme_mod( 'custom_logo' );
-$logo_url   = wp_get_attachment_image_src( $get_logo, 'full' );
+$logo_url   = wp_get_attachment_image_src( $get_logo, 'admin-avatar' );
 
-if ( $theme_icon ) {
+if ( file_exists( $theme_icon ) ) {
 	$icon_url = $theme_icon;
 } elseif ( has_custom_logo( get_current_blog_id() ) ) {
 	$icon_url = $logo_url[0];
@@ -153,8 +153,10 @@ if ( $get_theme_domain ) {
 			<ul>
 				<li><a class="dashboard-icon customize-icon-schemes" href="<?php echo esc_url( wp_customize_url() ); ?>"><?php _e( 'Choose color schemes', 'sitecore' ); ?></a></li>
 				<li><a class="dashboard-icon customize-icon-headers" href="<?php echo esc_url( wp_customize_url() ); ?>"><?php _e( 'Set site & page headers', 'sitecore' ); ?></a></li>
-				<li><a class="dashboard-icon customize-icon-typography" href="<?php echo esc_url( wp_customize_url() . '?url=' . site_url() . '&autofocus[section]=typography_options&return=' . site_url() ); ?>"><?php _e( 'Design your typography', 'sitecore' ); ?></a></li>
-				<li><a class="dashboard-icon customize-icon-background" href="<?php echo esc_url( wp_customize_url() . '?url=' . site_url() . '&autofocus[section]=background_image&return=' . site_url() ); ?>"><?php _e( 'Site background', 'sitecore' ); ?></a></li>
+				<li><a class="dashboard-icon customize-icon-typography" href="<?php echo esc_url( wp_customize_url() . '?url=' . site_url() . '&autofocus[section]=typography_options&return=' . admin_url() ); ?>"><?php _e( 'Design your typography', 'sitecore' ); ?></a></li>
+				<?php if ( current_theme_supports( 'custom-background' ) ) : ?>
+				<li><a class="dashboard-icon customize-icon-background" href="<?php echo esc_url( wp_customize_url() . '?url=' . site_url() . '&autofocus[section]=background_image&return=' . admin_url() ); ?>"><?php _e( 'Site background', 'sitecore' ); ?></a></li>
+				<?php endif; ?>
 				<?php do_action( 'customize_dashboard_tab_appearance_options' ); ?>
 			</ul>
 		</div>
