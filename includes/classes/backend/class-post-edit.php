@@ -32,7 +32,7 @@ class Post_Edit {
 		// Replace default post title placeholders.
 		add_filter( 'enter_title_here', [ $this, 'title_placeholders' ] );
 
-		// Add excerpts to pages for use in meta data.
+		// Add excerpts to page post type.
 		add_action( 'init', [ $this, 'add_page_excerpts' ] );
 
 		// Show excerpt metabox by default.
@@ -80,7 +80,7 @@ class Post_Edit {
 	}
 
 	/**
-	 * Add excerpts to pages for use in meta data.
+	 * Add excerpts to page post type
 	 *
 	 * @since  1.0.0
 	 * @access public
