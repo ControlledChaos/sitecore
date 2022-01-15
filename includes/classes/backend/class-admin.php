@@ -133,7 +133,7 @@ class Admin {
 		 * child classes of the `Add_Page` class. This creates tabbed
 		 * content on admin pages, settings pages, & the dashboard.
 		 */
-		wp_enqueue_script( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
+		wp_enqueue_script( 'scp-tabs', SCP_URL . 'assets/js/admin-tabs' . $suffix . '.js', [ 'jquery' ], '', true );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class Admin {
 		 *
 		 * @since 1.0.0
 		 */
-		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-admin', SCP_URL . 'assets/css/admin' . $suffix . '.css', [], '', 'all' );
+		wp_enqueue_style( 'scp-admin', SCP_URL . 'assets/css/admin' . $suffix . '.css', [], '', 'all' );
 
 		/**
 		 * Enqueue admin tabs styles
@@ -171,7 +171,7 @@ class Admin {
 		 * child classes of the `Add_Page` class. This creates tabbed
 		 * content on admin pages, settings pages, & the dashboard.
 		 */
-		wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-tabs', SCP_URL . 'assets/css/admin-tabs' . $suffix . '.css', [], '', 'all' );
+		wp_enqueue_style( 'scp-tabs', SCP_URL . 'assets/css/admin-tabs' . $suffix . '.css', [], '', 'all' );
 	}
 
 	/**

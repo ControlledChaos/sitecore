@@ -151,20 +151,6 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
 
 		/**
-		 * Universal slug
-		 *
-		 * This URL slug is used for various plugin admin & settings pages.
-		 *
-		 * The prefix will change in your search & replace in renaming the plugin.
-		 * Change the second part of the define(), here as 'site-core',
-		 * to your preferred page slug.
-		 *
-		 * @since 1.0.0
-		 * @var   string The URL slug of the admin pages.
-		 */
-		'admin_slug' => 'site-core',
-
-		/**
 		 * Allow Site Health
 		 *
 		 * @since 1.0.0

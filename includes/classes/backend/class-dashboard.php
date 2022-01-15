@@ -147,10 +147,10 @@ class Dashboard {
 
 		// Enqueue only on the Dashboard screen.
 		if ( $screen->id == 'dashboard' ) {
-			wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-dashboard', SCP_URL .  'assets/css/dashboard-panel' . $suffix . '.css', [], null, 'screen' );
+			wp_enqueue_style( 'scp-dashboard', SCP_URL .  'assets/css/dashboard-panel' . $suffix . '.css', [], null, 'screen' );
 
 			if ( is_rtl() ) {
-				wp_enqueue_style( SCP_CONFIG['admin_slug'] . '-dashboard-rtl', SCP_URL .  'assets/css/dashboard-panel-rtl' . $suffix . '.css', [], null, 'screen' );
+				wp_enqueue_style( 'scp-dashboard-rtl', SCP_URL .  'assets/css/dashboard-panel-rtl' . $suffix . '.css', [], null, 'screen' );
 			}
 		}
 	}
