@@ -18,8 +18,7 @@ SiteCore\Classes\Settings   as Settings,
 SiteCore\Classes\Tools      as Tools,
 SiteCore\Classes\Media      as Media,
 SiteCore\Classes\Users      as Users,
-SiteCore\Classes\Admin      as Admin_Class,
-SiteCore\Classes\Front      as Front_Class,
+SiteCore\Classes\Admin      as Backend,
 SiteCore\Classes\Front\Meta as Meta,
 SiteCore\Classes\Widgets    as Widgets,
 SiteCore\Classes\Vendor     as Vendor;
@@ -77,7 +76,7 @@ function init() {
 
 	// Instantiate settings classes.
 	new Settings\Settings;
-	new Admin_Class\Content_Settings;
+	new Backend\Content_Settings;
 
 	// Instantiate core classes.
 	new Core\Type_Tax;
