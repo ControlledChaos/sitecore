@@ -108,7 +108,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Vendor\Sample_ACF_Suboptions' => SCP_CLASS['vendor'] . 'sample-acf-suboptions.php',
 
 	// Backend/admin classes,
-	SCP_CLASS_NS . '\Admin\Admin'                   => SCP_CLASS['admin'] . 'admin.php',
 	SCP_CLASS_NS . '\Admin\Add_Page'                => SCP_CLASS['admin'] . 'add-page.php',
 	SCP_CLASS_NS . '\Admin\Add_Subpage'             => SCP_CLASS['admin'] . 'add-subpage.php',
 	SCP_CLASS_NS . '\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',

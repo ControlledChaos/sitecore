@@ -18,7 +18,7 @@ SiteCore\Classes\Settings   as Settings,
 SiteCore\Classes\Tools      as Tools,
 SiteCore\Classes\Media      as Media,
 SiteCore\Classes\Users      as Users,
-SiteCore\Classes\Admin      as Admin,
+SiteCore\Classes\Admin      as Admin_Class,
 SiteCore\Classes\Front      as Front,
 SiteCore\Classes\Front\Meta as Meta,
 SiteCore\Classes\Widgets    as Widgets,
@@ -33,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Initialization function
  *
  * Loads PHP classes and text domain.
+ * Executes various setup functions.
  * Instantiates various classes.
  * Adds settings link in the plugin row.
  *
@@ -63,12 +64,17 @@ function init() {
 	 */
 	require_once SCP_PATH . 'includes/autoloader.php';
 
+	// Load required files.
+	foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
+		require_once $filename;
+	}
+
 	// Get compatibility functions.
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 
 	// Instantiate settings classes.
 	new Settings\Settings;
-	new Admin\Content_Settings;
+	new Admin_Class\Content_Settings;
 
 	// Instantiate core classes.
 	new Core\Type_Tax;
@@ -123,7 +129,7 @@ function init() {
 
 	// Instantiate backend classes.
 	if ( is_admin() ) {
-		new Admin\Admin;
+		Admin\setup();
 	}
 
 	// Instantiate users classes.
