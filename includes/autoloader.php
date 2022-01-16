@@ -117,7 +117,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 
 	// Frontend classes.
-	SCP_CLASS_NS . '\Front\Frontend'         => SCP_CLASS['front'] . 'frontend.php',
 	SCP_CLASS_NS . '\Front\Title_Filter'     => SCP_CLASS['front'] . 'title-filter.php',
 	SCP_CLASS_NS . '\Front\Content_Filter'   => SCP_CLASS['front'] . 'content-filter.php',
 	SCP_CLASS_NS . '\Front\Template_Filters' => SCP_CLASS['front'] . 'template-filters.php',

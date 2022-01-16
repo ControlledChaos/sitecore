@@ -19,7 +19,7 @@ SiteCore\Classes\Tools      as Tools,
 SiteCore\Classes\Media      as Media,
 SiteCore\Classes\Users      as Users,
 SiteCore\Classes\Admin      as Admin_Class,
-SiteCore\Classes\Front      as Front,
+SiteCore\Classes\Front      as Front_Class,
 SiteCore\Classes\Front\Meta as Meta,
 SiteCore\Classes\Widgets    as Widgets,
 SiteCore\Classes\Vendor     as Vendor;
@@ -66,6 +66,9 @@ function init() {
 
 	// Load required files.
 	foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
+		require_once $filename;
+	}
+	foreach ( glob( SCP_PATH . 'includes/frontend/*.php' ) as $filename ) {
 		require_once $filename;
 	}
 
@@ -127,7 +130,6 @@ function init() {
 	new Vendor\Sample_ACF_Options;
 	new Vendor\Sample_ACF_Suboptions;
 
-	// Instantiate backend classes.
 	if ( is_admin() ) {
 		Admin\setup();
 	}
@@ -135,10 +137,9 @@ function init() {
 	// Instantiate users classes.
 	new Users\Users;
 
-	// Instantiate frontend classes.
 	if ( ! is_admin() ) {
-		new Front\Frontend;
-		new Front\Template_Filters;
+		Front\setup();
+		new Front_Class\Template_Filters;
 		new Meta\Meta_Data;
 		new Meta\Meta_Tags;
 	}
@@ -170,20 +171,6 @@ function init() {
 	remove_filter( 'the_title', 'capital_P_dangit', 11 );
 	remove_filter( 'the_content', 'capital_P_dangit', 11 );
 	remove_filter( 'comment_text', 'capital_P_dangit', 31 );
-
-	/**
-	 * Disable emoji script
-	 *
-	 * Emojis will still work in modern browsers. This removes the script
-	 * that makes emojis work in old browsers.
-	 */
-	remove_action( 'admin_print_styles', 'print_emoji_styles' );
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
 	// System email from text.
 	add_filter( 'wp_mail_from_name', function( $name ) {
