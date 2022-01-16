@@ -199,8 +199,6 @@ function template_columns_content( $column_name ) {
  * @param int $post_ID Returns the post ID.
  * @return string Returns the path to the featured image.
  */
-
-// Get featured image.
 function get_column_image( $post_ID ) {
 
 	// Get the post thumbnail ID as a variable.
