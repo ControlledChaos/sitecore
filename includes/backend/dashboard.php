@@ -1,6 +1,6 @@
 <?php
 /**
- * Dashboard class
+ * Admin dashboard
  *
  * @package    Site_Core
  * @subpackage Admin
