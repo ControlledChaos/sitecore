@@ -47,13 +47,13 @@ function setup() {
 	// Post edit screens
 	new Classes\Admin\Post_Edit;
 
+	// Posts list tables.
+	List_Tables\setup();
+
 	// Run the dashboard only on the backend index screen.
 	if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
 		Dashboard\setup();
 	}
-
-	// Posts list tables.
-	new Classes\Admin\Posts_List_Table;
 
 	// Remove theme & plugin editor links.
 	add_action( 'admin_init', $ns( 'remove_editor_links' ) );
