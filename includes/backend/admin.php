@@ -44,8 +44,8 @@ function setup() {
 		new Classes\Admin\Manage_Website_Page;
 	}
 
-	// Post edit screens
-	new Classes\Admin\Post_Edit;
+	// Post edit screens.
+	Post_Edit\setup();
 
 	// Posts list tables.
 	List_Tables\setup();
