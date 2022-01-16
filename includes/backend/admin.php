@@ -49,7 +49,7 @@ function setup() {
 
 	// Run the dashboard only on the backend index screen.
 	if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
-		new Classes\Admin\Dashboard;
+		Dashboard\setup();
 	}
 
 	// Posts list tables.
