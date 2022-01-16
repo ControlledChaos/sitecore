@@ -115,7 +115,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
-	SCP_CLASS_NS . '\Admin\User_Colors'             => SCP_CLASS['admin'] . 'user-colors.php',
 
 	// Frontend classes.
 	SCP_CLASS_NS . '\Front\Frontend'         => SCP_CLASS['front'] . 'frontend.php',
