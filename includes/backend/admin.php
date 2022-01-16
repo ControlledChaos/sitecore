@@ -233,26 +233,30 @@ function menus_widgets() {
 	}
 
 	// Add a new top-level Menus page.
-	add_menu_page(
-		__( 'Navigation Menus', 'sitecore' ),
-		__( 'Navigation', 'sitecore' ),
-		'delete_others_pages',
-		'nav-menus.php',
-		'',
-		'dashicons-menu-alt',
-		61
-	);
+	if ( current_theme_supports( 'menus' ) || current_theme_supports( 'widgets' ) ) {
+		add_menu_page(
+			__( 'Navigation Menus', 'sitecore' ),
+			__( 'Navigation', 'sitecore' ),
+			'delete_others_pages',
+			'nav-menus.php',
+			'',
+			'dashicons-menu-alt',
+			61
+		);
+	}
 
 	// Add a new top-level Widgets page.
-	add_menu_page(
-		__( 'Widgets', 'sitecore' ),
-		__( 'Widgets', 'sitecore' ),
-		'delete_others_pages',
-		'widgets.php',
-		'',
-		'dashicons-screenoptions',
-		62
-	);
+	if ( current_theme_supports( 'widgets' ) ) {
+		add_menu_page(
+			__( 'Widgets', 'sitecore' ),
+			__( 'Widgets', 'sitecore' ),
+			'delete_others_pages',
+			'widgets.php',
+			'',
+			'dashicons-screenoptions',
+			62
+		);
+	}
 }
 
 /**
