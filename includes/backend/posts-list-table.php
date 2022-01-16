@@ -209,16 +209,20 @@ function get_column_image( $post_ID ) {
 	 *
 	 * @see includes/classes/media/class-media.php
 	 */
-	$size  = 'column-thumbnail';
+	if ( has_image_size( 'column-thumbnail' ) ) {
+		$size = 'column-thumbnail';
+	} else {
+		$size = 'thumbnail';
+	}
 
 	// Apply a filter for conditional modification.
-	$thumb = apply_filters( 'scp_column_thumbnail_size', $size );
+	$thumbnail = apply_filters( 'scp_column_thumbnail_size', $size );
 
 	// If there is an ID (if the post has a featured image).
 	if ( $post_thumbnail_id ) {
 
 		// Get the src for the Thumbnail size.
-		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $thumb );
+		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $thumbnail );
 
 		// Return the image src for use below.
 		return $post_thumbnail_img[0];
@@ -237,7 +241,7 @@ function get_column_image( $post_ID ) {
 function image_column_head( $defaults ) {
 
 	// The column heading name.
-	$name    = __( 'Featured Image', 'sitecore' );
+	$name = __( 'Featured Image', 'sitecore' );
 
 	// Apply a filter for conditional modification.
 	$heading = apply_filters( 'scp_image_column_head', $name );
