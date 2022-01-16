@@ -139,7 +139,6 @@ function init() {
 
 	if ( ! is_admin() ) {
 		Front\setup();
-		new Front_Class\Template_Filters;
 		new Meta\Meta_Data;
 		new Meta\Meta_Tags;
 	}

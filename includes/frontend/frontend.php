@@ -43,6 +43,10 @@ function setup() {
 
 	// Remove user toolbar items.
 	add_action( 'admin_bar_menu', $ns( 'remove_toolbar_items' ), 999 );
+
+	// Post type archive titles & descriptions.
+	add_filter( 'get_the_archive_title', $ns( 'archive_titles' ) );
+	add_filter( 'get_the_archive_description', $ns( 'archive_descriptions' ) );
 }
 
 /**
@@ -120,4 +124,63 @@ function deregister_dashicons() {
 function remove_toolbar_items( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'wp-logo' );
 	$wp_admin_bar->remove_menu( 'search' );
+}
+
+/**
+ * Post type archive titles
+ *
+ * @since  1.0.0
+ * @return string Returns the filtered title.
+ */
+function archive_titles( $title ) {
+
+	// Remove any HTML, words, digits, and spaces before the title.
+	$title = preg_replace( '#^[\w\d\s]+:\s*#', '', strip_tags( $title ) );
+
+	// Get the page for posts.
+	$front = (string) get_option( 'show_on_front' );
+	$posts = (int) get_option( 'page_for_posts' );
+
+	// Blog pages title.
+	if (
+		'post' === get_post_type() &&
+		is_home() && is_main_query() &&
+		'page' === $front &&
+		! empty( $posts )
+	) {
+		$title = get_the_title( $posts );
+	}
+	return $title;
+}
+
+/**
+ * Post type archive descriptions
+ *
+ * @since  1.0.0
+ * @param  string $description The default post type description.
+ * @return string Returns the new post type description.
+ */
+function archive_descriptions( $description ) {
+
+	// Blog pages description.
+	if (
+		'post' === get_post_type() &&
+		is_home() && is_main_query()
+	) {
+		return sprintf(
+			'<p>%s</p>',
+			__( 'This is a filtered sample description for the default post type.', 'sitecore' )
+		);
+
+	// Sample post type description.
+	} elseif (
+		'sample_type' === get_post_type() &&
+		is_home() && is_main_query()
+	) {
+		return sprintf(
+			'<p>%s</p>',
+			__( 'This is a filtered description for the sample post type.', 'sitecore' )
+		);
+	}
+	return $description;
 }
