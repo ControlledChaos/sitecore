@@ -74,11 +74,7 @@ function options() {
  * @return void
  */
 function get_row_notice() {
-
-	// Add notice if the PHP version is insufficient.
-	if ( ! Classes\php()->version() ) {
-		add_action( 'after_plugin_row_' . SCP_BASENAME, __NAMESPACE__ . '\row_notice', 5, 3 );
-	}
+	add_action( 'after_plugin_row_' . SCP_BASENAME, __NAMESPACE__ . '\row_notice', 5, 3 );
 }
 
 /**
@@ -124,7 +120,7 @@ function row_notice( $plugin_file, $plugin_data, $status ) {
 					__( 'Functionality of the', 'sitecore' ),
 					SCP_NAME,
 					__( 'plugin has been disabled because it requires PHP version', 'sitecore' ),
-					Classes\php()->minimum(),
+					SCP_MIN_PHP_VERSION,
 					__( 'or greater. Your system is running PHP version', 'sitecore' ),
 					phpversion()
 				); ?>

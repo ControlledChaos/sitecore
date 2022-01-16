@@ -28,6 +28,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Constant: Minimum PHP version
+ *
+ * @since 1.0.0
+ * @var   string The minimum required PHP version.
+ */
+define( 'SCP_MIN_PHP_VERSION', '7.4' );
+
+/**
+ * Function: Minimum PHP version
+ *
+ * Checks the PHP version sunning on the current host
+ * against the minimum version required by this plugin.
+ *
+ * @since  1.0.0
+ * @return boolean Returns false if the minimum is not met.
+ */
+function min_php_version() {
+
+	if ( version_compare( phpversion(), SCP_MIN_PHP_VERSION, '<' ) ) {
+		return false;
+	}
+	return true;
+}
+
+/**
  * Constant: Plugin version
  *
  * Keeping the version at 1.0.0 as this is a starter plugin but
@@ -78,7 +103,7 @@ define( 'SCP_URL', plugin_dir_url( __FILE__ ) );
  * @since  1.0.0
  * @return void
  */
-if ( ! Classes\php()->version() ) {
+if ( ! min_php_version() ) {
 	return;
 }
 
@@ -91,22 +116,6 @@ if ( ! Classes\php()->version() ) {
 if ( ! defined( 'SCP_CONFIG' ) ) {
 
 	define( 'SCP_CONFIG', [
-
-		/**
-		 * Plugin version
-		 *
-		 * @since 1.0.0
-		 * @var   string The latest plugin version.
-		 */
-		'version' => SCP_VERSION,
-
-		/**
-		 * Required PHP version
-		 *
-		 * @since 1.0.0
-		 * @var   string The minimum required PHP version.
-		 */
-		'php_version' => Classes\php()->minimum(),
 
 		/**
 		 * Plugin name

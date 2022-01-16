@@ -133,9 +133,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 
-// Get the PHP version class.
-require_once plugin_dir_path( __FILE__ ) . 'includes/classes/class-php-version.php';
-
 // Get plugin configuration file.
 require plugin_dir_path( __FILE__ ) . 'config.php';
 
@@ -210,7 +207,7 @@ function deactivate_plugin() {
  * @since  1.0.0
  * @return void
  */
-if ( ! Classes\php()->version() ) {
+if ( ! min_php_version() ) {
 
 	// First add a notice to the plugin row.
 	Activate\get_row_notice();
