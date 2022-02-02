@@ -17,7 +17,7 @@ SiteCore\Classes\Core       as Core,
 SiteCore\Classes\Settings   as Settings,
 SiteCore\Classes\Tools      as Tools,
 SiteCore\Classes\Media      as Media,
-SiteCore\Classes\Users      as Users,
+SiteCore\Classes\Users      as Users_Class,
 SiteCore\Classes\Admin      as Backend,
 SiteCore\Classes\Front\Meta as Meta,
 SiteCore\Classes\Widgets    as Widgets,
@@ -65,10 +65,13 @@ function init() {
 
 	// Load required files.
 	foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
-		require_once $filename;
+		require $filename;
 	}
 	foreach ( glob( SCP_PATH . 'includes/frontend/*.php' ) as $filename ) {
-		require_once $filename;
+		require $filename;
+	}
+	foreach ( glob( SCP_PATH . 'includes/users/*.php' ) as $filename ) {
+		require $filename;
 	}
 
 	// Get compatibility functions.
@@ -133,14 +136,15 @@ function init() {
 		Admin\setup();
 	}
 
+	Users\setup();
+
 	// Instantiate users classes.
-	new Users\Users;
-	new Users\User_Roles_Caps;
+	new Users_Class\User_Roles_Caps;
 	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
-		new Users\User_Toolbar;
+		new Users_Class\User_Toolbar;
 	}
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
-		new Users\User_Avatars;
+		new Users_Class\User_Avatars;
 	}
 
 	if ( ! is_admin() ) {

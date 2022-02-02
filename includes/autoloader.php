@@ -88,7 +88,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',
 
 	// Users classes.
-	SCP_CLASS_NS . '\Users\Users'           => SCP_CLASS['users'] . 'users.php',
 	SCP_CLASS_NS . '\Users\User_Roles_Caps' => SCP_CLASS['users'] . 'user-roles-caps.php',
 	SCP_CLASS_NS . '\Users\User_Toolbar'    => SCP_CLASS['users'] . 'user-toolbar.php',
 	SCP_CLASS_NS . '\Users\User_Avatars'    => SCP_CLASS['users'] . 'user-avatars.php',
