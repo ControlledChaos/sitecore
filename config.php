@@ -160,6 +160,14 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
 
 		/**
+		 * Allow custom dashboard
+		 *
+		 * @since 1.0.0
+		 * @var   boolean Whether to allow custom dashboard.
+		 */
+		'dashboard' => false,
+
+		/**
 		 * Allow Site Health
 		 *
 		 * @since 1.0.0
@@ -239,6 +247,16 @@ if ( ! defined( 'SCP_DEV_EMAIL' ) ) {
  */
 if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
 	define( 'SCP_PLUGIN_URL', SCP_CONFIG['plugin_url'] );
+}
+
+/**
+ * Allow custom dashboard
+ *
+ * @since 1.0.0
+ * @var   boolean Whether to allow the custom dashboard.
+ */
+if ( ! defined( 'SCP_USE_CUSTOM_DASHBOARD' ) ) {
+	define( 'SCP_USE_CUSTOM_DASHBOARD', SCP_CONFIG['dashboard'] );
 }
 
 /**
