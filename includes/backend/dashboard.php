@@ -228,9 +228,7 @@ function dashboard_panel() {
 function dashboard_template() {
 
 	// Instantiate Plugin_ACF class to get the suffix.
-	$acf    = new Vendor\Plugin_ACF;
-	$colors = new Users\User_Colors;
-	$user   = new Users\User_Options;
+	$acf = new Vendor\Plugin_ACF;
 
 	// Look first in the active theme for a dashboard panel template.
 	$dashboard = locate_template( 'template-parts/admin/dashboard-panel' . $acf->suffix() . '.php' );

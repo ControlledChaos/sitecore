@@ -74,7 +74,8 @@ class User_Toolbar {
 	 */
 	public function backend_main( $wp_admin_bar ) {
 
-		if ( is_admin() && is_user_logged_in() && ( $locations = get_nav_menu_locations() ) && isset( $locations[ 'backend_toolbar_main' ] ) ) {
+		$locations = get_nav_menu_locations();
+		if ( is_admin() && is_user_logged_in() ) {
 
 			$menu = wp_get_nav_menu_object( $locations[ 'backend_toolbar_main' ] );
 
@@ -133,7 +134,8 @@ class User_Toolbar {
 	 */
 	public function backend_site( $wp_admin_bar ) {
 
-		if ( is_admin() && is_user_logged_in() && ( $locations = get_nav_menu_locations() ) && isset( $locations[ 'backend_toolbar_site' ] ) ) {
+		$locations = get_nav_menu_locations();
+		if ( is_admin() && is_user_logged_in() ) {
 
 			$menu = wp_get_nav_menu_object( $locations[ 'backend_toolbar_site' ] );
 
@@ -193,7 +195,8 @@ class User_Toolbar {
 	 */
 	public function backend_user( $wp_admin_bar ) {
 
-		if ( is_admin() && is_user_logged_in() && ( $locations = get_nav_menu_locations() ) && isset( $locations[ 'admin_toolbar_account' ] ) ) {
+		$locations = get_nav_menu_locations();
+		if ( is_admin() && is_user_logged_in() && isset( $locations[ 'admin_toolbar_account' ] ) ) {
 
 			$menu = wp_get_nav_menu_object( $locations[ 'admin_toolbar_account' ] );
 

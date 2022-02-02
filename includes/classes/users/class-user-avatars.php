@@ -756,7 +756,7 @@ class User_Avatars {
 	 */
 	public function unique_filename_callback( $dir, $name, $ext ) {
 
-		$user   = get_user_by( 'id', (int) $this->user_id_being_edited );
+		$user   = get_user_by( 'id', (int) 0 );
 		$name   = $base_name = sanitize_file_name( $user->display_name . '_avatar' );
 		$number = 1;
 

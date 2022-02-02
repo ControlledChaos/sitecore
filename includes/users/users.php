@@ -298,3 +298,472 @@ function developer_access() {
 		$user->set_role( 'developer' );
 	}
 }
+
+/**
+ * User login (username)
+ *
+ * @since  1.0.0
+ * @param  string $username Default empty string.
+ * @return string Returns the username.
+ */
+function user_login( $username = '' ) {
+
+	// Get current user data.
+	$user_data = get_userdata( get_current_user_id() );
+
+	if ( isset( $user_data->user_login ) ) {
+		$username = esc_html( $user_data->user_login );
+	} else {
+		$username = __( 'Not available', 'sitecore' );
+	}
+
+	// Return the username.
+	return $username;
+}
+
+/**
+ * Get user roles
+ *
+ * @since  1.0.0
+ * @param  array $roles Default empty array.
+ * @return array Returns an array of user roles.
+ */
+function get_user_roles( $roles = [] ) {
+
+	// Get current user roles as a variable.
+	$user  = wp_get_current_user();
+	$roles = (array) $user->roles;
+
+	// Add Super Admin if applicable to current user.
+	if ( is_multisite() && is_super_admin( get_current_user_id() ) ) {
+		$super = [ __( 'Super Admin', 'sitecore' ) ];
+		$roles = array_merge( $super, $roles );
+	}
+
+	// Return an array of user roles.
+	return $roles;
+}
+
+/**
+ * User roles
+ *
+ * Comma-separated list of user roles.
+ *
+ * @since  1.0.0
+ * @param  array $role_i18n Default empty array.
+ * @return string Returns the list.
+ */
+function user_roles( $role_i18n = [] ) {
+
+	// Get the array of user roles.
+	$roles = get_user_roles();
+
+	// Translate and capitalize each role.
+	if ( is_array( $roles ) ) {
+		foreach( $roles as $role ) {
+			$role_i18n[] = ucwords( __( $role, 'sitecore' ) );
+		}
+	} else {
+
+		// Default array.
+		$role_i18n = [ __( 'Undetermined', 'sitecore' ) ];
+	}
+
+	// Return a comma-separated list of user roles.
+	return implode( ', ', $role_i18n );
+}
+
+/**
+ * Nickname
+ *
+ * @since  1.0.0
+ * @param  string $nickname Default empty string.
+ * @return string Returns the nickname.
+ */
+function nickname( $nickname = '' ) {
+
+	// Get current user data.
+	$user_data = get_userdata( get_current_user_id() );
+
+	if ( isset( $user_data->nickname ) ) {
+		$nickname = esc_html( $user_data->user_login );
+	} else {
+		$nickname = __( 'Not available', 'sitecore' );
+	}
+
+	// Return the nickname.
+	return $nickname;
+}
+
+/**
+ * Display name
+ *
+ * @since  1.0.0
+ * @param  string $display_name Default empty string.
+ * @return string Returns the display name.
+ */
+function display_name( $display_name = '' ) {
+
+	// Get current user data.
+	$user_data = get_userdata( get_current_user_id() );
+
+	if ( isset( $user_data->display_name ) ) {
+		$display_name = esc_html( $user_data->display_name );
+	} else {
+		$display_name = __( 'Not available', 'sitecore' );
+	}
+
+	// Return the display name.
+	return $display_name;
+}
+
+/**
+ * User email
+ *
+ * Current user email with mailto link.
+ *
+ * @since  1.0.0
+ * @param  string $user_email Default empty string.
+ * @return string Returns the email address.
+ */
+function email( $user_email = '' ) {
+
+	// Get current user data.
+	$user_data = get_userdata( get_current_user_id() );
+
+	if ( isset( $user_data->user_email ) ) {
+		$user_email = sprintf(
+			'<a href="mailto:%s">%s</a>',
+			sanitize_email( $user_data->user_email ),
+			sanitize_email( $user_data->user_email )
+		);
+	} else {
+		$user_email = __( 'Not available', 'sitecore' );
+	}
+
+	// Return the linked email address.
+	return $user_email;
+}
+
+/**
+ * User website
+ *
+ * Current user website URL with link, if available.
+ *
+ * @since  1.0.0
+ * @param  string $website Default empty string.
+ * @return string Returns the website URL or no website notice.
+ */
+function website( $website = '' ) {
+
+	if ( ! empty( get_user_option( 'user_url' ) ) ) {
+		$website = sprintf(
+			'<a href="%s" target="_blank" rel="nofollow noreferrer noopener">%s</a>',
+			esc_url( get_user_option( 'user_url' ) ),
+			esc_url( get_user_option( 'user_url' ) )
+		);
+	} else {
+		$website = __( 'No website provided.', 'sitecore' );
+	}
+
+	// Return the linked website URL or notice.
+	return $website;
+}
+
+/**
+ * Frontend toolbar
+ *
+ * @since  1.0.0
+ * @param  string $enabled Default empty string.
+ * @return string Returns Yes/No text based on user option.
+ */
+function toolbar( $enabled = '' ) {
+
+	// Check the toolbar user option.
+	if ( 'true' == get_user_option( 'show_admin_bar_front' ) ) {
+		$enabled = __( 'Yes', 'sitecore' );
+	} else {
+		$enabled = __( 'No', 'sitecore' );
+	}
+
+	// Return the string.
+	return $enabled;
+}
+
+/**
+ * Get user color scheme
+ *
+ * Gets the name of the user's color scheme preference.
+ *
+ * @since  1.0.0
+ * @return string Returns the name of the color scheme.
+ */
+function get_user_color_scheme( $name = 'Fresh' ) {
+
+	// Access global variables.
+	global $_wp_admin_css_colors;
+
+	// Get the name of the user's color scheme.
+	$option = get_user_option( 'admin_color' );
+	$scheme = array_key_exists( $option, $_wp_admin_css_colors );
+
+	/**
+	 * Default or unknown scheme
+	 *
+	 * If `fresh` is the user option then change the label from
+	 * "Default" to "Fresh". If the option is unknown — if the
+	 * user option is from a plugin or theme that has been
+	 * deactivated — then the system uses the default scheme so
+	 * use the "Fresh" label is applied in that instance.
+	 */
+	if ( ! $scheme || 'fresh' == $option ) {
+		$name = __( 'Fresh', 'sitecore' );
+
+	// Use the scheme name if available.
+	} elseif ( $scheme ) {
+		$name = $_wp_admin_css_colors[$option]->name;
+
+	// A fallback that is likely unnecessary.
+	} else {
+		$name = __( 'Not available', 'sitecore' );
+	}
+
+	// The name of the color scheme.
+	return $name;
+}
+
+/**
+ * User colors
+ *
+ * Returns CSS hex codes for admin user schemes.
+ * These colors are used to fill base64/SVG background
+ * images with colors corresponding to current user's
+ * color scheme preference. Also used rendering the
+ * tab effect by applying the color scheme background
+ * color to the bottom border of the active tab.
+ *
+ * @see assets/js/svg-icon-colors.js
+ *
+ * @since  1.0.0
+ * @param  array $colors Array of CSS hex codes.
+ * @global integer $wp_version
+ * @return array Returns an array of color scheme CSS hex codes.
+ */
+function user_colors( $colors = [] ) {
+
+	// Get WordPress version.
+	global $wp_version;
+
+	// Get the user color scheme option.
+	$color_scheme = get_user_option( 'admin_color' );
+
+	/**
+	 * Older color schemes for ClassicPress and
+	 * older WordPress versions.
+	 */
+	if (
+		function_exists( 'classicpress_version' ) ||
+		( ! function_exists( 'classicpress_version' ) && version_compare( $wp_version,'4.9.9' ) <= 0 )
+	) {
+
+		/**
+		 * The Fresh (default) scheme in older WordPress & in ClassicPress
+		 * has a link hover/focus color different than the others.
+		 */
+		if ( ! $color_scheme || 'fresh'== $color_scheme ) {
+			$colors = [ 'colors' =>
+				[ 'background' => '#f1f1f1', 'link' => '#0073aa', 'hover' => '#00a0d2', 'focus' => '#00a0d2' ]
+			];
+		} else {
+			$colors = [ 'colors' =>
+				[ 'background' => '#f1f1f1', 'link' => '#0073aa', 'hover' => '#0096dd', 'focus' => '#0096dd' ]
+			];
+		}
+
+	/**
+	 * The Modern scheme in WordPress is the
+	 * only one other than the default (Fresh)
+	 * with unique link colors.
+	 */
+	} elseif ( 'modern' == $color_scheme ) {
+		$colors = [ 'colors' =>
+			[ 'background' => '#f1f1f1', 'link' => '#3858e9', 'hover' => '#183ad6', 'focus' => '#183ad6' ]
+		];
+
+	// All other default color schemes.
+	} else {
+		$colors = [ 'colors' =>
+			[ 'background' => '#f1f1f1', 'link' => '#0073aa', 'hover' => '#006799', 'focus' => '#006799' ]
+		];
+	}
+
+	// Apply a filter for custom color schemes.
+	return apply_filters( 'ds_user_colors', $colors );
+}
+
+/**
+ * User notification colors
+ *
+ * Used to print a style block for update count
+ * colors in the default widget, depending on the
+ * user's color scheme preference. The color
+ * likely does not match any in the color scheme
+ * array so it is defined here by the color scheme
+ * slug.
+ *
+ * Accounts for the Admin Color Schemes plugin and
+ * a filter is applied for custom admin themes.
+ *
+ * @since  1.0.0
+ * @param  array $colors Array of CSS hex codes.
+ * @return array Returns the array of CSS hex codes.
+ */
+function user_notify_colors( $colors = [] ) {
+
+	// Get the name of the user's color scheme.
+	$scheme = get_user_option( 'admin_color' );
+
+	// Modern scheme.
+	if ( 'modern' == $scheme ) {
+		$colors = [
+			'background' => '#3858e9',
+			'text'       => '#ffffff'
+		];
+
+	// Light scheme.
+	} elseif ( 'light' == $scheme ) {
+		$colors = [
+			'background' => '#d64e07',
+			'text'       => '#ffffff'
+		];
+
+	// 80's Kid scheme.
+	} elseif ( '80s-kid' == $scheme ) {
+		$colors = [
+			'background' => '#43db2a',
+			'text'       => '#ffffff'
+		];
+
+	// Adderley scheme.
+	} elseif ( 'adderley' == $scheme ) {
+		$colors = [
+			'background' => '#bde7f0',
+			'text'       => '#216bce'
+		];
+
+	// Aubergine scheme.
+	} elseif ( 'aubergine' == $scheme ) {
+		$colors = [
+			'background' => '#d97042',
+			'text'       => '#ffffff'
+		];
+
+	// Blue scheme.
+	} elseif ( 'blue' == $scheme ) {
+		$colors = [
+			'background' => '#e1a948',
+			'text'       => '#ffffff'
+		];
+
+	// Coffee scheme.
+	} elseif ( 'coffee' == $scheme ) {
+		$colors = [
+			'background' => '#9ea476',
+			'text'       => '#ffffff'
+		];
+
+	// High Contrast Blue scheme.
+	} elseif ( 'contrast-blue' == $scheme ) {
+		$colors = [
+			'background' => '#9d2f4d',
+			'text'       => '#ffffff'
+		];
+
+	// Cruise scheme.
+	} elseif ( 'cruise' == $scheme ) {
+		$colors = [
+			'background' => '#d2ac1f',
+			'text'       => '#ffffff'
+		];
+
+	// Ectoplasm scheme.
+	} elseif ( 'ectoplasm' == $scheme ) {
+		$colors = [
+			'background' => '#d46f15',
+			'text'       => '#ffffff'
+		];
+
+	// Flat scheme.
+	} elseif ( 'flat' == $scheme ) {
+		$colors = [
+			'background' => '#d35401',
+			'text'       => '#ffffff'
+		];
+
+	// Kirk scheme.
+	} elseif ( 'kirk' == $scheme ) {
+		$colors = [
+			'background' => '#bd3854',
+			'text'       => '#fefcf7'
+		];
+
+	// Lawn scheme.
+	} elseif ( 'lawn' == $scheme ) {
+		$colors = [
+			'background' => '#456a7f',
+			'text'       => '#ffffff'
+		];
+
+	// Midnight scheme.
+	} elseif ( 'midnight' == $scheme ) {
+		$colors = [
+			'background' => '#69a8bb',
+			'text'       => '#ffffff'
+		];
+
+	// Ocean scheme.
+	} elseif ( 'ocean' == $scheme ) {
+		$colors = [
+			'background' => '#aa9d88',
+			'text'       => '#ffffff'
+		];
+
+	// Primary scheme.
+	} elseif ( 'primary' == $scheme ) {
+		$colors = [
+			'background' => '#f48236',
+			'text'       => '#ffffff'
+		];
+
+	// Seashore scheme.
+	} elseif ( 'seashore' == $scheme ) {
+		$colors = [
+			'background' => '#73340f',
+			'text'       => '#f8f6f1'
+		];
+
+	// Sunrise scheme.
+	} elseif ( 'sunrise' == $scheme ) {
+		$colors = [
+			'background' => '#ccaf0b',
+			'text'       => '#ffffff'
+		];
+
+	// Vinyard scheme.
+	} elseif ( 'vinyard' == $scheme ) {
+		$colors = [
+			'background' => '#ba8752',
+			'text'       => '#ffffff'
+		];
+
+	// The default and remaining native schemes.
+	} else {
+		$colors = [
+			'background' => '#f56e28',
+			'text'       => '#ffffff'
+		];
+	}
+
+	// The array of colors.
+	return apply_filters( 'ds_user_notify_colors', $colors );
+}

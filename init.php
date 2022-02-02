@@ -140,9 +140,6 @@ function init() {
 
 	// Instantiate users classes.
 	new Users_Class\User_Roles_Caps;
-	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
-		new Users_Class\User_Toolbar;
-	}
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
 		new Users_Class\User_Avatars;
 	}
