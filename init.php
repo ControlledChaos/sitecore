@@ -135,6 +135,13 @@ function init() {
 
 	// Instantiate users classes.
 	new Users\Users;
+	new Users\User_Roles_Caps;
+	if ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) {
+		new Users\User_Toolbar;
+	}
+	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
+		new Users\User_Avatars;
+	}
 
 	if ( ! is_admin() ) {
 		Front\setup();
