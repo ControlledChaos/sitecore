@@ -137,9 +137,7 @@ function init() {
 	}
 
 	Users\setup();
-
-	// Instantiate users classes.
-	new Users_Class\User_Roles_Caps;
+	User_Roles\setup();
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
 		new Users_Class\User_Avatars;
 	}
