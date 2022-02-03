@@ -35,9 +35,6 @@ final class Type_Tax {
 		// Post type & taxonomy sort order.
 		// new Types_Taxes_Order;
 
-		// Taxonomy templates.
-		// new Taxonomy_Templates;
-
 		// Add taxonomies to the page post type.
 		add_action( 'init', [ $this, 'page_taxonomies' ] );
 	}

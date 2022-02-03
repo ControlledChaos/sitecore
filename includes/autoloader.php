@@ -70,7 +70,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Core\Register_Tax'         => SCP_CLASS['core'] . 'register-tax.php',
 	SCP_CLASS_NS . '\Core\Register_Sample_Tax'  => SCP_CLASS['core'] . 'register-sample-tax.php',
 	SCP_CLASS_NS . '\Core\Types_Taxes_Order'    => SCP_CLASS['core'] . 'types-taxes-order.php',
-	SCP_CLASS_NS . '\Core\Taxonomy_Templates'   => SCP_CLASS['core'] . 'taxonomy-templates.php',
 	SCP_CLASS_NS . '\Core\Remove_Blog'          => SCP_CLASS['core'] . 'remove-blog.php',
 	SCP_CLASS_NS . '\Core\Remove_Customizer'    => SCP_CLASS['core'] . 'remove-customizer.php',
 
