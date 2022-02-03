@@ -62,7 +62,6 @@ define( 'SCP_CLASSES', [
 
 	// Core classes.
 	SCP_CLASS_NS . '\Core\Editor_Options'       => SCP_CLASS['core'] . 'editor-options.php',
-	SCP_CLASS_NS . '\Core\Type_Tax'             => SCP_CLASS['core'] . 'type-tax.php',
 	SCP_CLASS_NS . '\Core\Register_Type'        => SCP_CLASS['core'] . 'register-type.php',
 	SCP_CLASS_NS . '\Core\Register_Sample_Type' => SCP_CLASS['core'] . 'register-sample-type.php',
 	SCP_CLASS_NS . '\Core\Register_Admin'       => SCP_CLASS['core'] . 'register-admin.php',

@@ -85,7 +85,6 @@ function init() {
 	new Backend\Content_Settings;
 
 	// Instantiate core classes.
-	new Core\Type_Tax;
 	new Core\Register_Sample_Type;
 	new Core\Register_Sample_Tax;
 	new Core\Register_Admin;

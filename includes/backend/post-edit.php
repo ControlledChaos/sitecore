@@ -31,7 +31,10 @@ function setup() {
 	// Replace default post title placeholders.
 	add_filter( 'enter_title_here', $ns( 'title_placeholders' ) );
 
-	// Add excerpts to page post type.
+	// Add taxonomies to the page post type.
+	add_action( 'init', $ns( 'page_taxonomies' ) );
+
+	// Add excerpts to the page post type.
 	add_action( 'init', $ns( 'add_page_excerpts' ) );
 
 	// Show excerpt metabox by default.
@@ -75,6 +78,19 @@ function title_placeholders( $title ) {
 
 	// Return the new placeholder.
 	return $title;
+}
+
+/**
+ * Page taxonomies
+ *
+ * Adds taxonomies to the page post type.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function page_taxonomies() {
+	register_taxonomy_for_object_type( 'category', 'page' );
+	register_taxonomy_for_object_type( 'post_tag', 'page' );
 }
 
 /**
