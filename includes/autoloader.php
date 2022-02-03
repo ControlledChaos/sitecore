@@ -78,8 +78,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Settings\Settings' => SCP_CLASS['settings'] . 'settings.php',
 
 	// Tools classes.
-	SCP_CLASS_NS . '\Tools\Disable_FloC'     => SCP_CLASS['tools'] . 'disable-google-floc.php',
-	SCP_CLASS_NS . '\Tools\RTL_Test'         => SCP_CLASS['tools'] . 'rtl-test.php',
 	SCP_CLASS_NS . '\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',
 
 	// Media classes.

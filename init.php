@@ -15,7 +15,7 @@ use
 SiteCore\Classes            as Classes,
 SiteCore\Classes\Core       as Core,
 SiteCore\Classes\Settings   as Settings,
-SiteCore\Classes\Tools      as Tools,
+SiteCore\Classes\Tools      as Tools_Class,
 SiteCore\Classes\Media      as Media,
 SiteCore\Classes\Users      as Users_Class,
 SiteCore\Classes\Admin      as Backend,
@@ -73,6 +73,9 @@ function init() {
 	foreach ( glob( SCP_PATH . 'includes/users/*.php' ) as $filename ) {
 		require $filename;
 	}
+	foreach ( glob( SCP_PATH . 'includes/tools/*.php' ) as $filename ) {
+		require $filename;
+	}
 
 	// Get compatibility functions.
 	require SCP_PATH . 'includes/vendor/compatibility.php';
@@ -110,9 +113,9 @@ function init() {
 
 	// Run tools.
 	// @todo Put into a settings page.
-	new Tools\RTL_Test;
-	new Tools\Customizer_Reset;
-	new Tools\Disable_FloC;
+	new Tools_Class\Customizer_Reset;
+	Tools\dir_switch();
+	Tools\disable_floc();
 
 	// Instantiate media class.
 	new Media\Media;
