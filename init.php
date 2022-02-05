@@ -153,8 +153,7 @@ function init() {
 
 	if ( ! is_admin() ) {
 		Front\setup();
-		new Meta\Meta_Data;
-		new Meta\Meta_Tags;
+		Meta_Tags\setup();
 	}
 
 	// Instantiate widget classes.

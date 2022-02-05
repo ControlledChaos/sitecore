@@ -11,14 +11,14 @@
  */
 
 // Alias namespaces.
-use SiteCore\Classes\Front\Meta as Meta;
+use SiteCore\Meta_Tags as Meta;
 
 ?>
 <?php echo "\r"; ?>
 <!-- Standard meta tags -->
-<meta name="title" content="<?php echo esc_attr( Meta\data()->title() ); ?>" />
-<meta name="description" content="<?php echo esc_attr( Meta\data()->description() ); ?>" />
-<meta name="author" content="<?php echo esc_attr( Meta\data()->author() ); ?>" />
-<meta name="copyright" content="<?php echo esc_attr( Meta\data()->copyright() ); ?>" />
+<meta name="title" content="<?php echo esc_attr( Meta\title() ); ?>" />
+<meta name="description" content="<?php echo esc_attr( Meta\description() ); ?>" />
+<meta name="author" content="<?php echo esc_attr( Meta\author() ); ?>" />
+<meta name="copyright" content="<?php echo esc_attr( Meta\copyright() ); ?>" />
 <meta name="language" content="<?php echo esc_attr( get_locale() ); ?>" />
 <?php echo "\r"; ?>
