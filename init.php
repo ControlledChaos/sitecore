@@ -117,46 +117,48 @@ function init() {
 		}
 	}
 
-	// Run tools.
+	// Tools.
 	// @todo Put into a settings page.
 	new Tools_Class\Customizer_Reset;
 	Tools\dir_switch();
 	Tools\disable_floc();
 
+	// Media.
 	Media\setup();
-
-	// Register media type taxonomy.
 	new Media_Class\Register_Media_Type;
 
-	// Include Advanced Custom Fields.
+	// Advanced Custom Fields.
 	$scp_acf = new Vendor\Plugin_ACF;
 	$scp_acf->include();
 
-	// Include Advanced Custom Fields: Extended.
+	// Advanced Custom Fields: Extended.
 	$scp_acfe = new Vendor\Plugin_ACFE;
 	$scp_acfe->include();
 
-	new Vendor\Sample_ACF_Options;
-	new Vendor\Sample_ACF_Suboptions;
-
+	// Admin.
 	if ( is_admin() ) {
 		Admin\setup();
 	}
 
+	// Users.
 	Users\setup();
 	User_Roles\setup();
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
 		new Users_Class\User_Avatars;
 	}
 
-	Front_Page_Post_Type\setup();
+	// Customizer/front end.
+	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && SCP_ALLOW_CUSTOMIZER ) ) {
+		Front_Page_Post_Type\setup();
+	}
 
+	// Front end.
 	if ( ! is_admin() ) {
 		Front\setup();
 		Meta_Tags\setup();
 	}
 
-	// Instantiate widget classes.
+	// Widgets.
 	new Widgets\Sample_Widget;
 
 	// Disable Site Health notifications.
