@@ -14,6 +14,7 @@ namespace SiteCore;
 use
 SiteCore\Classes            as Classes,
 SiteCore\Classes\Core       as Core,
+SiteCore\Classes\Front       as Front_Class,
 SiteCore\Classes\Settings   as Settings,
 SiteCore\Classes\Tools      as Tools_Class,
 SiteCore\Classes\Media      as Media,
@@ -71,6 +72,9 @@ function init() {
 		require $filename;
 	}
 	foreach ( glob( SCP_PATH . 'includes/users/*.php' ) as $filename ) {
+		require $filename;
+	}
+	foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
 		require $filename;
 	}
 	foreach ( glob( SCP_PATH . 'includes/tools/*.php' ) as $filename ) {
@@ -142,6 +146,8 @@ function init() {
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
 		new Users_Class\User_Avatars;
 	}
+
+	Front_Page_Post_Type\setup();
 
 	if ( ! is_admin() ) {
 		Front\setup();
