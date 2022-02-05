@@ -17,7 +17,7 @@ SiteCore\Classes\Core       as Core,
 SiteCore\Classes\Front       as Front_Class,
 SiteCore\Classes\Settings   as Settings,
 SiteCore\Classes\Tools      as Tools_Class,
-SiteCore\Classes\Media      as Media,
+SiteCore\Classes\Media      as Media_Class,
 SiteCore\Classes\Users      as Users_Class,
 SiteCore\Classes\Admin      as Backend,
 SiteCore\Classes\Front\Meta as Meta,
@@ -65,6 +65,12 @@ function init() {
 	require_once SCP_PATH . 'includes/autoloader.php';
 
 	// Load required files.
+	foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
+		require $filename;
+	}
+	foreach ( glob( SCP_PATH . 'includes/media/*.php' ) as $filename ) {
+		require $filename;
+	}
 	foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
 		require $filename;
 	}
@@ -72,9 +78,6 @@ function init() {
 		require $filename;
 	}
 	foreach ( glob( SCP_PATH . 'includes/users/*.php' ) as $filename ) {
-		require $filename;
-	}
-	foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
 		require $filename;
 	}
 	foreach ( glob( SCP_PATH . 'includes/tools/*.php' ) as $filename ) {
@@ -120,11 +123,10 @@ function init() {
 	Tools\dir_switch();
 	Tools\disable_floc();
 
-	// Instantiate media class.
-	new Media\Media;
+	Media\setup();
 
 	// Register media type taxonomy.
-	new Media\Register_Media_Type;
+	new Media_Class\Register_Media_Type;
 
 	// Include Advanced Custom Fields.
 	$scp_acf = new Vendor\Plugin_ACF;

@@ -79,7 +79,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',
 
 	// Media classes.
-	SCP_CLASS_NS . '\Media\Media'               => SCP_CLASS['media'] . 'media.php',
 	SCP_CLASS_NS . '\Media\Register_Media_Type' => SCP_CLASS['media'] . 'register-media-type.php',
 
 	// Users classes.
