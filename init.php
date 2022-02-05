@@ -12,17 +12,14 @@ namespace SiteCore;
 
 // Alias namespaces.
 use
-SiteCore\Classes            as Classes,
-SiteCore\Classes\Core       as Core,
-SiteCore\Classes\Front       as Front_Class,
-SiteCore\Classes\Settings   as Settings,
-SiteCore\Classes\Tools      as Tools_Class,
-SiteCore\Classes\Media      as Media_Class,
-SiteCore\Classes\Users      as Users_Class,
-SiteCore\Classes\Admin      as Backend,
-SiteCore\Classes\Front\Meta as Meta,
-SiteCore\Classes\Widgets    as Widgets,
-SiteCore\Classes\Vendor     as Vendor;
+SiteCore\Classes\Core     as Core_Class,
+SiteCore\Classes\Settings as Settings_Class,
+SiteCore\Classes\Tools    as Tools_Class,
+SiteCore\Classes\Media    as Media_Class,
+SiteCore\Classes\Users    as Users_Class,
+SiteCore\Classes\Admin    as Backend_Class,
+SiteCore\Classes\Widgets  as Widgets_Class,
+SiteCore\Classes\Vendor   as Vendor_Class;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -88,18 +85,18 @@ function init() {
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 
 	// Instantiate settings classes.
-	new Settings\Settings;
-	new Backend\Content_Settings;
+	new Settings_Class\Settings;
+	new Backend_Class\Content_Settings;
 
 	// Instantiate core classes.
-	new Core\Register_Sample_Type;
-	new Core\Register_Sample_Tax;
-	new Core\Register_Admin;
-	new Core\Register_Site_Help;
+	new Core_Class\Register_Sample_Type;
+	new Core_Class\Register_Sample_Tax;
+	new Core_Class\Register_Admin;
+	new Core_Class\Register_Site_Help;
 
 	// If the Customizer is disabled in the system config file.
 	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {
-		new Core\Remove_Customizer;
+		new Core_Class\Remove_Customizer;
 	}
 
 	/**
@@ -113,7 +110,7 @@ function init() {
 	 */
 	if ( ! function_exists( 'classicpress_version' ) || ! defined( 'APP_INC_PATH' ) ) {
 		if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
-			new Core\Editor_Options;
+			new Core_Class\Editor_Options;
 		}
 	}
 
@@ -128,11 +125,11 @@ function init() {
 	new Media_Class\Register_Media_Type;
 
 	// Advanced Custom Fields.
-	$scp_acf = new Vendor\Plugin_ACF;
+	$scp_acf = new Vendor_Class\Plugin_ACF;
 	$scp_acf->include();
 
 	// Advanced Custom Fields: Extended.
-	$scp_acfe = new Vendor\Plugin_ACFE;
+	$scp_acfe = new Vendor_Class\Plugin_ACFE;
 	$scp_acfe->include();
 
 	// Admin.
@@ -159,7 +156,7 @@ function init() {
 	}
 
 	// Widgets.
-	new Widgets\Sample_Widget;
+	new Widgets_Class\Sample_Widget;
 
 	// Disable Site Health notifications.
 	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
