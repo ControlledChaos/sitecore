@@ -14,7 +14,7 @@ $brush_icon = SCP_URL . 'assets/images/theme-brush-icon.svg';
 $get_logo   = get_theme_mod( 'custom_logo' );
 $logo_url   = wp_get_attachment_image_src( $get_logo, 'admin-avatar' );
 
-if ( file_exists( $theme_icon ) ) {
+if ( ! empty( $theme_icon ) ) {
 	$icon_url = $theme_icon;
 } elseif ( has_custom_logo( get_current_blog_id() ) ) {
 	$icon_url = $logo_url[0];
