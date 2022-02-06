@@ -45,7 +45,7 @@ class Editor_Options {
 	public function __construct() {
 
 		// Run this class.
-		add_action( 'plugins_loaded', [ $this, 'init_actions' ] );
+		add_action( 'init', [ $this, 'init_actions' ] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Editor_Options {
 		remove_action( 'try_gutenberg_panel', 'wp_try_gutenberg_panel' );
 
 		if ( ! $block_editor && ! $gutenberg  ) {
-			return;
+			// return;
 		}
 
 		if ( $settings['allow-users'] ) {
