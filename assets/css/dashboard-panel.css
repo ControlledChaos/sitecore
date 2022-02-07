@@ -40,6 +40,7 @@
 }
 
 #dashboard-panel .dashboard-panel-content {
+  overflow: auto;
   padding: 1rem;
   clear: both;
 }
