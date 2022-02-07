@@ -9,17 +9,18 @@
  */
 
 // Get icon URL or fallback.
-$theme_icon = get_theme_file_uri( '/assets/images/theme-icon.jpg' );
-$brush_icon = SCP_URL . 'assets/images/brush-icon.svg';
-$get_logo   = get_theme_mod( 'custom_logo' );
-$logo_url   = wp_get_attachment_image_src( $get_logo, 'full' );
+$theme_icon_path = get_theme_file_path( '/assets/images/theme-icon.jpg' );
+$theme_icon_url  = get_theme_file_uri( '/assets/images/theme-icon.jpg' );
+$brush_icon_url  = SCP_URL . 'assets/images/theme-brush-icon.svg';
+$get_site_logo   = get_theme_mod( 'custom_logo' );
+$site_logo_url   = wp_get_attachment_image_src( $get_site_logo, 'admin-avatar' );
 
-if ( ! empty( $theme_icon ) ) {
-	$icon_url = $theme_icon;
+if ( is_readable( $theme_icon_path ) ) {
+	$icon_url = $theme_icon_url;
 } elseif ( has_custom_logo( get_current_blog_id() ) ) {
-	$icon_url = $logo_url[0];
+	$icon_url = $site_logo_url[0];
 } else {
-	$icon_url = $brush_icon;
+	$icon_url = $brush_icon_url;
 }
 
 // Get theme data as variables.
