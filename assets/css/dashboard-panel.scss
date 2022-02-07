@@ -50,6 +50,7 @@
 
 	.dashboard-panel-content {
 		padding: 1rem;
+		clear: both;
 
 		.about-description {
 			font-size: 16px;
@@ -128,7 +129,7 @@
 
 .no-js {
 	#dashboard-panel {
-		#customize {
+		.dashboard-panel-content {
 			display: block !important;
 		}
 	}

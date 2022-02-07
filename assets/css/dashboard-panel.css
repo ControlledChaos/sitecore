@@ -41,6 +41,7 @@
 
 #dashboard-panel .dashboard-panel-content {
   padding: 1rem;
+  clear: both;
 }
 
 #dashboard-panel .dashboard-panel-content .about-description {
@@ -120,6 +121,6 @@
   margin: 1rem 0 0 0;
 }
 
-.no-js #dashboard-panel #customize {
+.no-js #dashboard-panel .dashboard-panel-content {
   display: block !important;
 }
