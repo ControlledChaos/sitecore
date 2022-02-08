@@ -103,6 +103,15 @@
 		figure {
 			margin: 0 1em 0 0;
 
+			a,
+			img {
+				display: block;
+
+				&:focus {
+					box-shadow: none;
+				}
+			}
+
 			@media screen and ( max-width: 799px ) {
 				float: left;
 			}

@@ -100,6 +100,17 @@
   margin: 0 1em 0 0;
 }
 
+#dashboard-panel .dashboard-panel-section-intro figure a,
+#dashboard-panel .dashboard-panel-section-intro figure img {
+  display: block;
+}
+
+#dashboard-panel .dashboard-panel-section-intro figure a:focus,
+#dashboard-panel .dashboard-panel-section-intro figure img:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 @media screen and (max-width: 799px) {
   #dashboard-panel .dashboard-panel-section-intro figure {
     float: left;
