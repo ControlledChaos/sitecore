@@ -488,8 +488,7 @@ class Register_Type {
 			'filter_items_list'     => __( 'Filter ' . ucwords( $this->plural ), 'sitecore' ),
 			'items_list_navigation' => __( ucwords( $this->plural ) . ' list navigation', 'sitecore' ),
 			'items_list'            => __( ucwords( $this->plural ) . ' List', 'sitecore' ),
-			'attributes'            => __( ucwords( $this->singular ) . ' Attributes', 'sitecore' ),
-			'parent_item_colon'     => __( 'Parent ' . ucwords( $this->singular ), 'sitecore' ),
+			'attributes'            => __( ucwords( $this->singular ) . ' Attributes', 'sitecore' )
 		];
 
 		// Filter for child classes to modify this array.
