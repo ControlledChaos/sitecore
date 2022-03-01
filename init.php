@@ -35,7 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Adds settings link in the plugin row.
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function init() {
@@ -199,7 +198,6 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
  * Instantiates various classes.
  *
  * @since  1.0.0
- * @access public
  * @global $pagenow Get the current admin screen.
  * @global $typenow Get the current post type screen.
  * @return void
