@@ -81,6 +81,9 @@ function setup() {
 	// Post type menu options.
 	add_filter( 'register_post_type_args', $ns( 'post_type_menu_options' ), 10, 2 );
 
+	// Hide help with privacy policy nag.
+	add_action( 'admin_head', $ns( 'hide_policy_content_notice' ) );
+
 	// Primary footer text.
 	add_filter( 'admin_footer_text', $ns( 'admin_footer_primary' ), 1 );
 
@@ -295,6 +298,27 @@ function post_type_menu_options( $args, $post_type ) {
 		return $args;
 	}
 	return $args;
+}
+
+/**
+ * Hide help with privacy policy nag
+ *
+ * @since  1.0.0
+ * @global object $post
+ * @return void
+ */
+function hide_policy_content_notice() {
+
+	global $post;
+
+	$current_screen = \get_current_screen();
+	$policy_page_id = (int) get_option( 'wp_page_for_privacy_policy' );
+
+	if ( 'post' !== $current_screen->base || $policy_page_id !== $post->ID ) {
+		return;
+	}
+
+	echo '<style>.wp-pp-notice{ display: none !important; }</style>';
 }
 
 /**
