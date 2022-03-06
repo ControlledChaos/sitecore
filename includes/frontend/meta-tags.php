@@ -118,7 +118,14 @@ function description() {
 	$site_description = wp_strip_all_tags( get_bloginfo( 'description' ) );
 
 	// Get the manual excerpt from the metabox.
-	$manual_excerpt   = get_post( get_the_ID() )->post_excerpt;
+	$manual_excerpt = '';
+	if (
+		is_singular( get_post_type( get_the_ID() ) ) &&
+		post_type_supports( get_post_type( get_the_ID() ), 'excerpt' ) )
+	{
+		// Get the manual excerpt from the metabox.
+		$manual_excerpt = get_post( get_the_ID() )->post_excerpt;
+	}
 
 	// Auto excerpt from content as a fallback.
 	$auto_excerpt = wp_strip_all_tags( wp_trim_words( get_the_content(), 40, '&hellp;' ) );
