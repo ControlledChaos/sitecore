@@ -228,10 +228,10 @@ function add_user_capabilities() {
 }
 
 /**
- * Profile role dropdaown
+ * Profile role dropdown
  *
  * Removes the default role dropdown from the profile form
- * because the functionality is replaced by a checkbos list.
+ * because the functionality is replaced by a checkbox list.
  *
  * @since  1.0.0
  * @global string $pagenow Gets the filename of the current page.
@@ -260,7 +260,7 @@ function profile_role_dropdown() {
 }
 
 /**
- * Profile rols checklist
+ * Profile role checklist
  *
  * Output the checklist view. If the user is not allowed to edit roles,
  * nothing will appear.
