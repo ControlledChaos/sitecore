@@ -252,7 +252,7 @@ function profile_role_dropdown() {
 	}
 	</style>
 	<script>
-	jQuery( document ).ready( function( $ ) {
+	jQuery( document ).ready( function($) {
 		$( '.user-role-wrap' ).remove();
 	} );
 	</script>
