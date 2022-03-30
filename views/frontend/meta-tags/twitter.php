@@ -20,6 +20,6 @@ use SiteCore\Meta_Tags as Meta;
 <meta name="twitter:site" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 <meta name="twitter:url" content="<?php echo esc_attr( esc_url( Meta\url() ) ); ?>" />
 <meta name="twitter:title" content="<?php echo esc_attr( Meta\title() ); ?>" />
-<meta name="twitter:description" content="404 <?php echo esc_attr( Meta\description() ); ?>" />
+<meta name="twitter:description" content="<?php echo esc_attr( Meta\description() ); ?>" />
 <meta name="twitter:image:src" content="<?php echo esc_attr( Meta\image() ); ?>" />
 <?php echo "\r"; ?>
