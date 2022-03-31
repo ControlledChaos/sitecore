@@ -30,6 +30,9 @@ function setup() {
 
 	// Print meta tags to the head.
 	add_action( 'wp_head', $ns( 'print_meta_tags' ) );
+
+	// Print structured data scripts to the head.
+	add_action( 'wp_head', $ns( 'print_structured_data' ) );
 }
 
 /**
@@ -39,7 +42,17 @@ function setup() {
  * @return boolean
  */
 function use_meta_tags() {
-	return apply_filters( 'scp_meta_use_tags', true );
+	return apply_filters( 'scp_use_meta_tags', true );
+}
+
+/**
+ * Use structured data
+ *
+ * @since  1.0.0
+ * @return boolean
+ */
+function use_structured_data() {
+	return apply_filters( 'scp_use_structured_data', true );
 }
 
 /**
@@ -437,11 +450,25 @@ function print_meta_tags() {
 	}
 
 	// Get meta tags.
-	meta();
-	schema();
-	open_graph();
-	twitter();
-	dublin();
+	meta_tags();
+	schema_tags();
+	open_graph_tags();
+	twitter_tags();
+	dublin_tags();
+}
+
+/**
+ * Print structured data
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function print_structured_data() {
+
+	// Stop if `use_structured_data` returns false.
+	if ( ! use_structured_data() ) {
+		return;
+	}
 }
 
 /**
@@ -450,8 +477,8 @@ function print_meta_tags() {
  * @since  1.0.0
  * @return void
  */
-function meta() {
-	include SCP_PATH . 'views/frontend/meta-tags/standard.php';
+function meta_tags() {
+	include SCP_PATH . 'views/frontend/meta-data/meta-tags/standard.php';
 }
 
 /**
@@ -460,8 +487,8 @@ function meta() {
  * @since  1.0.0
  * @return void
  */
-function schema() {
-	include SCP_PATH . 'views/frontend/meta-tags/schema.php';
+function schema_tags() {
+	include SCP_PATH . 'views/frontend/meta-data/meta-tags/schema.php';
 }
 
 /**
@@ -470,8 +497,8 @@ function schema() {
  * @since  1.0.0
  * @return void
  */
-function open_graph() {
-	include SCP_PATH . 'views/frontend/meta-tags/open-graph.php';
+function open_graph_tags() {
+	include SCP_PATH . 'views/frontend/meta-data/meta-tags/open-graph.php';
 }
 
 /**
@@ -480,8 +507,8 @@ function open_graph() {
  * @since  1.0.0
  * @return void
  */
-function twitter() {
-	include SCP_PATH . 'views/frontend/meta-tags/twitter.php';
+function twitter_tags() {
+	include SCP_PATH . 'views/frontend/meta-data/meta-tags/twitter.php';
 }
 
 /**
@@ -490,6 +517,6 @@ function twitter() {
  * @since  1.0.0
  * @return void
  */
-function dublin() {
-	include SCP_PATH . 'views/frontend/meta-tags/dublin.php';
+function dublin_tags() {
+	include SCP_PATH . 'views/frontend/meta-data/meta-tags/dublin.php';
 }
