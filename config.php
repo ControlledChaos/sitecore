@@ -160,6 +160,16 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
 
 		/**
+		 * Posts content type
+		 *
+		 * The nature of the default posts (e.g. blog, news).
+		 *
+		 * @since 1.0.0
+		 * @var   string The name of the developer/agency.
+		 */
+		'posts_content' => 'blog',
+
+		/**
 		 * Allow custom dashboard
 		 *
 		 * @since 1.0.0
@@ -247,6 +257,16 @@ if ( ! defined( 'SCP_DEV_EMAIL' ) ) {
  */
 if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
 	define( 'SCP_PLUGIN_URL', SCP_CONFIG['plugin_url'] );
+}
+
+/**
+ * Posts content type
+ *
+ * @since 1.0.0
+ * @var   string The nature of the default posts (e.g. blog, news).
+ */
+if ( ! defined( 'SCP_POSTS_CONTENT_TYPE' ) ) {
+	define( 'SCP_POSTS_CONTENT_TYPE', SCP_CONFIG['posts_content'] );
 }
 
 /**
