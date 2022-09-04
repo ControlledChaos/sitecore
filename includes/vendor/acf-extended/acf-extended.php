@@ -1,16 +1,12 @@
 <?php
 /**
- * Advanced Custom Fields: Extended
- *
- * "Enhancement Suite which improves Advanced Custom Fields administration."
- *
- * @package    Site_Core
- * @subpackage Vendor
- * @category   Plugins
- * @version    0.8.8.5
- * @since      1.0.0
- * @author     ACF Extended
- * @link       https://www.acf-extended.com
+ * Plugin Name: Advanced Custom Fields: Extended
+ * Description: All-in-one enhancement suite that improves WordPress & Advanced Custom Fields.
+ * Version:     0.8.8.7
+ * Author:      ACF Extended
+ * Author URI:  https://www.acf-extended.com
+ * Text Domain: acfe
+ * Domain Path: /lang
  */
 
 if(!defined('ABSPATH'))
@@ -21,7 +17,7 @@ if(!class_exists('ACFE')):
 class ACFE{
 
     // Vars
-    var $version = '0.8.8.5';
+    var $version = '0.8.8.7';
 
     /*
      * Construct
@@ -203,6 +199,7 @@ class ACFE{
         acfe_include('includes/fields/field-repeater.php');
         acfe_include('includes/fields/field-select.php');
         acfe_include('includes/fields/field-textarea.php');
+        acfe_include('includes/fields/field-wysiwyg.php');
 
         /*
          * Fields settings

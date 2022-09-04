@@ -52,14 +52,14 @@ function acfe_maybe_get_REQUEST($key = '', $default = null){
  */
 function acfe_is_json($string){
     
-    // in case string = 1
-    if(is_numeric($string)){
+    // in case string = 1 or not string
+    if(is_numeric($string) || !is_string($string)){
         return false;
     }
     
     json_decode($string);
     
-    return (json_last_error() == JSON_ERROR_NONE);
+    return json_last_error() == JSON_ERROR_NONE;
     
 }
 
@@ -288,6 +288,8 @@ function acfe_add_validation_error($selector = '', $message = ''){
         return $message;
     });
     
+    return false;
+    
 }
 
 /**
@@ -369,7 +371,16 @@ function acfe_array_to_string($array = array()){
  */
 function acfe_is_dev(){
     
-    return acf_get_setting('acfe/dev', false) || (defined('ACFE_dev') && ACFE_dev);
+    // deprecated
+    if(defined('ACFE_dev')){
+    
+        _deprecated_function('ACF Extended: "ACFE_dev" constant', '0.8.8.7', 'the constant "ACFE_DEV"');
+        
+        return ACFE_dev;
+        
+    }
+    
+    return acf_get_setting('acfe/dev', false) || (defined('ACFE_DEV') && ACFE_DEV);
     
 }
 
@@ -382,7 +393,16 @@ function acfe_is_dev(){
  */
 function acfe_is_super_dev(){
     
-    return acf_get_setting('acfe/super_dev', false) || (defined('ACFE_super_dev') && ACFE_super_dev);
+    // deprecated
+    if(defined('ACFE_super_dev')){
+        
+        _deprecated_function('ACF Extended: "ACFE_super_dev" constant', '0.8.8.7', 'the constant "ACFE_SUPER_DEV"');
+        
+        return ACFE_super_dev;
+        
+    }
+    
+    return acf_get_setting('acfe/super_dev', false) || (defined('ACFE_SUPER_DEV') && ACFE_SUPER_DEV);
     
 }
 

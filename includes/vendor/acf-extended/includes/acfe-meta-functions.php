@@ -108,9 +108,9 @@ function acfe_get_meta($post_id = false){
         $field = acf_get_field($field_key);
         
         // Check clone in sub field: field_123456abcdef_field_123456abcfed
-        if(!$field && substr_count($field_key, 'field_') === 2){
+        if(!$field && substr_count($field_key, 'field_') > 1){
             
-            // get field key (last part)
+            // get field key (last key)
             $_field_key = substr($field_key, strrpos($field_key, 'field_'));
             
             // get field
@@ -299,19 +299,26 @@ function acfe_get_orphan_meta($post_id = 0){
             $clones[] = $field;
             
         // get clone seamless sub field: field_123456abcdef_field_123456abcfed
-        }elseif(substr_count($field_key, 'field_') === 2){
+        }elseif(substr_count($field_key, 'field_') > 1){
             
-            // get clone key (first part)
-            $clone_key = substr($field_key, 0, strpos($field_key, '_field'));
-            
-            // get clone field
-            $clone = acf_get_field($clone_key);
-            
-            if(acf_maybe_get($clone, 'type') === 'clone'){
+            // explode field_xxxxxxxxxxx
+            $_clones = explode('_field_', $field_key);
+    
+            foreach($_clones as $_clone_key){
                 
-                // add to collection
-                $clones[] = $clone;
-                
+                // prepend 'field_'
+                if(strpos($_clone_key, 'field_') !== 0){
+                    $_clone_key = "field_{$_clone_key}";
+                }
+        
+                // get clone field
+                $clone = acf_get_field($_clone_key);
+        
+                // check type & add to collection
+                if(acf_maybe_get($clone, 'type') === 'clone'){
+                    $clones[] = $clone;
+                }
+        
             }
             
         }
@@ -352,6 +359,31 @@ function acfe_get_orphan_meta($post_id = 0){
                     }elseif(acf_is_field_key($cloned_key)){
                         
                         $allowed_fields[] = $cloned_key;
+                        
+                        // get field group from cloned field
+                        $clone_field_group = acfe_get_field_group_from_field($cloned_key);
+    
+                        // add field group in the allowed list
+                        if($clone_field_group){
+                            $allowed_field_groups[] = $clone_field_group['key'];
+                        }
+                        
+                        // todo: enhance logic to only allow sub field of the targeted field
+                        /*
+                        $is_enabled = acf_is_filter_enabled('clone');
+                        
+                        if($is_enabled){
+                            acf_disable_filter('clone');
+                        }
+                        
+                        // also allow descendants in case of repeater, flexible content or group
+                        $descendants = acfe_get_field_descendants($cloned_key);
+                        $allowed_fields = array_merge($allowed_fields, $descendants);
+    
+                        if($is_enabled){
+                            acf_enable_filter('clone');
+                        }
+                        */
                         
                     }
                     

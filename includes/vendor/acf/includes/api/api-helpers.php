@@ -419,37 +419,29 @@ function acf_parse_type( $v ) {
 }
 
 
-/*
-*  acf_get_view
-*
-*  This function will load in a file from the 'admin/views' folder and allow variables to be passed through
-*
-*  @type    function
-*  @date    28/09/13
-*  @since   5.0.0
-*
-*  @param   $view_name (string)
-*  @param   $args (array)
-*  @return  n/a
-*/
-
-function acf_get_view( $path = '', $args = array() ) {
-
+/**
+ *  This function will load in a file from the 'admin/views' folder and allow variables to be passed through
+ *
+ *  @date    28/09/13
+ *  @since   5.0.0
+ *
+ *  @param string $view_path
+ *  @param array  $view_args
+ *
+ *  @return void
+ */
+function acf_get_view( $view_path = '', $view_args = array() ) {
 	// allow view file name shortcut
-	if ( substr( $path, -4 ) !== '.php' ) {
-
-		$path = acf_get_path( "includes/admin/views/{$path}.php" );
-
+	if ( substr( $view_path, -4 ) !== '.php' ) {
+		$view_path = acf_get_path( "includes/admin/views/{$view_path}.php" );
 	}
 
 	// include
-	if ( file_exists( $path ) ) {
-
-		extract( $args );
-		include $path;
-
+	if ( file_exists( $view_path ) ) {
+		// Use `EXTR_SKIP` here to prevent `$view_path` from being accidentally/maliciously overridden.
+		extract( $view_args, EXTR_SKIP );
+		include $view_path;
 	}
-
 }
 
 
@@ -2699,20 +2691,15 @@ function acf_isset_termmeta( $taxonomy = '' ) {
 
 }
 
-
-/*
-*  acf_upload_files
-*
-*  This function will walk througfh the $_FILES data and upload each found
-*
-*  @type    function
-*  @date    25/10/2014
-*  @since   5.0.9
-*
-*  @param   $ancestors (array) an internal parameter, not required
-*  @return  n/a
-*/
-
+/**
+ * This function will walk through the $_FILES data and upload each found.
+ *
+ * @date    25/10/2014
+ * @since   5.0.9
+ *
+ * @param array $ancestors An internal parameter, not required.
+ * @return void
+ */
 function acf_upload_files( $ancestors = array() ) {
 
 	// vars
@@ -2759,15 +2746,21 @@ function acf_upload_files( $ancestors = array() ) {
 
 	}
 
-	// bail ealry if file has error (no file uploaded)
+	// Bail early if file has error (no file uploaded).
 	if ( $file['error'] ) {
-
 		return;
-
 	}
 
-	// assign global _acfuploader for media validation
-	$_POST['_acfuploader'] = end( $ancestors );
+	$field_key  = end( $ancestors );
+	$nonce_name = $field_key . '_file_nonce';
+	$file_nonce = isset( $_REQUEST['acf'][ $nonce_name ] ) ? $_REQUEST['acf'][ $nonce_name ] : false;
+
+	if ( ! $file_nonce || ! wp_verify_nonce( $file_nonce, 'acf/file_uploader_nonce/' . $field_key ) ) {
+		return;
+	}
+
+	// Assign global _acfuploader for media validation.
+	$_POST['_acfuploader'] = $field_key;
 
 	// file found!
 	$attachment_id = acf_upload_file( $file );
@@ -2777,7 +2770,6 @@ function acf_upload_files( $ancestors = array() ) {
 	acf_update_nested_array( $_POST, $ancestors, $attachment_id );
 
 }
-
 
 /*
 *  acf_upload_file
@@ -3079,39 +3071,29 @@ function acf_get_attachment( $attachment ) {
 }
 
 
-/*
-*  acf_get_truncated
-*
-*  This function will truncate and return a string
-*
-*  @type    function
-*  @date    8/08/2014
-*  @since   5.0.0
-*
-*  @param   $text (string)
-*  @param   $length (int)
-*  @return  (string)
-*/
-
+/**
+ *  This function will truncate and return a string
+ *
+ *  @date    8/08/2014
+ *  @since   5.0.0
+ *
+ *  @param string $text   The text to truncate.
+ *  @param int    $length The number of characters to allow in the string.
+ *
+ *  @return  string
+ */
 function acf_get_truncated( $text, $length = 64 ) {
-
-	// vars
 	$text       = trim( $text );
-	$the_length = strlen( $text );
+	$the_length = function_exists( 'mb_strlen' ) ? mb_strlen( $text ) : strlen( $text );
 
-	// cut
-	$return = substr( $text, 0, ( $length - 3 ) );
+	$cut_length = $length - 3;
+	$return     = function_exists( 'mb_substr' ) ? mb_substr( $text, 0, $cut_length ) : substr( $text, 0, $cut_length );
 
-	// ...
-	if ( $the_length > ( $length - 3 ) ) {
-
+	if ( $the_length > $cut_length ) {
 		$return .= '...';
-
 	}
 
-	// return
 	return $return;
-
 }
 
 /*
@@ -4246,7 +4228,7 @@ function acf_remove_array_key_prefix( $array, $prefix ) {
 *  acf_strip_protocol
 *
 *  This function will remove the proticol from a url
-*  Used to allow licences to remain active if a site is switched to https
+*  Used to allow licenses to remain active if a site is switched to https
 *
 *  @type    function
 *  @date    10/01/2017

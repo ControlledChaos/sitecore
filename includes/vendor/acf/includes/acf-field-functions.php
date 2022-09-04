@@ -533,7 +533,7 @@ function acf_prepare_field( $field ) {
 	}
 
 	// Use field prefix to modify input name.
-	if ( $field['prefix'] ) {
+	if ( ! empty( $field['prefix'] ) ) {
 		$field['name'] = "{$field['prefix']}[{$field['name']}]";
 	}
 
@@ -1393,6 +1393,8 @@ function acf_duplicate_fields( $fields = array(), $parent_id = 0 ) {
 		$keys[ $field['key'] ] = uniqid( 'field_' );
 	}
 	acf_append_data( 'generated_keys', $keys );
+
+	$duplicates = array();
 
 	// Duplicate fields.
 	foreach ( $fields as $field ) {

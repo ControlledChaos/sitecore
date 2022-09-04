@@ -702,9 +702,9 @@ class acfe_dev{
             $field = acf_get_field($field_key);
     
             // Check clone in sub field: field_123456abcdef_field_123456abcfed
-            if(!$field && substr_count($field_key, 'field_') === 2){
+            if(!$field && substr_count($field_key, 'field_') > 1){
                 
-                // get field key (last part)
+                // get field key (last key)
                 $_field_key = substr($field_key, strrpos($field_key, 'field_'));
                 
                 // get field
@@ -732,7 +732,7 @@ class acfe_dev{
                     }
                     
                     // found db field group
-                    if($field_group['ID']){
+                    if($field_group && $field_group['ID']){
                         
                         $post_status = get_post_status($field_group['ID']);
     

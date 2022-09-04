@@ -76,6 +76,12 @@ The following docblock replaces the plugin header in the main file.
 * Replace the condition for the `acfe_screen_options_page` class in `acf-extended/includes/forms/form-options-page.php`.  
   Replace with: `if ( ! class_exists( 'acfe_screen_options_page' ) && class_exists( 'acf_pro' ) ) :`
 
+* Replace the condition for the `acfe_dynamic_options_pages_import` class in `acf-extended/includes/admin/tools/block-types-import.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_dynamic_options_pages_import' ) && class_exists( 'acf_pro' ) ) :`
+
+* Replace the condition for the `acfe_dynamic_options_pages_export` class in `acf-extended/includes/admin/tools/block-types-export.php`.  
+  Replace with: `if ( ! class_exists( 'acfe_dynamic_options_pages_export' ) && class_exists( 'acf_pro' ) ) :`
+
 * Replace the condition for the `acfe_field_flexible_content` class in `acf-extended/includes/fields/field-flexible-content.php`.  
   Replace with: `if ( ! class_exists( 'acfe_field_flexible_content' ) && class_exists( 'acf_pro' ) ) :`
 
@@ -83,8 +89,10 @@ The following docblock replaces the plugin header in the main file.
   ```
   // Modules
   if ( class_exists( 'acf_pro' ) ) {
-      acf_get_instance('acfe_dynamic_block_types')->reset();
-      acf_get_instance('acfe_dynamic_options_pages')->reset();
+    acf_get_instance('acfe_dynamic_block_types')->reset();
+    acf_get_instance('acfe_dynamic_options_pages')->reset();
+    acf_get_instance('acfe_dynamic_post_types')->reset();
+    acf_get_instance('acfe_dynamic_taxonomies')->reset();
   }
   ```
 

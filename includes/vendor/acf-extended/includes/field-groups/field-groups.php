@@ -610,6 +610,11 @@ class ACFE_Field_Groups{
      */
     function row_actions($actions, $post){
         
+        // bail early
+        if($post->post_type !== 'acf-field-group'){
+            return $actions;
+        }
+        
         $field_group = acf_get_field_group($post->ID);
         
         $actions['acfe-export-php'] = '<a href="' . admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=export&action=php&keys=' . $field_group['key']) . '">PHP</a>';
@@ -809,26 +814,31 @@ class ACFE_Field_Groups{
     function seamless_metabox($post_type, $post, $field_groups){
         
         // check gutenberg
-        $is_gutenberg = acf_is_block_editor();
+        $is_gutenberg = acfe_is_block_editor();
         
         foreach($field_groups as $field_group){
             
             add_filter("postbox_classes_{$post_type}_acf-{$field_group['key']}", function($classes) use($field_group, $is_gutenberg){
                 
+                // default
                 $classes[] = 'acf-postbox';
                 
-                // Seamless
-                if(!$is_gutenberg && $field_group['style'] === 'seamless')
+                // seamless
+                if(!$is_gutenberg && $field_group['style'] === 'seamless'){
                     $classes[] = 'seamless';
+                }
                 
-                // Left
-                if($field_group['label_placement'] === 'left')
+                // left
+                if($field_group['label_placement'] === 'left'){
                     $classes[] = 'acfe-postbox-left';
+                }
                 
-                // Top
-                if($field_group['label_placement'] === 'top')
+                // top
+                if($field_group['label_placement'] === 'top'){
                     $classes[] = 'acfe-postbox-top';
+                }
                 
+                // return
                 return $classes;
                 
             });
