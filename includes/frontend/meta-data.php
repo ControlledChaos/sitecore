@@ -120,6 +120,19 @@ function title() {
 }
 
 /**
+ * Subtitle
+ *
+ * Development function.
+ *
+ * @since  1.0.0
+ * @return string Returns an empty, filtered string.
+ */
+function subtitle() {
+	$subtitle = '';
+	return apply_filters( 'scp_meta_data_subtitle', $subtitle );
+}
+
+/**
  * Description content
  *
  * @since  1.0.0
@@ -134,7 +147,8 @@ function description() {
 	$manual_excerpt = '';
 	if (
 		is_singular( get_post_type( get_the_ID() ) ) &&
-		post_type_supports( get_post_type( get_the_ID() ), 'excerpt' ) )
+		post_type_supports( get_post_type( get_the_ID() ), 'excerpt' )
+		)
 	{
 		// Get the manual excerpt from the metabox.
 		$manual_excerpt = get_post( get_the_ID() )->post_excerpt;
@@ -323,8 +337,25 @@ function author() {
 	// Get the author ID.
 	$author_id = '';
 	if ( is_singular() && post_type_supports( get_post_type( $post_id ), 'author' ) ) {
-		$author_id = $post->post_author;
-		$author    = get_the_author_meta( 'display_name', $author_id );
+
+		// Get author meta data.
+		$author_id    = $post->post_author;
+		$display_name = get_the_author_meta( 'display_name', $author_id );
+		$first_name   = get_the_author_meta( 'first_name', $author_id );
+		$last_name    = get_the_author_meta( 'last_name', $author_id );
+
+		// Use first & last name if available.
+		if ( ! empty( $first_name ) && ! empty( $last_name ) ) {
+			$author = sprintf(
+				'%s %s',
+				$first_name,
+				$last_name
+			);
+
+		// Default to display name.
+		} else {
+			$author = $display_name;
+		}
 
 	// Otherwise use the website name.
 	} else {
@@ -367,6 +398,52 @@ function modified() {
 
 	$date = get_post_modified_time( 'M d, Y' );
 	return apply_filters( 'scp_meta_data_modified', $date );
+}
+
+/**
+ * Post genre
+ *
+ * Development function.
+ *
+ * @since  1.0.0
+ * @return string Returns an empty, filtered string.
+ */
+function post_genre() {
+	$genre = '';
+	return apply_filters( 'scp_meta_data_post_genre', $genre );
+}
+
+/**
+ * Get keywords
+ *
+ * Development function.
+ *
+ * @since  1.0.0
+ * @return array Returns an empty, filtered array.
+ */
+function get_keywords() {
+	return apply_filters( 'scp_meta_data_get_keywords', [] );
+}
+
+/**
+ * Keywords
+ *
+ * Development function.
+ *
+ * @since  1.0.0
+ * @return string Returns a filtered string of keywords.
+ */
+function keywords() {
+
+	// Get keywords.
+	$keywords = get_keywords();
+
+	// Separate keywords with commas.
+	if ( is_array( $keywords ) ) {
+		$keywords = implode( ', ', $keywords );
+	}
+
+	return apply_filters( 'scp_meta_data_keywords', $keywords );
 }
 
 /**
@@ -421,6 +498,25 @@ function image() {
 }
 
 /**
+ * Site logo
+ *
+ * @since  1.0.0
+ * @return mixed Returns the logo url or null.
+ */
+function site_logo( $html = null ) {
+
+	// Get the custom logo URL.
+	$mod = get_theme_mod( 'custom_logo' );
+	$url = wp_get_attachment_image_src( $mod , 'full' );
+
+	$logo = '';
+	if ( has_custom_logo( get_current_blog_id() ) ) {
+		$logo = esc_attr( esc_url( $url[0] ) );
+	}
+	return apply_filters( 'scp_meta_data_logo', $logo );
+}
+
+/**
  * Copyright
  *
  * @since  1.0.0
@@ -437,6 +533,23 @@ function copyright() {
 }
 
 /**
+ * Word count
+ *
+ * Number of words in a single post.
+ *
+ * @since  1.0.0
+ * @return integer Returns the number of words.
+ */
+function word_count() {
+
+	$count = null;
+	if ( is_singular() ) {
+		$count = str_word_count( trim( strip_tags( get_the_content( null, false, get_the_ID() ) ) ) );
+	}
+	return $count;
+}
+
+/**
  * Print meta tags
  *
  * @since  1.0.0
@@ -449,12 +562,13 @@ function print_meta_tags() {
 		return;
 	}
 
-	// Get meta tags.
-	meta_tags();
-	schema_tags();
-	open_graph_tags();
-	twitter_tags();
-	dublin_tags();
+	$tags  = meta_tags();
+	$tags .= schema_tags();
+	$tags .= open_graph_tags();
+	$tags .= twitter_tags();
+	$tags .= dublin_tags();
+
+	return apply_filters( 'scp_print_meta_tags', $tags );
 }
 
 /**
@@ -469,6 +583,17 @@ function print_structured_data() {
 	if ( ! use_structured_data() ) {
 		return;
 	}
+
+	$data = null;
+
+	if ( is_singular( 'post' ) && 'news' === SCP_POSTS_CONTENT_TYPE ) {
+		$data = news_article_data();
+	} elseif ( is_singular( 'post' ) && 'blog' === SCP_POSTS_CONTENT_TYPE ) {
+		$data = blog_post_data();
+	} elseif ( is_singular() ) {
+		$data = article_data();
+	}
+	return apply_filters( 'scp_print_structured_data', $data );
 }
 
 /**
@@ -519,4 +644,34 @@ function twitter_tags() {
  */
 function dublin_tags() {
 	include SCP_PATH . 'views/frontend/meta-data/meta-tags/dublin.php';
+}
+
+/**
+ * Article structured data
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function article_data() {
+	include SCP_PATH . 'views/frontend/meta-data/structured-data/article.php';
+}
+
+/**
+ * News article structured data
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function news_article_data() {
+	include SCP_PATH . 'views/frontend/meta-data/structured-data/news-article.php';
+}
+
+/**
+ * Blog post structured data
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function blog_post_data() {
+	include SCP_PATH . 'views/frontend/meta-data/structured-data/blog-post.php';
 }
