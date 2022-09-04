@@ -160,11 +160,11 @@ class acfe_enhanced_ui_user extends acfe_enhanced_ui{
      */
     function user_footer(){
         
-        global $profileuser;
+        global $user_id;
         
         ?>
         <div id="edit-slug-box">
-            <strong>Permalink:</strong> <a href="<?php echo get_author_posts_url($profileuser->ID); ?>"><?php echo get_author_posts_url($profileuser->ID); ?></a>
+            <strong>Permalink:</strong> <a href="<?php echo get_author_posts_url($user_id); ?>"><?php echo get_author_posts_url($user_id); ?></a>
         </div>
         <script type="text/javascript">
             (function($){
