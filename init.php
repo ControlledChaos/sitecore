@@ -195,7 +195,7 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 /**
  * Admin initialization function
  *
- * Instantiates various classes.
+ * Provided for development.
  *
  * @since  1.0.0
  * @global $pagenow Get the current admin screen.
