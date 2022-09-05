@@ -82,8 +82,13 @@ class Plugin_ACFE extends Plugin {
 
 		parent :: __construct();
 
-		// Dequeue ACFE UI changes.
-		add_action( 'admin_enqueue_scripts', [ $this, 'dequeue_acfe_ui' ] );
+		/**
+		 * Dequeue ACFE UI changes
+		 *
+		 * Uncomment to remove ACFE UI modifications.
+		 * May cause conflicts with some metaboxes.
+		 */
+		// add_action( 'admin_enqueue_scripts', [ $this, 'dequeue_acfe_ui' ] );
 
 		/**
 		 * ACF local JSON

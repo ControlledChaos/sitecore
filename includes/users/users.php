@@ -85,7 +85,8 @@ function admin_print_styles() {
 	?>
 	<style>
 	#profile-page > form,
-	#profile-page > form > div > div {
+	#profile-page > form > div > div,
+	.acf-column-1 {
 		display: flex;
 		flex-direction: column;
 	}
@@ -95,7 +96,9 @@ function admin_print_styles() {
 	}
 
 	#profile-page > form h2:first-of-type,
-	#profile-page > form table:first-of-type {
+	.acf-column-1 h2:nth-of-type(2),
+	#profile-page > form table:first-of-type,
+	.acf-column-1 table:nth-of-type(2) {
 		order: 99;
 	}
 
@@ -103,9 +106,10 @@ function admin_print_styles() {
 		order: 100;
 	}
 
-	#profile-page > form table:nth-of-type(2),
-	#xprofile-page > form h2:nth-of-type(4),
-	#xprofile-page > form table:nth-of-type(4) {
+	#profile-page > form h2:nth-of-type(4),
+	.acf-column-1 h2:nth-of-type(4),
+	#profile-page > form table:nth-of-type(4),
+	.acf-column-1 table:nth-of-type(4) {
 		display: none;
 	}
 	</style>
