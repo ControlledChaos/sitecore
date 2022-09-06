@@ -225,7 +225,9 @@ function get_column_image( $post_ID ) {
 		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $thumbnail );
 
 		// Return the image src for use below.
-		return $post_thumbnail_img[0];
+		if ( is_array( $post_thumbnail_img ) ) {
+			return $post_thumbnail_img[0];
+		}
 	}
 }
 
