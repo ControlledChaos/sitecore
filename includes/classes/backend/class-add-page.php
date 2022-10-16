@@ -63,6 +63,18 @@ class Add_Page {
 	protected $menu_slug = '';
 
 	/**
+	 * Settings page
+	 *
+	 * Whether this is a settings page.
+	 * Adds form elements if true.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to include form elements.
+	 */
+	protected $settings_page = false;
+
+	/**
 	 * Callback function
 	 *
 	 * @since  1.0.0
@@ -181,6 +193,19 @@ class Add_Page {
 	}
 
 	/**
+	 * Is subpage
+	 *
+	 * Checks if the admin page class is a subpage.
+	 */
+	protected function is_subpage() {
+
+		if ( property_exists( $this, 'parent_slug' ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Register menu page
 	 *
 	 * @since  1.0.0
@@ -194,15 +219,30 @@ class Add_Page {
 			return null;
 		}
 
-		$this->help = add_menu_page(
-			$this->page_title(),
-			$this->menu_title(),
-			strtolower( $this->capability ),
-			strtolower( $this->menu_slug ),
-			[ $this, $this->function ],
-			strtolower( $this->icon_url ),
-			(integer)$this->position
-		);
+		if ( $this->is_subpage() ) {
+
+			$this->help = add_submenu_page(
+				strtolower( $this->parent_slug ),
+				$this->page_title(),
+				$this->menu_title(),
+				strtolower( $this->capability ),
+				strtolower( $this->menu_slug ),
+				[ $this, $this->function ],
+				(integer)$this->position
+			);
+
+		} else {
+
+			$this->help = add_menu_page(
+				$this->page_title(),
+				$this->menu_title(),
+				strtolower( $this->capability ),
+				strtolower( $this->menu_slug ),
+				[ $this, $this->function ],
+				strtolower( $this->icon_url ),
+				(integer)$this->position
+			);
+		}
 
 		// Add content to the contextual help section.
 		if ( true == $this->add_help ) {
@@ -262,6 +302,74 @@ class Add_Page {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Form action
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed
+	 */
+	protected function form_action() {
+
+		if ( property_exists( $this, 'parent_slug' ) && $this->settings_page ) {
+			$action = sprintf(
+				'%s?page=%s',
+				$this->parent_slug,
+				$this->menu_slug
+			);
+		} else {
+			$action = sprintf(
+				'admin.php?page=%s',
+				$this->menu_slug
+			);
+		}
+
+		return $action;
+	}
+
+	/**
+	 * Begin settings form
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the opening form markup or null.
+	 */
+	protected function form_open() {
+
+		if ( ! $this->settings_page ) {
+			return null;
+		}
+
+		$html = sprintf(
+			'<form method="post" action="%s">',
+			$this->form_action()
+		);
+
+		return $html;
+	}
+
+	/**
+	 * End settings form
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the closing form markup or null.
+	 */
+	protected function form_close() {
+
+		if ( ! $this->settings_page ) {
+			return null;
+		}
+
+		$html = sprintf(
+			'<p class="submit">%s</p>',
+			submit_button( __( 'Save Settings', 'sitecore' ), 'button-primary', '', true, [] )
+		);
+		$html .= '</form>';
+
+		return $html;
 	}
 
 	/**
@@ -440,6 +548,7 @@ class Add_Page {
 		}
 
 		?>
+		<?php echo $this->form_open(); ?>
 		<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="<?php echo $hashtags; ?>" >
 
 			<?php if ( count( $tabs ) > 1 ) : ?>
@@ -526,6 +635,7 @@ class Add_Page {
 				endif;
 			endforeach; ?>
 		</div>
+		<?php echo $this->form_close(); ?>
 		<?php
 	}
 

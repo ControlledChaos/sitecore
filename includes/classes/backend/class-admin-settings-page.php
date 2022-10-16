@@ -16,7 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin_Settings_Page extends Add_Settings_Subpage {
+class Admin_Settings_Page extends Add_Page {
+
+	/**
+	 * Settings page
+	 *
+	 * Whether this is a settings page.
+	 * Adds form elements if true.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    boolean Whether to include form elements.
+	 */
+	protected $settings_page = true;
 
 	/**
 	 * Page title
@@ -46,6 +58,16 @@ class Admin_Settings_Page extends Add_Settings_Subpage {
 	 * @var    string The slug name to refer to the menu by.
 	 */
 	protected $menu_slug = 'options-admin';
+
+	/**
+	 * Parent slug
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    string The slug name for the parent menu or
+	 *                the file name of a standard admin page.
+	 */
+	protected $parent_slug = 'options-general.php';
 
 	/**
 	 * Menu position

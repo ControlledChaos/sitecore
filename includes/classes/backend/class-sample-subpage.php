@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Sample_Subpage extends Add_Subpage {
+class Sample_Subpage extends Add_Page {
 
 	/**
 	 * Parent slug

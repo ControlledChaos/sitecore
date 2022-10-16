@@ -98,10 +98,9 @@ define( 'SCP_CLASSES', [
 
 	// Backend/admin classes,
 	SCP_CLASS_NS . '\Admin\Add_Page'                => SCP_CLASS['admin'] . 'add-page.php',
-	SCP_CLASS_NS . '\Admin\Add_Subpage'             => SCP_CLASS['admin'] . 'add-subpage.php',
+	SCP_CLASS_NS . '\Admin\Sample_Page'             => SCP_CLASS['admin'] . 'sample-page.php',
+	SCP_CLASS_NS . '\Admin\Sample_Subpage'             => SCP_CLASS['admin'] . 'sample-subpage.php',
 	SCP_CLASS_NS . '\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
-	SCP_CLASS_NS . '\Admin\Add_Settings_Page'       => SCP_CLASS['admin'] . 'add-settings-page.php',
-	SCP_CLASS_NS . '\Admin\Add_Settings_Subpage'    => SCP_CLASS['admin'] . 'add-settings-subpage.php',
 	SCP_CLASS_NS . '\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',

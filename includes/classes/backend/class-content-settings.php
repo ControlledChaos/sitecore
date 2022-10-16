@@ -17,16 +17,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Content_Settings extends Add_Settings_Page {
+class Content_Settings extends Add_Page {
 
 	/**
-	 * Settings class
+	 * Settings page
+	 *
+	 * Whether this is a settings page.
+	 * Adds form elements if true.
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    Settings
+	 * @var    boolean Whether to include form elements.
 	 */
-	private $settings;
+	protected $settings_page = true;
 
 	/**
 	 * Page title
