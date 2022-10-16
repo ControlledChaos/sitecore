@@ -411,6 +411,8 @@ class Add_Page {
 	 * the list of tab items, and the content container of
 	 * each tab.
 	 *
+	 * List item closing tags are omitted to prevent whitespace nodes.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return mixed Returns the markup of the tabs and the tabs container.
