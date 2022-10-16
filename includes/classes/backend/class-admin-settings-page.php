@@ -16,17 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Admin_Settings_Page extends Add_Subpage {
-
-	/**
-	 * Parent slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name for the parent menu or
-	 *                the file name of a standard admin page.
-	 */
-	protected $parent_slug = 'options-general.php';
+class Admin_Settings_Page extends Add_Settings_Subpage {
 
 	/**
 	 * Page title
@@ -55,7 +45,7 @@ class Admin_Settings_Page extends Add_Subpage {
 	 * @access protected
 	 * @var    string The slug name to refer to the menu by.
 	 */
-	protected $menu_slug = 'admin-options';
+	protected $menu_slug = 'options-admin';
 
 	/**
 	 * Menu position
@@ -98,17 +88,6 @@ class Admin_Settings_Page extends Add_Subpage {
 	 */
 	public function __construct() {
 		parent :: __construct();
-	}
-
-	/**
-	 * Page heading
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the page heading.
-	 */
-	protected function heading() {
-		return __( 'Administration Settings', 'sitecore' );
 	}
 
 	/**
