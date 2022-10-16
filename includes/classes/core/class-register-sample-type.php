@@ -158,7 +158,7 @@ class Register_Sample_Type extends Register_Type {
 		$type_obj  = get_post_type_object( $post_type );
 
 		// New post type labels.
-		$type_obj->labels->menu_name = __( 'Sample', 'sitecore' );
+		$type_obj->labels->menu_name = __( 'Sample Type', 'sitecore' );
 		$type_obj->labels->all_items = __( 'All Samples', 'sitecore' );
 		$type_obj->labels->add_new   = __( 'New Sample', 'sitecore' );
 	}
