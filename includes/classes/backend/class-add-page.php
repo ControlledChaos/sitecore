@@ -215,7 +215,7 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @return string Returns the conditional menu label.
+	 * @return string Returns the page title.
 	 */
 	protected function page_title() {
 		return __( $this->page_title, 'sitecore' );
@@ -226,7 +226,7 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @return string Returns the conditional menu label.
+	 * @return string Returns the menu label.
 	 */
 	protected function menu_title() {
 		return ucwords( __( $this->menu_title, 'sitecore' ) );
@@ -240,7 +240,7 @@ class Add_Page {
 	 * @return string Returns the page heading.
 	 */
 	protected function heading() {
-		return $this->menu_title();
+		return $this->page_title();
 	}
 
 	/**
@@ -248,7 +248,7 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @return string Returns the conditional menu label.
+	 * @return string Returns the page description.
 	 */
 	protected function description() {
 
