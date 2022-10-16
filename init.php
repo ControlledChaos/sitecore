@@ -134,6 +134,7 @@ function init() {
 	// Admin.
 	if ( is_admin() ) {
 		Admin\setup();
+		new Backend_Class\Sample_Page;
 	}
 
 	// Users.
