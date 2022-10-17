@@ -23,26 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Sample_Page extends Add_Page {
 
 	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = 'Sample Page';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = 'Sample Page';
-
-	/**
 	 * Capability
 	 *
 	 * @since  1.0.0
@@ -91,18 +71,6 @@ class Sample_Page extends Add_Page {
 	protected $position = 3;
 
 	/**
-	 * Page description
-	 *
-	 * This is a non-native feature. The description is addeded by
-	 * the template provided in this plugin.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var    string The description of the page displayed below the title.
-	 */
-	protected $description = 'Demonstration of adding a page.';
-
-	/**
 	 * Help section
 	 *
 	 * @since  1.0.0
@@ -120,7 +88,17 @@ class Sample_Page extends Add_Page {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+
+		$labels = [
+			'page_title'  => __( 'Sample Page', 'sitecore' ),
+			'menu_title'  => __( 'Sample Page', 'sitecore' ),
+			'description' => __( 'Demonstration of adding a page.' )
+		];
+
+		parent :: __construct(
+			false,
+			$labels
+		);
 	}
 
 	/**

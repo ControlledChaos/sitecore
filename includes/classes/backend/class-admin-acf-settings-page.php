@@ -32,26 +32,6 @@ class Admin_ACF_Settings_Page extends Vendor\Add_ACF_Suboptions {
 	protected $parent_slug = 'options-general.php';
 
 	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = 'Admin Options';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = 'Admin';
-
-	/**
 	 * Page slug
 	 *
 	 * @since  1.0.0
@@ -77,6 +57,9 @@ class Admin_ACF_Settings_Page extends Vendor\Add_ACF_Suboptions {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+		parent :: __construct(
+			__( 'Admin Options', 'sitecore' ),
+			__( 'Admin Options', 'sitecore' ),
+		);
 	}
 }

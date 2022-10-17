@@ -28,27 +28,7 @@ class Admin_Settings_Page extends Add_Page {
 	 * @access protected
 	 * @var    boolean Whether to include form elements.
 	 */
-	protected $settings_page = true;
-
-	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = 'Administration Settings';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = 'Admin';
+	// protected $settings_page = true;
 
 	/**
 	 * Page slug
@@ -79,18 +59,6 @@ class Admin_Settings_Page extends Add_Page {
 	protected $position = 35;
 
 	/**
-	 * Page description
-	 *
-	 * This is a non-native feature. The description is addeded by
-	 * the template provided in this plugin.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var    string The description of the page displayed below the title.
-	 */
-	protected $description = 'Customize the content and user interfaces of administration pages.';
-
-	/**
 	 * Tabs hashtags
 	 *
 	 * Allow URL hashtags per open tab.
@@ -109,7 +77,17 @@ class Admin_Settings_Page extends Add_Page {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+
+		$labels = [
+			'page_title'  => __( 'Administration Settings', 'sitecore' ),
+			'menu_title'  => __( 'Admin', 'sitecore' ),
+			'description' => __( 'Customize the content and user interfaces of administration pages.' )
+		];
+
+		parent :: __construct(
+			true,
+			$labels
+		);
 	}
 
 	/**

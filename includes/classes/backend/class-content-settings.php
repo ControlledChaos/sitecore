@@ -20,38 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Content_Settings extends Add_Page {
 
 	/**
-	 * Settings page
-	 *
-	 * Whether this is a settings page.
-	 * Adds form elements if true.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to include form elements.
-	 */
-	protected $settings_page = true;
-
-	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = 'Content Settings';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = 'Content';
-
-	/**
 	 * Capability
 	 *
 	 * @since  1.0.0
@@ -89,18 +57,6 @@ class Content_Settings extends Add_Page {
 	protected $position = 26;
 
 	/**
-	 * Page description
-	 *
-	 * This is a non-native feature. The description is addeded by
-	 * the template provided in this plugin.
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var    string The description of the page displayed below the title.
-	 */
-	protected $description = 'Manage how the content of this website is edited and displayed.';
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -108,7 +64,17 @@ class Content_Settings extends Add_Page {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+
+		$labels = [
+			'page_title'  => __( 'Content Settings', 'sitecore' ),
+			'menu_title'  => __( 'Content', 'sitecore' ),
+			'description' => __( 'Manage how the content of this website is edited and displayed.' )
+		];
+
+		parent :: __construct(
+			true,
+			$labels
+		);
 	}
 
 	/**

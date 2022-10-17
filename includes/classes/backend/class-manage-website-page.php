@@ -29,26 +29,6 @@ class Manage_Website_Page extends Add_Page {
 	protected $parent_slug = 'index.php';
 
 	/**
-	 * Page title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
-	 */
-	protected $page_title = 'Help Managing This Website';
-
-	/**
-	 * Menu title
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
-	 */
-	protected $menu_title = 'Manage Website';
-
-	/**
 	 * Capability
 	 *
 	 * @since  1.0.0
@@ -77,15 +57,6 @@ class Manage_Website_Page extends Add_Page {
 	protected $position = 1;
 
 	/**
-	 * Page description
-	 *
-	 * @since 1.0.0
-	 * @access protected
-	 * @var    string The description of the page displayed below the title.
-	 */
-	protected $description = 'This page provides you with help managing this website.';
-
-	/**
 	 * Help section
 	 *
 	 * @since  1.0.0
@@ -103,7 +74,17 @@ class Manage_Website_Page extends Add_Page {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+
+		$labels = [
+			'page_title'  => __( 'Help Managing This Website', 'sitecore' ),
+			'menu_title'  => __( 'Manage Website', 'sitecore' ),
+			'description' => __( 'This page provides you with help managing this website.' )
+		];
+
+		parent :: __construct(
+			true,
+			$labels
+		);
 	}
 
 	/**

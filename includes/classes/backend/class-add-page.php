@@ -20,24 +20,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Add_Page {
 
 	/**
-	 * Page title
+	 * Settings page
+	 *
+	 * Whether this is a settings page.
+	 * Adds form elements if true.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be displayed in the
-	 *                title tags of the page when the
-	 *                menu is selected.
+	 * @access public
+	 * @var    boolean Whether to include form elements.
 	 */
-	protected $page_title = '';
+	public $settings = false;
 
 	/**
-	 * Menu title
+	 * Page labels
+	 *
+	 * Various text for the admin page, not
+	 * including page content or forms.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The text to be used for the menu.
+	 * @access public
+	 * @var array An array of page labels.
 	 */
-	protected $menu_title = '';
+	public $page_labels = [];
 
 	/**
 	 * Capability
@@ -61,18 +65,6 @@ class Add_Page {
 	 *                compatible with sanitize_key().
 	 */
 	protected $menu_slug = '';
-
-	/**
-	 * Settings page
-	 *
-	 * Whether this is a settings page.
-	 * Adds form elements if true.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to include form elements.
-	 */
-	protected $settings_page = false;
 
 	/**
 	 * Callback function
@@ -108,18 +100,6 @@ class Add_Page {
 	 * @var    integer The position in the menu order this item should appear.
 	 */
 	protected $position = 30;
-
-	/**
-	 * Page description
-	 *
-	 * This is a non-native feature. The description is added by
-	 * the template provided in this plugin.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The description of the page displayed below the title.
-	 */
-	protected $description = '';
 
 	/**
 	 * The content tab data associated with the screen, if any.
@@ -177,7 +157,16 @@ class Add_Page {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct( $settings, $page_labels ) {
+
+		$labels = [
+			'page_title'  => '',
+			'menu_title'  => '',
+			'description' => ''
+		];
+
+		$this->settings    = $settings;
+		$this->page_labels = wp_parse_args( $page_labels, $labels );
 
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
@@ -258,7 +247,7 @@ class Add_Page {
 	 * @return string Returns the page title.
 	 */
 	protected function page_title() {
-		return __( $this->page_title, 'sitecore' );
+		return $this->page_labels['page_title'];
 	}
 
 	/**
@@ -269,7 +258,7 @@ class Add_Page {
 	 * @return string Returns the menu label.
 	 */
 	protected function menu_title() {
-		return ucwords( __( $this->menu_title, 'sitecore' ) );
+		return $this->page_labels['menu_title'];
 	}
 
 	/**
@@ -294,10 +283,10 @@ class Add_Page {
 
 		$description = sprintf(
 			'<p class="description">%s</p>',
-			__( $this->description, 'sitecore' )
+			__( $this->page_labels['description'], 'sitecore' )
 		);
 
-		if ( ! empty( $this->description ) ) {
+		if ( ! empty( $this->page_labels['description'] ) ) {
 			return $description;
 		}
 
@@ -313,7 +302,7 @@ class Add_Page {
 	 */
 	protected function form_action() {
 
-		if ( property_exists( $this, 'parent_slug' ) && $this->settings_page ) {
+		if ( property_exists( $this, 'parent_slug' ) && $this->settings ) {
 			$action = sprintf(
 				'%s?page=%s',
 				$this->parent_slug,
@@ -338,7 +327,7 @@ class Add_Page {
 	 */
 	protected function form_open() {
 
-		if ( ! $this->settings_page ) {
+		if ( ! $this->settings ) {
 			return null;
 		}
 
@@ -359,7 +348,7 @@ class Add_Page {
 	 */
 	protected function form_close() {
 
-		if ( ! $this->settings_page ) {
+		if ( ! $this->settings ) {
 			return null;
 		}
 
