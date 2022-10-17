@@ -22,57 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Sample_Subpage extends Add_Page {
 
 	/**
-	 * Parent slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name for the parent menu or
-	 *                the file name of a standard admin page.
-	 */
-	protected $parent_slug = 'plugins.php';
-
-	/**
-	 * Capability
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The capability required for the menu
-	 *                to be displayed to the user.
-	 */
-	protected $capability = 'read';
-
-	/**
-	 * Page slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name to refer to the menu by.
-	 *                Should be unique for the menu page and
-	 *                only include lowercase alphanumeric,
-	 *                dashes, and underscores characters to be
-	 *                compatible with sanitize_key().
-	 */
-	protected $menu_slug = SCP_BASENAME . '-sample-subpage';
-
-	/**
-	 * Menu position
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The position in the menu order this item should appear.
-	 */
-	protected $position = 9;
-
-	/**
-	 * Help section
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Content is added to the contextual help section.
-	 */
-	protected $add_help = true;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -86,11 +35,19 @@ class Sample_Subpage extends Add_Page {
 			'menu_title'  => __( 'Sample Subpage', 'sitecore' ),
 			'description' => __( 'Demonstration of adding a subpage.' )
 		];
-		$this->page_labels = $labels;
+
+		$options = [
+			'capability'    => 'read',
+			'menu_slug'     => 'sample-subpage',
+			'parent_slug'   => 'plugins.php',
+			'icon_url'      => 'dashicons-welcome-learn-more',
+			'position'      => 9,
+			'add_help'      => true
+		];
 
 		parent :: __construct(
-			false,
-			$labels
+			$labels,
+			$options
 		);
 	}
 

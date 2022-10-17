@@ -18,57 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Admin_Settings_Page extends Add_Page {
 
 	/**
-	 * Settings page
-	 *
-	 * Whether this is a settings page.
-	 * Adds form elements if true.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to include form elements.
-	 */
-	// protected $settings_page = true;
-
-	/**
-	 * Page slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name to refer to the menu by.
-	 */
-	protected $menu_slug = 'options-admin';
-
-	/**
-	 * Parent slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name for the parent menu or
-	 *                the file name of a standard admin page.
-	 */
-	protected $parent_slug = 'options-general.php';
-
-	/**
-	 * Menu position
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The position in the menu order this item should appear.
-	 */
-	protected $position = 35;
-
-	/**
-	 * Tabs hashtags
-	 *
-	 * Allow URL hashtags per open tab.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string
-	 */
-	protected $tabs_hashtags = true;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -83,9 +32,17 @@ class Admin_Settings_Page extends Add_Page {
 			'description' => __( 'Customize the content and user interfaces of administration pages.' )
 		];
 
+		$options = [
+			'settings'      => true,
+			'menu_slug'     => 'options-admin',
+			'parent_slug'   => 'options-general.php',
+			'position'      => 35,
+			'tabs_hashtags' => true,
+		];
+
 		parent :: __construct(
-			true,
-			$labels
+			$labels,
+			$options
 		);
 	}
 

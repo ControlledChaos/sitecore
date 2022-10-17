@@ -19,43 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Content_Settings extends Add_Page {
 
 	/**
-	 * Capability
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The capability required for the menu
-	 *                to be displayed to the user.
-	 */
-	protected $capability = 'manage_options';
-
-	/**
-	 * Page slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name to refer to the menu by.
-	 */
-	protected $menu_slug = 'content-settings';
-
-	/**
-	 * Menu icon
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The URL to the icon to be used for this menu.
-	 */
-	protected $icon_url = 'dashicons-edit';
-
-	/**
-	 * Menu position
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The position in the menu order this item should appear.
-	 */
-	protected $position = 26;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -70,9 +33,16 @@ class Content_Settings extends Add_Page {
 			'description' => __( 'Manage how the content of this website is edited and displayed.' )
 		];
 
+		$options = [
+			'settings'      => true,
+			'menu_slug'     => 'content-settings',
+			'icon_url'      => 'dashicons-edit',
+			'position'      => 26
+		];
+
 		parent :: __construct(
-			true,
-			$labels
+			$labels,
+			$options
 		);
 	}
 

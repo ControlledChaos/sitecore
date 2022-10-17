@@ -19,18 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Add_Page {
 
 	/**
-	 * Settings page
-	 *
-	 * Whether this is a settings page.
-	 * Adds form elements if true.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    boolean Whether to include form elements.
-	 */
-	public $settings = false;
-
-	/**
 	 * Page labels
 	 *
 	 * Various text for the admin page, not
@@ -43,52 +31,13 @@ class Add_Page {
 	public $page_labels = [];
 
 	/**
-	 * Capability
+	 * Page options
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The capability required for the menu
-	 *                to be displayed to the user.
+	 * @access public
+	 * @var array An array of page options.
 	 */
-	protected $capability = 'manage_options';
-
-	/**
-	 * Page slug
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The slug name to refer to the menu by.
-	 *                Should be unique for the menu page and
-	 *                only include lowercase alphanumeric,
-	 *                dashes, and underscores characters to be
-	 *                compatible with sanitize_key().
-	 */
-	protected $menu_slug = '';
-
-	/**
-	 * Menu icon
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The URL to the icon to be used for this menu.
-	 *                * Pass a base64-encoded SVG using a data URI,
-	 *                  which will be colored to match the color scheme.
-	 *                  This should begin with 'data:image/svg+xml;base64,'.
-	 *                * Pass the name of a Dashicons helper class to use
-	 *                  a font icon, e.g. 'dashicons-chart-pie'.
-	 *                * Pass 'none' to leave div.wp-menu-image empty so
-	 *                  an icon can be added via CSS.
-	 */
-	protected $icon_url = 'dashicons-admin-generic';
-
-	/**
-	 * Menu position
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The position in the menu order this item should appear.
-	 */
-	protected $position = 30;
+	public $page_options = [];
 
 	/**
 	 * The content tab data associated with the screen, if any.
@@ -109,44 +58,13 @@ class Add_Page {
 	private $content_tab_attributes = [];
 
 	/**
-	 * Tabs hashtags
-	 *
-	 * Allow URL hashtags per open tab.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string
-	 */
-	protected $tabs_hashtags = false;
-
-	/**
-	 * Help section
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Content is added to the contextual help
-	 *                 section if true. Default is false.
-	 */
-	protected $add_help = false;
-
-	/**
-	 * ACF options page
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean True is the page is an ACF options page.
-	 *                  Default is false.
-	 */
-	protected $acf_options = false;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return self
 	 */
-	public function __construct( $settings, $page_labels ) {
+	public function __construct( $page_labels, $page_options ) {
 
 		$labels = [
 			'page_title'  => '',
@@ -154,8 +72,19 @@ class Add_Page {
 			'description' => ''
 		];
 
-		$this->settings    = $settings;
-		$this->page_labels = wp_parse_args( $page_labels, $labels );
+		$options = [
+			'settings'      => false,
+			'capability'    => 'manage_options',
+			'menu_slug'     => '',
+			'parent_slug'   => '',
+			'icon_url'      => 'dashicons-admin-generic',
+			'position'      => 30,
+			'tabs_hashtags' => false,
+			'add_help'      => false
+		];
+
+		$this->page_labels  = wp_parse_args( $page_labels, $labels );
+		$this->page_options = wp_parse_args( $page_options, $options );
 
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
@@ -177,7 +106,7 @@ class Add_Page {
 	 */
 	protected function is_subpage() {
 
-		if ( property_exists( $this, 'parent_slug' ) ) {
+		if ( ! empty( $this->page_options['parent_slug'] ) ) {
 			return true;
 		}
 		return false;
@@ -192,21 +121,16 @@ class Add_Page {
 	 */
 	public function add_page() {
 
-		// Return null for ACF options pages.
-		if ( true == $this->acf_options ) {
-			return null;
-		}
-
 		if ( $this->is_subpage() ) {
 
 			$this->help = add_submenu_page(
-				strtolower( $this->parent_slug ),
+				strtolower( $this->page_options['parent_slug'] ),
 				$this->page_title(),
 				$this->menu_title(),
-				strtolower( $this->capability ),
-				strtolower( $this->menu_slug ),
+				strtolower( $this->page_options['capability'] ),
+				strtolower( $this->page_options['menu_slug'] ),
 				[ $this, 'content_callback' ],
-				(integer)$this->position
+				(integer)$this->page_options['position']
 			);
 
 		} else {
@@ -214,16 +138,16 @@ class Add_Page {
 			$this->help = add_menu_page(
 				$this->page_title(),
 				$this->menu_title(),
-				strtolower( $this->capability ),
-				strtolower( $this->menu_slug ),
+				strtolower( $this->page_options['capability'] ),
+				strtolower( $this->page_options['menu_slug'] ),
 				[ $this, 'content_callback' ],
-				strtolower( $this->icon_url ),
-				(integer)$this->position
+				strtolower( $this->page_options['icon_url'] ),
+				(integer)$this->page_options['position']
 			);
 		}
 
 		// Add content to the contextual help section.
-		if ( true == $this->add_help ) {
+		if ( true == $this->page_options['add_help'] ) {
 			add_action( 'load-' . $this->help, [ $this, 'help' ] );
 		}
 	}
@@ -291,16 +215,16 @@ class Add_Page {
 	 */
 	protected function form_action() {
 
-		if ( property_exists( $this, 'parent_slug' ) && $this->settings ) {
+		if ( ! empty( $this->page_options['parent_slug'] ) && $this->page_options['settings'] ) {
 			$action = sprintf(
 				'%s?page=%s',
-				$this->parent_slug,
-				$this->menu_slug
+				$this->page_options['parent_slug'],
+				$this->page_options['menu_slug']
 			);
 		} else {
 			$action = sprintf(
 				'admin.php?page=%s',
-				$this->menu_slug
+				$this->page_options['menu_slug']
 			);
 		}
 
@@ -316,7 +240,7 @@ class Add_Page {
 	 */
 	protected function form_open() {
 
-		if ( ! $this->settings ) {
+		if ( ! $this->page_options['settings'] ) {
 			return null;
 		}
 
@@ -337,7 +261,7 @@ class Add_Page {
 	 */
 	protected function form_close() {
 
-		if ( ! $this->settings ) {
+		if ( ! $this->page_options['settings'] ) {
 			return null;
 		}
 
@@ -507,7 +431,7 @@ class Add_Page {
 
 		$tabs = $this->get_content_tabs();
 
-		if ( true == $this->tabs_hashtags ) {
+		if ( true == $this->page_options['tabs_hashtags'] ) {
 			$hashtags = 'true';
 		} else {
 			$hashtags = 'false';
@@ -673,7 +597,7 @@ class Add_Page {
 	 * @return mixed Returns the page content.
 	 */
 	protected function content() {
-		do_action( 'render_screen_tabs_' . $this->menu_slug );
+		do_action( 'render_screen_tabs_' . $this->page_options['menu_slug'] );
 	}
 
 	/**
@@ -694,7 +618,7 @@ class Add_Page {
 	 */
 	public function content_callback() {
 
-		add_action( 'render_screen_tabs_' . $this->menu_slug, [ $this, 'render_tabs' ] );
+		add_action( 'render_screen_tabs_' . $this->page_options['menu_slug'], [ $this, 'render_tabs' ] );
 
 		// Native page wrap element/class.
 		echo  '<div class="wrap">';
