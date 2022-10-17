@@ -66,16 +66,6 @@ class Add_Page {
 	protected $menu_slug = '';
 
 	/**
-	 * Callback function
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The function to be called to output the
-	 *                content for the page. Default value: 'callback'.
-	 */
-	protected $function = 'callback';
-
-	/**
 	 * Menu icon
 	 *
 	 * @since  1.0.0
@@ -215,7 +205,7 @@ class Add_Page {
 				$this->menu_title(),
 				strtolower( $this->capability ),
 				strtolower( $this->menu_slug ),
-				[ $this, $this->function ],
+				[ $this, 'content_callback' ],
 				(integer)$this->position
 			);
 
@@ -226,7 +216,7 @@ class Add_Page {
 				$this->menu_title(),
 				strtolower( $this->capability ),
 				strtolower( $this->menu_slug ),
-				[ $this, $this->function ],
+				[ $this, 'content_callback' ],
 				strtolower( $this->icon_url ),
 				(integer)$this->position
 			);
@@ -687,9 +677,10 @@ class Add_Page {
 	}
 
 	/**
-	 * Callback function
+	 * Content callback function
 	 *
-	 * It is recommended that the page output callback functions
+	 * To override the default content with the add tab system
+	 * it is recommended that the page output callback functions
 	 * of classes that extend this class simply include a file in
 	 * the `views/pages` directory to output the markup of the page.
 	 *
@@ -701,7 +692,7 @@ class Add_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function callback() {
+	public function content_callback() {
 
 		add_action( 'render_screen_tabs_' . $this->menu_slug, [ $this, 'render_tabs' ] );
 

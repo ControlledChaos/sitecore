@@ -97,7 +97,7 @@ class Manage_Website_Page extends Add_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function callback() {
+	public function content_callback() {
 		include_once SCP_PATH . 'views/backend/pages/manage-website.php';
 	}
 }
