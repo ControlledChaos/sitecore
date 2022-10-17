@@ -8,7 +8,6 @@
  * @since      1.0.0
  */
 
-declare( strict_types = 1 );
 namespace SiteCore\Classes\Core;
 
 // Restrict direct access.

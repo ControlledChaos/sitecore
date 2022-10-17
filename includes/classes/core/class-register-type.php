@@ -23,7 +23,6 @@
  * @see includes/classes/core/class-register-sample.php
  */
 
-declare( strict_types = 1 );
 namespace SiteCore\Classes\Core;
 
 // Restrict direct access.
