@@ -6,7 +6,6 @@ Develop site-specific plugins for ClassicPress, WordPress, and the antibrand sys
 ![Tested on PHP version 8.0](https://img.shields.io/badge/PHP_tested-8.0-8892bf.svg?style=flat-square)
 ![ClassicPress tested on version 1.2.0](https://img.shields.io/badge/ClassicPress_tested-1.2.0-03768e.svg?style=flat-square)
 ![WordPress tested on version 6.0.3](https://img.shields.io/badge/WordPress_tested-6.0.3-2271b1.svg?style=flat-square)
-![Compatible with the antibrand system](https://img.shields.io/badge/antibrand-Ready-ffe000.svg?style=flat-square)
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
 
 ![Site Core Plugin Cover Image](https://github.com/ControlledChaos/sitecore/raw/main/cover.jpg)
