@@ -22,74 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_Sample_Type extends Register_Type {
 
 	/**
-	 * Post type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The database name of the post type.
-	 */
-	protected $type_key = 'sample_type';
-
-	/**
-	 * Singular name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The singular name of the post type.
-	 */
-	protected $singular = 'sample post';
-
-	/**
-	 * Plural name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The plural name of the post type.
-	 */
-	protected $plural = 'sample posts';
-
-	/**
-	 * Menu icon
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The dashicon class or custom URL.
-	 */
-	protected $menu_icon = 'dashicons-welcome-learn-more';
-
-	/**
-	 * Use block editor
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type uses the block editor
-	 * 				   rather than the rich text editor.
-	 */
-	protected $use_block_editor = false;
-
-	/**
-	 * Settings page
-	 *
-	 * Add a settings page for the post type.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to create a settings page for this post type.
-	 */
-	protected $settings_page = false;
-
-	/**
-	 * Register priority
-	 *
-	 * When to register the post type.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The numeral to set hook priority.
-	 */
-	protected $priority = 20;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -98,8 +30,24 @@ class Register_Sample_Type extends Register_Type {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
+		$labels = [
+			'singular'    => __( 'sample post', 'sitecore' ),
+			'plural'      => __( 'sample posts', 'sitecore' ),
+			'description' => '',
+			'menu_icon'   => 'dashicons-welcome-learn-more'
+		];
+
+		$options = [
+			'menu_position' => 3
+		];
+
+		parent :: __construct(
+			'sample_type',
+			$labels,
+			$options,
+			10,
+			false
+		);
 	}
 
 	/**
@@ -138,7 +86,7 @@ class Register_Sample_Type extends Register_Type {
 		}
 
 		// Sample option.
-		$args['menu_position'] = 3;
+		// $args['menu_position'] = 3;
 
 		return $args;
 	}

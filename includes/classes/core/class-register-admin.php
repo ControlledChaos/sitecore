@@ -22,156 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_Admin extends Register_Type {
 
 	/**
-	 * Post type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The database name of the post type.
-	 */
-	protected $type_key = 'admin';
-
-	/**
-	 * Singular name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The singular name of the post type.
-	 */
-	protected $singular = 'admin page';
-
-	/**
-	 * Plural name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The plural name of the post type.
-	 */
-	protected $plural = 'admin pages';
-
-	/**
-	 * Menu icon
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The dashicon class for book.
-	 */
-	protected $menu_icon = 'dashicons-clipboard';
-
-	/**
-	 * Menu position
-	 *
-	 * If the content settings page is not available then
-	 * put this as a top-level entry at or near the
-	 * bottom of the menu.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The numeral to set position.
-	 */
-	protected $menu_position = 99;
-
-	/**
-	 * Public type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type is public.
-	 */
-	protected $public = false;
-
-	/**
-	 * Exclude from search
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type should be
-	 *                 excluded from search.
-	 */
-	protected $exclude_from_search = true;
-
-	/**
-	 * Show in admin menu
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type displays
-	 *                 links in the admin menu.
-	 */
-	protected $show_in_menu = false;
-
-	/**
-	 * Show in navigation menus
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type displays
-	 *                 in the navigation menus interface.
-	 */
-	protected $show_in_nav_menus = false;
-
-	/**
-	 * Show in admin/user toolbar
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type displays
-	 *                 links in the admin/user toolbar.
-	 */
-	protected $show_in_admin_bar = false;
-
-	/**
-	 * Has archive
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether there should be post type archives.
-	 */
-	protected $has_archive = false;
-
-	/**
-	 * Register priority
-	 *
-	 * Attempt to display below other content entries.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The numeral to set hook priority.
-	 */
-	protected $priority = 20;
-
-	/**
-	 * Supports
-	 *
-	 * The built in fields/metaboxes supported by the post type.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    array The array of support.
-	 */
-	protected $supports = [
-		'title',
-		'thumbnail',
-	];
-
-	/**
-	 * Supported taxonomies
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    array The array of supported taxonomies.
-	 */
-	protected $taxonomies = [];
-
-	/**
-	 * Settings page
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to create a settings page for this post type.
-	 */
-	protected $settings_page = true;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -180,8 +30,35 @@ class Register_Admin extends Register_Type {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
+		$labels = [
+			'singular'    => __( 'admin page', 'sitecore' ),
+			'plural'      => __( 'admin pages', 'sitecore' ),
+			'description' => '',
+			'menu_icon'   => 'dashicons-clipboard'
+		];
+
+		$options = [
+			'public'              => false,
+			'menu_position'       => 99,
+			'exclude_from_search' => true,
+			'show_in_menu'        => false,
+			'show_in_nav_menus'   => false,
+			'show_in_admin_bar'   => false,
+			'supports'            => [
+				'title',
+				'thumbnail',
+			],
+			'taxonomies'  => [],
+			'has_archive' => false
+		];
+
+		parent :: __construct(
+			'admin',
+			$labels,
+			$options,
+			20,
+			true
+		);
 
 		// Modify row actions in list UI.
 		add_filter( 'post_row_actions', [ $this, 'row_actions' ], 10, 1 );

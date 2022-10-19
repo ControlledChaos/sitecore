@@ -18,70 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_Site_Help extends Register_Type {
 
 	/**
-	 * Post type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The database name of the post type.
-	 */
-	protected $type_key = 'site_help';
-
-	/**
-	 * Singular name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The singular name of the post type.
-	 */
-	protected $singular = 'help page';
-
-	/**
-	 * Plural name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The plural name of the post type.
-	 */
-	protected $plural = 'help pages';
-
-	/**
-	 * Public type
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type is public.
-	 */
-	protected $public = false;
-
-	/**
-	 * Menu position
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    integer The numeral to set position.
-	 */
-	protected $menu_position = 100;
-
-	/**
-	 * Menu icon
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The dashicon class for book.
-	 */
-	protected $menu_icon = 'dashicons-welcome-learn-more';
-
-	/**
-	 * Show in admin menu
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the post type displays
-	 *                 links in the admin menu.
-	 */
-	protected $show_in_menu = false;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -90,8 +26,26 @@ class Register_Site_Help extends Register_Type {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
+		$labels = [
+			'singular'    => __( 'help page', 'sitecore' ),
+			'plural'      => __( 'help pages', 'sitecore' ),
+			'description' => '',
+			'menu_icon'   => 'dashicons-welcome-learn-more'
+		];
+
+		$options = [
+			'public'        => false,
+			'show_in_menu'  => false,
+			'menu_position' => 100
+		];
+
+		parent :: __construct(
+			'site_help',
+			$labels,
+			$options,
+			10,
+			false
+		);
 	}
 
 	/**
