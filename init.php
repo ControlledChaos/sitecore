@@ -131,11 +131,6 @@ function init() {
 	$scp_acfe = new Vendor_Class\Plugin_ACFE;
 	$scp_acfe->include();
 
-	// Admin.
-	if ( is_admin() ) {
-		Admin\setup();
-	}
-
 	// Users.
 	Users\setup();
 	User_Roles\setup();
@@ -195,8 +190,6 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 /**
  * Admin initialization function
  *
- * Provided for development.
- *
  * @since  1.0.0
  * @global $pagenow Get the current admin screen.
  * @global $typenow Get the current post type screen.
@@ -204,7 +197,13 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
  */
 function admin_init() {
 
+	if ( ! is_admin() ) {
+		return;
+	}
+
 	// Access global variables.
 	global $pagenow, $typenow;
+
+	Admin\setup();
 }
 add_action( 'plugins_loaded', __NAMESPACE__ . '\admin_init' );
