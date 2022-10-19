@@ -34,7 +34,7 @@ class Register_Sample_Type extends Register_Type {
 			'singular'    => __( 'sample post', 'sitecore' ),
 			'plural'      => __( 'sample posts', 'sitecore' ),
 			'description' => '',
-			'menu_icon'   => 'dashicons-welcome-learn-more'
+			'menu_icon'   => 'dashicons-lightbulb'
 		];
 
 		$options = [
