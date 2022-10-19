@@ -18,6 +18,7 @@ SiteCore\Classes\Tools    as Tools_Class,
 SiteCore\Classes\Media    as Media_Class,
 SiteCore\Classes\Users    as Users_Class,
 SiteCore\Classes\Admin    as Backend_Class,
+SiteCore\Classes\Front    as Frontend_Class,
 SiteCore\Classes\Widgets  as Widgets_Class,
 SiteCore\Classes\Vendor   as Vendor_Class;
 
