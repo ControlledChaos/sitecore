@@ -15,6 +15,9 @@
 
 namespace SiteCore\Classes\Front;
 
+// Alias namespaces.
+use SiteCore\Classes\Vendor as Vendor;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -25,16 +28,35 @@ class Content_Filter {
 	/**
 	 * Post types
 	 *
-	 * Array of the post types to be filtered,
-	 * as they are registered.
-	 *
-	 * @example [ 'post', 'sample_type' ]
+	 * Array of the post types to be filtered.
 	 *
 	 * @since  1.0.0
-	 * @access private
+	 * @access public
 	 * @var    array Array of the post types to be filtered.
 	 */
-	private $post_types = [];
+	public $post_types = [];
+
+	/**
+	 * Post taxonomies
+	 *
+	 * Array of the taxonomies to be filtered.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    array Array of the taxonomies to be filtered.
+	 */
+	public $post_taxes = [];
+
+	/**
+	 * Post formats
+	 *
+	 * Array of the formats to be filtered.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    array Array of the formats to be filtered.
+	 */
+	public $post_formats = [];
 
 	/**
 	 * Content filter priority
@@ -42,10 +64,10 @@ class Content_Filter {
 	 * When to filter the content.
 	 *
 	 * @since  1.0.0
-	 * @access private
+	 * @access public
 	 * @var    integer The numeral to set filter priority.
 	 */
-	private $priority = 10;
+	public $priority = 10;
 
 	/**
 	 * Constructor method
@@ -54,10 +76,19 @@ class Content_Filter {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct( $post_types, $post_taxes, $post_formats, $priority ) {
+
+		$types   = [];
+		$taxes   = [];
+		$formats = [];
+
+		$this->post_types   = wp_parse_args( $post_types, $types );
+		$this->post_taxes   = wp_parse_args( $post_taxes, $taxes );
+		$this->post_formats = wp_parse_args( $post_formats, $formats );
+		$this->priority     = $priority;
 
 		// Add content filter if post types are set.
-		if ( $this->post_types() ) {
+		if ( $this->post_types() || $this->post_taxes() || $this->post_formats() ) {
 			add_filter( 'the_content', [ $this, 'the_content' ], $this->priority, 1 );
 		}
 	}
@@ -78,6 +109,52 @@ class Content_Filter {
 	}
 
 	/**
+	 * Check for taxonomies
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @return boolean Returns true if the post_taxes property
+	 *                 has at least one taxonomy.
+	 */
+	private function post_taxes() {
+		if ( isset( $this->post_taxes ) && is_array( $this->post_taxes ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Check for formats
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @return boolean Returns true if the post_formats property
+	 *                 has at least one formats.
+	 */
+	private function post_formats() {
+		if ( isset( $this->post_formats ) && is_array( $this->post_formats ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Filter content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $content The value of the content field.
+	 * @return mixed Returns the content to be filtered or
+	 *               returns the unfiltered content if post types don't match.
+	 */
+	public function xthe_content( $content ) {
+		$filtered  = $this->before_content();
+		$filtered .= $content;
+		$filtered .= $this->after_content();
+		return $filtered;
+	}
+
+	/**
 	 * Filter content
 	 *
 	 * @since  1.0.0
@@ -87,10 +164,45 @@ class Content_Filter {
 	 *               returns the unfiltered content if post types don't match.
 	 */
 	public function the_content( $content ) {
-		$filtered  = $this->before_content();
-		$filtered .= $content;
-		$filtered .= $this->after_content();
-		return $filtered;
+
+		// Get the array of post types & taxonomies to be filtered.
+		$types = $this->post_types;
+		$taxes = $this->post_taxes;
+
+		// Default content for post types not modified.
+		$content = $content;
+
+		// Modify the content for each post type in the post_types property.
+		foreach ( $types as $type ) {
+
+			$this->before_content();
+
+			// If the post type matches one in the loop.
+			if ( $type == get_post_type( get_the_ID() ) ) {
+
+				/**
+				 * If the post is in its post type archive
+				 * and if the content is in the loop.
+				 */
+				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
+					$content = $this->archive_content();
+
+				// If the post is singular and if it is in the loop.
+				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
+					$content = $this->single_content();
+
+				// If the post is in taxonomy archive pages and if it is in the loop.
+				} elseif ( is_tax( 'sample_tax' ) && is_main_query() && in_the_loop() ) {
+					$content = $this->taxonomy_content();
+
+				}
+			}
+
+			$this->after_content();
+		}
+
+		// Return the modified or unmodified content.
+		return $content;
 	}
 
 	/**

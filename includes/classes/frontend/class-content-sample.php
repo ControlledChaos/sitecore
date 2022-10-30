@@ -21,34 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Content_Sample extends Content_Filter {
 
 	/**
-	 * Post types
-	 *
-	 * Array of the post types to be filtered,
-	 * as they are registered.
-	 *
-	 * @example [ 'post', 'sample_type' ]
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var    array Array of the post types to be filtered.
-	 */
-	private $post_types = [
-		'post',
-		'sample_type'
-	];
-
-	/**
-	 * Content filter priority
-	 *
-	 * When to filter the content.
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var    integer The numeral to set filter priority.
-	 */
-	private $priority = 10;
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -57,56 +29,24 @@ class Content_Sample extends Content_Filter {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
-	}
+		$types = [
+			'sample_type'
+		];
 
-	/**
-	 * Filter content
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  string $content The value of the content field.
-	 * @return mixed Returns the content to be filtered or
-	 *               returns the unfiltered content if post types don't match.
-	 */
-	public function the_content( $content ) {
+		$taxes = [
+			// 'sample_tax'
+		];
 
-		// Get the array of post types to be filtered.
-		$types = $this->post_types;
+		$formats = [
+			'aside'
+		];
 
-		// Default content for post types not modified.
-		$content = $content;
-
-		// Modify the content for each post type in the post_types property.
-		foreach ( $types as $type ) {
-
-			$id = get_the_ID();
-
-			// If the post type matches one in the loop.
-			if ( $type == get_post_type( $id ) ) {
-
-				/**
-				 * If the post is in its post type archive
-				 * and if the content is in the loop.
-				 */
-				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
-					$content = $this->archive_content();
-
-				// If the post is singular and if it is in the loop.
-				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
-					$content = $this->single_content();
-
-				// If the post is in taxonomy archive pages and if it is in the loop.
-				} elseif ( is_tax( 'sample_tax' ) && is_main_query() && in_the_loop() ) {
-					$content = $this->taxonomy_content();
-
-				}
-			}
-		}
-
-		// Return the modified or unmodified content.
-		return $content;
+		parent :: __construct(
+			$types,
+			$taxes,
+			$formats,
+			10
+		);
 	}
 
 	/**
