@@ -27,123 +27,50 @@ class Register_Tax {
 	 * @example 'vehicle_type'
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @var    string The database name of the taxonomy.
 	 */
-	protected $tax_key = '';
+	public $tax_key = '';
 
 	/**
 	 * Associated post types
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @var    array The array of associated post types.
 	 */
-	protected $post_types = [];
+	public $post_types = [];
 
 	/**
-	 * Singular name
+	 * Taxonomy labels
+	 *
+	 * Various text for the taxonomy.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The singular name of the taxonomy.
+	 * @access public
+	 * @var array An array of taxonomy labels.
 	 */
-	protected $singular = '';
+	public $tax_labels = [];
 
 	/**
-	 * Plural name
+	 * Taxonomy options
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The plural name of the taxonomy.
+	 * @access public
+	 * @var array An array of taxonomy options.
 	 */
-	protected $plural = '';
+	public $tax_options = [];
 
 	/**
-	 * Public type
+	 * Register priority
+	 *
+	 * When to register the taxonomy.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy is public.
+	 * @access public
+	 * @var    integer The numeral to set hook priority.
 	 */
-	protected $public = true;
-
-	/**
-	 * Hierarchical
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy is hierarchical.
-	 */
-	protected $hierarchical = false;
-
-	/**
-	 * Show user interface
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy displays
-	 *                 a user interface.
-	 */
-	protected $show_ui = true;
-
-	/**
-	 * Show in admin menu
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy displays
-	 *                 links in the admin menu.
-	 */
-	protected $show_in_menu = true;
-
-	/**
-	 * Show admin column
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy displays an
-	 *                 admin column in the post list.
-	 */
-	protected $show_admin_column = true;
-
-	/**
-	 * Show in quick edit
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy displays in
-	 *                 relative post type quick edit.
-	 */
-	protected $show_in_quick_edit = true;
-
-	/**
-	 * Show in navigation menus
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether the taxonomy displays
-	 *                 in the navigation menus interface.
-	 */
-	protected $show_in_nav_menus = true;
-
-	/**
-	 * Show in REST API
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    boolean Whether to show in REST API.
-	 */
-	protected $show_in_rest = true;
-
-	/**
-	 * REST controller class
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string REST API Controller class name.
-	 */
-	protected $rest_controller_class = 'WP_REST_Terms_Controller';
+	public $priority = 10;
 
 	/**
 	 * Constructor magic method.
@@ -152,7 +79,40 @@ class Register_Tax {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct( $tax_key, $post_types, $tax_labels, $tax_options, $priority ) {
+
+		$types = [];
+
+		$labels = [
+			'singular'    => '',
+			'plural'      => '',
+			'description' => '',
+			'menu_icon'   => 'dashicons-category'
+		];
+
+		$options = [
+			'label'                 => '',
+			'labels'                => [],
+			'public'                => true,
+			'hierarchical'          => false,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'show_in_quick_edit'    => true,
+			'meta_box_cb'           => 'post_categories_meta_box',
+			'show_in_menu'          => true,
+			'show_in_nav_menus'     => true,
+			'rewrite'               => [],
+			'show_in_rest'          => true,
+			'rest_base'             => $this->tax_key . '_rest_api',
+			'rest_controller_class' => 'WP_REST_Terms_Controller',
+			'query_var'             => $this->tax_key
+		];
+
+		$this->tax_key      = $tax_key;
+		$this->post_types   = wp_parse_args( $post_types, $types );
+		$this->tax_labels   = wp_parse_args( $tax_labels, $labels );
+		$this->tax_options  = wp_parse_args( $tax_options, $options );
+		$this->priority     = $priority;
 
 		// Register taxonomy.
 		add_action( 'init', [ $this, 'register' ] );
@@ -164,10 +124,6 @@ class Register_Tax {
 
 	/**
      * Register taxonomy
-     *
-     * Note for WordPress 5.0 or greater:
-     * If you want your taxonomy to adopt the block edit_form_image_editor
-     * rather than using the rich text editor then set `show_in_rest` to `true`.
      *
      * @since  1.0.0
 	 * @access public
@@ -193,20 +149,20 @@ class Register_Tax {
 	public function options() {
 
 		$options = [
-			'label'                 => __( ucwords( $this->plural ), 'sitecore' ),
+			'label'                 => __( ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
 			'labels'                => $this->labels(),
-			'public'                => $this->public,
-			'hierarchical'          => $this->hierarchical,
-			'show_ui'               => $this->show_ui,
-			'show_admin_column'     => $this->show_admin_column,
-			'show_in_quick_edit'    => $this->show_in_quick_edit,
-			'meta_box_cb'           => $this->meta_box_cb(),
-			'show_in_menu'          => $this->show_in_menu,
-			'show_in_nav_menus'     => $this->show_in_nav_menus,
+			'public'                => $this->tax_options['public'],
+			'hierarchical'          => $this->tax_options['hierarchical'],
+			'show_ui'               => $this->tax_options['show_ui'],
+			'show_admin_column'     => $this->tax_options['show_admin_column'],
+			'show_in_quick_edit'    => $this->tax_options['show_in_quick_edit'],
+			'meta_box_cb'           => $this->tax_options['meta_box_cb'],
+			'show_in_menu'          => $this->tax_options['show_in_menu'],
+			'show_in_nav_menus'     => $this->tax_options['show_in_nav_menus'],
 			'rewrite'               => $this->rewrite(),
-			'show_in_rest'          => $this->show_in_rest,
+			'show_in_rest'          => $this->tax_options['show_in_rest'],
 			'rest_base'             => $this->tax_key . '_rest_api',
-			'rest_controller_class' => $this->rest_controller_class,
+			'rest_controller_class' => $this->tax_options['rest_controller_class'],
 			'query_var'             => $this->tax_key
 		];
 
@@ -226,47 +182,32 @@ class Register_Tax {
 	public function labels() {
 
 		$labels = [
-			'name'                       => __( ucwords( $this->plural ), 'sitecore' ),
-			'singular_name'              => __( ucwords( $this->singular ), 'sitecore' ),
-			'menu_name'                  => __( ucwords( $this->plural ), 'sitecore' ),
-			'all_items'                  => __( 'All ' . ucwords( $this->plural ), 'sitecore' ),
-			'edit_item'                  => __( 'Edit ' . ucwords( $this->singular ), 'sitecore' ),
-			'view_item'                  => __( 'View ' . ucwords( $this->singular ), 'sitecore' ),
-			'update_item'                => __( 'Update ' . ucwords( $this->singular ), 'sitecore' ),
-			'add_new_item'               => __( 'Add New ' . ucwords( $this->singular ), 'sitecore' ),
-			'new_item_name'              => __( 'New ' . ucwords( $this->singular ), 'sitecore' ),
-			'parent_item'                => __( 'Parent ' . ucwords( $this->singular ), 'sitecore' ),
-			'parent_item_colon'          => __( 'Parent ' . ucwords( $this->singular ), 'sitecore' ),
-			'popular_items'              => __( 'Popular ' . ucwords( $this->plural ), 'sitecore' ),
-			'separate_items_with_commas' => __( 'Separate ' . ucwords( $this->plural ) . ' with commas', 'sitecore' ),
-			'add_or_remove_items'        => __( 'Add or Remove ' . ucwords( $this->plural ), 'sitecore' ),
-			'choose_from_most_used'      => __( 'Choose from the most used ' . ucwords( $this->plural ), 'sitecore' ),
-			'not_found'                  => __( 'No ' . ucwords( $this->plural ) . ' Found', 'sitecore' ),
-			'no_terms'                   => __( 'No ' . ucwords( $this->plural ), 'sitecore' ),
-			'filter_by_item'             => __( 'Filter by Category', 'sitecore' ),
-			'items_list_navigation'      => __( ucwords( $this->plural ) . ' list navigation', 'sitecore' ),
-			'items_list'                 => __( ucwords( $this->plural ) . ' List', 'sitecore' ),
-			'most_used'                  => __( 'Most Used ' . ucwords( $this->plural ), 'sitecore' ),
-			'back_to_items'              => __( 'Back to ' . ucwords( $this->plural ), 'sitecore' )
+			'name'                       => __( ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'singular_name'              => __( ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'menu_name'                  => __( ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'all_items'                  => __( 'All ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'edit_item'                  => __( 'Edit ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'view_item'                  => __( 'View ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'update_item'                => __( 'Update ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'add_new_item'               => __( 'Add New ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'new_item_name'              => __( 'New ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'parent_item'                => __( 'Parent ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'parent_item_colon'          => __( 'Parent ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'popular_items'              => __( 'Popular ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'separate_items_with_commas' => __( 'Separate ' . ucwords( $this->tax_labels['plural'] ) . ' with commas', 'sitecore' ),
+			'add_or_remove_items'        => __( 'Add or Remove ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'choose_from_most_used'      => __( 'Choose from the most used ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'not_found'                  => __( 'No ' . ucwords( $this->tax_labels['plural'] ) . ' Found', 'sitecore' ),
+			'no_terms'                   => __( 'No ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'filter_by_item'             => __( 'Filter by ' . ucwords( $this->tax_labels['singular'] ), 'sitecore' ),
+			'items_list_navigation'      => __( ucwords( $this->tax_labels['plural'] ) . ' list navigation', 'sitecore' ),
+			'items_list'                 => __( ucwords( $this->tax_labels['plural'] ) . ' List', 'sitecore' ),
+			'most_used'                  => __( 'Most Used ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' ),
+			'back_to_items'              => __( 'Back to ' . ucwords( $this->tax_labels['plural'] ), 'sitecore' )
 		];
 
 		// Filter for child classes to modify this array.
 		return $labels;
-	}
-
-	/**
-	 * Metabox callback
-	 *
-	 * Callback function for metabox markup on edit screens.
-	 * False will disable the metabox. Null will use the
-	 * core tags callback function, `post_tags_meta_box`.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    mixed The callback function name or false or null.
-	 */
-	protected function meta_box_cb() {
-		return null;
 	}
 
 	/**
@@ -278,11 +219,11 @@ class Register_Tax {
 	 */
 	public function rewrite() {
 
+		$slug    = str_replace( ' ', '-', strtolower( $this->tax_labels['plural'] ) );
 		$rewrite = [
-			'slug'       => $this->tax_key,
+			'slug'       => $slug,
 			'with_front' => true
 		];
-
 		return $rewrite;
 	}
 

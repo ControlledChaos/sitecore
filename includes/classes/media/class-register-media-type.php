@@ -21,50 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_Media_Type extends Core\Register_Tax {
 
 	/**
-	 * Taxonomy
-	 *
-	 * Maximum 20 characters. May only contain lowercase alphanumeric
-	 * characters, dashes, and underscores. Dashes discouraged.
-	 *
-	 * @example 'color'
-	 * @example 'vehicle_type'
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The database name of the taxonomy.
-	 */
-	protected $tax_key = 'media_type';
-
-	/**
-	 * Associated post types
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    array The array of associated post types.
-	 */
-	protected $post_types = [
-		'attachment'
-	];
-
-	/**
-	 * Singular name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The singular name of the taxonomy.
-	 */
-	protected $singular = 'media type';
-
-	/**
-	 * Plural name
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The plural name of the taxonomy.
-	 */
-	protected $plural = 'media types';
-
-	/**
 	 * Constructor magic method.
 	 *
 	 * @since  1.0.0
@@ -73,8 +29,26 @@ class Register_Media_Type extends Core\Register_Tax {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
+		$types = [
+			'attachment'
+		];
 
+		$labels = [
+			'singular'    => __( 'media type', 'sitecore' ),
+			'plural'      => __( 'media types', 'sitecore' ),
+			'description' => __( 'Organize the media library by file types.', 'sitecore' ),
+			'menu_icon'   => 'dashicons-tag'
+		];
+
+		$options = [];
+
+		// Run the parent constructor method.
+		parent :: __construct(
+			'media_type',
+			$types,
+			$labels,
+			$options,
+			10
+		);
 	}
 }
