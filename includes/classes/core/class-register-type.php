@@ -6,21 +6,6 @@
  * @subpackage Classes
  * @category   Core
  * @since      1.0.0
- *
- * To register a new post type create a class that
- * extends this class, including a constructor that
- * runs this parent constructor method.
- * ```
- * public function __construct() {
- *     parent :: __construct();
- * }
- * ```
- *
- * Add new variables for the key, names, supports, etc.
- * Override the `labels()` and `options()` methods if
- * more detailed replacement is needed.
- *
- * @see includes/classes/core/class-register-sample.php
  */
 
 namespace SiteCore\Classes\Core;
@@ -42,10 +27,10 @@ class Register_Type {
 	 * @example 'car_part'
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The database name of the post type.
 	 */
-	public $type_key = '';
+	protected $type_key = '';
 
 	/**
 	 * Post type labels
@@ -53,19 +38,19 @@ class Register_Type {
 	 * Various text for the post type.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var array An array of post type labels.
 	 */
-	public $type_labels = [];
+	protected $type_labels = [];
 
 	/**
 	 * Post type options
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var array An array of post type options.
 	 */
-	public $type_options = [];
+	protected $type_options = [];
 
 	/**
 	 * Settings page
@@ -73,10 +58,10 @@ class Register_Type {
 	 * Add a settings page for the post type.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    boolean Whether to create a settings page for this post type.
 	 */
-	public $settings_page = false;
+	protected $settings_page = false;
 
 	/**
 	 * Register priority
@@ -84,10 +69,10 @@ class Register_Type {
 	 * When to register the post type.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    integer The numeral to set hook priority.
 	 */
-	public $priority = 10;
+	protected $priority = 10;
 
 	/**
 	 * Constructor method

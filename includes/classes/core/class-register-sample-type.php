@@ -38,14 +38,19 @@ class Register_Sample_Type extends Register_Type {
 		];
 
 		$options = [
-			'menu_position' => 3
+			'menu_position' => 3,
+			'taxonomies'    => [
+				'sample_tax',
+				'category',
+				'post_tag'
+			]
 		];
 
 		parent :: __construct(
 			'sample_type',
 			$labels,
 			$options,
-			10,
+			$this->priority,
 			false
 		);
 	}

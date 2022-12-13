@@ -27,19 +27,19 @@ class Register_Tax {
 	 * @example 'vehicle_type'
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    string The database name of the taxonomy.
 	 */
-	public $tax_key = '';
+	protected $tax_key = '';
 
 	/**
 	 * Associated post types
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    array The array of associated post types.
 	 */
-	public $post_types = [];
+	protected $post_types = [];
 
 	/**
 	 * Taxonomy labels
@@ -47,19 +47,19 @@ class Register_Tax {
 	 * Various text for the taxonomy.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var array An array of taxonomy labels.
 	 */
-	public $tax_labels = [];
+	protected $tax_labels = [];
 
 	/**
 	 * Taxonomy options
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var array An array of taxonomy options.
 	 */
-	public $tax_options = [];
+	protected $tax_options = [];
 
 	/**
 	 * Register priority
@@ -67,10 +67,10 @@ class Register_Tax {
 	 * When to register the taxonomy.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @var    integer The numeral to set hook priority.
 	 */
-	public $priority = 10;
+	protected $priority = 10;
 
 	/**
 	 * Constructor magic method.

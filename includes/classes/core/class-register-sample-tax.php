@@ -50,7 +50,7 @@ class Register_Sample_Tax extends Register_Tax {
 			$types,
 			$labels,
 			$options,
-			10
+			$this->priority
 		);
 	}
 }
