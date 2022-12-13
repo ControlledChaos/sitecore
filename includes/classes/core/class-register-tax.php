@@ -108,14 +108,14 @@ class Register_Tax {
 			'query_var'             => $this->tax_key
 		];
 
-		$this->tax_key      = $tax_key;
+		$this->tax_key      = (string) $tax_key;
 		$this->post_types   = wp_parse_args( $post_types, $types );
 		$this->tax_labels   = wp_parse_args( $tax_labels, $labels );
 		$this->tax_options  = wp_parse_args( $tax_options, $options );
-		$this->priority     = $priority;
+		$this->priority     = (int) $priority;
 
 		// Register taxonomy.
-		add_action( 'init', [ $this, 'register' ] );
+		add_action( 'init', [ $this, 'register' ], $this->priority );
 
 		// Rewrite taxonomy labels.
 		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );

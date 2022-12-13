@@ -130,20 +130,20 @@ class Register_Type {
 			'_builtin'         => false
 		];
 
-		$this->type_key      = $type_key;
+		$this->type_key      = (string) $type_key;
 		$this->type_labels   = wp_parse_args( $type_labels, $labels );
 		$this->type_options  = wp_parse_args( $type_options, $options );
-		$this->priority      = $priority;
-		$this->settings_page = $settings;
+		$this->priority      = (int) $priority;
+		$this->settings_page = (bool) $settings;
 
 		// Register post type.
 		add_action( 'init', [ $this, 'register' ], $this->priority );
 
 		// New post type options.
-		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], 10, 2 );
+		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], $this->priority, 2 );
 
 		// Use block editor.
-		// add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], 10, 1 );
+		// add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], $this->priority, 1 );
 
 		// Rewrite post type labels.
 		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );
