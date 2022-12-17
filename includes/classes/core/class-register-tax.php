@@ -73,7 +73,7 @@ class Register_Tax {
 	protected $priority = 10;
 
 	/**
-	 * Constructor magic method.
+	 * Constructor method
 	 *
 	 * @since  1.0.0
 	 * @access public

@@ -24,12 +24,18 @@ class Register_Sample_Type extends Register_Type {
 	/**
 	 * Constructor method
 	 *
+	 * @see Register_Type::__construct()
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return self
 	 */
 	public function __construct() {
 
+		/**
+		 * Keep singular and plural names lowercase and the
+		 * parent class will capitalize them where appropriate.
+		 */
 		$labels = [
 			'singular'    => __( 'sample post', 'sitecore' ),
 			'plural'      => __( 'sample posts', 'sitecore' ),

@@ -22,7 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Register_Sample_Tax extends Register_Tax {
 
 	/**
-	 * Constructor magic method.
+	 * Constructor method
+	 *
+	 * @see Register_Tax::__construct()
 	 *
 	 * @since  1.0.0
 	 * @access public
