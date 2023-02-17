@@ -102,6 +102,8 @@ class Register_Type {
 			'show_in_nav_menus'     => true,
 			'show_in_admin_bar'     => true,
 			'show_in_rest'          => true,
+			'rest_base'             => $type_key,
+			'rest_namespace'        => 'wp/v2',
 			'rest_controller_class' => 'WP_REST_Posts_Controller',
 			'capabilities'          => [],
 			'map_meta_cap'          => null,
@@ -126,6 +128,7 @@ class Register_Type {
 			'has_archive'      => true,
 			'can_export'       => true,
 			'delete_with_user' => null,
+			'template'         => $this->template(),
 			'template_lock'    => false,
 			'_builtin'         => false
 		];
@@ -143,7 +146,7 @@ class Register_Type {
 		add_filter( 'register_post_type_args', [ $this, 'post_type_options' ], $this->priority, 2 );
 
 		// Use block editor.
-		// add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], $this->priority, 1 );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'use_block_editor' ], $this->priority, 1 );
 
 		// Rewrite post type labels.
 		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );
@@ -194,7 +197,8 @@ class Register_Type {
 			'show_in_nav_menus'     => $this->type_options['show_in_nav_menus'],
 			'show_in_admin_bar'     => $this->type_options['show_in_admin_bar'],
 			'show_in_rest'          => $this->type_options['show_in_rest'],
-			'rest_base'             => $this->type_key . '_rest_api',
+			'rest_base'             => $this->type_options['rest_base'],
+			'rest_namespace'        => $this->type_options['rest_namespace'],
 			'rest_controller_class' => $this->type_options['rest_controller_class'],
 			'menu_position'         => $this->type_options['menu_position'],
 			'menu_icon'             => $this->type_labels['menu_icon'],
@@ -258,7 +262,6 @@ class Register_Type {
 			'attributes'            => __( ucwords( $this->type_labels['singular'] ) . ' Attributes', 'sitecore' )
 		];
 
-		// Filter for child classes to modify this array.
 		return $labels;
 	}
 
@@ -320,7 +323,6 @@ class Register_Type {
 			'feeds'      => true,
 			'pages'      => true
 		];
-
 		return $rewrite;
 	}
 
@@ -339,7 +341,6 @@ class Register_Type {
 		if ( $this->type_key != $post_type ) {
 			return $args;
 		}
-
 		return $args;
 	}
 
