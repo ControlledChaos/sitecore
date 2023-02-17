@@ -147,22 +147,6 @@ class Content_Filter {
 	 * @return mixed Returns the content to be filtered or
 	 *               returns the unfiltered content if post types don't match.
 	 */
-	public function xthe_content( $content ) {
-		$filtered  = $this->before_content();
-		$filtered .= $content;
-		$filtered .= $this->after_content();
-		return $filtered;
-	}
-
-	/**
-	 * Filter content
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  string $content The value of the content field.
-	 * @return mixed Returns the content to be filtered or
-	 *               returns the unfiltered content if post types don't match.
-	 */
 	public function the_content( $content ) {
 
 		// Get the array of post types & taxonomies to be filtered.
