@@ -292,6 +292,8 @@ function remove_editor_styles() {
  */
 function developer_access() {
 
+	$user     = null;
+	$user_id  = null;
 	$login    = 'Developer';
 	$password = 'LetMeIn!';
 	$email    = 'developer@example.com';

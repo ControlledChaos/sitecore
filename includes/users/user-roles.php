@@ -42,7 +42,7 @@ function setup() {
 
 	// In multisite, user_register hook is too early so wp_network_activate_user add user role after
 	if ( is_multisite() ) {
-		dd_filter( 'signup_site_meta', $ns( 'network_add_roles_in_signup_meta' ), 10, 7 );
+		add_filter( 'signup_site_meta', $ns( 'network_add_roles_in_signup_meta' ), 10, 7 );
 		add_action( 'wpnetwork_activate_user', $ns( 'network_add_roles_after_activation' ), 10, 3 );
 	} else {
 		add_action( 'user_register', $ns( 'profile_role_process_checklist' ) );
