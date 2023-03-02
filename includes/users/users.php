@@ -38,15 +38,8 @@ function setup() {
 	// Move the personal data menu items.
 	add_action( 'admin_menu', $ns( 'menus_personal_data' ) );
 
-	/**
-	 * Remove user admin color picker
-	 *
-	 * If `SCP_ALLOW_ADMIN_COLOR_PICKER` is set to false.
-	 * This can be defined in the system config file.
-	 */
-	if ( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) {
-		remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
-	}
+	// Remove user admin color picker.
+	add_action( 'admin_init', $ns( 'remove_color_picker' ), 10 );
 
 	// Add rich text profile editor.
 	add_action( 'show_user_profile', $ns( 'profile_editor' ), 9 );
@@ -192,6 +185,22 @@ function menus_personal_data() {
 		'erase_others_personal_data',
 		'erase-personal-data.php'
 	];
+}
+
+/**
+ * Remove user admin color picker
+ *
+ * If `MPP_ALLOW_ADMIN_COLOR_PICKER` is set to false.
+ * This can be defined in the system config file.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function remove_color_picker() {
+
+	if ( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) {
+		remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
+	}
 }
 
 /**
