@@ -33,7 +33,7 @@ class Sample_Subpage extends Add_Page {
 		$labels = [
 			'page_title'  => __( 'Sample Subpage', 'sitecore' ),
 			'menu_title'  => __( 'Sample Subpage', 'sitecore' ),
-			'description' => __( 'Demonstration of adding a subpage.' )
+			'description' => __( 'Demonstration of adding a subpage.', 'sitecore' )
 		];
 
 		$options = [
