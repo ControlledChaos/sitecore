@@ -58,19 +58,19 @@ class Content_Settings extends Add_Page {
 	public function tabs() {
 
 		$this->add_content_tab( [
-			'id'         => 'content-settings-intro',
-			'tab'        => __( 'Intro', 'sitecore' ),
-			'heading'    => __( 'Introduction', 'sitecore' ),
-			'content'    => '',
-			'callback'   => [ $this, 'intro_tab' ]
+			'id'       => 'content-settings-intro',
+			'tab'      => __( 'Intro', 'sitecore' ),
+			'heading'  => __( 'Introduction', 'sitecore' ),
+			'content'  => '',
+			'callback' => [ $this, 'intro_tab' ]
 		] );
 
 		$this->add_content_tab( [
-			'id'         => 'content-settings-sample',
-			'tab'        => __( 'Another', 'sitecore' ),
-			'heading'    => __( 'Sample Tab', 'sitecore' ),
-			'content'    => '',
-			'callback'   => [ $this, 'sample_tab' ]
+			'id'       => 'content-settings-sample',
+			'tab'      => __( 'Another', 'sitecore' ),
+			'heading'  => __( 'Sample Tab', 'sitecore' ),
+			'content'  => '',
+			'callback' => [ $this, 'sample_tab' ]
 		] );
 	}
 
