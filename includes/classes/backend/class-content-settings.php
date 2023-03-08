@@ -30,14 +30,14 @@ class Content_Settings extends Add_Page {
 		$labels = [
 			'page_title'  => __( 'Content Settings', 'sitecore' ),
 			'menu_title'  => __( 'Content', 'sitecore' ),
-			'description' => __( 'Manage how the content of this website is edited and displayed.' )
+			'description' => __( 'Manage how the content of this website is edited and displayed.', 'sitecore' )
 		];
 
 		$options = [
-			'settings'      => true,
-			'menu_slug'     => 'content-settings',
-			'icon_url'      => 'dashicons-edit',
-			'position'      => 26
+			'settings'  => true,
+			'menu_slug' => 'content-settings',
+			'icon_url'  => 'dashicons-edit',
+			'position'  => 26
 		];
 
 		parent :: __construct(
