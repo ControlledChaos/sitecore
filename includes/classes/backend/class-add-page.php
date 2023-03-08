@@ -172,7 +172,10 @@ class Add_Page {
 	 */
 	public function add_acf_page() {
 
-		if ( ! $this->page_options['acf_page'] ) {
+		if (
+			! $this->page_options['acf_page'] ||
+			$this->page_options['settings']
+		) {
 			return null;
 		}
 
@@ -262,11 +265,14 @@ class Add_Page {
 	 */
 	protected function form_action() {
 
-		if ( $this->page_options['acf_page'] ) {
+		if (
+			! $this->page_options['settings'] ||
+			$this->page_options['acf_page']
+		) {
 			return null;
 		}
 
-		if ( ! empty( $this->page_options['parent_slug'] ) && $this->page_options['settings'] ) {
+		if ( ! empty( $this->page_options['parent_slug'] ) ) {
 			$action = sprintf(
 				'%s?page=%s',
 				$this->page_options['parent_slug'],
