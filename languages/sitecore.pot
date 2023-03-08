@@ -515,7 +515,7 @@ msgstr ""
 #: includes/classes/backend/class-add-settings-page.php:136
 #: includes/classes/backend/class-sample-page.php:140
 #: includes/classes/backend/class-sample-subpage.php:144
-msgid "Settings One"
+msgid "Sample Content One"
 msgstr ""
 
 #: views/backend/forms/settings-page-posts-order.php:47
@@ -525,7 +525,7 @@ msgstr ""
 #: includes/classes/backend/class-add-settings-page.php:145
 #: includes/classes/backend/class-sample-page.php:148
 #: includes/classes/backend/class-sample-subpage.php:152
-msgid "Settings Two"
+msgid "Sample Content Two"
 msgstr ""
 
 #: includes/classes/users/class-users.php:237

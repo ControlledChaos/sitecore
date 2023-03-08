@@ -65,7 +65,7 @@ class Sample_Page extends Add_Page {
 		$this->add_content_tab( [
 			'id'         => 'sample-one',
 			'tab'        => __( 'One', 'sitecore' ),
-			'heading'    => __( 'Settings One', 'sitecore' ),
+			'heading'    => __( 'Sample Content One', 'sitecore' ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
@@ -73,7 +73,7 @@ class Sample_Page extends Add_Page {
 		$this->add_content_tab( [
 			'id'         => 'sample-two',
 			'tab'        => __( 'Two', 'sitecore' ),
-			'heading'    => __( 'Settings Two', 'sitecore' ),
+			'heading'    => __( 'Sample Content Two', 'sitecore' ),
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
