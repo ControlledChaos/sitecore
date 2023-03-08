@@ -74,6 +74,7 @@ class Add_Page {
 
 		$options = [
 			'settings'      => false,
+			'acf_page'      => false,
 			'capability'    => 'manage_options',
 			'menu_slug'     => '',
 			'parent_slug'   => '',
@@ -89,6 +90,9 @@ class Add_Page {
 		// Add an about page for the plugin.
 		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
 
+		// Register ACF options page.
+		add_action( 'acf/init', [ $this, 'add_acf_page' ] );
+
 		// Add screen options.
 		add_action( 'admin_head', [ $this, 'screen_options' ] );
 
@@ -97,6 +101,9 @@ class Add_Page {
 
 		// Print admin styles to head.
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
+
+		// ACF field groups.
+		add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 	}
 
 	/**
@@ -120,6 +127,10 @@ class Add_Page {
 	 * @return void
 	 */
 	public function add_page() {
+
+		if ( $this->page_options['acf_page'] ) {
+			return null;
+		}
 
 		if ( $this->is_subpage() ) {
 
@@ -149,6 +160,42 @@ class Add_Page {
 		// Add content to the contextual help section.
 		if ( true == $this->page_options['add_help'] ) {
 			add_action( 'load-' . $this->help, [ $this, 'help' ] );
+		}
+	}
+
+	/**
+	 * Register ACF options page
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function add_acf_page() {
+
+		if ( ! $this->page_options['acf_page'] ) {
+			return null;
+		}
+
+		// Stop here if ACF Pro is not active.
+		if ( ! function_exists( 'acf_add_options_page' ) ) {
+			return;
+		}
+
+		$options = [
+			'page_title'  => $this->page_title(),
+			'menu_title'  => $this->menu_title(),
+			'menu_slug'   => strtolower( $this->page_options['menu_slug'] ),
+			'parent_slug' => strtolower( $this->page_options['parent_slug'] ),
+			'icon_url'    => strtolower( $this->page_options['icon_url'] ),
+			'position'    => (integer)$this->page_options['position'],
+			'capability'  => strtolower( $this->page_options['capability'] ),
+			'redirect'    => false
+		];
+
+		if ( $this->is_subpage() ) {
+			acf_add_options_sub_page( $options );
+		} else {
+			acf_add_options_page( $options );
 		}
 	}
 
@@ -215,6 +262,10 @@ class Add_Page {
 	 */
 	protected function form_action() {
 
+		if ( $this->page_options['acf_page'] ) {
+			return null;
+		}
+
 		if ( ! empty( $this->page_options['parent_slug'] ) && $this->page_options['settings'] ) {
 			$action = sprintf(
 				'%s?page=%s',
@@ -240,7 +291,10 @@ class Add_Page {
 	 */
 	protected function form_open() {
 
-		if ( ! $this->page_options['settings'] ) {
+		if (
+			! $this->page_options['settings'] ||
+			$this->page_options['acf_page']
+		) {
 			return null;
 		}
 
@@ -261,7 +315,10 @@ class Add_Page {
 	 */
 	protected function form_close() {
 
-		if ( ! $this->page_options['settings'] ) {
+		if (
+			! $this->page_options['settings'] ||
+			$this->page_options['acf_page']
+		) {
 			return null;
 		}
 
@@ -743,4 +800,29 @@ class Add_Page {
 	 * @return string
 	 */
 	public function admin_print_styles() {}
+
+	/**
+	 * ACF field groups
+	 *
+	 * Register field groups for this options page.
+	 *
+	 * The Plugin_ACF class at
+	 * `includes/classes/vendor/class-plugin-acf.php`
+	 * includes once all PHP files prefixed with `acf-`.
+	 * This method is not necessary in child classes if
+	 * field groups are added to that directory with
+	 * that prefix.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acf_field_groups() {
+
+		/**
+		 * Include from another file or use the
+		 * `acf_add_local_field_group` function
+		 * here, as exported.
+		 */
+	}
 }

@@ -90,11 +90,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Vendor\Plugin_ACF'    => SCP_CLASS['vendor'] . 'plugin-acf.php',
 	SCP_CLASS_NS . '\Vendor\Plugin_ACFE'   => SCP_CLASS['vendor'] . 'plugin-acfe.php',
 	SCP_CLASS_NS . '\Vendor\ACF_Columns'   => SCP_CLASS['vendor'] . 'acf-columns.php',
-	SCP_CLASS_NS . '\Vendor\Add_ACF_Options'    => SCP_CLASS['vendor'] . 'add-acf-options.php',
-	SCP_CLASS_NS . '\Vendor\Add_ACF_Suboptions' => SCP_CLASS['vendor'] . 'add-acf-suboptions.php',
-	SCP_CLASS_NS . '\Vendor\ACF_Manage_Site'    => SCP_CLASS['vendor'] . 'acf-manage-site.php',
-	SCP_CLASS_NS . '\Vendor\Sample_ACF_Options'    => SCP_CLASS['vendor'] . 'sample-acf-options.php',
-	SCP_CLASS_NS . '\Vendor\Sample_ACF_Suboptions' => SCP_CLASS['vendor'] . 'sample-acf-suboptions.php',
 
 	// Backend/admin classes,
 	SCP_CLASS_NS . '\Admin\Add_Page'                => SCP_CLASS['admin'] . 'add-page.php',
@@ -104,6 +99,9 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
+	SCP_CLASS_NS . '\Admin\ACF_Manage_Site'         => SCP_CLASS['admin'] . 'acf-manage-site.php',
+	SCP_CLASS_NS . '\Admin\Sample_ACF_Options'      => SCP_CLASS['admin'] . 'sample-acf-options.php',
+	SCP_CLASS_NS . '\Admin\Sample_ACF_Suboptions'   => SCP_CLASS['admin'] . 'sample-acf-suboptions.php',
 
 	// Frontend classes.
 	SCP_CLASS_NS . '\Front\Title_Filter'     => SCP_CLASS['front'] . 'title-filter.php',

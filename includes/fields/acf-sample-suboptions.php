@@ -61,7 +61,7 @@ acf_add_local_field_group( [
 			[
 				'param'    => 'options_page',
 				'operator' => '==',
-				'value'    => 'sample-options-subpage',
+				'value'    => 'sample-acf-options-subpage',
 			],
 		],
 	],

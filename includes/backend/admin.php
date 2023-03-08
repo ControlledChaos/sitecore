@@ -43,7 +43,11 @@ function setup() {
 	new Classes\Admin\Admin_Settings_Page;
 
 	if ( Compat\active_acf_pro() ) {
-		// new Vendor\ACF_Manage_Site;
+
+		// Advanced Custom Fields pages.
+		new Classes\Admin\ACF_Manage_Site;
+		new Classes\Admin\Sample_ACF_Options;
+		new Classes\Admin\Sample_ACF_Suboptions;
 	} else {
 		new Classes\Admin\Manage_Website_Page;
 	}

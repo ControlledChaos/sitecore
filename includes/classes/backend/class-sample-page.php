@@ -33,7 +33,7 @@ class Sample_Page extends Add_Page {
 		$labels = [
 			'page_title'  => __( 'Sample Page', 'sitecore' ),
 			'menu_title'  => __( 'Sample Page', 'sitecore' ),
-			'description' => __( 'Demonstration of adding a page.' )
+			'description' => __( 'Demonstration of adding a page.', 'sitecore' )
 		];
 
 		$options = [
