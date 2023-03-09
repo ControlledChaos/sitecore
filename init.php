@@ -47,7 +47,7 @@ function init() {
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 
-	// If this is in the must-use plugins directory.
+	// If this plugin is in the must-use plugins directory.
 	load_muplugin_textdomain(
 		'sitecore',
 		dirname( SCP_BASENAME ) . '/languages'
