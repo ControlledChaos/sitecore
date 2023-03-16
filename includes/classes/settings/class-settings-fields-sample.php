@@ -59,7 +59,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id );
+		$option   = get_option( $field_id, false );
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -78,7 +78,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id );
+		$option   = get_option( $field_id, false );
 
 		$html = '<p>';
 		$html .= sprintf(
