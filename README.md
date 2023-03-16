@@ -28,7 +28,7 @@ If you would like to request development of a custom version of this plugin for 
 
 ## Development
 
-This is a complete overhaul of my years-old starter plugin. Many of the features in the old plugin are being tranferred over and rewritten as necessary and proper. These features and new ones will be listed here as they are implemented.
+This is a complete overhaul of my years-old starter plugin. Many of the features in the old plugin are being transferred over and rewritten as necessary and proper. These features and new ones will be listed here as they are implemented.
 
 ## Cover Image
 
@@ -95,26 +95,26 @@ Next change the information in the plugin header of the core plugin file and eit
 
 Following is a list of strings to find and replace in all plugin files.
 
-1. **Plugin name**  
+1. **Plugin name**
    Find `Site Core` and replace with your plugin name.
 
-2. **Package**  
+2. **Package**
    Find `Site_Core` and replace with your plugin name, include underscores between words. This will change the package name
    in file headers.
 
-3. **Namespace**  
+3. **Namespace**
    Find `SiteCore` and replace with something unique to your plugin name.
 
-4. **Text domain**  
+4. **Text domain**
    Find `sitecore` and replace with the new name of your primary plugin file (this file). It is standard to match the domain with the file name but this is not required to run the code.
 
-5. **Admin page slug**  
+5. **Admin page slug**
    Find `site-core` and replace with the new base slug of your plugin's admin pages.
 
-6. **Constants prefix**  
+6. **Constants prefix**
    Find `SCP` and replace with something unique to your plugin name. Use only uppercase letters.
 
-7. **General prefix**  
+7. **General prefix**
    Find `scp` and replace with something unique to your plugin name. Use only lowercase letters. This will change the prefix of all filters and settings, and the prefix of functions outside of a class.
 
 8. **Constants**
