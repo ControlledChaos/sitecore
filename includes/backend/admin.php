@@ -157,7 +157,10 @@ function redirect_editor_pages() {
  * @todo Make this optional on the Site Settings screen.
  */
 function remove_toolbar_logo( $wp_admin_bar ) {
-	$wp_admin_bar->remove_node( 'wp-logo' );
+
+	if ( get_option( 'toolbar_remove_platform_link', true ) ) {
+		$wp_admin_bar->remove_node( 'wp-logo' );
+	}
 }
 
 /**
@@ -232,12 +235,12 @@ function menus_widgets() {
 		foreach ( $submenu['themes.php'] as $key => $item ) {
 
 			// Unset Menus if it is found.
-			if ( $item[2] === 'nav-menus.php' ) {
+			if ( $item[2] === 'nav-menus.php' && get_option( 'admin_menu_menus_top', true ) ) {
 				unset($submenu['themes.php'][$key] );
 			}
 
 			// Unset Widgets if it is found.
-			if ( $item[2] === 'widgets.php' ) {
+			if ( $item[2] === 'widgets.php' && get_option( 'admin_menu_widgets_top', true ) ) {
 				unset( $submenu['themes.php'][$key] );
 			}
 		}
@@ -245,28 +248,34 @@ function menus_widgets() {
 
 	// Add a new top-level Menus page.
 	if ( current_theme_supports( 'menus' ) || current_theme_supports( 'widgets' ) ) {
-		add_menu_page(
-			__( 'Navigation Menus', 'sitecore' ),
-			__( 'Navigation', 'sitecore' ),
-			'delete_others_pages',
-			'nav-menus.php',
-			'',
-			'dashicons-menu-alt',
-			61
-		);
+
+		if ( get_option( 'admin_menu_menus_top', true ) ) {
+			add_menu_page(
+				__( 'Navigation Menus', 'sitecore' ),
+				__( 'Navigation', 'sitecore' ),
+				'delete_others_pages',
+				'nav-menus.php',
+				'',
+				'dashicons-menu-alt',
+				61
+			);
+		}
 	}
 
 	// Add a new top-level Widgets page.
 	if ( current_theme_supports( 'widgets' ) ) {
-		add_menu_page(
-			__( 'Widgets', 'sitecore' ),
-			__( 'Widgets', 'sitecore' ),
-			'delete_others_pages',
-			'widgets.php',
-			'',
-			'dashicons-screenoptions',
-			62
-		);
+
+		if ( get_option( 'admin_menu_widgets_top', true ) ) {
+			add_menu_page(
+				__( 'Widgets', 'sitecore' ),
+				__( 'Widgets', 'sitecore' ),
+				'delete_others_pages',
+				'widgets.php',
+				'',
+				'dashicons-screenoptions',
+				62
+			);
+		}
 	}
 }
 

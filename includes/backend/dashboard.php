@@ -49,7 +49,7 @@ function setup() {
 	 * @todo Option to use the panel in addition to
 	 * the config file constant.
 	 */
-	if ( defined( 'SCP_USE_CUSTOM_DASHBOARD' ) && false != SCP_USE_CUSTOM_DASHBOARD ) :
+	if ( get_option( 'enable_custom_dashboard', false ) ) :
 
 		// Enqueue dashboard panel styles.
 		add_action( 'admin_enqueue_scripts', $ns( 'dashboard_panel_styles' ) );
@@ -60,13 +60,10 @@ function setup() {
 		// Widget order.
 		add_action( 'admin_init', $ns( 'widget_order' ), 25 );
 
-		// Remove core welcome panel.
-		// remove_action( 'welcome_panel', 'wp_welcome_panel' );
-
 		// Add custom dashboard panel.
 		add_action( 'wp_dashboard_setup', $ns( 'dashboard_panel' ) );
 
-	endif; // SCP_USE_CUSTOM_DASHBOARD
+	endif;
 }
 
 /**
@@ -201,6 +198,15 @@ function widget_order() {
  * @return void
  */
 function dashboard_panel() {
+
+	// Remove default widgets.
+	global $wp_meta_boxes;
+	unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_primary'] );
+	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_petitions'] );
+	unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press'] );
+	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now'] );
+	remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );
+	remove_action( 'welcome_panel', 'wp_welcome_panel' );
 
 	$heading = sprintf(
 		'%s %s',
