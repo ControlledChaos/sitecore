@@ -67,8 +67,8 @@ class Content_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'       => 'content-settings-sample',
-			'tab'      => __( 'Posts', 'sitecore' ),
-			'heading'  => __( 'Post Types and Blog', 'sitecore' ),
+			'tab'      => __( 'Options', 'sitecore' ),
+			'heading'  => __( 'Blog and Widgets', 'sitecore' ),
 			'content'  => '',
 			'callback' => [ $this, 'settings_tab' ]
 		] );

@@ -51,9 +51,11 @@ class Settings_Sections_Content extends Settings_Sections {
 	 */
 	public function callback() {
 
-		printf(
+		$html = sprintf(
 			'<p>%s</p>',
-			__( 'Choose options for posts, pages, and the blogging system.', 'sitecore' )
+			__( 'Choose options for the blog and widgets.', 'sitecore' )
 		);
+
+		echo apply_filters( 'scp_content_settings_callback', $html );
 	}
 }
