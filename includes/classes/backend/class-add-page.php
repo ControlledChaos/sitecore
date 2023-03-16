@@ -128,7 +128,7 @@ class Add_Page {
 	 */
 	public function add_page() {
 
-		if ( $this->page_options['acf_page'] ) {
+		if ( ! isset( $this->page_options['menu_slug'] ) || $this->page_options['acf_page'] ) {
 			return null;
 		}
 
@@ -173,6 +173,7 @@ class Add_Page {
 	public function add_acf_page() {
 
 		if (
+			! isset( $this->page_options['menu_slug'] ) ||
 			! $this->page_options['acf_page'] ||
 			$this->page_options['settings']
 		) {
