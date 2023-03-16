@@ -109,12 +109,11 @@ function init() {
 	 * Editor options for WordPress
 	 *
 	 * Not run for ClassicPress and the default antibrand system.
-	 * The `classicpress_version()` function checks for ClassicPress.
-	 * The `APP_INC_PATH` constant checks for the default antibrand system.
+	 * The `Core\is_classicpress()` function checks for ClassicPress.
 	 *
 	 * Not run if the Classic Editor plugin is active.
 	 */
-	if ( ! function_exists( 'classicpress_version' ) || ! defined( 'APP_INC_PATH' ) ) {
+	if ( ! Core\is_classicpress() ) {
 		if ( ! is_plugin_active( 'classic-editor/classic-editor.php' ) ) {
 			new Core_Class\Editor_Options;
 		}

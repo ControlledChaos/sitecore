@@ -9,7 +9,9 @@
  */
 
 namespace SiteCore\Users;
+
 use SiteCore\Classes as Classes;
+use function SiteCore\Core\is_classicpress;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -577,8 +579,8 @@ function user_colors( $colors = [] ) {
 	 * older WordPress versions.
 	 */
 	if (
-		function_exists( 'classicpress_version' ) ||
-		( ! function_exists( 'classicpress_version' ) && version_compare( $wp_version,'4.9.9' ) <= 0 )
+		Core\is_classicpress() ||
+		( ! Core\is_classicpress() && version_compare( $wp_version,'4.9.9' ) <= 0 )
 	) {
 
 		/**
@@ -613,7 +615,7 @@ function user_colors( $colors = [] ) {
 	}
 
 	// Apply a filter for custom color schemes.
-	return apply_filters( 'ds_user_colors', $colors );
+	return apply_filters( 'scp_user_colors', $colors );
 }
 
 /**
@@ -780,5 +782,5 @@ function user_notify_colors( $colors = [] ) {
 	}
 
 	// The array of colors.
-	return apply_filters( 'ds_user_notify_colors', $colors );
+	return apply_filters( 'scp_user_notify_colors', $colors );
 }
