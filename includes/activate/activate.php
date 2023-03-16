@@ -65,6 +65,9 @@ function options() {
 	} elseif ( in_array( $avatar, $gravatar ) ) {
 		update_option( 'avatar_default', $mystery );
 	}
+
+	// Options true by default.
+	update_option( 'disable_block_widgets', true );
 }
 
 /**

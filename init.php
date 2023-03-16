@@ -160,7 +160,7 @@ function init() {
 	}
 
 	// Disable block widgets.
-	if ( defined( 'SCP_ALLOW_BLOCK_WIDGETS' ) && ! SCP_ALLOW_BLOCK_WIDGETS ) {
+	if ( get_option( 'disable_block_widgets', true ) ) {
 		add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
 		add_filter( 'use_widgets_block_editor', '__return_false' );
 	}

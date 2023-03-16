@@ -24,7 +24,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$fields = [
 			[
 				'id'       => 'posts_to_news',
-				'title'    => __( 'Posts to News', 'sitecore' ),
+				'title'    => __( 'Change Posts to News', 'sitecore' ),
 				'callback' => [ $this, 'posts_to_news' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
@@ -32,6 +32,19 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'args'     => [
 					'description' => __( 'Check to change blog posts to news posts.', 'sitecore' ),
 					'label_for'   => 'posts_to_news',
+					'class'       => 'content-field'
+				]
+			],
+			[
+				'id'       => 'disable_block_widgets',
+				'title'    => __( 'Disable Block Widgets', 'sitecore' ),
+				'callback' => [ $this, 'disable_block_widgets' ],
+				'page'     => 'content-settings',
+				'section'  => 'scp-settings-content-posts',
+				'type'     => 'boolean',
+				'args'     => [
+					'description' => __( 'Check to disable block widgets in favor of classic widgets.', 'sitecore' ),
+					'label_for'   => 'disable_block_widgets',
 					'class'       => 'content-field'
 				]
 			]
@@ -64,6 +77,25 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			checked( 1, $option, false ),
 			$fields[0]['args']['description']
+		);
+		$html .= '<p>';
+
+		echo $html;
+	}
+
+	public function disable_block_widgets() {
+
+		$fields   = $this->settings_fields;
+		$field_id = $fields[1]['id'];
+		$option   = get_option( $field_id );
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[1]['args']['description']
 		);
 		$html .= '<p>';
 
