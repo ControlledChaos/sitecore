@@ -34,10 +34,11 @@ class Content_Settings_Page extends Add_Page {
 		];
 
 		$options = [
-			'settings'  => true,
-			'menu_slug' => 'content-settings',
-			'icon_url'  => 'dashicons-edit',
-			'position'  => 26
+			'capability' => 'read',
+			'settings'   => true,
+			'menu_slug'  => 'content-settings',
+			'icon_url'   => 'dashicons-edit',
+			'position'   => 26
 		];
 
 		parent :: __construct(
@@ -66,11 +67,12 @@ class Content_Settings_Page extends Add_Page {
 		] );
 
 		$this->add_content_tab( [
-			'id'       => 'content-settings-sample',
-			'tab'      => __( 'Options', 'sitecore' ),
-			'heading'  => __( 'Blog and Widgets', 'sitecore' ),
-			'content'  => '',
-			'callback' => [ $this, 'settings_tab' ]
+			'capability' => 'manage_options',
+			'id'         => 'content-settings-sample',
+			'tab'        => __( 'Options', 'sitecore' ),
+			'heading'    => __( 'Blog and Widgets', 'sitecore' ),
+			'content'    => '',
+			'callback'   => [ $this, 'settings_tab' ]
 		] );
 	}
 
