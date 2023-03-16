@@ -22,6 +22,12 @@ $avatar = get_avatar(
 		]
 );
 
+if ( ! empty( get_user_option( 'description' ) ) ) {
+	$user_description = wp_trim_words( get_user_option( 'description' ), 64, '&hellip;' );
+} else {
+	$user_description = __( 'As a user of this website you can include a bio/description which may be displayed to other users or to the public, depending on your user permissions, member plugins, and the active theme.', 'sitecore' );
+}
+
 ?>
 <div id="welcome" class="tab-content dashboard-panel-content dashboard-welcome-content">
 
@@ -65,8 +71,11 @@ $avatar = get_avatar(
 
 			<h3><?php _e( 'Bio/Description', 'sitecore' ); ?></h3>
 
-			<p><?php echo wp_trim_words( get_user_option( 'description' ), 64, '&hellip;' ); ?></p>
-			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit', 'sitecore' ); ?></a></p>
+			<?php printf(
+				'<p>%s</p>',
+				$user_description
+			); ?>
+			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit Bio', 'sitecore' ); ?></a></p>
 		</div>
 
 		<div id="dashboard-more-actions" class="dashboard-panel-column dashboard-panel-last">

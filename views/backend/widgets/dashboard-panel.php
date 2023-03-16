@@ -44,7 +44,7 @@ $tabs = apply_filters( 'scp_dashboard_panel_tabs', [
 
 ?>
 <div id="dashboard-panel" class="dashboard-panel">
-	<div class="admin-tabs" data-tabbed="tabbed" data-tabdeeplinking="falsee">
+	<div class="admin-tabs" data-tabbed="tabbed" data-tabdeeplinking="false">
 
 		<ul class="admin-tabs-list hide-if-no-js">
 			<?php echo implode( $tabs ); ?>
