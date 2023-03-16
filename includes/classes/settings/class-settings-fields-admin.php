@@ -66,9 +66,8 @@ class Settings_Fields_Admin extends Settings_Fields {
 			[
 				'id'       => 'toolbar_remove_platform_link',
 				'title'    => sprintf(
-					'%s %s',
-					platform_name(),
-					__( 'Link', 'sitecore' )
+					__( '%s Link', 'sitecore' ),
+					platform_name()
 
 				),
 				'callback' => [ $this, 'toolbar_remove_platform_link' ],
