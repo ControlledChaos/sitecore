@@ -28,7 +28,7 @@ class Content_Settings_Page extends Add_Page {
 	public function __construct() {
 
 		$labels = [
-			'page_title'  => __( 'Content Settings', 'sitecore' ),
+			'page_title'  => __( 'Website Content', 'sitecore' ),
 			'menu_title'  => __( 'Content', 'sitecore' ),
 			'description' => __( 'Manage how the content of this website is edited and displayed.', 'sitecore' )
 		];
