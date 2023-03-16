@@ -51,7 +51,13 @@ if ( enable_posts_to_news() ) {
  * @return boolean Returns true/false according to setting.
  */
 function enable_posts_to_news() {
-	return apply_filters( 'scp_enable_posts_to_news', false );
+
+	$enable = get_option( 'posts_to_news', false );
+
+	if ( true == $enable ) {
+		return true;
+	}
+	return false;
 }
 
 /**
