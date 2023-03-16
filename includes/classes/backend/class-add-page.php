@@ -253,7 +253,6 @@ class Add_Page {
 		if ( ! empty( $this->page_labels['description'] ) ) {
 			return $description;
 		}
-
 		return null;
 	}
 
@@ -272,7 +271,6 @@ class Add_Page {
 		) {
 			return null;
 		}
-
 		return 'options.php';
 	}
 
@@ -296,7 +294,6 @@ class Add_Page {
 			'<form method="post" action="%s" novalidate="novalidate">',
 			$this->form_action()
 		);
-
 		return $html;
 	}
 
@@ -378,7 +375,6 @@ class Add_Page {
 		if ( ! isset( $this->content_tabs[ $id ] ) ) {
 			return null;
 		}
-
 		return $this->content_tabs[ $id ];
 	}
 
@@ -395,7 +391,6 @@ class Add_Page {
 		if ( ! isset( $this->content_tabs[ $id ] ) ) {
 			return false;
 		}
-
 		return true;
 	}
 
