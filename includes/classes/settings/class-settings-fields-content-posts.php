@@ -50,7 +50,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			],
 			[
 				'id'       => 'enable_link_manager',
-				'title'    => __( 'Classic Links', 'sitecore' ),
+				'title'    => __( 'Enable Classic Links', 'sitecore' ),
 				'callback' => [ $this, 'enable_link_manager' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
