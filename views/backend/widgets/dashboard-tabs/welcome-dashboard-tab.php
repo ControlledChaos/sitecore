@@ -22,6 +22,13 @@ $avatar = get_avatar(
 		]
 );
 
+$get_user_desc = get_user_option( 'description' );
+if ( ! empty( $get_user_desc ) || ctype_space( $get_user_desc ) ) {
+	$user_desc = wp_trim_words( $get_user_desc, 64, '&hellip;' );
+} else {
+	$user_desc = __( 'As a user of this website you can include a bio/description which may be displayed to other users or to the public, depending on your user permissions, member plugins, and the active theme.', 'sitecore' );
+}
+
 ?>
 <div id="welcome" class="tab-content dashboard-panel-content dashboard-welcome-content">
 
@@ -30,7 +37,7 @@ $avatar = get_avatar(
 		__( 'Welcome to', 'sitecore' ),
 		get_bloginfo( 'name' )
 	); ?>
-	<p class="about-description"><?php _e( 'We\'ve assembled some links to get you started.', 'sitecore' ); ?></p>
+	<p class="about-description"><?php _e( 'This dashboard provides quick links and info to help you use this website.', 'sitecore' ); ?></p>
 
 	<div class="dashboard-panel-column-container">
 
@@ -53,9 +60,9 @@ $avatar = get_avatar(
 						__( 'Howdy,', 'sitecore' ),
 						Users\display_name()
 					); ?>
-					<p class="about-description"><?php _e( 'This site may display your profile in posts that you author. And there are personal options available for using this site, such as editor preferences and color schemes.', 'sitecore' ); ?></p>
+					<p class="about-description"><?php _e( 'There are personal options available to you as a registered user of this website.', 'sitecore' ); ?></p>
 					<p class="dashboard-panel-call-to-action"><a class="button button-primary button-hero" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Manage Your Profile', 'sitecore' ); ?></a></p>
-					<p class="description"><?php _e( 'Edit your display name & bio.', 'sitecore' ); ?></p>
+					<p class="description"><?php _e( 'Edit your display name, bio & user options.', 'sitecore' ); ?></p>
 				</div>
 
 			</div>
@@ -65,8 +72,11 @@ $avatar = get_avatar(
 
 			<h3><?php _e( 'Bio/Description', 'sitecore' ); ?></h3>
 
-			<p><?php echo wp_trim_words( get_user_option( 'description' ), 64, '&hellip;' ); ?></p>
-			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit', 'sitecore' ); ?></a></p>
+			<?php printf(
+				'<p>%s</p>',
+				$user_desc
+			); ?>
+			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit Bio', 'sitecore' ); ?></a></p>
 		</div>
 
 		<div id="dashboard-more-actions" class="dashboard-panel-column dashboard-panel-last">
