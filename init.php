@@ -99,6 +99,9 @@ function init() {
 	new Core_Class\Register_Sample_Tax;
 	new Core_Class\Register_Admin;
 	new Core_Class\Register_Site_Help;
+	if ( get_option( 'remove_blog' ) ) {
+		new Core_Class\Remove_Blog;
+	}
 
 	// If the Customizer is disabled in the system config file.
 	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {

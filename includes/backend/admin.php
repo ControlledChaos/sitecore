@@ -153,8 +153,6 @@ function redirect_editor_pages() {
  * @since  1.0.0
  * @param  object $wp_admin_bar
  * @return void
- *
- * @todo Make this optional on the Site Settings screen.
  */
 function remove_toolbar_logo( $wp_admin_bar ) {
 
@@ -216,8 +214,6 @@ function menu_remove_site_health(){
  * headers, background, theme options, customizer, etc.
  *
  * This also provides the opportunity to have submenus for each.
- *
- * @todo Make this optional via settings, top-level being default.
  *
  * @since  1.0.0
  * @global array menu The admin menu array.

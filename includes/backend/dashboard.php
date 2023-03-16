@@ -45,9 +45,6 @@ function setup() {
 	 * This replaces the core welcome panel which is
 	 * limited to admins. With this, a custom welcome
 	 * panel can be offered to all user roles.
-	 *
-	 * @todo Option to use the panel in addition to
-	 * the config file constant.
 	 */
 	if ( get_option( 'enable_custom_dashboard', false ) ) :
 

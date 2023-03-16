@@ -32,8 +32,8 @@ class Remove_Blog {
 		// Update home page options.
 		add_action( 'init', [ $this, 'home_options' ] );
 
-		// Delete default post.
-		add_action( 'init', [ $this, 'delete_default' ] );
+		// Delete posts.
+		// add_action( 'init', [ $this, 'delete_posts' ] );
 
 		// Remove posts from user toolbar.
 		add_action( 'admin_bar_menu', [ $this, 'posts_toolbar' ], 999 );
@@ -160,15 +160,13 @@ class Remove_Blog {
 	}
 
 	/**
-	 * Delete default post
-	 *
-	 * @todo Uncomment wp_delete_post when setting is done.
+	 * Delete posts
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function delete_default() {
+	public function delete_posts() {
 
 		// Get all posts by post type.
 		$posts = get_posts( [
@@ -176,11 +174,8 @@ class Remove_Blog {
 			'numberposts' => -1
 		] );
 
-		// Get the option to trash or delete.
-		$force = get_option( 'scp_force_delete_posts' );
-
 		foreach ( $posts as $post ) {
-			// wp_delete_post( $post->ID, $force );
+			wp_delete_post( $post->ID, $force );
 		}
 	}
 
@@ -263,6 +258,7 @@ class Remove_Blog {
 
 		?>
 		<style>
+		#dashboard_right_now li.post-count,
 		#dashboard_right_now .comment-count,
 		#latest-comments,
 		.welcome-panel-last ul li:nth-of-type(3),

@@ -36,6 +36,19 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				]
 			],
 			[
+				'id'       => 'remove_blog',
+				'title'    => __( 'Remove Blog', 'sitecore' ),
+				'callback' => [ $this, 'remove_blog' ],
+				'page'     => 'content-settings',
+				'section'  => 'scp-settings-content-posts',
+				'type'     => 'boolean',
+				'args'     => [
+					'description' => __( 'Check to entirely remove the blogging feature and associated content or widgets.', 'sitecore' ),
+					'label_for'   => 'remove_blog',
+					'class'       => 'content-field'
+				]
+			],
+			[
 				'id'       => 'disable_block_widgets',
 				'title'    => __( 'Disable Block Widgets', 'sitecore' ),
 				'callback' => [ $this, 'disable_block_widgets' ],
@@ -96,6 +109,25 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		echo $html;
 	}
 
+	public function remove_blog() {
+
+		$fields   = $this->settings_fields;
+		$field_id = $fields[1]['id'];
+		$option   = get_option( $field_id, false );
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[1]['args']['description']
+		);
+		$html .= '<p>';
+
+		echo $html;
+	}
+
 	/**
 	 * Block widgets field
 	 *
@@ -106,7 +138,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function disable_block_widgets() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[1]['id'];
+		$field_id = $fields[2]['id'];
 		$option   = get_option( $field_id, true );
 
 		$html = '<p>';
@@ -115,7 +147,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[1]['args']['description']
+			$fields[2]['args']['description']
 		);
 		$html .= '<p>';
 
@@ -132,7 +164,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function enable_link_manager() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[2]['id'];
+		$field_id = $fields[3]['id'];
 		$option   = get_option( $field_id, false );
 
 		$html = '<p>';
@@ -141,7 +173,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[2]['args']['description']
+			$fields[3]['args']['description']
 		);
 		$html .= '<p>';
 

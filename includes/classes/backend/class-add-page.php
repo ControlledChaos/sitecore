@@ -421,7 +421,7 @@ class Add_Page {
 			'class'          => 'content-tab',
 			'icon'           => null,
 			'content'        => null,
-			'settings'       => '', // @todo Use or remove.
+			'settings'       => '',
 			'hide-if-no-js'  => false,
 			'callback'       => null,
 			'priority'       => 10,

@@ -13,7 +13,7 @@ namespace SiteCore\Views\Admin;
 function content_settings_intro( $content = '' ) {
 
 	// If ACF and ACF Extended are active.
-	if ( class_exists( 'acf' ) && class_exists( 'acfe' ) ) {
+	if ( current_user_can( 'develop' ) && class_exists( 'acf' ) && class_exists( 'acfe' ) ) {
 
 		$content = sprintf(
 			'<p>%s</p>',
