@@ -160,16 +160,6 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
 
 		/**
-		 * Posts content type
-		 *
-		 * The nature of the default posts (e.g. blog, news).
-		 *
-		 * @since 1.0.0
-		 * @var   string The name of the developer/agency.
-		 */
-		'posts_content' => 'blog',
-
-		/**
 		 * Allow custom dashboard
 		 *
 		 * @since 1.0.0
@@ -184,22 +174,6 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @var   boolean Whether to allow the Site Health feature.
 		 */
 		'site_health' => false,
-
-		/**
-		 * Allow block widgets
-		 *
-		 * @since 1.0.0
-		 * @var   boolean Whether to allow block widgets.
-		 */
-		'block_widgets' => true,
-
-		/**
-		 * Allow links manager
-		 *
-		 * @since 1.0.0
-		 * @var   boolean Whether to allow the links manager feature.
-		 */
-		'links_manager' => false,
 
 		/**
 		 * Allow Customizer
@@ -260,16 +234,6 @@ if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
 }
 
 /**
- * Posts content type
- *
- * @since 1.0.0
- * @var   string The nature of the default posts (e.g. blog, news).
- */
-if ( ! defined( 'SCP_POSTS_CONTENT_TYPE' ) ) {
-	define( 'SCP_POSTS_CONTENT_TYPE', SCP_CONFIG['posts_content'] );
-}
-
-/**
  * Allow custom dashboard
  *
  * @since 1.0.0
@@ -287,26 +251,6 @@ if ( ! defined( 'SCP_USE_CUSTOM_DASHBOARD' ) ) {
  */
 if ( ! defined( 'SCP_ALLOW_SITE_HEALTH' ) ) {
 	define( 'SCP_ALLOW_SITE_HEALTH', SCP_CONFIG['site_health'] );
-}
-
-/**
- * Allow block widgets
- *
- * @since 1.0.0
- * @var   boolean Whether to allow block widgets.
- */
-if ( ! defined( 'SCP_ALLOW_BLOCK_WIDGETS' ) ) {
-	define( 'SCP_ALLOW_BLOCK_WIDGETS', SCP_CONFIG['block_widgets'] );
-}
-
-/**
- * Allow links manager
- *
- * @since 1.0.0
- * @var   boolean Whether to allow the links manager feature.
- */
-if ( ! defined( 'SCP_ALLOW_LINKS_MANAGER' ) ) {
-	define( 'SCP_ALLOW_LINKS_MANAGER', SCP_CONFIG['links_manager'] );
 }
 
 /**

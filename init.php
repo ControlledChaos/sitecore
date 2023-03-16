@@ -165,12 +165,8 @@ function init() {
 		add_filter( 'use_widgets_block_editor', '__return_false' );
 	}
 
-	/**
-	 * Allow links manager
-	 *
-	 * @todo Put into an option.
-	 */
-	if ( defined( 'SCP_ALLOW_LINKS_MANAGER' ) && SCP_ALLOW_LINKS_MANAGER ) {
+	// Allow link manager.
+	if ( get_option( 'enable_link_manager', false ) ) {
 		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 	}
 

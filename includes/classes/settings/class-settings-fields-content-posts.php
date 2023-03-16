@@ -47,6 +47,19 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 					'label_for'   => 'disable_block_widgets',
 					'class'       => 'content-field'
 				]
+			],
+			[
+				'id'       => 'enable_link_manager',
+				'title'    => __( 'Classic Links', 'sitecore' ),
+				'callback' => [ $this, 'enable_link_manager' ],
+				'page'     => 'content-settings',
+				'section'  => 'scp-settings-content-posts',
+				'type'     => 'boolean',
+				'args'     => [
+					'description' => __( 'Check to enable the link manager and links widget.', 'sitecore' ),
+					'label_for'   => 'enable_link_manager',
+					'class'       => 'content-field'
+				]
 			]
 		];
 
@@ -68,7 +81,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id );
+		$option   = get_option( $field_id, false );
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -83,11 +96,18 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		echo $html;
 	}
 
+	/**
+	 * Block widgets field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public function disable_block_widgets() {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id );
+		$option   = get_option( $field_id, true );
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -96,6 +116,32 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			checked( 1, $option, false ),
 			$fields[1]['args']['description']
+		);
+		$html .= '<p>';
+
+		echo $html;
+	}
+
+	/**
+	 * Link manager field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enable_link_manager() {
+
+		$fields   = $this->settings_fields;
+		$field_id = $fields[2]['id'];
+		$option   = get_option( $field_id, false );
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[2]['args']['description']
 		);
 		$html .= '<p>';
 

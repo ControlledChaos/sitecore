@@ -586,9 +586,9 @@ function print_structured_data() {
 
 	$data = null;
 
-	if ( is_singular( 'post' ) && 'news' === SCP_POSTS_CONTENT_TYPE ) {
+	if ( is_singular( 'post' ) && true == get_option( 'posts_to_news' ) ) {
 		$data = news_article_data();
-	} elseif ( is_singular( 'post' ) && 'blog' === SCP_POSTS_CONTENT_TYPE ) {
+	} elseif ( is_singular( 'post' ) ) {
 		$data = blog_post_data();
 	} elseif ( is_singular() ) {
 		$data = article_data();

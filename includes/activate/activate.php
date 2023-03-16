@@ -67,7 +67,7 @@ function options() {
 	}
 
 	// Options true by default.
-	update_option( 'disable_block_widgets', true );
+	add_option( 'disable_block_widgets', true );
 }
 
 /**
