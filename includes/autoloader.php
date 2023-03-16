@@ -73,7 +73,12 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Core\Remove_Customizer'    => SCP_CLASS['core'] . 'remove-customizer.php',
 
 	// Settings classes.
-	SCP_CLASS_NS . '\Settings\Settings' => SCP_CLASS['settings'] . 'settings.php',
+	SCP_CLASS_NS . '\Settings\Settings_Sections' => SCP_CLASS['settings'] . 'settings-sections.php',
+	SCP_CLASS_NS . '\Settings\Settings_Sections_Sample' => SCP_CLASS['settings'] . 'settings-sections-sample.php',
+	SCP_CLASS_NS . '\Settings\Settings_Sections_Content' => SCP_CLASS['settings'] . 'settings-sections-content.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields'   => SCP_CLASS['settings'] . 'settings-fields.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Sample'   => SCP_CLASS['settings'] . 'settings-fields-sample.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Content_Posts'   => SCP_CLASS['settings'] . 'settings-fields-content-posts.php',
 
 	// Tools classes.
 	SCP_CLASS_NS . '\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',
@@ -97,7 +102,7 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Sample_Subpage'          => SCP_CLASS['admin'] . 'sample-subpage.php',
 	SCP_CLASS_NS . '\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
-	SCP_CLASS_NS . '\Admin\Content_Settings'        => SCP_CLASS['admin'] . 'content-settings.php',
+	SCP_CLASS_NS . '\Admin\Content_Settings_Page'        => SCP_CLASS['admin'] . 'content-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 	SCP_CLASS_NS . '\Admin\ACF_Manage_Site'         => SCP_CLASS['admin'] . 'acf-manage-site.php',
 	SCP_CLASS_NS . '\Admin\Sample_ACF_Options'      => SCP_CLASS['admin'] . 'sample-acf-options.php',

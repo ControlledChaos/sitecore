@@ -272,20 +272,7 @@ class Add_Page {
 			return null;
 		}
 
-		if ( ! empty( $this->page_options['parent_slug'] ) ) {
-			$action = sprintf(
-				'%s?page=%s',
-				$this->page_options['parent_slug'],
-				$this->page_options['menu_slug']
-			);
-		} else {
-			$action = sprintf(
-				'admin.php?page=%s',
-				$this->page_options['menu_slug']
-			);
-		}
-
-		return $action;
+		return 'options.php';
 	}
 
 	/**
@@ -305,7 +292,7 @@ class Add_Page {
 		}
 
 		$html = sprintf(
-			'<form method="post" action="%s">',
+			'<form method="post" action="%s" novalidate="novalidate">',
 			$this->form_action()
 		);
 
@@ -328,9 +315,12 @@ class Add_Page {
 			return null;
 		}
 
-		$html = sprintf(
-			'<p class="submit">%s</p>',
-			submit_button( __( 'Save Settings', 'sitecore' ), 'button-primary', '', true, [] )
+		$html = submit_button(
+			__( 'Save Settings', 'sitecore' ),
+			'primary',
+			'submit',
+			true,
+			[]
 		);
 		$html .= '</form>';
 
@@ -600,8 +590,7 @@ class Add_Page {
 				endif;
 			endforeach; ?>
 		</div>
-		<?php echo $this->form_close(); ?>
-		<?php
+		<?php echo $this->form_close();
 	}
 
 	/**
