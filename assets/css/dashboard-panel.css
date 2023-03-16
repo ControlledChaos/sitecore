@@ -37,23 +37,10 @@
   overflow: auto;
 }
 
-#dashboard-panel .admin-tabs .admin-tabs-list {
-  margin-top: 0;
-}
-
-#dashboard-panel .admin-tabs .admin-tabs-list li.active a {
-  background-color: #ffffff;
-}
-
 #dashboard-panel .dashboard-panel-content {
   overflow: auto;
   padding: 1rem;
   clear: both;
-  background-color: #ffffff;
-  border: 1px solid #ccd0d4;
-  border-top: none;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
 #dashboard-panel .dashboard-panel-content .about-description {

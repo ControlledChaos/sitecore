@@ -9,7 +9,7 @@
  */
 
 ?>
-<div id="content" class="dashboard-panel-content dashboard-content-content" style="display: none;">
+<div id="content" class="tab-content dashboard-panel-content dashboard-content-content" style="display: none;">
 
 	<h2><?php _e( 'Manage Website Content', 'sitecore' ); ?></h2>
 	<p class="description"><?php _e( 'Manage blog posts and static pages, upload images, add helpful widgets&hellip;', 'sitecore' ); ?></p>

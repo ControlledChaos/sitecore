@@ -23,7 +23,7 @@ $avatar = get_avatar(
 );
 
 ?>
-<div id="welcome" class="dashboard-panel-content dashboard-welcome-content">
+<div id="welcome" class="tab-content dashboard-panel-content dashboard-welcome-content">
 
 	<?php echo sprintf(
 		'<h2>%s %s</h2>',

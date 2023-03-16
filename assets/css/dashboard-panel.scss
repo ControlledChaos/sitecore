@@ -43,24 +43,10 @@
 	height: 100%;
 	overflow: auto;
 
-	.admin-tabs {
-		.admin-tabs-list {
-			margin-top: 0;
-
-			li.active a {
-				background-color: #ffffff;
-			}
-		}
-	}
-
 	.dashboard-panel-content {
 		overflow: auto;
 		padding: 1rem;
 		clear: both;
-		background-color: #ffffff;
-		border: 1px solid #ccd0d4;
-		border-top: none;
-		box-shadow: 0 1px 1px rgba( 0, 0, 0, .04 );
 
 		.about-description {
 			font-size: 16px;

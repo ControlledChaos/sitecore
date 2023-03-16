@@ -86,7 +86,7 @@ if ( $get_theme_domain ) {
 }
 
 ?>
-<div id="customize" class="dashboard-panel-content dashboard-customize-content" style="display: none">
+<div id="customize" class="tab-content dashboard-panel-content dashboard-customize-content" style="display: none">
 
 	<h2><?php _e( 'Customize Your Site', 'sitecore' ); ?></h2>
 	<p class="description"><?php _e( 'Choose layout options, color schemes, and more.', 'sitecore' ); ?></p>

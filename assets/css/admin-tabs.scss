@@ -57,6 +57,7 @@
 				border-bottom-color: #f1f1f1;
 
 				a {
+					background-color: #ffffff;
 					color: #23282d;
 					cursor: default;
 				}
@@ -70,6 +71,10 @@
 		overflow: hidden;
 		max-width: 1200px;
 		padding: 2rem 1em;
+		background-color: #ffffff;
+		border: 1px solid #ccd0d4;
+		border-top: none;
+		box-shadow: 1px 2px 1px rgba( 0, 0, 0, .04 );
 
 		& > h2 {
 			margin-top: 0;
