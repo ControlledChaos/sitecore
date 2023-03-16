@@ -59,8 +59,9 @@ function setup() {
 
 		// Add custom dashboard panel.
 		add_action( 'wp_dashboard_setup', $ns( 'dashboard_panel' ) );
-
 	endif;
+
+	add_action( 'dashboard_glance_items', $ns( 'dashboard_glance_items' ) );
 }
 
 /**
@@ -240,5 +241,53 @@ function dashboard_template() {
 		get_template_part( 'template-parts/admin/dashboard-panel' . $acf->suffix() );
 	} else {
 		include_once SCP_PATH . 'views/backend/widgets/dashboard-panel' . $acf->suffix() . '.php';
+	}
+}
+
+/**
+ * Dashboard glance items
+ *
+ * Adds custom post types to "At a Glance" dashboard widget.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function dashboard_glance_items() {
+
+	// Post type query arguments.
+	$args = [
+		'public'   => true,
+		'_builtin' => false
+	];
+	$output     = 'object';
+	$operator   = 'and';
+	$post_types = get_post_types( $args, $output, $operator );
+
+	// Prepare an entry for each post type matching the query.
+	foreach ( $post_types as $post_type ) {
+
+		$count  = wp_count_posts( $post_type->name );
+		$number = number_format_i18n( $count->publish );
+		$name   = _n( $post_type->labels->menu_name, $post_type->labels->name, intval( $count->publish ) );
+
+		// Supply an edit link if the user can edit posts.
+		if ( current_user_can( 'edit_posts' ) ) {
+			echo sprintf(
+				'<li class="post-count %1s-count"><a href="edit.php?post_type=%2s">%3s %4s</a></li>',
+				$post_type->name,
+				$post_type->name,
+				$number,
+				$name
+			);
+
+		// Otherwise just the count and post type name.
+		} else {
+			echo sprintf(
+				'<li class="post-count %1s-count">%2s %3s</li>',
+				$post_type->name,
+				$number,
+				$name
+			);
+		}
 	}
 }
