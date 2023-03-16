@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Content_Settings extends Add_Page {
+class Content_Settings_Page extends Add_Page {
 
 	/**
 	 * Constructor method
@@ -60,29 +60,18 @@ class Content_Settings extends Add_Page {
 		$this->add_content_tab( [
 			'id'       => 'content-settings-intro',
 			'tab'      => __( 'Intro', 'sitecore' ),
-			'heading'  => __( 'Introduction', 'sitecore' ),
+			'heading'  => __( 'Manage Your Website Content', 'sitecore' ),
 			'content'  => '',
 			'callback' => [ $this, 'intro_tab' ]
 		] );
 
 		$this->add_content_tab( [
 			'id'       => 'content-settings-sample',
-			'tab'      => __( 'Another', 'sitecore' ),
-			'heading'  => __( 'Sample Tab', 'sitecore' ),
+			'tab'      => __( 'Posts', 'sitecore' ),
+			'heading'  => __( 'Post Types and Blog', 'sitecore' ),
 			'content'  => '',
-			'callback' => [ $this, 'sample_tab' ]
+			'callback' => [ $this, 'settings_tab' ]
 		] );
-	}
-
-	/**
-	 * Page heading
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return string Returns the page heading.
-	 */
-	protected function heading() {
-		return __( 'Content Settings', 'sitecore' );
 	}
 
 	/**
@@ -93,17 +82,17 @@ class Content_Settings extends Add_Page {
 	 * @return mixed Returns the tab content.
 	 */
 	public function intro_tab() {
-		include SCP_PATH . 'views/backend/pages/partials/settings-content-intro.php';
+		include SCP_PATH . 'views/backend/forms/partials/settings-content-intro.php';
 	}
 
 	/**
-	 * Sample tab callback
+	 * Settings callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return mixed Returns the tab content.
 	 */
-	public function sample_tab() {
-		include SCP_PATH . 'views/backend/pages/partials/settings-content-sample.php';
+	public function settings_tab() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-content.php';
 	}
 }

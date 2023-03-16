@@ -85,8 +85,9 @@ function init() {
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 
 	// Instantiate settings classes.
-	new Settings_Class\Settings;
-	new Backend_Class\Content_Settings;
+	new Settings_Class\Settings_Sections_Content;
+	new Settings_Class\Settings_Fields_Content_Posts;
+	new Backend_Class\Content_Settings_Page;
 
 	// Instantiate core classes.
 	new Core_Class\Register_Sample_Type;
