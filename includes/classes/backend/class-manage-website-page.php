@@ -50,10 +50,6 @@ class Manage_Website_Page extends Add_Page {
 	/**
 	 * Callback function
 	 *
-	 * @todo Conditional page output files, one being for
-	 * the antibrand admin screen class. But this will
-	 * work in the meantime.
-	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
