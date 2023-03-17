@@ -95,8 +95,6 @@ function init() {
 	new Backend_Class\Content_Settings_Page;
 
 	// Instantiate core classes.
-	new Core_Class\Register_Sample_Type;
-	new Core_Class\Register_Sample_Tax;
 	new Core_Class\Register_Admin;
 	new Core_Class\Register_Site_Help;
 	if ( get_option( 'remove_blog' ) ) {
@@ -157,9 +155,6 @@ function init() {
 		Front\setup();
 		Meta_Tags\setup();
 	}
-
-	// Widgets.
-	new Widgets_Class\Sample_Widget;
 
 	// Disable Site Health notifications.
 	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {

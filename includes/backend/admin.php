@@ -35,10 +35,6 @@ function setup() {
 	// Get the filename of the current page.
 	global $pagenow;
 
-	// Sample pages.
-	new Classes\Admin\Sample_Page;
-	new Classes\Admin\Sample_Subpage;
-
 	// Admin settings.
 	new Classes\Admin\Admin_Settings_Page;
 
@@ -46,8 +42,6 @@ function setup() {
 
 		// Advanced Custom Fields pages.
 		new Classes\Admin\ACF_Manage_Site;
-		new Classes\Admin\Sample_ACF_Options;
-		new Classes\Admin\Sample_ACF_Suboptions;
 	} else {
 		new Classes\Admin\Manage_Website_Page;
 	}
