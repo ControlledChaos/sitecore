@@ -104,7 +104,7 @@ class Settings_Fields_Admin extends Settings_Fields {
 				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
 				'args'     => [
-					'description' => __( 'Check to enable user avatar uploads and extended default avatar options.', 'sitecore' ),
+					'description' => __( 'Check to enable user avatar uploads and extended, local options for the default avatar.', 'sitecore' ),
 					'label_for'   => 'enable_user_avatars',
 					'class'       => 'admin-field'
 				]
