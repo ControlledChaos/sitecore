@@ -82,6 +82,32 @@ class Settings_Fields_Admin extends Settings_Fields {
 					'label_for'   => 'toolbar_remove_platform_link',
 					'class'       => 'admin-field'
 				]
+			],
+			[
+				'id'       => 'enable_multi_user_roles',
+				'title'    => __( 'Multiple User Roles', 'sitecore' ),
+				'callback' => [ $this, 'enable_multi_user_roles' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-users',
+				'type'     => 'boolean',
+				'args'     => [
+					'description' => __( 'Check to enable multiple user roles on profile edit screens.', 'sitecore' ),
+					'label_for'   => 'enable_multi_user_roles',
+					'class'       => 'admin-field'
+				]
+			],
+			[
+				'id'       => 'enable_user_avatars',
+				'title'    => __( 'Custom User Avatars', 'sitecore' ),
+				'callback' => [ $this, 'enable_user_avatars' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-users',
+				'type'     => 'boolean',
+				'args'     => [
+					'description' => __( 'Check to enable user avatar uploads and extended default avatar options.', 'sitecore' ),
+					'label_for'   => 'enable_user_avatars',
+					'class'       => 'admin-field'
+				]
 			]
 		];
 
@@ -160,6 +186,44 @@ class Settings_Fields_Admin extends Settings_Fields {
 			$field_id,
 			checked( 1, $option, false ),
 			$fields[3]['args']['description']
+		);
+		$html .= '<p>';
+
+		echo $html;
+	}
+
+	public function enable_multi_user_roles() {
+
+		$fields   = $this->settings_fields;
+		$field_id = $fields[4]['id'];
+		$option   = get_option( $field_id, false );
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[4]['args']['description']
+		);
+		$html .= '<p>';
+
+		echo $html;
+	}
+
+	public function enable_user_avatars() {
+
+		$fields   = $this->settings_fields;
+		$field_id = $fields[5]['id'];
+		$option   = get_option( $field_id, false );
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[5]['args']['description']
 		);
 		$html .= '<p>';
 

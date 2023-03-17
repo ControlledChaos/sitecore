@@ -142,7 +142,9 @@ function init() {
 	Users\setup();
 	User_Roles\setup();
 	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
-		new Users_Class\User_Avatars;
+		if ( get_option( 'enable_user_avatars', false ) ) {
+			new Users_Class\User_Avatars;
+		}
 	}
 
 	// Customizer/front end.
