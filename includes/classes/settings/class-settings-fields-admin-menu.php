@@ -78,7 +78,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[0]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</p>';
 
 		echo $html;
 	}
@@ -104,7 +104,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[1]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</p>';
 
 		echo $html;
 	}
