@@ -395,14 +395,13 @@ function admin_header_styles() {
 		align-items: flex-start;
 	}
 }
-.admin-header .site-branding-wrap div,
-.admin-header .site-branding-wrap nav {
-	width: auto;
+.admin-header .site-branding-wrap > div,
+.admin-header .site-branding-wrap > nav {
+	width: 100%;
 }
 .admin-header .site-branding {
-	width: 100%;
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	align-items: center;
 	gap: 1rem;
 }
@@ -419,6 +418,7 @@ function admin_header_styles() {
 }
 .admin-header .site-description {
 	margin: 0;
+	line-height: 1.3;
 }
 .admin-header .site-logo {
 	margin: 0;
