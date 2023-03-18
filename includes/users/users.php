@@ -200,7 +200,10 @@ function menus_personal_data() {
  */
 function remove_color_picker() {
 
-	if ( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) {
+	if (
+		get_option( 'disable_admin_color_schemes', false ) ||
+		( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) )
+	{
 		remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 	}
 }
