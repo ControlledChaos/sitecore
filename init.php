@@ -65,6 +65,9 @@ function init() {
 	foreach ( glob( SCP_PATH . 'includes/core/*.php' ) as $filename ) {
 		require $filename;
 	}
+	foreach ( glob( SCP_PATH . 'includes/settings/*.php' ) as $filename ) {
+		require $filename;
+	}
 	foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
 		require $filename;
 	}
@@ -88,18 +91,7 @@ function init() {
 	require SCP_PATH . 'includes/vendor/compatibility.php';
 
 	// Instantiate settings classes.
-	new Settings_Class\Settings_Sections_Admin;
-	new Settings_Class\Settings_Sections_Content;
-
-	new Settings_Class\Settings_Fields_Admin_Dashboard;
-	new Settings_Class\Settings_Fields_Admin_Menu;
-	new Settings_Class\Settings_Fields_Admin_Toolbar;
-	new Settings_Class\Settings_Fields_Admin_Users;
-
-	new Settings_Class\Settings_Fields_Content_Posts;
-
-	new Backend_Class\Content_Settings_Page;
-	new Backend_Class\Admin_Settings_Page;
+	Settings\setup();
 
 	// Instantiate core classes.
 	new Core_Class\Register_Admin;
