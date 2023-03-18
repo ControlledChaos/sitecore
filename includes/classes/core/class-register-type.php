@@ -130,7 +130,18 @@ class Register_Type {
 			'delete_with_user' => null,
 			'template'         => $this->template(),
 			'template_lock'    => false,
-			'_builtin'         => false
+			'_builtin'         => false,
+
+			// Keys for Advanced Custom Fields Extended.
+			'acfe_archive_template' => '',
+			'acfe_archive_ppp'      => 10,
+			'acfe_archive_orderby'  => 'date',
+			'acfe_archive_order'    => 'DESC',
+			'acfe_single_template'  => '',
+			'acfe_admin_archive'    => false,
+			'acfe_admin_ppp'        => 10,
+			'acfe_admin_orderby'    => 'date',
+			'acfe_admin_order'      => 'DESC'
 		];
 
 		$this->type_key      = (string) $type_key;
