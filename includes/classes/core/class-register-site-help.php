@@ -34,9 +34,10 @@ class Register_Site_Help extends Register_Type {
 		];
 
 		$options = [
-			'public'        => false,
-			'show_in_menu'  => false,
-			'menu_position' => 100
+			'public'            => false,
+			'show_in_menu'      => false,
+			'show_in_nav_menus' => false,
+			'menu_position'     => 100
 		];
 
 		parent :: __construct(
