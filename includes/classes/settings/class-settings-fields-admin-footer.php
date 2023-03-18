@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin toolbar settings fields
+ * Admin footer settings fields
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -12,7 +12,7 @@ namespace SiteCore\Classes\Settings;
 
 use function SiteCore\Core\platform_name;
 
-class Settings_Fields_Admin_Toolbar extends Settings_Fields {
+class Settings_Fields_Admin_Footer extends Settings_Fields {
 
 	/**
 	 * Constructor method
@@ -25,22 +25,18 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 
 		$fields = [
 			[
-				'id'       => 'toolbar_remove_platform_link',
-				'title'    => sprintf(
-					__( '%s Link', 'sitecore' ),
-					platform_name()
-
-				),
-				'callback' => [ $this, 'toolbar_remove_platform_link_callback' ],
+				'id'       => 'enable_custom_admin_footer',
+				'title'    => __( 'Enable Custom Footer', 'sitecore' ),
+				'callback' => [ $this, 'enable_custom_admin_footer_callback' ],
 				'page'     => 'options-admin',
-				'section'  => 'scp-settings-section-admin-toolbar',
+				'section'  => 'scp-settings-section-admin-footer',
 				'type'     => 'boolean',
 				'args'     => [
 					'description' => sprintf(
-						__( 'Check to remove the %s logo link.', 'sitecore' ),
+						__( 'Check to replace the default %s footer on admin screens.', 'sitecore' ),
 						platform_name()
 					),
-					'label_for'   => 'toolbar_remove_platform_link',
+					'label_for'   => 'enable_custom_admin_footer',
 					'class'       => 'admin-field'
 				]
 			]
@@ -52,47 +48,47 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	}
 
 	/**
-	 * Platform Link field order
+	 * Custom Dashboard field order
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
-	public function toolbar_remove_platform_link_order() {
+	public function enable_custom_admin_footer_order() {
 		return 0;
 	}
 
 	/**
-	 * Sanitize Platform Link field
+	 * Sanitize Custom Dashboard field
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return boolean
 	 */
-	public function toolbar_remove_platform_link_sanitize() {
+	public function enable_custom_admin_footer_sanitize() {
 
-		$option = get_option( 'toolbar_remove_platform_link', true );
+		$option = get_option( 'enable_custom_admin_footer', true );
 		if ( true == $option ) {
 			$option = true;
 		} else {
 			$option = false;
 		}
-		return apply_filters( 'scp_toolbar_remove_platform_link', $option );
+		return apply_filters( 'scp_enable_custom_admin_footer', $option );
 	}
 
 	/**
-	 * Platform Link field callback
+	 * Custom Dashboard field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function toolbar_remove_platform_link_callback() {
+	public function enable_custom_admin_footer_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->toolbar_remove_platform_link_order();
+		$order    = $this->enable_custom_admin_footer_order();
 		$field_id = $fields[$order]['id'];
-		$option   = $this->toolbar_remove_platform_link_sanitize();
+		$option   = $this->enable_custom_admin_footer_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(

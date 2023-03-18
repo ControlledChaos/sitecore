@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin settings fields
+ * Admin menu settings fields
  *
  * @package    Site_Core
  * @subpackage Classes

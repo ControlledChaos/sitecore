@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin settings fields
+ * Admin dashboard settings fields
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -32,7 +32,7 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 				'section'  => 'scp-settings-section-admin-dashboard',
 				'type'     => 'boolean',
 				'args'     => [
-					'description' => __( 'Check to replace the default dashboard with a custom dasnboard for this website.', 'sitecore' ),
+					'description' => __( 'Check to replace the default dashboard with a custom dashboard for this website.', 'sitecore' ),
 					'label_for'   => 'enable_custom_dashboard',
 					'class'       => 'admin-field'
 				]
