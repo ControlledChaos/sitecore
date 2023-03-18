@@ -83,11 +83,11 @@ function setup() {
 	// Hide help with privacy policy nag.
 	add_action( 'admin_head', $ns( 'hide_policy_content_notice' ) );
 
-	// Primary footer text.
-	add_filter( 'admin_footer_text', $ns( 'admin_footer_primary' ), 1 );
-
-	// Secondary footer text.
-	add_filter( 'update_footer', $ns( 'admin_footer_secondary' ), 1 );
+	// Primary & secondary footer text.
+	if ( get_option( 'enable_custom_admin_footer', true ) ) {
+		add_filter( 'admin_footer_text', $ns( 'admin_footer_primary' ), 1 );
+		add_filter( 'update_footer', $ns( 'admin_footer_secondary' ), 1 );
+	}
 
 	// Enqueue scripts.
 	add_action( 'admin_enqueue_scripts', $ns( 'admin_enqueue_scripts' ) );

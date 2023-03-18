@@ -56,6 +56,17 @@ class Settings_Sections_Admin extends Settings_Sections {
 				]
 			],
 			[
+				'id'       => 'scp-settings-section-admin-footer',
+				'title'    => __( 'Footer Settings', 'sitecore' ),
+				'callback' => '',
+				'page'     => 'options-admin',
+				'args'     => [
+					'before_section' => '',
+					'after_section'  => '',
+					'section_class'  => 'settings-section-admin-footer'
+				]
+			],
+			[
 				'id'       => 'scp-settings-section-admin-users',
 				'title'    => __( 'User Settings', 'sitecore' ),
 				'callback' => '',
