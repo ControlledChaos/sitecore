@@ -84,7 +84,8 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Content_Posts' => SCP_CLASS['settings'] . 'settings-fields-content-posts.php',
 
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Dashboard' => SCP_CLASS['settings'] . 'settings-fields-admin-dashboard.php',
-	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Footer'      => SCP_CLASS['settings'] . 'settings-fields-admin-footer.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Footer'    => SCP_CLASS['settings'] . 'settings-fields-admin-footer.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Header'    => SCP_CLASS['settings'] . 'settings-fields-admin-header.php',
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Menu'      => SCP_CLASS['settings'] . 'settings-fields-admin-menu.php',
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Toolbar'   => SCP_CLASS['settings'] . 'settings-fields-admin-toolbar.php',
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Users'     => SCP_CLASS['settings'] . 'settings-fields-admin-users.php',

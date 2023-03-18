@@ -83,6 +83,28 @@ function setup() {
 	// Hide help with privacy policy nag.
 	add_action( 'admin_head', $ns( 'hide_policy_content_notice' ) );
 
+	// Add admin header.
+	if ( get_option( 'enable_custom_admin_header', false ) ) {
+
+		/**
+		 * Not hooked to `in_admin_header` because the screen options
+		 * and contextual help buttons/sections need to load first.
+		 *
+		 * Add early to the relevant hook in attempt to display
+		 * above any admin notices.
+		 */
+		if ( is_network_admin() ) {
+			$header_hook = 'network_admin_notices';
+		} elseif ( is_user_admin() ) {
+			$header_hook = 'user_admin_notices';
+		} else {
+			$header_hook = 'admin_notices';
+		}
+		add_action( $header_hook, $ns( 'admin_header' ), 1 );
+		add_action( 'after_setup_theme', $ns( 'admin_header_menu' ) );
+		add_action( 'admin_print_styles', $ns( 'admin_header_styles' ) );
+	}
+
 	// Primary & secondary footer text.
 	if ( get_option( 'enable_custom_admin_footer', true ) ) {
 		add_filter( 'admin_footer_text', $ns( 'admin_footer_primary' ), 1 );
@@ -323,6 +345,110 @@ function hide_policy_content_notice() {
 	}
 
 	echo '<style>.wp-pp-notice{ display: none !important; }</style>';
+}
+
+/**
+ * Admin header menu
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function admin_header_menu() {
+	register_nav_menus( [
+		'admin_header' => __( 'Admin Header Menu', 'sitecore' )
+	] );
+}
+
+/**
+ * Admin header
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function admin_header() {
+	include_once SCP_PATH . 'views/backend/header/admin-header.php';
+}
+
+/**
+ * Admin header CSS
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function admin_header_styles() {
+
+?>
+<style>
+.admin-header {
+	margin: 2rem 20px 0 0;
+}
+.admin-header .site-branding-wrap {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem 2rem;
+}
+@media screen and ( max-width: 782px ) {
+	.admin-header .site-branding-wrap {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+.admin-header .site-branding-wrap div,
+.admin-header .site-branding-wrap nav {
+	width: auto;
+}
+.admin-header .site-branding {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+}
+.admin-header .site-title {
+	font-size: 23px;
+	font-weight: 400;
+	margin: 0;
+	line-height: 1.3;
+	color: #1d2327;
+}
+.admin-header .site-title a {
+	text-decoration: none;
+	color: #1d2327;
+}
+.admin-header .site-description {
+	margin: 0;
+}
+.admin-header .site-logo {
+	margin: 0;
+}
+.admin-header .site-logo a {
+	display: block;
+}
+.admin-header .site-logo img {
+	display: block;
+	max-height: 60px;
+}
+.admin-header .menu {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 1em;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+@media screen and ( max-width: 782px ) {
+	.admin-header .menu {
+		justify-content: flex-start;
+	}
+}
+.admin-header .menu li {
+	display: inline;
+}
+</style>
+<?php
 }
 
 /**

@@ -9,6 +9,15 @@
  */
 
 namespace SiteCore\Views\Admin;
-use SiteCore\Classes\Admin as Admin;
 
 ?>
+<div>
+	<?php do_action( 'scp_before_admin_header_settings' ); ?>
+	<table class="form-table">
+		<?php
+		settings_fields( 'options-admin' );
+		do_settings_fields( 'options-admin', 'scp-settings-section-admin-header' );
+		?>
+	</table>
+	<?php do_action( 'scp_after_admin_header_settings' ); ?>
+</div>

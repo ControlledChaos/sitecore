@@ -32,31 +32,37 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	add_action( 'init', $ns( 'instantiate_classes' ) );
-	// instantiate_classes();
+	add_action( 'init', $ns( 'admin_settings' ), 10 );
+	add_action( 'init', $ns( 'content_settings' ), 10 );
 }
 
 /**
- * Instantiate classes
- *
- * Run the settings sections and fields classes.
+ * Admin settings
  *
  * @since  1.0.0
  * @return void
  */
-function instantiate_classes() {
+function admin_settings() {
 
 	new Settings_Class\Settings_Sections_Admin;
-	new Settings_Class\Settings_Sections_Content;
-
 	new Settings_Class\Settings_Fields_Admin_Dashboard;
 	new Settings_Class\Settings_Fields_Admin_Footer;
+	new Settings_Class\Settings_Fields_Admin_Header;
 	new Settings_Class\Settings_Fields_Admin_Menu;
 	new Settings_Class\Settings_Fields_Admin_Toolbar;
 	new Settings_Class\Settings_Fields_Admin_Users;
-
-	new Settings_Class\Settings_Fields_Content_Posts;
-
-	new Backend_Class\Content_Settings_Page;
 	new Backend_Class\Admin_Settings_Page;
+}
+
+/**
+ * Admin settings
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function content_settings() {
+
+	new Settings_Class\Settings_Sections_Content;
+	new Settings_Class\Settings_Fields_Content_Posts;
+	new Backend_Class\Content_Settings_Page;
 }
