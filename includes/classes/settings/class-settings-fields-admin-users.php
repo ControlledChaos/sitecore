@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample settings fields
+ * Admin settings fields
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -10,7 +10,9 @@
 
 namespace SiteCore\Classes\Settings;
 
-class Settings_Fields_Sample extends Settings_Fields {
+use function SiteCore\Core\platform_name;
+
+class Settings_Fields_Admin_Users extends Settings_Fields {
 
 	/**
 	 * Constructor method
@@ -23,29 +25,29 @@ class Settings_Fields_Sample extends Settings_Fields {
 
 		$fields = [
 			[
-				'id'       => 'sample_field_one',
-				'title'    => __( 'Sample Field #1', 'sitecore' ),
-				'callback' => [ $this, 'sample_field_one' ],
-				'page'     => 'general',
-				'section'  => 'scp-settings-section-sample',
+				'id'       => 'enable_multi_user_roles',
+				'title'    => __( 'Multiple User Roles', 'sitecore' ),
+				'callback' => [ $this, 'enable_multi_user_roles' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
 				'args'     => [
-					'description' => __( 'Sample field one description.', 'sitecore' ),
-					'label_for'   => 'sample_field_one',
-					'class'       => 'sample-field'
+					'description' => __( 'Check to enable multiple user roles on profile edit screens.', 'sitecore' ),
+					'label_for'   => 'enable_multi_user_roles',
+					'class'       => 'admin-field'
 				]
 			],
 			[
-				'id'       => 'sample_field_two',
-				'title'    => __( 'Sample Field #2', 'sitecore' ),
-				'callback' => [ $this, 'sample_field_two' ],
-				'page'     => 'general',
-				'section'  => 'scp-settings-section-sample',
+				'id'       => 'enable_user_avatars',
+				'title'    => __( 'Custom User Avatars', 'sitecore' ),
+				'callback' => [ $this, 'enable_user_avatars' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
 				'args'     => [
-					'description' => __( 'Sample field two description.', 'sitecore' ),
-					'label_for'   => 'sample_field_two',
-					'class'       => 'sample-field'
+					'description' => __( 'Check to enable user avatar uploads and extended, local options for the default avatar.', 'sitecore' ),
+					'label_for'   => 'enable_user_avatars',
+					'class'       => 'admin-field'
 				]
 			]
 		];
@@ -56,13 +58,13 @@ class Settings_Fields_Sample extends Settings_Fields {
 	}
 
 	/**
-	 * Sample Field #1 callback
+	 * Multiple User Roles field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function sample_field_one() {
+	public function enable_multi_user_roles() {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[0]['id'];
@@ -82,13 +84,13 @@ class Settings_Fields_Sample extends Settings_Fields {
 	}
 
 	/**
-	 * Sample Field #2 callback
+	 * Custom User Avatars field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function sample_field_two() {
+	public function enable_user_avatars() {
 
 		$fields   = $this->settings_fields;
 		$field_id = $fields[1]['id'];

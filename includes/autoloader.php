@@ -77,10 +77,16 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Settings\Settings_Sections_Sample'  => SCP_CLASS['settings'] . 'settings-sections-sample.php',
 	SCP_CLASS_NS . '\Settings\Settings_Sections_Content' => SCP_CLASS['settings'] . 'settings-sections-content.php',
 	SCP_CLASS_NS . '\Settings\Settings_Sections_Admin'   => SCP_CLASS['settings'] . 'settings-sections-admin.php',
-	SCP_CLASS_NS . '\Settings\Settings_Fields'           => SCP_CLASS['settings'] . 'settings-fields.php',
-	SCP_CLASS_NS . '\Settings\Settings_Fields_Sample'    => SCP_CLASS['settings'] . 'settings-fields-sample.php',
+
+	SCP_CLASS_NS . '\Settings\Settings_Fields'        => SCP_CLASS['settings'] . 'settings-fields.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Sample' => SCP_CLASS['settings'] . 'settings-fields-sample.php',
+
 	SCP_CLASS_NS . '\Settings\Settings_Fields_Content_Posts' => SCP_CLASS['settings'] . 'settings-fields-content-posts.php',
-	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin' => SCP_CLASS['settings'] . 'settings-fields-admin.php',
+
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Dashboard' => SCP_CLASS['settings'] . 'settings-fields-admin-dashboard.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Menu'      => SCP_CLASS['settings'] . 'settings-fields-admin-menu.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Toolbar'   => SCP_CLASS['settings'] . 'settings-fields-admin-toolbar.php',
+	SCP_CLASS_NS . '\Settings\Settings_Fields_Admin_Users'     => SCP_CLASS['settings'] . 'settings-fields-admin-users.php',
 
 	// Tools classes.
 	SCP_CLASS_NS . '\Tools\Customizer_Reset' => SCP_CLASS['tools'] . 'customizer-reset.php',

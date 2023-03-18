@@ -82,9 +82,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Posts to news field
-	 *
-	 * Check to change blog posts to news posts.
+	 * Posts to news field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -109,6 +107,13 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		echo $html;
 	}
 
+	/**
+	 * Remove blog field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
 	public function remove_blog() {
 
 		$fields   = $this->settings_fields;
@@ -129,7 +134,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Block widgets field
+	 * Block widgets field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -155,7 +160,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Link manager field
+	 * Link manager field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
