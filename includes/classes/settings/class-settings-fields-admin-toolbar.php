@@ -31,7 +31,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 					platform_name()
 
 				),
-				'callback' => [ $this, 'toolbar_remove_platform_link' ],
+				'callback' => [ $this, 'toolbar_remove_platform_link_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-toolbar',
 				'type'     => 'boolean',
@@ -52,17 +52,47 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	}
 
 	/**
+	 * Platform Link field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function toolbar_remove_platform_link_order() {
+		return 0;
+	}
+
+	/**
+	 * Sanitize Platform Link field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function toolbar_remove_platform_link_sanitize() {
+
+		$option = get_option( 'toolbar_remove_platform_link', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_toolbar_remove_platform_link', $option );
+	}
+
+	/**
 	 * Platform Link field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function toolbar_remove_platform_link() {
+	public function toolbar_remove_platform_link_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id, true );
+		$order    = $this->toolbar_remove_platform_link_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->toolbar_remove_platform_link_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -70,7 +100,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[0]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
 

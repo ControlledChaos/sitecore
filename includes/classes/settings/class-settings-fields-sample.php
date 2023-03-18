@@ -25,7 +25,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			[
 				'id'       => 'sample_field_one',
 				'title'    => __( 'Sample Field #1', 'sitecore' ),
-				'callback' => [ $this, 'sample_field_one' ],
+				'callback' => [ $this, 'sample_field_one_callback' ],
 				'page'     => 'general',
 				'section'  => 'scp-settings-section-sample',
 				'type'     => 'boolean',
@@ -38,7 +38,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			[
 				'id'       => 'sample_field_two',
 				'title'    => __( 'Sample Field #2', 'sitecore' ),
-				'callback' => [ $this, 'sample_field_two' ],
+				'callback' => [ $this, 'sample_field_two_callback' ],
 				'page'     => 'general',
 				'section'  => 'scp-settings-section-sample',
 				'type'     => 'boolean',
@@ -56,17 +56,76 @@ class Settings_Fields_Sample extends Settings_Fields {
 	}
 
 	/**
+	 * Sample Field #1 field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function sample_field_one_order() {
+		return 0;
+	}
+
+	/**
+	 * Sample Field #2 field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function sample_field_two_order() {
+		return 1;
+	}
+
+	/**
+	 * Sanitize Sample Field #1 field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function sample_field_one_sanitize() {
+
+		$option = get_option( 'sample_field_one', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_sample_field_one', $option );
+	}
+
+	/**
+	 * Sanitize Sample Field #2 field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function sample_field_two_sanitize() {
+
+		$option = get_option( 'sample_field_two', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_sample_field_two', $option );
+	}
+
+	/**
 	 * Sample Field #1 callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function sample_field_one() {
+	public function sample_field_one_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->sample_field_one_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->sample_field_one_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -74,7 +133,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[0]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 
@@ -88,11 +147,12 @@ class Settings_Fields_Sample extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function sample_field_two() {
+	public function sample_field_two_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->sample_field_two_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->sample_field_two_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -100,7 +160,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[1]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 

@@ -27,7 +27,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			[
 				'id'       => 'enable_multi_user_roles',
 				'title'    => __( 'Multiple User Roles', 'sitecore' ),
-				'callback' => [ $this, 'enable_multi_user_roles' ],
+				'callback' => [ $this, 'enable_multi_user_roles_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
@@ -40,7 +40,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			[
 				'id'       => 'enable_user_avatars',
 				'title'    => __( 'Custom User Avatars', 'sitecore' ),
-				'callback' => [ $this, 'enable_user_avatars' ],
+				'callback' => [ $this, 'enable_user_avatars_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
@@ -53,7 +53,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			[
 				'id'       => 'disable_admin_color_schemes',
 				'title'    => __( 'Disable Admin Color Schemes', 'sitecore' ),
-				'callback' => [ $this, 'disable_admin_color_schemes' ],
+				'callback' => [ $this, 'disable_admin_color_schemes_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'boolean',
@@ -71,17 +71,105 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	}
 
 	/**
+	 * Multiple User Roles field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_multi_user_roles_order() {
+		return 0;
+	}
+
+	/**
+	 * Custom User Avatars field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_user_avatars_order() {
+		return 1;
+	}
+
+	/**
+	 * Disable Admin Color Schemes field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function disable_admin_color_schemes_order() {
+		return 2;
+	}
+
+	/**
+	 * Sanitize Multiple User Roles field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_multi_user_roles_sanitize() {
+
+		$option = get_option( 'enable_multi_user_roles', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_enable_multi_user_roles', $option );
+	}
+
+	/**
+	 * Sanitize Custom User Avatars field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_user_avatars_sanitize() {
+
+		$option = get_option( 'enable_user_avatars', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_enable_user_avatars', $option );
+	}
+
+	/**
+	 * Sanitize Disable Admin Color Schemes field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function disable_admin_color_schemes_sanitize() {
+
+		$option = get_option( 'disable_admin_color_schemes', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_disable_admin_color_schemes', $option );
+	}
+
+	/**
 	 * Multiple User Roles field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function enable_multi_user_roles() {
+	public function enable_multi_user_roles_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->enable_multi_user_roles_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_multi_user_roles_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -89,7 +177,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[0]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
 
@@ -103,11 +191,12 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function enable_user_avatars() {
+	public function enable_user_avatars_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->enable_user_avatars_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_user_avatars_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -115,7 +204,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[1]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
 
@@ -129,11 +218,12 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function disable_admin_color_schemes() {
+	public function disable_admin_color_schemes_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[2]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->disable_admin_color_schemes_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->disable_admin_color_schemes_sanitize();
 
 		if ( defined( 'SCP_ALLOW_ADMIN_COLOR_PICKER' ) && false == SCP_ALLOW_ADMIN_COLOR_PICKER ) {
 			$html = sprintf(
@@ -148,7 +238,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				$field_id,
 				$field_id,
 				checked( 1, $option, false ),
-				$fields[2]['args']['description']
+				$fields[$order]['args']['description']
 			);
 			$html .= '</p>';
 		}

@@ -27,7 +27,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			[
 				'id'       => 'admin_menu_menus_top',
 				'title'    => __( 'Navigation Link', 'sitecore' ),
-				'callback' => [ $this, 'admin_menu_menus_top' ],
+				'callback' => [ $this, 'admin_menu_menus_top_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-menu',
 				'type'     => 'boolean',
@@ -40,7 +40,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			[
 				'id'       => 'admin_menu_widgets_top',
 				'title'    => __( 'Widgets Link', 'sitecore' ),
-				'callback' => [ $this, 'admin_menu_widgets_top' ],
+				'callback' => [ $this, 'admin_menu_widgets_top_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-menu',
 				'type'     => 'boolean',
@@ -58,17 +58,76 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	}
 
 	/**
+	 * Navigation Link field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function admin_menu_menus_top_order() {
+		return 0;
+	}
+
+	/**
+	 * Widgets Link field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function admin_menu_widgets_top_order() {
+		return 1;
+	}
+
+	/**
+	 * Sanitize Navigation Link field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function admin_menu_menus_top_sanitize() {
+
+		$option = get_option( 'admin_menu_menus_top', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_admin_menu_menus_top', $option );
+	}
+
+	/**
+	 * Sanitize Widgets Link field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function admin_menu_widgets_top_sanitize() {
+
+		$option = get_option( 'admin_menu_widgets_top', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_admin_menu_widgets_top', $option );
+	}
+
+	/**
 	 * Navigation Link field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function admin_menu_menus_top() {
+	public function admin_menu_menus_top_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id, true );
+		$order    = $this->admin_menu_menus_top_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->admin_menu_menus_top_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -76,7 +135,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[0]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
 
@@ -90,11 +149,12 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function admin_menu_widgets_top() {
+	public function admin_menu_widgets_top_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id, true );
+		$order    = $this->admin_menu_widgets_top_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->admin_menu_widgets_top_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -102,7 +162,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[1]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
 

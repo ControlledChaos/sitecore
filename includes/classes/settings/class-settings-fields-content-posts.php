@@ -25,7 +25,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			[
 				'id'       => 'posts_to_news',
 				'title'    => __( 'Change Posts to News', 'sitecore' ),
-				'callback' => [ $this, 'posts_to_news' ],
+				'callback' => [ $this, 'posts_to_news_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'boolean',
@@ -38,7 +38,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			[
 				'id'       => 'remove_blog',
 				'title'    => __( 'Remove Blog', 'sitecore' ),
-				'callback' => [ $this, 'remove_blog' ],
+				'callback' => [ $this, 'remove_blog_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'boolean',
@@ -51,7 +51,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			[
 				'id'       => 'disable_block_widgets',
 				'title'    => __( 'Disable Block Widgets', 'sitecore' ),
-				'callback' => [ $this, 'disable_block_widgets' ],
+				'callback' => [ $this, 'disable_block_widgets_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'boolean',
@@ -64,7 +64,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			[
 				'id'       => 'enable_link_manager',
 				'title'    => __( 'Enable Classic Links', 'sitecore' ),
-				'callback' => [ $this, 'enable_link_manager' ],
+				'callback' => [ $this, 'enable_link_manager_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'boolean',
@@ -82,17 +82,134 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Posts to news field callback
+	 * Posts to News field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function posts_to_news_order() {
+		return 0;
+	}
+
+	/**
+	 * Remove Blog field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function remove_blog_order() {
+		return 1;
+	}
+
+	/**
+	 * Block Widgets field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function disable_block_widgets_order() {
+		return 2;
+	}
+
+	/**
+	 * Link Manager field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_link_manager_order() {
+		return 3;
+	}
+
+	/**
+	 * Sanitize Posts to News field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function posts_to_news_sanitize() {
+
+		$option = get_option( 'posts_to_news', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_posts_to_news', $option );
+	}
+
+	/**
+	 * Sanitize Remove Blog field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function remove_blog_sanitize() {
+
+		$option = get_option( 'remove_blog', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_remove_blog', $option );
+	}
+
+	/**
+	 * Sanitize Block Widgets field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function disable_block_widgets_sanitize() {
+
+		$option = get_option( 'disable_block_widgets', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_disable_block_widgets', $option );
+	}
+
+	/**
+	 * Sanitize Link Manager field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_link_manager_sanitize() {
+
+		$option = get_option( 'enable_link_manager', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_enable_link_manager', $option );
+	}
+
+	/**
+	 * Posts to News field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function posts_to_news() {
+	public function posts_to_news_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[0]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->posts_to_news_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->posts_to_news_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -100,7 +217,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[0]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 
@@ -108,17 +225,18 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Remove blog field callback
+	 * Remove Blog field callback
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
-	public function remove_blog() {
+	public function remove_blog_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[1]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->remove_blog_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->remove_blog_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -126,7 +244,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[1]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 
@@ -140,11 +258,12 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function disable_block_widgets() {
+	public function disable_block_widgets_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[2]['id'];
-		$option   = get_option( $field_id, true );
+		$order    = $this->disable_block_widgets_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->disable_block_widgets_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -152,7 +271,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[2]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 
@@ -166,11 +285,12 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function enable_link_manager() {
+	public function enable_link_manager_callback() {
 
 		$fields   = $this->settings_fields;
-		$field_id = $fields[3]['id'];
-		$option   = get_option( $field_id, false );
+		$order    = $this->enable_link_manager_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_link_manager_sanitize();
 
 		$html = '<p>';
 		$html .= sprintf(
@@ -178,7 +298,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
-			$fields[3]['args']['description']
+			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
 
