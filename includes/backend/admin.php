@@ -382,6 +382,9 @@ function admin_header_styles() {
 .admin-header {
 	margin: 2rem 20px 0 0;
 }
+.rtl .admin-header {
+	margin: 2rem 0 0 20px;
+}
 .admin-header .site-branding-wrap {
 	width: 100%;
 	display: flex;
