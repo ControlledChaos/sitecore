@@ -88,10 +88,8 @@ class Settings_Fields {
 				);
 				$callback = [ $this, $callback ];
 
-				if ( isset( $field['type'] ) && ! empty( $field['type'] ) ) {
-					if ( 'custom' == $field['type'] ) {
-						$callback = $field['callback'];
-					}
+				if ( isset( $field['callback'] ) && ! empty( $field['callback'] ) ) {
+					$callback = $field['callback'];
 				}
 
 				register_setting(
