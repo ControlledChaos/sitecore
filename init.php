@@ -206,5 +206,6 @@ function admin_init() {
 	global $pagenow, $typenow;
 
 	Admin\setup();
+	Admin_Footer\setup();
 }
 add_action( 'plugins_loaded', __NAMESPACE__ . '\admin_init' );

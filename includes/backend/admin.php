@@ -105,12 +105,6 @@ function setup() {
 		add_action( 'admin_print_styles', $ns( 'admin_header_styles' ) );
 	}
 
-	// Primary & secondary footer text.
-	if ( get_option( 'enable_custom_admin_footer', true ) ) {
-		add_filter( 'admin_footer_text', $ns( 'admin_footer_primary' ), 1 );
-		add_filter( 'update_footer', $ns( 'admin_footer_secondary' ), 1 );
-	}
-
 	// Enqueue scripts.
 	add_action( 'admin_enqueue_scripts', $ns( 'admin_enqueue_scripts' ) );
 
@@ -437,7 +431,7 @@ function admin_header_styles() {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-end;
-	gap: 1em;
+	gap: 0.625em 1em;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -452,120 +446,6 @@ function admin_header_styles() {
 }
 </style>
 <?php
-}
-
-/**
- * Admin footer primary
- *
- * Replaces the "Thank you for creating with ClassicPress/WordPress" text
- * in the #wpfooter div at the bottom of all admin screens. This replaces
- * text inside the default paragraph (<p>) tags.
- *
- * Several options are provided. Edit or delete as desired.
- *
- * @since  1.0.0
- * @return string Returns the text of the footer.
- */
-function admin_footer_primary() {
-
-	// Plugin credit option.
-	$plugin = sprintf(
-		'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a> %s',
-		get_bloginfo( 'name' ),
-		esc_html__( 'is managed by the' ),
-		esc_url( SCP_PLUGIN_URL ),
-		esc_html( SCP_NAME ),
-		esc_html__( 'plugin' )
-	);
-
-	// Site name & description option.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description ) {
-		$name = sprintf(
-			'%s - %s',
-			get_bloginfo( 'name' ),
-			get_bloginfo( 'description' )
-		);
-	} else {
-		$name = get_bloginfo( 'name' );
-	}
-
-	// Developer website option.
-	$dev_url = sprintf(
-		'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a>',
-		get_bloginfo( 'name' ),
-		esc_html__( 'website was designed & developed by' ),
-		esc_url( SCP_DEV_URL ),
-		esc_html( SCP_DEV_NAME )
-	);
-
-	// Developer email option.
-	$dev_email = sprintf(
-		'%s %s %s <a href="mailto:%s">%s</a>',
-		esc_html__( 'Contact' ),
-		esc_html( SCP_DEV_NAME ),
-		esc_html__( 'for website assistance:' ),
-		esc_html( SCP_DEV_EMAIL ),
-		esc_html( SCP_DEV_EMAIL )
-	);
-
-	echo $name;
-}
-
-/**
- * Admin footer secondary
- *
- * Several options are provided. Edit or delete as desired.
- *
- * @since  1.0.0
- * @return string Returns the text of the footer.
- */
-function admin_footer_secondary() {
-
-	remove_filter( 'update_footer', 'core_update_footer' );
-
-	// Plugin credit option.
-	$plugin = sprintf(
-		'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a> %s',
-		get_bloginfo( 'name' ),
-		esc_html__( 'is managed by the' ),
-		esc_url( SCP_PLUGIN_URL ),
-		esc_html( SCP_NAME ),
-		esc_html__( 'plugin' )
-	);
-
-	// Site name & description option.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description ) {
-		$name = sprintf(
-			'%s - %s',
-			get_bloginfo( 'name' ),
-			get_bloginfo( 'description' )
-		);
-	} else {
-		$name = get_bloginfo( 'name' );
-	}
-
-	// Developer website option.
-	$dev_url = sprintf(
-		'%s %s <a href="%s" target="_blank" rel="nofollow">%s</a>',
-		get_bloginfo( 'name' ),
-		esc_html__( 'website was designed & developed by' ),
-		esc_url( SCP_DEV_URL ),
-		esc_html( SCP_DEV_NAME )
-	);
-
-	// Developer email option.
-	$dev_email = sprintf(
-		'%s %s %s <a href="mailto:%s">%s</a>',
-		esc_html__( 'Contact' ),
-		esc_html( SCP_DEV_NAME ),
-		esc_html__( 'for website assistance:' ),
-		esc_html( SCP_DEV_EMAIL ),
-		esc_html( SCP_DEV_EMAIL )
-	);
-
-	echo $dev_email;
 }
 
 /**
