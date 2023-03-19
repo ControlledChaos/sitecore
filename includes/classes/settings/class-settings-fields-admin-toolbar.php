@@ -34,7 +34,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 				'callback' => [ $this, 'toolbar_remove_platform_link_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-toolbar',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => sprintf(
 						__( 'Check to remove the %s logo link.', 'sitecore' ),

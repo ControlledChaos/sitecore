@@ -28,7 +28,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 				'callback' => [ $this, 'sample_field_one_callback' ],
 				'page'     => 'general',
 				'section'  => 'scp-settings-section-sample',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Sample field one description.', 'sitecore' ),
 					'label_for'   => 'sample_field_one',
@@ -41,7 +41,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 				'callback' => [ $this, 'sample_field_two_callback' ],
 				'page'     => 'general',
 				'section'  => 'scp-settings-section-sample',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Sample field two description.', 'sitecore' ),
 					'label_for'   => 'sample_field_two',

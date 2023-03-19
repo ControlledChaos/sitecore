@@ -27,10 +27,9 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 			[
 				'id'       => 'enable_custom_dashboard',
 				'title'    => __( 'Custom Dashboard', 'sitecore' ),
-				'callback' => [ $this, 'enable_custom_dashboard_field_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-dashboard',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to replace the default dashboard with a custom dashboard for this website.', 'sitecore' ),
 					'label_for'   => 'enable_custom_dashboard',
@@ -80,7 +79,7 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function enable_custom_dashboard_field_callback() {
+	public function enable_custom_dashboard_callback() {
 
 		$fields   = $this->settings_fields;
 		$order    = $this->enable_custom_dashboard_order();

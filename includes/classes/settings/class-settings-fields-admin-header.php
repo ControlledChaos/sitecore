@@ -30,7 +30,7 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 				'callback' => [ $this, 'enable_custom_admin_header_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-header',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => sprintf(
 						__( 'Check to enable the custom header on admin screens.', 'sitecore' )

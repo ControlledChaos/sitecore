@@ -30,7 +30,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'callback' => [ $this, 'enable_multi_user_roles_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable multiple user roles on profile edit screens.', 'sitecore' ),
 					'label_for'   => 'enable_multi_user_roles',
@@ -43,7 +43,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'callback' => [ $this, 'enable_user_avatars_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable user avatar uploads and extended, local options for the default avatar.', 'sitecore' ),
 					'label_for'   => 'enable_user_avatars',
@@ -56,7 +56,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'callback' => [ $this, 'disable_admin_color_schemes_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-users',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to disable the user admin color scheme picker. This is handy for custom admin themes.', 'sitecore' ),
 					'label_for'   => 'disable_admin_color_schemes',

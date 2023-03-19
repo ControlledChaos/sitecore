@@ -30,7 +30,7 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 				'callback' => [ $this, 'enable_custom_admin_footer_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-footer',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => sprintf(
 						__( 'Check to replace the default %s footer on admin screens.', 'sitecore' ),

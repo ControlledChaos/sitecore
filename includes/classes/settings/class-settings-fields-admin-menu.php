@@ -27,10 +27,9 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			[
 				'id'       => 'admin_menu_menus_top',
 				'title'    => __( 'Navigation Link', 'sitecore' ),
-				'callback' => [ $this, 'admin_menu_menus_top_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-menu',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to make the link to the navigation menus screen a top-level menu entry.', 'sitecore' ),
 					'label_for'   => 'admin_menu_menus_top',
@@ -40,10 +39,9 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			[
 				'id'       => 'admin_menu_widgets_top',
 				'title'    => __( 'Widgets Link', 'sitecore' ),
-				'callback' => [ $this, 'admin_menu_widgets_top_callback' ],
 				'page'     => 'options-admin',
 				'section'  => 'scp-settings-section-admin-menu',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to make the link to the widgets screen a top-level menu entry.', 'sitecore' ),
 					'label_for'   => 'admin_menu_widgets_top',

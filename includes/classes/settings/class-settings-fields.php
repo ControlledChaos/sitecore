@@ -82,6 +82,18 @@ class Settings_Fields {
 
 			if ( isset( $field['id'] ) && ! empty( $field['id'] ) ) :
 
+				$callback = sprintf(
+					'%s_callback',
+					$field['id']
+				);
+				$callback = [ $this, $callback ];
+
+				if ( isset( $field['type'] ) && ! empty( $field['type'] ) ) {
+					if ( 'custom' == $field['type'] ) {
+						$callback = $field['callback'];
+					}
+				}
+
 				register_setting(
 					$field['page'],
 					$field['id'],
@@ -93,7 +105,7 @@ class Settings_Fields {
 				add_settings_field(
 					$field['id'],
 					$field['title'],
-					$field['callback'],
+					$callback,
 					$field['page'],
 					$field['section'],
 					$field['args']

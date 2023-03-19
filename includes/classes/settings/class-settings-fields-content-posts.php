@@ -28,7 +28,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'callback' => [ $this, 'posts_to_news_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to change blog posts to news posts.', 'sitecore' ),
 					'label_for'   => 'posts_to_news',
@@ -41,7 +41,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'callback' => [ $this, 'remove_blog_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to entirely remove the blogging feature and associated content or widgets.', 'sitecore' ),
 					'label_for'   => 'remove_blog',
@@ -54,7 +54,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'callback' => [ $this, 'disable_block_widgets_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to disable block widgets in favor of classic widgets.', 'sitecore' ),
 					'label_for'   => 'disable_block_widgets',
@@ -67,7 +67,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'callback' => [ $this, 'enable_link_manager_callback' ],
 				'page'     => 'content-settings',
 				'section'  => 'scp-settings-content-posts',
-				'type'     => 'boolean',
+				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable the link manager and links widget.', 'sitecore' ),
 					'label_for'   => 'enable_link_manager',
