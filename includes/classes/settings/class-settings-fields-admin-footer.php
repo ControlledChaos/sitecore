@@ -99,6 +99,16 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Replaces both left and right text.', 'sitecore' )
+		);
+		if ( current_user_can( 'develop' ) ) {
+			$html .= sprintf(
+				'<p class="description"><em>%s</em></p>',
+				__( 'Find the text replacement options in includes/backend/admin-footer.php.', 'sitecore' )
+			);
+		}
 
 		echo $html;
 	}

@@ -58,7 +58,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'section'  => 'scp-settings-section-admin-users',
 				'type'     => 'checkbox',
 				'args'     => [
-					'description' => __( 'Check to disable the user admin color scheme picker. This is handy for custom admin themes.', 'sitecore' ),
+					'description' => __( 'Check to disable the user admin color scheme picker.', 'sitecore' ),
 					'label_for'   => 'disable_admin_color_schemes',
 					'class'       => 'admin-field'
 				]
@@ -207,6 +207,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Avatar uploads are added to user profile screens and the default avatars are available on the Discussion Settings screen.', 'sitecore' )
+		);
 
 		echo $html;
 	}
@@ -241,6 +245,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				$fields[$order]['args']['description']
 			);
 			$html .= '</p>';
+			$html .= sprintf(
+				'<p class="description">%s</p>',
+				__( 'This is handy for custom admin themes.', 'sitecore' )
+			);
 		}
 
 		echo $html;

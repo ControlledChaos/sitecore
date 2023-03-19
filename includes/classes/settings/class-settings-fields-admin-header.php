@@ -98,6 +98,10 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '</p>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Adds the site title, the tagline/description, logo, and registers a navigation menu.', 'sitecore' )
+		);
 
 		echo $html;
 	}
