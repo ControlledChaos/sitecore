@@ -37,7 +37,7 @@ class Admin_Settings_Page extends Add_Page {
 			'menu_slug'     => 'options-admin',
 			'parent_slug'   => 'options-general.php',
 			'position'      => 35,
-			'tabs_hashtags' => true,
+			'tabs_hashtags' => true
 		];
 
 		parent :: __construct(

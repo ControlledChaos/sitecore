@@ -34,11 +34,12 @@ class Content_Settings_Page extends Add_Page {
 		];
 
 		$options = [
-			'capability' => 'read',
-			'settings'   => true,
-			'menu_slug'  => 'content-settings',
-			'icon_url'   => 'dashicons-edit',
-			'position'   => 26
+			'capability'    => 'read',
+			'settings'      => true,
+			'menu_slug'     => 'content-settings',
+			'icon_url'      => 'dashicons-edit',
+			'position'      => 26,
+			'tabs_hashtags' => true
 		];
 
 		parent :: __construct(
