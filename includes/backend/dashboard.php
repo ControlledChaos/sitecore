@@ -28,6 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function setup() {
 
+	// Stop here if not on Dashboard screen.
+	global $pagenow;
+	if ( 'index.php' != $pagenow ) {
+		return;
+	}
+
 	// Return namespaced function.
 	$ns = function( $function ) {
 		return __NAMESPACE__ . "\\$function";
@@ -64,7 +70,26 @@ function setup() {
 		add_action( 'wp_dashboard_setup', $ns( 'dashboard_panel' ) );
 	endif;
 
+	// Add custom post types to "At a Glance".
 	add_action( 'dashboard_glance_items', $ns( 'dashboard_glance_items' ) );
+
+	// Remove contextual help items.
+	add_action( 'admin_head', $ns( 'remove_help_items' ) );
+}
+
+/**
+ * Remove contextual help items
+ *
+ * @since  1.0.0
+ * @global $pagenow
+ * @return void
+ */
+function remove_help_items() {
+	$screen = get_current_screen();
+	$screen->remove_help_tab( 'help-navigation' );
+	$screen->remove_help_tab( 'help-layout' );
+	$screen->remove_help_tab( 'help-content' );
+	$screen->set_help_sidebar( null );
 }
 
 /**
