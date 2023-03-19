@@ -301,6 +301,12 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '<p>';
+		$html .= sprintf(
+			'<p class="description">%s <a href="%s" target="_blank" rel="nofollow noindex">%s</a></p>',
+			__( 'More information at', 'sitecore' ),
+			esc_url( 'https://codex.wordpress.org/Links_Manager' ),
+			'https://codex.wordpress.org/Links_Manager'
+		);
 
 		echo $html;
 	}
