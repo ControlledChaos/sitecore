@@ -44,7 +44,7 @@
 	overflow: auto;
 
 	.dashboard-panel-content {
-		overflow: auto;
+		height: 100% !important;
 		padding: 1rem;
 		clear: both;
 

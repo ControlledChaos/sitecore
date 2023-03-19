@@ -51,6 +51,9 @@ function setup() {
 		// Enqueue dashboard panel styles.
 		add_action( 'admin_enqueue_scripts', $ns( 'dashboard_panel_styles' ) );
 
+		// Print dashboard panel styles.
+		add_action( 'admin_print_styles', $ns( 'print_content_summary_styles' ), 20 );
+
 		// Widgets area layout.
 		layout();
 
@@ -290,4 +293,321 @@ function dashboard_glance_items() {
 			);
 		}
 	}
+}
+
+/**
+ * Custom post types query
+ *
+ * The custom post types are here as a separate query
+ * for use in the At a Glance widget in which the default,
+ * built-in post types already exists and custom post types
+ * are added by filter.
+ *
+ * @since  1.0.0
+ * @return array Returns an array of queried post types.
+ */
+function custom_post_types_query() {
+
+	// Array of post type query arguments.
+	$query = [
+		'public'   => true,
+		'_builtin' => false
+	];
+
+	// Return post types according to above.
+	$query = get_post_types( $query, 'names', 'and' );
+
+	// Return the custom post types.
+	return apply_filters( 'scp_custom_post_types_query', $query );
+}
+
+/**
+ * Public post types
+ *
+ * Merges built-in post types and custom post types.
+ *
+ * @since  1.0.0
+ * @return array Returns an array of all public post types.
+ */
+function public_post_types_query() {
+
+	// Add attachment post type.
+	$builtin = [ 'post', 'page', 'attachment' ];
+
+	// Custom post types query.
+	$custom = custom_post_types_query();
+
+	// Merge the post type arrays.
+	$query = array_merge( $builtin, $custom );
+
+	// Return the public post types.
+	return apply_filters( 'scp_public_post_types_query', $query );
+}
+
+/**
+ * Taxonomies query
+ *
+ * @since  1.0.0
+ * @return array Returns an array of queried taxonomies.
+ */
+function taxonomies_query() {
+
+	// Taxonomy query arguments.
+	$query = [
+		'public'  => true,
+		'show_ui' => true
+	];
+
+	// Get taxonomies according to above array.
+	$query = get_taxonomies( $query, 'object', 'and' );
+
+	// Return the array of taxonomies. Apply filter for customization.
+	return apply_filters( 'scp_taxonomies_query', $query );
+}
+
+/**
+ * Post types list
+ *
+ * @since  1.0.0
+ * @return string Returns unordered list markup.
+ */
+function post_types_list() {
+
+	// Get all public post types.
+	$post_types = public_post_types_query();
+
+	// Begin the post types list.
+	$html = '<ul class="scp-content-list scp-post-types-list">';
+
+	// Conditional list items.
+	foreach ( $post_types as $post_type ) {
+
+		$type = get_post_type_object( $post_type );
+
+		// Count the number of posts.
+		$get_count = wp_count_posts( $type->name );
+		if ( 'attachment' === $post_type ) {
+			$count = $get_count->inherit;
+		} else {
+			$count = $get_count->publish;
+		}
+
+		// Get the number of published posts.
+		$number = number_format_i18n( $count );
+
+		// Get the plural or single name based on the count.
+		$name = _n( $type->labels->singular_name, $type->labels->name, intval( $count ), 'dashboard-summary' );
+
+		// If the icon is data:image/svg+xml.
+		if ( 0 === strpos( $type->menu_icon, 'data:image/svg+xml;base64,' ) ) {
+			$menu_icon = sprintf(
+				'<icon class="scp-cpt-icons" style="%s"></icon>',
+				esc_attr( 'background-image: url( "' . esc_html( $type->menu_icon ) . '" );' )
+			);
+
+		// If the icon is a Dashicon class.
+		} elseif ( 0 === strpos( $type->menu_icon, 'dashicons-' ) ) {
+			$menu_icon = '<icon class="dashicons ' . $type->menu_icon . '"></icon>';
+
+		// If the icon is a URL.
+		} elseif( 0 === strpos( $type->menu_icon, 'http' ) ) {
+			$menu_icon = '<icon class="scp-cpt-icons"><img src="' . esc_url( $type->menu_icon ) . '" /></icon>';
+
+		// Fall back to the default post icon.
+		} else {
+			$menu_icon = '<icon class="dashicons dashicons-admin-post dashicons-admin-' . $type->menu_icon . '"></icon>';
+		}
+
+		// Supply an edit link if media & the user can access the media library.
+		if ( 'attachment' === $post_type && current_user_can( 'upload_files' ) ) {
+			$html .= sprintf(
+				'<li class="post-count %s-count"><a href="edit.php?post_type=%s">%s %s %s</a></li>',
+				$type->name,
+				$type->name,
+				$menu_icon,
+				$number,
+				$name
+			);
+
+		// Supply an edit link if not media & the user can edit posts.
+		} elseif ( 'attachment' != $post_type && current_user_can( $type->cap->edit_posts ) ) {
+			$html .= sprintf(
+				'<li class="post-count %s-count"><a href="edit.php?post_type=%s">%s %s %s</a></li>',
+				$type->name,
+				$type->name,
+				$menu_icon,
+				$number,
+				$name
+			);
+
+		// Otherwise just the count and post type name.
+		} else {
+			$html .= sprintf(
+				'<li class="post-count %s-count">%s %s %s</li>',
+				$type->name,
+				$menu_icon,
+				$number,
+				$name
+			);
+
+		}
+	}
+
+	// End the post types list.
+	$html .= '</ul>';
+
+	// Print the list markup.
+	echo $html;
+}
+
+/**
+ * Taxonomies list with icons
+ *
+ * Includes icon elements rather than adding
+ * icons via CSS.
+ *
+ * @since  1.0.0
+ * @return string Returns unordered list markup.
+ */
+function taxonomies_list() {
+
+	// Get taxonomies.
+	$taxonomies = taxonomies_query();
+
+	// Prepare an entry for each taxonomy matching the query.
+	if ( $taxonomies ) {
+
+		// Begin the taxonomies icons list.
+		$html = '<ul class="scp-content-list scp-taxonomies-list">';
+
+		foreach ( $taxonomies as $taxonomy ) {
+
+			// Get the first supported post type in the array.
+			if ( ! empty( $taxonomy->object_type ) ) {
+				$types = $taxonomy->object_type[0];
+			} else {
+				$types = null;
+			}
+
+			// Set `post_type` URL parameter for menu highlighting.
+			if ( $types && 'post' === $types ) {
+				$type = '&post_type=post';
+			} elseif ( $types ) {
+				$type = '&post_type=' . $types;
+			} else {
+				$type = '';
+			}
+
+			// Count the terms in the taxonomy.
+			$count = wp_count_terms( $taxonomy->name );
+
+			// Get the plural or singular name based on the count.
+			$name = _n( $taxonomy->labels->singular_name, $taxonomy->labels->name, intval( $count ), 'dashboard-summary' );
+
+			// Conditional icon markup.
+			$icon = '';
+			if ( 'post_tag' == $taxonomy->name ) {
+				$icon = sprintf(
+					'<icon class="dashicons dashicons-tag scp-icon-%s"></icon>',
+					$taxonomy->name
+				);
+			} elseif ( 'media_type' == $taxonomy->name ) {
+				$icon = sprintf(
+					'<icon class="dashicons dashicons-portfolio scp-icon-%s"></icon>',
+					$taxonomy->name
+				);
+			} else {
+				$icon = sprintf(
+					'<icon class="dashicons dashicons-category scp-icon-%s"></icon>',
+					$taxonomy->name
+				);
+			}
+
+			// Supply an edit link if the user can edit the taxonomy.
+			$edit = get_taxonomy( $taxonomy->name );
+			if ( current_user_can( $edit->cap->edit_terms ) ) {
+
+				// Print a list item for the taxonomy.
+				$html .= sprintf(
+					'<li class="at-glance-taxonomy %s"><a href="%s">%s %s %s</a></li>',
+					$taxonomy->name,
+					esc_url( admin_url( 'edit-tags.php?taxonomy=' . $taxonomy->name . $type ) ),
+					$icon,
+					$count,
+					$name
+				);
+
+			// List item without link.
+			} else {
+				// Print a list item for the taxonomy.
+				$html .= sprintf(
+					'<li class="at-glance-taxonomy %s">%s %s %s</li>',
+					$taxonomy->name,
+					$icon,
+					$count,
+					$name
+				);
+			}
+		}
+
+		// End the taxonomies icons list.
+		$html .= '</ul>';
+
+		// Print the list markup.
+		echo $html;
+	}
+}
+
+/**
+ * Print admin styles
+ *
+ * Needed to override the default CSS pseudoelement icon on
+ * custom post types and for post type icons that are
+ * base64/SVG or <img> element.
+ * Also, icons colored with current link color.
+ *
+ * @since  1.0.0
+ * @param  string $style Default empty string.
+ * @return string Returns the style blocks.
+ */
+function print_content_summary_styles( $style = '' ) {
+
+	// Get post types.
+	$post_types = public_post_types_query();
+
+	// Prepare styles for each post type matching the query.
+	$type_count = '';
+	foreach ( $post_types as $post_type ) {
+
+		$type = get_post_type_object( $post_type );
+		$type_count .= sprintf(
+			'#dashboard_right_now .post-count.%s a:before, #dashboard_right_now .post-count.%s span:before { display: none; }',
+			$type->name . '-count',
+			$type->name . '-count'
+		);
+	}
+
+	$style  = '<style>';
+	$style .= '#dashboard_right_now li a:before, #dashboard_right_now li span:before { color: currentColor; } ';
+	$style .= '.at-glance-cpt-icons { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background-repeat: no-repeat; background-position: center; background-size: 20px auto; } ';
+	$style .= '.at-glance-cpt-icons img { display: inline-block; max-width: 20px; } ';
+	$style .= $type_count;
+	$style .= '#dashboard_right_now li.at-glance-taxonomy a:before, #dashboard_right_now li.at-glance-taxonomy > span:before { display: none; }';
+	$style .= '#dashboard_right_now .post-count.attachment-count a::before, #dashboard_right_now .post-count.attachment-count span::before { display: none; }';
+	$style .= '#dashboard_right_now li.at-glance-user-count a:before, #dashboard_right_now li.at-glance-user-count span:before { content: "\f110"; }';
+	$style .= '#dashboard_right_now li.at-glance-users-count a:before, #dashboard_right_now li.at-glance-users-count span:before { content: "\f307"; }';
+	$style .= '#dashboard_right_now .scp-widget-divided-section { margin-top: 1em; padding-top: 0.5em; border-top: solid 1px #ccd0d4; }';
+	$style .= '#dashboard_right_now #wp-version-message { display: none; }';
+	$style .= '#dashboard-widgets #dashboard_right_now .scp-widget-divided-section h4 { margin: 0.75em 0 0; font-size: 1em; font-weight: bold; font-weight: 600; }';
+	$style .= '#dashboard-widgets #dashboard_right_now .scp-widget-divided-section p.description { margin: 0.75em 0 0; font-style: italic; line-height: 1.3; }';
+	$style .= '#dashboard-widgets #dashboard_right_now .scp-widget-divided-section a:not(.scp-search-engines) { text-decoration: none; }';
+	$style .= '#dashboard_right_now ul.scp-widget-system-list { display: block; margin: 0.75em 0 0; }';
+	$style .= '#dashboard_right_now .scp-widget-system-list li { margin: 0.325em 0 0; }';
+	$style .= '#dashboard_right_now .scp-widget-system-list li a:before { display: none; }';
+	$style .= '#dashboard_right_now .main p.scp-widget-link-button { margin-top: 1.5em; }';
+	$style .= '.scp-dashboard-search-fields { display: flex; flex-wrap: wrap; gap: 0.25em; }';
+	$style .= '</style>';
+
+	// Apply filter and print the style block.
+	echo apply_filters( 'scp_website_default_print_styles', $style );
 }

@@ -8,6 +8,9 @@
  * @since      1.0.0
  */
 
+use function SiteCore\Admin\Dashboard\post_types_list;
+use function SiteCore\Admin\Dashboard\taxonomies_list;
+
 $images = get_posts( [
 	'post_type'      => 'attachment',
 	'post_parent'    => null,
@@ -53,16 +56,28 @@ $images = get_posts( [
 
 		<div class="dashboard-panel-column">
 
-			<h3><?php _e( 'Website Summary', 'sitecore' ); ?></h3>
+			<h3><?php _e( 'Content Summary', 'sitecore' ); ?></h3>
 
 			<div id="dashboard_right_now" style="padding: 1rem 0;">
-				<?php wp_dashboard_right_now(); ?>
+				<?php post_types_list(); ?>
+				<hr />
+				<?php taxonomies_list(); ?>
 			</div>
 		</div>
 
 		<div class="dashboard-panel-column dashboard-panel-last">
 
 			<h3><?php _e( 'Manage Content', 'sitecore' ); ?></h3>
+
+			<form role="search" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get" target="_blank" rel="nofollow noreferrer noopener">
+				<?php $content_id = 'site-' . get_current_blog_id() . '-dashboard-search-content'; ?>
+				<p class="scp-dashboard-search-fields">
+					<label class="screen-reader-text" for="<?php echo $content_id; ?>" aria-label="<?php _e( 'Search Content', 'sitecore' ); ?>"><?php _e( 'Search Content', 'sitecore' ); ?></label>
+
+					<input type="search" name="s" id="<?php echo $content_id; ?>" aria-labelledby="<?php _e( 'Search Content', 'sitecore' ); ?>" value="<?php echo get_search_query(); ?>" autocomplete="off" placeholder="<?php _e( 'Search Content', 'sitecore' ); ?>" aria-placeholder="<?php _e( 'Enter content search terms', 'sitecore' ); ?>" />
+					<?php submit_button( __( 'Submit', 'sitecore' ), '', false, false, [ 'id' => 'submit-' . $content_id ] ); ?>
+				</p>
+			</form>
 
 			<ul>
 				<li><?php printf( '<a href="%s" class="welcome-icon welcome-content-settings">' . __( 'Website Content', 'sitecore' ) . '</a>', admin_url( 'admin.php?page=content-settings' ) ); ?></li>
