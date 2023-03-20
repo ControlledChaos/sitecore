@@ -61,13 +61,16 @@ function setup() {
 		add_action( 'admin_print_styles', $ns( 'print_content_summary_styles' ), 20 );
 
 		// Widgets area layout.
-		layout();
+		custom_dashboard_layout();
 
 		// Widget order.
 		add_action( 'admin_init', $ns( 'widget_order' ), 25 );
 
 		// Add custom dashboard panel.
 		add_action( 'wp_dashboard_setup', $ns( 'dashboard_panel' ) );
+
+		// Remove screen options.
+		add_filter( 'screen_options_show_screen', '__return_false' );
 	endif;
 
 	// Add custom post types to "At a Glance".
@@ -183,7 +186,7 @@ function dashboard_panel_styles() {
  * @since  1.0.0
  * @return void
  */
-function layout() {
+function custom_dashboard_layout() {
 
 	// Make dashboard one column because of the big user panel.
 	add_filter( 'screen_layout_columns', function( $columns ) {
