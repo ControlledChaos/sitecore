@@ -62,7 +62,7 @@ if ( ! empty( $get_user_desc ) || ctype_space( $get_user_desc ) ) {
 					); ?>
 					<p class="about-description"><?php _e( 'There are personal options available to you as a registered user of this website.', 'sitecore' ); ?></p>
 					<p class="dashboard-panel-call-to-action"><a class="button button-primary button-hero" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Manage Your Profile', 'sitecore' ); ?></a></p>
-					<p class="description"><?php _e( 'Edit your display name, bio & user options.', 'sitecore' ); ?></p>
+					<p class="description"><?php _e( 'Edit your display name, your bio, upload an avatar, & mane your user options.', 'sitecore' ); ?></p>
 				</div>
 
 			</div>

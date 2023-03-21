@@ -10,86 +10,92 @@
 
  use SiteCore\Users as Users;
 
-// Current user avatar.
-$avatar = get_avatar(
-	get_current_user_id(),
-	64,
-	'',
-	Users\display_name(),
-	[
-		'class'         => 'dashboard-panel-avatar alignnone',
-		'force_display' => true
-		]
-);
+use function SiteCore\Admin\Dashboard\post_types_list;
+use function SiteCore\Admin\Dashboard\taxonomies_list;
 
-if ( ! empty( get_user_option( 'description' ) ) ) {
-	$user_description = wp_trim_words( get_user_option( 'description' ), 64, '&hellip;' );
-} else {
-	$user_description = __( 'As a user of this website you can include a bio/description which may be displayed to other users or to the public, depending on your user permissions, member plugins, and the active theme.', 'sitecore' );
-}
+$images = get_posts( [
+	'post_type'      => 'attachment',
+	'post_parent'    => null,
+	'post_mime_type' => 'image',
+	'post_status'    => null,
+	'numberposts'    => 1,
+	'order'          => 'DESC'
+] );
 
 ?>
-<div id="welcome" class="tab-content dashboard-panel-content dashboard-welcome-content">
+<div id="content" class="tab-content dashboard-panel-content dashboard-content-content" style="display: none;">
 
-	<?php echo sprintf(
-		'<h2>%s %s</h2>',
-		__( 'Welcome to', 'sitecore' ),
-		get_bloginfo( 'name' )
-	); ?>
-	<p class="about-description"><?php _e( 'We\'ve assembled some links to get you started.', 'sitecore' ); ?></p>
+	<h2><?php _e( 'Manage Website Content', 'sitecore' ); ?></h2>
+	<p class="description"><?php _e( 'Manage blog posts and static pages, upload images, add helpful widgets&hellip;', 'sitecore' ); ?></p>
 
 	<div class="dashboard-panel-column-container">
 
-		<div id="dashboard-get-started" class="dashboard-panel-column">
+		<div class="dashboard-panel-column">
 
-			<h3><?php _e( 'Your Account', 'sitecore' ); ?></h3>
+			<h3><?php _e( 'Media Library', 'sitecore' ); ?></h3>
 
-			<div class="dashboard-panel-section-intro dashboard-panel-user-greeting">
-
-				<figure>
-					<a href="<?php echo admin_url( 'profile.php' ); ?>#avatar-profile-screen" title="<?php _e( 'Your profile avatar', 'sitecore' ); ?>">
-						<?php echo $avatar; ?>
-					</a>
-					<figcaption class="screen-reader-text"><?php echo Users\display_name(); ?></figcaption>
-				</figure>
-
+			<div class="dashboard-panel-section-intro dashboard-panel-content-greeting">
+				<?php if ( $images ) : ?>
+					<?php foreach ( $images as $image ) :
+					$thumb = wp_get_attachment_image_src( $image->ID, 'thumbnail' );
+					$src   = $thumb[0];
+					?>
+						<figure>
+							<a href="<?php echo esc_attr( admin_url( 'upload.php' ) ); ?>"><img class="avatar" src="<?php echo esc_attr( $src ); ?>" alt="<?php echo esc_attr( apply_filters( 'the_title', $image->post_title ) ); ?>" width="64" height="64"></a>
+							<figcaption class="screen-reader-text"><?php echo apply_filters( 'the_title', $image->post_title ); ?></figcaption>
+						</figure>
+					<?php endforeach; ?>
+				<?php endif; ?>
 				<div>
-					<?php echo sprintf(
-						'<h4>%1s %2s.</h4>',
-						__( 'Howdy,', 'sitecore' ),
-						Users\display_name()
-					); ?>
-					<p class="about-description"><?php _e( 'This site may display your profile in posts that you author. And there are personal options available for using this site, such as editor preferences and color schemes.', 'sitecore' ); ?></p>
-					<p class="dashboard-panel-call-to-action"><a class="button button-primary button-hero" href="<?php echo admin_url( 'profile.php' ); ?>"><?php _e( 'Manage Your Profile', 'sitecore' ); ?></a></p>
-					<p class="description"><?php _e( 'Edit your display name & bio.', 'sitecore' ); ?></p>
-				</div>
+					<h4><?php _e( 'Images & Video', 'sitecore' ); ?></h4>
+					<p class="about-description"><?php _e( 'Manage the site library of visual media as well as audio files & documents.', 'sitecore' ); ?></p>
 
+					<p class="dashboard-panel-call-to-action"><a class="button button-primary button-hero load-customize hide-if-no-customize" href="<?php echo esc_url( admin_url( 'upload.php' ) ); ?>"><?php _e( 'Manage Media Library' ); ?></a></p>
+					<p class="description"><?php _e( 'Add media files to the site library.', 'sitecore' ); ?></p>
+				</div>
 			</div>
 		</div>
 
-		<div id="dashboard-next-steps" class="dashboard-panel-column">
+		<div class="dashboard-panel-column">
 
-			<h3><?php _e( 'Bio/Description', 'sitecore' ); ?></h3>
+			<h3><?php _e( 'Content Summary', 'sitecore' ); ?></h3>
 
-			<?php printf(
-				'<p>%s</p>',
-				$user_description
-			); ?>
-			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit Bio', 'sitecore' ); ?></a></p>
+			<div id="dashboard_right_now" style="padding: 1rem 0;">
+				<?php post_types_list(); ?>
+				<hr />
+				<?php taxonomies_list(); ?>
+			</div>
 		</div>
 
-		<div id="dashboard-more-actions" class="dashboard-panel-column dashboard-panel-last">
+		<div class="dashboard-panel-column dashboard-panel-last">
 
-			<h3><?php _e( 'Account Options', 'sitecore' ); ?></h3>
+			<h3><?php _e( 'Manage Content', 'sitecore' ); ?></h3>
 
-			<ul class="ds-widget-details-list ds-widget-options-list">
-				<li><?php _e( 'User roles:', 'sitecore' ); ?> <strong><?php echo Users\user_roles(); ?></strong></li>
-				<li><?php _e( 'Account email:', 'sitecore' ); ?> <strong><?php echo Users\email(); ?></strong></li>
-				<li><?php _e( 'Your website:', 'sitecore' ); ?> <strong><?php echo Users\website(); ?></strong></li>
-				<li><?php _e( 'Admin color scheme:', 'sitecore' ); ?> <a href="<?php echo admin_url( 'profile.php' ); ?>#color-picker"><strong><?php echo Users\get_user_color_scheme(); ?></strong></a></li>
-				<li><?php _e( 'Frontend toolbar:', 'sitecore' ); ?> <a href="<?php echo admin_url( 'profile.php' ); ?>#admin_bar_front"><strong><?php echo Users\toolbar(); ?></strong></a></li>
+			<form role="search" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get" target="_blank" rel="nofollow noreferrer noopener">
+				<?php $content_id = 'site-' . get_current_blog_id() . '-dashboard-search-content'; ?>
+				<p class="scp-dashboard-search-fields">
+					<label class="screen-reader-text" for="<?php echo $content_id; ?>" aria-label="<?php _e( 'Search Content', 'sitecore' ); ?>"><?php _e( 'Search Content', 'sitecore' ); ?></label>
+
+					<input type="search" name="s" id="<?php echo $content_id; ?>" aria-labelledby="<?php _e( 'Search Content', 'sitecore' ); ?>" value="<?php echo get_search_query(); ?>" autocomplete="off" placeholder="<?php _e( 'Search Content', 'sitecore' ); ?>" aria-placeholder="<?php _e( 'Enter content search terms', 'sitecore' ); ?>" />
+					<?php submit_button( __( 'Submit', 'sitecore' ), '', false, false, [ 'id' => 'submit-' . $content_id ] ); ?>
+				</p>
+			</form>
+
+			<ul>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-content-settings">' . __( 'Website Content', 'sitecore' ) . '</a>', admin_url( 'admin.php?page=content-settings' ) ); ?></li>
+
+				<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'menus' ) ) : ?>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-menus">' . __( 'Manage menus', 'sitecore' ) . '</a>', admin_url( 'nav-menus.php' ) ); ?></li>
+			<?php endif; ?>
+
+			<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'widgets' ) ) : ?>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-widgets">' . __( 'Manage widgets', 'sitecore' ) . '</a>', admin_url( 'widgets.php' ) ); ?></li>
+			<?php endif; ?>
+
+			<?php if ( current_user_can( 'edit_posts' ) ) : ?>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-comments">' . __( 'Manage Comments', 'sitecore' ) . '</a>', admin_url( 'edit-comments.php' ) ); ?></li>
+			<?php endif; ?>
 			</ul>
 		</div>
-
 	</div>
 </div>
