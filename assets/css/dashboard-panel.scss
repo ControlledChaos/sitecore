@@ -35,7 +35,7 @@
 
 #scp-dashboard .inside {
 	display: block !important;
-	// max-width: 1280px;
+	max-width: 1280px;
 	padding: 0;
 }
 
@@ -57,21 +57,17 @@
 	.dashboard-panel-column-container {
 		clear: both;
 		position: relative;
+		display: grid;
+		grid-template-columns: repeat( 3, 1fr );
+		gap: 1rem;
+
+		@media screen and ( max-width: 782px ) {
+			display: block;
+		}
 	}
 
 	.dashboard-panel-column {
 		box-sizing: border-box;
-		width: 32%;
-		min-width: 200px;
-		float: left;
-
-		&:not( :last-of-type ) {
-			padding-right: 1rem;
-		}
-
-		&:first-child {
-			width: 36%;
-		}
 
 		h3 {
 			margin: 1.33em 0 0;
@@ -83,7 +79,7 @@
 	.dashboard-panel-section-intro {
 		display: -webkit-box;
 		display: flex;
-		padding: 1rem 2rem 0 0;
+		padding: 1rem 0 0 0;
 
 		@media screen and ( max-width: 799px ) {
 			display: block;
@@ -129,6 +125,15 @@
 
 	.dashboard-panel-call-to-action {
 		margin: 1rem 0 0 0;
+	}
+
+	.button {
+		&.button-hero {
+			min-height: unset;
+			padding: 1em;
+			line-height: 1;
+			text-align: center;
+		}
 	}
 }
 

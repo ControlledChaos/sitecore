@@ -29,6 +29,7 @@
 
 #scp-dashboard .inside {
   display: block !important;
+  max-width: 1280px;
   padding: 0;
 }
 
@@ -51,22 +52,22 @@
 #dashboard-panel .dashboard-panel-column-container {
   clear: both;
   position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media screen and (max-width: 782px) {
+  #dashboard-panel .dashboard-panel-column-container {
+    display: block;
+  }
 }
 
 #dashboard-panel .dashboard-panel-column {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  width: 32%;
-  min-width: 200px;
-  float: left;
-}
-
-#dashboard-panel .dashboard-panel-column:not(:last-of-type) {
-  padding-right: 1rem;
-}
-
-#dashboard-panel .dashboard-panel-column:first-child {
-  width: 36%;
 }
 
 #dashboard-panel .dashboard-panel-column h3 {
@@ -79,7 +80,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 1rem 2rem 0 0;
+  padding: 1rem 0 0 0;
 }
 
 @media screen and (max-width: 799px) {
@@ -129,6 +130,13 @@
 
 #dashboard-panel .dashboard-panel-call-to-action {
   margin: 1rem 0 0 0;
+}
+
+#dashboard-panel .button.button-hero {
+  min-height: unset;
+  padding: 1em;
+  line-height: 1;
+  text-align: center;
 }
 
 .no-js #dashboard-panel .dashboard-panel-content {
