@@ -313,8 +313,14 @@ class Add_Page {
 			return null;
 		}
 
+		if ( $this->page_labels['submit_label'] ) {
+			$label = $this->page_labels['submit_label'];
+		} else {
+			$label = __( 'Save Settings', 'sitecore' );
+		}
+
 		$html = submit_button(
-			__( 'Save Settings', 'sitecore' ),
+			$label,
 			'primary',
 			'submit',
 			true,
