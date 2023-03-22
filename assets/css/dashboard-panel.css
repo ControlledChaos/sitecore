@@ -110,6 +110,11 @@
           box-shadow: none;
 }
 
+#dashboard-panel .dashboard-panel-section-intro figure img {
+  width: 64px;
+  height: auto;
+}
+
 @media screen and (max-width: 799px) {
   #dashboard-panel .dashboard-panel-section-intro figure {
     float: left;

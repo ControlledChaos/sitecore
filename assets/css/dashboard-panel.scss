@@ -103,6 +103,11 @@
 				}
 			}
 
+			img {
+				width: 64px;
+				height: auto;
+			}
+
 			@media screen and ( max-width: 799px ) {
 				float: left;
 			}
