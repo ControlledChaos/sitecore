@@ -10,34 +10,38 @@
 
 namespace SiteCore\Tools;
 
+use SiteCore\Classes\Tools as Tools_Class;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
 /**
- * Disable FloC
- *
- * Executes the `floc_headers` function.
+ * Execute functions
  *
  * @since  1.0.0
  * @return void
  */
-function disable_floc() {
-	add_filter( 'wp_headers', __NAMESPACE__ . '\\disable_floc' );
-}
+function setup() {
 
-/**
- * RTL/LTR switcher
- *
- * Executes the direction functions.
- *
- * @since  1.0.0
- * @return void
- */
-function dir_switch() {
-	add_action( 'init', __NAMESPACE__ . '\\set_direction' );
-	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\toolbar_dir_switch', 999 );
+	// Return namespaced function.
+	$ns = function( $function ) {
+		return __NAMESPACE__ . "\\$function";
+	};
+
+	if ( get_option( 'direction_switch', false ) ) {
+		add_action( 'init', $ns( 'set_direction' ) );
+		add_action( 'admin_bar_menu', $ns( 'toolbar_dir_switch' ), 999 );
+	}
+
+	if ( get_option( 'customizer_reset', false ) ) {
+		new Tools_Class\Customizer_Reset;
+	}
+
+	if ( get_option( 'disable_floc', true ) ) {
+		add_filter( 'wp_headers', $ns( 'floc_headers' ) );
+	}
 }
 
 /**

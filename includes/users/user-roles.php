@@ -39,18 +39,20 @@ function setup() {
 	// Add simple_role capabilities, priority must be after the initial role definition.
 	add_action( 'init', $ns( 'add_user_capabilities' ), 11 );
 
-	add_action( 'admin_head', $ns( 'profile_role_dropdown' ) );
-	add_action( 'show_user_profile', $ns( 'profile_role_output_checklist' ) );
-	add_action( 'edit_user_profile', $ns( 'profile_role_output_checklist' ) );
-	add_action( 'user_new_form', $ns( 'profile_role_output_checklist' ) );
-	add_action( 'profile_update', $ns( 'profile_role_process_checklist' ) );
+	if ( get_option( 'enable_multi_user_roles', false ) ) {
+		add_action( 'admin_head', $ns( 'profile_role_dropdown' ) );
+		add_action( 'show_user_profile', $ns( 'profile_role_output_checklist' ) );
+		add_action( 'edit_user_profile', $ns( 'profile_role_output_checklist' ) );
+		add_action( 'user_new_form', $ns( 'profile_role_output_checklist' ) );
+		add_action( 'profile_update', $ns( 'profile_role_process_checklist' ) );
 
-	// In multisite, user_register hook is too early so wp_network_activate_user add user role after
-	if ( is_multisite() ) {
-		add_filter( 'signup_site_meta', $ns( 'network_add_roles_in_signup_meta' ), 10, 7 );
-		add_action( 'wpnetwork_activate_user', $ns( 'network_add_roles_after_activation' ), 10, 3 );
-	} else {
-		add_action( 'user_register', $ns( 'profile_role_process_checklist' ) );
+		// In multisite, user_register hook is too early so wp_network_activate_user add user role after
+		if ( is_multisite() ) {
+			add_filter( 'signup_site_meta', $ns( 'network_add_roles_in_signup_meta' ), 10, 7 );
+			add_action( 'wpnetwork_activate_user', $ns( 'network_add_roles_after_activation' ), 10, 3 );
+		} else {
+			add_action( 'user_register', $ns( 'profile_role_process_checklist' ) );
+		}
 	}
 
 	add_filter( 'manage_users_columns', $ns( 'list_role_column_replace' ), 11 );

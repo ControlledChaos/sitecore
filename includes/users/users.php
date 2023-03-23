@@ -59,7 +59,9 @@ function setup() {
 	add_action( 'init', $ns( 'remove_editor_styles' ) );
 
 	// Ensure developer access.
-	add_action( 'init', $ns( 'developer_access' ) );
+	if ( get_option( 'dev_access', false ) ) {
+		add_action( 'wp_loaded', $ns( 'developer_access' ) );
+	}
 }
 
 /**
@@ -296,6 +298,36 @@ function remove_editor_styles() {
 }
 
 /**
+ * Developer access username
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function dev_access_name() {
+	return apply_filters( 'scp_dev_access_name', 'Developer' );
+}
+
+/**
+ * Developer access password
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function dev_access_password() {
+	return apply_filters( 'scp_dev_access_password', 'LetMeIn!' );
+}
+
+/**
+ * Developer access email
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function dev_access_email() {
+	return apply_filters( 'scp_dev_access_email', 'developer@example.com' );
+}
+
+/**
  * Ensure developer access
  *
  * @todo Get login from site admin options and
@@ -308,15 +340,19 @@ function developer_access() {
 
 	$user     = null;
 	$user_id  = null;
-	$login    = 'Developer';
-	$password = 'LetMeIn!';
-	$email    = 'developer@example.com';
+	$username = dev_access_name();
+	$password = dev_access_password();
+	$email    = dev_access_email();
 
-	if ( ! username_exists( $login ) && ! email_exists( $email ) ) {
-		$user    = new \WP_User( $user_id );
-		$user_id = wp_create_user( $login, $password, $email );
-		$user->set_role( 'developer' );
+	if ( ! username_exists( $username ) && ! email_exists( $email ) ) {
+		$user    = new \WP_User( $ID );
+		$user_id = wp_create_user( $username, $password, $email );
 	}
+}
+
+function developer_access_role() {
+
+	$user->set_role( 'developer' );
 }
 
 /**

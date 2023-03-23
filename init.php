@@ -120,10 +120,7 @@ function init() {
 	}
 
 	// Tools.
-	// @todo Put into a settings page.
-	new Tools_Class\Customizer_Reset;
-	Tools\dir_switch();
-	Tools\disable_floc();
+	Tools\setup();
 
 	// Media.
 	Media\setup();

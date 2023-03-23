@@ -34,6 +34,7 @@ function setup() {
 
 	add_action( 'init', $ns( 'admin_settings' ), 10 );
 	add_action( 'init', $ns( 'content_settings' ), 10 );
+	add_action( 'init', $ns( 'developer_settings' ), 10 );
 }
 
 /**
@@ -55,7 +56,7 @@ function admin_settings() {
 }
 
 /**
- * Admin settings
+ * Content settings
  *
  * @since  1.0.0
  * @return void
@@ -65,4 +66,18 @@ function content_settings() {
 	new Settings_Class\Settings_Sections_Content;
 	new Settings_Class\Settings_Fields_Content_Posts;
 	new Backend_Class\Content_Settings_Page;
+}
+
+/**
+ * Developer settings
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function developer_settings() {
+
+	new Settings_Class\Settings_Sections_Developer;
+	new Settings_Class\Settings_Fields_Developer;
+	new Settings_Class\Settings_Fields_Developer_Users;
+	new Backend_Class\Developer_Settings_Page;
 }
