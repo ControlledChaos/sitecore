@@ -48,6 +48,24 @@ function setup() {
 }
 
 /**
+ * Is tools screen
+ *
+ * @since  1.0.0
+ * @global $pagenow Get the current admin screen.
+ * @return boolean Returns true if on the tools screen.
+ */
+function is_tools_screen() {
+
+	// Access current admin page.
+	global $pagenow;
+
+	if ( 'tools.php' == $pagenow ) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * Developer settings page
  *
  * Checks for the Developer_Settings_Page class.
@@ -97,6 +115,10 @@ function available_tools() {
  * @return void
  */
 function add_help_tabs() {
+
+	if ( ! is_tools_screen() ) {
+		return;
+	}
 
 	$screen = get_current_screen();
 
