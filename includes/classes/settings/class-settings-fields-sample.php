@@ -135,7 +135,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</p>';
 
 		echo $html;
 	}
@@ -162,7 +162,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</p>';
 
 		echo $html;
 	}
