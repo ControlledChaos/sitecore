@@ -60,7 +60,8 @@ function setup() {
 
 	// Ensure developer access.
 	if ( get_option( 'dev_access', false ) ) {
-		add_action( 'wp_loaded', $ns( 'developer_access' ) );
+		add_action( 'init', $ns( 'developer_access' ) );
+		add_action( 'init', $ns( 'developer_access_role' ) );
 	}
 }
 
@@ -345,13 +346,19 @@ function developer_access() {
 	$email    = dev_access_email();
 
 	if ( ! username_exists( $username ) && ! email_exists( $email ) ) {
-		$user    = new \WP_User( $ID );
 		$user_id = wp_create_user( $username, $password, $email );
 	}
 }
 
+/**
+ * Set developer access role
+ *
+ * @since  1.0.0
+ * @return void
+ */
 function developer_access_role() {
-
+	$id   = get_user_by( 'login', dev_access_name() );
+	$user = new \WP_User( $id );
 	$user->set_role( 'developer' );
 }
 
