@@ -30,6 +30,9 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
+	add_action( 'tool_box', $ns( 'available_tools' ) );
+	add_action( 'admin_head', $ns( 'add_help_tabs' ) );
+
 	if ( get_option( 'direction_switch', false ) ) {
 		add_action( 'init', $ns( 'set_direction' ) );
 		add_action( 'admin_bar_menu', $ns( 'toolbar_dir_switch' ), 999 );
@@ -41,6 +44,73 @@ function setup() {
 
 	if ( get_option( 'disable_floc', true ) ) {
 		add_filter( 'wp_headers', $ns( 'floc_headers' ) );
+	}
+}
+
+/**
+ * Developer settings page
+ *
+ * Checks for the Developer_Settings_Page class.
+ *
+ * @since  1.0.0
+ * @return boolean Returns true if the class exists.
+ */
+function dev_settings_page() {
+
+	if ( class_exists( 'SiteCore\Classes\Admin\Developer_Settings_Page', ) ) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Available tools
+ *
+ * Adds cards to the tools.php screen
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function available_tools() {
+
+	if ( current_user_can( 'develop' ) && dev_settings_page() ) :
+
+	?>
+	<div class="card">
+		<h2 class="title"><?php _e( 'Developer Tools', 'sitecore' ); ?></h2>
+		<p>
+		<?php
+			printf(
+				__( 'As a registered developer of this website there are <a href="%s">tools available</a> to you for managing the site.', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=developer-tools' ) )
+			);
+		?>
+		</p>
+	</div>
+	<?php endif;
+}
+
+/**
+ * Add help tabs
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function add_help_tabs() {
+
+	$screen = get_current_screen();
+
+	if ( current_user_can( 'develop' ) && dev_settings_page() ) {
+		$screen->add_help_tab(
+			[
+				'id'      => 'dev_tools',
+				'title'   => __( 'Developer Tools', 'sitecore' ),
+				'content' => sprintf(
+					__( '<p>The <a href="%s">developer tools</a> are only available to logged-in users with the user capability of "develop" under the "Developer" user role.</p>', 'sitecore' ),
+					esc_url( admin_url( 'tools.php?page=developer-tools' ) )
+				)
+			]
+		);
 	}
 }
 
