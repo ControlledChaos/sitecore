@@ -62,7 +62,7 @@ class Content_Settings_Page extends Add_Page {
 		$this->add_content_tab( [
 			'id'       => 'content-settings-intro',
 			'tab'      => __( 'Intro', 'sitecore' ),
-			'heading'  => __( 'Manage Your Website Content', 'sitecore' ),
+			'heading'  => __( 'About This Website\'s Content', 'sitecore' ),
 			'content'  => '',
 			'callback' => [ $this, 'intro_tab' ]
 		] );
@@ -71,7 +71,7 @@ class Content_Settings_Page extends Add_Page {
 			'capability' => 'manage_options',
 			'id'         => 'content-settings-sample',
 			'tab'        => __( 'Options', 'sitecore' ),
-			'heading'    => __( 'Blog and Widgets', 'sitecore' ),
+			'heading'    => __( 'Website Content Options', 'sitecore' ),
 			'content'    => '',
 			'callback'   => [ $this, 'settings_tab' ]
 		] );

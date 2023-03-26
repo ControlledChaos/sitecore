@@ -8,16 +8,30 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Views\Admin;
+namespace SiteCore\Views\Admin\Content_Settings_Intro;
 
 function content_settings_intro( $content = '' ) {
 
 	// If ACF and ACF Extended are active.
-	if ( current_user_can( 'develop' ) && class_exists( 'acf' ) && class_exists( 'acfe' ) ) {
+	if ( current_user_can( 'develop' ) && ( class_exists( 'acf' ) && class_exists( 'acfe' ) ) ) {
 
 		$content = sprintf(
 			'<p>%s</p>',
-			__( 'ACFE intro.', 'sitecore' )
+			__( 'ACFE Dev intro.', 'sitecore' )
+		);
+
+	} elseif ( current_user_can( 'develop' ) && class_exists( 'acf' ) ) {
+
+		$content = sprintf(
+			'<p>%s</p>',
+			__( 'ACF Dev intro.', 'sitecore' )
+		);
+
+	} elseif ( current_user_can( 'manage_options' ) ) {
+
+		$content = sprintf(
+			'<p>%s</p>',
+			__( 'Admin intro.', 'sitecore' )
 		);
 
 	} else {
