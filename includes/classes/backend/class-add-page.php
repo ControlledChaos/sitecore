@@ -246,7 +246,7 @@ class Add_Page {
 
 		$description = sprintf(
 			'<p class="description">%s</p>',
-			__( $this->page_labels['description'], 'sitecore' )
+			$this->page_labels['description']
 		);
 
 		if ( ! empty( $this->page_labels['description'] ) ) {
@@ -640,17 +640,18 @@ class Add_Page {
 	/**
 	 * Page content
 	 *
-	 * This can be used in the default `callback()` method.
-	 * Hooking into `scp_submanu_page_content` adds
+	 * This can be used in the default `content_callback()` method.
+	 * Hooking into `scp_submenu_page_content` adds
 	 * content/markup inside the standard page markup.
-	 * Use a new `callback()` method to override these defaults.
+	 * Use a new `content_callback()` method to override these defaults.
 	 *
 	 * @since  1.0.0
 	 * @access protected
 	 * @return mixed Returns the page content.
 	 */
 	protected function content() {
-		do_action( 'render_screen_tabs_' . $this->page_options['menu_slug'] );
+		$content = do_action( 'render_screen_tabs_' . $this->page_options['menu_slug'] );
+		return apply_filters( 'admin_page_content_' . $this->page_options['menu_slug'], $content );
 	}
 
 	/**
@@ -688,7 +689,7 @@ class Add_Page {
 		$this->content();
 
 		// End page wrap.
-		echo  '</div>';
+		echo '</div>';
 	}
 
 	/**
