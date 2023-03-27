@@ -218,7 +218,7 @@ class Register_Admin extends Register_Type {
 					'<div class="wrap"><h1>%s</h1><p class="description">%s</p>%s</div>',
 					$post->post_title,
 					get_field( 'admin_post_description', $post->ID ),
-					apply_filters( 'the_content', $post->post_content )
+					apply_filters( 'the_content', get_the_content( null, true, $post->ID ) )
 				);
 			};
 
