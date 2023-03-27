@@ -100,7 +100,7 @@ class Plugin_ACF extends Plugin {
 		add_filter( 'acf/settings/show_admin', [ $this, 'acf_settings_show_admin' ] );
 
 		// Add ACF field groups.
-		$this->field_groups();
+		add_action( 'plugins_loaded', [ $this, 'field_groups' ], 20 );
 
 		/**
 		 * Remove the ACF toolbar.
@@ -112,7 +112,7 @@ class Plugin_ACF extends Plugin {
 		add_filter( 'acf/admin/toolbar', '__return_false' );
 
 		// Admin columns for ACF fields.
-		$this->acf_columns();
+		add_action( 'plugins_loaded', [ $this, 'acf_columns' ], 20 );
 	}
 
 	/**
@@ -254,8 +254,8 @@ class Plugin_ACF extends Plugin {
 	 * @return void
 	 */
 	public function acf_columns() {
-		if ( class_exists( 'ACF_Columns' ) && is_admin() ) {
-			return new ACF_Columns;
+		if ( class_exists( 'SiteCore\Classes\Vendor\ACF_Columns' ) && is_admin() ) {
+			new ACF_Columns;
 		}
 	}
 }
