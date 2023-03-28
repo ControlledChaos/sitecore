@@ -1,11 +1,11 @@
 # Site Core
 
-Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
+Develop site-specific plugins for ClassicPress and WordPres.
 
 ![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_minimum-7.4-8892bf.svg?style=flat-square)
 ![Tested on PHP version 8.0](https://img.shields.io/badge/PHP_tested-8.0-8892bf.svg?style=flat-square)
 ![ClassicPress tested on version 1.4.3](https://img.shields.io/badge/ClassicPress_tested-1.4.3-03768e.svg?style=flat-square)
-![WordPress tested on version 6.0.3](https://img.shields.io/badge/WordPress_tested-6.0.3-2271b1.svg?style=flat-square)
+![WordPress tested on version 6.1.1](https://img.shields.io/badge/WordPress_tested-6.1.1-2271b1.svg?style=flat-square)
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
 
 ![Site Core Plugin Cover Image](https://github.com/ControlledChaos/sitecore/raw/main/cover.jpg)
@@ -26,10 +26,6 @@ Not every feature included with this plugin will be needed for my projects or yo
 
 If you would like to request development of a custom version of this plugin for your site, or to use as your own starter plugin, then contact Greg Sweet at [greg@ccdzine.com](mailto:greg@ccdzine.com).
 
-## Development
-
-This is a complete overhaul of my years-old starter plugin. Many of the features in the old plugin are being transferred over and rewritten as necessary and proper. These features and new ones will be listed here as they are implemented.
-
 ## Cover Image
 
 Anyone who wants to submit a replacement for the plugin's cover image into which I put three minutes of effort is welcome to do so.
@@ -48,7 +44,7 @@ Included is the basic version of the Advanced Custom Fields system for adding ed
 
 ### Advanced Custom Fields: Extended
 
-Included is the basic version of the Advanced Custom Fields: Extended enhancement suite to improves Advanced Custom Fields administration.
+Included is the basic version of the Advanced Custom Fields: Extended enhancement suite to improve Advanced Custom Fields administration.
 
 [https://www.acf-extended.com](https://www.acf-extended.com)
 
