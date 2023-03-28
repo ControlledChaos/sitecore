@@ -49,6 +49,19 @@ class Settings_Fields_Developer extends Settings_Fields {
 				]
 			],
 			[
+				'id'       => 'disable_site_health',
+				'title'    => __( 'Disable Site Health', 'sitecore' ),
+				'callback' => [ $this, 'disable_site_health_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Disable WordPress\' site health feature.', 'sitecore' ),
+					'label_for'   => 'disable_site_health',
+					'class'       => 'admin-field'
+				]
+			],
+			[
 				'id'       => 'disable_floc',
 				'title'    => __( 'Disable FloC', 'sitecore' ),
 				'callback' => [ $this, 'disable_floc_callback' ],
@@ -91,6 +104,17 @@ class Settings_Fields_Developer extends Settings_Fields {
 	}
 
 	/**
+	 * Disable site health
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function disable_site_health_order() {
+		return 2;
+	}
+
+	/**
 	 * Disable FloC field order
 	 *
 	 * @since  1.0.0
@@ -98,7 +122,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_floc_order() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -135,6 +159,24 @@ class Settings_Fields_Developer extends Settings_Fields {
 			$option = false;
 		}
 		return apply_filters( 'scp_customizer_reset', $option );
+	}
+
+	/**
+	 * Sanitize Disable Site Health field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function disable_site_health_sanitize() {
+
+		$option = get_option( 'disable_site_health', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_disable_site_health', $option );
 	}
 
 	/**
@@ -212,6 +254,37 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds a button in the Customizer panel header.', 'sitecore' )
+		);
+
+		echo $html;
+	}
+
+	/**
+	 * Disable Site Health field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function disable_site_health_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->disable_site_health_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->disable_site_health_sanitize();
+
+		$html = '<p>';
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</p>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Removes the dashboard widget and the menu entry, disables site health notifications.', 'sitecore' )
 		);
 
 		echo $html;

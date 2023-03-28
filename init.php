@@ -144,9 +144,7 @@ function init() {
 	}
 
 	// Customizer/front end.
-	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && SCP_ALLOW_CUSTOMIZER ) ) {
-		Front_Page_Post_Type\setup();
-	}
+	Front_Page_Post_Type\setup();
 
 	// Front end.
 	if ( ! is_admin() ) {
@@ -155,12 +153,19 @@ function init() {
 	}
 
 	// Disable Site Health notifications.
-	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
+	if ( get_option( 'disable_site_health', false ) ) {
+		add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
+	}
+	if ( defined( 'SCP_DISABLE_SITE_HEALTH' ) && SCP_DISABLE_SITE_HEALTH ) {
 		add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
 	}
 
 	// Disable block widgets.
 	if ( get_option( 'disable_block_widgets', true ) ) {
+		add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+		add_filter( 'use_widgets_block_editor', '__return_false' );
+	}
+	if ( defined( 'SCP_DISABLE_BLOCK_WIDGETS' ) && SCP_DISABLE_BLOCK_WIDGETS ) {
 		add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
 		add_filter( 'use_widgets_block_editor', '__return_false' );
 	}

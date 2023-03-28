@@ -135,7 +135,10 @@ function remove_widgets() {
 	// remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );
 
 	// Site Health.
-	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
+	if ( get_option( 'disable_site_health', false ) ) {
+		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
+	}
+	if ( defined( 'SCP_DISABLE_SITE_HEALTH' ) && SCP_DISABLE_SITE_HEALTH ) {
 		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
 	}
 

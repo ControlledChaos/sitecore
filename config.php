@@ -231,8 +231,8 @@ if ( ! defined( 'SCP_PLUGIN_URL' ) ) {
  * @since 1.0.0
  * @var   boolean Whether to allow the Site Health feature.
  */
-if ( ! defined( 'SCP_ALLOW_SITE_HEALTH' ) ) {
-	define( 'SCP_ALLOW_SITE_HEALTH', SCP_CONFIG['site_health'] );
+if ( ! defined( 'SCP_DISABLE_SITE_HEALTH' ) ) {
+	define( 'SCP_DISABLE_SITE_HEALTH', SCP_CONFIG['site_health'] );
 }
 
 /**

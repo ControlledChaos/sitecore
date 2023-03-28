@@ -67,7 +67,10 @@ function setup() {
 	add_action( 'admin_head', $ns( 'admin_only_updates' ), 1 );
 
 	// Remove Site Health from menu.
-	if ( defined( 'SCP_ALLOW_SITE_HEALTH' ) && ! SCP_ALLOW_SITE_HEALTH ) {
+	if ( get_option( 'disable_site_health', false ) ) {
+		add_action( 'admin_menu', $ns( 'menu_remove_site_health' ) );
+	}
+	if ( defined( 'SCP_DISABLE_SITE_HEALTH' ) && SCP_DISABLE_SITE_HEALTH ) {
 		add_action( 'admin_menu', $ns( 'menu_remove_site_health' ) );
 	}
 
