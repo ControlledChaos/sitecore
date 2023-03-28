@@ -70,14 +70,18 @@ These classes include:
 
 ### User Options, Roles, & Capabilities
 
-Much is complete, documentation coming.
+* Choose multiple roles per user
+* Custom user avatar uploads
+* Remove admin color scheme picker
+* Developer role adds a 'develop' capability
+* Programmatically add a developer back door user
 
 ## Configuration Constants
 
-Several native features of Word/ClassicPress can be enabled or disabled by this plugin using constants in the system config file.
+Several native features can be enabled or disabled using constants in the system config file to override options.
 
 * Disable block widgets in WordPress 5.8+
-* Enable Site Health page & widget in WordPress 5.2+ (this plugin disables them by default)
+* Disable Site Health page & widget in WordPress 5.2+
 * Disable Site Health notifications in WordPress 5.2+
 * Disable the user admin color picker
 * Enable the old links manager
