@@ -35,7 +35,6 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 					'description' => sprintf(
 						__( 'Check to enable the custom header on admin screens.', 'sitecore' )
 					),
-					'label_for'   => 'enable_custom_admin_header',
 					'class'       => 'admin-field'
 				]
 			]
@@ -90,6 +89,10 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 		$option   = $this->enable_custom_admin_header_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -100,7 +103,7 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds the site title, the tagline/description, logo, and registers a navigation menu.', 'sitecore' )

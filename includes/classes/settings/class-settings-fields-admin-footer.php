@@ -36,7 +36,6 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 						__( 'Check to replace the default %s footer on admin screens.', 'sitecore' ),
 						platform_name()
 					),
-					'label_for'   => 'enable_custom_admin_footer',
 					'class'       => 'admin-field'
 				]
 			]
@@ -91,6 +90,10 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 		$option   = $this->enable_custom_admin_footer_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -101,7 +104,7 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Replaces both left and right text.', 'sitecore' )

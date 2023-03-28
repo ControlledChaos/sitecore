@@ -40,7 +40,6 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 						__( 'Check to remove the %s logo link.', 'sitecore' ),
 						platform_name()
 					),
-					'label_for'   => 'toolbar_remove_platform_link',
 					'class'       => 'admin-field'
 				]
 			]
@@ -95,6 +94,10 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 		$option   = $this->toolbar_remove_platform_link_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -105,7 +108,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}

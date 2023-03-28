@@ -31,7 +31,6 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to change blog posts to news posts.', 'sitecore' ),
-					'label_for'   => 'posts_to_news',
 					'class'       => 'content-field'
 				]
 			],
@@ -44,7 +43,6 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to entirely remove the blogging feature and associated content or widgets.', 'sitecore' ),
-					'label_for'   => 'remove_blog',
 					'class'       => 'content-field'
 				]
 			],
@@ -57,7 +55,6 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to disable block widgets in favor of classic widgets.', 'sitecore' ),
-					'label_for'   => 'disable_block_widgets',
 					'class'       => 'content-field'
 				]
 			],
@@ -70,7 +67,6 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable the link manager and links widget.', 'sitecore' ),
-					'label_for'   => 'enable_link_manager',
 					'class'       => 'content-field'
 				]
 			]
@@ -212,6 +208,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$option   = $this->posts_to_news_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -222,7 +222,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
@@ -242,6 +242,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$option   = $this->remove_blog_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -252,7 +256,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
@@ -272,6 +276,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$option   = $this->disable_block_widgets_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -282,7 +290,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
@@ -302,6 +310,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$option   = $this->enable_link_manager_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -312,7 +324,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s <a href="%s" target="_blank" rel="nofollow noindex">%s</a></p>',
 			__( 'More information at', 'sitecore' ),

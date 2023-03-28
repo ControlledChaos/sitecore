@@ -31,7 +31,6 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Programmatically add a developer back door user.', 'sitecore' ),
-					'label_for'   => 'dev_access',
 					'class'       => 'admin-field'
 				]
 			]
@@ -86,6 +85,10 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 		$option   = $this->dev_access_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -96,7 +99,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'This account has the "Developer" user role. Default username, email, and password set in includes/users/users.php.', 'sitecore' )

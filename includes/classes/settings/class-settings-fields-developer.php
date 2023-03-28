@@ -31,7 +31,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Easily switch backend and frontend screens between left-to-right and right-to-left orientations.', 'sitecore' ),
-					'label_for'   => 'direction_switch',
 					'class'       => 'admin-field'
 				]
 			],
@@ -44,7 +43,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Enable the ability to reset customizations to the active theme.', 'sitecore' ),
-					'label_for'   => 'customizer_reset',
 					'class'       => 'admin-field'
 				]
 			],
@@ -57,7 +55,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Disable WordPress\' site health feature.', 'sitecore' ),
-					'label_for'   => 'disable_site_health',
 					'class'       => 'admin-field'
 				]
 			],
@@ -70,7 +67,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Disable Google\'s next-generation tracking technology.', 'sitecore' ),
-					'label_for'   => 'disable_floc',
 					'class'       => 'admin-field'
 				]
 			]
@@ -212,6 +208,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$option   = $this->direction_switch_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -222,7 +222,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds a button in the user toolbar.', 'sitecore' )
@@ -246,6 +246,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$option   = $this->customizer_reset_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -256,7 +260,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds a button in the Customizer panel header.', 'sitecore' )
@@ -280,6 +284,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$option   = $this->disable_site_health_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -290,7 +298,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Removes the dashboard widget and the menu entry, disables site health notifications.', 'sitecore' )
@@ -314,6 +322,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$option   = $this->disable_floc_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -324,7 +336,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds an http header to disable FLoC.', 'sitecore' )

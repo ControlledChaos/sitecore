@@ -33,7 +33,6 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable multiple user roles on profile edit screens.', 'sitecore' ),
-					'label_for'   => 'enable_multi_user_roles',
 					'class'       => 'admin-field'
 				]
 			],
@@ -46,7 +45,6 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to enable user avatar uploads and extended, local options for the default avatar.', 'sitecore' ),
-					'label_for'   => 'enable_user_avatars',
 					'class'       => 'admin-field'
 				]
 			],
@@ -59,7 +57,6 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to disable the user admin color scheme picker.', 'sitecore' ),
-					'label_for'   => 'disable_admin_color_schemes',
 					'class'       => 'admin-field'
 				]
 			]
@@ -172,6 +169,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 		$option   = $this->enable_multi_user_roles_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -182,7 +183,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
@@ -202,6 +203,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 		$option   = $this->enable_user_avatars_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -212,7 +217,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Avatar uploads are added to user profile screens and the default avatars are available on the Discussion Settings screen.', 'sitecore' )
@@ -243,6 +248,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 
 		} else {
 			$html = sprintf(
+				'<fieldset><legend class="screen-reader-text">%s</legend>',
+				$fields[$order]['title']
+			);
+			$html .= sprintf(
 				'<label for="%s">',
 				$field_id
 			);
@@ -253,7 +262,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				checked( 1, $option, false ),
 				$fields[$order]['args']['description']
 			);
-			$html .= '</label>';
+			$html .= '</label></fieldset>';
 			$html .= sprintf(
 				'<p class="description">%s</p>',
 				__( 'This is handy for custom admin themes.', 'sitecore' )

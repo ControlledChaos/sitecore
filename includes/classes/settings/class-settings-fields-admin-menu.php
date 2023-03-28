@@ -132,7 +132,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			$field_id
 		);
 		$html .= sprintf(
-			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> <span>%s</span>',
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),
@@ -162,7 +162,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			$field_id
 		);
 		$html .= sprintf(
-			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> <span>%s</span>',
 			$field_id,
 			$field_id,
 			checked( 1, $option, false ),

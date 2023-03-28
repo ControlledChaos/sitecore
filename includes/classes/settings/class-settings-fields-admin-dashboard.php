@@ -32,7 +32,6 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Check to replace the default dashboard with a custom dashboard for this website.', 'sitecore' ),
-					'label_for'   => 'enable_custom_dashboard',
 					'class'       => 'admin-field'
 				]
 			]
@@ -87,6 +86,10 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 		$option   = $this->enable_custom_dashboard_sanitize();
 
 		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
 			'<label for="%s">',
 			$field_id
 		);
@@ -97,7 +100,7 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</label>';
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
