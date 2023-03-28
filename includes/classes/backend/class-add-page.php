@@ -504,7 +504,6 @@ class Add_Page {
 		}
 
 		?>
-		<?php echo $this->form_open(); ?>
 		<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="<?php echo $hashtags; ?>" >
 
 			<?php if ( count( $tabs ) > 1 ) : ?>
@@ -591,7 +590,7 @@ class Add_Page {
 				endif;
 			endforeach; ?>
 		</div>
-		<?php echo $this->form_close();
+		<?php
 	}
 
 	/**
@@ -686,7 +685,11 @@ class Add_Page {
 		// Print a paragraph with native description class using the description variable.
 		echo  $this->description();
 
+		echo $this->form_open();
+
 		$this->content();
+
+		echo $this->form_close();
 
 		// End page wrap.
 		echo '</div>';
