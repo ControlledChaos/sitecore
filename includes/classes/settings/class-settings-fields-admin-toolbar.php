@@ -94,7 +94,10 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->toolbar_remove_platform_link_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -102,7 +105,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 
 		echo $html;
 	}

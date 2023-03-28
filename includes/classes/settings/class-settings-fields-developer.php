@@ -211,7 +211,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->direction_switch_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -219,7 +222,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds a button in the user toolbar.', 'sitecore' )
@@ -242,7 +245,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->customizer_reset_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -250,7 +256,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds a button in the Customizer panel header.', 'sitecore' )
@@ -273,7 +279,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_site_health_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -281,7 +290,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Removes the dashboard widget and the menu entry, disables site health notifications.', 'sitecore' )
@@ -304,7 +313,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_floc_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -312,7 +324,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds an http header to disable FLoC.', 'sitecore' )

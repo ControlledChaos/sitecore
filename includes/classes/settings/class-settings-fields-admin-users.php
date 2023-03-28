@@ -171,7 +171,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_multi_user_roles_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -179,7 +182,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
@@ -198,7 +201,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_user_avatars_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -206,7 +212,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Avatar uploads are added to user profile screens and the default avatars are available on the Discussion Settings screen.', 'sitecore' )
@@ -236,7 +242,10 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 			);
 
 		} else {
-			$html = '<p>';
+			$html = sprintf(
+				'<label for="%s">',
+				$field_id
+			);
 			$html .= sprintf(
 				'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 				$field_id,
@@ -244,7 +253,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 				checked( 1, $option, false ),
 				$fields[$order]['args']['description']
 			);
-			$html .= '</p>';
+			$html .= '</label>';
 			$html .= sprintf(
 				'<p class="description">%s</p>',
 				__( 'This is handy for custom admin themes.', 'sitecore' )

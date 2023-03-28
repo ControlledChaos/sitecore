@@ -89,7 +89,10 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_custom_admin_header_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -97,7 +100,7 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'Adds the site title, the tagline/description, logo, and registers a navigation menu.', 'sitecore' )

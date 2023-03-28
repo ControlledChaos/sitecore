@@ -85,7 +85,10 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->dev_access_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -93,7 +96,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
 			__( 'This account has the "Developer" user role. Default username, email, and password set in includes/users/users.php.', 'sitecore' )

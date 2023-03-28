@@ -211,7 +211,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->posts_to_news_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -219,7 +222,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
@@ -238,7 +241,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->remove_blog_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -246,7 +252,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
@@ -265,7 +271,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_block_widgets_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -273,7 +282,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
@@ -292,7 +301,10 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_link_manager_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -300,7 +312,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '<p>';
+		$html .= '</label>';
 		$html .= sprintf(
 			'<p class="description">%s <a href="%s" target="_blank" rel="nofollow noindex">%s</a></p>',
 			__( 'More information at', 'sitecore' ),

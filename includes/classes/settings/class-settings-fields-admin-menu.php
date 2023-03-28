@@ -127,7 +127,10 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_menus_top_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -135,7 +138,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
@@ -154,7 +157,10 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_widgets_top_sanitize();
 
-		$html = '<p>';
+		$html = sprintf(
+			'<label for="%s">',
+			$field_id
+		);
 		$html .= sprintf(
 			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
 			$field_id,
@@ -162,7 +168,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 			checked( 1, $option, false ),
 			$fields[$order]['args']['description']
 		);
-		$html .= '</p>';
+		$html .= '</label>';
 
 		echo $html;
 	}
