@@ -17,28 +17,28 @@ function content_settings_intro( $content = '' ) {
 
 		$content = sprintf(
 			'<p>%s</p>',
-			__( 'ACFE Dev intro.', 'sitecore' )
+			__( 'You are seeing this content because you have the user role of Developer, because Advanced Custom Fields and Advanced Custom Fields: Extended are both active.', 'sitecore' )
 		);
 
 	} elseif ( current_user_can( 'develop' ) && class_exists( 'acf' ) ) {
 
 		$content = sprintf(
 			'<p>%s</p>',
-			__( 'ACF Dev intro.', 'sitecore' )
+			__( 'You are seeing this content because you have the user role of Developer, and because Advanced Custom Fields is active.', 'sitecore' )
 		);
 
 	} elseif ( current_user_can( 'manage_options' ) ) {
 
 		$content = sprintf(
 			'<p>%s</p>',
-			__( 'Admin intro.', 'sitecore' )
+			__( 'You are seeing this content because you have the user role of Administrator.', 'sitecore' )
 		);
 
 	} else {
 
 		$content = sprintf(
 			'<p>%s</p>',
-			__( 'Default intro.', 'sitecore' )
+			__( 'This is the default content for this intro, available to the lowest user capacity of this page.', 'sitecore' )
 		);
 	}
 
@@ -49,6 +49,7 @@ add_action( 'scp_content_settings_intro', __NAMESPACE__ . '\content_settings_int
 ?>
 <div>
 	<?php do_action( 'scp_before_content_settings_intro' ); ?>
+	<p class="description"><?php _e( 'Change this intro as needed for your project.', 'sitecore' ); ?></p>
 	<?php do_action( 'scp_content_settings_intro' ); ?>
 	<?php do_action( 'scp_after_content_settings_intro' ); ?>
 </div>
