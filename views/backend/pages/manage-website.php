@@ -22,13 +22,8 @@ $page = new Admin\Manage_Website_Page;
 		__( $page->heading(), 'sitecore' )
 	);
 
-	printf(
-		'<p class="description">%s</p>',
-		__( $page->description(), 'sitecore' )
-	);
+	echo $page->description();
 	?>
-
-	<hr />
 
 	<!-- Further development of this page is forthcoming. -->
 
