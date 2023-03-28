@@ -75,6 +75,14 @@ class Developer_Settings_Page extends Add_Page {
 			'content'    => '',
 			'callback'   => [ $this, 'user_tools' ]
 		] );
+
+		$this->add_content_tab( [
+			'id'         => 'system-info',
+			'tab'        => __( 'System', 'sitecore' ),
+			'heading'    => __( 'System Information', 'sitecore' ),
+			'content'    => '',
+			'callback'   => [ $this, 'system_info' ]
+		] );
 	}
 
 	/**
@@ -97,5 +105,16 @@ class Developer_Settings_Page extends Add_Page {
 	 */
 	public function user_tools() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-dev-user-tools.php';
+	}
+
+	/**
+	 * System Information tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function system_info() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-dev-system-info.php';
 	}
 }

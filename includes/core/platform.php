@@ -58,3 +58,19 @@ function platform_name() {
 
 	return apply_filters( 'scp_platform_name', $name );
 }
+
+/**
+ * Dashboard type
+ *
+ * @since  1.0.0
+ * @access public
+ * @return string Returns the text of the dashboard type.
+ */
+function dashboard_type() {
+
+	if ( is_network_admin() ) {
+		return 'network';
+	} else {
+		return 'website';
+	}
+}
