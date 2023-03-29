@@ -10,6 +10,8 @@
 
 namespace SiteCore\Classes\Admin;
 
+use SiteCore\Compatibility as Compat;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -72,37 +74,42 @@ class Add_Page {
 		];
 
 		$options = [
-			'settings'      => false,
-			'acf_page'      => false,
-			'capability'    => 'manage_options',
-			'menu_slug'     => '',
-			'parent_slug'   => '',
-			'icon_url'      => 'dashicons-admin-generic',
-			'position'      => 30,
-			'tabs_hashtags' => false,
-			'add_help'      => false
+			'settings'       => false,
+			'acf'            => [
+				'acf_page'   => false,
+				'capability' => 'manage_options'
+			],
+			'capability'     => 'manage_options',
+			'menu_slug'      => '',
+			'parent_slug'    => '',
+			'icon_url'       => 'dashicons-admin-generic',
+			'position'       => 30,
+			'tabs_hashtags'  => false,
+			'add_help'       => false,
+			'screen_options' => false
 		];
 
 		$this->page_labels  = wp_parse_args( $page_labels, $labels );
 		$this->page_options = wp_parse_args( $page_options, $options );
 
-		// Add an about page for the plugin.
-		add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
+		/**
+		 * Add an ACF options page and load field groups
+		 * if Advanced Custom Fields PRO is active,
+		 */
+		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
+			add_action( 'acf/init', [ $this, 'add_acf_page' ] );
+			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
-		// Register ACF options page.
-		add_action( 'acf/init', [ $this, 'add_acf_page' ] );
-
-		// Add screen options.
-		add_action( 'admin_head', [ $this, 'screen_options' ] );
+		// Otherwise add a regular admin page.
+		} else {
+			add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
+		}
 
 		// Enqueue admin scripts.
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
 		// Print admin styles to head.
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
-
-		// ACF field groups.
-		add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 	}
 
 	/**
@@ -127,13 +134,9 @@ class Add_Page {
 	 */
 	public function add_page() {
 
-		if ( ! isset( $this->page_options['menu_slug'] ) || $this->page_options['acf_page'] ) {
-			return null;
-		}
-
 		if ( $this->is_subpage() ) {
 
-			$this->help = add_submenu_page(
+			$this->page_options['menu_slug'] = add_submenu_page(
 				strtolower( $this->page_options['parent_slug'] ),
 				$this->page_title(),
 				$this->menu_title(),
@@ -145,7 +148,7 @@ class Add_Page {
 
 		} else {
 
-			$this->help = add_menu_page(
+			$this->page_options['menu_slug'] = add_menu_page(
 				$this->page_title(),
 				$this->menu_title(),
 				strtolower( $this->page_options['capability'] ),
@@ -158,7 +161,15 @@ class Add_Page {
 
 		// Add content to the contextual help section.
 		if ( true == $this->page_options['add_help'] ) {
-			add_action( 'load-' . $this->help, [ $this, 'help' ] );
+			add_action( 'load-' . $this->page_options['menu_slug'], [ $this, 'help' ] );
+		}
+
+		if ( true == $this->page_options['screen_options'] ) {
+			add_action( 'load-' . $this->page_options['menu_slug'], [ $this, 'screen_options' ] );
+		} else {
+			add_action( 'load-' . $this->page_options['menu_slug'], function() {
+				add_filter( 'screen_options_show_screen', '__return_false' );
+			} );
 		}
 	}
 
@@ -171,34 +182,42 @@ class Add_Page {
 	 */
 	public function add_acf_page() {
 
-		if (
-			! isset( $this->page_options['menu_slug'] ) ||
-			! $this->page_options['acf_page'] ||
-			$this->page_options['settings']
-		) {
-			return null;
-		}
-
 		// Stop here if ACF Pro is not active.
 		if ( ! function_exists( 'acf_add_options_page' ) ) {
 			return;
 		}
 
 		$options = [
-			'page_title'  => $this->page_title(),
-			'menu_title'  => $this->menu_title(),
-			'menu_slug'   => strtolower( $this->page_options['menu_slug'] ),
-			'parent_slug' => strtolower( $this->page_options['parent_slug'] ),
-			'icon_url'    => strtolower( $this->page_options['icon_url'] ),
-			'position'    => (integer)$this->page_options['position'],
-			'capability'  => strtolower( $this->page_options['capability'] ),
-			'redirect'    => false
+			'page_title'      => $this->page_title(),
+			'menu_title'      => $this->menu_title(),
+			'menu_slug'       => strtolower( $this->page_options['menu_slug'] ),
+			'capability'      => strtolower( $this->page_options['capability'] ),
+			'parent_slug'     => strtolower( $this->page_options['parent_slug'] ),
+			'position'        => (integer)$this->page_options['position'],
+			'icon_url'        => strtolower( $this->page_options['icon_url'] ),
+			'redirect'        => true,
+			'post_id'         => 'options',
+			'autoload'        => false,
+			'update_button'   => $this->acf_update_button(),
+			'updated_message' => $this->acf_update_message()
 		];
 
 		if ( $this->is_subpage() ) {
 			acf_add_options_sub_page( $options );
 		} else {
 			acf_add_options_page( $options );
+		}
+
+		if ( isset( $this->page_options['acf']['capability'] ) ) {
+			$acf_capability = $this->page_options['acf']['capability'];
+		} else {
+			$acf_capability = $this->page_options['capability'];
+		}
+
+		if ( ! current_user_can( $acf_capability ) ) {
+			add_action( 'admin_head', function() {
+				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
+			} );
 		}
 	}
 
@@ -256,6 +275,28 @@ class Add_Page {
 	}
 
 	/**
+	 * ACF update button
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the text of the button.
+	 */
+	protected function acf_update_button() {
+		return apply_filters( 'scp_acf_update_button', __( 'Update Page', 'sitecore' ) );
+	}
+
+	/**
+	 * ACF update message
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the text of the message.
+	 */
+	protected function acf_update_message() {
+		return apply_filters( 'scp_acf_update_message', __( 'Page Updated', 'sitecore' ) );
+	}
+
+	/**
 	 * Form action
 	 *
 	 * @since  1.0.0
@@ -266,7 +307,7 @@ class Add_Page {
 
 		if (
 			! $this->page_options['settings'] ||
-			$this->page_options['acf_page']
+			$this->page_options['acf']['acf_page']
 		) {
 			return null;
 		}
@@ -284,7 +325,7 @@ class Add_Page {
 
 		if (
 			! $this->page_options['settings'] ||
-			$this->page_options['acf_page']
+			$this->page_options['acf']['acf_page']
 		) {
 			return null;
 		}
@@ -307,7 +348,7 @@ class Add_Page {
 
 		if (
 			! $this->page_options['settings'] ||
-			$this->page_options['acf_page']
+			$this->page_options['acf']['acf_page']
 		) {
 			return null;
 		}
@@ -761,15 +802,11 @@ class Add_Page {
 	/**
 	 * Screen options
 	 *
-	 * Add to the screen option tab at the top of the page
-	 * for showing and hiding page elements.
-	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
 	public function screen_options() {
-
 		// add_screen_option();
 	}
 
