@@ -59,7 +59,10 @@ function setup() {
 	add_action( 'init', $ns( 'remove_editor_styles' ) );
 
 	// Ensure developer access.
-	if ( get_option( 'dev_access', false ) ) {
+	if (
+		( defined( 'SCP_DEV_ACCESS' ) && SCP_DEV_ACCESS ) ||
+		get_option( 'dev_access', false )
+	) {
 		add_action( 'init', $ns( 'developer_access' ) );
 		add_action( 'init', $ns( 'developer_access_role' ) );
 		add_action( 'admin_print_styles', $ns( 'hide_developer_access_css' ) );
