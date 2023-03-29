@@ -650,7 +650,7 @@ class Add_Page {
 	 */
 	protected function content() {
 		$content = do_action( 'render_screen_tabs_' . $this->page_options['menu_slug'] );
-		return apply_filters( 'admin_page_content_' . $this->page_options['menu_slug'], $content );
+		return apply_filters( 'scp_admin_page_content_' . $this->page_options['menu_slug'], $content );
 	}
 
 	/**
