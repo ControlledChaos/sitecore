@@ -35,13 +35,7 @@ function setup() {
 	// Get the filename of the current page.
 	global $pagenow;
 
-	if ( Compat\active_acf_pro() ) {
-
-		// Advanced Custom Fields pages.
-		new Classes\Admin\ACF_Manage_Site;
-	} else {
-		new Classes\Admin\Manage_Website_Page;
-	}
+	new Classes\Admin\Manage_Website_Page;
 
 	// Post edit screens.
 	Post_Edit\setup();

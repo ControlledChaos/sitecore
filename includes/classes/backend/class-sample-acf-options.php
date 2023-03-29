@@ -37,7 +37,9 @@ class Sample_ACF_Options extends Add_Page {
 		];
 
 		$options = [
-			'acf_page'  => true,
+			'acf'           => [
+				'acf_page' => true
+			],
 			'menu_slug' => 'sample-acf-options-page',
 			'icon_url'  => 'dashicons-admin-generic',
 			'position'  => 76

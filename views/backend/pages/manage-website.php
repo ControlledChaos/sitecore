@@ -19,12 +19,11 @@ $page = new Admin\Manage_Website_Page;
 	<?php
 	printf(
 		'<h1>%s</h1>',
-		__( $page->heading(), 'sitecore' )
+		$page->heading()
 	);
 
 	echo $page->description();
+	echo $page->page_content();
+
 	?>
-
-	<!-- Further development of this page is forthcoming. -->
-
 </div>

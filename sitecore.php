@@ -149,7 +149,7 @@ define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
  */
 function scp_plugin_page_link( $links ) {
 
-	$url  = apply_filters( 'scp_plugin_page_page_url', 'admin.php?page=sample-page' );
+	$url  = apply_filters( 'scp_plugin_page_page_url', 'admin.php?page=manage-website' );
 	$html = sprintf(
 			'<a href="%s" class="scp-plugin-page-link">%s</a>',
 			esc_url( admin_url( $url ) ),
