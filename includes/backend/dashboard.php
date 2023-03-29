@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Execute functions
  *
  * @since  1.0.0
+ * @global $pagenow Access the current admin page.
  * @return void
  */
 function setup() {
