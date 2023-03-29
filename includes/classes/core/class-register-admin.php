@@ -215,10 +215,6 @@ class Register_Admin extends Register_Type {
 				$position = 85;
 			}
 
-			$content = function() use ( $post ) {
-				echo apply_filters( 'the_content', get_the_content( null, true, $post->ID ) );
-			};
-
 			if ( $slug ) {
 
 				$labels = [
@@ -236,8 +232,95 @@ class Register_Admin extends Register_Type {
 					'add_help'      => false
 				];
 
-				$add_page = new Backend_Class\Add_Page( $labels, $options );
-				add_filter( 'scp_admin_page_content_' . $slug, $content );
+				new Backend_Class\Add_Page( $labels, $options );
+
+				$content = function() use ( $post ) {
+
+					$id = $post->ID;
+					$get_tabs = get_field( 'admin_post_content_tabs', $id );
+
+					if ( ! is_array( $get_tabs ) ) {
+						printf(
+							'<h2>%s</h2>',
+							__( 'No content available.', 'sitecore' )
+						);
+						return;
+					}
+
+					if ( count( $get_tabs ) > 1 ) {
+						$tabbed         = ' data-tabbed="tabbed"';
+						$wrap_class     = 'registered-content-wrap admin-tabs';
+						$content_class  = 'registered-content tab-content';
+					} else {
+						$tabbed         = '';
+						$wrap_class     = 'registered-content-wrap';
+						$content_class  = 'registered-content';
+					}
+
+					?>
+					<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="true" >
+
+					<?php
+
+					if ( count( $get_tabs ) > 1 ) : ?>
+
+					<ul class="admin-tabs-list hide-if-no-js">
+					<?php
+					foreach ( $get_tabs as $tab ) :
+
+						$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['admin_post_content_tab_label'] ) );
+
+						if ( current_user_can( $tab['admin_post_content_tab_user_cap'] ) ) :
+
+							$href = "#$tab_id";
+
+							if ( ! empty( $tab['icon'] ) ) {
+								$icon = sprintf(
+									'<span class="content-tab-icon %1s"></span> ',
+									$tab['icon']
+								);
+							} else {
+								$icon = null;
+							}
+							?>
+								<li class="content-tab">
+									<a href="<?php echo esc_url( $href ); ?>" aria-controls="<?php echo esc_attr( $tab_id ); ?>">
+										<?php echo $icon . $tab['admin_post_content_tab_label']; ?>
+									</a>
+							<?php
+						endif;
+					endforeach;
+
+					?>
+					</ul>
+					<?php endif; ?>
+
+					<?php
+					foreach ( $get_tabs as $tab ) :
+
+						$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['admin_post_content_tab_label'] ) );
+
+						if ( current_user_can( $tab['admin_post_content_tab_user_cap'] ) ) :
+						?>
+						<div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo $content_class; ?>">
+							<?php
+
+							printf(
+								'<h2>%s</h2>',
+								$tab['admin_post_content_tab_heading']
+							);
+							echo $tab['admin_post_content_tab_content'];
+
+							?>
+						</div>
+						<?php
+						endif;
+					endforeach; ?>
+				</div>
+
+				<?php
+				};
+				add_action( 'render_screen_tabs_' . $slug, $content );
 			}
 		}
 		wp_reset_postdata();
