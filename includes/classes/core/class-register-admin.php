@@ -10,6 +10,8 @@
 
 namespace SiteCore\Classes\Core;
 
+use SiteCore\Classes\Admin as Backend_Class;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -61,7 +63,7 @@ class Register_Admin extends Register_Type {
 		add_filter( 'post_row_actions', [ $this, 'row_actions' ], 10, 1 );
 
 		// Add a page per post.
-		add_action( 'admin_menu', [ $this, 'add_pages' ] );
+		add_action( 'plugins_loaded', [ $this, 'add_pages' ], 11 );
 
 		// Enqueue admin scripts & styles.
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
@@ -214,37 +216,28 @@ class Register_Admin extends Register_Type {
 			}
 
 			$content = function() use ( $post ) {
-				printf(
-					'<div class="wrap"><h1>%s</h1><p class="description">%s</p>%s</div>',
-					$post->post_title,
-					get_field( 'admin_post_description', $post->ID ),
-					apply_filters( 'the_content', get_the_content( null, true, $post->ID ) )
-				);
+				echo apply_filters( 'the_content', get_the_content( null, true, $post->ID ) );
 			};
 
-			// Submenu page if the parent slug field is filled.
-			if ( $slug && $parent ) {
-				add_submenu_page(
-					$parent,
-					$post->post_title,
-					$menu_title,
-					$capability,
-					strtolower( $slug ),
-					$content,
-					$position
-				);
+			if ( $slug ) {
 
-			// Top-level page if no parent slug.
-			} elseif ( $slug ) {
-				add_menu_page(
-					$post->post_title,
-					$menu_title,
-					$capability,
-					strtolower( $slug ),
-					$content,
-					$icon,
-					$position
-				);
+				$labels = [
+					'page_title'  => $post->post_title,
+					'menu_title'  => $menu_title,
+					'description' => $desc
+				];
+
+				$options = [
+					'capability'    => $capability,
+					'menu_slug'     => $slug,
+					'parent_slug'   => $parent,
+					'icon_url'      => $icon,
+					'position'      => $position,
+					'add_help'      => false
+				];
+
+				$add_page = new Backend_Class\Add_Page( $labels, $options );
+				add_filter( 'scp_admin_page_content_' . $slug, $content );
 			}
 		}
 		wp_reset_postdata();
