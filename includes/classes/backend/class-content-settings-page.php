@@ -9,7 +9,6 @@
  */
 
 namespace SiteCore\Classes\Admin;
-use SiteCore\Classes\Settings as Settings;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
