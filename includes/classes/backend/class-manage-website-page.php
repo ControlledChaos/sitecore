@@ -27,12 +27,12 @@ class Manage_Website_Page extends Add_Page {
 	public function __construct() {
 
 		if ( current_user_can( 'edit_others_posts' ) ) {
-			$page_title = __( 'Help Managing This Website', 'sitecore' );
-			$menu_title = __( 'Manage Website', 'sitecore' );
+			$page_title  = __( 'Help Managing This Website', 'sitecore' );
+			$menu_title  = __( 'Manage Website', 'sitecore' );
 			$description = __( 'This page provides you with help managing this website.' );
 		} else {
-			$page_title = __( 'Help Using This Website', 'sitecore' );
-			$menu_title = __( 'Website Help', 'sitecore' );
+			$page_title  = __( 'Help Using This Website', 'sitecore' );
+			$menu_title  = __( 'Website Help', 'sitecore' );
 			$description = __( 'This page provides you with help using this website.' );
 		}
 
@@ -43,7 +43,7 @@ class Manage_Website_Page extends Add_Page {
 		];
 
 		$options = [
-			'acf'           => [
+			'acf' => [
 				'acf_page'   => true,
 				'capability' => 'hide_publish_metabox', // Dummy capability.
 			],
@@ -51,8 +51,7 @@ class Manage_Website_Page extends Add_Page {
 			'menu_slug'   => 'manage-website',
 			'parent_slug' => 'index.php',
 			'icon_url'    => 'dashicons-welcome-learn-more',
-			'position'    => 1,
-			'add_help'    => false
+			'position'    => 1
 		];
 
 		parent :: __construct(
