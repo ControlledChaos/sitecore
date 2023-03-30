@@ -12,6 +12,7 @@ namespace SiteCore;
 
 // Alias namespaces.
 use
+SiteCore\Classes\Autoload as Autoload,
 SiteCore\Classes\Core     as Core_Class,
 SiteCore\Classes\Settings as Settings_Class,
 SiteCore\Classes\Tools    as Tools_Class,
@@ -53,13 +54,8 @@ function init() {
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 
-	/**
-	 * Class autoloader
-	 *
-	 * The autoloader registers plugin classes for later use,
-	 * such as running new instances below.
-	 */
-	require_once SCP_PATH . 'includes/autoload.php';
+	// Autoload classes.
+	require_once SCP_PATH . 'includes/classes/autoload.php';
 	Autoload\classes();
 
 	// Load required files.

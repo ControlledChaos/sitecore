@@ -2,7 +2,7 @@
 /**
  * Register plugin classes
  *
- * The autoloader registers plugin classes for later use.
+ * The autoloaders register plugin classes for later use.
  *
  * @package    Site_Core
  * @subpackage Includes
@@ -10,7 +10,7 @@
  * @since      1.0.0
  */
 
-namespace SiteCore\Autoload;
+namespace SiteCore\Classes\Autoload;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
