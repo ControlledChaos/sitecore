@@ -59,6 +59,17 @@ class Add_Page {
 	private $content_tab_attributes = [];
 
 	/**
+	 * Hook priority
+	 *
+	 * When to hook to the admin menu.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    integer The numeral to set hook priority.
+	 */
+	protected $priority = 10;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -102,7 +113,7 @@ class Add_Page {
 
 		// Otherwise add a regular admin page.
 		} else {
-			add_action( 'admin_menu', [ $this, 'add_page' ] );
+			add_action( 'admin_menu', [ $this, 'add_page' ], $this->priority );
 		}
 
 		// Enqueue admin scripts.

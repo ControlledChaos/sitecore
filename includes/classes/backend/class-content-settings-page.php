@@ -18,6 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Content_Settings_Page extends Add_Page {
 
 	/**
+	 * Hook priority
+	 *
+	 * When to hook to the admin menu.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    integer The numeral to set hook priority.
+	 */
+	protected $priority = 9;
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
