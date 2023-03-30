@@ -1,0 +1,289 @@
+<?php
+/**
+ * Register plugin classes
+ *
+ * The autoloader registers plugin classes for later use.
+ *
+ * @package    Site_Core
+ * @subpackage Includes
+ * @category   Classes
+ * @since      1.0.0
+ */
+
+namespace SiteCore\Autoload;
+
+// Restrict direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
+
+/**
+ * Load classes
+ *
+ * Runs the autoload functions.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+	core();
+	settings();
+	tools();
+	media();
+	users();
+	vendor();
+	admin();
+	front();
+	widgets();
+}
+
+/**
+ * Namespace & class name
+ *
+ * Class namespaces must contain `Classes` and a
+ * category following the plugin namespace.
+ * Example: `SiteCore\Classes\Category\My_Class`
+ *
+ * @since  1.0.0
+ * @param  string $cat
+ * @param  string $class
+ * @return string Returns the namespace with category and class name.
+ *                Example: SiteCore\Classes\Admin\My_Class.
+ */
+function ns( $cat, $class ) {
+	return 'SiteCore\Classes\\' . ucwords( $cat ) . '\\' . $class;
+};
+
+/**
+ * File path
+ *
+ * Works for subdirectories of the `includes/classes` directory.
+ * Files require the `class-` prefix.
+ *
+ * @since  1.0.0
+ * @param  string $dir
+ * @param  string $file
+ * @return string Returns the file path in classes subdirectory.
+ */
+function f( $dir, $file ) {
+	return SCP_PATH . 'includes/classes/' . $dir .'/class-' . $file;
+};
+
+/**
+ * Core classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function core() {
+
+	$classes = [
+		ns( 'core', 'Editor_Options' )       => f( 'core', 'editor-options.php' ),
+		ns( 'core', 'Register_Type' )        => f( 'core', 'register-type.php' ),
+		ns( 'core', 'Register_Sample_Type' ) => f( 'core', 'register-sample-type.php' ),
+		ns( 'core', 'Register_Admin' )       => f( 'core', 'register-admin.php' ),
+		ns( 'core', 'Register_Site_Help' )   => f( 'core', 'register-site-help.php' ),
+		ns( 'core', 'Register_Tax' )         => f( 'core', 'register-tax.php' ),
+		ns( 'core', 'Register_Sample_Tax' )  => f( 'core', 'register-sample-tax.php' ),
+		ns( 'core', 'Types_Taxes_Order' )    => f( 'core', 'types-taxes-order.php' ),
+		ns( 'core', 'Remove_Blog' )          => f( 'core', 'remove-blog.php' ),
+		ns( 'core', 'Remove_Customizer' )    => f( 'core', 'remove-customizer.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Settings classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function settings() {
+
+	$classes = [
+		ns( 'settings', 'Settings_Sections' )               => f( 'settings', 'settings-sections.php' ),
+		ns( 'settings', 'Settings_Sections_Sample' )        => f( 'settings', 'settings-sections-sample.php' ),
+		ns( 'settings', 'Settings_Sections_Content' )       => f( 'settings', 'settings-sections-content.php' ),
+		ns( 'settings', 'Settings_Sections_Admin' )         => f( 'settings', 'settings-sections-admin.php' ),
+		ns( 'settings', 'Settings_Sections_Developer' )     => f( 'settings', 'settings-sections-developer.php' ),
+		ns( 'settings', 'Settings_Fields' )                 => f( 'settings', 'settings-fields.php' ),
+		ns( 'settings', 'Settings_Fields_Sample' )          => f( 'settings', 'settings-fields-sample.php' ),
+		ns( 'settings', 'Settings_Fields_Content_Posts' )   => f( 'settings', 'settings-fields-content-posts.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Dashboard' ) => f( 'settings', 'settings-fields-admin-dashboard.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Footer' )    => f( 'settings', 'settings-fields-admin-footer.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Header' )    => f( 'settings', 'settings-fields-admin-header.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Menu' )      => f( 'settings', 'settings-fields-admin-menu.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Toolbar' )   => f( 'settings', 'settings-fields-admin-toolbar.php' ),
+		ns( 'settings', 'Settings_Fields_Admin_Users' )     => f( 'settings', 'settings-fields-admin-users.php' ),
+		ns( 'settings', 'Settings_Fields_Developer' )       => f( 'settings', 'settings-fields-developer.php' ),
+		ns( 'settings', 'Settings_Fields_Developer_Users' ) => f( 'settings', 'settings-fields-developer-users.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Tools classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function tools() {
+
+	$classes = [
+		ns( 'tools', 'Customizer_Reset' ) => f( 'tools', 'customizer-reset.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Media classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function media() {
+
+	$classes = [
+		ns( 'media', 'Register_Media_Type' ) => f( 'media', 'register-media-type.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Users classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function users() {
+
+	$classes = [
+		ns( 'users', 'User_Avatars' ) => f( 'users', 'user-avatars.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Vendor classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function vendor() {
+
+	$classes = [
+		ns( 'vendor', 'Plugin' )        => f( 'vendor', 'plugin.php' ),
+		ns( 'vendor', 'Plugin_Sample' ) => f( 'vendor', 'plugin-sample.php' ),
+		ns( 'vendor', 'Plugin_ACF' )    => f( 'vendor', 'plugin-acf.php' ),
+		ns( 'vendor', 'Plugin_ACFE' )   => f( 'vendor', 'plugin-acfe.php' ),
+		ns( 'vendor', 'ACF_Columns' )   => f( 'vendor', 'acf-columns.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Backend classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function admin() {
+
+	$classes = [
+		ns( 'admin', 'Add_Page' )                => f( 'backend', 'add-page.php' ),
+		ns( 'admin', 'Sample_Page' )             => f( 'backend', 'sample-page.php' ),
+		ns( 'admin', 'Sample_Subpage' )          => f( 'backend', 'sample-subpage.php' ),
+		ns( 'admin', 'Admin_Settings_Page' )     => f( 'backend', 'admin-settings-page.php' ),
+		ns( 'admin', 'Developer_Settings_Page' ) => f( 'backend', 'developer-settings-page.php' ),
+		ns( 'admin', 'Content_Settings_Page' )   => f( 'backend', 'content-settings-page.php' ),
+		ns( 'admin', 'Manage_Website_Page' )     => f( 'backend', 'manage-website-page.php' ),
+		ns( 'admin', 'Sample_ACF_Options' )      => f( 'backend', 'sample-acf-options.php' ),
+		ns( 'admin', 'Sample_ACF_Suboptions' )   => f( 'backend', 'sample-acf-suboptions.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Frontend classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function front() {
+
+	$classes = [
+		ns( 'front', 'Title_Filter' )   => f( 'frontend', 'title-filter.php' ),
+		ns( 'front', 'Content_Filter' ) => f( 'frontend', 'content-filter.php' ),
+		ns( 'front', 'Content_Sample' ) => f( 'frontend', 'content-sample.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}
+
+/**
+ * Widgets classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function widgets() {
+
+	$classes = [
+		ns( 'widgets', 'Add_Widget' )    => f( 'widgets', 'add-widget.php' ),
+		ns( 'widgets', 'Sample_Widget' ) => f( 'widgets', 'sample-widget.php' )
+	];
+	spl_autoload_register(
+		function ( string $class ) use ( $classes ) {
+			if ( isset( $classes[ $class ] ) ) {
+				require $classes[ $class ];
+			}
+		}
+	);
+}

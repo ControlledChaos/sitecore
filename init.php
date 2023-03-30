@@ -59,7 +59,8 @@ function init() {
 	 * The autoloader registers plugin classes for later use,
 	 * such as running new instances below.
 	 */
-	require_once SCP_PATH . 'includes/autoloader.php';
+	require_once SCP_PATH . 'includes/autoload.php';
+	Autoload\classes();
 
 	// Load required files.
 	foreach ( glob( SCP_PATH . 'includes/core/*.php' ) as $filename ) {
