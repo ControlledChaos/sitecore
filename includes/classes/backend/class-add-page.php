@@ -97,12 +97,12 @@ class Add_Page {
 		 * if Advanced Custom Fields PRO is active,
 		 */
 		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
-			add_action( 'acf/init', [ $this, 'add_acf_page' ] );
+			add_action( 'acf/init', [ $this, 'add_acf_page' ], 9 );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
 		// Otherwise add a regular admin page.
 		} else {
-			add_action( 'admin_menu', [ $this, 'add_page' ], 9 );
+			add_action( 'admin_menu', [ $this, 'add_page' ] );
 		}
 
 		// Enqueue admin scripts.
@@ -134,9 +134,11 @@ class Add_Page {
 	 */
 	public function add_page() {
 
+		$screen = $this->page_options['menu_slug'];
+
 		if ( $this->is_subpage() ) {
 
-			$this->page_options['menu_slug'] = add_submenu_page(
+			$screen = add_submenu_page(
 				strtolower( $this->page_options['parent_slug'] ),
 				$this->page_title(),
 				$this->menu_title(),
@@ -148,7 +150,7 @@ class Add_Page {
 
 		} else {
 
-			$this->page_options['menu_slug'] = add_menu_page(
+			$screen = add_menu_page(
 				$this->page_title(),
 				$this->menu_title(),
 				strtolower( $this->page_options['capability'] ),
@@ -161,13 +163,13 @@ class Add_Page {
 
 		// Add content to the contextual help section.
 		if ( true == $this->page_options['add_help'] ) {
-			add_action( 'load-' . $this->page_options['menu_slug'], [ $this, 'help' ] );
+			add_action( "load-{$screen}", [ $this, 'help' ] );
 		}
 
 		if ( true == $this->page_options['screen_options'] ) {
-			add_action( 'load-' . $this->page_options['menu_slug'], [ $this, 'screen_options' ] );
+			add_action( "load-{$screen}", [ $this, 'screen_options' ] );
 		} else {
-			add_action( 'load-' . $this->page_options['menu_slug'], function() {
+			add_action( "load-{$screen}", function() {
 				add_filter( 'screen_options_show_screen', '__return_false' );
 			} );
 		}
@@ -187,6 +189,8 @@ class Add_Page {
 			return;
 		}
 
+		$screen = $this->page_options['menu_slug'];
+
 		$options = [
 			'page_title'      => $this->page_title(),
 			'menu_title'      => $this->menu_title(),
@@ -203,9 +207,9 @@ class Add_Page {
 		];
 
 		if ( $this->is_subpage() ) {
-			acf_add_options_sub_page( $options );
+			$screen = acf_add_options_sub_page( $options );
 		} else {
-			acf_add_options_page( $options );
+			$screen = acf_add_options_page( $options );
 		}
 
 		if ( isset( $this->page_options['acf']['capability'] ) ) {
@@ -217,6 +221,12 @@ class Add_Page {
 		if ( ! current_user_can( $acf_capability ) ) {
 			add_action( 'admin_head', function() {
 				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
+			} );
+		}
+
+		if ( false == $this->page_options['screen_options'] ) {
+			add_action( "load-{$screen}", function() {
+				add_filter( 'screen_options_show_screen', '__return_false' );
 			} );
 		}
 	}
@@ -690,7 +700,9 @@ class Add_Page {
 	 * @return mixed Returns the page content.
 	 */
 	protected function content() {
+
 		$content = do_action( 'render_screen_tabs_' . $this->page_options['menu_slug'] );
+
 		return apply_filters( 'scp_admin_page_content_' . $this->page_options['menu_slug'], $content );
 	}
 
