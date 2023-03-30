@@ -115,7 +115,6 @@ define( 'SCP_CLASSES', [
 	SCP_CLASS_NS . '\Admin\Sample_Subpage'          => SCP_CLASS['admin'] . 'sample-subpage.php',
 	SCP_CLASS_NS . '\Admin\Admin_Settings_Page'     => SCP_CLASS['admin'] . 'admin-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Developer_Settings_Page'     => SCP_CLASS['admin'] . 'developer-settings-page.php',
-	SCP_CLASS_NS . '\Admin\Admin_ACF_Settings_Page' => SCP_CLASS['admin'] . 'admin-acf-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Content_Settings_Page'        => SCP_CLASS['admin'] . 'content-settings-page.php',
 	SCP_CLASS_NS . '\Admin\Manage_Website_Page'     => SCP_CLASS['admin'] . 'manage-website-page.php',
 	SCP_CLASS_NS . '\Admin\Sample_ACF_Options'      => SCP_CLASS['admin'] . 'sample-acf-options.php',
