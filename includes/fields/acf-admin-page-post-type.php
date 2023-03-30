@@ -1,12 +1,8 @@
 <?php
 /**
- * Sample ACF options page field group
+ * ACF fields for the `admin` post type
  *
- * The ACF export tool does not use the short
- * array syntax and does not add internationalization
- * functions. Also, it does not align arrays.
- * This is sample has been made consistent with
- * the rest of this plugin.
+ * Requires ACF Pro to be active,
  *
  * @package    Site_Core
  * @subpackage Fields
@@ -19,6 +15,10 @@ namespace SiteCore\Fields\ACF;
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
+}
+
+if ( ! class_exists( 'acf_pro' ) ) {
+	return;
 }
 
 acf_add_local_field_group( [

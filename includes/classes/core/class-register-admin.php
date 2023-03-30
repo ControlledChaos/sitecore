@@ -67,6 +67,9 @@ class Register_Admin extends Register_Type {
 
 		// Enqueue admin scripts & styles.
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+
+		// Print CSS to the admin head.
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
 	}
 
 	/**
@@ -237,6 +240,16 @@ class Register_Admin extends Register_Type {
 				$content = function() use ( $post ) {
 
 					$id = $post->ID;
+
+					// If ACF Pro is not active then get the post content,
+					if ( ! class_exists( 'acf_pro' ) ) {
+						printf(
+							'<div class="admin-post-type-content">%s</div>',
+							apply_filters( 'the_content', $post->post_content )
+						);
+						return;
+					}
+
 					$get_tabs = get_field( 'admin_post_content_tabs', $id );
 
 					if ( ! is_array( $get_tabs ) ) {
@@ -249,11 +262,11 @@ class Register_Admin extends Register_Type {
 
 					if ( count( $get_tabs ) > 1 ) {
 						$tabbed         = ' data-tabbed="tabbed"';
-						$wrap_class     = 'registered-content-wrap admin-tabs';
+						$wrap_class     = 'admin-post-type-content registered-content-wrap admin-tabs';
 						$content_class  = 'registered-content tab-content';
 					} else {
 						$tabbed         = '';
-						$wrap_class     = 'registered-content-wrap';
+						$wrap_class     = 'admin-post-type-content registered-content-wrap';
 						$content_class  = 'registered-content';
 					}
 
@@ -337,5 +350,22 @@ class Register_Admin extends Register_Type {
 	 */
 	public function admin_enqueue_scripts() {
 		return apply_filters( 'scp_admin_pages_enqueue_scripts', null );
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_styles() {
+
+		$style = '<style>';
+		$style .= '.admin-post-type-content { overflow-x: hidden; }';
+		$style .= '.admin-post-type-content img { max-width: 100%; height: auto; }';
+		$style .= '</style>';
+
+		echo $style;
 	}
 }
