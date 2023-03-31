@@ -41,12 +41,10 @@ class Content_Settings_Page extends Add_Page {
 			'tabs_hashtags' => true
 		];
 
-		$priority = 9;
-
 		parent :: __construct(
 			$labels,
 			$options,
-			$priority
+			9
 		);
 	}
 
