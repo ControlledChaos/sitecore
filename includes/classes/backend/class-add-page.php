@@ -76,7 +76,7 @@ class Add_Page {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct( $page_labels, $page_options ) {
+	public function __construct( $page_labels, $page_options, $priority ) {
 
 		$labels = [
 			'page_title'  => '',
@@ -102,6 +102,7 @@ class Add_Page {
 
 		$this->page_labels  = wp_parse_args( $page_labels, $labels );
 		$this->page_options = wp_parse_args( $page_options, $options );
+		$this->priority     = (int) $priority;
 
 		/**
 		 * Add an ACF options page and load field groups

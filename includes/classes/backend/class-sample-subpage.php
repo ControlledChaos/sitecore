@@ -47,7 +47,8 @@ class Sample_Subpage extends Add_Page {
 
 		parent :: __construct(
 			$labels,
-			$options
+			$options,
+			$priority
 		);
 	}
 

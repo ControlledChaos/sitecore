@@ -45,7 +45,8 @@ class Developer_Settings_Page extends Add_Page {
 
 		parent :: __construct(
 			$labels,
-			$options
+			$options,
+			$priority
 		);
 	}
 

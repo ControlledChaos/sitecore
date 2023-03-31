@@ -198,6 +198,7 @@ class Register_Admin extends Register_Type {
 			$menu_title = get_field( 'admin_post_menu_title', $post_id );
 			$icon       = get_field( 'admin_post_icon_url', $post_id );
 			$position   = get_field( 'admin_post_position', $post_id );
+			$priority   = get_field( 'admin_post_hook_priority', $post_id );
 			$desc       = get_field( 'admin_post_description', $post_id );
 
 			if ( $capability ) {
@@ -218,6 +219,12 @@ class Register_Admin extends Register_Type {
 				$position = 85;
 			}
 
+			if ( $priority ) {
+				$priority = $priority;
+			} else {
+				$priority = 10;
+			}
+
 			if ( $slug ) {
 
 				$labels = [
@@ -235,7 +242,7 @@ class Register_Admin extends Register_Type {
 					'add_help'      => false
 				];
 
-				new Backend_Class\Add_Page( $labels, $options );
+				new Backend_Class\Add_Page( $labels, $options, $priority );
 
 				$content = function() use ( $post ) {
 
