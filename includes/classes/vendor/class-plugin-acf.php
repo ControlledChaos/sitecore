@@ -18,60 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Plugin_ACF extends Plugin {
 
 	/**
-	 * Installed plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the installed plugin.
-	 */
-	protected $installed_dir = 'advanced-custom-fields';
-
-	/**
-	 * Installed plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the installed plugin.
-	 */
-	protected $installed_file = 'acf.php';
-
-	/**
-	 * Bundled plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the bundled plugin.
-	 */
-	protected $bundled_dir = 'acf';
-
-	/**
-	 * Bundled plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the bundled plugin.
-	 */
-	protected $bundled_file = 'acf.php';
-
-	/**
-	 * Upgrade plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the upgrade plugin.
-	 */
-	protected $upgrade_dir = 'advanced-custom-fields-pro';
-
-	/**
-	 * Upgrade plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the upgrade plugin.
-	 */
-	protected $upgrade_file = 'acf.php';
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -80,7 +26,20 @@ class Plugin_ACF extends Plugin {
 	 */
 	public function __construct() {
 
-		parent :: __construct();
+		$paths = [
+			'bundled_dir'    => 'acf',
+			'bundled_file'   => 'acf.php',
+			'installed_dir'  => 'advanced-custom-fields',
+			'installed_file' => 'acf.php',
+			'upgrade_dir'    => 'advanced-custom-fields-pro',
+			'upgrade_file'   => 'acf.php'
+		];
+
+		parent :: __construct(
+			$paths,
+			true,
+			true
+		);
 
 		/**
 		 * ACF local JSON
@@ -113,23 +72,6 @@ class Plugin_ACF extends Plugin {
 
 		// Admin columns for ACF fields.
 		add_action( 'plugins_loaded', [ $this, 'acf_columns' ], 20 );
-	}
-
-	/**
-	 * Use bundled plugin
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return boolean Default should be true. False only
-	 *                 if defined as such elsewhere.
-	 */
-	public function use_bundled() {
-
-		// Override constant.
-		if ( defined( 'SCP_USE_BUNDLED_ACF' ) && false == SCP_USE_BUNDLED_ACF ) {
-			return false;
-		}
-		return true;
 	}
 
 	/**

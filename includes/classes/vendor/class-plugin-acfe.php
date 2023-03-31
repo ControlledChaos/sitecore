@@ -18,60 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Plugin_ACFE extends Plugin {
 
 	/**
-	 * Installed plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the installed plugin.
-	 */
-	protected $installed_dir = 'acf-extended';
-
-	/**
-	 * Installed plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the installed plugin.
-	 */
-	protected $installed_file = 'acf-extended.php';
-
-	/**
-	 * Bundled plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the bundled plugin.
-	 */
-	protected $bundled_dir = 'acf-extended';
-
-	/**
-	 * Bundled plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the bundled plugin.
-	 */
-	protected $bundled_file = 'acf-extended.php';
-
-	/**
-	 * Upgrade plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the upgrade plugin.
-	 */
-	protected $upgrade_dir = 'acf-extended-pro';
-
-	/**
-	 * Upgrade plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the upgrade plugin.
-	 */
-	protected $upgrade_file = 'acf-extended.php';
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -80,7 +26,20 @@ class Plugin_ACFE extends Plugin {
 	 */
 	public function __construct() {
 
-		parent :: __construct();
+		$paths = [
+			'bundled_dir'    => 'acf-extended',
+			'bundled_file'   => 'acf-extended.php',
+			'installed_dir'  => 'acf-extended',
+			'installed_file' => 'acf-extended.php',
+			'upgrade_dir'    => 'acf-extended-pro',
+			'upgrade_file'   => 'acf-extended.php'
+		];
+
+		parent :: __construct(
+			$paths,
+			true,
+			true
+		);
 
 		/**
 		 * Dequeue ACFE UI changes

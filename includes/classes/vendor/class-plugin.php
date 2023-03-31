@@ -27,40 +27,15 @@ class Plugin {
 	CONST SCP_VENDOR_PATH = SCP_PATH . 'includes/vendor/';
 
 	/**
-	 * Installed plugin directory
+	 * Plugin paths
+	 *
+	 * Plugin directories and files.
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var    string The directory of the installed plugin.
+	 * @var array An array of plugin directories and files.
 	 */
-	protected $installed_dir = '';
-
-	/**
-	 * Installed plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the installed plugin.
-	 */
-	protected $installed_file = '';
-
-	/**
-	 * Bundled plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the bundled plugin.
-	 */
-	protected $bundled_dir = '';
-
-	/**
-	 * Bundled plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the bundled plugin.
-	 */
-	protected $bundled_file = '';
+	protected $plugin_paths = [];
 
 	/**
 	 * Allow installed
@@ -86,35 +61,30 @@ class Plugin {
 	protected $allow_upgrade = true;
 
 	/**
-	 * Upgrade plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the upgrade plugin.
-	 */
-	protected $upgrade_dir = '';
-
-	/**
-	 * Upgrade plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the upgrade plugin.
-	 */
-	protected $upgrade_file = '';
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct( $plugin_paths,	$allow_installed, $allow_upgrade ) {
+
+		$paths = [
+			'bundled_dir'    => '',
+			'bundled_file'   => '',
+			'installed_dir'  => '',
+			'installed_file' => '',
+			'upgrade_dir'    => '',
+			'upgrade_file'   => ''
+		];
+
+		$this->plugin_paths    = wp_parse_args( $plugin_paths, $paths );
+		$this->allow_installed = (bool) $allow_installed;
+		$this->allow_upgrade   = (bool) $allow_upgrade;
 
 		// Deactivate installed versions if not allowed.
-		$this->deactivate_installed();
-		$this->deactivate_upgrade();
+		add_action( 'plugins_loaded', [ $this, 'deactivate_installed' ], 11 );
+		add_action( 'plugins_loaded', [ $this, 'deactivate_upgrade' ], 11 );
 	}
 
 	/**
@@ -164,8 +134,8 @@ class Plugin {
 	 */
 	protected function bundled_path() {
 
-		$dir  = $this->bundled_dir;
-		$file = $this->bundled_file;
+		$dir  = $this->plugin_paths['bundled_dir'];
+		$file = $this->plugin_paths['bundled_file'];
 
 		// Return the path to the core plugin file.
 		return self :: SCP_VENDOR_PATH . $dir . '/' . $file;
@@ -183,8 +153,8 @@ class Plugin {
 	 */
 	protected function upgrade_path() {
 
-		$dir  = $this->upgrade_dir;
-		$file = $this->upgrade_file;
+		$dir  = $this->plugin_paths['upgrade_dir'];
+		$file = $this->plugin_paths['upgrade_file'];
 		$path = '';
 
 		if (
@@ -214,8 +184,8 @@ class Plugin {
 	 */
 	protected function basic_basename() {
 
-		$dir      = $this->installed_dir;
-		$file     = $this->installed_file;
+		$dir      = $this->plugin_paths['installed_dir'];
+		$file     = $this->plugin_paths['installed_file'];
 		$basename = '';
 
 		if (
@@ -239,8 +209,8 @@ class Plugin {
 	 */
 	protected function upgrade_basename() {
 
-		$dir      = $this->upgrade_dir;
-		$file     = $this->upgrade_file;
+		$dir      = $this->plugin_paths['upgrade_dir'];
+		$file     = $this->plugin_paths['upgrade_file'];
 		$basename = '';
 
 		if (
@@ -341,10 +311,10 @@ class Plugin {
 	 * Deactivate installed
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
-	protected function deactivate_installed() {
+	public function deactivate_installed() {
 
 		// Stop if the installed version is allowed.
 		if ( $this->allow_installed() ) {
@@ -363,10 +333,10 @@ class Plugin {
 	 * Deactivate upgrade
 	 *
 	 * @since  1.0.0
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
-	protected function deactivate_upgrade() {
+	public function deactivate_upgrade() {
 
 		// Stop if the upgrade version is allowed.
 		if ( $this->allow_upgrade() ) {

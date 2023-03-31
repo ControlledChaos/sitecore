@@ -18,60 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Plugin_Sample extends Plugin {
 
 	/**
-	 * Installed plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the installed plugin.
-	 */
-	protected $installed_dir = 'sample';
-
-	/**
-	 * Installed plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the installed plugin.
-	 */
-	protected $installed_file = 'sample.php';
-
-	/**
-	 * Bundled plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the bundled plugin.
-	 */
-	protected $bundled_dir = 'sample';
-
-	/**
-	 * Bundled plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the bundled plugin.
-	 */
-	protected $bundled_file = 'sample.php';
-
-	/**
-	 * Upgrade plugin directory
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The directory of the upgrade plugin.
-	 */
-	protected $upgrade_dir = 'sample-pro';
-
-	/**
-	 * Upgrade plugin file
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @var    string The core file of the upgrade plugin.
-	 */
-	protected $upgrade_file = 'sample.php';
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -79,7 +25,21 @@ class Plugin_Sample extends Plugin {
 	 * @return self
 	 */
 	public function __construct() {
-		parent :: __construct();
+
+		$paths = [
+			'bundled_dir'    => 'sample',
+			'bundled_file'   => 'sample.php',
+			'installed_dir'  => 'sample',
+			'installed_file' => 'sample.php',
+			'upgrade_dir'    => 'sample-pro',
+			'upgrade_file'   => 'sample.php'
+		];
+
+		parent :: __construct(
+			$paths, // Plugin directories & files.
+			true, // Allow installed plugin.
+			true // Allow upgrade plugin.
+		);
 	}
 
 	/**
