@@ -30,6 +30,7 @@ class Content_Sample extends Content_Filter {
 	public function __construct() {
 
 		$types = [
+			'post',
 			'sample_type'
 		];
 

@@ -29,10 +29,10 @@ class Title_Filter {
 	 * @example [ 'post', 'sample_type' ]
 	 *
 	 * @since  1.0.0
-	 * @access private
+	 * @access public
 	 * @var    array Array of the post types to be filtered.
 	 */
-	private $post_types = [];
+	public $post_types = [];
 
 	/**
 	 * Title filter priority
@@ -40,10 +40,10 @@ class Title_Filter {
 	 * When to filter the title.
 	 *
 	 * @since  1.0.0
-	 * @access private
+	 * @access protected
 	 * @var    integer The numeral to set filter priority.
 	 */
-	private $priority = 10;
+	protected $priority = 10;
 
 	/**
 	 * Constructor method
@@ -52,7 +52,12 @@ class Title_Filter {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct( $post_types, $priority ) {
+
+		$types = [];
+
+		$this->post_types = wp_parse_args( $post_types, $types );
+		$this->priority   = (int) $priority;
 
 		// Add title filter if post types are set.
 		if ( $this->post_types() ) {
@@ -64,11 +69,11 @@ class Title_Filter {
 	 * Check for post types
 	 *
 	 * @since  1.0.0
-	 * @access private
+	 * @access protected
 	 * @return boolean Returns true if the post_types property
 	 *                 has at least one post type.
 	 */
-	private function post_types() {
+	protected function post_types() {
 		if ( isset( $this->post_types ) && is_array( $this->post_types ) ) {
 			return true;
 		}

@@ -18,23 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Title_Sample extends Title_Filter {
 
 	/**
-	 * Post types
-	 *
-	 * Array of the post types to be filtered,
-	 * as they are registered.
-	 *
-	 * @example [ 'post', 'sample_type' ]
-	 *
-	 * @since  1.0.0
-	 * @access private
-	 * @var    array Array of the post types to be filtered.
-	 */
-	private $post_types = [
-		'post',
-		'sample_type'
-	];
-
-	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
@@ -43,8 +26,12 @@ class Title_Sample extends Title_Filter {
 	 */
 	public function __construct() {
 
-		// Run the parent constructor method.
-		parent :: __construct();
+		$types = [
+			'post',
+			'sample_type'
+		];
+
+		parent :: __construct( $types, 10 );
 	}
 
 	/**

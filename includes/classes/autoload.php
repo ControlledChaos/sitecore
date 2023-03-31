@@ -257,6 +257,7 @@ function front() {
 
 	$classes = [
 		ns( 'Front', 'Title_Filter' )   => f( 'frontend', 'title-filter.php' ),
+		ns( 'Front', 'Title_Sample' )   => f( 'frontend', 'title-sample.php' ),
 		ns( 'Front', 'Content_Filter' ) => f( 'frontend', 'content-filter.php' ),
 		ns( 'Front', 'Content_Sample' ) => f( 'frontend', 'content-sample.php' )
 	];
