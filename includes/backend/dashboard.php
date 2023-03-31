@@ -53,7 +53,8 @@ function setup() {
 	 * limited to admins. With this, a custom welcome
 	 * panel can be offered to all user roles.
 	 */
-	if ( get_option( 'enable_custom_dashboard', false ) ) :
+	if ( get_option( 'enable_custom_dashboard', false ) ||
+	( defined( 'SCP_USE_CUSTOM_DASHBOARD' ) && SCP_USE_CUSTOM_DASHBOARD ) ) :
 
 		// Enqueue dashboard panel styles.
 		add_action( 'admin_enqueue_scripts', $ns( 'dashboard_panel_styles' ) );
