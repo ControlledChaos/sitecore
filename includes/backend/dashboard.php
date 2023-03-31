@@ -53,8 +53,7 @@ function setup() {
 	 * limited to admins. With this, a custom welcome
 	 * panel can be offered to all user roles.
 	 */
-	if ( get_option( 'enable_custom_dashboard', false ) ||
-	( defined( 'SCP_USE_CUSTOM_DASHBOARD' ) && SCP_USE_CUSTOM_DASHBOARD ) ) :
+	if ( use_custom() ) :
 
 		// Enqueue dashboard panel styles.
 		add_action( 'admin_enqueue_scripts', $ns( 'dashboard_panel_styles' ) );
@@ -95,6 +94,22 @@ function remove_help_items() {
 	$screen->remove_help_tab( 'help-layout' );
 	$screen->remove_help_tab( 'help-content' );
 	$screen->set_help_sidebar( null );
+}
+
+/**
+ * Use custom dashboard
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function use_custom() {
+
+	if ( defined( 'SCP_USE_CUSTOM_DASHBOARD' ) && ! SCP_USE_CUSTOM_DASHBOARD ) {
+		return false;
+	} elseif ( get_option( 'enable_custom_dashboard', false ) ) {
+		return true;
+	}
+	return false;
 }
 
 /**
