@@ -2,7 +2,7 @@
 /**
  * Site Core plugin
  *
- * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
+ * Develop site-specific plugins for ClassicPress and WordPres.
  *
  * @package  Site_Core
  * @category Core
@@ -11,7 +11,7 @@
  *
  * Plugin Name:  Site Core
  * Plugin URI:   https://github.com/ControlledChaos/sitecore
- * Description:  Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
+ * Description:  Develop site-specific plugins for ClassicPress and WordPres.
  * Version:      1.0.0
  * Author:       Controlled Chaos Design
  * Author URI:   https://ccdzine.com/
@@ -177,7 +177,7 @@ include_once SCP_PATH . 'includes/activate/deactivate.php';
 /**
  * Register the activation & deactivation hooks
  *
- * The namspace of this file must remain escaped by use of the
+ * The namespace of this file must remain escaped by use of the
  * backslash (`\`) prepending the activation hooks and corresponding
  * functions.
  *
