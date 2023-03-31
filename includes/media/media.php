@@ -10,6 +10,8 @@
 
 namespace SiteCore\Media;
 
+use SiteCore\Classes\Core as Core_Class;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -27,6 +29,11 @@ function setup() {
 	$ns = function( $function ) {
 		return __NAMESPACE__ . "\\$function";
 	};
+
+	// Add custom media taxonomy.
+	add_action( 'plugins_loaded', function() {
+		new Core_Class\Register_Media_Type;
+	}, 11 );
 
 	// Add categories and tags to media library items.
 	add_action( 'init' , $ns( 'media_taxonomies' ) );

@@ -121,7 +121,6 @@ function init() {
 
 	// Media.
 	Media\setup();
-	new Media_Class\Register_Media_Type;
 
 	// Advanced Custom Fields.
 	$scp_acf = new Vendor_Class\Plugin_ACF;

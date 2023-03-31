@@ -4,21 +4,18 @@
  *
  * @package    Site_Core
  * @subpackage Classes
- * @category   Media
+ * @category   Core
  * @since      1.0.0
  */
 
-namespace SiteCore\Classes\Media;
-
-// Alias namespaces.
-use SiteCore\Classes\Core as Core;
+namespace SiteCore\Classes\Core;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Register_Media_Type extends Core\Register_Tax {
+class Register_Media_Type extends Register_Tax {
 
 	/**
 	 * Constructor method
