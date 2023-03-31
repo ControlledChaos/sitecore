@@ -47,6 +47,18 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				]
 			],
 			[
+				'id'       => 'type_tax_sort_order',
+				'title'    => __( 'Post Types & Taxonomies Sort Order', 'sitecore' ),
+				'callback' => [ $this, 'type_tax_sort_order_callback' ],
+				'page'     => 'content-settings',
+				'section'  => 'scp-settings-content-posts',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Check to enable drag & drop sort order of post types and taxonomies.', 'sitecore' ),
+					'class'       => 'content-field'
+				]
+			],
+						[
 				'id'       => 'disable_block_widgets',
 				'title'    => __( 'Disable Block Widgets', 'sitecore' ),
 				'callback' => [ $this, 'disable_block_widgets_callback' ],
@@ -100,6 +112,17 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
+	 * Remove Blog field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function type_tax_sort_order_order() {
+		return 2;
+	}
+
+	/**
 	 * Block Widgets field order
 	 *
 	 * @since  1.0.0
@@ -107,7 +130,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_block_widgets_order() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -118,7 +141,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function enable_link_manager_order() {
-		return 3;
+		return 4;
 	}
 
 	/**
@@ -155,6 +178,24 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 			$option = false;
 		}
 		return apply_filters( 'scp_remove_blog', $option );
+	}
+
+	/**
+	 * Sanitize Sort Order field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function type_tax_sort_order_sanitize() {
+
+		$option = get_option( 'type_tax_sort_order', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_type_tax_sort_order', $option );
 	}
 
 	/**
@@ -240,6 +281,40 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 		$order    = $this->remove_blog_order();
 		$field_id = $fields[$order]['id'];
 		$option   = $this->remove_blog_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+
+		echo $html;
+	}
+
+	/**
+	 * Sort Order field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function type_tax_sort_order_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->type_tax_sort_order_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->type_tax_sort_order_sanitize();
 
 		$html = sprintf(
 			'<fieldset><legend class="screen-reader-text">%s</legend>',

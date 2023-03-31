@@ -10,7 +10,8 @@
 
 namespace SiteCore\Tools;
 
-use SiteCore\Classes\Tools as Tools_Class;
+use SiteCore\Classes\Core  as Core_Class,
+	SiteCore\Classes\Tools as Tools_Class;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,6 +33,10 @@ function setup() {
 
 	add_action( 'tool_box', $ns( 'available_tools' ) );
 	add_action( 'admin_head', $ns( 'add_help_tabs' ) );
+
+	if ( get_option( 'type_tax_sort_order', false ) ) {
+		new Core_Class\Types_Taxes_Order;
+	}
 
 	if ( get_option( 'direction_switch', false ) ) {
 		add_action( 'init', $ns( 'set_direction' ) );
