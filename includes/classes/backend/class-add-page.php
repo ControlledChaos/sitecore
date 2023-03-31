@@ -122,6 +122,9 @@ class Add_Page {
 
 		// Print admin styles to head.
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
+
+		// Print footer scripts.
+		add_action( "admin_print_footer_scripts-{$this->page_options['menu_slug']}", [ $this, 'admin_print_footer_scripts' ] );
 	}
 
 	/**
@@ -858,9 +861,20 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return string
+	 * @return void
 	 */
 	public function admin_print_styles() {}
+
+	/**
+	 * Print page scripts
+	 *
+	 * Hooks into the page slug (suffix).
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_footer_scripts() {}
 
 	/**
 	 * ACF field groups
