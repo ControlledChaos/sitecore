@@ -5,7 +5,7 @@
  * The minimum PHP version is not included in the
  * plugin header because the admin notices here are
  * more elegant than the native `die()` screen
- * proveded by the management system.
+ * provided by the management system.
  *
  * @package    Site_Core
  * @subpackage Activate
