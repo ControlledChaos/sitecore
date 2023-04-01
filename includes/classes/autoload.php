@@ -84,7 +84,6 @@ function core() {
 		ns( 'Core', 'Register_Type' )        => f( 'core', 'register-type.php' ),
 		ns( 'Core', 'Register_Sample_Type' ) => f( 'core', 'register-sample-type.php' ),
 		ns( 'Core', 'Register_Admin' )       => f( 'core', 'register-admin.php' ),
-		ns( 'Core', 'Register_Site_Help' )   => f( 'core', 'register-site-help.php' ),
 		ns( 'Core', 'Register_Tax' )         => f( 'core', 'register-tax.php' ),
 		ns( 'Core', 'Register_Sample_Tax' )  => f( 'core', 'register-sample-tax.php' ),
 		ns( 'Core', 'Register_Media_Type' )  => f( 'core', 'register-media-type.php' ),

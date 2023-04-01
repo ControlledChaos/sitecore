@@ -92,7 +92,6 @@ function init() {
 
 	// Instantiate core classes.
 	new Core_Class\Register_Admin;
-	new Core_Class\Register_Site_Help;
 	if ( get_option( 'remove_blog' ) ) {
 		new Core_Class\Remove_Blog;
 	}
