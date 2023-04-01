@@ -56,7 +56,7 @@ class Plugin_ACF extends Plugin {
 		}
 
 		// Hide/show the ACF admin menu item.
-		add_filter( 'acf/settings/show_admin', [ $this, 'acf_settings_show_admin' ] );
+		add_action( 'plugins_loaded', [ $this, 'acf_settings_show_admin' ], 20 );
 
 		// Add ACF field groups.
 		add_action( 'plugins_loaded', [ $this, 'field_groups' ], 20 );
@@ -98,11 +98,12 @@ class Plugin_ACF extends Plugin {
 	public function acf_settings_show_admin( $show_admin ) {
 
 		// Hide if in multisite mode & not the main site.
-		$show_admin = true;
 		if ( is_multisite() && ! is_main_site() && ! is_super_admin( get_current_user_id() ) ) {
-			$show_admin = false;
+			add_filter( 'acf/settings/show_admin', '__return_false', 11 );
 		}
-		return apply_filters( 'scp_acf_settings_show_admin', $show_admin );
+		if ( ( defined( 'ACF_SHOW_ADMIN' ) && ! ACF_SHOW_ADMIN ) && ! current_user_can( 'develop' ) ) {
+			add_filter( 'acf/settings/show_admin', '__return_false', 11 );
+		}
 	}
 
 	/**
