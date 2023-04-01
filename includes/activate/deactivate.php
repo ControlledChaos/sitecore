@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin deactivation class
+ * Plugin deactivation
  *
  * @package    Site_Core
  * @subpackage Includes

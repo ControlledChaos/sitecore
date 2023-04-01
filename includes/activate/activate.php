@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin activation class
+ * Plugin activation
  *
  * The minimum PHP version is not included in the
  * plugin header because the admin notices here are
