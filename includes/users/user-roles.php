@@ -28,11 +28,6 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	// Stop if this option is not enabled.
-	if ( ! get_option( 'enable_multi_user_roles', false ) ) {
-		return;
-	}
-
 	// Add user roles.
 	add_action( 'init', $ns( 'add_user_roles' ) );
 
