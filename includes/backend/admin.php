@@ -60,6 +60,10 @@ function setup() {
 	// Hide the ClassicPress/WordPress update notification to all but admins.
 	add_action( 'admin_head', $ns( 'admin_only_updates' ), 1 );
 
+	// Custom admin menu order.
+	add_filter( 'menu_order', $ns( 'menu_order' ), 10, 1 );
+	add_filter( 'custom_menu_order', $ns( 'menu_order' ), 10, 1 );
+
 	// Remove Site Health from menu.
 	if ( get_option( 'disable_site_health', false ) ) {
 		add_action( 'admin_menu', $ns( 'menu_remove_site_health' ) );
@@ -181,6 +185,29 @@ function admin_only_updates() {
 	if ( ! current_user_can( 'update_core' ) ) {
 		remove_action( 'admin_notices', 'update_nag', 3 );
 	}
+}
+
+/**
+ * Custom admin menu order
+ *
+ * @since  1.0.0
+ * @param  array $order
+ * @return array
+ */
+function menu_order( $order ) {
+
+	// Add items to follow the dashboard.
+	$order = [
+		'index.php',
+		'separator1',
+		'content-settings',
+		'upload.php',
+		'edit.php',
+		'edit.php?post_type=page',
+		'edit-comments.php',
+		'separator2'
+	];
+	return apply_filters( 'scp_admin_menu_order', $order );
 }
 
 /**
