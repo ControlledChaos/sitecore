@@ -87,7 +87,11 @@ class Register_Type {
 			'singular'    => '',
 			'plural'      => '',
 			'description' => '',
-			'menu_icon'   => 'dashicons-admin-post'
+			'menu_icon'   => 'dashicons-admin-post',
+			'excerpt_mb'  => [
+				'title'       => '',
+				'description' => ''
+			]
 		];
 
 		$options = [
@@ -164,6 +168,15 @@ class Register_Type {
 
 		// Field groups.
 		add_action( 'acf/init', [ $this, 'field_groups' ] );
+
+		/**
+		 * Post type excerpt metaboxes
+		 *
+		 * Run with a lower priority (higher number) than
+		 * the priorty of the similar function in
+		 * `includes/backend/post-edit.php`.
+		 */
+		add_action( 'add_meta_boxes', [ $this, 'excerpt_metabox' ], 22 );
 	}
 
 	/**
@@ -397,5 +410,95 @@ class Register_Type {
 		 * `acf_add_local_field_group` function
 		 * here, as exported.
 		 */
+	}
+
+	/**
+	 * Post type excerpt metabox title
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the text of the title.
+	 */
+	protected function excerpt_metabox_title() {
+
+		if ( $this->type_labels['excerpt_mb']['title'] ) {
+			$title = $this->type_labels['excerpt_mb']['title'];
+		} else {
+			$title = sprintf(
+				'%s %s',
+				ucwords( $this->type_labels['singular'] ),
+				__( 'Summary', 'sitecore' )
+			);
+		}
+		return apply_filters( 'scp_excerpt_metabox_title', $title );
+	}
+
+	/**
+	 * Post type excerpt metabox description
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the text of the description.
+	 */
+	protected function excerpt_metabox_description() {
+
+		if ( $this->type_labels['excerpt_mb']['description'] ) {
+			$description = $this->type_labels['excerpt_mb']['description'];
+		} else {
+			$description = __( 'Add a brief summary of this content to be used in archive pages, depending upon the active theme, and to be used in search engine metadata and for display in social media embeds.', 'sitecore' );
+		}
+		return apply_filters( 'scp_excerpt_metabox_description', $description );
+	}
+
+	/**
+	 * Post type excerpt metaboxes
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $post_type Post type key.
+	 * @global array $wp_meta_boxes Access the metaboxes array.
+	 * @return void
+	 */
+	public function excerpt_metabox( $post_type ) {
+
+		if ( $this->type_key != $post_type ) {
+			return;
+		}
+
+		if ( ! post_type_supports( get_post_type(), 'excerpt' ) ) {
+			return;
+		}
+
+		global $wp_meta_boxes;
+
+		$type_key = $this->type_key;
+		$title    = $this->excerpt_metabox_title();
+
+		$wp_meta_boxes[ $type_key ]['normal']['core']['postexcerpt']['title']    = $title;
+		$wp_meta_boxes[ $type_key ]['normal']['core']['postexcerpt']['callback'] = [ $this, 'excerpt_metabox_callback' ];
+	}
+
+	/**
+	 * Display post excerpt form fields.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  WP_Post $post The post object.
+	 * @return void
+	 */
+	public function excerpt_metabox_callback( $post ) {
+
+	?>
+	<p class="description">
+		<?php echo $this->excerpt_metabox_description(); ?>
+	</p>
+
+	<label class="screen-reader-text" for="excerpt">
+		<?php _e( 'Post content excerpt or description' ); ?>
+	</label>
+
+	<textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; ?></textarea>
+	<?php
+
 	}
 }

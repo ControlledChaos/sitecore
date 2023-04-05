@@ -40,7 +40,11 @@ class Register_Sample_Type extends Register_Type {
 			'singular'    => __( 'sample post', 'sitecore' ),
 			'plural'      => __( 'sample posts', 'sitecore' ),
 			'description' => '',
-			'menu_icon'   => 'dashicons-lightbulb'
+			'menu_icon'   => 'dashicons-lightbulb',
+			'excerpt_mb'  => [
+				'title'       => __( 'Describe This Post', 'sitecore' ),
+				'description' => __( 'Add a brief description of this content.', 'sitecore' )
+			]
 		];
 
 		$options = [
