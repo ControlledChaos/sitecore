@@ -139,22 +139,22 @@ define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
  * @since  1.0.0
  * @return void
  */
-function load_plugin_text_domain() {
+function load_plugin_textdomain() {
 
 	// Standard plugin installation.
-	load_plugin_textdomain(
+	\load_plugin_textdomain(
 		'sitecore',
 		false,
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 
 	// If this plugin is in the must-use plugins directory.
-	load_muplugin_textdomain(
+	\load_muplugin_textdomain(
 		'sitecore',
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\load_plugin_text_domain' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load_plugin_textdomain' );
 
 /**
  * Plugin page link
