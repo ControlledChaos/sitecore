@@ -30,8 +30,8 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	add_action( 'plugins_loaded', $ns( 'acf' ), 11 );
-	add_action( 'plugins_loaded', $ns( 'acfe' ), 11 );
+	add_action( 'plugins_loaded', $ns( 'acf' ) );
+	add_action( 'plugins_loaded', $ns( 'acfe' ) );
 }
 
 /**

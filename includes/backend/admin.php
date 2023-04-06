@@ -35,7 +35,7 @@ function setup() {
 	// Get the filename of the current page.
 	global $pagenow;
 
-	new Classes\Admin\Manage_Website_Page;
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Post edit screens.
 	Post_Edit\setup();
@@ -111,6 +111,17 @@ function setup() {
 
 	// Enqueue styles.
 	add_action( 'admin_enqueue_scripts', $ns( 'admin_enqueue_styles' ) );
+}
+
+/**
+ * Backend classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+
+	new Classes\Admin\Manage_Website_Page;
 }
 
 /**

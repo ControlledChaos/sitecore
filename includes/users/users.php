@@ -34,7 +34,7 @@ function setup() {
 	};
 
 	// Users classes.
-	add_action( 'plugins_loaded', $ns( 'classes' ), 11 );
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Print admin styles to head.
 	add_action( 'admin_print_styles', $ns( 'admin_print_styles' ), 20 );

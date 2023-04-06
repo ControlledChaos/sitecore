@@ -30,7 +30,7 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	add_action( 'init', $ns( 'classes' ) );
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Allow link manager.
 	if ( get_option( 'enable_link_manager', false ) ) {

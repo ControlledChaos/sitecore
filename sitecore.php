@@ -133,6 +133,28 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 
+/**
+ * Load text domain
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function load_plugin_text_domain() {
+
+	// Standard plugin installation.
+	load_plugin_textdomain(
+		'sitecore',
+		false,
+		dirname( SCP_BASENAME ) . '/languages'
+	);
+
+	// If this plugin is in the must-use plugins directory.
+	load_muplugin_textdomain(
+		'sitecore',
+		dirname( SCP_BASENAME ) . '/languages'
+	);
+}
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load_plugin_text_domain' );
 
 /**
  * Plugin page link
