@@ -63,7 +63,7 @@ class Register_Admin extends Register_Type {
 		add_filter( 'post_row_actions', [ $this, 'row_actions' ], 10, 1 );
 
 		// Add a page per post.
-		add_action( 'plugins_loaded', [ $this, 'add_pages' ], 11 );
+		add_action( 'plugins_loaded', [ $this, 'add_pages' ] );
 
 		// Enqueue admin scripts & styles.
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );

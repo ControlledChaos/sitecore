@@ -10,7 +10,9 @@
 
 namespace SiteCore\Users;
 
-use SiteCore\Classes as Classes;
+use SiteCore\Classes       as Classes,
+	SiteCore\Classes\Users as Users_Class;
+
 use function SiteCore\Core\is_classicpress;
 
 // Restrict direct access.
@@ -30,6 +32,9 @@ function setup() {
 	$ns = function( $function ) {
 		return __NAMESPACE__ . "\\$function";
 	};
+
+	// Users classes.
+	add_action( 'plugins_loaded', $ns( 'classes' ), 11 );
 
 	// Print admin styles to head.
 	add_action( 'admin_print_styles', $ns( 'admin_print_styles' ), 20 );
@@ -67,6 +72,21 @@ function setup() {
 		add_action( 'init', $ns( 'developer_access_role' ) );
 		add_action( 'admin_print_styles', $ns( 'hide_developer_access_css' ) );
 		add_action( 'admin_footer', $ns( 'hide_developer_access_js' ) );
+	}
+}
+
+/**
+ * Users classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+
+	if ( ! is_plugin_active( 'user-avatars/user-avatars.php' ) ) {
+		if ( get_option( 'enable_user_avatars', true ) ) {
+			new Users_Class\User_Avatars;
+		}
 	}
 }
 
