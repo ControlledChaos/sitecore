@@ -75,6 +75,31 @@ class Plugin_ACF extends Plugin {
 	}
 
 	/**
+	 * Plugin is active
+	 *
+	 * Checks if the basic version or an upgrade version
+	 * is installed and active.
+	 * Also check for the Applied Content Forms fork
+	 * of ACF Pro.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return boolean Returns true if either version of the
+	 *                 installed plugin is active.
+	 */
+	protected function is_active() {
+
+		if ( is_plugin_active( $this->basic_basename() ) ) {
+			return true;
+		} elseif ( is_plugin_active( $this->upgrade_basename() ) ) {
+			return true;
+		} elseif ( is_plugin_active( 'applied-content-forms/acf.php' ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * ACF settings URL
 	 *
 	 * @since  1.0.0
