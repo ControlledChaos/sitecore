@@ -83,7 +83,7 @@ class Plugin_ACF extends Plugin {
 	 * @return string Returns the URL for ACF files.
 	 */
 	public function acf_settings_url( $url ) {
-		$url = SCP_URL . 'includes/vendor/' . $this->bundled_dir . '/';
+		$url = SCP_URL . 'includes/vendor/' . $this->plugin_paths['bundled_dir'] . '/';
 		return $url;
 	}
 
