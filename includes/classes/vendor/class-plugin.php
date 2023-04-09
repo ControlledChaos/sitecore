@@ -3,7 +3,9 @@
  * Plugin initialization class
  *
  * Extend this class to load a plugin and
- * add related filters & actions.
+ * add related filters & actions. Used
+ * to bundle third-party plugins with
+ * this plugin.
  *
  * @package    Site_Core
  * @subpackage Classes
@@ -61,13 +63,24 @@ class Plugin {
 	protected $allow_upgrade = true;
 
 	/**
+	 * Plugin hook
+	 *
+	 * To create specific actions & filters.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var array An array of plugin directories and files.
+	 */
+	protected $plugin_hook = '';
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return self
 	 */
-	public function __construct( $plugin_paths,	$allow_installed, $allow_upgrade ) {
+	public function __construct( $plugin_paths,	$allow_installed, $allow_upgrade, $plugin_hook ) {
 
 		$paths = [
 			'bundled_dir'    => '',
@@ -81,6 +94,9 @@ class Plugin {
 		$this->plugin_paths    = wp_parse_args( $plugin_paths, $paths );
 		$this->allow_installed = (bool) $allow_installed;
 		$this->allow_upgrade   = (bool) $allow_upgrade;
+
+		$hook = strtolower( str_replace( '-', '_', $this->plugin_paths['bundled_dir'] ) );
+		$this->plugin_hook = (string) $hook;
 
 		// Deactivate installed versions if not allowed.
 		add_action( 'plugins_loaded', [ $this, 'deactivate_installed' ], 11 );
@@ -236,12 +252,13 @@ class Plugin {
 	 */
 	protected function is_active() {
 
+		$active = false;
 		if ( is_plugin_active( $this->basic_basename() ) ) {
-			return true;
+			$active = true;
 		} elseif ( is_plugin_active( $this->upgrade_basename() ) ) {
-			return true;
+			$active = true;
 		}
-		return false;
+		return apply_filters( $this->plugin_hook . '_is_active', $active );
 	}
 
 	/**

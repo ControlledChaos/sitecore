@@ -38,8 +38,13 @@ class Plugin_ACF extends Plugin {
 		parent :: __construct(
 			$paths,
 			true,
-			true
+			true,
+			'acf'
 		);
+
+		if ( $this->acf_is_active() ) {
+			add_filter( $this->plugin_hook . '_is_active', [ $this, 'acf_is_active' ] );
+		}
 
 		/**
 		 * ACF local JSON
@@ -77,26 +82,20 @@ class Plugin_ACF extends Plugin {
 	/**
 	 * Plugin is active
 	 *
-	 * Checks if the basic version or an upgrade version
-	 * is installed and active.
-	 * Also check for the Applied Content Forms fork
-	 * of ACF Pro.
+	 * Check for the Applied Content Forms fork
+	 * of ACF Pro and adds to the assets URL filter.
 	 *
 	 * @since  1.0.0
-	 * @access protected
-	 * @return boolean Returns true if either version of the
-	 *                 installed plugin is active.
+	 * @access public
+	 * @return boolean Returns true if Applied Content Forms is active.
 	 */
-	protected function is_active() {
+	public function acf_is_active() {
 
-		if ( is_plugin_active( $this->basic_basename() ) ) {
-			return true;
-		} elseif ( is_plugin_active( $this->upgrade_basename() ) ) {
-			return true;
-		} elseif ( is_plugin_active( 'applied-content-forms/acf.php' ) ) {
-			return true;
+		$active = false;
+		if ( is_plugin_active( 'applied-content-forms/acf.php' ) ) {
+			$active = true;
 		}
-		return false;
+		return $active;
 	}
 
 	/**

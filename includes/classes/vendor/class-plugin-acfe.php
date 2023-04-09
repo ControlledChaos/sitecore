@@ -38,7 +38,8 @@ class Plugin_ACFE extends Plugin {
 		parent :: __construct(
 			$paths,
 			true,
-			true
+			true,
+			'acfe'
 		);
 
 		/**

@@ -39,6 +39,7 @@ class Plugin_Sample extends Plugin {
 			$paths, // Plugin directories & files.
 			true, // Allow installed plugin.
 			true // Allow upgrade plugin.
+			'sample' // Plugin hook name.
 		);
 	}
 
