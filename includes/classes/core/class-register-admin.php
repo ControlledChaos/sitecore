@@ -38,8 +38,19 @@ class Register_Admin extends Register_Type {
 		$options = [
 			'public'              => false,
 			'menu_position'       => 99,
+			'capabilities'        => [
+				'edit_'   . $this->type_key => 'develop',
+				'delete_' . $this->type_key => 'develop',
+				'edit_post'          => 'develop',
+				'edit_posts'         => 'develop',
+				'edit_others_posts'  => 'develop',
+				'publish_posts'      => 'develop',
+				'read_post'          => 'develop',
+				'read_private_posts' => 'develop',
+				'delete_posts'       => 'develop'
+			],
 			'exclude_from_search' => true,
-			'show_in_menu'        => false,
+			'show_in_menu'        => 'content-settings',
 			'show_in_nav_menus'   => false,
 			'show_in_admin_bar'   => false,
 			'supports'            => [
@@ -87,45 +98,6 @@ class Register_Admin extends Register_Type {
 			unset( $actions['view'] );
 		}
 		return $actions;
-	}
-
-	/**
-	 * New post type options
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $args Array of arguments for registering a post type.
-	 * @param  string $post_type Post type key.
-	 * @return array Returns an array of new option arguments.
-	 */
-	public function post_type_options( $args, $post_type ) {
-
-		// Look for the content settings page and set as a variable.
-		$content = get_plugin_page_hookname( 'content-settings', 'content-settings' );
-
-		// Only modify this post type.
-		if ( $this->type_key != $post_type ) {
-			return $args;
-		}
-
-		// Only show under content settings if the page exists & if developer.
-		if ( $content && current_user_can( 'develop' ) ) {
-
-			// Set content settings as menu parent.
-			$args['show_in_menu'] = 'content-settings';
-		}
-
-		// Only allow developer role to add & edit.
-		if ( ! current_user_can( 'develop' ) ) {
-			$args['capabilities'] = [
-				'edit_'   . $this->type_key => false,
-				'delete_' . $this->type_key => false,
-				'edit_posts'   => false,
-				'delete_posts' => false
-			];
-		}
-
-		return $args;
 	}
 
 	/**
