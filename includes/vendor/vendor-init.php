@@ -41,8 +41,11 @@ function setup() {
  * @return void
  */
 function acf() {
+
 	$scp_acf = new Vendor_Class\Plugin_ACF;
 	$scp_acf->include();
+
+	new Vendor_Class\ACF_Nav_Menu_Field;
 }
 
 /**
@@ -52,6 +55,7 @@ function acf() {
  * @return void
  */
 function acfe() {
+
 	$scp_acfe = new Vendor_Class\Plugin_ACFE;
 	$scp_acfe->include();
 }
