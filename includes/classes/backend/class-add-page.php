@@ -109,7 +109,7 @@ class Add_Page {
 		 * if Advanced Custom Fields PRO is active,
 		 */
 		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
-			add_action( 'acf/init', [ $this, 'add_acf_page' ], 9 );
+			add_action( 'acf/init', [ $this, 'add_acf_page' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
 		// Otherwise add a regular admin page.
@@ -234,13 +234,13 @@ class Add_Page {
 		}
 
 		if ( ! current_user_can( $acf_capability ) ) {
-			add_action( 'admin_head', function() {
+			add_action( "admin_head-{$this->page_options['menu_slug']}", function() {
 				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
 			} );
 		}
 
 		if ( false == $this->page_options['screen_options'] ) {
-			add_action( "load-{$screen}", function() {
+			add_action( "load-{$this->page_options['menu_slug']}", function() {
 				add_filter( 'screen_options_show_screen', '__return_false' );
 			} );
 		}
@@ -840,11 +840,6 @@ class Add_Page {
 	/**
 	 * Enqueue page scripts
 	 *
-	 * This is for scripts that shall not be
-	 * overridden by class extension. Specific
-	 * screens should use enqueue_scripts() to
-	 * enqueue scripts for its screen.
-	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
@@ -853,11 +848,6 @@ class Add_Page {
 
 	/**
 	 * Print page styles
-	 *
-	 * This is for styles that shall not be
-	 * overridden by class extension. Specific
-	 * screens should use print_styles() to
-	 * print styles for its screen.
 	 *
 	 * @since  1.0.0
 	 * @access public
