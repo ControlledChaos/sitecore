@@ -262,7 +262,14 @@ class Register_Admin extends Register_Type {
 
 						$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['admin_post_content_tab_label'] ) );
 
-						if ( current_user_can( $tab['admin_post_content_tab_user_cap'] ) ) :
+						$user_cap = $tab['dashboard_content_tab_user_cap'];
+						if ( ! empty( $user_cap ) ) {
+							$user_cap = $user_cap;
+						} else {
+							$user_cap = 'read';
+						}
+
+						if ( current_user_can( $user_cap ) ) :
 
 							$href = "#$tab_id";
 
@@ -292,7 +299,14 @@ class Register_Admin extends Register_Type {
 
 						$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['admin_post_content_tab_label'] ) );
 
-						if ( current_user_can( $tab['admin_post_content_tab_user_cap'] ) ) :
+						$user_cap = $tab['dashboard_content_tab_user_cap'];
+						if ( ! empty( $user_cap ) ) {
+							$user_cap = $user_cap;
+						} else {
+							$user_cap = 'read';
+						}
+
+						if ( current_user_can( $user_cap ) ) :
 						?>
 						<div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo $content_class; ?>">
 							<?php
