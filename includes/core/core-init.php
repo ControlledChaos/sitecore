@@ -77,7 +77,6 @@ function setup() {
  */
 function classes() {
 
-	new Core_Class\Register_Dashboard_Tab;
 	new Core_Class\Register_Admin;
 	if ( get_option( 'remove_blog' ) ) {
 		new Core_Class\Remove_Blog;
