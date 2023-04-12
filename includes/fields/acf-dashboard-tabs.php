@@ -40,13 +40,41 @@ acf_add_local_field_group( [
 			'esc_html'  => 0,
 		],
 		[
+			'key'               => 'field_643733e0b9da6',
+			'label'             => __( 'Tabs Display', 'sitecore' ),
+			'name'              => 'dashboard_content_tabs_active',
+			'type'              => 'true_false',
+			'instructions'      => __( 'If tabs are inactive then the default custom dashboard content will be displayed.', 'sitecore' ),
+			'required'          => 0,
+			'conditional_logic' => 0,
+			'wrapper'           => [
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			],
+			'acfe_permissions'      => '',
+			'message'       => __( '', 'sitecore' ),
+			'default_value' => 1,
+			'ui'            => 1,
+			'ui_on_text'  => __( 'Active', 'sitecore' ),
+			'ui_off_text' => __( 'Inactive', 'sitecore' ),
+		],
+		[
 			'key'               => 'field_6436268b4dd5e',
 			'label'             => __( 'Content Tabs', 'sitecore' ),
 			'name'              => 'dashboard_content_tabs',
 			'type'              => 'repeater',
-			'instructions'      => __( 'If only one tab is added then the content will appear without the tabs switcher interface.', 'sitecore' ),
+			'instructions'      => __( 'If only one tab is added then the content will appear without the tabs switcher interface. <br />If no tabs are added then the default custom dashboard content will be displayed.', 'sitecore' ),
 			'required'          => 0,
-			'conditional_logic' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field'    => 'field_643733e0b9da6',
+						'operator' => '==',
+						'value'    => '1'
+					]
+				]
+			],
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
@@ -154,7 +182,7 @@ acf_add_local_field_group( [
 						3 => 'acf-field-group-category',
 						4 => 'media_type',
 					],
-					'default_value' => '',
+					'default_value' => 'read',
 					'placeholder'   => __( '', 'sitecore' ),
 					'prepend'       => '',
 					'append'        => '',

@@ -15,7 +15,7 @@ $get_tabs = get_field( 'dashboard_content_tabs', 'option' );
  * If there are no tabs set in the Dashboard Tabs options page
  * then use the default custom dashboard content.
  */
-if ( ! $get_tabs ) {
+if ( ! $get_tabs || ! get_field( 'dashboard_content_tabs_active', 'option' ) ) {
 	include_once SCP_PATH . '/views/backend/widgets/dashboard-panel.php';
 	return;
 }
