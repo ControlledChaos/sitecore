@@ -50,7 +50,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 /**
  * ACF is active
  *
- * Checks for the Advanced Custom Fields plugin
+ * Checks for the Advanced Custom Fields plugin.
  *
  * @since  1.0.0
  * @access public
@@ -68,6 +68,7 @@ function active_acf() {
  * ACF PRO is active
  *
  * Checks for the Advanced Custom Fields PRO plugin
+ * and for the same core class bundled in this plugin.
  *
  * @since  1.0.0
  * @access public
@@ -75,7 +76,10 @@ function active_acf() {
  */
 function active_acf_pro() {
 
-	if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+	if (
+		class_exists( 'acf_pro' ) ||
+		is_plugin_active( 'advanced-custom-fields-pro/acf.php' )
+	) {
 		return true;
 	}
 	return false;
@@ -84,7 +88,7 @@ function active_acf_pro() {
 /**
  * ACFE is active
  *
- * Checks for the Advanced Custom Fields: Extended plugin
+ * Checks for the Advanced Custom Fields: Extended plugin.
  *
  * @since  1.0.0
  * @access public
@@ -101,7 +105,7 @@ function active_acfe() {
 /**
  * ACFE PRO is active
  *
- * Checks for the Advanced Custom Fields: Extended PRO plugin
+ * Checks for the Advanced Custom Fields: Extended PRO plugin.
  *
  * @since  1.0.0
  * @access public
