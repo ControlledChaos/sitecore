@@ -10,7 +10,8 @@
 
 namespace SiteCore\Vendor;
 
-use SiteCore\Classes\Vendor as Vendor_Class;
+use SiteCore\Classes\Vendor as Vendor_Class,
+	SiteCore\Compatibility  as Compat;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,7 +46,9 @@ function acf() {
 	$scp_acf = new Vendor_Class\Plugin_ACF;
 	$scp_acf->include();
 
-	new Vendor_Class\ACF_Nav_Menu_Field;
+	if ( Compat\has_acf() ) {
+		new Vendor_Class\ACF_Nav_Menu_Field;
+	}
 }
 
 /**
