@@ -8,59 +8,99 @@
  * @since      1.0.0
  */
 
+// Get ACF fields from registered options page.
+$get_tabs = get_field( 'dashboard_content_tabs', 'option' );
+
 /**
- * Panel tabs
- *
- * The customize panel is only available
- * to user who can customize themes.
+ * If there are no tabs set in the Dashboard Tabs options page
+ * then use the default custom dashboard content.
  */
-if ( current_user_can( 'customize' ) ) {
-	$customize = sprintf(
-        '<li class="content-tab"><a href="%1s"><span class="dashicons dashicons-art"></span> %2s</a></li>',
-		'#customize',
-       __( 'Customize', 'sitecore' )
-	);
-} else {
-	$customize = null;
+if ( ! $get_tabs ) {
+	include_once SCP_PATH . '/views/backend/widgets/dashboard-panel.php';
+	return;
 }
 
-$content = sprintf(
-	'<li class="content-tab"><a href="%1s"><span class="dashicons dashicons-edit-page"></span> %2s</a></li>',
-	'#content',
-   __( 'Content', 'sitecore' )
-);
-
-$tabs = apply_filters( 'scp_dashboard_panel_tabs', [
-
-    // Welcome tab, initially active.
-    sprintf(
-        '<li class="content-tab active"><a href="%1s"><span class="dashicons dashicons-welcome-learn-more"></span> %2s</a></li>',
-        '#welcome',
-        __( 'Welcome', 'sitecore' )
-	),
-	$content,
-	$customize
-] );
+if ( count( $get_tabs ) > 1 ) {
+	$tabbed         = ' data-tabbed="tabbed"';
+	$wrap_class     = 'dashboard-panel-content registered-content-wrap admin-tabs';
+	$content_class  = 'registered-content tab-content';
+} else {
+	$tabbed         = '';
+	$wrap_class     = 'dashboard-panel-content registered-content-wrap';
+	$content_class  = 'registered-content';
+}
 
 ?>
-<div id="dashboard-panel" class="dashboard-panel">
-	<div class="admin-tabs" data-tabbed="tabbed" data-tabdeeplinking="false">
+<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="true" >
 
-		<ul class="admin-tabs-list hide-if-no-js">
-			<?php echo implode( $tabs ); ?>
-		</ul>
+<?php
+
+if ( count( $get_tabs ) > 1 ) : ?>
+
+<ul class="admin-tabs-list hide-if-no-js">
+<?php
+foreach ( $get_tabs as $tab ) :
+
+	$tab_id   = strtolower( str_replace( [ ' ', '-' ], '_', $tab['dashboard_content_tab_label'] ) );
+
+	$user_cap = $tab['dashboard_content_tab_user_cap'];
+	if ( ! empty( $user_cap ) ) {
+		$user_cap = $user_cap;
+	} else {
+		$user_cap = 'read';
+	}
+
+	if ( current_user_can( $user_cap ) ) :
+
+		$href = "#$tab_id";
+
+		if ( ! empty( $tab['icon'] ) ) {
+			$icon = sprintf(
+				'<span class="content-tab-icon %1s"></span> ',
+				$tab['icon']
+			);
+		} else {
+			$icon = null;
+		}
+		?>
+			<li class="content-tab">
+				<a href="<?php echo esc_url( $href ); ?>" aria-controls="<?php echo esc_attr( $tab_id ); ?>">
+					<?php echo $icon . $tab['dashboard_content_tab_label']; ?>
+				</a>
+		<?php
+	endif;
+endforeach;
+
+?>
+</ul>
+<?php endif; ?>
+
+<?php
+foreach ( $get_tabs as $tab ) :
+
+	$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['dashboard_content_tab_label'] ) );
+
+	$user_cap = $tab['dashboard_content_tab_user_cap'];
+	if ( ! empty( $user_cap ) ) {
+		$user_cap = $user_cap;
+	} else {
+		$user_cap = 'read';
+	}
+
+	if ( current_user_can( $user_cap ) ) :
+	?>
+	<div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo $content_class; ?>">
 		<?php
 
-		// Welcome tab.
-		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/welcome-dashboard-tab' . $acf->suffix() . '.php' );
+		printf(
+			'<h2>%s</h2>',
+			$tab['dashboard_content_tab_heading']
+		);
+		echo $tab['dashboard_content_tab_content'];
 
-		// Customize tab.
-		if ( current_user_can( 'customize' ) ) {
-			include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/customize-dashboard-tab' . $acf->suffix() . '.php' );
-		}
-
-		// Content tab.
-		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/content-dashboard-tab' . $acf->suffix() . '.php' );
 		?>
 	</div>
+	<?php
+	endif;
+endforeach; ?>
 </div>

@@ -122,6 +122,10 @@ function setup() {
 function classes() {
 
 	new Classes\Admin\Manage_Website_Page;
+
+	if ( get_option( 'enable_custom_dashboard', false ) ) {
+		new Classes\Admin\Dashboard_Tabs_ACF;
+	}
 }
 
 /**
