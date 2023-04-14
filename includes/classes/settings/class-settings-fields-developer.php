@@ -10,6 +10,8 @@
 
 namespace SiteCore\Classes\Settings;
 
+use function SiteCore\Core\platform_name;
+
 class Settings_Fields_Developer extends Settings_Fields {
 
 	/**
@@ -22,6 +24,21 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function __construct() {
 
 		$fields = [
+			[
+				'id'       => 'update_in_progress',
+				'title'    => __( 'Update in Progress', 'sitecore' ),
+				'callback' => [ $this, 'update_in_progress_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => sprintf(
+						__( 'Fix another %s update already in progress.', 'sitecore' ),
+						platform_name()
+					),
+					'class'       => 'admin-field'
+				]
+			],
 			[
 				'id'       => 'direction_switch',
 				'title'    => __( 'Direction Switcher', 'sitecore' ),
@@ -78,6 +95,17 @@ class Settings_Fields_Developer extends Settings_Fields {
 	}
 
 	/**
+	 * Update in Progress field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function update_in_progress_order() {
+		return 0;
+	}
+
+	/**
 	 * Direction Switcher field order
 	 *
 	 * @since  1.0.0
@@ -85,7 +113,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function direction_switch_order() {
-		return 0;
+		return 1;
 	}
 
 	/**
@@ -96,7 +124,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function customizer_reset_order() {
-		return 1;
+		return 2;
 	}
 
 	/**
@@ -107,7 +135,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_site_health_order() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -118,7 +146,25 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_floc_order() {
-		return 3;
+		return 4;
+	}
+
+	/**
+	 * Sanitize Update in Progress field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function update_in_progress_sanitize() {
+
+		$option = get_option( 'update_in_progress', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return $option;
 	}
 
 	/**
@@ -191,6 +237,72 @@ class Settings_Fields_Developer extends Settings_Fields {
 			$option = false;
 		}
 		return apply_filters( 'scp_disable_floc', $option );
+	}
+
+	/**
+	 * Update in Progress field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function update_in_progress_callback() {
+
+		if ( version_compare( get_bloginfo( 'version' ),'4.5', '>=' ) ) {
+			$lock = get_option( 'core_updater.lock', null );
+		} else {
+			$lock = get_option( 'core_updater', null );
+		}
+		$no_lock = sprintf(
+			__( '<p>There is no update lock issue.</p>', 'sitecore' ),
+			admin_url( 'update-core.php' )
+		);
+		$no_lock .= sprintf(
+			__( '<p class="description">Go to the <a href="%s">Updates page</a>.</p>', 'sitecore' ),
+			admin_url( 'update-core.php' )
+		);
+
+		$fields   = $this->settings_fields;
+		$order    = $this->update_in_progress_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->update_in_progress_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+
+		if ( get_option( 'update_in_progress' ) ) {
+
+			if ( $lock ) {
+				update_option( 'update_in_progress', false );
+			}
+
+			if ( version_compare( get_bloginfo( 'version' ),'4.5', '>=' ) ) {
+				delete_option( 'core_updater.lock' );
+			} else {
+				delete_option( 'core_updater' );
+			}
+			$html = $no_lock;
+		}
+
+		if ( ! $lock ) {
+			$html = $no_lock;
+		}
+
+		echo $html;
 	}
 
 	/**
