@@ -34,7 +34,7 @@ function setup() {
 	add_filter( 'pre_get_posts', $ns( 'front_page_pre_get_posts' ) );
 
 	// Customizer settings & text.
-	add_action( 'customize_register', $ns( 'front_page_query_customize' ) );
+	add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
 }
 
 /**
