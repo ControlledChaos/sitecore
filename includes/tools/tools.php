@@ -10,8 +10,9 @@
 
 namespace SiteCore\Tools;
 
-use SiteCore\Classes\Core  as Core_Class,
-	SiteCore\Classes\Tools as Tools_Class;
+use SiteCore\Classes\Core     as Core_Class,
+	SiteCore\Classes\Tools    as Tools_Class,
+	SiteCore\Theme_Test_Drive as Test_Drive;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -49,6 +50,10 @@ function setup() {
 
 	if ( get_option( 'disable_floc', true ) ) {
 		add_filter( 'wp_headers', $ns( 'floc_headers' ) );
+	}
+
+	if ( get_option( 'theme_test_drive' ) ) {
+		Test_Drive\setup();
 	}
 }
 

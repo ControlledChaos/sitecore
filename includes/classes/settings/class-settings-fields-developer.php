@@ -40,6 +40,18 @@ class Settings_Fields_Developer extends Settings_Fields {
 				]
 			],
 			[
+				'id'       => 'theme_test_drive',
+				'title'    => __( 'Theme Test Drive', 'sitecore' ),
+				'callback' => [ $this, 'theme_test_drive_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Safely test any theme while visitors view the active theme.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
+			],
+			[
 				'id'       => 'direction_switch',
 				'title'    => __( 'Direction Switcher', 'sitecore' ),
 				'callback' => [ $this, 'direction_switch_callback' ],
@@ -106,6 +118,17 @@ class Settings_Fields_Developer extends Settings_Fields {
 	}
 
 	/**
+	 * Theme Test Drive field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function theme_test_drive_order() {
+		return 1;
+	}
+
+	/**
 	 * Direction Switcher field order
 	 *
 	 * @since  1.0.0
@@ -113,7 +136,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function direction_switch_order() {
-		return 1;
+		return 2;
 	}
 
 	/**
@@ -124,7 +147,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function customizer_reset_order() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -135,7 +158,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_site_health_order() {
-		return 3;
+		return 4;
 	}
 
 	/**
@@ -146,7 +169,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function disable_floc_order() {
-		return 4;
+		return 5;
 	}
 
 	/**
@@ -159,6 +182,24 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function update_in_progress_sanitize() {
 
 		$option = get_option( 'update_in_progress', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return $option;
+	}
+
+	/**
+	 * Sanitize Theme Test Drive field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function theme_test_drive_sanitize() {
+
+		$option = get_option( 'theme_test_drive', false );
 		if ( true == $option ) {
 			$option = true;
 		} else {
@@ -301,6 +342,44 @@ class Settings_Fields_Developer extends Settings_Fields {
 		if ( ! $lock ) {
 			$html = $no_lock;
 		}
+
+		echo $html;
+	}
+
+	/**
+	 * Theme Test Drive field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function theme_test_drive_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->theme_test_drive_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->theme_test_drive_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Adds a page under Appearance.', 'sitecore' )
+		);
 
 		echo $html;
 	}
