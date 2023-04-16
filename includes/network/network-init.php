@@ -10,6 +10,9 @@
 
 namespace SiteCore\Network;
 
+use SiteCore\Classes\Network as Network_Class,
+	SiteCore\Classes\Admin   as Admin_Class;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -38,5 +41,6 @@ function setup() {
  * @return void
  */
 function classes() {
-	// Instantiate classes.
+	// new Admin_Class\Sample_Network_Page;
+	// new Admin_Class\Sample_Network_Subpage;
 }

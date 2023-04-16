@@ -229,7 +229,9 @@ function admin() {
 	$classes = [
 		ns( 'Admin', 'Add_Page' )                => f( 'backend', 'add-page.php' ),
 		ns( 'Admin', 'Sample_Page' )             => f( 'backend', 'sample-page.php' ),
+		ns( 'Admin', 'Sample_Network_Page' )             => f( 'backend', 'sample-network-page.php' ),
 		ns( 'Admin', 'Sample_Subpage' )          => f( 'backend', 'sample-subpage.php' ),
+		ns( 'Admin', 'Sample_Network_Subpage' )  => f( 'backend', 'sample-network-subpage.php' ),
 		ns( 'Admin', 'Dashboard_Tabs_ACF' )      => f( 'backend', 'dashboard-tabs-acf.php' ),
 		ns( 'Admin', 'Admin_Settings_Page' )     => f( 'backend', 'admin-settings-page.php' ),
 		ns( 'Admin', 'Developer_Settings_Page' ) => f( 'backend', 'developer-settings-page.php' ),
