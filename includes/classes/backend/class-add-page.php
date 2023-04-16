@@ -86,6 +86,7 @@ class Add_Page {
 
 		$options = [
 			'settings'       => false,
+			'network'        => false,
 			'acf'            => [
 				'acf_page'   => false,
 				'capability' => 'manage_options'
@@ -106,11 +107,15 @@ class Add_Page {
 
 		/**
 		 * Add an ACF options page and load field groups
-		 * if Advanced Custom Fields PRO is active,
+		 * if ACF options page function is available.
 		 */
 		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
 			add_action( 'acf/init', [ $this, 'add_acf_page' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
+
+		// If network is true, add as network admin page.
+		} elseif ( $this->page_options['network'] ) {
+			add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
 
 		// Otherwise add a regular admin page.
 		} else {
