@@ -114,7 +114,7 @@ class Add_Page {
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
 		// If network is true, add as network admin page.
-		} elseif ( $this->page_options['network'] ) {
+		} elseif ( is_multisite() && $this->page_options['network'] ) {
 			add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
 
 		// Otherwise add a regular admin page.
