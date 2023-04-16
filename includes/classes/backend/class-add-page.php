@@ -113,8 +113,16 @@ class Add_Page {
 			add_action( 'acf/init', [ $this, 'add_acf_page' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
-		// If network is true, add as network admin page.
-		} elseif ( is_multisite() && $this->page_options['network'] ) {
+		/**
+		 * If network is true, if is in multisite mode,
+		 * if the plugin is network active, add as
+		 * a network admin page.
+		 */
+		} elseif (
+			is_multisite() &&
+			is_plugin_active_for_network( SCP_BASENAME ) &&
+			$this->page_options['network']
+		) {
 			add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
 
 		// Otherwise add a regular admin page.
@@ -212,6 +220,7 @@ class Add_Page {
 		$screen = $this->page_options['menu_slug'];
 
 		$options = [
+			'network'         => $this->page_options['network'],
 			'page_title'      => $this->page_title(),
 			'menu_title'      => $this->menu_title(),
 			'menu_slug'       => strtolower( $this->page_options['menu_slug'] ),
