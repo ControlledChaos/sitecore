@@ -36,6 +36,9 @@ foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
 foreach ( glob( SCP_PATH . 'includes/media/*.php' ) as $filename ) {
 	require $filename;
 }
+foreach ( glob( SCP_PATH . 'includes/network/*.php' ) as $filename ) {
+	require $filename;
+}
 foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
 	require $filename;
 }
@@ -61,6 +64,11 @@ Vendor\setup();
 Users\setup();
 User_Roles\setup();
 Front_Page_Post_Type\setup();
+
+// Network.
+if ( is_multisite() ) {
+	Network\setup();
+}
 
 // Front end.
 if ( ! is_admin() ) {
