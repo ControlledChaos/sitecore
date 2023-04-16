@@ -41,17 +41,17 @@ class acfe_field_group_category{
             'show_tagcloud'     => false,
             'rewrite'           => false,
             'labels'            => array(
-                'name'              => _x('Categories', 'Category'),
-                'singular_name'     => _x('Categories', 'Category'),
-                'search_items'      => __('Search categories', 'acfe'),
-                'all_items'         => __('All categories', 'acfe'),
-                'parent_item'       => __('Parent category', 'acfe'),
-                'parent_item_colon' => __('Parent category:', 'acfe'),
-                'edit_item'         => __('Edit category', 'acfe'),
-                'update_item'       => __('Update category', 'acfe'),
-                'add_new_item'      => __('Add New category', 'acfe'),
-                'new_item_name'     => __('New category name', 'acfe'),
-                'menu_name'         => __('category', 'acfe'),
+                'name'              => _x('Field Categories', 'Category'),
+                'singular_name'     => _x('Field Categories', 'Category'),
+                'search_items'      => __('Search field categories', 'acfe'),
+                'all_items'         => __('All field categories', 'acfe'),
+                'parent_item'       => __('Parent field category', 'acfe'),
+                'parent_item_colon' => __('Parent field category:', 'acfe'),
+                'edit_item'         => __('Edit field category', 'acfe'),
+                'update_item'       => __('Update field category', 'acfe'),
+                'add_new_item'      => __('Add new field category', 'acfe'),
+                'new_item_name'     => __('New field category name', 'acfe'),
+                'menu_name'         => __('field category', 'acfe'),
             ),
         ));
         
@@ -65,7 +65,7 @@ class acfe_field_group_category{
         if(!acf_get_setting('show_admin'))
             return;
         
-        add_submenu_page('edit.php?post_type=acf-field-group', __('Categories'), __('Categories'), acf_get_setting('capability'), 'edit-tags.php?taxonomy=acf-field-group-category');
+        add_submenu_page('custom-content', __('Field Categories'), __('Field Categories'), acf_get_setting('capability'), 'edit-tags.php?taxonomy=acf-field-group-category', false, 5 );
         
     }
     

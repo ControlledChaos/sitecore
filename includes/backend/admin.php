@@ -79,9 +79,6 @@ function setup() {
 	// Admin menu highlighting.
 	add_action( 'parent_file', $ns( 'parent_file' ) );
 
-	// Post type menu options.
-	add_filter( 'register_post_type_args', $ns( 'post_type_menu_options' ), 10, 2 );
-
 	// Hide help with privacy policy nag.
 	add_action( 'admin_head', $ns( 'hide_policy_content_notice' ) );
 
@@ -219,7 +216,7 @@ function menu_order( $order ) {
 	$order = [
 		'index.php',
 		'separator1',
-		'content-settings',
+		'custom-content',
 		'upload.php',
 		'edit.php',
 		'edit.php?post_type=page',
@@ -343,24 +340,6 @@ function parent_file( $parent_file ) {
 		$parent_file = 'nav-menus.php';
 	}
 	return $parent_file;
-}
-
-/**
- * Post type menu options
- *
- * @since  1.0.0
- * @param  array $args Array of arguments for registering a post type.
- * @param  string $post_type Post type key.
- * @return array Returns an array of new option arguments.
- */
-function post_type_menu_options( $args, $post_type ) {
-
-	// ACFE dynamic options page post type.
-	if ( 'acfe-dop' == $post_type ) {
-		$args['show_in_menu'] = 'options-general.php';
-		return $args;
-	}
-	return $args;
 }
 
 /**

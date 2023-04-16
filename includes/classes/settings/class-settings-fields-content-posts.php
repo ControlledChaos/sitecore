@@ -26,7 +26,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'id'       => 'posts_to_news',
 				'title'    => __( 'Change Posts to News', 'sitecore' ),
 				'callback' => [ $this, 'posts_to_news_callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'checkbox',
 				'args'     => [
@@ -38,7 +38,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'id'       => 'remove_blog',
 				'title'    => __( 'Remove Blog', 'sitecore' ),
 				'callback' => [ $this, 'remove_blog_callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'checkbox',
 				'args'     => [
@@ -50,7 +50,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'id'       => 'type_tax_sort_order',
 				'title'    => __( 'Post Types & Taxonomies Sort Order', 'sitecore' ),
 				'callback' => [ $this, 'type_tax_sort_order_callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'checkbox',
 				'args'     => [
@@ -62,7 +62,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'id'       => 'disable_block_widgets',
 				'title'    => __( 'Disable Block Widgets', 'sitecore' ),
 				'callback' => [ $this, 'disable_block_widgets_callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'checkbox',
 				'args'     => [
@@ -74,7 +74,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 				'id'       => 'enable_link_manager',
 				'title'    => __( 'Enable Classic Links', 'sitecore' ),
 				'callback' => [ $this, 'enable_link_manager_callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'section'  => 'scp-settings-content-posts',
 				'type'     => 'checkbox',
 				'args'     => [

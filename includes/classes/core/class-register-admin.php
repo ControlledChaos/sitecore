@@ -50,7 +50,7 @@ class Register_Admin extends Register_Type {
 				'delete_posts'       => 'develop'
 			],
 			'exclude_from_search' => true,
-			'show_in_menu'        => 'content-settings',
+			'show_in_menu'        => 'custom-content',
 			'show_in_nav_menus'   => false,
 			'show_in_admin_bar'   => false,
 			'supports'            => [

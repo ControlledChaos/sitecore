@@ -18,36 +18,9 @@ class ACF_Admin {
 	function __construct() {
 
 		// Add actions.
-		add_action( 'admin_menu', 				array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts',	array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'admin_body_class', 		array( $this, 'admin_body_class' ) );
 		add_action( 'current_screen',			array( $this, 'current_screen' ) );
-	}
-
-	/**
-	 * Adds the ACF menu item.
-	 *
-	 * @date	28/09/13
-	 * @since	5.0.0
-	 *
-	 * @param	void
-	 * @return	void
-	 */
-	function admin_menu() {
-
-		// Bail early if ACF is hidden.
-		if( !acf_get_setting('show_admin') ) {
-			return;
-		}
-
-		// Vars.
-		$slug = 'edit.php?post_type=acf-field-group';
-		$cap = acf_get_setting('capability');
-
-		// Add menu items.
-		add_menu_page( __("Custom Fields",'acf'), __("Custom Fields",'acf'), $cap, $slug, false, 'dashicons-welcome-widgets-menus', '80.025' );
-		add_submenu_page( $slug, __('Field Groups','acf'), __('Field Groups','acf'), $cap, $slug );
-		add_submenu_page( $slug, __('Add New','acf'), __('Add New','acf'), $cap, 'post-new.php?post_type=acf-field-group' );
 	}
 
 	/**

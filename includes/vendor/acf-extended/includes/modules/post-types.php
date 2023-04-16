@@ -101,7 +101,7 @@ class acfe_dynamic_post_types extends acfe_dynamic_module{
             'hierarchical'          => false,
             'public'                => false,
             'show_ui'               => true,
-            'show_in_menu'          => 'tools.php',
+            'show_in_menu'		    => 'custom-content',
             'menu_icon'             => 'dashicons-layout',
             'show_in_admin_bar'     => false,
             'show_in_nav_menus'     => false,

@@ -400,7 +400,7 @@ class ACF {
 			'public'			=> false,
 			'hierarchical'		=> true,
 			'show_ui'			=> true,
-			'show_in_menu'		=> false,
+			'show_in_menu'		=> 'custom-content',
 			'_builtin'			=> false,
 			'capability_type'	=> 'post',
 			'capabilities'		=> array(

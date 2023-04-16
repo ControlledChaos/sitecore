@@ -172,7 +172,7 @@ class Plugin_ACFE extends Plugin {
 	public function acfe_post_type_options( $args, $post_type ) {
 
 		// Look for the content settings page and set as a variable.
-		$content = get_plugin_page_hookname( 'content-settings', 'content-settings' );
+		$content = get_plugin_page_hookname( 'custom-content', 'custom-content' );
 
 		// Only modify dynamic post types & taxonomies.
 		if ( 'acfe-dpt' == $post_type || 'acfe-dt' == $post_type ) {
@@ -181,7 +181,7 @@ class Plugin_ACFE extends Plugin {
 			if ( $content ) {
 
 				// Set content settings as menu parent.
-				$args['show_in_menu'] = 'content-settings';
+				$args['show_in_menu'] = 'custom-content';
 			}
 			return $args;
 		}

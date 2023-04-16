@@ -102,7 +102,7 @@ class acfe_dynamic_options_pages extends acfe_dynamic_module{
             'hierarchical'          => true,
             'public'                => false,
             'show_ui'               => true,
-            'show_in_menu'          => 'edit.php?post_type=acf-field-group',
+            'show_in_menu'          => 'options-general.php',
             'menu_icon'             => 'dashicons-layout',
             'show_in_admin_bar'     => false,
             'show_in_nav_menus'     => false,

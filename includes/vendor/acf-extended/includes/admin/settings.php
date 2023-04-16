@@ -466,7 +466,7 @@ class acfe_admin_settings_ui{
         if(!acf_get_setting('show_admin'))
             return;
     
-        $page = add_submenu_page('edit.php?post_type=acf-field-group', __('Settings'), __('Settings'), acf_get_setting('capability'), 'acfe-settings', array($this, 'menu_html'));
+        $page = add_submenu_page('custom-content', __('Settings'), __('Settings'), acf_get_setting('capability'), 'acfe-settings', array($this, 'menu_html'));
         
         add_action("load-{$page}", array($this, 'menu_load'));
         

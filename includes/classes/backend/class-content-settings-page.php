@@ -27,7 +27,7 @@ class Content_Settings_Page extends Add_Page {
 	public function __construct() {
 
 		$labels = [
-			'page_title'  => __( 'Website Content', 'sitecore' ),
+			'page_title'  => __( 'Custom Content', 'sitecore' ),
 			'menu_title'  => __( 'Content', 'sitecore' ),
 			'description' => __( 'Manage how the content of this website is edited and displayed.', 'sitecore' )
 		];
@@ -35,7 +35,7 @@ class Content_Settings_Page extends Add_Page {
 		$options = [
 			'capability'    => 'read',
 			'settings'      => true,
-			'menu_slug'     => 'content-settings',
+			'menu_slug'     => 'custom-content',
 			'icon_url'      => 'dashicons-edit',
 			'position'      => 3,
 			'tabs_hashtags' => true
@@ -69,7 +69,7 @@ class Content_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'capability' => 'manage_options',
-			'id'         => 'content-settings-sample',
+			'id'         => 'content-settings',
 			'tab'        => __( 'Options', 'sitecore' ),
 			'heading'    => __( 'Website Content Options', 'sitecore' ),
 			'content'    => '',

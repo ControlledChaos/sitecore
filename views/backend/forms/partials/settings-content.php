@@ -14,8 +14,8 @@ namespace SiteCore\Views\Admin;
 <div>
 	<?php do_action( 'scp_before_content_settings' ); ?>
 	<?php
-	settings_fields( 'content-settings' );
-	do_settings_sections( 'content-settings' );
+	settings_fields( 'custom-content' );
+	do_settings_sections( 'custom-content' );
 	?>
 	<?php do_action( 'scp_after_content_settings' ); ?>
 </div>

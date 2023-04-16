@@ -113,7 +113,7 @@ class acf_admin_tools {
 		
 		
 		// add page
-		$page = add_submenu_page('edit.php?post_type=acf-field-group', __('Tools','acf'), __('Tools','acf'), acf_get_setting('capability'), 'acf-tools', array($this, 'html'));
+		$page = add_submenu_page( 'tools.php', __('Content Tools','acf'), __('Content Tools','acf'), acf_get_setting('capability'), 'acf-tools', array($this, 'html'));
 		
 		
 		// actions

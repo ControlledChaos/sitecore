@@ -26,7 +26,7 @@ class Settings_Sections_Content extends Settings_Sections {
 				'id'       => 'scp-settings-content-posts',
 				'title'    => null,
 				'callback' => [ $this, 'callback' ],
-				'page'     => 'content-settings',
+				'page'     => 'custom-content',
 				'args'     => [
 					'before_section' => '',
 					'after_section'  => '',
