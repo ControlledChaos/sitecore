@@ -13,7 +13,8 @@ class acfe_enhanced_ui{
     
     function __construct(){
         
-        $this->initialize();
+        // Do not use ACFE UI modifications.
+        // $this->initialize();
         
     }
     
