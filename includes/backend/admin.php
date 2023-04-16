@@ -43,10 +43,8 @@ function setup() {
 	// Posts list tables.
 	List_Tables\setup();
 
-	// Run the dashboard only on the backend index screen.
-	if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
-		Dashboard\setup();
-	}
+	// Custom dashboard.
+	Dashboard\setup();
 
 	// Remove theme & plugin editor links.
 	add_action( 'admin_init', $ns( 'remove_editor_links' ) );

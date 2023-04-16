@@ -31,7 +31,7 @@ function setup() {
 
 	// Stop here if not on Dashboard screen.
 	global $pagenow;
-	if ( 'index.php' != $pagenow ) {
+	if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
 		return;
 	}
 
