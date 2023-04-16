@@ -32,19 +32,22 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	// Get the filename of the current page.
-	global $pagenow;
-
 	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Post edit screens.
-	Post_Edit\setup();
+	add_action( 'admin_init', function() {
+		Post_Edit\setup();
+	} );
 
 	// Posts list tables.
-	List_Tables\setup();
+	add_action( 'admin_init', function() {
+		List_Tables\setup();
+	} );
 
 	// Custom dashboard.
-	Dashboard\setup();
+	add_action( 'admin_init', function() {
+		Dashboard\setup();
+	} );
 
 	// Remove theme & plugin editor links.
 	add_action( 'admin_init', $ns( 'remove_editor_links' ) );

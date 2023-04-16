@@ -29,9 +29,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function setup() {
 
-	// Stop here if not on Dashboard screen.
+	// Stop here if not on site Dashboard screen.
 	global $pagenow;
-	if ( 'index.php' == $pagenow && ! isset( $_GET['page'] ) ) {
+	if (
+		'index.php' != $pagenow ||
+		is_network_admin() ||
+		( 'index.php' == $pagenow && isset( $_GET['page'] ) )
+	) {
 		return;
 	}
 
