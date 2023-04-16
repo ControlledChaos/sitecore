@@ -3,7 +3,7 @@
 if(!defined('ABSPATH'))
     exit;
 
-if ( ! class_exists( 'acfe_screen_options_page' ) && class_exists( 'acf_pro' ) ) :
+if(!class_exists('acfe_screen_options_page')):
 
 class acfe_screen_options_page{
     

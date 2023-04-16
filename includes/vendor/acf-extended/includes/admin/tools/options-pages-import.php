@@ -7,7 +7,7 @@ if(!defined('ABSPATH'))
 if(!acf_get_setting('acfe/modules/options_pages'))
     return;
 
-if ( ! class_exists( 'acfe_dynamic_options_pages_import' ) && class_exists( 'acf_pro' ) ):
+if(!class_exists('acfe_dynamic_options_pages_import')):
     
 class acfe_dynamic_options_pages_import extends acfe_module_import{
     

@@ -140,31 +140,29 @@ class acfe_screen_taxonomy{
         }
         
         ?>
-        <template id="tmpl-acf-after-title">
+        <script type="text/html" id="tmpl-acf-after-title">
             
-            <div id="poststuff" class="acfe-list-postboxes">
+            <div id="poststuff" class="acfe-dev-postboxes">
                 <form method="post">
                     <?php do_meta_boxes('edit', 'acf_after_title', $this->taxonomy); ?>
                 </form>
             </div>
         
-        </template>
-        
-        <template id="tmpl-acf-normal">
+        </script>
+        <script type="text/html" id="tmpl-acf-normal">
             
-            <div id="poststuff" class="acfe-list-postboxes">
+            <div id="poststuff" class="acfe-dev-postboxes">
                 <form method="post">
                     <?php do_meta_boxes('edit', 'normal', $this->taxonomy); ?>
                 </form>
             </div>
         
-        </template>
-        
-        <template id="tmpl-acf-side">
+        </script>
+        <script type="text/html" id="tmpl-acf-side">
             
             <div class="acf-column-2">
                 
-                <div id="poststuff" class="acfe-list-postboxes -side">
+                <div id="poststuff" class="acfe-dev-postboxes -side">
                     <form method="post">
                         <?php do_meta_boxes('edit', 'side', $this->taxonomy); ?>
                     </form>
@@ -172,7 +170,7 @@ class acfe_screen_taxonomy{
             
             </div>
         
-        </template>
+        </script>
         <script type="text/javascript">
         (function($){
 

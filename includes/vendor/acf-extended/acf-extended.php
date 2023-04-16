@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Advanced Custom Fields: Extended
+ * Plugin Name: Advanced Custom Fields: Extended PRO
  * Description: All-in-one enhancement suite that improves WordPress & Advanced Custom Fields.
- * Version:     0.8.8.7
+ * Version:     10.8.8.6
  * Author:      ACF Extended
  * Author URI:  https://www.acf-extended.com
  * Text Domain: acfe
@@ -17,7 +17,7 @@ if(!class_exists('ACFE')):
 class ACFE{
 
     // Vars
-    var $version = '0.8.8.7';
+    var $version = '10.8.8.6';
 
     /*
      * Construct
@@ -162,6 +162,9 @@ class ACFE{
         acfe_include('includes/forms/form-taxonomy.php');
         acfe_include('includes/forms/form-user.php');
 
+        // Pro
+        acfe_include('pro/acf-extended-pro.php');
+
     }
 
     /*
@@ -199,7 +202,6 @@ class ACFE{
         acfe_include('includes/fields/field-repeater.php');
         acfe_include('includes/fields/field-select.php');
         acfe_include('includes/fields/field-textarea.php');
-        acfe_include('includes/fields/field-wysiwyg.php');
 
         /*
          * Fields settings
@@ -358,7 +360,7 @@ class ACFE{
      */
     function acf(){
 
-        return class_exists('ACF') && defined('ACF_VERSION') && version_compare(ACF_VERSION, '5.8', '>=');
+        return class_exists('ACF') && defined('ACF_PRO') && defined('ACF_VERSION') && version_compare(ACF_VERSION, '5.8', '>=');
 
     }
 

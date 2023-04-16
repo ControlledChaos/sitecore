@@ -3,7 +3,7 @@
 if(!defined('ABSPATH'))
     exit;
 
-if ( ! class_exists( 'acfe_dynamic_options_pages' ) && class_exists( 'acf_pro' ) ) :
+if(!class_exists('acfe_dynamic_options_pages')):
 
 class acfe_dynamic_options_pages extends acfe_dynamic_module{
     

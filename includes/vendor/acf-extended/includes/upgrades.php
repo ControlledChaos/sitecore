@@ -54,12 +54,10 @@ class acfe_upgrades{
     function do_reset(){
         
         // Modules
-        if ( class_exists( 'acf_pro' ) ) {
-            acf_get_instance('acfe_dynamic_block_types')->reset();
-            acf_get_instance('acfe_dynamic_options_pages')->reset();
-            acf_get_instance('acfe_dynamic_post_types')->reset();
-            acf_get_instance('acfe_dynamic_taxonomies')->reset();
-        }
+        acf_get_instance('acfe_dynamic_block_types')->reset();
+        acf_get_instance('acfe_dynamic_options_pages')->reset();
+        acf_get_instance('acfe_dynamic_post_types')->reset();
+        acf_get_instance('acfe_dynamic_taxonomies')->reset();
         
     }
     
