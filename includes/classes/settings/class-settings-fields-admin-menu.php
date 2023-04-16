@@ -122,6 +122,10 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	 */
 	public function admin_menu_menus_top_callback() {
 
+		if ( ! current_theme_supports( 'menus' ) ) {
+			return;
+		}
+
 		$fields   = $this->settings_fields;
 		$order    = $this->admin_menu_menus_top_order();
 		$field_id = $fields[$order]['id'];
@@ -151,6 +155,10 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	 * @return void
 	 */
 	public function admin_menu_widgets_top_callback() {
+
+		if ( ! current_theme_supports( 'widgets' ) ) {
+			return;
+		}
 
 		$fields   = $this->settings_fields;
 		$order    = $this->admin_menu_widgets_top_order();
