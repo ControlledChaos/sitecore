@@ -70,6 +70,14 @@ class Developer_Settings_Page extends Add_Page {
 		] );
 
 		$this->add_content_tab( [
+			'id'         => 'content-tools',
+			'tab'        => __( 'Content', 'sitecore' ),
+			'heading'    => __( 'Custom Content', 'sitecore' ),
+			'content'    => '',
+			'callback'   => [ $this, 'content_tools' ]
+		] );
+
+		$this->add_content_tab( [
 			'id'         => 'user-tools',
 			'tab'        => __( 'Users', 'sitecore' ),
 			'heading'    => __( 'User Options', 'sitecore' ),
@@ -95,6 +103,17 @@ class Developer_Settings_Page extends Add_Page {
 	 */
 	public function dev_tools() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-dev-tools.php';
+	}
+
+	/**
+	 * Custom Content tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function content_tools() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-dev-content.php';
 	}
 
 	/**

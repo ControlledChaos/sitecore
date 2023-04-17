@@ -79,6 +79,7 @@ function developer_settings() {
 
 	new Settings_Class\Settings_Sections_Developer;
 	new Settings_Class\Settings_Fields_Developer;
+	new Settings_Class\Settings_Fields_Developer_Content;
 	new Settings_Class\Settings_Fields_Developer_Users;
 	new Backend_Class\Developer_Settings_Page;
 }

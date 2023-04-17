@@ -34,7 +34,18 @@ class Settings_Sections_Developer extends Settings_Sections {
 				]
 			],
 			[
-				'id'       => 'scp-options-developer-users',
+				'id'       => 'scp-options-developer-content',
+				'title'    => '',
+				'callback' => '',
+				'page'     => 'developer-tools',
+				'args'     => [
+					'before_section' => '',
+					'after_section'  => '',
+					'section_class'  => 'options-developer'
+				]
+			],
+			[
+				'id'       => 'scp-options-developer-users-content',
 				'title'    => '',
 				'callback' => '',
 				'page'     => 'developer-tools',

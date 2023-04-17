@@ -109,23 +109,24 @@ function core() {
 function settings() {
 
 	$classes = [
-		ns( 'Settings', 'Settings_Sections' )               => f( 'settings', 'settings-sections.php' ),
-		ns( 'Settings', 'Settings_Sections_Sample' )        => f( 'settings', 'settings-sections-sample.php' ),
-		ns( 'Settings', 'Settings_Sections_Content' )       => f( 'settings', 'settings-sections-content.php' ),
-		ns( 'Settings', 'Settings_Sections_Admin' )         => f( 'settings', 'settings-sections-admin.php' ),
-		ns( 'Settings', 'Settings_Sections_Developer' )     => f( 'settings', 'settings-sections-developer.php' ),
-		ns( 'Settings', 'Settings_Fields' )                 => f( 'settings', 'settings-fields.php' ),
-		ns( 'Settings', 'Settings_Fields_Sample' )          => f( 'settings', 'settings-fields-sample.php' ),
-		ns( 'Settings', 'Settings_Fields_Content_Posts' )   => f( 'settings', 'settings-fields-content-posts.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Dashboard' ) => f( 'settings', 'settings-fields-admin-dashboard.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Footer' )    => f( 'settings', 'settings-fields-admin-footer.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Forms' )     => f( 'settings', 'settings-fields-admin-forms.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Header' )    => f( 'settings', 'settings-fields-admin-header.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Menu' )      => f( 'settings', 'settings-fields-admin-menu.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Toolbar' )   => f( 'settings', 'settings-fields-admin-toolbar.php' ),
-		ns( 'Settings', 'Settings_Fields_Admin_Users' )     => f( 'settings', 'settings-fields-admin-users.php' ),
-		ns( 'Settings', 'Settings_Fields_Developer' )       => f( 'settings', 'settings-fields-developer.php' ),
-		ns( 'Settings', 'Settings_Fields_Developer_Users' ) => f( 'settings', 'settings-fields-developer-users.php' )
+		ns( 'Settings', 'Settings_Sections' )                 => f( 'settings', 'settings-sections.php' ),
+		ns( 'Settings', 'Settings_Sections_Sample' )          => f( 'settings', 'settings-sections-sample.php' ),
+		ns( 'Settings', 'Settings_Sections_Content' )         => f( 'settings', 'settings-sections-content.php' ),
+		ns( 'Settings', 'Settings_Sections_Admin' )           => f( 'settings', 'settings-sections-admin.php' ),
+		ns( 'Settings', 'Settings_Sections_Developer' )       => f( 'settings', 'settings-sections-developer.php' ),
+		ns( 'Settings', 'Settings_Fields' )                   => f( 'settings', 'settings-fields.php' ),
+		ns( 'Settings', 'Settings_Fields_Sample' )            => f( 'settings', 'settings-fields-sample.php' ),
+		ns( 'Settings', 'Settings_Fields_Content_Posts' )     => f( 'settings', 'settings-fields-content-posts.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Dashboard' )   => f( 'settings', 'settings-fields-admin-dashboard.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Footer' )      => f( 'settings', 'settings-fields-admin-footer.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Forms' )       => f( 'settings', 'settings-fields-admin-forms.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Header' )      => f( 'settings', 'settings-fields-admin-header.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Menu' )        => f( 'settings', 'settings-fields-admin-menu.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Toolbar' )     => f( 'settings', 'settings-fields-admin-toolbar.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Users' )       => f( 'settings', 'settings-fields-admin-users.php' ),
+		ns( 'Settings', 'Settings_Fields_Developer' )         => f( 'settings', 'settings-fields-developer.php' ),
+		ns( 'Settings', 'Settings_Fields_Developer_Content' ) => f( 'settings', 'settings-fields-developer-content.php' ),
+		ns( 'Settings', 'Settings_Fields_Developer_Users' )   => f( 'settings', 'settings-fields-developer-users.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {
