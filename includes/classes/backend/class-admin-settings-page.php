@@ -77,6 +77,15 @@ class Admin_Settings_Page extends Add_Page {
 		] );
 
 		$this->add_content_tab( [
+			'id'         => 'forms',
+			'capability' => 'read',
+			'tab'        => __( 'Forms' ),
+			'heading'    => __( 'Form Options' ),
+			'content'    => '',
+			'callback'   => [ $this, 'forms_tab' ]
+		] );
+
+		$this->add_content_tab( [
 			'id'         => 'toolbar',
 			'capability' => 'read',
 			'tab'        => __( 'Toolbar' ),
@@ -133,6 +142,17 @@ class Admin_Settings_Page extends Add_Page {
 	 */
 	public function dashboard_tab() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-admin-dashboard.php';
+	}
+
+	/**
+	 * Forms tab callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function forms_tab() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-admin-forms.php';
 	}
 
 	/**

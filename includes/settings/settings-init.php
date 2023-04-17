@@ -48,6 +48,7 @@ function admin_settings() {
 	new Settings_Class\Settings_Sections_Admin;
 	new Settings_Class\Settings_Fields_Admin_Dashboard;
 	new Settings_Class\Settings_Fields_Admin_Footer;
+	new Settings_Class\Settings_Fields_Admin_Forms;
 	new Settings_Class\Settings_Fields_Admin_Header;
 	new Settings_Class\Settings_Fields_Admin_Menu;
 	new Settings_Class\Settings_Fields_Admin_Toolbar;

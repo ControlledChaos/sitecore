@@ -119,6 +119,7 @@ function settings() {
 		ns( 'Settings', 'Settings_Fields_Content_Posts' )   => f( 'settings', 'settings-fields-content-posts.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Dashboard' ) => f( 'settings', 'settings-fields-admin-dashboard.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Footer' )    => f( 'settings', 'settings-fields-admin-footer.php' ),
+		ns( 'Settings', 'Settings_Fields_Admin_Forms' )     => f( 'settings', 'settings-fields-admin-forms.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Header' )    => f( 'settings', 'settings-fields-admin-header.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Menu' )      => f( 'settings', 'settings-fields-admin-menu.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Toolbar' )   => f( 'settings', 'settings-fields-admin-toolbar.php' ),
