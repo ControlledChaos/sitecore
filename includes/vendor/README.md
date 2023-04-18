@@ -66,6 +66,46 @@ The following docblock replaces the plugin header in the main file.
 
 ### Updating ACFE #2
 
+Update the following files to work with certain developer settings applied by the Site Core plugin.
+
+* Find the `initialize()` method in `acf-extended/includes/modules/post-types.php`.  
+  Add to the top of the function:
+
+  ```php
+  if ( ! get_option( 'enable_dynamic_post_types', true ) ) {
+      return;
+  }
+  ```
+
+* Find the `initialize()` method in `acf-extended/includes/modules/taxonomies.php`.  
+  Add to the top of the function:
+
+  ```php
+  if ( ! get_option( 'enable_dynamic_taxonomies', true ) ) {
+      return;
+  }
+  ```
+
+* Find the `initialize()` method in `acf-extended/includes/modules/block-types.php`.  
+  Add to the top of the function:
+
+  ```php
+  if ( ! get_option( 'enable_dynamic_block_types', true ) ) {
+      return;
+  }
+  ```
+
+* Find the `initialize()` ***pro*** method in `acf-extended/pro/includes/modules/templates.php`.  
+  Add to the top of the function:
+
+  ```php
+  if ( ! get_option( 'enable_dynamic_templates', true ) ) {
+      return;
+  }
+  ```
+
+### Updating ACFE #3
+
 If the basic version of Advanced Custom Fields has replaced the Applied Content Fields files in the `includes/vendor/acf` directory then apply the following changes to ACFE files.
 
 * Remove or comment out the following condition from the `acf()` function in the core ACFE file, `acf-extended.php`.  
@@ -96,13 +136,14 @@ If the basic version of Advanced Custom Fields has replaced the Applied Content 
   Replace with: `if ( ! class_exists( 'acfe_field_flexible_content' ) && class_exists( 'acf_pro' ) ) :`
 
 * In the `acfe_upgrades` class add a check for ACF Pro in the `do_reset()` method.
-  ```
+
+  ```php
   // Modules
   if ( class_exists( 'acf_pro' ) ) {
-    acf_get_instance('acfe_dynamic_block_types')->reset();
-    acf_get_instance('acfe_dynamic_options_pages')->reset();
-    acf_get_instance('acfe_dynamic_post_types')->reset();
-    acf_get_instance('acfe_dynamic_taxonomies')->reset();
+      acf_get_instance('acfe_dynamic_block_types')->reset();
+      acf_get_instance('acfe_dynamic_options_pages')->reset();
+      acf_get_instance('acfe_dynamic_post_types')->reset();
+      acf_get_instance('acfe_dynamic_taxonomies')->reset();
   }
   ```
 
