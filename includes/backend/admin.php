@@ -119,13 +119,19 @@ function setup() {
  */
 function classes() {
 
-	new Classes\Admin\Manage_Website_Page;
-
 	if (
 		get_option( 'enable_custom_dashboard', false ) &&
 		Compat\has_acf()
 	) {
 		new Classes\Admin\Dashboard_Tabs_ACF;
+	}
+
+	if ( get_option( 'enable_sample_files', false ) ) {
+		new Classes\Admin\Manage_Website_Page;
+		new Classes\Admin\Sample_Page;
+		new Classes\Admin\Sample_Subpage;
+		new Classes\Admin\Sample_ACF_Options;
+		new Classes\Admin\Sample_ACF_Suboptions;
 	}
 }
 

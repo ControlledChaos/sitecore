@@ -98,6 +98,21 @@ class Settings_Fields_Developer extends Settings_Fields {
 					'description' => __( 'Disable Google\'s next-generation tracking technology.', 'sitecore' ),
 					'class'       => 'admin-field'
 				]
+			],
+			[
+				'id'       => 'enable_sample_files',
+				'title'    => __( 'Enable Sample Files', 'sitecore' ),
+				'callback' => [ $this, 'enable_sample_files_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => sprintf(
+						__( 'Load content and pages that have been included in the %s plugin for demonstration purposes.', 'sitecore' ),
+						SCP_NAME
+					),
+					'class'       => 'admin-field'
+				]
 			]
 		];
 
@@ -170,6 +185,17 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 */
 	public function disable_floc_order() {
 		return 5;
+	}
+
+	/**
+	 * Enable Sample Files field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_sample_files_order() {
+		return 6;
 	}
 
 	/**
@@ -278,6 +304,24 @@ class Settings_Fields_Developer extends Settings_Fields {
 			$option = false;
 		}
 		return apply_filters( 'scp_disable_floc', $option );
+	}
+
+	/**
+	 * Sanitize Enable Sample Files field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_sample_files_sanitize() {
+
+		$option = get_option( 'enable_sample_files', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_enable_sample_files', $option );
 	}
 
 	/**
@@ -532,6 +576,40 @@ class Settings_Fields_Developer extends Settings_Fields {
 			'<p class="description">%s</p>',
 			__( 'Adds an http header to disable FLoC.', 'sitecore' )
 		);
+
+		echo $html;
+	}
+
+	/**
+	 * Enable Sample Files field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enable_sample_files_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->enable_sample_files_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_sample_files_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}

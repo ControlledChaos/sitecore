@@ -100,6 +100,11 @@ function classes() {
 			new Core_Class\Editor_Options;
 		}
 	}
+
+	if ( get_option( 'enable_sample_files', false ) ) {
+		new Core_Class\Register_Sample_Type;
+		new Core_Class\Register_Sample_Tax;
+	}
 }
 
 /**
