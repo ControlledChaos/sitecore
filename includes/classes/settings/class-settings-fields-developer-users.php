@@ -23,6 +23,18 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 
 		$fields = [
 			[
+				'id'       => 'enable_dynamic_forms',
+				'title'    => __( 'Enable Forms', 'sitecore' ),
+				'callback' => [ $this, 'enable_dynamic_forms_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer-users',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Allow dynamic forms to which field groups are added. For frontend user forms.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
+			],
+			[
 				'id'       => 'dev_access',
 				'title'    => __( 'Developer Access', 'sitecore' ),
 				'callback' => [ $this, 'dev_access_callback' ],
@@ -42,18 +54,47 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 	}
 
 	/**
-	 * Direction Switcher field order
+	 * Enable Forms field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_dynamic_forms_order() {
+		return 0;
+	}
+
+	/**
+	 * Developer Access field order
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function dev_access_order() {
-		return 0;
+		return 1;
 	}
 
 	/**
-	 * Sanitize Direction Switcher field
+	 * Sanitize Enable Forms field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_dynamic_forms_sanitize() {
+
+		$option = get_option( 'enable_dynamic_forms', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return $option;
+	}
+
+	/**
+	 * Sanitize Developer Access field
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -71,7 +112,45 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 	}
 
 	/**
-	 * Direction Switcher field callback
+	 * Enable Forms field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enable_dynamic_forms_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->enable_dynamic_forms_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_dynamic_forms_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Adds a link under Tools in the admin menu.', 'sitecore' )
+		);
+
+		echo $html;
+	}
+
+	/**
+	 * Developer Access field callback
 	 *
 	 * @since  1.0.0
 	 * @access public

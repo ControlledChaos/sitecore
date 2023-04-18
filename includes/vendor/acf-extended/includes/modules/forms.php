@@ -6,19 +6,23 @@ if(!defined('ABSPATH'))
 if(!class_exists('acfe_dynamic_forms')):
 
 class acfe_dynamic_forms extends acfe_dynamic_module{
-    
+
     // vars
     public $field_groups = array();
-    
+
     /*
      * Initialize
      */
-    function initialize(){
-        
+    function initialize() {
+
+        if ( ! get_option( 'enable_dynamic_forms', true ) ) {
+			return;
+		}
+
         $this->active = acf_get_setting('acfe/modules/forms');
         $this->post_type = 'acfe-form';
         $this->label = 'Form Title';
-        
+
         $this->tool = 'acfe_dynamic_forms_export';
         $this->tools = array('json');
         $this->columns = array(
@@ -27,75 +31,75 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             'actions'       => __('Actions', 'acf'),
             'shortcode'     => __('Shortcode', 'acf'),
         );
-        
+
     }
-    
+
     /*
      * Actions
      */
     function actions(){
-        
+
         // TinyMCE
         add_filter('mce_external_plugins',                      array($this, 'mce_plugins'));
-        
+
         // Validate
         add_filter('acf/validate_value/name=acfe_form_name',    array($this, 'validate_name'), 10, 4);
-        
+
         // Save
         add_action('acfe/form/save',                            array($this, 'save'), 10, 2);
-        
+
         // Import
         add_action('acfe/form/import_fields',                   array($this, 'import_fields'), 10, 3);
-        
+
         // Includes
         acfe_include('includes/modules/forms-cheatsheet.php');
         acfe_include('includes/modules/forms-front.php');
         acfe_include('includes/modules/forms-helpers.php');
         acfe_include('includes/modules/forms-hooks.php');
-        
+
         acfe_include('includes/modules/forms-action-custom.php');
         acfe_include('includes/modules/forms-action-email.php');
         acfe_include('includes/modules/forms-action-post.php');
         acfe_include('includes/modules/forms-action-redirect.php');
         acfe_include('includes/modules/forms-action-term.php');
         acfe_include('includes/modules/forms-action-user.php');
-    
+
         do_action('acfe/include_form_actions');
-        
+
     }
-    
+
     /*
      * TinyMCE Plugin JS
      */
     function mce_plugins($plugins){
-        
+
         $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-        
+
         $plugins['acfe_form'] = acfe_get_url('assets/inc/tinymce/acfe-form' . $suffix . '.js');
-        
+
         return $plugins;
-        
+
     }
-    
+
     /*
      * Get Name
      */
     function get_name($post_id){
-        
+
         return get_field('acfe_form_name', $post_id);
-        
+
     }
-    
+
     /*
      * Init
      */
     function init(){
-    
+
         $capability = acf_get_setting('capability');
-        
+
         if(!acf_get_setting('show_admin'))
             $capability = false;
-        
+
         register_post_type($this->post_type, array(
             'label'                 => __('Forms', 'acf'),
             'description'           => __('Forms', 'acf'),
@@ -134,38 +138,38 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             'acfe_admin_orderby'    => 'title',
             'acfe_admin_order'      => 'ASC',
         ));
-        
+
     }
-    
+
     /*
      * Post Head
      */
     function post_head(){
-        
+
         global $pagenow;
-        
+
         if($pagenow === 'post-new.php')
             return;
-        
+
         $this->field_groups = acf_get_instance('acfe_dynamic_forms_helpers')->get_field_groups();
-    
+
         // Add Instructions
         add_meta_box('acfe-form-integration', 'Integration', array($this, 'meta_box_side'), $this->post_type,'side', 'core');
-    
+
         if($this->field_groups){
             add_meta_box('acfe-form-details', __('Fields', 'acf'), array($this, 'meta_box_field_groups'), $this->post_type, 'normal');
         }
-        
+
     }
-    
+
     /*
      * Metabox: Sidebar
      */
     function meta_box_side($post){
-        
+
         $form_id = $post->ID;
         $form_name = $this->get_name($form_id);
-        
+
         ?>
 
         <div class="acf-field">
@@ -186,7 +190,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             </div>
 
         </div>
-        
+
         <div class="acf-field">
 
             <div class="acf-label">
@@ -209,7 +213,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             </div>
 
             <div class="acf-input">
-                
+
                 <pre>&lt;?php get_header(); ?&gt;
 
 &lt;!-- <?php echo get_the_title($form_id); ?> --&gt;
@@ -236,12 +240,12 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
         </script>
         <?php
     }
-    
+
     /*
      * Metabox: Field Groups
      */
     function meta_box_field_groups(){
-        
+
         foreach($this->field_groups as $field_group){ ?>
 
             <div class="acf-field">
@@ -252,7 +256,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                 </div>
 
                 <div class="acf-input">
-                    
+
                     <?php if(acf_maybe_get($field_group, 'fields')){ ?>
 
                         <table class="acf-table">
@@ -265,16 +269,16 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
 
                             <tbody>
                             <?php
-                            
+
                             $array = array();
                             foreach($field_group['fields'] as $field){
-    
+
                                 $this->get_fields_labels_recursive($array, $field);
-                                
+
                             }
-                            
+
                             foreach($array as $field_key => $field_label){
-                                
+
                                 $field = acf_get_field($field_key);
                                 $type = acf_get_field_type($field['type']);
                                 $type_label = '-';
@@ -288,16 +292,16 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                                     <td width="25%"><code style="font-size:12px;"><?php echo $field_key; ?></code></td>
                                     <td width="25%"><?php echo $type_label; ?></td>
                                 </tr>
-                            
+
                             <?php } ?>
                             </tbody>
                         </table>
-                    
+
                     <?php } ?>
                 </div>
 
             </div>
-        
+
         <?php } ?>
 
         <script type="text/javascript">
@@ -314,214 +318,214 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             }
         </script>
         <?php
-        
+
     }
-    
+
     /*
      * Edit Columns HTML
      */
     function edit_columns_html($column, $post_id){
-    
+
         switch($column){
-            
+
             // Name
             case 'name':
-    
+
                 echo '<code style="font-size: 12px;">' . $this->get_name($post_id) . '</code>';
                 break;
-                
+
             // Field Groups
             case 'field_groups':
-                
+
                 $return = '—';
-                
+
                 $field_groups = acf_get_array(get_field('acfe_form_field_groups', $post_id));
-    
+
                 if(!empty($field_groups)){
-        
+
                     $links = array();
-        
+
                     foreach($field_groups as $key){
-            
+
                         $field_group = acf_get_field_group($key);
-            
+
                         if(!$field_group)
                             continue;
-            
+
                         if(acf_maybe_get($field_group, 'ID')){
-    
+
                             $links[] = '<a href="' . admin_url("post.php?post={$field_group['ID']}&action=edit") . '">' . $field_group['title'] . '</a>';
-                
+
                         }else{
-    
+
                             $links[] = $field_group['title'];
-                
+
                         }
-            
+
                     }
-        
+
                     $return = implode(', ', $links);
-                
+
                 }
-                
+
                 echo $return;
                 break;
-                
+
             // Actions
             case 'actions':
-                
+
                 $return = '—';
-    
+
                 $icons = array();
-    
+
                 if(have_rows('acfe_form_actions', $post_id)):
                     while(have_rows('acfe_form_actions', $post_id)): the_row();
-            
+
                         // Custom
                         if(get_row_layout() === 'custom'){
-                
+
                             $action_name = get_sub_field('acfe_form_custom_action');
-    
+
                             $icons[] = '<span class="acf-js-tooltip dashicons dashicons-editor-code" title="Custom action: ' . $action_name . '"></span>';
-                
+
                         }
-            
+
                         // E-mail
                         elseif(get_row_layout() === 'email'){
                             $icons[] = '<span class="acf-js-tooltip dashicons dashicons-email" title="E-mail"></span>';
                         }
-            
+
                         // Post
                         elseif(get_row_layout() === 'post'){
-                
+
                             $action = get_sub_field('acfe_form_post_action');
-                
+
                             // Insert
                             if($action === 'insert_post'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-edit" title="Create post"></span>';
                             }
-                
+
                             // Update
                             elseif($action === 'update_post'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-update" title="Update post"></span>';
                             }
-                
+
                         }
-            
+
                         // Term
                         elseif(get_row_layout() === 'term'){
-                
+
                             $action = get_sub_field('acfe_form_term_action');
-                
+
                             // Insert
                             if($action === 'insert_term'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-category" title="Create term"></span>';
                             }
-                
+
                             // Update
                             elseif($action === 'update_term'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-category" title="Update term"></span>';
                             }
-                
+
                         }
-            
+
                         // User
                         elseif(get_row_layout() === 'user'){
-                
+
                             $action = get_sub_field('acfe_form_user_action');
-                
+
                             // Insert
                             if($action === 'insert_user'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-admin-users" title="Create user"></span>';
                             }
-                
+
                             // Update
                             elseif($action === 'update_user'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-admin-users" title="Update user"></span>';
                             }
-                
+
                             // Update
                             elseif($action === 'log_user'){
                                 $icons[] = '<span class="acf-js-tooltip dashicons dashicons-migrate" title="Log user"></span>';
                             }
-                
+
                         }
-        
+
                     endwhile;
                 endif;
-    
+
                 if(!empty($icons)){
                     $return = implode('', $icons);
                 }
-                
+
                 echo $return;
                 break;
-    
+
             // Shortcode
             case 'shortcode':
-    
+
                 echo '<code style="font-size: 12px;">[acfe_form name="' . $this->get_name($post_id) . '"]</code>';
                 break;
-                
+
         }
-        
+
     }
-    
+
     /*
      * ACF Save post
      */
     function save_post($post_id){
-    
+
         // Get Post
         $name = $this->get_name($post_id);
-        
+
         // Actions
         do_action("acfe/form/save",                 $name, $post_id);
         do_action("acfe/form/save/name={$name}",    $name, $post_id);
         do_action("acfe/form/save/id={$post_id}",   $name, $post_id);
-        
+
     }
-    
+
     /*
      * Save
      */
     function save($name, $post_id){
-        
+
         // Update post
         wp_update_post(array(
             'ID'            => $post_id,
             'post_name'     => $name,
             'post_status'   => 'publish',
         ));
-        
+
         // Get generated post name (possible name-2)
         $_name = get_post_field('post_name', $post_id);
-        
+
         // Update the meta if different
         if($_name !== $name)
             update_field('acfe_form_name', $_name, $post_id);
-        
+
     }
-    
+
     /*
      * Validate Name
      */
     function validate_name($valid, $value, $field, $input){
-    
+
         if($valid !== true)
             return $valid;
-    
+
         // Check current name
         $post_id = acfe_get_post_id();
-    
+
         if(empty($post_id))
             return $valid;
-    
+
         $name = get_field($field['name'], $post_id);
-    
+
         if($value === $name)
             return $valid;
-        
+
         $get_posts = get_posts(array(
             'post_type'         => $this->post_type,
             'name'              => $value,
@@ -530,146 +534,146 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             'post_status'       => array('publish', 'acf-disabled'),
             'posts_per_page'    => 1
         ));
-        
+
         if(!empty($get_posts))
             $valid = 'This form name already exists';
-        
+
         return $valid;
-        
+
     }
-    
+
     /*
      * Import
      */
     function import($name, $args){
-        
+
         // Vars
         $title = acf_extract_var($args, 'title');
         $name = $args['acfe_form_name'];
-    
+
         // Already exists
         if(get_page_by_path($name, OBJECT, $this->post_type)){
             return new WP_Error('acfe_form_import_already_exists', __("Form \"{$title}\" already exists. Import aborted."));
         }
-    
+
         // Import Post
         $post_id = false;
-    
+
         $post = array(
             'post_title'    => $title,
             'post_name'     => $name,
             'post_type'     => $this->post_type,
             'post_status'   => 'publish'
         );
-    
+
         $post = apply_filters("acfe/form/import_post",                 $post, $name);
         $post = apply_filters("acfe/form/import_post/name={$name}",    $post, $name);
-    
+
         if($post !== false){
             $post_id = wp_insert_post($post);
         }
-    
+
         if(!$post_id || is_wp_error($post_id)){
             return new WP_Error('acfe_form_import_error', __("Something went wrong with the form \"{$title}\". Import aborted."));
         }
-    
+
         // Import Args
         $args = apply_filters("acfe/form/import_args",                  $args, $name, $post_id);
         $args = apply_filters("acfe/form/import_args/name={$name}",     $args, $name, $post_id);
         $args = apply_filters("acfe/form/import_args/id={$post_id}",    $args, $name, $post_id);
-    
+
         if($args === false)
             return $post_id;
-        
+
         // Import Fields
         acf_enable_filter('local');
-        
+
         do_action("acfe/form/import_fields",               $name, $args, $post_id);
         do_action("acfe/form/import_fields/name={$name}",  $name, $args, $post_id);
         do_action("acfe/form/import_fields/id={$post_id}", $name, $args, $post_id);
-        
+
         acf_disable_filter('local');
-    
+
         // Save
         $this->save_post($post_id);
-        
+
         return $post_id;
-        
+
     }
-    
+
     /*
      * Import Fields
      */
     function import_fields($name, $args, $post_id){
-    
+
         // Update
         acf_update_values($args, $post_id);
-        
+
     }
-    
+
     /*
      * Export: Choices
      */
     function export_choices(){
-        
+
         $choices = array();
-        
+
         $get_posts = get_posts(array(
             'post_type'         => 'acfe-form',
             'posts_per_page'    => -1,
             'fields'            => 'ids'
         ));
-        
+
         if(!$get_posts)
             return $choices;
-        
+
         foreach($get_posts as $post_id){
-            
+
             $name = $this->get_name($post_id);
             $choices[$name] = esc_html(get_the_title($post_id));
-            
+
         }
-        
+
         return $choices;
-        
+
     }
-    
+
     /*
      * Export: Data
      */
     function export_data($name){
-    
+
         if(!$form = get_page_by_path($name, OBJECT, $this->post_type))
             return false;
-    
+
         acf_enable_filter('local');
-        
+
         $args = array_merge(array('title' => get_the_title($form->ID)), get_fields($form->ID, false));
-    
+
         // Filters
         $args = apply_filters("acfe/form/export_args",                 $args, $name);
         $args = apply_filters("acfe/form/export_args/name={$name}",    $args, $name);
-    
+
         acf_disable_filter('local');
-        
+
         return $args;
-        
+
     }
-    
+
     /*
      * Add Local Field Group
      */
     function add_local_field_group(){
-    
+
         $actions_layouts = apply_filters('acfe/form/actions', array());
         ksort($actions_layouts);
-    
+
         acf_add_local_field_group(array(
             'key' => 'group_acfe_dynamic_form',
             'title' => 'Dynamic Form',
             'acfe_display_title' => '',
             'fields' => array(
-            
+
                 /*
                  * Actions
                  */
@@ -755,7 +759,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                     'min' => '',
                     'max' => '',
                 ),
-            
+
                 /*
                  * Settings
                  */
@@ -881,7 +885,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                             'append' => '',
                             'maxlength' => '',
                         ),
-                
+
                     ),
                 ),
                 array(
@@ -1195,7 +1199,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                     'return_format' => 'value',
                     'save_other_choice' => 0,
                 ),
-            
+
                 /*
                  * HTML
                  */
@@ -1303,7 +1307,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                     'maxlength' => '',
                     'rows' => 2,
                 ),
-            
+
                 /*
                  * Validation
                  */
@@ -1444,7 +1448,7 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
                     'append' => '',
                     'maxlength' => '',
                 ),
-            
+
                 /*
                  * Submission
                  */
@@ -1571,7 +1575,7 @@ If used, you have to include the following code <code>%s</code> to print the act
                     'maxlength' => '',
                     'rows' => 2,
                 ),
-            
+
                 /*
                  * Cheatsheet
                  */
@@ -1592,7 +1596,7 @@ If used, you have to include the following code <code>%s</code> to print the act
                     'placement' => 'top',
                     'endpoint' => 0,
                 ),
-            
+
                 array(
                     'key' => 'field_acfe_form_cheatsheet_field',
                     'label' => 'Field',
@@ -1828,9 +1832,9 @@ If used, you have to include the following code <code>%s</code> to print the act
             'acfe_meta' => '',
             'acfe_note' => '',
         ));
-        
+
     }
-    
+
 }
 
 acf_new_instance('acfe_dynamic_forms');
@@ -1841,70 +1845,70 @@ endif;
  * ACFE: Import Form
  */
 function acfe_import_form($args){
-    
+
     // json
     if(is_string($args))
         $args = json_decode($args, true);
-    
+
     if(!is_array($args) || empty($args))
         return new WP_Error('acfe_import_form_invalid_input', __("Input is invalid: Must be a json string or an array."));
-    
+
     // Instance
     $instance = acf_get_instance('acfe_dynamic_forms');
-    
+
     // Single
     if(acf_maybe_get($args, 'title')){
-        
+
         $name = acf_maybe_get($args, 'acfe_form_name');
-        
+
         $args = array(
             $name => $args
         );
-        
+
     }
-    
+
     $result = array();
-    
+
     foreach($args as $name => $data){
-        
+
         // Import
         $post_id = $instance->import($name, $data);
-        
+
         $return = array(
             'success'   => true,
             'post_id'   => $post_id,
             'message'   => 'Form "' . acf_maybe_get($data, 'title') . '" successfully imported.',
         );
-        
+
         // Error
         if(is_wp_error($post_id)){
-            
+
             $return['post_id'] = 0;
             $return['success'] = false;
             $return['message'] = $post_id->get_error_message();
-            
+
             if($post_id->get_error_code() === 'acfe_form_import_already_exists'){
-                
+
                 $get_post = get_page_by_path($name, OBJECT, $instance->post_type);
-                
+
                 if($get_post){
                     $return['post_id'] = $get_post->ID;
                 }
-                
+
             }
-            
+
         }
-        
+
         $result[] = $return;
-        
+
     }
-    
+
     if(count($result) === 1){
         $result = $result[0];
     }
-    
+
     return $result;
-    
+
 }
 
 /*

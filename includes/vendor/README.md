@@ -95,6 +95,15 @@ Update the following files to work with certain developer settings applied by th
   }
   ```
 
+* Find the `initialize()` method in `acf-extended/includes/modules/forms.php`.  
+  Add to the top of the function:
+
+  ```php
+  if ( ! get_option( 'enable_dynamic_forms', true ) ) {
+      return;
+  }
+  ```
+
 * Find the `initialize()` ***pro*** method in `acf-extended/pro/includes/modules/templates.php`.  
   Add to the top of the function:
 
