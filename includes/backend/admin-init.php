@@ -218,6 +218,11 @@ function admin_only_updates() {
  */
 function menu_order( $order ) {
 
+	$links = '';
+	if ( get_option( 'enable_link_manager', false ) ) {
+		$links = 'link-manager.php';
+	}
+
 	// Add items to follow the dashboard.
 	$order = [
 		'index.php',
@@ -226,6 +231,7 @@ function menu_order( $order ) {
 		'edit.php',
 		'edit.php?post_type=page',
 		'custom-content',
+		$links,
 		'edit-comments.php',
 		'separator2'
 	];
