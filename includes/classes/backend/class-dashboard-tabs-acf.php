@@ -38,9 +38,9 @@ class Dashboard_Tabs_ACF extends Add_Page {
 		$options = [
 			'acf'            => [
 				'acf_page'   => true,
-				'capability' => 'develop'
+				'capability' => 'manage_options'
 			],
-			'capability'    => 'develop',
+			'capability'    => 'manage_options',
 			'menu_slug'     => 'acf-dashboard-tabs',
 			'parent_slug'   => 'index.php',
 			'icon_url'      => 'dashicons-index-card',

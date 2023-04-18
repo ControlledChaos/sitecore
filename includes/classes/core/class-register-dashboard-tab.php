@@ -46,15 +46,15 @@ class Register_Dashboard_Tab extends Register_Type {
 		$options = [
 			'menu_position'       => 20,
 			'capabilities'        => [
-				'edit_'   . $this->type_key => 'develop',
-				'delete_' . $this->type_key => 'develop',
-				'edit_post'          => 'develop',
-				'edit_posts'         => 'develop',
-				'edit_others_posts'  => 'develop',
-				'publish_posts'      => 'develop',
-				'read_post'          => 'develop',
-				'read_private_posts' => 'develop',
-				'delete_posts'       => 'develop'
+				'edit_'   . $this->type_key => 'manage_options',
+				'delete_' . $this->type_key => 'manage_options',
+				'edit_post'          => 'manage_options',
+				'edit_posts'         => 'manage_options',
+				'edit_others_posts'  => 'manage_options',
+				'publish_posts'      => 'manage_options',
+				'read_post'          => 'manage_options',
+				'read_private_posts' => 'manage_options',
+				'delete_posts'       => 'manage_options'
 			],
 			'exclude_from_search' => false,
 			'publicly_queryable'  => false,
