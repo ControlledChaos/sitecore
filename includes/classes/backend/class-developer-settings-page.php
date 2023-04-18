@@ -65,6 +65,7 @@ class Developer_Settings_Page extends Add_Page {
 			'id'         => 'dev-tools',
 			'tab'        => __( 'Tools', 'sitecore' ),
 			'heading'    => __( 'Developer Tools', 'sitecore' ),
+			'icon'       => 'dashicons dashicons-admin-tools',
 			'content'    => '',
 			'callback'   => [ $this, 'dev_tools' ]
 		] );
@@ -73,6 +74,7 @@ class Developer_Settings_Page extends Add_Page {
 			'id'         => 'content-tools',
 			'tab'        => __( 'Content', 'sitecore' ),
 			'heading'    => __( 'Custom Content', 'sitecore' ),
+			'icon'       => 'dashicons dashicons-edit',
 			'content'    => '',
 			'callback'   => [ $this, 'content_tools' ]
 		] );
@@ -81,6 +83,7 @@ class Developer_Settings_Page extends Add_Page {
 			'id'         => 'user-tools',
 			'tab'        => __( 'Users', 'sitecore' ),
 			'heading'    => __( 'User Options', 'sitecore' ),
+			'icon'       => 'dashicons dashicons-admin-users',
 			'content'    => '',
 			'callback'   => [ $this, 'user_tools' ]
 		] );
@@ -89,6 +92,7 @@ class Developer_Settings_Page extends Add_Page {
 			'id'         => 'system-info',
 			'tab'        => __( 'System', 'sitecore' ),
 			'heading'    => __( 'System Information', 'sitecore' ),
+			'icon'       => 'dashicons dashicons-database',
 			'content'    => '',
 			'callback'   => [ $this, 'system_info' ]
 		] );

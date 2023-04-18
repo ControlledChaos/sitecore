@@ -44,6 +44,14 @@
   cursor: default;
 }
 
+.admin-tabs .admin-tabs-list .content-tab .dashicons,
+.admin-tabs .admin-tabs-list .content-tab .dashicons-before:before {
+  vertical-align: text-bottom;
+  width: auto;
+  height: auto;
+  font-size: 1.5em;
+}
+
 .admin-tabs .tab-content {
   display: none;
   position: relative;
