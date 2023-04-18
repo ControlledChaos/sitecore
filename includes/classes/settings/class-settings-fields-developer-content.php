@@ -19,7 +19,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() {
+	public function __construct() { 
 
 		$fields = [];
 
@@ -45,6 +45,18 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Allow the addition and management of custom taxonomies via user interface.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
+			],
+			[
+				'id'       => 'enable_dynamic_block_types',
+				'title'    => __( 'Enable Block Types', 'sitecore' ),
+				'callback' => [ $this, 'enable_dynamic_block_types_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer-content',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Allow the addition and management of custom block types via user interface.', 'sitecore' ),
 					'class'       => 'admin-field'
 				]
 			]
@@ -101,6 +113,17 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	}
 
 	/**
+	 * Enable Block Types field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function enable_dynamic_block_types_order() {
+		return 2;
+	}
+
+	/**
 	 * Enable Templates field order
 	 *
 	 * @since  1.0.0
@@ -108,7 +131,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function enable_dynamic_templates_order() {
-		return 2;
+		return 3;
 	}
 
 	/**
@@ -139,6 +162,24 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_taxonomies_sanitize() {
 
 		$option = get_option( 'enable_dynamic_taxonomies', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return $option;
+	}
+
+	/**
+	 * Sanitize Enable Block Types field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_dynamic_block_types_sanitize() {
+
+		$option = get_option( 'enable_dynamic_block_types', true );
 		if ( true == $option ) {
 			$option = true;
 		} else {
@@ -216,6 +257,44 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 		$order    = $this->enable_dynamic_taxonomies_order();
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_taxonomies_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Adds a link under Content in the admin menu.', 'sitecore' )
+		);
+
+		echo $html;
+	}
+
+	/**
+	 * Enable Block Types field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enable_dynamic_block_types_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->enable_dynamic_block_types_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_dynamic_block_types_sanitize();
 
 		$html = sprintf(
 			'<fieldset><legend class="screen-reader-text">%s</legend>',

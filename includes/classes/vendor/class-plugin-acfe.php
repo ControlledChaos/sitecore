@@ -175,7 +175,11 @@ class Plugin_ACFE extends Plugin {
 		$content = get_plugin_page_hookname( 'custom-content', 'custom-content' );
 
 		// Only modify dynamic post types & taxonomies.
-		if ( 'acfe-dpt' == $post_type || 'acfe-dt' == $post_type ) {
+		if (
+			'acfe-dpt' == $post_type ||
+			'acfe-dt'  == $post_type ||
+			'acfe-dbt' == $post_type
+		) {
 
 			// Only show under content settings if the page exists.
 			if ( $content ) {
