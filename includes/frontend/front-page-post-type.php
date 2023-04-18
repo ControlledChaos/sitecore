@@ -5,8 +5,8 @@
  * Select a custom post type to be displayed in place of latest posts on the front page.
  *
  * @package    Site_Core
- * @subpackage Post Types
- * @category   Blog
+ * @subpackage Includes
+ * @category   Frontend
  * @since      1.0.0
  */
 

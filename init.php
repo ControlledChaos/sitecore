@@ -30,9 +30,6 @@ foreach ( glob( SCP_PATH . 'includes/core/*.php' ) as $filename ) {
 foreach ( glob( SCP_PATH . 'includes/settings/*.php' ) as $filename ) {
 	require $filename;
 }
-foreach ( glob( SCP_PATH . 'includes/post-types/*.php' ) as $filename ) {
-	require $filename;
-}
 foreach ( glob( SCP_PATH . 'includes/media/*.php' ) as $filename ) {
 	require $filename;
 }

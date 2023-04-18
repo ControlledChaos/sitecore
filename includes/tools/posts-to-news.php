@@ -5,8 +5,8 @@
  *  Changes the default posts to "news".
  *
  * @package    Site_Core
- * @subpackage Post Types
- * @category   Blog
+ * @subpackage Includes
+ * @category   Tools
  * @since      1.0.0
  */
 
