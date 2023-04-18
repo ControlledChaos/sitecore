@@ -1,6 +1,6 @@
 <?php
 /**
- * Add page class
+ * Add admin page class
  *
  * @package    Site_Core
  * @subpackage Classes
