@@ -3,8 +3,8 @@
  * Admin dashboard
  *
  * @package    Site_Core
- * @subpackage Admin
- * @category   Dashboard
+ * @subpackage Includes
+ * @category   Admin
  * @since      1.0.0
  */
 

@@ -3,8 +3,8 @@
  * Third-party code compatibility
  *
  * @package    Site_Core
- * @subpackage Vendor
- * @category   Functions
+ * @subpackage Includes
+ * @category   Vendor
  * @since      1.0.0
  */
 

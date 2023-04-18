@@ -3,8 +3,8 @@
  * Posts list tables
  *
  * @package    Site_Core
- * @subpackage Admin
- * @category   List Tables
+ * @subpackage Includes
+ * @category   Admin
  * @since      1.0.0
  */
 

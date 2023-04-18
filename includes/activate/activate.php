@@ -8,7 +8,8 @@
  * provided by the management system.
  *
  * @package    Site_Core
- * @subpackage Activate
+ * @subpackage Includes
+ * @category   Activate
  * @since      1.0.0
  */
 

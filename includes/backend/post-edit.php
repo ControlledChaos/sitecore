@@ -3,8 +3,8 @@
  * Post edit screens
  *
  * @package    Site_Core
- * @subpackage Admin
- * @category   Post Edit
+ * @subpackage Includes
+ * @category   Admin
  * @since      1.0.0
  */
 

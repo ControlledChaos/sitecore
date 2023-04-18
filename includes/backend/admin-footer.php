@@ -3,8 +3,8 @@
  * Admin footer
  *
  * @package    Site_Core
- * @subpackage Admin
- * @category   Footer
+ * @subpackage Includes
+ * @category   Admin
  * @since      1.0.0
  */
 

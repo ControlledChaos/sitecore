@@ -3,8 +3,8 @@
  * Site frontend
  *
  * @package    Site_Core
- * @subpackage Front
- * @category   General
+ * @subpackage Includes
+ * @category   Frontend
  * @since      1.0.0
  */
 

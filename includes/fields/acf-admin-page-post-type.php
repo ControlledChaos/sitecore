@@ -5,8 +5,8 @@
  * Requires ACF Pro to be active,
  *
  * @package    Site_Core
- * @subpackage Fields
- * @category   ACF
+ * @subpackage Includes
+ * @category   Fields
  * @since      1.0.0
  */
 

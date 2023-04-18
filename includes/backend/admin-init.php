@@ -3,8 +3,8 @@
  * Admin screens
  *
  * @package    Site_Core
- * @subpackage Admin
- * @category   General
+ * @subpackage Includes
+ * @category   Admin
  * @since      1.0.0
  */
 

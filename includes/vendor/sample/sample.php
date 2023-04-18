@@ -4,9 +4,10 @@
  *
  * Included for demonstration of bundling a plugin in the Site Core plugin.
  *
- * @package  Site_Core
- * @category Core
- * @since    1.0.0
+ * @package    Site_Core
+ * @subpackage Includes
+ * @category   Vendor
+ * @since      1.0.0
  *
  * Plugin Name:  Sample Plugin
  * Description:  Included for demonstration of bundling a plugin in the Site Core plugin.

@@ -4,7 +4,7 @@
  *
  * @package    Site_Core
  * @subpackage Includes
- * @category   Core
+ * @category   Settings
  * @since      1.0.0
  */
 

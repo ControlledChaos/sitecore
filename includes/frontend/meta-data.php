@@ -3,8 +3,8 @@
  * Frontend meta tags
  *
  * @package    Site_Core
- * @subpackage Classes
- * @category   Front
+ * @subpackage Includes
+ * @category   Frontend
  * @since      1.0.0
  */
 
