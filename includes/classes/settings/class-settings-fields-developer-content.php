@@ -19,7 +19,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct() { 
+	public function __construct() {
 
 		$fields = [];
 
