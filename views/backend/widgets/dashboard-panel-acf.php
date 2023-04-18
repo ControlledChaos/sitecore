@@ -13,9 +13,11 @@ $get_tabs = get_field( 'dashboard_content_tabs', 'option' );
 
 // Count active tabs.
 $tab_count = 0;
-foreach ( $get_tabs as $tab ) {
-	if ( $tab['dashboard_content_tab_active'] ) {
-		$tab_count++;
+if ( $get_tabs ) {
+	foreach ( $get_tabs as $tab ) {
+		if ( $tab['dashboard_content_tab_active'] ) {
+			$tab_count++;
+		}
 	}
 }
 
