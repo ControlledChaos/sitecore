@@ -39,7 +39,7 @@ class Sample_Subpage extends Add_Page {
 		$options = [
 			'capability'    => 'read',
 			'menu_slug'     => 'sample-subpage',
-			'parent_slug'   => 'plugins.php',
+			'parent_slug'   => 'sample-page',
 			'icon_url'      => 'dashicons-welcome-learn-more',
 			'position'      => 9,
 			'add_help'      => true
