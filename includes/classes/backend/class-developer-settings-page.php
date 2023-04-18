@@ -82,7 +82,7 @@ class Developer_Settings_Page extends Add_Page {
 		$this->add_content_tab( [
 			'id'         => 'user-tools',
 			'tab'        => __( 'Users', 'sitecore' ),
-			'heading'    => __( 'User Options', 'sitecore' ),
+			'heading'    => __( 'User Tools', 'sitecore' ),
 			'icon'       => 'dashicons dashicons-admin-users',
 			'content'    => '',
 			'callback'   => [ $this, 'user_tools' ]
