@@ -54,10 +54,10 @@ foreach ( $get_tabs as $tab ) :
 
 		$href = "#$tab_id";
 
-		if ( ! empty( $tab['icon'] ) ) {
+		if ( ! empty( $tab['dashboard_content_tab_icon'] ) ) {
 			$icon = sprintf(
-				'<span class="content-tab-icon %1s"></span> ',
-				$tab['icon']
+				'<span class="content-tab-icon dashicons %1s"></span> ',
+				$tab['dashboard_content_tab_icon']
 			);
 		} else {
 			$icon = null;
