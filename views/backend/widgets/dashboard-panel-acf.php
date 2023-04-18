@@ -11,16 +11,24 @@
 // Get ACF fields from registered options page.
 $get_tabs = get_field( 'dashboard_content_tabs', 'option' );
 
+// Count active tabs.
+$tab_count = 0;
+foreach ( $get_tabs as $tab ) {
+	if ( $tab['dashboard_content_tab_active'] ) {
+		$tab_count++;
+	}
+}
+
 /**
  * If there are no tabs set in the Dashboard Tabs options page
  * then use the default custom dashboard content.
  */
-if ( ! $get_tabs || ! get_field( 'dashboard_content_tabs_active', 'option' ) ) {
+if ( 0 == $tab_count || ! get_field( 'dashboard_content_tabs_active', 'option' ) ) {
 	include_once SCP_PATH . '/views/backend/widgets/dashboard-panel.php';
 	return;
 }
 
-if ( count( $get_tabs ) > 1 ) {
+if ( $tab_count > 1 ) {
 	$tabbed         = ' data-tabbed="tabbed"';
 	$wrap_class     = 'dashboard-panel-content registered-content-wrap admin-tabs';
 	$content_class  = 'registered-content tab-content';
@@ -35,7 +43,7 @@ if ( count( $get_tabs ) > 1 ) {
 
 <?php
 
-if ( count( $get_tabs ) > 1 ) : ?>
+if ( $tab_count > 1 ) : ?>
 
 <ul class="admin-tabs-list hide-if-no-js">
 <?php
@@ -50,7 +58,7 @@ foreach ( $get_tabs as $tab ) :
 		$user_cap = 'read';
 	}
 
-	if ( current_user_can( $user_cap ) ) :
+	if ( current_user_can( $user_cap ) && $tab['dashboard_content_tab_active'] ) :
 
 		$href = "#$tab_id";
 
@@ -76,6 +84,7 @@ endforeach;
 <?php endif; ?>
 
 <?php
+if ( $tab_count > 0 ) :
 foreach ( $get_tabs as $tab ) :
 
 	$tab_id = strtolower( str_replace( [ ' ', '-' ], '_', $tab['dashboard_content_tab_label'] ) );
@@ -87,7 +96,7 @@ foreach ( $get_tabs as $tab ) :
 		$user_cap = 'read';
 	}
 
-	if ( current_user_can( $user_cap ) ) :
+	if ( current_user_can( $user_cap ) && $tab['dashboard_content_tab_active'] ) :
 	?>
 	<div id="<?php echo esc_attr( $tab_id ); ?>" class="<?php echo $content_class; ?>">
 		<?php
@@ -102,5 +111,6 @@ foreach ( $get_tabs as $tab ) :
 	</div>
 	<?php
 	endif;
-endforeach; ?>
+endforeach;
+endif; ?>
 </div>

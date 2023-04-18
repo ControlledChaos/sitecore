@@ -12,7 +12,7 @@ namespace SiteCore\Admin\Dashboard;
 
 // Alias namespaces.
 use SiteCore\Classes as Classes,
-	SiteCore\Classes\Users as Users,
+	SiteCore\Classes\Users  as Users,
 	SiteCore\Classes\Vendor as Vendor;
 
 // Restrict direct access.
