@@ -187,8 +187,16 @@ class Plugin_ACFE extends Plugin {
 				// Set content settings as menu parent.
 				$args['show_in_menu'] = 'custom-content';
 			}
-			return $args;
 		}
+
+		if ( 'acfe-form' == $post_type ) {
+			$args['show_in_menu'] = 'tools.php';
+		}
+
+		if ( 'acfe-dop' == $post_type ) {
+			$args['show_in_menu'] = 'options-general.php';
+		}
+
 		return $args;
 	}
 }
