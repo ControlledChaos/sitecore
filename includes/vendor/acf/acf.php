@@ -5,8 +5,8 @@
  * Content editing for WordPress and ClassicPress.
  *
  * @package    Site_Core
- * @subpackage Vendor
- * @category   Plugins
+ * @subpackage Includes
+ * @category   Vendor
  * @since      1.0.0
  * @author     Elliot Condon
  * @link       https://www.advancedcustomfields.com
@@ -26,7 +26,7 @@
  * bundling the free version of Advanced Custom Fields.
  *
  * The Advanced Custom Fields plugin, free and pro versions,
- * are significantly than this this version so it is without
+ * are significantly different than this version so it is without
  * ethical concerns that this pro version is bundled here.
  *
  * Either the free and pro version of Advanced Custom Fields

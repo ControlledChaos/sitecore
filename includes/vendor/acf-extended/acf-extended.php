@@ -1,12 +1,16 @@
 <?php
 /**
- * Plugin Name: Advanced Custom Fields: Extended PRO
- * Description: All-in-one enhancement suite that improves WordPress & Advanced Custom Fields.
- * Version:     10.8.8.6
- * Author:      ACF Extended
- * Author URI:  https://www.acf-extended.com
- * Text Domain: acfe
- * Domain Path: /lang
+ * Advanced Custom Fields: Extended
+ *
+ * "Enhancement Suite which improves Advanced Custom Fields administration."
+ *
+ * @package    Site_Core
+ * @subpackage Includes
+ * @category   Vendor
+ * @version    x.x.x
+ * @since      10.8.8.6
+ * @author     ACF Extended
+ * @link       https://www.acf-extended.com
  */
 
 if(!defined('ABSPATH'))

@@ -2,11 +2,21 @@
 
 This plugin includes files & functionality provided by outside sources, including compatible plugins. These plugins may need to be updated periodically so following are any changes made to third-party files and instructions for how to maintain these changes upon updating files.
 
+## Applied Content Fields
+
+This plugin includes a bundled fork of Advanced Custom Fields Pro version 5.9.6, the last version of the plugin released before it was sold to by its originator, Elliot Condon, to the Delicious Brains corporation.
+
 ## Advanced Custom Fields
 
-"Customize WordPress with powerful, professional and intuitive fields."
+The Advanced Custom Fields plugin, basic version or Pro version, should work in place of the Applied Content Fields plugin without issue.
 
-### Updating ACF #1
+### Adding Advanced Custom Fields #1
+
+Delete all files in the `includes/vendor/acf` directory. Replace with all files from the Advanced Custom Fields plugin.
+
+It is recommended to retain the `index.php` security file in the `acf` directory.
+
+### Adding Advanced Custom Fields #2
 
 The following docblock replaces the plugin header in the main file.
 
@@ -17,8 +27,8 @@ The following docblock replaces the plugin header in the main file.
  * "Customize WordPress with powerful, professional and intuitive fields."
  *
  * @package    Site_Core
- * @subpackage Vendor
- * @category   Plugins
+ * @subpackage Includes
+ * @category   Vendor
  * @version    x.x.x
  * @since      1.0.0
  * @author     Elliot Condon, Delicious Brains
@@ -26,15 +36,13 @@ The following docblock replaces the plugin header in the main file.
  */
 ```
 
-### Updating ACF #2
+### Adding Advanced Custom Fields #3
 
-Remove the upsell (since Delicious Brains) in `includes/admin/views/html-admin-navigation.php`.
-
-It is recommended to retain the `index.php` security file in the `acf` directory.
+If bundling the basic version, remove the upsell (since Delicious Brains) in `includes/admin/views/html-admin-navigation.php`.
 
 ## Advanced Custom Fields: Extended
 
-"Enhancement Suite which improves Advanced Custom Fields administration."
+This plugin includes a bundled version of Advanced Custom Fields: Extended Pro version 10.8.8.6, modified to work with certain developer settings applied by the Site Core plugin.
 
 ### Updating ACFE #1
 
@@ -47,8 +55,8 @@ The following docblock replaces the plugin header in the main file.
  * "Enhancement Suite which improves Advanced Custom Fields administration."
  *
  * @package    Site_Core
- * @subpackage Vendor
- * @category   Plugins
+ * @subpackage Includes
+ * @category   Vendor
  * @version    x.x.x
  * @since      1.0.0
  * @author     ACF Extended
@@ -57,6 +65,8 @@ The following docblock replaces the plugin header in the main file.
 ```
 
 ### Updating ACFE #2
+
+If the basic version of Advanced Custom Fields has replaced the Applied Content Fields files in the `includes/vendor/acf` directory then apply the following changes to ACFE files.
 
 * Remove or comment out the following condition from the `acf()` function in the core ACFE file, `acf-extended.php`.  
   Remove: `&& defined('ACF_PRO')`
