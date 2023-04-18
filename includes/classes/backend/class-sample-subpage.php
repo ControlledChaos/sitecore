@@ -67,6 +67,7 @@ class Sample_Subpage extends Add_Page {
 			'id'         => 'sample-one',
 			'tab'        => __( 'One', 'sitecore' ),
 			'heading'    => __( 'Sample Content One', 'sitecore' ),
+			'icon'       => 'dashicons-admin-tools',
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
@@ -75,6 +76,7 @@ class Sample_Subpage extends Add_Page {
 			'id'         => 'sample-two',
 			'tab'        => __( 'Two', 'sitecore' ),
 			'heading'    => __( 'Sample Content Two', 'sitecore' ),
+			'icon'       => 'dashicons-hammer',
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
 		] );
