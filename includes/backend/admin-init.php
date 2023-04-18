@@ -222,10 +222,10 @@ function menu_order( $order ) {
 	$order = [
 		'index.php',
 		'separator1',
-		'custom-content',
 		'upload.php',
 		'edit.php',
 		'edit.php?post_type=page',
+		'custom-content',
 		'edit-comments.php',
 		'separator2'
 	];
