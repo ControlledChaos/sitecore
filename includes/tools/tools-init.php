@@ -32,20 +32,14 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
+
 	add_action( 'tool_box', $ns( 'available_tools' ) );
 	add_action( 'admin_head', $ns( 'add_help_tabs' ) );
-
-	if ( get_option( 'type_tax_sort_order', false ) ) {
-		new Core_Class\Types_Taxes_Order;
-	}
 
 	if ( get_option( 'direction_switch', false ) ) {
 		add_action( 'init', $ns( 'set_direction' ) );
 		add_action( 'admin_bar_menu', $ns( 'toolbar_dir_switch' ), 999 );
-	}
-
-	if ( get_option( 'customizer_reset', false ) ) {
-		new Tools_Class\Customizer_Reset;
 	}
 
 	if ( get_option( 'disable_floc', true ) ) {
@@ -56,6 +50,23 @@ function setup() {
 		add_action( 'after_setup_theme', function() {
 			Test_Drive\setup();
 		} );
+	}
+}
+
+/**
+ * Tools classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+
+	if ( get_option( 'type_tax_sort_order', false ) ) {
+		new Core_Class\Types_Taxes_Order;
+	}
+
+	if ( get_option( 'customizer_reset', false ) ) {
+		new Tools_Class\Customizer_Reset;
 	}
 }
 

@@ -30,10 +30,7 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	// Add custom media taxonomy.
-	add_action( 'plugins_loaded', function() {
-		new Core_Class\Register_Media_Type;
-	} );
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Add categories and tags to media library items.
 	add_action( 'init' , $ns( 'media_taxonomies' ) );
@@ -57,6 +54,17 @@ function setup() {
 	// Add featured images to RSS feeds.
 	add_filter( 'the_excerpt_rss', $ns( 'rss_featured_images' ) );
 	add_filter( 'the_content_feed', $ns( 'rss_featured_images' ) );
+}
+
+/**
+ * Media classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+
+	new Core_Class\Register_Media_Type;
 }
 
 /**

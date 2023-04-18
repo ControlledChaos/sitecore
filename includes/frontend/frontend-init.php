@@ -28,6 +28,8 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
+	add_action( 'plugins_loaded', $ns( 'classes' ) );
+
 	// Remove unpopular meta tags.
 	add_action( 'init', $ns( 'head_cleanup' ) );
 
@@ -47,6 +49,16 @@ function setup() {
 	// Post type archive titles & descriptions.
 	add_filter( 'get_the_archive_title', $ns( 'archive_titles' ) );
 	add_filter( 'get_the_archive_description', $ns( 'archive_descriptions' ) );
+}
+
+/**
+ * Frontend classes
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function classes() {
+	// instantiate classes.
 }
 
 /**
