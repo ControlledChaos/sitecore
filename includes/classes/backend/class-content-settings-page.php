@@ -64,7 +64,7 @@ class Content_Settings_Page extends Add_Page {
 			'id'         => 'content-settings-intro',
 			'tab'        => __( 'Intro', 'sitecore' ),
 			'heading'    => __( 'About This Website\'s Content', 'sitecore' ),
-			'icon'       => 'dashicons dashicons-info',
+			'icon'       => 'dashicons-info',
 			'content'    => '',
 			'callback'   => [ $this, 'intro_tab' ]
 		] );
@@ -74,7 +74,7 @@ class Content_Settings_Page extends Add_Page {
 			'id'         => 'content-settings',
 			'tab'        => __( 'Options', 'sitecore' ),
 			'heading'    => __( 'Website Content Options', 'sitecore' ),
-			'icon'       => 'dashicons dashicons-admin-generic',
+			'icon'       => 'dashicons-admin-generic',
 			'content'    => '',
 			'callback'   => [ $this, 'settings_tab' ]
 		] );

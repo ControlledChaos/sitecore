@@ -605,7 +605,7 @@ class Add_Page {
 
 					if ( ! empty( $tab['icon'] ) ) {
 						$icon = sprintf(
-							'<span class="content-tab-icon %1s"></span> ',
+							'<span class="content-tab-icon dashicons %1s"></span> ',
 							$tab['icon']
 						);
 					} else {

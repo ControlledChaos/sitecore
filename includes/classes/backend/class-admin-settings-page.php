@@ -63,7 +63,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Menu' ),
 			'heading'    => __( 'Admin Menu' ),
-			'icon'       => 'dashicons dashicons-menu-alt',
+			'icon'       => 'dashicons-menu-alt',
 			'content'    => '',
 			'callback'   => [ $this, 'menu_tab' ]
 		] );
@@ -73,7 +73,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Dashboard' ),
 			'heading'    => __( 'User Dashboard' ),
-			'icon'       => 'dashicons dashicons-dashboard',
+			'icon'       => 'dashicons-dashboard',
 			'content'    => '',
 			'callback'   => [ $this, 'dashboard_tab' ]
 		] );
@@ -83,7 +83,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Forms' ),
 			'heading'    => __( 'Form Options' ),
-			'icon'       => 'dashicons dashicons-editor-table',
+			'icon'       => 'dashicons-editor-table',
 			'content'    => '',
 			'callback'   => [ $this, 'forms_tab' ]
 		] );
@@ -93,7 +93,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Toolbar' ),
 			'heading'    => __( 'User Toolbar' ),
-			'icon'       => 'dashicons dashicons-admin-tools',
+			'icon'       => 'dashicons-admin-tools',
 			'content'    => '',
 			'callback'   => [ $this, 'toolbar_tab' ]
 		] );
@@ -103,7 +103,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Header' ),
 			'heading'    => __( 'Admin Header' ),
-			'icon'       => 'dashicons dashicons-flag',
+			'icon'       => 'dashicons-flag',
 			'content'    => '',
 			'callback'   => [ $this, 'header_tab' ]
 		] );
@@ -113,7 +113,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Footer' ),
 			'heading'    => __( 'Admin Footer' ),
-			'icon'       => 'dashicons dashicons-editor-break',
+			'icon'       => 'dashicons-editor-break',
 			'content'    => '',
 			'callback'   => [ $this, 'footer_tab' ]
 		] );
@@ -123,7 +123,7 @@ class Admin_Settings_Page extends Add_Page {
 			'capability' => 'read',
 			'tab'        => __( 'Users' ),
 			'heading'    => __( 'User Options' ),
-			'icon'       => 'dashicons dashicons-admin-users',
+			'icon'       => 'dashicons-admin-users',
 			'content'    => '',
 			'callback'   => [ $this, 'users_tab' ]
 		] );
