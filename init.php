@@ -42,6 +42,9 @@ foreach ( glob( SCP_PATH . 'includes/backend/*.php' ) as $filename ) {
 foreach ( glob( SCP_PATH . 'includes/frontend/*.php' ) as $filename ) {
 	require $filename;
 }
+foreach ( glob( SCP_PATH . 'includes/widgets/*.php' ) as $filename ) {
+	require $filename;
+}
 foreach ( glob( SCP_PATH . 'includes/users/*.php' ) as $filename ) {
 	require $filename;
 }
@@ -57,6 +60,7 @@ Settings\setup();
 Core\setup();
 Tools\setup();
 Media\setup();
+Widgets\setup();
 Vendor\setup();
 Users\setup();
 User_Roles\setup();
