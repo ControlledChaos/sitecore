@@ -215,23 +215,30 @@ function admin_only_updates() {
 /**
  * Custom admin menu order
  *
+ * Hook `scp_menu_order_after_index`
+ * filter to the `admin_menu` action
+ * to add items in the top section.
+ *
  * @since  1.0.0
  * @param  array $order
  * @return array
  */
 function menu_order( $order ) {
 
+	// Variables.
+	$order = [];
+	$index = [ 'index.php' ];
+	$after = apply_filters( 'scp_menu_order_after_index', [] );
+	$top   = array_merge( $index, $after );
 	$links = '';
+
 	if ( get_option( 'enable_link_manager', false ) ) {
 		$links = 'link-manager.php';
 	}
 
-	$order = [];
-
 	// Add items to follow the dashboard.
 	if ( get_option( 'admin_menu_custom_order', true ) ) {
-		$order = [
-			'index.php',
+		$custom = [
 			'separator1',
 			'upload.php',
 			'edit.php',
@@ -241,6 +248,7 @@ function menu_order( $order ) {
 			'edit-comments.php',
 			'separator2'
 		];
+		$order = array_merge( $top, $custom );
 	}
 	return apply_filters( 'scp_admin_menu_order', $order );
 }
