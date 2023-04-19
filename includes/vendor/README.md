@@ -42,7 +42,7 @@ If bundling the basic version, remove the upsell (since Delicious Brains) in `in
 
 ## Advanced Custom Fields: Extended
 
-This plugin includes a bundled version of Advanced Custom Fields: Extended Pro version 10.8.8.6, modified to work with certain developer settings applied by the Site Core plugin.
+This plugin includes a bundled version of Advanced Custom Fields: Extended Pro version 10.8.8.6, modified to work with certain developer settings.
 
 ### Updating ACFE #1
 

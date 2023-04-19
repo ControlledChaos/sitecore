@@ -38,13 +38,13 @@ Following are the highlights of this plugin's functionality.
 
 ### Advanced Custom Fields
 
-Included is the basic version of the Advanced Custom Fields system for adding editor fields.
+This plugin includes a bundled fork of Advanced Custom Fields Pro version 5.9.6, the last version of the plugin released before it was sold to by its originator, Elliot Condon, to the Delicious Brains corporation.
 
 [https://www.advancedcustomfields.com](https://www.advancedcustomfields.com)
 
 ### Advanced Custom Fields: Extended
 
-Included is the basic version of the Advanced Custom Fields: Extended enhancement suite to improve Advanced Custom Fields administration.
+This plugin includes a bundled version of Advanced Custom Fields: Extended Pro version 10.8.8.6, modified to work with certain developer settings.
 
 [https://www.acf-extended.com](https://www.acf-extended.com)
 
