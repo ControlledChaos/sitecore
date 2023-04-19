@@ -8,15 +8,22 @@
  * @since      1.0.0
  */
 
-// Get icon URL or fallback.
+// Get icon URL or fallbacks.
 $theme_icon_path = get_theme_file_path( '/assets/images/theme-icon.jpg' );
 $theme_icon_url  = get_theme_file_uri( '/assets/images/theme-icon.jpg' );
 $brush_icon_url  = SCP_URL . 'assets/images/theme-brush-icon.svg';
 $get_site_logo   = get_theme_mod( 'custom_logo' );
 $site_logo_url   = wp_get_attachment_image_src( $get_site_logo, 'admin-avatar' );
+$get_header_img  = get_custom_header();
 
 if ( is_readable( $theme_icon_path ) ) {
 	$icon_url = $theme_icon_url;
+} elseif (
+	$get_header_img &&
+	has_custom_header( get_current_blog_id() ) &&
+	wp_get_attachment_image_url( $get_header_img->attachment_id, 'thumbnail' )
+) {
+	$icon_url = wp_get_attachment_image_url( $get_header_img->attachment_id, 'thumbnail' );
 } elseif ( has_custom_logo( get_current_blog_id() ) ) {
 	$icon_url = $site_logo_url[0];
 } else {
