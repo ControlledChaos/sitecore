@@ -55,6 +55,11 @@ function setup() {
 		add_filter( 'use_widgets_block_editor', '__return_false' );
 	}
 
+	// Login screen modifications.
+	add_filter( 'login_headertext', $ns( 'login_title' ) );
+	add_filter( 'login_headerurl', $ns( 'login_url' ) );
+	add_action( 'login_head', $ns( 'login_styles' ) );
+
 	// Remove the Draconian capital P filters.
 	remove_filter( 'the_title', 'capital_P_dangit', 11 );
 	remove_filter( 'the_content', 'capital_P_dangit', 11 );
@@ -141,7 +146,6 @@ function platform_name() {
  * Dashboard type
  *
  * @since  1.0.0
- * @access public
  * @return string Returns the text of the dashboard type.
  */
 function dashboard_type() {
@@ -151,4 +155,82 @@ function dashboard_type() {
 	} else {
 		return 'website';
 	}
+}
+
+/**
+ * Login title
+ *
+ * Includes the logo if set in the customizer.
+ *
+ * @since  1.0.0
+ * @return string Returns the title markup.
+ */
+function login_title() {
+
+	// Get the custom logo URL.
+	$logo   = get_theme_mod( 'custom_logo' );
+	$src    = wp_get_attachment_image_src( $logo , 'full' );
+	$output = '';
+
+	// Title markup, inside the h1 > a elements.
+	if ( has_custom_logo( get_current_blog_id() ) ) {
+		$output .= sprintf(
+			'<span class="login-title-logo site-logo"><img src="%s" /></span> ',
+			$src[0]
+		);
+	}
+
+	$output .= sprintf(
+		'<span class="login-title-text site-title">%s %s</span> ',
+		get_bloginfo( 'name' ),
+		__( 'Login', 'sitecore' )
+	);
+
+	return $output;
+}
+
+/**
+ * Login URL
+ *
+ * @since  1.0.0
+ * @return string Returns the URL.
+ */
+function login_url() {
+	return site_url( '/' );
+}
+
+/**
+ * Login styles
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function login_styles() {
+
+	$style = '<style>';
+	$style .= '
+	.login h1 a {
+		width: unset;
+		height: unset;
+		text-indent: 0px;
+		background: none;
+		font-size: unset;
+	}
+
+	.login h1 a .login-title-logo {
+		display: block;
+		max-width: 120px;
+		margin: 0 auto;
+	}
+
+	.login h1 a .login-title-logo img {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		-ms-interpolation-mode: bicubic;
+		border: 0;
+	}';
+	$style .= '</style>';
+
+	echo $style;
 }
