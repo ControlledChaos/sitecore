@@ -382,6 +382,7 @@ function show_in_menu( $args, $post_type ) {
 		get_option( 'admin_menu_reuse_blocks', false )
 	) {
 		if ( $content && $show_blocks ) {
+			$args['labels']['name']      = __( 'Reusable Blocks', 'sitecore' );
 			$args['labels']['menu_name'] = __( 'Reusable Blocks', 'sitecore' );
 			$args['labels']['all_items'] = __( 'Reusable Blocks', 'sitecore' );
 			$args['show_in_menu'] = 'custom-content';
