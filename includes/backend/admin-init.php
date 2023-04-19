@@ -74,7 +74,10 @@ function setup() {
 	}
 
 	// Menus & Widgets admin menu items.
-	add_action( 'admin_menu', $ns( 'menus_widgets' ) );
+	add_action( 'admin_menu', $ns( 'menus_widgets' ), 9 );
+
+	// Show hidden screens in menu.
+	add_action( 'register_post_type_args', $ns( 'show_in_menu' ), 10, 2 );
 
 	// Admin menu highlighting.
 	add_action( 'parent_file', $ns( 'parent_file' ) );
@@ -336,6 +339,56 @@ function menus_widgets() {
 			);
 		}
 	}
+}
+
+/**
+ * Shoe in admin menu
+ *
+ * @since  1.0.0
+ * @param  array $args Array of arguments for registering a post type.
+ * @param  string $post_type Post type key.
+ * @return array Returns an array of new option arguments.
+ */
+function show_in_menu( $args, $post_type ) {
+
+	// Determine whether blocks are used.
+	$editor_replace     = get_option( 'editor-options-replace' );
+	$editor_allow_users = get_option( 'editor-options-allow-users' );
+	$show_blocks        = false;
+
+	if ( 'block' == $editor_replace || ( 'tinymce' == $editor_replace && 'allow' == $editor_allow_users ) ) {
+		$show_blocks = true;
+	}
+
+	// Look for the content settings page and set as a variable.
+	$content = get_plugin_page_hookname( 'custom-content', 'custom-content' );
+
+	if ( get_option( 'admin_menu_menus_top', true ) ) {
+		$nav_parent = 'nav-menus.php';
+	} else {
+		$nav_parent = 'themes.php';
+	}
+
+	if (
+		'wp_block' == $post_type &&
+		get_option( 'admin_menu_reuse_blocks', false )
+	) {
+		if ( $content && $show_blocks ) {
+			$args['labels']['menu_name'] = __( 'Reusable Blocks', 'sitecore' );
+			$args['labels']['all_items'] = __( 'Reusable Blocks', 'sitecore' );
+			$args['show_in_menu'] = 'custom-content';
+		}
+	}
+
+	if (
+		'wp_navigation' == $post_type &&
+		get_option( 'admin_menu_nav_blocks', false )
+	) {
+		$args['labels']['menu_name'] = __( 'Navigation Blocks', 'sitecore' );
+		$args['labels']['all_items'] = __( 'Navigation Blocks', 'sitecore' );
+		$args['show_in_menu'] = $nav_parent;
+	}
+	return $args;
 }
 
 /**
