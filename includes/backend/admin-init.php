@@ -223,18 +223,22 @@ function menu_order( $order ) {
 		$links = 'link-manager.php';
 	}
 
+	$order = [];
+
 	// Add items to follow the dashboard.
-	$order = [
-		'index.php',
-		'separator1',
-		'upload.php',
-		'edit.php',
-		'edit.php?post_type=page',
-		'custom-content',
-		$links,
-		'edit-comments.php',
-		'separator2'
-	];
+	if ( get_option( 'admin_menu_custom_order', true ) ) {
+		$order = [
+			'index.php',
+			'separator1',
+			'upload.php',
+			'edit.php',
+			'edit.php?post_type=page',
+			'custom-content',
+			$links,
+			'edit-comments.php',
+			'separator2'
+		];
+	}
 	return apply_filters( 'scp_admin_menu_order', $order );
 }
 

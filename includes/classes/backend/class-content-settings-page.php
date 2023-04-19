@@ -37,7 +37,7 @@ class Content_Settings_Page extends Add_Page {
 			'settings'      => true,
 			'menu_slug'     => 'custom-content',
 			'icon_url'      => 'dashicons-edit',
-			'position'      => 3,
+			'position'      => 25,
 			'tabs_hashtags' => true
 		];
 

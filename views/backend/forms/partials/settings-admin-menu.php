@@ -31,6 +31,15 @@ settings_fields( 'options-admin' );
 					</fieldset>
 				</td>
 			</tr>
+			<tr class="admin-field">
+				<th scope="row"><?php _e( 'Custom Order', 'sitecore' ); ?></th>
+				<td>
+					<fieldset>
+						<legend class="screen-reader-text"><?php _e( 'Custom Admin Menu Order', 'sitecore' ); ?></legend>
+						<?php $settings->admin_menu_custom_order_callback(); ?>
+					</fieldset>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 	<?php do_action( 'scp_after_admin_menu_settings' ); ?>
