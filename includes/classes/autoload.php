@@ -146,7 +146,12 @@ function settings() {
 function tools() {
 
 	$classes = [
-		ns( 'Tools', 'Customizer_Reset' ) => f( 'tools', 'customizer-reset.php' )
+
+		// Load `ACF_Admin_Tool` prior to `Content_Import_Export`.
+		'ACF_Admin_Tool' => SCP_PATH . 'includes/vendor/acf/includes/admin/tools/class-acf-admin-tool.php',
+
+		ns( 'Tools', 'Content_Import_Export' ) => f( 'tools', 'content-import-export.php' ),
+		ns( 'Tools', 'Customizer_Reset' )      => f( 'tools', 'customizer-reset.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {

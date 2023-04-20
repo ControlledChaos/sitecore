@@ -76,6 +76,9 @@ function setup() {
 	// Menus & Widgets admin menu items.
 	add_action( 'admin_menu', $ns( 'menus_widgets' ), 9 );
 
+	// Remove menu items.
+	add_action( 'admin_menu', $ns( 'remove_menu_items' ), 9 );
+
 	// Show hidden screens in menu.
 	add_action( 'register_post_type_args', $ns( 'show_in_menu' ), 10, 2 );
 
@@ -290,26 +293,21 @@ function menu_remove_site_health(){
  * This also provides the opportunity to have submenus for each.
  *
  * @since  1.0.0
- * @global array menu The admin menu array.
  * @global array submenu The admin submenu array.
  * @return void
  */
 function menus_widgets() {
 
-	global $menu, $submenu;
+	global $submenu;
 
-	// Remove Menus and Widgets as submenu items of Appearances.
 	if ( isset( $submenu['themes.php'] ) ) {
 
-		// Look for menu items under Appearances.
 		foreach ( $submenu['themes.php'] as $key => $item ) {
 
-			// Unset Menus if it is found.
 			if ( $item[2] === 'nav-menus.php' && get_option( 'admin_menu_menus_top', true ) ) {
-				unset($submenu['themes.php'][$key] );
+				unset( $submenu['themes.php'][$key] );
 			}
 
-			// Unset Widgets if it is found.
 			if ( $item[2] === 'widgets.php' && get_option( 'admin_menu_widgets_top', true ) ) {
 				unset( $submenu['themes.php'][$key] );
 			}
@@ -345,6 +343,40 @@ function menus_widgets() {
 				'dashicons-screenoptions',
 				62
 			);
+		}
+	}
+}
+
+/**
+ * Remove menu items
+ *
+ * @since  1.0.0
+ * @global object pagenow Gets the current admin screen.
+ * @global array submenu The admin submenu array.
+ * @return void
+ */
+function remove_menu_items() {
+
+	// Stop if no content metabox on the ACF content tools screen.
+	if (
+		! class_exists( 'acf' ) &&
+		! class_exists( 'SiteCore\Classes\Tools\Content_Import_Export' )
+	) {
+		return;
+	}
+
+	global $pagenow, $submenu;
+
+	if ( isset( $submenu['tools.php'] ) ) {
+
+		foreach ( $submenu['tools.php'] as $key => $item ) {
+
+			if ( $item[2] === 'import.php' && 'import.php' != $pagenow ) {
+				unset( $submenu['tools.php'][$key] );
+			}
+			if ( $item[2] === 'export.php' && 'export.php' != $pagenow ) {
+				unset( $submenu['tools.php'][$key] );
+			}
 		}
 	}
 }
