@@ -60,7 +60,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'menu',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Menu' ),
 			'heading'    => __( 'Admin Menu' ),
 			'icon'       => 'dashicons-menu-alt',
@@ -70,7 +70,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'dashboard',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Dashboard' ),
 			'heading'    => __( 'User Dashboard' ),
 			'icon'       => 'dashicons-dashboard',
@@ -80,7 +80,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'forms',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Forms' ),
 			'heading'    => __( 'Form Options' ),
 			'icon'       => 'dashicons-editor-table',
@@ -90,7 +90,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'toolbar',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Toolbar' ),
 			'heading'    => __( 'User Toolbar' ),
 			'icon'       => 'dashicons-admin-tools',
@@ -100,7 +100,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'header',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Header' ),
 			'heading'    => __( 'Admin Header' ),
 			'icon'       => 'dashicons-flag',
@@ -110,7 +110,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'footer',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Footer' ),
 			'heading'    => __( 'Admin Footer' ),
 			'icon'       => 'dashicons-editor-break',
@@ -120,7 +120,7 @@ class Admin_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'id'         => 'users',
-			'capability' => 'read',
+			'capability' => 'manage_options',
 			'tab'        => __( 'Users' ),
 			'heading'    => __( 'User Options' ),
 			'icon'       => 'dashicons-admin-users',
