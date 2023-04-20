@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
 *  html-admin-tools
@@ -17,11 +17,11 @@ $class = $active ? 'single' : 'grid';
 
 ?>
 <div class="wrap" id="acf-admin-tools">
-	
-	<h1><?php _e('Tools', 'acf'); ?> <?php if( $active ): ?><a class="page-title-action" href="<?php echo acf_get_admin_tools_url(); ?>"><?php _e('Back to all tools', 'acf'); ?></a><?php endif; ?></h1>
-	
+
+	<h1><?php _e( 'Content Tools', 'acf' ); ?> <?php if(  $active ): ?><a class="page-title-action" href="<?php echo acf_get_admin_tools_url(); ?>"><?php _e( 'Back to all tools', 'acf' ); ?></a><?php endif; ?></h1>
+	<p class="description"><?php _e( 'Import and export various content types.', 'acf' ); ?></p>
+
 	<div class="acf-meta-box-wrap -<?php echo $class; ?>">
-		<?php do_meta_boxes( $screen_id, 'normal', '' ); ?>	
+		<?php do_meta_boxes( $screen_id, 'normal', '' ); ?>
 	</div>
-	
 </div>
