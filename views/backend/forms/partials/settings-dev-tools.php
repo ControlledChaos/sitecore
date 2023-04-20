@@ -13,7 +13,7 @@ namespace SiteCore\Views\Admin;
 ?>
 <div>
 	<?php do_action( 'scp_before_dev_tools_settings' ); ?>
-	<table class="form-table">
+	<table class="form-table" role="presentation">
 		<?php
 		settings_fields( 'developer-tools' );
 		do_settings_fields( 'developer-tools', 'scp-options-developer' );

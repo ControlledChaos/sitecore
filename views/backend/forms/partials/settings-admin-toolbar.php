@@ -13,7 +13,7 @@ namespace SiteCore\Views\Admin;
 ?>
 <div>
 	<?php do_action( 'scp_before_admin_toolbar_settings' ); ?>
-	<table class="form-table">
+	<table class="form-table" role="presentation">
 		<?php
 		settings_fields( 'options-admin' );
 		do_settings_fields( 'options-admin', 'scp-settings-section-admin-toolbar' );
