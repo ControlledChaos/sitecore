@@ -27,6 +27,22 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 
 		$acfe_fields = [
 			[
+				'id'       => 'email_from_name',
+				'title'    => __( 'Email From Text', 'sitecore' ),
+				'callback' => [ $this, 'email_from_name_callback' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-forms',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => sprintf(
+						__( 'For the "From" line in emails sent from the %s platform.', 'sitecore' ),
+						platform_name()
+					),
+					'label_for' => 'email_from_name',
+					'class'     => 'admin-field'
+				]
+			],
+			[
 				'id'       => 'acfe_enable_forms_ui',
 				'title'    => __( 'Enable ACFE Forms UI', 'sitecore' ),
 				'callback' => [ $this, 'acfe_enable_forms_ui_callback' ],
@@ -38,7 +54,7 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 						__( 'Makes native %s form pages two columns with the publish action to the side.', 'sitecore' ),
 						platform_name()
 					),
-					'class'       => 'admin-field'
+					'class' => 'admin-field'
 				]
 			]
 		];
@@ -53,18 +69,47 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	}
 
 	/**
-	 * Platform Link field order
+	 * Email From Line field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function email_from_name_order() {
+		return 0;
+	}
+
+	/**
+	 * Enable ACFE Forms field order
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
 	public function acfe_enable_forms_ui_order() {
-		return 0;
+		return 1;
 	}
 
 	/**
-	 * Sanitize Platform Link field
+	 * Sanitize Email From Line field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function email_from_name_sanitize() {
+
+		$option = get_option( 'email_from_name', '' );
+
+		if ( ! empty( $option ) && ! ctype_space( $option ) ) {
+			$option = esc_html( $option );
+			return apply_filters( 'scp_email_from_name', $option );
+		}
+		return null;
+	}
+
+	/**
+	 * Sanitize Enable ACFE Forms field
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -82,7 +127,41 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	}
 
 	/**
-	 * Platform Link field callback
+	 * Email From Line field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function email_from_name_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->email_from_name_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->email_from_name_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<input type="text" id="%s" name="%s" value="%s" placeholder="%s" />',
+			$field_id,
+			$field_id,
+			$option,
+			__( 'Enter Text', 'sitecore' )
+		);
+		$html .= '</fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			$fields[$order]['args']['description']
+		);
+
+		echo $html;
+	}
+
+	/**
+	 * Enable ACFE Forms field callback
 	 *
 	 * @since  1.0.0
 	 * @access public

@@ -66,9 +66,7 @@ function setup() {
 	remove_filter( 'comment_text', 'capital_P_dangit', 31 );
 
 	// System email from text.
-	add_filter( 'wp_mail_from_name', function( $name ) {
-		return apply_filters( 'scp_mail_from_name', get_bloginfo( 'name' ) );
-	} );
+	add_filter( 'wp_mail_from_name', $ns( 'mail_from_name' ) );
 
 	// Disable WordPress administration email verification prompt.
 	add_filter( 'admin_email_check_interval', '__return_false' );
@@ -110,6 +108,22 @@ function classes() {
 		new Core_Class\Register_Sample_Type;
 		new Core_Class\Register_Sample_Tax;
 	}
+}
+
+/**
+ * Email from text
+ *
+ * @since  1.0.0
+ * @return mixed Returns the option text or null.
+ */
+function mail_from_name() {
+
+	$option = get_option( 'email_from_name' );
+
+	if ( ! empty( $option ) ) {
+		return $option;
+	}
+	return get_bloginfo( 'name' );
 }
 
 /**
