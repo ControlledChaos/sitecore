@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample settings sections
+ * Admin settings sections
  *
  * @package    Site_Core
  * @subpackage Classes
