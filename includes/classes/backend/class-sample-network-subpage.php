@@ -40,7 +40,7 @@ class Sample_Network_Subpage extends Add_Page {
 			'network'       => true,
 			'capability'    => 'read',
 			'menu_slug'     => 'sample-subpage',
-			'parent_slug'   => 'sites.php',
+			'parent_slug'   => 'sample-page',
 			'icon_url'      => 'dashicons-welcome-learn-more',
 			'position'      => 9,
 			'add_help'      => true
