@@ -44,7 +44,13 @@ function setup() {
  * @return void
  */
 function classes() {
-	// instantiate classes.
+
+	if (
+		class_exists( 'SiteCore\Classes\Widgets\Sample_Widget' ) &&
+		get_option( 'enable_sample_files', false )
+	) {
+		new Widgets_Class\Sample_Widget;
+	}
 }
 
 /**
