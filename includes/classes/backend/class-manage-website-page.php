@@ -51,7 +51,8 @@ class Manage_Website_Page extends Add_Page {
 			'menu_slug'   => 'manage-website',
 			'parent_slug' => 'index.php',
 			'icon_url'    => 'dashicons-welcome-learn-more',
-			'position'    => 1
+			'position'    => 1,
+			'screen_options' => false,
 		];
 
 		parent :: __construct(

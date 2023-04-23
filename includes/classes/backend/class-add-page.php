@@ -118,12 +118,13 @@ class Add_Page {
 		 * if the plugin is network active, add as
 		 * a network admin page.
 		 */
-		} elseif (
-			is_multisite() &&
-			is_plugin_active_for_network( SCP_BASENAME ) &&
-			$this->page_options['network']
-		) {
-			add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
+		} elseif ( is_multisite() && $this->page_options['network'] ) {
+			if ( is_main_site() ) {
+				add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
+
+				// Save network settings.
+				add_action( 'network_admin_edit_' . $this->page_options['menu_slug'], [ $this, 'save_network_settings' ] );
+			}
 
 		// Otherwise add a regular admin page.
 		} else {
@@ -135,9 +136,6 @@ class Add_Page {
 
 		// Print admin styles to head.
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 20 );
-
-		// Print footer scripts.
-		add_action( "admin_print_footer_scripts-{$this->page_options['menu_slug']}", [ $this, 'admin_print_footer_scripts' ] );
 	}
 
 	/**
@@ -162,7 +160,7 @@ class Add_Page {
 	 */
 	public function add_page() {
 
-		$screen = $this->page_options['menu_slug'];
+		$screen  = $this->page_options['menu_slug'];
 
 		if ( $this->is_subpage() ) {
 
@@ -201,6 +199,8 @@ class Add_Page {
 				add_filter( 'screen_options_show_screen', '__return_false' );
 			} );
 		}
+
+		add_action( "admin_footer-{$screen}", [ $this, 'admin_print_footer_scripts' ], 20 );
 	}
 
 	/**
@@ -248,16 +248,18 @@ class Add_Page {
 		}
 
 		if ( ! current_user_can( $acf_capability ) ) {
-			add_action( "admin_head-{$this->page_options['menu_slug']}", function() {
+			add_action( "admin_head-{$screen}", function() {
 				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
 			} );
 		}
 
 		if ( false == $this->page_options['screen_options'] ) {
-			add_action( "load-{$this->page_options['menu_slug']}", function() {
+			add_action( "load-{$screen}", function() {
 				add_filter( 'screen_options_show_screen', '__return_false' );
 			} );
 		}
+
+		add_action( "admin_footer-{$screen}", [ $this, 'admin_print_footer_scripts' ], 20 );
 	}
 
 	/**
@@ -349,6 +351,12 @@ class Add_Page {
 			$this->page_options['acf']['acf_page']
 		) {
 			return null;
+		}
+
+		if ( is_multisite() ) {
+			if ( is_network_admin() ) {
+				return add_query_arg( 'action', $this->page_options['menu_slug'], 'edit.php' );
+			}
 		}
 		return 'options.php';
 	}
@@ -767,6 +775,8 @@ class Add_Page {
 		// Print a paragraph with native description class using the description variable.
 		echo  $this->description();
 
+		wp_nonce_field( $this->page_options['menu_slug'] . '-validate' );
+
 		echo $this->form_open();
 
 		$this->content();
@@ -852,6 +862,37 @@ class Add_Page {
 	}
 
 	/**
+	 * Save network settings
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function save_network_settings() {
+
+		if ( ! is_multisite() && ! $this->page_options['settings'] ) {
+			return;
+		}
+
+		if ( $this->is_subpage() ) {
+			$redirect = $this->page_options['parent_slug'];
+		} else {
+			$redirect = 'admin.php';
+		}
+
+		do_action( 'save_network_settings_' . $this->page_options['menu_slug'] );
+
+		wp_safe_redirect(
+			add_query_arg( [
+				'page'    => $this->page_options['menu_slug'],
+				'updated' => true
+			],
+			network_admin_url( $redirect ) )
+		 );
+		 exit;
+	}
+
+	/**
 	 * Enqueue page scripts
 	 *
 	 * @since  1.0.0
@@ -878,7 +919,11 @@ class Add_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function admin_print_footer_scripts() {}
+	public function admin_print_footer_scripts() {
+		?>
+		<!-- Findme --><script><?php echo $this->page_options['menu_slug']; ?></script>
+		<?php
+	}
 
 	/**
 	 * ACF field groups
