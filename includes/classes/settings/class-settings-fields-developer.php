@@ -25,9 +25,9 @@ class Settings_Fields_Developer extends Settings_Fields {
 
 		$fields = [
 			[
-				'id'       => 'update_in_progress',
+				'id'       => 'fix_update_in_progress',
 				'title'    => __( 'Update in Progress', 'sitecore' ),
-				'callback' => [ $this, 'update_in_progress_callback' ],
+				'callback' => [ $this, 'fix_update_in_progress_callback' ],
 				'page'     => 'developer-tools',
 				'section'  => 'scp-options-developer',
 				'type'     => 'checkbox',
@@ -128,7 +128,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @access public
 	 * @return integer Returns the placement of the field in the fields array.
 	 */
-	public function update_in_progress_order() {
+	public function fix_update_in_progress_order() {
 		return 0;
 	}
 
@@ -205,9 +205,9 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @access public
 	 * @return boolean
 	 */
-	public function update_in_progress_sanitize() {
+	public function fix_update_in_progress_sanitize() {
 
-		$option = get_option( 'update_in_progress', false );
+		$option = get_option( 'fix_update_in_progress', false );
 		if ( true == $option ) {
 			$option = true;
 		} else {
@@ -331,7 +331,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 * @access public
 	 * @return void
 	 */
-	public function update_in_progress_callback() {
+	public function fix_update_in_progress_callback() {
 
 		if ( version_compare( get_bloginfo( 'version' ),'4.5', '>=' ) ) {
 			$lock = get_option( 'core_updater.lock', null );
@@ -348,9 +348,9 @@ class Settings_Fields_Developer extends Settings_Fields {
 		);
 
 		$fields   = $this->settings_fields;
-		$order    = $this->update_in_progress_order();
+		$order    = $this->fix_update_in_progress_order();
 		$field_id = $fields[$order]['id'];
-		$option   = $this->update_in_progress_sanitize();
+		$option   = $this->fix_update_in_progress_sanitize();
 
 		$html = sprintf(
 			'<fieldset><legend class="screen-reader-text">%s</legend>',
@@ -369,10 +369,10 @@ class Settings_Fields_Developer extends Settings_Fields {
 		);
 		$html .= '</label></fieldset>';
 
-		if ( get_option( 'update_in_progress' ) ) {
+		if ( get_option( 'fix_update_in_progress' ) ) {
 
 			if ( $lock ) {
-				update_option( 'update_in_progress', false );
+				update_option( 'fix_update_in_progress', false );
 			}
 
 			if ( version_compare( get_bloginfo( 'version' ),'4.5', '>=' ) ) {
