@@ -50,7 +50,9 @@ function acf() {
 		new Vendor_Class\ACF_Nav_Menu_Field;
 	}
 
-	acf_register_admin_tool( 'SiteCore\Classes\Tools\Content_Import_Export' );
+	if ( function_exists( 'acf_register_admin_tool' ) ) {
+		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Content_Import_Export' );
+	}
 }
 
 /**
