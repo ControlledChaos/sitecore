@@ -45,8 +45,11 @@ function setup() {
 function classes() {
 
 	new Admin_Class\Network_Admin_Settings_Page;
-	// new Admin_Class\Sample_Network_Page;
-	// new Admin_Class\Sample_Network_Subpage;
+
+	if ( get_blog_option( get_main_site_id(), 'enable_sample_files', false ) ) {
+		new Admin_Class\Sample_Network_Page;
+		new Admin_Class\Sample_Network_Subpage;
+	}
 }
 
 /**
