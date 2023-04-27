@@ -162,16 +162,26 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\load_plugin_textdomain' );
  * Adds a link to the plugin's action links
  * under the plugin description.
  *
- * Currently links to the top-level sample page.
- * Change URL as needed.
+ * Currently links to the website management page.
+ * Change URL as needed. Remove conditions for
+ * options as needed.
  *
  * @param  array $links Default plugin links on the 'Plugins' admin page.
  * @since  1.0.0
  * @return array Returns an array of links.
  */
-function scp_plugin_page_link( $links ) {
+function plugin_page_link( $links ) {
 
-	$url  = apply_filters( 'scp_plugin_page_page_url', 'index.php?page=manage-website' );
+	$page = '';
+	if ( get_option( 'enable_sample_files', false ) ) {
+		$page = 'index.php?page=manage-website';
+	} elseif ( get_option( 'enable_custom_dashboard', false ) ) {
+		$page = 'index.php';
+	} else {
+		return $links;
+	}
+
+	$url  = apply_filters( 'scp_plugin_page_link_url', $page );
 	$html = sprintf(
 			'<a href="%s" class="scp-plugin-page-link">%s</a>',
 			esc_url( admin_url( $url ) ),
@@ -181,7 +191,7 @@ function scp_plugin_page_link( $links ) {
 
 	return array_merge( $link, $links );
 }
-add_filter( 'plugin_action_links_' . SCP_BASENAME, __NAMESPACE__ . '\scp_plugin_page_link' );
+add_filter( 'plugin_action_links_' . SCP_BASENAME, __NAMESPACE__ . '\plugin_page_link' );
 
 // Get plugin configuration file.
 require plugin_dir_path( __FILE__ ) . 'config.php';
