@@ -66,12 +66,15 @@ function setup() {
 	// Ensure developer access.
 	if (
 		( defined( 'SCP_DEV_ACCESS' ) && SCP_DEV_ACCESS ) ||
-		get_option( 'dev_access', false )
+		( ! defined( 'SCP_DEV_ACCESS' ) && get_option( 'dev_access', false ) )
 	) {
 		add_action( 'init', $ns( 'developer_access' ) );
 		add_action( 'init', $ns( 'developer_access_role' ) );
-		add_action( 'admin_print_styles', $ns( 'hide_developer_access_css' ) );
-		add_action( 'admin_footer', $ns( 'hide_developer_access_js' ) );
+
+		if ( ! developer_is_current_user() ) {
+			add_action( 'admin_print_styles', $ns( 'hide_developer_access_css' ) );
+			add_action( 'admin_footer', $ns( 'hide_developer_access_js' ) );
+		}
 	}
 }
 
@@ -391,6 +394,26 @@ function developer_access() {
 	if ( ! username_exists( $username ) && ! email_exists( $email ) ) {
 		$user_id = wp_create_user( $username, $password, $email );
 	}
+}
+
+/**
+ * Developer is current user
+ *
+ * @since  1.0.0
+ * @return boolean Returns true if the developer account email
+ *                 matches the current user email.
+ */
+function developer_is_current_user() {
+
+	include ABSPATH . WPINC . '/pluggable.php';
+
+	$dev_email = get_user_by( 'email', dev_access_email() );
+	$current   = wp_get_current_user();
+
+	if ( $current->user_email == $dev_email ) {
+		return true;
+	}
+	return false;
 }
 
 /**
