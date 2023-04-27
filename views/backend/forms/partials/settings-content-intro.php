@@ -10,36 +10,40 @@
 
 namespace SiteCore\Views\Admin\Content_Settings_Intro;
 
+use SiteCore\Users as Users;
+
 function content_settings_intro( $content = '' ) {
+
+	$get_roles = Users\get_user_roles();
+
+	if ( count( $get_roles ) > 1 ) {
+		$roles = __( 'roles', 'sitecore' );
+	} else {
+		$roles = __( 'role', 'sitecore' );
+	}
+
+	$role_message = sprintf(
+		__( '<p>This content is for users with your %s: %s.</p>', 'sitecore' ),
+		$roles,
+		Users\user_roles()
+	);
 
 	// If ACF and ACF Extended are active.
 	if ( current_user_can( 'develop' ) && ( class_exists( 'acf' ) && class_exists( 'acfe' ) ) ) {
 
-		$content = sprintf(
+		$content .= sprintf(
 			'<p>%s</p>',
-			__( 'You are seeing this content because you have the user role of Developer, because Advanced Custom Fields and Advanced Custom Fields: Extended are both active.', 'sitecore' )
+			__( 'You are seeing this content because you have the user role of Developer, and because Advanced Custom Fields and Advanced Custom Fields: Extended are both active.', 'sitecore' )
 		);
 
 	} elseif ( current_user_can( 'develop' ) && class_exists( 'acf' ) ) {
 
-		$content = sprintf(
+		$content .= sprintf(
 			'<p>%s</p>',
 			__( 'You are seeing this content because you have the user role of Developer, and because Advanced Custom Fields is active.', 'sitecore' )
 		);
-
-	} elseif ( current_user_can( 'manage_options' ) ) {
-
-		$content = sprintf(
-			'<p>%s</p>',
-			__( 'You are seeing this content because you have the user role of Administrator.', 'sitecore' )
-		);
-
 	} else {
-
-		$content = sprintf(
-			'<p>%s</p>',
-			__( 'This is the default content for this intro, available to the lowest user capacity of this page.', 'sitecore' )
-		);
+		$content = $role_message;
 	}
 
 	echo apply_filters( 'scp_content_settings_intro_text', $content );

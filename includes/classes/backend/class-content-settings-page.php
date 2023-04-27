@@ -27,9 +27,9 @@ class Content_Settings_Page extends Add_Page {
 	public function __construct() {
 
 		$labels = [
-			'page_title'  => __( 'Custom Content', 'sitecore' ),
+			'page_title'  => $this->page_title(),
 			'menu_title'  => __( 'Content', 'sitecore' ),
-			'description' => __( 'Manage how the content of this website is edited and displayed.', 'sitecore' )
+			'description' => $this->description()
 		];
 
 		$options = [
@@ -45,6 +45,43 @@ class Content_Settings_Page extends Add_Page {
 			$labels,
 			$options,
 			9
+		);
+	}
+
+	/**
+	 * Page title
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the page title.
+	 */
+	protected function page_title() {
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			$title = __( 'Website Content', 'sitecore' );
+		} else {
+			$title = __( 'Custom Content', 'sitecore' );
+		}
+		return $title;
+	}
+
+	/**
+	 * Page description
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the page description.
+	 */
+	protected function description() {
+
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			$description = __( 'This is an overview of this website\'s content.', 'sitecore' );
+		} else {
+			$description = __( 'Manage how the content of this website is edited and displayed.', 'sitecore' );
+		}
+		return sprintf(
+			'<p class="description">%s</p>',
+			$description
 		);
 	}
 
