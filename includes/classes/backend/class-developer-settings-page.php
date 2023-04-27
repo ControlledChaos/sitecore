@@ -33,7 +33,10 @@ class Developer_Settings_Page extends Add_Page {
 		];
 
 		$options = [
-			'settings'      => true,
+			'settings'      => [
+				'print_form' => true,
+				'capability' => 'develop'
+			],
 			'capability'    => 'develop',
 			'menu_slug'     => 'developer-tools',
 			'parent_slug'   => 'tools.php',

@@ -338,6 +338,27 @@ class Add_Page {
 	}
 
 	/**
+	 * Form user access
+	 *
+	 * Prints the page form elements if current
+	 * user is allowed to save settings. used
+	 * as the parameter in `current_user_can()`.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string Returns the capability or
+	 *                a non-existent capability.
+	 */
+	protected function form_user_access() {
+
+		if ( array_key_exists( 'capability', $this->page_options['settings'] ) ) {
+			return $this->page_options['settings']['capability'];
+		} else {
+			return 'scp_no_user_form_access';
+		}
+	}
+
+	/**
 	 * Form action
 	 *
 	 * @since  1.0.0
@@ -347,7 +368,7 @@ class Add_Page {
 	protected function form_action() {
 
 		if (
-			! $this->page_options['settings'] ||
+			! $this->page_options['settings']['print_form'] ||
 			$this->page_options['acf']['acf_page']
 		) {
 			return null;
@@ -370,8 +391,12 @@ class Add_Page {
 	 */
 	protected function form_open() {
 
+		if ( ! current_user_can( $this->form_user_access() ) ) {
+			return null;
+		}
+
 		if (
-			! $this->page_options['settings'] ||
+			! $this->page_options['settings']['print_form'] ||
 			$this->page_options['acf']['acf_page']
 		) {
 			return null;
@@ -381,7 +406,7 @@ class Add_Page {
 			'<form method="post" action="%s" novalidate="novalidate">',
 			$this->form_action()
 		);
-		return $html;
+		return $html . $this->form_user_access();
 	}
 
 	/**
@@ -393,8 +418,12 @@ class Add_Page {
 	 */
 	protected function form_close() {
 
+		if ( ! current_user_can( $this->form_user_access() ) ) {
+			return null;
+		}
+
 		if (
-			! $this->page_options['settings'] ||
+			! $this->page_options['settings']['print_form'] ||
 			$this->page_options['acf']['acf_page']
 		) {
 			return null;
@@ -435,10 +464,12 @@ class Add_Page {
 
 		foreach ( $content_tabs as $content_tab ) {
 
-			if ( isset( $priorities[ $content_tab['priority'] ] ) ) {
-				$priorities[ $content_tab['priority'] ][] = $content_tab;
-			} else {
-				$priorities[ $content_tab['priority'] ] = [ $content_tab ];
+			if ( current_user_can( $content_tab['capability'] ) ) {
+				if ( isset( $priorities[ $content_tab['priority'] ] ) ) {
+					$priorities[ $content_tab['priority'] ][] = $content_tab;
+				} else {
+					$priorities[ $content_tab['priority'] ] = [ $content_tab ];
+				}
 			}
 		}
 

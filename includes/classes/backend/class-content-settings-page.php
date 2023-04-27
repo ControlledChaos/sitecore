@@ -34,7 +34,10 @@ class Content_Settings_Page extends Add_Page {
 
 		$options = [
 			'capability'    => 'read',
-			'settings'      => true,
+			'settings'      => [
+				'print_form' => true,
+				'capability' => 'manage_options'
+			],
 			'menu_slug'     => 'custom-content',
 			'icon_url'      => 'dashicons-edit',
 			'position'      => 25,
