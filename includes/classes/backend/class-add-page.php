@@ -808,6 +808,12 @@ class Add_Page {
 
 		wp_nonce_field( $this->page_options['menu_slug'] . '-validate' );
 
+		if ( ! $this->is_subpage() ||
+			( $this->is_subpage() && 'options-general.php' != $this->page_options['parent_slug'] )
+		) {
+			settings_errors();
+		}
+
 		echo $this->form_open();
 
 		$this->content();
