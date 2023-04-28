@@ -8,8 +8,21 @@
  * @since      1.0.0
  */
 
+$object = get_post_type_object( get_post_type( get_the_ID() ) );
+
+if ( $object->labels->singular_name ) {
+	$name = $object->labels->singular_name;
+} else {
+	$name = $object->labels->name;
+}
+
 printf(
-	'<p>%s%s</p>',
-	__( 'ACF content for post #', 'sitecore' ),
+	__( '<p>Filtered content for %s #%s</p>', 'sitecore' ),
+	$name,
 	get_the_ID()
+);
+
+printf(
+	'<p>%s</p>',
+	__( 'This template is being displayed because the sample content filter class has been instantiated. This template is also being displayed because the Advanced Custom Fields plugin is active or the bundled Applied Content Fields files are included.', 'sitecore' )
 );

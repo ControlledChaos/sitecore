@@ -57,6 +57,14 @@ class Title_Sample extends Title_Filter {
 			// If the post type matches one in the loop.
 			if ( $type == get_post_type( $id ) ) {
 
+				$object = get_post_type_object( $type );
+
+				if ( $object->labels->singular_name ) {
+					$name = $object->labels->singular_name;
+				} else {
+					$name = $object->labels->name;
+				}
+
 				/**
 				 * Using `in_the_loop()` will modify all instances of
 				 * the title in the loop, including the post navigation.
@@ -71,9 +79,9 @@ class Title_Sample extends Title_Filter {
 
 					// Text specific to the archive.
 					$title = sprintf(
-						'%s%s',
-						__( 'Archived Post #', 'sitecore' ),
-						$id
+						__( 'Filtered Demo Title: Archived %s #%s', 'sitecore' ),
+						$name,
+						$id,
 					);
 
 				// If the post is in the main blog pages.
@@ -81,9 +89,9 @@ class Title_Sample extends Title_Filter {
 
 					// Text specific to the blog.
 					$title = sprintf(
-						'%s%s',
-						__( 'Blog Post #', 'sitecore' ),
-						$id
+						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
+						$name,
+						$id,
 					);
 
 				// If the post is singular and if it is in the loop.
@@ -91,8 +99,8 @@ class Title_Sample extends Title_Filter {
 
 					// Text specific to the single post.
 					$title = sprintf(
-						'%s%s',
-						__( 'Post #', 'sitecore' ),
+						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
+						$name,
 						$id
 					);
 

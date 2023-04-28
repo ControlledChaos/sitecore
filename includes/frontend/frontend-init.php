@@ -10,6 +10,8 @@
 
 namespace SiteCore\Front;
 
+use SiteCore\Classes\Front as Front_Class;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -58,7 +60,11 @@ function setup() {
  * @return void
  */
 function classes() {
-	// instantiate classes.
+
+	if ( get_option( 'enable_sample_files', false ) ) {
+		new Front_Class\Title_Sample;
+		new Front_Class\Content_Sample;
+	}
 }
 
 /**
