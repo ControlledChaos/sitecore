@@ -184,7 +184,7 @@ function can_update_roles() {
 	 *     ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE && ! current_user_can( 'manage_sites' ) )
 	 * )
 	 *
-	 * @todo Text in network mode then edit this method and docblock accordingly.
+	 * @todo Test in network mode then edit this method and docblock accordingly.
 	 */
 	if ( is_network_admin() || ! current_user_can( 'promote_users' ) ) {
 			return false;

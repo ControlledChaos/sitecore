@@ -2,8 +2,6 @@
 /**
  * Remove Customizer class
  *
- * @todo Add to settings.
- *
  * @package    Site_Core
  * @subpackage Classes
  * @category   Core

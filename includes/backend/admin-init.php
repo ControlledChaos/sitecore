@@ -204,8 +204,6 @@ function remove_toolbar_logo( $wp_admin_bar ) {
  *
  * @since  1.0.0
  * @return void
- *
- * @todo Make this optional on the Site Settings screen.
  */
 function admin_only_updates() {
 
@@ -264,8 +262,6 @@ function menu_order( $order ) {
  * @since  1.0.0
  * @global object pagenow Gets the current admin screen.
  * @return void
- *
- * @todo Make this optional on the Site Settings screen.
  */
 function menu_remove_site_health(){
 

@@ -35,7 +35,7 @@ function setup() {
 	add_action( 'init', $ns( 'page_taxonomies' ) );
 
 	// Add excerpts to the page post type.
-	add_action( 'init', $ns( 'add_page_excerpts' ) );
+	add_action( 'add_meta_boxes', $ns( 'add_page_excerpts' ) );
 
 	// Show excerpt metabox by default.
 	add_filter( 'default_hidden_meta_boxes', $ns( 'show_excerpt_metabox' ), 10, 2 );
@@ -104,8 +104,9 @@ function add_page_excerpts() {
 }
 
 /**
- * Make excerpts visible by default if used as meta descriptions.
+ * Post excerpt metabox
  *
+ * Make excerpts visible by default if used as meta descriptions.
  * Add your post types as necessary.
  *
  * @since  1.0.0
@@ -120,21 +121,20 @@ function add_page_excerpts() {
  */
 function show_excerpt_metabox( $hidden, $screen ) {
 
-	// Post type screens to show excerpt.
-	if ( 'post' == $screen->base || 'page' == $screen->base ) {
+	$post_types = get_post_types();
 
-		// Look for hidden stuff.
-		foreach( $hidden as $key=>$value ) {
+	foreach ( $post_types as $post_type ) {
 
-			// If the excerpt is hidden, show it.
-			if ( 'postexcerpt' == $value ) {
-				unset( $hidden[$key] );
-				break;
+		if ( $post_type == $screen->base ) {
+
+			foreach( $hidden as $key=>$value ) {
+				if ( 'postexcerpt' == $value ) {
+					unset( $hidden[$key] );
+					break;
+				}
 			}
 		}
 	}
-
-	// Return the default for other post types.
 	return $hidden;
 }
 
@@ -224,10 +224,6 @@ function excerpt_metabox_callback( $post ) {
  * @param  array $buttons
  * @param  string $id
  * @return array Returns the TinyMCE buttons array.
- *
- * @todo   Review this if or when a check becomes available for the
- *         new WordPress block editor (Gutenberg) since page breaks
- *         will be included.
  */
 function add_page_break_button( $buttons, $id ) {
 
