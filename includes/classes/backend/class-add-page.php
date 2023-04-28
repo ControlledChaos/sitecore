@@ -406,7 +406,7 @@ class Add_Page {
 			'<form method="post" action="%s" novalidate="novalidate">',
 			$this->form_action()
 		);
-		return $html . $this->form_user_access();
+		return $html;
 	}
 
 	/**
