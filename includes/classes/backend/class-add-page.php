@@ -901,6 +901,7 @@ class Add_Page {
 	 */
 	public function save_network_settings() {
 
+		$settings = array_key_exists( 'capability', $this->page_options['settings'] );
 		if ( ! is_multisite() && ! $this->page_options['settings'] ) {
 			return;
 		}
