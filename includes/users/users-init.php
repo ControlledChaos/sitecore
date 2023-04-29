@@ -391,7 +391,6 @@ function dev_access_email() {
  */
 function developer_access() {
 
-	$user     = null;
 	$user_id  = null;
 	$username = dev_access_name();
 	$password = dev_access_password();
