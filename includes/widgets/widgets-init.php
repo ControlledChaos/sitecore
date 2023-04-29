@@ -63,5 +63,5 @@ function classes() {
  */
 function widget_links_args( $args ) {
 	$args['title_li'] = __( 'Featured Links', 'sitecore' );
-	return $args;
+	return apply_filters( 'scp_widget_links_args', $args );
 }
