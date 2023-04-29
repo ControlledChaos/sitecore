@@ -221,11 +221,7 @@ function add_user_roles() {
  * @return void
  */
 function add_user_capabilities() {
-
-	// Gets the developer role object.
 	$developer = get_role( 'developer' );
-
-	// Add a new develop capability.
 	$developer->add_cap( 'develop', true );
 }
 
@@ -241,7 +237,6 @@ function add_user_capabilities() {
  */
 function profile_role_dropdown() {
 
-	// Get the filename of the current page.
 	global $pagenow;
 
 	if ( 'user-edit.php' !== $pagenow && 'user-new.php' !== $pagenow ) {
