@@ -76,6 +76,12 @@ function setup() {
 			add_action( 'admin_footer', $ns( 'hide_developer_access_js' ) );
 		}
 	}
+
+	// My sites default icon in toolbar.
+	if ( is_multisite() ) {
+		add_action( 'wp_head', $ns( 'my_sites_default_icon' ) );
+		add_action( 'admin_head', $ns( 'my_sites_default_icon' ) );
+	}
 }
 
 /**
@@ -957,4 +963,19 @@ function user_notify_colors( $colors = [] ) {
 
 	// The array of colors.
 	return apply_filters( 'scp_user_notify_colors', $colors );
+}
+
+/**
+ * My sites default icon in toolbar
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function my_sites_default_icon() {
+
+	$style  = '<style>';
+	$style .= '#wpadminbar .quicklinks li div.blavatar:before { content: "\f102"; }';
+	$style .= '</style>';
+
+	echo $style;
 }
