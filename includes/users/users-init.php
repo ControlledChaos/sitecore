@@ -383,9 +383,6 @@ function dev_access_email() {
 /**
  * Ensure developer access
  *
- * @todo Get login from site admin options and
- * use that as well as a non-dynamic account.
- *
  * @since  1.0.0
  * @return void
  */

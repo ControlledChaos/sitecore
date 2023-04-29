@@ -113,21 +113,17 @@ function add_page_excerpts() {
  * @param  array $hidden
  * @param  object $screen
  * @return array Unsets the hidden value in the screen base array.
- *
- * @todo   Programmatically apply to all registered post types.
- * @todo   Review this if or when a check becomes available for the
- *         new WordPress block editor (Gutenberg) as the classic
- *         Excerpt metabox will not be displayed.
  */
 function show_excerpt_metabox( $hidden, $screen ) {
 
 	$post_types = get_post_types();
 
 	foreach ( $post_types as $post_type ) {
-
-		if ( $post_type == $screen->base ) {
-
-			foreach( $hidden as $key=>$value ) {
+		if (
+			$post_type == $screen->base &&
+			post_type_supports( $post_type, 'excerpt' )
+		) {
+			foreach ( $hidden as $key=>$value ) {
 				if ( 'postexcerpt' == $value ) {
 					unset( $hidden[$key] );
 					break;

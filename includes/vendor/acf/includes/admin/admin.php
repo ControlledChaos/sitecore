@@ -71,8 +71,6 @@ class ACF_Admin {
 	 * Navigation toolbar and footer text mod are
 	 * commented out.
 	 *
-	 * @todo Make an opt-in setting for nav toolbar.
-	 *
 	 * @date	7/4/20
 	 * @since	5.9.0
 	 *
@@ -82,9 +80,9 @@ class ACF_Admin {
 	function current_screen( $screen ) {
 
 		// Determine if the current page being viewed is "ACF" related.
-		if( isset( $screen->post_type ) && $screen->post_type === 'acf-field-group' ) {
-			// add_action( 'in_admin_header',		array( $this, 'in_admin_header' ) );
-			// add_filter( 'admin_footer_text',	array( $this, 'admin_footer_text' ) );
+		if ( isset( $screen->post_type ) && $screen->post_type === 'acf-field-group' ) {
+			add_action( 'in_admin_header', array( $this, 'in_admin_header' ) );
+			add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
 			$this->setup_help_tab();
 		}
 	}

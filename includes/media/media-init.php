@@ -145,8 +145,6 @@ function insert_custom_image_sizes( $sizes ) {
 			$sizes[$id] = ucwords( str_replace( '-', ' ', $id ) );
 		}
 	}
-
-	// Return the modified array of sizes.
 	return $sizes;
 }
 
@@ -159,7 +157,6 @@ function insert_custom_image_sizes( $sizes ) {
 function image_link() {
 
 	$image_link = get_option( 'image_default_link_type' );
-
 	if ( $image_link !== 'file' ) { // Could be 'none' or custom.
 		update_option( 'image_default_link_type', 'file' );
 	}
@@ -172,15 +169,10 @@ function image_link() {
  * galleries in the rich text editor, not with the new block editor galleries.
  *
  * @since  1.0.0
- * @return mixed[] Modifies the WordPress gallery shortcode.
- *
- * @todo Review this after WordPress 5.0 is released or if/when the new block
- *       editor adds the option to link to the full size images.
+ * @return array
  */
 function gallery_link( $settings ) {
-
 	$settings['galleryDefaults']['link'] = 'file';
-
 	return $settings;
 }
 
@@ -199,7 +191,6 @@ function lightbox_gallery_attribute( $content, $id ) {
 	$caption = wp_get_attachment_caption( $id );
 	return str_replace( '<a', '<a data-type="image" data-fancybox="gallery" data-caption="' . $caption . '" title="' . esc_attr( $title ) . '" ', $content );
 }
-
 
 /**
  * Single image lightbox attributes
@@ -244,7 +235,5 @@ function rss_featured_images( $content ) {
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$content = sprintf( '<div>%1s</div><div>%2s</div>', get_the_post_thumbnail( $post->ID, $size, [] ), $content );
 	}
-
-	// Return the filtered post content.
 	return $content;
 }
