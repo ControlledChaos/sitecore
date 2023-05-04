@@ -39,6 +39,9 @@ function setup() {
 	add_filter( 'style_loader_src', $ns( 'remove_versions' ), 999 );
 	add_filter( 'script_loader_src', $ns( 'remove_versions' ), 999 );
 
+	// Scripts & styles.
+	add_action( 'wp_enqueue_scripts', $ns( 'scripts_styles' ) );
+
 	// Disable emoji script.
 	add_action( 'init', $ns( 'disable_emojis' ) );
 
@@ -98,6 +101,12 @@ function remove_versions( $src ) {
 		$src = remove_query_arg( 'ver', $src );
 	}
 	return $src;
+}
+
+function scripts_styles() {
+
+	wp_enqueue_style( 'scp-lightbox', SCP_URL . 'assets/css/lightbox.css', [], null, 'screen' );
+	wp_enqueue_script( 'scp-lightbox', SCP_URL . 'assets/js/lightbox.js', [ 'jquery' ], null, true );
 }
 
 /**

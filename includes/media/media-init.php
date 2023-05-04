@@ -10,7 +10,8 @@
 
 namespace SiteCore\Media;
 
-use SiteCore\Classes\Core as Core_Class;
+use SiteCore\Classes\Core     as Core_Class,
+	SiteCore\Classes\Settings as Settings_Class;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,6 +38,9 @@ function setup() {
 
 	// Add image sizes.
 	add_action( 'init', $ns( 'image_sizes' ) );
+
+	// Crop image sizes.
+	add_action( 'init', $ns( 'image_crop' ) );
 
 	// Add image sizes to insert media UI.
 	add_filter( 'image_size_names_choose', $ns( 'insert_custom_image_sizes' ) );
@@ -65,6 +69,7 @@ function setup() {
 function classes() {
 
 	new Core_Class\Register_Media_Type;
+	new Settings_Class\Settings_Fields_Media_Images;
 }
 
 /**
@@ -115,6 +120,31 @@ function image_sizes() {
 	 * 1:1 aspect ratio.
 	 */
 	add_image_size( 'column-thumbnail', 48, 48, true );
+}
+
+/**
+ * Crop images
+ *
+ * Medium and large sizes are cropped to
+ * exact dimensions of size fields if
+ * the crop options are true.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function image_crop() {
+
+	if ( get_option( 'hard_crop_medium', true ) ) {
+		update_option( 'medium_crop', true );
+	} else {
+		update_option( 'medium_crop', false );
+	}
+
+	if ( get_option( 'hard_crop_large', true ) ) {
+		update_option( 'large_crop', true );
+	} else {
+		update_option( 'large_crop', false );
+	}
 }
 
 /**

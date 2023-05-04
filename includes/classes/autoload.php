@@ -129,7 +129,8 @@ function settings() {
 		ns( 'Settings', 'Settings_Fields_Admin_Users' )        => f( 'settings', 'settings-fields-admin-users.php' ),
 		ns( 'Settings', 'Settings_Fields_Developer' )          => f( 'settings', 'settings-fields-developer.php' ),
 		ns( 'Settings', 'Settings_Fields_Developer_Content' )  => f( 'settings', 'settings-fields-developer-content.php' ),
-		ns( 'Settings', 'Settings_Fields_Developer_Users' )    => f( 'settings', 'settings-fields-developer-users.php' )
+		ns( 'Settings', 'Settings_Fields_Developer_Users' )    => f( 'settings', 'settings-fields-developer-users.php' ),
+		ns( 'Settings', 'Settings_Fields_Media_Images' )       => f( 'settings', 'settings-fields-media-images.php' ),
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {
