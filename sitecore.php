@@ -191,7 +191,9 @@ function plugin_page_link( $links ) {
 
 	return array_merge( $link, $links );
 }
-add_filter( 'plugin_action_links_' . SCP_BASENAME, __NAMESPACE__ . '\plugin_page_link' );
+add_action( 'plugins_loaded', function() {
+	add_filter( 'plugin_action_links_' . SCP_BASENAME, __NAMESPACE__ . '\plugin_page_link' );
+} );
 
 // Get plugin configuration file.
 require plugin_dir_path( __FILE__ ) . 'config.php';
