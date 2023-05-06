@@ -407,6 +407,17 @@ function developer_access() {
  */
 function developer_is_current_user() {
 
+	if ( is_multisite() ) {
+
+		if ( is_network_admin() ) {
+			return true;
+		}
+
+		if ( is_plugin_active_for_network( SCP_BASENAME ) && ! is_network_admin() ) {
+			return false;
+		}
+	}
+
 	include ABSPATH . WPINC . '/pluggable.php';
 
 	$dev_email = get_user_by( 'email', dev_access_email() );
