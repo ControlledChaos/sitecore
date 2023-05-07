@@ -275,6 +275,17 @@ function disable_personal_option() {
 }
 
 /**
+ * Parent menu item
+ *
+ * @since  1.0.0
+ * @access public
+ * @return void
+ */
+function parent_page() {
+	return apply_filters( 'scp_disable_toolbar_parent_page', 'users.php' );
+}
+
+/**
  * Add menu item
  *
  * @since  1.0.0
@@ -284,7 +295,7 @@ function disable_personal_option() {
 function admin_menu() {
 
 	add_submenu_page(
-		'users.php',
+		parent_page(),
 		__( 'Disable User Toolbar', 'sitecore' ),
 		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_options',
@@ -304,7 +315,7 @@ function admin_menu() {
 function network_admin_menu() {
 
 	add_submenu_page(
-		'users.php',
+		parent_page(),
 		__( 'Disable User Toolbar', 'sitecore' ),
 		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_network_options',
@@ -338,7 +349,15 @@ function network_settings_save() {
 		}
 	}
 
-	wp_redirect( 'users.php?page=admin_bar_disabler&settings-updated=1' );
+	wp_safe_redirect(
+		add_query_arg(
+			[
+				'page' => 'admin_bar_disabler',
+				'settings-updated' => true
+			],
+			parent_page()
+		)
+	 );
 	die();
 }
 

@@ -918,6 +918,8 @@ class Add_Page {
 			$redirect = 'admin.php';
 		}
 
+		// check_admin_referer( '' );
+
 		do_action( 'save_network_settings_' . $this->page_options['menu_slug'] );
 
 		wp_safe_redirect(
