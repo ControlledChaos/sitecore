@@ -53,7 +53,19 @@ function setup() {
 		} );
 	}
 
-	Disable_Toolbar\setup();
+	if ( is_multisite() ) {
+		if ( is_network_admin() ) {
+			Disable_Toolbar\setup();
+		} else {
+			if ( get_option( 'disable_user_toolbar', false ) ) {
+				Disable_Toolbar\setup();
+			}
+		}
+	} else {
+		if ( get_option( 'disable_user_toolbar', false ) ) {
+			Disable_Toolbar\setup();
+		}
+	}
 }
 
 /**

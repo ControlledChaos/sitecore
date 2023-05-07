@@ -42,6 +42,18 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 					),
 					'class'       => 'admin-field'
 				]
+			],
+			[
+				'id'       => 'disable_user_toolbar',
+				'title'    => __( 'Disable Toolbar', 'sitecore' ),
+				'callback' => [ $this, 'disable_user_toolbar_callback' ],
+				'page'     => 'options-admin',
+				'section'  => 'scp-settings-section-admin-toolbar',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Check to add option for disabling the user toolbar on the front end.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
 			]
 		];
 
@@ -62,6 +74,17 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	}
 
 	/**
+	 * Disable Toolbar field order
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return integer Returns the placement of the field in the fields array.
+	 */
+	public function disable_user_toolbar_order() {
+		return 1;
+	}
+
+	/**
 	 * Sanitize Platform Link field
 	 *
 	 * @since  1.0.0
@@ -77,6 +100,24 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 			$option = false;
 		}
 		return apply_filters( 'scp_toolbar_remove_platform_link', $option );
+	}
+
+	/**
+	 * Sanitize Disable Toolbar field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function disable_user_toolbar_sanitize() {
+
+		$option = get_option( 'disable_user_toolbar', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_disable_user_toolbar', $option );
 	}
 
 	/**
@@ -109,6 +150,41 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '</label></fieldset>';
+
+		echo $html;
+	}
+
+	/**
+	 * Disable Toolbar field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function disable_user_toolbar_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = $this->disable_user_toolbar_order();
+		$field_id = $fields[$order]['id'];
+		$option   = $this->disable_user_toolbar_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= __( '<p class="description">Adds a link under Users in the admin menu.</p>', 'sitecore' );
 
 		echo $html;
 	}
