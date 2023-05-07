@@ -377,7 +377,19 @@ function settings_page() {
 	}
 
 	?>
-	<div class="wrap">
+	<style>
+	.disable-toolbar select[multiple] {
+		overflow-y: auto;
+	}
+	.disable-toolbar optgroup {
+		font-style: normal;
+		font-weight: normal;
+	}
+	textarea {
+		resize: none;
+	}
+	</style>
+	<div class="wrap disable-toolbar">
 
 		<h2><?php _e( 'Disable User Toolbar', 'sitecore' ); ?></h2>
 
@@ -420,11 +432,11 @@ function settings_page() {
 					<td>
 						<p><?php _e( 'ONLY show the user toolbar for users with these role(s).', 'sitecore' ); ?></p>
 						<p>
-							<select name="admin_bar_disabler_whitelist_roles[]" id="admin_bar_disabler_whitelist_roles" size="9" multiple style="overflow-y: auto">
-								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>" style="font-style: normal; font-weight: normal">
+							<select name="admin_bar_disabler_whitelist_roles[]" id="admin_bar_disabler_whitelist_roles" size="9" multiple>
+								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>">
 									<option value=""><?php _e( 'Reset', 'sitecore' ); ?></option>
 								</optgroup>
-								<optgroup label="<?php _e( 'User Roles', 'sitecore' ); ?>" style="font-style: normal; font-weight: normal">
+								<optgroup label="<?php _e( 'User Roles', 'sitecore' ); ?>">
 								<?php
 								$inclusion_list_roles = $settings['whitelist_roles'];
 
@@ -451,7 +463,7 @@ function settings_page() {
 						$inclusion_list_caps = implode( ',', $settings['whitelist_caps'] );
 						?>
 						<p><?php _e( 'ONLY show the user toolbar for users with these capabilities', 'sitecore' ); ?></p>
-						<textarea rows="3" cols="50" name="admin_bar_disabler_whitelist_caps" id="admin_bar_disabler_whitelist_caps" style="resize: none"><?php echo wp_strip_all_tags( $inclusion_list_caps ); ?></textarea>
+						<textarea rows="3" cols="50" name="admin_bar_disabler_whitelist_caps" id="admin_bar_disabler_whitelist_caps"><?php echo wp_strip_all_tags( $inclusion_list_caps ); ?></textarea>
 						<p class="description"><?php _e( 'Add capabilities as a comma-separated list.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
@@ -464,11 +476,11 @@ function settings_page() {
 					<td>
 						<p><?php _e( 'DO NOT show the user toolbar for users with these role(s).', 'sitecore' ); ?></p>
 						<p>
-							<select name="admin_bar_disabler_blacklist_roles[]" id="admin_bar_disabler_blacklist_roles" size="9" multiple style="overflow-y: auto">
-								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>" style="font-style: normal; font-weight: normal">
+							<select name="admin_bar_disabler_blacklist_roles[]" id="admin_bar_disabler_blacklist_roles" size="9" multiple>
+								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>">
 									<option value=""><?php _e( 'Reset', 'sitecore' ); ?></option>
 								</optgroup>
-								<optgroup label="<?php _e( 'User Roles', 'sitecore' ); ?>" style="font-style: normal; font-weight: normal">
+								<optgroup label="<?php _e( 'User Roles', 'sitecore' ); ?>">
 								<?php
 								$exclusion_list_roles = $settings['blacklist_roles'];
 
@@ -495,7 +507,7 @@ function settings_page() {
 						$exclusion_list_caps = implode( ',', $settings['blacklist_caps'] );
 						?>
 						<p><?php _e( 'DO NOT show the user toolbar for users with these capabilities', 'sitecore' ); ?></p>
-						<textarea rows="3" cols="50" name="admin_bar_disabler_blacklist_caps" id="admin_bar_disabler_blacklist_caps" style="resize: none"><?php echo wp_strip_all_tags( $exclusion_list_caps ); ?></textarea>
+						<textarea rows="3" cols="50" name="admin_bar_disabler_blacklist_caps" id="admin_bar_disabler_blacklist_caps"><?php echo wp_strip_all_tags( $exclusion_list_caps ); ?></textarea>
 						<p class="description"><?php _e( 'Add capabilities as a comma-separated list.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
