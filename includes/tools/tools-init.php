@@ -12,7 +12,8 @@ namespace SiteCore\Tools;
 
 use SiteCore\Classes\Core     as Core_Class,
 	SiteCore\Classes\Tools    as Tools_Class,
-	SiteCore\Theme_Test_Drive as Test_Drive;
+	SiteCore\Theme_Test_Drive as Test_Drive,
+	SiteCore\Disable_Toolbar  as Disable_Toolbar;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,6 +52,8 @@ function setup() {
 			Test_Drive\setup();
 		} );
 	}
+
+	Disable_Toolbar\setup();
 }
 
 /**
@@ -68,8 +71,6 @@ function classes() {
 	if ( get_option( 'customizer_reset', false ) ) {
 		new Tools_Class\Customizer_Reset;
 	}
-
-	new Tools_Class\Disable_User_Toolbar;
 }
 
 /**
