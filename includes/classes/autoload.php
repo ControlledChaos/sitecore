@@ -155,7 +155,8 @@ function tools() {
 		'ACF_Admin_Tool' => SCP_PATH . 'includes/vendor/acf/includes/admin/tools/class-acf-admin-tool.php',
 
 		ns( 'Tools', 'Content_Import_Export' ) => f( 'tools', 'content-import-export.php' ),
-		ns( 'Tools', 'Customizer_Reset' )      => f( 'tools', 'customizer-reset.php' )
+		ns( 'Tools', 'Customizer_Reset' )      => f( 'tools', 'customizer-reset.php' ),
+		ns( 'Tools', 'Disable_User_Toolbar' )  => f( 'tools', 'disable-user-toolbar.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {

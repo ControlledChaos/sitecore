@@ -68,6 +68,8 @@ function classes() {
 	if ( get_option( 'customizer_reset', false ) ) {
 		new Tools_Class\Customizer_Reset;
 	}
+
+	new Tools_Class\Disable_User_Toolbar;
 }
 
 /**

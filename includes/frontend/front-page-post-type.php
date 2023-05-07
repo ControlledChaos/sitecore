@@ -85,7 +85,7 @@ function front_page_pre_get_posts( $query ) {
 
 	if ( $query->is_home() && $query->is_front_page() && $query->is_main_query() ) {
 
-		$post_type  = (string) get_option( 'scp_front_page_post_type', '' );
+		$post_type  = (string) get_option( 'front_page_post_type', '' );
 		$post_types = front_page_query_args();
 
 		if ( in_array( $post_type, $post_types ) ) {
@@ -117,13 +117,13 @@ function front_page_query_customize( $wp_customize ) {
 		$choices[$post_type->name] = $post_type->labels->name;
 	}
 
-	$wp_customize->add_setting( 'scp_front_page_post_type', [
+	$wp_customize->add_setting( 'front_page_post_type', [
 		'type'       => 'option',
 		'capability' => 'manage_options',
 		'default'    => 'post'
 	] );
 
-	$wp_customize->add_control( 'scp_front_page_post_type', [
+	$wp_customize->add_control( 'front_page_post_type', [
 		'label'       => __( 'Front Page Post Type', 'sitecore' ),
 		'description' => __( 'Choose which post type to display in the front page feed.', 'sitecore' ),
 		'type'        => 'radio',
