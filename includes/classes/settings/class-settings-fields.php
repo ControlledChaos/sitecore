@@ -63,8 +63,8 @@ class Settings_Fields {
 	/**
 	 * Add settings fields
 	 *
-	 * Adds a settings section fpr each array supplied
-	 * in the constructor method, if an ID is supplied.
+	 * Adds a setting fpr each array supplied in the
+	 * constructor method, if an ID is supplied.
 	 *
 	 * @since  1.0.0
 	 * @access protected
@@ -110,5 +110,32 @@ class Settings_Fields {
 				);
 			endif;
 		}
+	}
+
+	/**
+	 * Get settings
+	 *
+	 * Gets all settings supplied in the constructor
+	 * method, if an ID is supplied.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return void
+	 */
+	protected function get_settings() {
+
+		$settings = [];
+		$fields   = $this->settings_fields;
+
+		if ( ! is_array( $fields ) ) {
+			return;
+		}
+
+		foreach ( $fields as $field ) {
+			if ( isset( $field['id'] ) && ! empty( $field['id'] ) ) {
+				$settings[] = get_option( $field['id'] );
+			}
+		}
+		return $settings;
 	}
 }
