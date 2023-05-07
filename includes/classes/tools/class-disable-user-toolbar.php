@@ -281,12 +281,14 @@ class Disable_User_Toolbar {
 	 */
 	public function admin_menu() {
 
-		add_options_page(
+		add_submenu_page(
+			'users.php',
 			__( 'Disable User Toolbar', 'sitecore' ),
 			__( 'User Toolbar', 'sitecore' ),
 			'manage_options',
 			'admin_bar_disabler',
-			[ $this, 'settings_page', ]
+			[ $this, 'settings_page', ],
+			60
 		);
 	}
 
@@ -300,7 +302,7 @@ class Disable_User_Toolbar {
 	public function network_admin_menu() {
 
 		add_submenu_page(
-			'settings.php',
+			'users.php',
 			__( 'Disable User Toolbar', 'sitecore' ),
 			__( 'User Toolbar', 'sitecore' ),
 			'manage_network_options',
@@ -334,7 +336,7 @@ class Disable_User_Toolbar {
 			}
 		}
 
-		wp_redirect( 'settings.php?page=admin_bar_disabler&settings-updated=1' );
+		wp_redirect( 'users.php?page=admin_bar_disabler&settings-updated=1' );
 		die();
 	}
 
@@ -432,6 +434,15 @@ class Disable_User_Toolbar {
 									?>
 									</optgroup>
 								</select>
+							</p>
+							<p>
+								<?php
+								foreach ( $roles as $role => $name ) {
+									?>
+									<input id="<?php echo $inclusion_list_roles . '-' . $role; ?>" name="<?php echo $inclusion_list_roles . '-' . $role; ?>" type="checkbox" value="<?php echo esc_attr( $role ); ?>"<?php checked( in_array( $role, $inclusion_list_roles, true ) ); ?> /> <?php echo esc_html( $name ); ?>
+									<?php
+								}
+								?>
 							</p>
 							<p class="description"><?php _e( 'CTRL/CMD + Click for multiple selections.', 'sitecore' ); ?></p>
 						</td>
