@@ -43,7 +43,7 @@ function setup() {
 
 		if ( is_multisite() ) {
 			add_action( 'network_admin_menu', $ns( 'network_admin_menu' ) );
-			add_action( 'network_admin_edit_admin_bar_disabler', $ns( 'network_settings_save' ) );
+			add_action( 'network_admin_edit_disable_user_toolbar', $ns( 'network_settings_save' ) );
 		}
 	}
 }
@@ -66,11 +66,11 @@ function init() {
  */
 function register_settings() {
 
-	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_disable_all' );
-	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_whitelist_roles' );
-	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_whitelist_caps' );
-	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_blacklist_roles' );
-	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_blacklist_caps' );
+	register_setting( 'admin-bar-disabler-settings-group', 'disable_user_toolbar_disable_all' );
+	register_setting( 'admin-bar-disabler-settings-group', 'disable_user_toolbar_whitelist_roles' );
+	register_setting( 'admin-bar-disabler-settings-group', 'disable_user_toolbar_whitelist_caps' );
+	register_setting( 'admin-bar-disabler-settings-group', 'disable_user_toolbar_blacklist_roles' );
+	register_setting( 'admin-bar-disabler-settings-group', 'disable_user_toolbar_blacklist_caps' );
 }
 
 /**
@@ -82,11 +82,11 @@ function register_settings() {
 function get_settings( $inherit = false ) {
 
 	$settings = [
-		'disable_all'     => (boolean) get_option( 'admin_bar_disabler_disable_all', 0 ),
-		'whitelist_roles' => (array) get_option( 'admin_bar_disabler_whitelist_roles', [] ),
-		'whitelist_caps'  => get_option( 'admin_bar_disabler_whitelist_caps', '' ),
-		'blacklist_roles' => (array) get_option( 'admin_bar_disabler_blacklist_roles', [] ),
-		'blacklist_caps'  => get_option( 'admin_bar_disabler_blacklist_caps', '' ),
+		'disable_all'     => (boolean) get_option( 'disable_user_toolbar_disable_all', 0 ),
+		'whitelist_roles' => (array) get_option( 'disable_user_toolbar_whitelist_roles', [] ),
+		'whitelist_caps'  => get_option( 'disable_user_toolbar_whitelist_caps', '' ),
+		'blacklist_roles' => (array) get_option( 'disable_user_toolbar_blacklist_roles', [] ),
+		'blacklist_caps'  => get_option( 'disable_user_toolbar_blacklist_caps', '' ),
 	];
 
 	$settings['whitelist_roles'] = array_map( 'trim', array_unique( array_filter( $settings['whitelist_roles'] ) ) );
@@ -121,11 +121,11 @@ function get_settings( $inherit = false ) {
 function get_site_settings() {
 
 	$settings = [
-		'disable_all'     => (boolean) get_site_option( 'admin_bar_disabler_disable_all', 0 ),
-		'whitelist_roles' => (array) get_site_option( 'admin_bar_disabler_whitelist_roles', [] ),
-		'whitelist_caps'  => get_site_option( 'admin_bar_disabler_whitelist_caps', '' ),
-		'blacklist_roles' => (array) get_site_option( 'admin_bar_disabler_blacklist_roles', [] ),
-		'blacklist_caps'  => get_site_option( 'admin_bar_disabler_blacklist_caps', '' ),
+		'disable_all'     => (boolean) get_site_option( 'disable_user_toolbar_disable_all', 0 ),
+		'whitelist_roles' => (array) get_site_option( 'disable_user_toolbar_whitelist_roles', [] ),
+		'whitelist_caps'  => get_site_option( 'disable_user_toolbar_whitelist_caps', '' ),
+		'blacklist_roles' => (array) get_site_option( 'disable_user_toolbar_blacklist_roles', [] ),
+		'blacklist_caps'  => get_site_option( 'disable_user_toolbar_blacklist_caps', '' ),
 	];
 
 	$settings['whitelist_roles'] = array_map( 'trim', array_unique( array_filter( $settings['whitelist_roles'] ) ) );
@@ -221,7 +221,7 @@ function enable_site_admin() {
 		return true;
 	}
 
-	$network = get_network_option( get_current_network_id(), 'admin_bar_disabler_disable_all', false );
+	$network = get_network_option( get_current_network_id(), 'disable_user_toolbar_disable_all', false );
 
 	if ( $network ) {
 		return false;
@@ -290,7 +290,7 @@ function admin_menu() {
 		__( 'Disable User Toolbar', 'sitecore' ),
 		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_options',
-		'admin_bar_disabler',
+		'disable_user_toolbar',
 		__NAMESPACE__ . '\settings_page',
 		60
 	);
@@ -309,7 +309,7 @@ function network_admin_menu() {
 		__( 'Disable User Toolbar', 'sitecore' ),
 		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_network_options',
-		'admin_bar_disabler',
+		'disable_user_toolbar',
 		__NAMESPACE__ . '\settings_page'
 	);
 }
@@ -322,26 +322,26 @@ function network_admin_menu() {
  */
 function network_settings_save() {
 
-	check_admin_referer( 'admin_bar_disabler' );
+	check_admin_referer( 'disable_user_toolbar' );
 
 	$settings = get_site_settings();
 
 	foreach ( $settings as $field => $value ) {
 
 		if (
-			isset( $_POST[ 'admin_bar_disabler_' . $field ] ) &&
-			! empty( $_POST[ 'admin_bar_disabler_' . $field ] )
+			isset( $_POST[ 'disable_user_toolbar_' . $field ] ) &&
+			! empty( $_POST[ 'disable_user_toolbar_' . $field ] )
 		) {
-			update_site_option( 'admin_bar_disabler_' . $field, $_POST[ 'admin_bar_disabler_' . $field ] );
+			update_site_option( 'disable_user_toolbar_' . $field, $_POST[ 'disable_user_toolbar_' . $field ] );
 		} else {
-			delete_site_option( 'admin_bar_disabler_' . $field );
+			delete_site_option( 'disable_user_toolbar_' . $field );
 		}
 	}
 
 	wp_safe_redirect(
 		add_query_arg(
 			[
-				'page' => 'admin_bar_disabler',
+				'page' => 'disable_user_toolbar',
 				'settings-updated' => true
 			],
 			parent_page()
@@ -365,7 +365,7 @@ function settings_page() {
 
 	if ( $network ) {
 		$settings    = get_site_settings();
-		$action      = 'edit.php?action=admin_bar_disabler';
+		$action      = 'edit.php?action=disable_user_toolbar';
 		$all_message = __( 'Disable the frontend toolbar for all users of all sites.', 'sitecore' );
 	}
 
@@ -405,7 +405,7 @@ function settings_page() {
 		<form method="post" action="<?php echo esc_attr( $action ); ?>">
 			<?php
 			if ( $network ) {
-				wp_nonce_field( 'admin_bar_disabler' );
+				wp_nonce_field( 'disable_user_toolbar' );
 			} else {
 				settings_fields( 'admin-bar-disabler-settings-group' );
 				do_settings_sections( 'admin-bar-disabler-settings-group' );
@@ -418,12 +418,12 @@ function settings_page() {
 			<table class="form-table">
 				<tr valign="top">
 					<th scope="row">
-						<label for="admin_bar_disabler_disable_all">
+						<label for="disable_user_toolbar_disable_all">
 							<?php _e( 'Disable for All', 'sitecore' ); ?>
 						</label>
 					</th>
 					<td>
-						<input type="checkbox" name="admin_bar_disabler_disable_all" id="admin_bar_disabler_disable_all" value="1"<?php checked( $settings['disable_all'] ); ?> /> <?php echo $all_message; ?>
+						<input type="checkbox" name="disable_user_toolbar_disable_all" id="disable_user_toolbar_disable_all" value="1"<?php checked( $settings['disable_all'] ); ?> /> <?php echo $all_message; ?>
 
 						<?php if ( $network ) : ?>
 						<p class="description"><?php _e( 'This also disables the toolbar settings page in single site admin.', 'sitecore' ); ?></p>
@@ -432,14 +432,14 @@ function settings_page() {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="admin_bar_disabler_whitelist_roles">
+						<label for="disable_user_toolbar_whitelist_roles">
 							<?php _e( 'Roles Inclusion', 'sitecore' ); ?>
 						</label>
 					</th>
 					<td>
 						<p><?php _e( 'ONLY show the user toolbar for users with these role(s).', 'sitecore' ); ?></p>
 						<p>
-							<select name="admin_bar_disabler_whitelist_roles[]" id="admin_bar_disabler_whitelist_roles" size="9" multiple>
+							<select name="disable_user_toolbar_whitelist_roles[]" id="disable_user_toolbar_whitelist_roles" size="9" multiple>
 								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>">
 									<option value=""><?php _e( 'Reset', 'sitecore' ); ?></option>
 								</optgroup>
@@ -461,7 +461,7 @@ function settings_page() {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="admin_bar_disabler_whitelist_caps">
+						<label for="disable_user_toolbar_whitelist_caps">
 							<?php _e( 'Capabilities Inclusion', 'sitecore' ); ?>
 						</label>
 					</th>
@@ -470,20 +470,20 @@ function settings_page() {
 						$inclusion_list_caps = implode( ',', $settings['whitelist_caps'] );
 						?>
 						<p><?php _e( 'ONLY show the user toolbar for users with these capabilities', 'sitecore' ); ?></p>
-						<textarea rows="3" cols="50" name="admin_bar_disabler_whitelist_caps" id="admin_bar_disabler_whitelist_caps"><?php echo wp_strip_all_tags( $inclusion_list_caps ); ?></textarea>
+						<textarea rows="3" cols="50" name="disable_user_toolbar_whitelist_caps" id="disable_user_toolbar_whitelist_caps"><?php echo wp_strip_all_tags( $inclusion_list_caps ); ?></textarea>
 						<p class="description"><?php _e( 'Add capabilities as a comma-separated list.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="admin_bar_disabler_blacklist_roles">
+						<label for="disable_user_toolbar_blacklist_roles">
 							<?php _e( 'Roles Exclusion', 'sitecore' ); ?>
 						</label>
 					</th>
 					<td>
 						<p><?php _e( 'DO NOT show the user toolbar for users with these role(s).', 'sitecore' ); ?></p>
 						<p>
-							<select name="admin_bar_disabler_blacklist_roles[]" id="admin_bar_disabler_blacklist_roles" size="9" multiple>
+							<select name="disable_user_toolbar_blacklist_roles[]" id="disable_user_toolbar_blacklist_roles" size="9" multiple>
 								<optgroup label="<?php _e( 'Default', 'sitecore' ); ?>">
 									<option value=""><?php _e( 'Reset', 'sitecore' ); ?></option>
 								</optgroup>
@@ -505,7 +505,7 @@ function settings_page() {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="admin_bar_disabler_blacklist_caps">
+						<label for="disable_user_toolbar_blacklist_caps">
 							<?php _e( 'Capabilities Exclusion', 'sitecore' ); ?>
 						</label>
 					</th>
@@ -514,7 +514,7 @@ function settings_page() {
 						$exclusion_list_caps = implode( ',', $settings['blacklist_caps'] );
 						?>
 						<p><?php _e( 'DO NOT show the user toolbar for users with these capabilities', 'sitecore' ); ?></p>
-						<textarea rows="3" cols="50" name="admin_bar_disabler_blacklist_caps" id="admin_bar_disabler_blacklist_caps"><?php echo wp_strip_all_tags( $exclusion_list_caps ); ?></textarea>
+						<textarea rows="3" cols="50" name="disable_user_toolbar_blacklist_caps" id="disable_user_toolbar_blacklist_caps"><?php echo wp_strip_all_tags( $exclusion_list_caps ); ?></textarea>
 						<p class="description"><?php _e( 'Add capabilities as a comma-separated list.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
