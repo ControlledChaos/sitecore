@@ -286,7 +286,7 @@ function admin_menu() {
 	add_submenu_page(
 		'users.php',
 		__( 'Disable User Toolbar', 'sitecore' ),
-		__( 'User Toolbar', 'sitecore' ),
+		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_options',
 		'admin_bar_disabler',
 		__NAMESPACE__ . '\settings_page',
@@ -306,7 +306,7 @@ function network_admin_menu() {
 	add_submenu_page(
 		'users.php',
 		__( 'Disable User Toolbar', 'sitecore' ),
-		__( 'User Toolbar', 'sitecore' ),
+		__( 'Disable Toolbar', 'sitecore' ),
 		'manage_network_options',
 		'admin_bar_disabler',
 		__NAMESPACE__ . '\settings_page'
