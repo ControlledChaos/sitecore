@@ -437,15 +437,6 @@ function settings_page() {
 								</optgroup>
 							</select>
 						</p>
-						<p>
-							<?php
-							foreach ( $roles as $role => $name ) {
-								?>
-								<input id="<?php echo $inclusion_list_roles . '-' . $role; ?>" name="<?php echo $inclusion_list_roles . '-' . $role; ?>" type="checkbox" value="<?php echo esc_attr( $role ); ?>"<?php checked( in_array( $role, $inclusion_list_roles, true ) ); ?> /> <?php echo esc_html( $name ); ?>
-								<?php
-							}
-							?>
-						</p>
 						<p class="description"><?php _e( 'CTRL/CMD + Click for multiple selections.', 'sitecore' ); ?></p>
 					</td>
 				</tr>
