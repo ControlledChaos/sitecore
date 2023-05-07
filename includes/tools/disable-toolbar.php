@@ -35,7 +35,7 @@ function setup() {
 	add_action( 'init', $ns( 'init' ) );
 
 	if ( is_admin() ) {
-		add_action( 'admin_init', $ns( 'admin_init' ) );
+		add_action( 'admin_init', $ns( 'register_settings' ) );
 
 		if ( enable_site_admin() ) {
 			add_action( 'admin_menu', $ns( 'admin_menu' ) );
@@ -52,7 +52,6 @@ function setup() {
  * Init
  *
  * @since  1.0.0
- * @access public
  * @return boolean
  */
 function init() {
@@ -63,9 +62,9 @@ function init() {
  * Admin init
  *
  * @since  1.0.0
- * @access public
+ * @return void
  */
-function admin_init() {
+function register_settings() {
 
 	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_disable_all' );
 	register_setting( 'admin-bar-disabler-settings-group', 'admin_bar_disabler_whitelist_roles' );
@@ -78,7 +77,6 @@ function admin_init() {
  * Get plugin settings
  *
  * @since  1.0.0
- * @access public
  * @return array
  */
 function get_settings( $inherit = false ) {
@@ -118,7 +116,6 @@ function get_settings( $inherit = false ) {
  * Get plugin settings
  *
  * @since  1.0.0
- * @access public
  * @return array
  */
 function get_site_settings() {
@@ -148,7 +145,6 @@ function get_site_settings() {
  * Disable by settings
  *
  * @since  1.0.0
- * @access public
  * @return boolean
  */
 function disable_by_settings() {
@@ -217,7 +213,6 @@ function disable_by_settings() {
  * Disable site admin pages
  *
  * @since  1.0.0
- * @access public
  * @return boolean
  */
 function enable_site_admin() {
@@ -238,7 +233,6 @@ function enable_site_admin() {
  * Disable admin bar
  *
  * @since  1.0.0
- * @access public
  * @return boolean
  */
 function disable() {
@@ -262,7 +256,6 @@ function disable() {
  * Disable personal option row for toolbar preferences via inline CSS
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function disable_personal_option() {
@@ -278,7 +271,6 @@ function disable_personal_option() {
  * Parent menu item
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function parent_page() {
@@ -289,7 +281,6 @@ function parent_page() {
  * Add menu item
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function admin_menu() {
@@ -309,7 +300,6 @@ function admin_menu() {
  * Add network menu item
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function network_admin_menu() {
@@ -328,7 +318,6 @@ function network_admin_menu() {
  * Save network settings
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function network_settings_save() {
@@ -365,7 +354,6 @@ function network_settings_save() {
  * Admin settings page
  *
  * @since  1.0.0
- * @access public
  * @return void
  */
 function settings_page() {
