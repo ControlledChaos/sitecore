@@ -68,39 +68,6 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	}
 
 	/**
-	 * Multiple User Roles field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_multi_user_roles_order() {
-		return 0;
-	}
-
-	/**
-	 * Custom User Avatars field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_user_avatars_order() {
-		return 1;
-	}
-
-	/**
-	 * Disable Admin Color Schemes field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function disable_admin_color_schemes_order() {
-		return 2;
-	}
-
-	/**
 	 * Sanitize Multiple User Roles field
 	 *
 	 * @since  1.0.0
@@ -164,7 +131,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	public function enable_multi_user_roles_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_multi_user_roles_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_multi_user_roles_sanitize();
 
@@ -198,7 +165,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	public function enable_user_avatars_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_user_avatars_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_user_avatars_sanitize();
 
@@ -236,7 +203,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 	public function disable_admin_color_schemes_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->disable_admin_color_schemes_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_admin_color_schemes_sanitize();
 

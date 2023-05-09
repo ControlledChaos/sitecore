@@ -43,17 +43,6 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 	}
 
 	/**
-	 * Custom Dashboard field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_custom_dashboard_order() {
-		return 0;
-	}
-
-	/**
 	 * Sanitize Custom Dashboard field
 	 *
 	 * @since  1.0.0
@@ -81,7 +70,7 @@ class Settings_Fields_Admin_Dashboard extends Settings_Fields {
 	public function enable_custom_dashboard_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_custom_dashboard_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_custom_dashboard_sanitize();
 

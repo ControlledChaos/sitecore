@@ -91,50 +91,6 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	}
 
 	/**
-	 * Enable Post Types field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_dynamic_post_types_order() {
-		return 0;
-	}
-
-	/**
-	 * Enable Taxonomies field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_dynamic_taxonomies_order() {
-		return 1;
-	}
-
-	/**
-	 * Enable Block Types field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_dynamic_block_types_order() {
-		return 2;
-	}
-
-	/**
-	 * Enable Templates field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_dynamic_templates_order() {
-		return 3;
-	}
-
-	/**
 	 * Sanitize Enable Post Types field
 	 *
 	 * @since  1.0.0
@@ -216,7 +172,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_post_types_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_dynamic_post_types_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_post_types_sanitize();
 
@@ -254,7 +210,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_taxonomies_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_dynamic_taxonomies_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_taxonomies_sanitize();
 
@@ -292,7 +248,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_block_types_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_dynamic_block_types_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_block_types_sanitize();
 
@@ -330,7 +286,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_templates_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_dynamic_templates_order();
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_templates_sanitize();
 

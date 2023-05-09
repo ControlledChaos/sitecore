@@ -92,61 +92,6 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	}
 
 	/**
-	 * Navigation Link field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function admin_menu_menus_top_order() {
-		return 0;
-	}
-
-	/**
-	 * Widgets Link field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function admin_menu_widgets_top_order() {
-		return 1;
-	}
-
-	/**
-	 * Navigation Blocks field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function admin_menu_nav_blocks_order() {
-		return 2;
-	}
-
-	/**
-	 * Reusable Blocks field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function admin_menu_reuse_blocks_order() {
-		return 3;
-	}
-
-	/**
-	 * Custom Order field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function admin_menu_custom_order_order() {
-		return 4;
-	}
-
-	/**
 	 * Sanitize Navigation Link field
 	 *
 	 * @since  1.0.0
@@ -250,7 +195,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 		}
 
 		$fields   = $this->settings_fields;
-		$order    = $this->admin_menu_menus_top_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_menus_top_sanitize();
 
@@ -284,7 +229,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 		}
 
 		$fields   = $this->settings_fields;
-		$order    = $this->admin_menu_widgets_top_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_widgets_top_sanitize();
 
@@ -314,7 +259,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	public function admin_menu_nav_blocks_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->admin_menu_nav_blocks_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_nav_blocks_sanitize();
 
@@ -354,7 +299,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	public function admin_menu_reuse_blocks_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->admin_menu_reuse_blocks_order();
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_reuse_blocks_sanitize();
 
@@ -388,7 +333,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 	public function admin_menu_custom_order_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->admin_menu_custom_order_order();
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->admin_menu_custom_order_sanitize();
 

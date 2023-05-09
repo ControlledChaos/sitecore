@@ -93,61 +93,6 @@ class Settings_Fields_Sample extends Settings_Fields {
 	}
 
 	/**
-	 * Sample Field #1 field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function sample_field_one_order() {
-		return 0;
-	}
-
-	/**
-	 * Sample Field #2 field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function sample_field_two_order() {
-		return 1;
-	}
-
-	/**
-	 * Sample Field #3 field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function sample_field_three_order() {
-		return 2;
-	}
-
-	/**
-	 * Sample Field #4 field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function sample_field_four_order() {
-		return 3;
-	}
-
-	/**
-	 * Sample Field #5 field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function sample_field_five_order() {
-		return 4;
-	}
-
-	/**
 	 * Sanitize Sample Field #1 field
 	 *
 	 * @since  1.0.0
@@ -223,7 +168,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	public function sample_field_one_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->sample_field_one_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_one_sanitize();
 
@@ -259,7 +204,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	public function sample_field_two_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->sample_field_two_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_two_sanitize();
 		$array    = 'sample_radio';
@@ -321,7 +266,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	public function sample_field_three_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->sample_field_three_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_three_sanitize();
 		$array    = 'sample_select';
@@ -371,7 +316,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	public function sample_field_four_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->sample_field_four_order();
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_four_sanitize();
 
@@ -406,7 +351,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	public function sample_field_five_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->sample_field_five_order();
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_five_sanitize();
 

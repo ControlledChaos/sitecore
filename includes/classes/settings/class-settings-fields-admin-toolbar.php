@@ -63,28 +63,6 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	}
 
 	/**
-	 * Platform Link field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function toolbar_remove_platform_link_order() {
-		return 0;
-	}
-
-	/**
-	 * Disable Toolbar field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function disable_user_toolbar_order() {
-		return 1;
-	}
-
-	/**
 	 * Sanitize Platform Link field
 	 *
 	 * @since  1.0.0
@@ -130,7 +108,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	public function toolbar_remove_platform_link_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->toolbar_remove_platform_link_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->toolbar_remove_platform_link_sanitize();
 
@@ -164,7 +142,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 	public function disable_user_toolbar_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->disable_user_toolbar_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_user_toolbar_sanitize();
 

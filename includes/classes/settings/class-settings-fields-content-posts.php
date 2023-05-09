@@ -90,61 +90,6 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	}
 
 	/**
-	 * Posts to News field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function posts_to_news_order() {
-		return 0;
-	}
-
-	/**
-	 * Remove Blog field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function remove_blog_order() {
-		return 1;
-	}
-
-	/**
-	 * Remove Blog field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function type_tax_sort_order_order() {
-		return 2;
-	}
-
-	/**
-	 * Block Widgets field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function disable_block_widgets_order() {
-		return 3;
-	}
-
-	/**
-	 * Link Manager field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_link_manager_order() {
-		return 4;
-	}
-
-	/**
 	 * Sanitize Posts to News field
 	 *
 	 * @since  1.0.0
@@ -244,7 +189,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function posts_to_news_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->posts_to_news_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->posts_to_news_sanitize();
 
@@ -278,7 +223,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function remove_blog_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->remove_blog_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->remove_blog_sanitize();
 
@@ -312,7 +257,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function type_tax_sort_order_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->type_tax_sort_order_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->type_tax_sort_order_sanitize();
 
@@ -346,7 +291,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function disable_block_widgets_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->disable_block_widgets_order();
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_block_widgets_sanitize();
 
@@ -380,7 +325,7 @@ class Settings_Fields_Content_Posts extends Settings_Fields {
 	public function enable_link_manager_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_link_manager_order();
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_link_manager_sanitize();
 

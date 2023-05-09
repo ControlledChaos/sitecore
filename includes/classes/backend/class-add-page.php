@@ -918,7 +918,7 @@ class Add_Page {
 			$redirect = 'admin.php';
 		}
 
-		// check_admin_referer( '' );
+		check_admin_referer( $this->page_options['menu_slug'] );
 
 		do_action( 'save_network_settings_' . $this->page_options['menu_slug'] );
 

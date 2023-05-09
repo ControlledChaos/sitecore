@@ -54,28 +54,6 @@ class Settings_Fields_Media_Images extends Settings_Fields {
 	}
 
 	/**
-	 * Medium Size Crop field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function hard_crop_medium_order() {
-		return 0;
-	}
-
-	/**
-	 * Large Size Crop field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function hard_crop_large_order() {
-		return 1;
-	}
-
-	/**
 	 * Sanitize Medium Size Crop field
 	 *
 	 * @since  1.0.0
@@ -121,7 +99,7 @@ class Settings_Fields_Media_Images extends Settings_Fields {
 	public function hard_crop_medium_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->hard_crop_medium_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->hard_crop_medium_sanitize();
 
@@ -157,7 +135,7 @@ class Settings_Fields_Media_Images extends Settings_Fields {
 	public function hard_crop_large_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->hard_crop_large_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->hard_crop_large_sanitize();
 

@@ -54,28 +54,6 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 	}
 
 	/**
-	 * Enable Forms field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_dynamic_forms_order() {
-		return 0;
-	}
-
-	/**
-	 * Developer Access field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function dev_access_order() {
-		return 1;
-	}
-
-	/**
 	 * Sanitize Enable Forms field
 	 *
 	 * @since  1.0.0
@@ -121,7 +99,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 	public function enable_dynamic_forms_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_dynamic_forms_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_forms_sanitize();
 
@@ -159,7 +137,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 	public function dev_access_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->dev_access_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->dev_access_sanitize();
 

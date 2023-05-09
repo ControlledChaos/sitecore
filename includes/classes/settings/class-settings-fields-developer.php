@@ -122,83 +122,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 	}
 
 	/**
-	 * Update in Progress field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function fix_update_in_progress_order() {
-		return 0;
-	}
-
-	/**
-	 * Theme Test Drive field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function theme_test_drive_order() {
-		return 1;
-	}
-
-	/**
-	 * Direction Switcher field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function direction_switch_order() {
-		return 2;
-	}
-
-	/**
-	 * Customizer Reset field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function customizer_reset_order() {
-		return 3;
-	}
-
-	/**
-	 * Disable site health
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function disable_site_health_order() {
-		return 4;
-	}
-
-	/**
-	 * Disable FloC field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function disable_floc_order() {
-		return 5;
-	}
-
-	/**
-	 * Enable Sample Files field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function enable_sample_files_order() {
-		return 6;
-	}
-
-	/**
 	 * Sanitize Update in Progress field
 	 *
 	 * @since  1.0.0
@@ -348,7 +271,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 		);
 
 		$fields   = $this->settings_fields;
-		$order    = $this->fix_update_in_progress_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->fix_update_in_progress_sanitize();
 
@@ -400,7 +323,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function theme_test_drive_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->theme_test_drive_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->theme_test_drive_sanitize();
 
@@ -438,7 +361,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function direction_switch_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->direction_switch_order();
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->direction_switch_sanitize();
 
@@ -476,7 +399,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function customizer_reset_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->customizer_reset_order();
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->customizer_reset_sanitize();
 
@@ -514,7 +437,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function disable_site_health_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->disable_site_health_order();
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_site_health_sanitize();
 
@@ -552,7 +475,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function disable_floc_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->disable_floc_order();
+		$order    = 5;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_floc_sanitize();
 
@@ -590,7 +513,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function enable_sample_files_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->enable_sample_files_order();
+		$order    = 6;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_sample_files_sanitize();
 

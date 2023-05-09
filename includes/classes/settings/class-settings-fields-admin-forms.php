@@ -69,28 +69,6 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	}
 
 	/**
-	 * Email From Line field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function email_from_name_order() {
-		return 0;
-	}
-
-	/**
-	 * Enable ACFE Forms field order
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return integer Returns the placement of the field in the fields array.
-	 */
-	public function acfe_enable_forms_ui_order() {
-		return 1;
-	}
-
-	/**
 	 * Sanitize Email From Line field
 	 *
 	 * @since  1.0.0
@@ -136,7 +114,7 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	public function email_from_name_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->email_from_name_order();
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->email_from_name_sanitize();
 
@@ -170,7 +148,7 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	public function acfe_enable_forms_ui_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = $this->acfe_enable_forms_ui_order();
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->acfe_enable_forms_ui_sanitize();
 
