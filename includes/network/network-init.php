@@ -60,7 +60,11 @@ function classes() {
  */
 function admin_settings() {
 
-	new Settings_Class\Settings_Sections_Network_Admin;
-	new Settings_Class\Settings_Fields_Network_Admin_Dashboard;
-	new Settings_Class\Settings_Fields_Network_Admin_Menu;
+	$sections  = new Settings_Class\Settings_Sections_Network_Admin;
+	$dashboard = new Settings_Class\Settings_Fields_Network_Admin_Dashboard;
+	$menu      = new Settings_Class\Settings_Fields_Network_Admin_Menu;
+
+	$sections->sections();
+	$dashboard->fields();
+	$menu->fields();
 }
