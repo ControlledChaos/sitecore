@@ -44,11 +44,14 @@ function setup() {
  */
 function classes() {
 
-	new Admin_Class\Network_Admin_Settings_Page;
+	$admin = new Admin_Class\Network_Admin_Settings_Page;
 
 	if ( get_blog_option( get_main_site_id(), 'enable_sample_files', false ) ) {
-		new Admin_Class\Sample_Network_Page;
-		new Admin_Class\Sample_Network_Subpage;
+		$sample     = new Admin_Class\Sample_Network_Page;
+		$sample_sub = new Admin_Class\Sample_Network_Subpage;
+
+		$sample->add_page();
+		$sample_sub->add_page();
 	}
 }
 

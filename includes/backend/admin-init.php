@@ -129,15 +129,22 @@ function classes() {
 		get_option( 'enable_custom_dashboard', false ) &&
 		Compat\has_acf()
 	) {
-		new Classes\Admin\Dashboard_Tabs_ACF;
+		$dashboard_acf = new Classes\Admin\Dashboard_Tabs_ACF;
+		$dashboard_acf->add_page();
 	}
 
 	if ( get_option( 'enable_sample_files', false ) ) {
-		new Classes\Admin\Manage_Website_Page;
-		new Classes\Admin\Sample_Page;
-		new Classes\Admin\Sample_Subpage;
-		new Classes\Admin\Sample_ACF_Options;
-		new Classes\Admin\Sample_ACF_Suboptions;
+		$manage         = new Classes\Admin\Manage_Website_Page;
+		$sample         = new Classes\Admin\Sample_Page;
+		$sample_sub     = new Classes\Admin\Sample_Subpage;
+		$sample_acf     = new Classes\Admin\Sample_ACF_Options;
+		$sample_acf_sub = new Classes\Admin\Sample_ACF_Suboptions;
+
+		$manage->add_page();
+		$sample->add_page();
+		$sample_sub->add_page();
+		$sample_acf->add_page();
+		$sample_acf_sub->add_page();
 	}
 }
 

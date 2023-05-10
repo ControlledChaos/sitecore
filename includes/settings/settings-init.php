@@ -64,6 +64,7 @@ function admin_settings() {
 	$menu->fields();
 	$toolbar->fields();
 	$users->fields();
+	$page->add_page();
 }
 
 /**
@@ -80,6 +81,7 @@ function content_settings() {
 
 	$sections->sections();
 	$posts->fields();
+	$page->add_page();
 }
 
 /**
@@ -100,6 +102,7 @@ function developer_settings() {
 	$tools->fields();
 	$content->fields();
 	$users->fields();
+	$page->add_page();
 }
 
 /**

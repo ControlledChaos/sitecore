@@ -104,13 +104,25 @@ class Add_Page {
 		$this->page_labels  = wp_parse_args( $page_labels, $labels );
 		$this->page_options = wp_parse_args( $page_options, $options );
 		$this->priority     = (int) $priority;
+	}
+
+	/**
+	 * Add admin page
+	 *
+	 * Add hooks and filters.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function add_page() {
 
 		/**
 		 * Add an ACF options page and load field groups
 		 * if ACF options page function is available.
 		 */
 		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
-			add_action( 'acf/init', [ $this, 'add_acf_page' ], $this->priority );
+			add_action( 'acf/init', [ $this, 'acf_page_init' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
 		/**
@@ -120,7 +132,7 @@ class Add_Page {
 		 */
 		} elseif ( is_multisite() && $this->page_options['network'] ) {
 			if ( is_main_site() ) {
-				add_action( 'network_admin_menu', [ $this, 'add_page' ], $this->priority );
+				add_action( 'network_admin_menu', [ $this, 'page_init' ], $this->priority );
 
 				// Save network settings.
 				add_action( 'network_admin_edit_' . $this->page_options['menu_slug'], [ $this, 'save_network_settings' ] );
@@ -128,7 +140,7 @@ class Add_Page {
 
 		// Otherwise add a regular admin page.
 		} else {
-			add_action( 'admin_menu', [ $this, 'add_page' ], $this->priority );
+			add_action( 'admin_menu', [ $this, 'page_init' ], $this->priority );
 		}
 
 		// Enqueue admin scripts.
@@ -139,9 +151,35 @@ class Add_Page {
 	}
 
 	/**
+	 * Page init
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function page_init() {
+		return $this->add_menu_page();
+	}
+
+	/**
+	 * ACF page init
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function acf_page_init() {
+		return $this->add_acf_page();
+	}
+
+	/**
 	 * Is subpage
 	 *
 	 * Checks if the admin page class is a subpage.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean Returns true if the page is a subpage.
 	 */
 	protected function is_subpage() {
 
@@ -155,10 +193,10 @@ class Add_Page {
 	 * Register menu page
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public function add_page() {
+	protected function add_menu_page() {
 
 		$screen  = $this->page_options['menu_slug'];
 
@@ -207,10 +245,10 @@ class Add_Page {
 	 * Register ACF options page
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public function add_acf_page() {
+	protected function add_acf_page() {
 
 		// Stop here if ACF Pro is not active.
 		if ( ! function_exists( 'acf_add_options_page' ) ) {
