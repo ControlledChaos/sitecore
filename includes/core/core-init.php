@@ -10,7 +10,8 @@
 
 namespace SiteCore\Core;
 
-use SiteCore\Classes\Core as Core_Class;
+use SiteCore\Classes\Core as Core_Class,
+	SiteCore\Remove_Blog  as Remove_Blog;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,6 +32,10 @@ function setup() {
 	};
 
 	add_action( 'plugins_loaded', $ns( 'classes' ) );
+
+	if ( get_option( 'remove_blog' ) ) {
+		Remove_Blog\setup();
+	}
 
 	// Allow link manager.
 	if ( get_option( 'enable_link_manager', false ) ) {
@@ -82,10 +87,6 @@ function classes() {
 
 	$admin_type = new Core_Class\Register_Admin;
 	$admin_type->add_type();
-
-	if ( get_option( 'remove_blog' ) ) {
-		new Core_Class\Remove_Blog;
-	}
 
 	/**
 	 * Editor options for WordPress
