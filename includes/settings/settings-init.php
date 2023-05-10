@@ -56,6 +56,7 @@ function admin_settings() {
 	$users     = new Settings_Class\Settings_Fields_Admin_Users;
 	$page      = new Backend_Class\Admin_Settings_Page;
 
+	$sections->sections();
 	$dashboard->fields();
 	$footer->fields();
 	$forms->fields();
@@ -77,6 +78,7 @@ function content_settings() {
 	$posts    = new Settings_Class\Settings_Fields_Content;
 	$page     = new Backend_Class\Content_Settings_Page;
 
+	$sections->sections();
 	$posts->fields();
 }
 
@@ -94,6 +96,7 @@ function developer_settings() {
 	$users    = new Settings_Class\Settings_Fields_Developer_Users;
 	$page     = new Backend_Class\Developer_Settings_Page;
 
+	$sections->sections();
 	$tools->fields();
 	$content->fields();
 	$users->fields();
@@ -116,5 +119,6 @@ function sample_settings() {
 
 	$sections = new Settings_Class\Settings_Sections_Sample;
 	$settings = new Settings_Class\Settings_Fields_Sample;
+	$sections->sections();
 	$settings->fields();
 }

@@ -44,19 +44,29 @@ class Settings_Sections {
 		$sections = [];
 
 		$this->settings_sections = wp_parse_args( $settings_sections, $sections );
-
-		// Add settings sections.
-		add_action( 'admin_init', [ $this, 'sections' ] );
 	}
 
 	/**
-	 * Settings sections
+	 * Sections init
+	 *
+	 * Add settings sections.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function sections() {
+		add_action( 'admin_init', [ $this, 'get_sections' ] );
+	}
+
+	/**
+	 * Get settings sections
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return array
 	 */
-	public function sections() {
+	public function get_sections() {
 		return $this->add_sections();
 	}
 
