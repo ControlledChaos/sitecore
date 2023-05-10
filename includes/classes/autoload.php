@@ -117,7 +117,7 @@ function settings() {
 		ns( 'Settings', 'Settings_Sections_Developer' )      => f( 'settings', 'settings-sections-developer.php' ),
 		ns( 'Settings', 'Settings_Fields' )                  => f( 'settings', 'settings-fields.php' ),
 		ns( 'Settings', 'Settings_Fields_Sample' )           => f( 'settings', 'settings-fields-sample.php' ),
-		ns( 'Settings', 'Settings_Fields_Content_Posts' )    => f( 'settings', 'settings-fields-content-posts.php' ),
+		ns( 'Settings', 'Settings_Fields_Content' )    => f( 'settings', 'settings-fields-content.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Dashboard' )  => f( 'settings', 'settings-fields-admin-dashboard.php' ),
 		ns( 'Settings', 'Settings_Fields_Network_Admin_Dashboard' ) => f( 'settings', 'settings-fields-network-admin-dashboard.php' ),
 		ns( 'Settings', 'Settings_Fields_Admin_Footer' )       => f( 'settings', 'settings-fields-admin-footer.php' ),

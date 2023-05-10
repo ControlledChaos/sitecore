@@ -44,19 +44,29 @@ class Settings_Fields {
 		$fields = [];
 
 		$this->settings_fields = wp_parse_args( $settings_fields, $fields );
-
-		// Register and add settings fields.
-		add_action( 'admin_init', [ $this, 'settings' ] );
 	}
 
 	/**
-	 * Settings fields
+	 * Fields init
+	 *
+	 * Register and add settings fields.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function fields() {
+		add_action( 'admin_init', [ $this, 'get_fields' ] );
+	}
+
+	/**
+	 * Get fields
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return array
 	 */
-	public function settings() {
+	public function get_fields() {
 		return $this->add_fields();
 	}
 
@@ -112,6 +122,10 @@ class Settings_Fields {
 		}
 	}
 
+	public function settings() {
+		return $this->get_settings();
+	}
+
 	/**
 	 * Get settings
 	 *
@@ -133,7 +147,7 @@ class Settings_Fields {
 
 		foreach ( $fields as $field ) {
 			if ( isset( $field['id'] ) && ! empty( $field['id'] ) ) {
-				$settings[] = get_option( $field['id'] );
+				$settings[] = $field['id'];
 			}
 		}
 		return $settings;

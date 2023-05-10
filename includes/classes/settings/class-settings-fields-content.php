@@ -10,7 +10,7 @@
 
 namespace SiteCore\Classes\Settings;
 
-class Settings_Fields_Content_Posts extends Settings_Fields {
+class Settings_Fields_Content extends Settings_Fields {
 
 	/**
 	 * Constructor method

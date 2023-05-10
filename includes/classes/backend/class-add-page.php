@@ -806,7 +806,7 @@ class Add_Page {
 		// Print a paragraph with native description class using the description variable.
 		echo  $this->description();
 
-		wp_nonce_field( $this->page_options['menu_slug'] . '-validate' );
+		wp_nonce_field( $this->page_options['menu_slug'] );
 
 		if ( ! $this->is_subpage() ||
 			( $this->is_subpage() && 'options-general.php' != $this->page_options['parent_slug'] )
@@ -929,7 +929,7 @@ class Add_Page {
 			],
 			network_admin_url( $redirect ) )
 		 );
-		 exit;
+		 die();
 	}
 
 	/**

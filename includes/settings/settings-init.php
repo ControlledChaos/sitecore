@@ -35,6 +35,7 @@ function setup() {
 	add_action( 'init', $ns( 'admin_settings' ), 10 );
 	add_action( 'init', $ns( 'content_settings' ), 10 );
 	add_action( 'init', $ns( 'developer_settings' ), 10 );
+	add_action( 'init', $ns( 'sample_settings' ), 10 );
 }
 
 /**
@@ -45,15 +46,23 @@ function setup() {
  */
 function admin_settings() {
 
-	new Settings_Class\Settings_Sections_Admin;
-	new Settings_Class\Settings_Fields_Admin_Dashboard;
-	new Settings_Class\Settings_Fields_Admin_Footer;
-	new Settings_Class\Settings_Fields_Admin_Forms;
-	new Settings_Class\Settings_Fields_Admin_Header;
-	new Settings_Class\Settings_Fields_Admin_Menu;
-	new Settings_Class\Settings_Fields_Admin_Toolbar;
-	new Settings_Class\Settings_Fields_Admin_Users;
-	new Backend_Class\Admin_Settings_Page;
+	$sections  = new Settings_Class\Settings_Sections_Admin;
+	$dashboard = new Settings_Class\Settings_Fields_Admin_Dashboard;
+	$footer    = new Settings_Class\Settings_Fields_Admin_Footer;
+	$forms     = new Settings_Class\Settings_Fields_Admin_Forms;
+	$header    = new Settings_Class\Settings_Fields_Admin_Header;
+	$menu      = new Settings_Class\Settings_Fields_Admin_Menu;
+	$toolbar   = new Settings_Class\Settings_Fields_Admin_Toolbar;
+	$users     = new Settings_Class\Settings_Fields_Admin_Users;
+	$page      = new Backend_Class\Admin_Settings_Page;
+
+	$dashboard->fields();
+	$footer->fields();
+	$forms->fields();
+	$header->fields();
+	$menu->fields();
+	$toolbar->fields();
+	$users->fields();
 }
 
 /**
@@ -64,9 +73,11 @@ function admin_settings() {
  */
 function content_settings() {
 
-	new Settings_Class\Settings_Sections_Content;
-	new Settings_Class\Settings_Fields_Content_Posts;
-	new Backend_Class\Content_Settings_Page;
+	$sections = new Settings_Class\Settings_Sections_Content;
+	$posts    = new Settings_Class\Settings_Fields_Content;
+	$page     = new Backend_Class\Content_Settings_Page;
+
+	$posts->fields();
 }
 
 /**
@@ -77,9 +88,33 @@ function content_settings() {
  */
 function developer_settings() {
 
-	new Settings_Class\Settings_Sections_Developer;
-	new Settings_Class\Settings_Fields_Developer;
-	new Settings_Class\Settings_Fields_Developer_Content;
-	new Settings_Class\Settings_Fields_Developer_Users;
-	new Backend_Class\Developer_Settings_Page;
+	$sections = new Settings_Class\Settings_Sections_Developer;
+	$tools    = new Settings_Class\Settings_Fields_Developer;
+	$content  = new Settings_Class\Settings_Fields_Developer_Content;
+	$users    = new Settings_Class\Settings_Fields_Developer_Users;
+	$page     = new Backend_Class\Developer_Settings_Page;
+
+	$tools->fields();
+	$content->fields();
+	$users->fields();
+}
+
+/**
+ * Sample settings
+ *
+ * Only registered and added if the sample files
+ * settings is true on the developer settings page.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function sample_settings() {
+
+	if ( ! get_option( 'enable_sample_files', false ) ) {
+		return;
+	}
+
+	$sections = new Settings_Class\Settings_Sections_Sample;
+	$settings = new Settings_Class\Settings_Fields_Sample;
+	$settings->fields();
 }
