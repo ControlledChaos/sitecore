@@ -10,10 +10,11 @@
 
 namespace SiteCore\Tools;
 
-use SiteCore\Classes\Core     as Core_Class,
-	SiteCore\Classes\Tools    as Tools_Class,
-	SiteCore\Theme_Test_Drive as Test_Drive,
-	SiteCore\Disable_Toolbar  as Disable_Toolbar;
+use SiteCore\Classes\Core      as Core_Class,
+	SiteCore\Classes\Tools     as Tools_Class,
+	SiteCore\Theme_Test_Drive  as Test_Drive,
+	SiteCore\Disable_Toolbar   as Disable_Toolbar,
+	SiteCore\Remove_Customizer as Remove_Customizer;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -66,6 +67,8 @@ function setup() {
 			Disable_Toolbar\setup();
 		}
 	}
+
+	Remove_Customizer\setup();
 }
 
 /**

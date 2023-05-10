@@ -87,11 +87,6 @@ function classes() {
 		new Core_Class\Remove_Blog;
 	}
 
-	// If the Customizer is disabled in the system config file.
-	if ( ( defined( 'SCP_ALLOW_CUSTOMIZER' ) && false == SCP_ALLOW_CUSTOMIZER ) && ! current_user_can( 'develop' ) ) {
-		new Core_Class\Remove_Customizer;
-	}
-
 	/**
 	 * Editor options for WordPress
 	 *
