@@ -153,6 +153,18 @@ class Register_Type {
 		$this->type_options  = wp_parse_args( $type_options, $options );
 		$this->priority      = (int) $priority;
 		$this->settings_page = (bool) $settings;
+	}
+
+	/**
+	 * Add type
+	 *
+	 * Hooks and filters.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function add_type() {
 
 		// Register post type.
 		add_action( 'init', [ $this, 'register' ], $this->priority );

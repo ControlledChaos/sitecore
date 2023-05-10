@@ -80,7 +80,9 @@ function setup() {
  */
 function classes() {
 
-	new Core_Class\Register_Admin;
+	$admin_type = new Core_Class\Register_Admin;
+	$admin_type->add_type();
+
 	if ( get_option( 'remove_blog' ) ) {
 		new Core_Class\Remove_Blog;
 	}
@@ -105,8 +107,11 @@ function classes() {
 	}
 
 	if ( get_option( 'enable_sample_files', false ) ) {
-		new Core_Class\Register_Sample_Type;
-		new Core_Class\Register_Sample_Tax;
+		$sample_type = new Core_Class\Register_Sample_Type;
+		$sample_type->add_type();
+
+		$sample_tax = new Core_Class\Register_Sample_Tax;
+		$sample_tax->add_tax();
 	}
 }
 

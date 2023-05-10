@@ -113,13 +113,24 @@ class Register_Tax {
 		$this->tax_labels   = wp_parse_args( $tax_labels, $labels );
 		$this->tax_options  = wp_parse_args( $tax_options, $options );
 		$this->priority     = (int) $priority;
+	}
+
+	/**
+	 * Add tax
+	 *
+	 * Hooks and filters.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function add_tax() {
 
 		// Register taxonomy.
 		add_action( 'init', [ $this, 'register' ], $this->priority );
 
 		// Rewrite taxonomy labels.
 		add_action( 'wp_loaded', [ $this, 'rewrite_labels' ] );
-
 	}
 
 	/**

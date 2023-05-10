@@ -68,7 +68,9 @@ function setup() {
  */
 function classes() {
 
-	new Core_Class\Register_Media_Type;
+	$media_type = new Core_Class\Register_Media_Type;
+	$media_type->add_tax();
+
 	new Settings_Class\Settings_Fields_Media_Images;
 }
 
