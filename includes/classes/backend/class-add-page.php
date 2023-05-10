@@ -351,8 +351,10 @@ class Add_Page {
 	 */
 	protected function form_user_access() {
 
-		if ( array_key_exists( 'capability', $this->page_options['settings'] ) ) {
-			return $this->page_options['settings']['capability'];
+		if ( is_array( $this->page_options['settings'] ) ) {
+			if ( array_key_exists( 'capability', $this->page_options['settings'] ) ) {
+				return $this->page_options['settings']['capability'];
+			}
 		} else {
 			return 'scp_no_user_form_access';
 		}
