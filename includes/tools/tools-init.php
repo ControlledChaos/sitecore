@@ -12,6 +12,7 @@ namespace SiteCore\Tools;
 
 use SiteCore\Classes\Core      as Core_Class,
 	SiteCore\Classes\Tools     as Tools_Class,
+	SiteCore\Types_Taxes_Order as Types_Taxes_Order,
 	SiteCore\Theme_Test_Drive  as Test_Drive,
 	SiteCore\Disable_Toolbar   as Disable_Toolbar,
 	SiteCore\Remove_Customizer as Remove_Customizer;
@@ -38,6 +39,10 @@ function setup() {
 
 	add_action( 'tool_box', $ns( 'available_tools' ) );
 	add_action( 'admin_head', $ns( 'add_help_tabs' ) );
+
+	if ( get_option( 'type_tax_sort_order', false ) ) {
+		Types_Taxes_Order\setup();
+	}
 
 	if ( get_option( 'direction_switch', false ) ) {
 		add_action( 'init', $ns( 'set_direction' ) );
@@ -78,10 +83,6 @@ function setup() {
  * @return void
  */
 function classes() {
-
-	if ( get_option( 'type_tax_sort_order', false ) ) {
-		new Core_Class\Types_Taxes_Order;
-	}
 
 	if ( get_option( 'customizer_reset', false ) ) {
 		new Tools_Class\Customizer_Reset;

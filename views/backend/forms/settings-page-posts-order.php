@@ -14,24 +14,24 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get the custom sort order options.
-$scp_order_options = get_option( 'scp_order_options' );
+$options = get_option( 'scp_order_options' );
 
 // Set variable for array of registered public post types.
-if ( isset( $scp_order_options['objects'] ) ) {
-    $scp_order_post_types = $scp_order_options['objects'];
+if ( isset( $options['objects'] ) ) {
+    $get_types = $options['objects'];
 
 // Return empty array if no registered public tpost types.
 } else {
-    $scp_order_post_types = [];
+    $get_types = [];
 }
 
 // Set variable for array of registered public taxonomies.
-if ( isset( $scp_order_options['tags'] ) ) {
-    $scp_order_taxonomies = $scp_order_options['tags'];
+if ( isset( $options['tags'] ) ) {
+    $get_taxes = $options['tags'];
 
 // Return empty array if no registered public taxonomies.
 } else {
-    $scp_order_taxonomies = [];
+    $get_taxes = [];
 } ?>
 <div class="wrap">
     <h1><?php _e( 'Posts & Taxonomies Sort Orders', 'sitecore' ); ?></h1>
@@ -76,8 +76,8 @@ if ( isset( $scp_order_options['tags'] ) ) {
                                     continue;
                                 } ?>
                                 <label><input type="checkbox" name="objects[]" value="<?php echo $post_type->name; ?>" <?php
-                                    if ( isset( $scp_order_post_types ) && is_array( $scp_order_post_types ) ) {
-                                        if ( in_array( $post_type->name, $scp_order_post_types ) ) {
+                                    if ( isset( $get_types ) && is_array( $get_types ) ) {
+                                        if ( in_array( $post_type->name, $get_types ) ) {
                                             echo 'checked="checked"';
                                         }
                                     }
@@ -112,8 +112,8 @@ if ( isset( $scp_order_options['tags'] ) ) {
                                     continue;
                                 } ?>
                                 <label><input type="checkbox" name="tags[]" value="<?php echo $taxonomy->name; ?>" <?php
-                                    if ( isset( $scp_order_taxonomies ) && is_array( $scp_order_taxonomies ) ) {
-                                        if ( in_array( $taxonomy->name, $scp_order_taxonomies ) ) {
+                                    if ( isset( $get_taxes ) && is_array( $get_taxes ) ) {
+                                        if ( in_array( $taxonomy->name, $get_taxes ) ) {
                                             echo 'checked="checked"';
                                         }
                                     } ?>>&nbsp;<?php echo $taxonomy->label ?></label><br>

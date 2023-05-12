@@ -86,8 +86,7 @@ function core() {
 		ns( 'Core', 'Register_Admin' )       => f( 'core', 'register-admin.php' ),
 		ns( 'Core', 'Register_Tax' )         => f( 'core', 'register-tax.php' ),
 		ns( 'Core', 'Register_Sample_Tax' )  => f( 'core', 'register-sample-tax.php' ),
-		ns( 'Core', 'Register_Media_Type' )  => f( 'core', 'register-media-type.php' ),
-		ns( 'Core', 'Types_Taxes_Order' )    => f( 'core', 'types-taxes-order.php' )
+		ns( 'Core', 'Register_Media_Type' )  => f( 'core', 'register-media-type.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {
