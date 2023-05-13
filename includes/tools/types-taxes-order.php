@@ -101,7 +101,7 @@ function _check_load_assets() {
 		return false;
 	}
 
-	if ( isset( $_GET['orderby'] ) || strstr( $_SERVER['REQUEST_URI'], 'action=edit' ) || strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) ) {
+	if ( ( isset( $_GET['orderby'] ) && 'menu_order' != $_GET['orderby'] ) || strstr( $_SERVER['REQUEST_URI'], 'action=edit' ) || strstr( $_SERVER['REQUEST_URI'], 'wp-admin/post-new.php' ) ) {
 		return false;
 	}
 
@@ -114,7 +114,7 @@ function _check_load_assets() {
 		}
 
 		// If the selected is a post.
-		if ( ! isset($_GET['post_type']) && strstr($_SERVER['REQUEST_URI'], 'wp-admin/edit.php') && in_array('post', $objects)) {
+		if ( ! isset( $_GET['post_type'] ) && strstr( $_SERVER['REQUEST_URI'], 'wp-admin/edit.php') && in_array( 'post', $objects ) ) {
 			$active = true;
 		}
 	}
