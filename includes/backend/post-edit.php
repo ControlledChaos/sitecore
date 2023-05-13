@@ -37,6 +37,9 @@ function setup() {
 	// Add excerpts to the page post type.
 	add_action( 'add_meta_boxes', $ns( 'add_page_excerpts' ) );
 
+	// Add menu order to `post` post type.
+	add_action( 'add_meta_boxes', $ns( 'add_post_type_menu_order' ) );
+
 	// Show excerpt metabox by default.
 	add_filter( 'default_hidden_meta_boxes', $ns( 'show_excerpt_metabox' ), 10, 2 );
 
@@ -94,13 +97,38 @@ function page_taxonomies() {
 }
 
 /**
- * Add excerpts to page post type
+ * Add excerpts to `page` post type
  *
  * @since  1.0.0
  * @return void
  */
 function add_page_excerpts() {
 	add_post_type_support( 'page', 'excerpt' );
+}
+
+/**
+ * Add menu order to post types
+ *
+ * Adds the order field to post types that
+ * are selected in the post types order option.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function add_post_type_menu_order() {
+
+	$order_options = [];
+	if ( $order_options = get_option( 'scp_order_options' ) ) {
+		$order_options = get_option( 'scp_order_options' );
+	}
+
+	if ( isset( $order_options['objects'] ) && is_array( $order_options['objects'] ) ) {
+
+		$types = $order_options['objects'];
+		foreach ( $types as $type ) {
+			add_post_type_support( $type, 'page-attributes' );
+		}
+	}
 }
 
 /**
