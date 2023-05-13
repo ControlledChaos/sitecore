@@ -122,19 +122,54 @@ function add_post_type_menu_order() {
 		$types = $order_options['objects'];
 		foreach ( $types as $type ) {
 
+			// Add support for menu order.
 			add_post_type_support( $type, 'page-attributes' );
 
+			/**
+			 * Create menu order columns
+			 *
+			 * Adds the Order column following the post title.
+			 *
+			 * @since  1.0.0
+			 * @return void
+			 */
+			add_filter( 'manage_edit-' . $type . '_columns', function( $columns ) {
+
+				$select = $columns['cb'];
+				$title  = $columns['title'];
+				unset( $select );
+				unset( $title );
+				$order = [
+					'cb'         => $select,
+					'title'      => $title,
+					'menu_order' => menu_order_list_label()
+				];
+
+				return array_merge( $order, $columns );
+			}, 10, 1 );
+
+			/**
+			 * Menu order values
+			 *
+			 * Fills the menu order column rows.
+			 *
+			 * @since  1.0.0
+			 * @return void
+			 */
 			add_filter( 'manage_' . $type . '_posts_custom_column', function( $column_name, $post_id ) {
 				if ( 'menu_order' == $column_name ) {
 					echo get_post( $post_id )->menu_order;
 				}
 			}, 10, 2 );
 
-			add_filter( 'manage_edit-' . $type . '_columns', function( $columns ) {
-				$columns['menu_order'] = menu_order_list_label();
-				return $columns;
-			}, 10, 1 );
-
+			/**
+			 * Sort posts by menu order
+			 *
+			 * Creates the clickable sort header.
+			 *
+			 * @since  1.0.0
+			 * @return void
+			 */
 			add_filter( 'manage_edit-' . $type . '_sortable_columns', function( $columns ) {
 				$columns['menu_order'] = 'menu_order';
 				return $columns;
