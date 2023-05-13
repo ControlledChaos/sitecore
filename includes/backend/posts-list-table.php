@@ -39,16 +39,13 @@ function setup() {
 	// Sort by menu order.
 	add_filter( 'request', $ns( 'sort_by_menu_order' ) );
 
-	// Perform the filtering.
-	add_filter( 'request', $ns( 'filter_post_list' ) );
-
 	// Add template column to posts lists.
-	add_filter( 'manage_posts_columns', $ns( 'template_columns_head' ), 9 );
-	add_filter( 'manage_pages_columns', $ns( 'template_columns_head' ), 9 );
+	add_filter( 'manage_edit-post_columns', $ns( 'template_columns_head' ), 9 );
+	add_filter( 'manage_edit-page_columns', $ns( 'template_columns_head' ), 9 );
 
 	// Template column content.
-	add_action( 'manage_posts_custom_column', $ns( 'template_columns_content' ), 9, 2 );
-	add_action( 'manage_pages_custom_column', $ns( 'template_columns_content' ), 9, 2 );
+	add_action( 'manage_post_posts_custom_column', $ns( 'template_columns_content' ), 9, 2 );
+	add_action( 'manage_page_posts_custom_column', $ns( 'template_columns_content' ), 9, 2 );
 
 	// Add image column to posts lists.
 	add_filter( 'manage_posts_columns', $ns( 'image_column_head' ) );
@@ -162,40 +159,6 @@ function sort_by_menu_order( $vars ) {
 			$vars['meta_key'] = 'menu_order';
 		}
 	}
-	return $vars;
-}
-
-/**
- * Perform the filtering.
- *
- * @since  1.0.0
- * @param  array $vars
- * @return array
- */
-function filter_post_list( $vars ) {
-
-	if ( ! isset( $_GET['page_template_filter'] ) ) {
-		return $vars;
-	}
-
-	$template = trim( $_GET['page_template_filter'] );
-
-	if ( $template == '' || $template == 'all' ) {
-		return $vars;
-	}
-
-	$vars = array_merge(
-		$vars,
-		[
-			'meta_query' => [
-				[
-					'key'     => '_wp_page_template',
-					'value'   => $template,
-					'compare' => '=',
-				],
-			],
-		]
-	);
 	return $vars;
 }
 
