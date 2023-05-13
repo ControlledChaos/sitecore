@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Get the custom sort order options.
-$options = get_option( 'scp_order_options' );
+$options = get_option( 'sort_order_options' );
 
 // Set variable for array of registered public post types.
 if ( isset( $options['objects'] ) ) {

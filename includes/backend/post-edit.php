@@ -118,8 +118,8 @@ function add_page_excerpts() {
 function add_post_type_menu_order() {
 
 	$order_options = [];
-	if ( $order_options = get_option( 'scp_order_options' ) ) {
-		$order_options = get_option( 'scp_order_options' );
+	if ( $order_options = get_option( 'sort_order_options' ) ) {
+		$order_options = get_option( 'sort_order_options' );
 	}
 
 	if ( isset( $order_options['objects'] ) && is_array( $order_options['objects'] ) ) {

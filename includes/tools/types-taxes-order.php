@@ -341,7 +341,7 @@ function update_options() {
 	$input_options['objects'] = isset( $_POST['objects'] ) ? $_POST['objects'] : '';
 	$input_options['tags']    = isset( $_POST['tags'] ) ? $_POST['tags'] : '';
 
-	update_option( 'scp_order_options', $input_options );
+	update_option( 'sort_order_options', $input_options );
 
 	$objects = get_order_options_objects();
 	$tags    = get_order_options_tags();
@@ -666,8 +666,8 @@ function taxcmp( $a, $b ) {
  */
 function get_order_options_objects() {
 
-	if ( $scp_order_options = get_option( 'scp_order_options' ) ) {
-		$scp_order_options = get_option( 'scp_order_options' );
+	if ( $scp_order_options = get_option( 'sort_order_options' ) ) {
+		$scp_order_options = get_option( 'sort_order_options' );
 	} else {
 		$scp_order_options = [];
 	}
@@ -688,8 +688,8 @@ function get_order_options_objects() {
  */
 function get_order_options_tags() {
 
-	if ( $scp_order_options = get_option( 'scp_order_options' ) ) {
-		$scp_order_options = get_option( 'scp_order_options' );
+	if ( $scp_order_options = get_option( 'sort_order_options' ) ) {
+		$scp_order_options = get_option( 'sort_order_options' );
 	} else {
 		$scp_order_options = [];
 	}
