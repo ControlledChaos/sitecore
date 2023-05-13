@@ -33,6 +33,12 @@ function setup() {
 	// Dropdown select box.
 	add_action( 'restrict_manage_posts', $ns( 'filter_dropdown' ) );
 
+	// Add menu order to post types.
+	add_action( 'init', $ns( 'add_post_type_menu_order' ) );
+
+	// Sort by menu order.
+	add_filter( 'request', $ns( 'sort_by_menu_order' ) );
+
 	// Perform the filtering.
 	add_filter( 'request', $ns( 'filter_post_list' ) );
 
@@ -83,6 +89,80 @@ function filter_dropdown() {
 		<?php page_template_dropdown( $template ); ?>
 	</select>
 	<?php
+}
+
+/**
+ * Order column label
+ *
+ * @since  1.0.0
+ * @return string Returns the text of the label.
+ */
+function menu_order_list_label() {
+	return apply_filters(
+		'scp_menu_order_list_label',
+		__( 'Order', 'sitecore' )
+	);
+}
+
+/**
+ * Add menu order
+ *
+ * Adds the order field to post types that
+ * are selected in the post types order option.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function add_post_type_menu_order() {
+
+	$order_options = [];
+	if ( $order_options = get_option( 'sort_order_options' ) ) {
+		$order_options = get_option( 'sort_order_options' );
+	}
+
+	if ( isset( $order_options['objects'] ) && is_array( $order_options['objects'] ) ) {
+
+		$types = $order_options['objects'];
+		foreach ( $types as $type ) {
+
+			add_post_type_support( $type, 'page-attributes' );
+
+			add_filter( 'manage_' . $type . '_posts_custom_column', function( $column_name, $post_id ) {
+				if ( 'menu_order' == $column_name ) {
+					echo get_post( $post_id )->menu_order;
+				}
+			}, 10, 2 );
+
+			add_filter( 'manage_edit-' . $type . '_columns', function( $columns ) {
+				$columns['menu_order'] = menu_order_list_label();
+				return $columns;
+			}, 10, 1 );
+
+			add_filter( 'manage_edit-' . $type . '_sortable_columns', function( $columns ) {
+				$columns['menu_order'] = 'menu_order';
+				return $columns;
+			}, 10, 1 );
+		}
+	}
+}
+
+/**
+ * Sort by menu order
+ *
+ * @since  1.0.0
+ * @param  array $vars
+ * @return array
+ */
+function sort_by_menu_order( $vars ) {
+
+	if ( is_array( $vars ) && array_key_exists( 'orderby', $vars ) ) {
+
+		if ( menu_order_list_label() == $vars['orderby'] ) {
+			$vars['orderby']  = 'meta_value';
+			$vars['meta_key'] = 'menu_order';
+		}
+	}
+	return $vars;
 }
 
 /**
