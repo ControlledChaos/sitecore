@@ -35,17 +35,17 @@ function setup() {
 	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Post edit screens.
-	add_action( 'admin_init', function() {
+	add_action( 'plugins_loaded', function() {
 		Post_Edit\setup();
 	} );
 
 	// Posts list tables.
-	add_action( 'admin_init', function() {
+	add_action( 'plugins_loaded', function() {
 		List_Tables\setup();
 	} );
 
 	// Custom dashboard.
-	add_action( 'admin_init', function() {
+	add_action( 'plugins_loaded', function() {
 		Dashboard\setup();
 	} );
 

@@ -38,7 +38,7 @@ function setup() {
 	add_action( 'add_meta_boxes', $ns( 'add_page_excerpts' ) );
 
 	// Add menu order to `post` post type.
-	add_action( 'add_meta_boxes', $ns( 'add_post_type_menu_order' ) );
+	add_action( 'init', $ns( 'add_post_type_menu_order' ) );
 
 	// Show excerpt metabox by default.
 	add_filter( 'default_hidden_meta_boxes', $ns( 'show_excerpt_metabox' ), 10, 2 );
