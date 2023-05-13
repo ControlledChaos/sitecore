@@ -229,6 +229,12 @@ function template_columns_content( $column_name ) {
 					);
 				}
 			}
+		} else {
+			echo sprintf(
+				'<span title="%1s">%2s</span>',
+				__( 'Default Template', 'sitecore' ),
+				__( 'Default Template', 'sitecore' )
+			);
 		}
 	}
 }
