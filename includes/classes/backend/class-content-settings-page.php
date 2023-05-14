@@ -99,6 +99,7 @@ class Content_Settings_Page extends Add_Page {
 	 */
 	public function tabs() {
 
+		if ( get_option( 'enable_sample_files' ) ) :
 		$this->add_content_tab( [
 			'capability' => 'read',
 			'id'         => 'content-settings-intro',
@@ -108,6 +109,7 @@ class Content_Settings_Page extends Add_Page {
 			'content'    => '',
 			'callback'   => [ $this, 'intro_tab' ]
 		] );
+		endif;
 
 		$this->add_content_tab( [
 			'capability' => 'manage_options',
