@@ -16,11 +16,22 @@ namespace SiteCore\Classes\Settings;
 class Settings_Fields {
 
 	/**
+	 * Settings array
+	 *
+	 * Optionally register settings as array.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @var    array An array of settings fields.
+	 */
+	protected $settings_register = [];
+
+	/**
 	 * Settings fields
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var array An array of settings fields.
+	 * @var    array An array of settings fields.
 	 */
 	protected $settings_fields = [];
 
@@ -31,7 +42,9 @@ class Settings_Fields {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct( $settings_fields ) {
+	public function __construct( $settings_register, $settings_fields ) {
+
+		$register = [];
 
 		/**
 		 * Fields array
@@ -43,7 +56,8 @@ class Settings_Fields {
 		 */
 		$fields = [];
 
-		$this->settings_fields = wp_parse_args( $settings_fields, $fields );
+		$this->settings_register = wp_parse_args( $settings_register, $register );
+		$this->settings_fields   = wp_parse_args( $settings_fields, $fields );
 	}
 
 	/**
@@ -70,6 +84,44 @@ class Settings_Fields {
 		return $this->add_fields();
 	}
 
+	protected function register_type() {
+
+		$register = $this->settings_register;
+
+		if ( is_array( $register ) && array_key_exists( 'serialize', $register ) ) {
+			if ( true == $register['serialize'] ) {
+				return $this->settings_array();
+			}
+		}
+		return $this->add_fields();
+	}
+
+	protected function settings_array() {
+
+		$register = $this->settings_register;
+		$fields   = $this->settings_fields;
+
+		if ( ! is_array( $register ) ) {
+			return;
+		}
+		if ( ! is_array( $fields ) ) {
+			return;
+		}
+
+		foreach ( $fields as $field ) {
+
+			if ( isset( $field['id'] ) && ! empty( $field['id'] ) ) {
+				if ( isset( $register['section'] ) && ! empty( $register['section'] ) ) {
+
+					register_setting(
+						$register['section'],
+						$field['id']
+					);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Add settings fields
 	 *
@@ -82,7 +134,8 @@ class Settings_Fields {
 	 */
 	protected function add_fields() {
 
-		$fields = $this->settings_fields;
+		$register = $this->settings_register;
+		$fields   = $this->settings_fields;
 
 		if ( ! is_array( $fields ) ) {
 			return;
@@ -110,14 +163,21 @@ class Settings_Fields {
 					]
 				);
 
-				add_settings_field(
-					$field['id'],
-					$field['title'],
-					$callback,
-					$field['page'],
-					$field['section'],
-					$field['args']
-				);
+				if (
+					is_array( $register ) &&
+					( array_key_exists( 'serialize', $register ) && ! $register['serialize'] ) ||
+					! array_key_exists( 'serialize', $register ) ||
+					! is_array( $register )
+				) {
+					add_settings_field(
+						$field['id'],
+						$field['title'],
+						$callback,
+						$field['page'],
+						$field['section'],
+						$field['args']
+					);
+				}
 			endif;
 		}
 	}
