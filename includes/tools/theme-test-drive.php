@@ -472,23 +472,52 @@ function theme_links() {
 		$theme_names = array_keys( $themes );
 		natcasesort( $theme_names );
 
-		$links = '<ul class="theme-test-drive-preview-links">';
-
-		foreach ( $theme_names as $theme_name ) {
-
-			// Skip unpublished themes.
-			if ( isset( $themes[$theme_name]['Status'] ) && $themes[$theme_name]['Status'] != 'publish' ) {
-				continue;
-			}
-
-			$links .= sprintf(
-				'<li><a href="%s?theme=%s" target="_blank" rel="noindex nofollow">%s</a></li>',
-				trailingslashit( get_option( 'siteurl' ) ),
-				$theme_name,
-				$themes[$theme_name]['Name']
-			);
+		$allowed = $theme_names;
+		if ( is_multisite() ) {
+			$allowed = get_network_option( get_current_network_id(), 'allowedthemes' );
 		}
-		$links .= '</ul>';
+
+		if ( is_array( $allowed ) && count( $allowed ) > 1 ) :
+
+			$links = '<ul class="theme-test-drive-preview-links">';
+
+			foreach ( $theme_names as $theme_name ) :
+
+				// Skip unpublished themes.
+				if ( isset( $themes[$theme_name]['Status'] ) && $themes[$theme_name]['Status'] != 'publish' ) {
+					continue;
+				}
+
+				if ( is_multisite() ) {
+
+					if ( array_key_exists( $theme_name, $allowed ) ) {
+						$links .= sprintf(
+							'<li><a href="%s?theme=%s" target="_blank" rel="noindex nofollow">%s</a></li>',
+							trailingslashit( get_option( 'siteurl' ) ),
+							$theme_name,
+							$themes[$theme_name]['Name']
+						);
+					}
+
+				} else {
+					$links .= sprintf(
+						'<li><a href="%s?theme=%s" target="_blank" rel="noindex nofollow">%s</a></li>',
+						trailingslashit( get_option( 'siteurl' ) ),
+						$theme_name,
+						$themes[$theme_name]['Name']
+					);
+				}
+			endforeach;
+
+			$links .= '</ul>';
+
+		else :
+			$links = sprintf(
+				'<p><strong>%1s</strong></p>',
+				__( 'There are no themes available to test drive.', 'sitecore' )
+			);
+		endif; // count( $allowed )
+
 	}
 	return $links;
 }

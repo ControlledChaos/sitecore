@@ -54,9 +54,7 @@ function setup() {
 	}
 
 	if ( get_option( 'theme_test_drive' ) ) {
-		add_action( 'after_setup_theme', function() {
-			Test_Drive\setup();
-		} );
+		Test_Drive\setup();
 	}
 
 	if ( is_multisite() ) {
