@@ -243,7 +243,7 @@ class User_Avatars {
 	 * @param  boolean $alt
 	 * @return string Returns the avatar markup.
 	 */
-	public function get_avatar( $avatar = '', $id_or_email = '', $size = 48, $default = '', $alt = false ) {
+	public function get_avatar( $avatar = '', $id_or_email = '', $size, $default = '', $alt = false ) {
 
 		// Determine if we receive an ID or string.
 		if ( is_numeric( $id_or_email ) ) {
@@ -266,7 +266,7 @@ class User_Avatars {
 			return $avatar;
 		}
 
-		$size = (int) $size;
+		$size = (int) 48;
 
 		if ( empty( $alt ) ) {
 			$alt = get_the_author_meta( 'display_name', $user_id );
