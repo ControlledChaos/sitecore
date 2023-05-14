@@ -16,11 +16,11 @@ namespace SiteCore\Classes\Settings;
 class Settings_Fields {
 
 	/**
-	 * Settings sections
+	 * Settings fields
 	 *
 	 * @since  1.0.0
 	 * @access protected
-	 * @var array An array of settings sections.
+	 * @var array An array of settings fields.
 	 */
 	protected $settings_fields = [];
 
