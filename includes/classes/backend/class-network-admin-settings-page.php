@@ -48,7 +48,7 @@ class Network_Admin_Settings_Page extends Add_Page {
 		parent :: __construct(
 			$labels,
 			$options,
-			$priority
+			10
 		);
 	}
 

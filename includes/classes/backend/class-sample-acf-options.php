@@ -48,7 +48,7 @@ class Sample_ACF_Options extends Add_Page {
 		parent :: __construct(
 			$labels,
 			$options,
-			$priority
+			10
 		);
 	}
 

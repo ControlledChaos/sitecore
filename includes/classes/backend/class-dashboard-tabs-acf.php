@@ -51,11 +51,11 @@ class Dashboard_Tabs_ACF extends Add_Page {
 		parent :: __construct(
 			$labels,
 			$options,
-			$priority
+			10
 		);
 
 		// Print admin styles to head.
-		add_action( "admin_print_styles-$this->options['acf-dashboard-tabs']", [ $this, 'admin_print_styles' ], 20 );
+		add_action( "admin_print_styles-$this->page_options['menu_slug']", [ $this, 'admin_print_styles' ], 20 );
 	}
 
 	/**

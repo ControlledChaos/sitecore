@@ -50,7 +50,7 @@ class Sample_ACF_Suboptions extends Add_Page {
 		parent :: __construct(
 			$labels,
 			$options,
-			$priority
+			10
 		);
 	}
 
