@@ -469,7 +469,7 @@ class Add_Page {
 			return null;
 		}
 
-		if ( $this->page_labels['submit_label'] ) {
+		if ( array_key_exists( 'submit_label', $this->page_labels ) && $this->page_labels['submit_label'] ) {
 			$label = $this->page_labels['submit_label'];
 		} else {
 			$label = __( 'Save Settings', 'sitecore' );
