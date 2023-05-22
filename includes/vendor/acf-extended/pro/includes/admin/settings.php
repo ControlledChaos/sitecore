@@ -292,8 +292,8 @@ class acfe_pro_admin_settings{
                                                 <div class="misc-pub-section acfe-misc-export">
                                                     <span class="dashicons dashicons-editor-code"></span>
                                                     Export:
-                                                    <a href="<?php echo admin_url("edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_settings_export&action=php"); ?>">PHP</a>
-                                                    <a href="<?php echo admin_url("edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_settings_export&action=json"); ?>">Json</a>
+                                                    <a href="<?php echo admin_url("tools.php?page=acf-tools&tool=acfe_settings_export&action=php"); ?>">PHP</a>
+                                                    <a href="<?php echo admin_url("tools.php?page=acf-tools&tool=acfe_settings_export&action=json"); ?>">Json</a>
                                                 </div>
                                             </div>
                                             

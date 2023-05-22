@@ -202,7 +202,7 @@ class acfe_pro_rewrite_rules{
                     </div>
 
                     <div class="heading-actions">
-                        <a href="<?php echo admin_url("edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe_rewrite_rules_export&action=php"); ?>" class="button">Export Rules</a>
+                        <a href="<?php echo admin_url("tools.php?page=acf-tools&tool=acfe_rewrite_rules_export&action=php"); ?>" class="button">Export Rules</a>
                         <button class="button button-primary" name="flush_permalinks" value="1">Flush Permalinks</button>
                     </div>
                     

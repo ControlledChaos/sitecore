@@ -242,7 +242,7 @@ class ACFE_Field_Groups_Local{
     
             $post_ids = $_REQUEST['post'];
     
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=php&keys=' . implode('+', $post_ids));
+            $url = admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=php&keys=' . implode('+', $post_ids));
             wp_redirect($url);
             exit;
         
@@ -253,7 +253,7 @@ class ACFE_Field_Groups_Local{
     
             $post_ids = $_REQUEST['post'];
     
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=json&keys=' . implode('+', $post_ids));
+            $url = admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=json&keys=' . implode('+', $post_ids));
             wp_redirect($url);
             exit;
             
@@ -264,7 +264,7 @@ class ACFE_Field_Groups_Local{
             
             $post_ids = $_REQUEST['post'];
             
-            $url = admin_url('edit.php?post_type=acf-field-group&page=acf-tools&tool=acfe-fg-local&action=sync&keys=' . implode('+', $post_ids));
+            $url = admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=sync&keys=' . implode('+', $post_ids));
             wp_redirect($url);
             exit;
         

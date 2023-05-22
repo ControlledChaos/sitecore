@@ -62,8 +62,8 @@ class ACFE_Field_Group{
 
         global $field_group;
 
-        $export_php = admin_url( 'admin.php?page=custom-content&page=acf-tools&tool=export&action=php&keys=' . $field_group['key'] );
-        $export_json = admin_url( 'admin.php?page=custom-content&page=acf-tools&tool=export&action=json&keys=' . $field_group['key'] );
+        $export_php = admin_url( 'tools.php?page=acf-tools&tool=export&action=php&keys=' . $field_group['key'] );
+        $export_json = admin_url( 'tools.php?page=acf-tools&tool=export&action=json&keys=' . $field_group['key'] );
 
         ?>
         <div class="misc-pub-section misc-pub-acfe-field-group-key">
