@@ -279,6 +279,12 @@ class Add_Page {
 			$acf_capability = $this->page_options['capability'];
 		}
 
+		if ( $this->is_subpage() ) {
+			acf_add_options_sub_page( $options );
+		} else {
+			acf_add_options_page( $options );
+		}
+
 		if ( ! current_user_can( $acf_capability ) ) {
 			add_action( "admin_head-{$screen}", function() {
 				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
