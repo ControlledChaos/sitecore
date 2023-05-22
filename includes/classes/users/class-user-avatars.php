@@ -176,7 +176,7 @@ class User_Avatars {
 		?>
 		<script>
 		jQuery(document).ready( function ($) {
-			$( 'td.defaultavatarpicker p' ).remove();
+			$( 'td.defaultavatarpicker fieldset p' ).remove();
 		});
 		</script>
 		<?php
@@ -197,7 +197,7 @@ class User_Avatars {
 	public function capability() {
 
 		add_settings_field(
-			'uap_user_avatars_caps',
+			'scp_user_avatars_caps',
 			__( 'Avatar Upload Permission',	'sitecore' ),
 			[ $this, 'capability_field' ],
 			'discussion',
@@ -207,7 +207,7 @@ class User_Avatars {
 
 		register_setting(
 			'discussion',
-			'uap_user_avatars_caps'
+			'scp_user_avatars_caps'
 		);
 	}
 
@@ -220,11 +220,11 @@ class User_Avatars {
 	 */
 	public function capability_field( $args ) {
 
-		$option = get_option( 'uap_user_avatars_caps' );
+		$option = get_option( 'scp_user_avatars_caps' );
 
-		$html = '<p><input type="checkbox" id="uap_user_avatars_caps" name="uap_user_avatars_caps" value="1" ' . checked( 1, $option, false ) . '/>';
+		$html = '<p><input type="checkbox" id="scp_user_avatars_caps" name="scp_user_avatars_caps" value="1" ' . checked( 1, $option, false ) . '/>';
 
-		$html .= '<label for="uap_user_avatars_caps"> ' . $args[0] . '</label></p>';
+		$html .= '<label for="scp_user_avatars_caps"> ' . $args[0] . '</label></p>';
 
 		echo $html;
 	}
@@ -260,7 +260,7 @@ class User_Avatars {
 			return $avatar;
 		}
 
-		$local_avatars = get_user_meta( $user_id, 'uap_user_avatar', true );
+		$local_avatars = get_user_meta( $user_id, 'scp_user_avatar', true );
 
 		if ( empty( $local_avatars ) || empty( $local_avatars['full'] ) ) {
 			return $avatar;
@@ -291,7 +291,7 @@ class User_Avatars {
 			}
 
 			// Save updated avatar sizes
-			update_user_meta( $user_id, 'uap_user_avatar', $local_avatars );
+			update_user_meta( $user_id, 'scp_user_avatar', $local_avatars );
 
 		} elseif ( substr( $local_avatars[$size], 0, 4 ) != 'http' ) {
 			$local_avatars[$size] = home_url( $local_avatars[$size] );
@@ -300,7 +300,7 @@ class User_Avatars {
 		$author_class = is_author( $user_id ) ? ' current-author' : '' ;
 		$avatar       = "<img alt='" . esc_attr( $alt ) . "' src='" . $local_avatars[$size] . "' class='avatar avatar-{$size}{$author_class} photo' height='{$size}' width='{$size}' />";
 
-		return apply_filters( 'uap_user_avatar', $avatar );
+		return apply_filters( 'scp_user_avatar', $avatar );
 	}
 
 	/**
@@ -335,12 +335,12 @@ class User_Avatars {
 					</td>
 					<td>
 					<?php
-					$options = get_option( 'uap_user_avatars_caps' );
+					$options = get_option( 'scp_user_avatars_caps' );
 
 					if ( empty( $options ) || current_user_can( 'upload_files' ) ) :
 
 						// Nonce security.
-						wp_nonce_field( 'uap_user_avatar_nonce', '_uap_user_avatar_nonce', false );
+						wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
 
 						// File upload input.
 						$upload = sprintf(
@@ -350,7 +350,7 @@ class User_Avatars {
 						);
 						echo "<p>{$upload}</p>";
 
-						if ( empty( $profileuser->uap_user_avatar ) ) {
+						if ( empty( $profileuser->scp_user_avatar ) ) {
 
 							printf(
 								'<p class="description">%s</p>',
@@ -372,7 +372,7 @@ class User_Avatars {
 						}
 
 					else :
-						if ( empty( $profileuser->uap_user_avatar ) ) {
+						if ( empty( $profileuser->scp_user_avatar ) ) {
 							printf(
 								'<p class="description">%s</p>',
 								__( 'You do not have permission to upload an avatar.', 'sitecore' )
@@ -411,7 +411,7 @@ class User_Avatars {
 	public function edit_user_profile_update( $user_id ) {
 
 		// Check for nonce otherwise bail.
-		if ( ! isset( $_POST['_uap_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_uap_user_avatar_nonce'], 'uap_user_avatar_nonce' ) ) {
+		if ( ! isset( $_POST['_scp_user_avatar_nonce'] ) || ! wp_verify_nonce( $_POST['_scp_user_avatar_nonce'], 'scp_user_avatar_nonce' ) ) {
 			return;
 		}
 
@@ -457,7 +457,7 @@ class User_Avatars {
 			}
 
 			// Save user information, overwriting previous.
-			update_user_meta( $user_id, 'uap_user_avatar', [ 'full' => $avatar['url'] ] );
+			update_user_meta( $user_id, 'scp_user_avatar', [ 'full' => $avatar['url'] ] );
 
 		} elseif ( ! empty( $_POST['basic-user-avatar-erase'] ) ) {
 			$this->avatar_delete( $user_id );
@@ -487,12 +487,12 @@ class User_Avatars {
 		echo '<fieldset class="bbp-form avatar">';
 
 	 			echo get_avatar( $profileuser->ID );
-				$options = get_option( 'uap_user_avatars_caps' );
+				$options = get_option( 'scp_user_avatars_caps' );
 
 				if ( empty( $options ) || current_user_can( 'upload_files' ) ) :
 
 					// Nonce security.
-					wp_nonce_field( 'uap_user_avatar_nonce', '_uap_user_avatar_nonce', false );
+					wp_nonce_field( 'scp_user_avatar_nonce', '_scp_user_avatar_nonce', false );
 
 					// File upload input.
 					$upload = sprintf(
@@ -502,7 +502,7 @@ class User_Avatars {
 					);
 					echo "<p>{$upload}</p>";
 
-					if ( empty( $profileuser->uap_user_avatar ) ) {
+					if ( empty( $profileuser->scp_user_avatar ) ) {
 
 						printf(
 							'<p class="description">%s</p>',
@@ -525,7 +525,7 @@ class User_Avatars {
 
 				else :
 
-					if ( empty( $profileuser->uap_user_avatar ) ) {
+					if ( empty( $profileuser->scp_user_avatar ) ) {
 						printf(
 							'<p class="description">%s</p>',
 							__( 'You do not have permission to upload an avatar.', 'sitecore' )
@@ -655,6 +655,7 @@ class User_Avatars {
 
 		// Local avatar options.
 		$defaults = [
+			'mm'      => esc_url( SCP_URL . 'assets/images/mystery.png' ),
 			'mystery' => esc_url( SCP_URL . 'assets/images/mystery.png' ),
 			'light'   => esc_url( SCP_URL . 'assets/images/mystery-light.png' ),
 			'dark'    => esc_url( SCP_URL . 'assets/images/mystery-dark.png' ),
@@ -675,7 +676,7 @@ class User_Avatars {
 		];
 
 		// Return avatar types.
-		return apply_filters( 'uap_get_avatar_defaults', $defaults );
+		return apply_filters( 'scp_get_avatar_defaults', $defaults );
 	}
 
 	/**
@@ -719,7 +720,7 @@ class User_Avatars {
 		];
 
 		// Return new avatar options.
-		return apply_filters( 'uap_avatar_defaults', $options );
+		return apply_filters( 'scp_avatar_defaults', $options );
 	}
 
 	/**
@@ -731,7 +732,7 @@ class User_Avatars {
 	 */
 	public function avatar_delete( $user_id ) {
 
-		$old_avatars = get_user_meta( $user_id, 'uap_user_avatar', true );
+		$old_avatars = get_user_meta( $user_id, 'scp_user_avatar', true );
 		$upload_path = wp_upload_dir();
 
 		if ( is_array( $old_avatars ) ) {
@@ -741,7 +742,7 @@ class User_Avatars {
 			}
 		}
 
-		delete_user_meta( $user_id, 'uap_user_avatar' );
+		delete_user_meta( $user_id, 'scp_user_avatar' );
 	}
 
 	/**
