@@ -273,12 +273,6 @@ class Add_Page {
 			'updated_message' => $this->acf_update_message()
 		];
 
-		if ( $this->is_subpage() ) {
-			$screen = acf_add_options_sub_page( $options );
-		} else {
-			$screen = acf_add_options_page( $options );
-		}
-
 		if ( isset( $this->page_options['acf']['capability'] ) ) {
 			$acf_capability = $this->page_options['acf']['capability'];
 		} else {

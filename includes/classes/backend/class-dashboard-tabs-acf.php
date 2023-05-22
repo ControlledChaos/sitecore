@@ -55,7 +55,8 @@ class Dashboard_Tabs_ACF extends Add_Page {
 		);
 
 		// Print admin styles to head.
-		add_action( "admin_print_styles-$this->page_options['menu_slug']", [ $this, 'admin_print_styles' ], 20 );
+		$screen = $this->page_options['menu_slug'];
+		add_action( "admin_print_styles-{$screen}", [ $this, 'admin_print_styles' ] );
 	}
 
 	/**
