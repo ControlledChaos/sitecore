@@ -326,8 +326,8 @@ acf_add_local_field_group( [
 		0 => 'administrator',
 		1 => 'developer'
 	],
-	'acfe_autosync'         => '',
-	'acfe_form' => 0,
-	'acfe_meta' => '',
-	'acfe_note' => '',
+	'acfe_autosync' => '',
+	'acfe_form'     => 0,
+	'acfe_meta'     => '',
+	'acfe_note'     => '',
 ] );

@@ -73,11 +73,9 @@ acf_add_local_field_group( [
 	'hide_on_screen'        => '',
 	'active'                => true,
 	'description'           => __( 'Field group provided as a sample for the sample options subpage.', 'sitecore' ),
-	'acfe_autosync'         => [
-		0 => 'json',
-	],
-	'acfe_form'          => 0,
-	'acfe_display_title' => '',
-	'acfe_meta'          => '',
-	'acfe_note'          => '',
+	'acfe_autosync'         => '',
+	'acfe_form'             => 0,
+	'acfe_display_title'    => '',
+	'acfe_meta'             => '',
+	'acfe_note'             => '',
 ] );

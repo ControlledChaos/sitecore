@@ -168,9 +168,7 @@ class Manage_Website_Page extends Add_Page {
 				'description'           => __( '', 'sitecore' ),
 				'show_in_rest'          => 0,
 				'acfe_display_title'    => '',
-				'acfe_autosync'         => [
-					0 => 'json',
-				],
+				'acfe_autosync'         => '',
 				'acfe_form' => 0,
 				'acfe_meta' => '',
 				'acfe_note' => '',
