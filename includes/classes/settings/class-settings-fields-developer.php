@@ -23,13 +23,19 @@ class Settings_Fields_Developer extends Settings_Fields {
 	 */
 	public function __construct() {
 
+		$register = [
+			'serialize' => true,
+			'page'      => 'developer-tools',
+			'section'   => 'scp-options-developer'
+		];
+
 		$fields = [
 			[
 				'id'       => 'fix_update_in_progress',
 				'title'    => __( 'Update in Progress', 'sitecore' ),
 				'callback' => [ $this, 'fix_update_in_progress_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => sprintf(
@@ -43,8 +49,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'theme_test_drive',
 				'title'    => __( 'Theme Test Drive', 'sitecore' ),
 				'callback' => [ $this, 'theme_test_drive_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Safely test any theme while visitors view the active theme.', 'sitecore' ),
@@ -55,8 +61,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'direction_switch',
 				'title'    => __( 'Direction Switcher', 'sitecore' ),
 				'callback' => [ $this, 'direction_switch_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Easily switch backend and frontend screens between left-to-right and right-to-left orientations.', 'sitecore' ),
@@ -67,8 +73,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'customizer_reset',
 				'title'    => __( 'Customizer Reset', 'sitecore' ),
 				'callback' => [ $this, 'customizer_reset_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Enable the ability to reset customizations to the active theme.', 'sitecore' ),
@@ -79,8 +85,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'disable_site_health',
 				'title'    => __( 'Disable Site Health', 'sitecore' ),
 				'callback' => [ $this, 'disable_site_health_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Disable WordPress\' site health feature.', 'sitecore' ),
@@ -91,8 +97,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'disable_floc',
 				'title'    => __( 'Disable FloC', 'sitecore' ),
 				'callback' => [ $this, 'disable_floc_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => __( 'Disable Google\'s next-generation tracking technology.', 'sitecore' ),
@@ -103,8 +109,8 @@ class Settings_Fields_Developer extends Settings_Fields {
 				'id'       => 'enable_sample_files',
 				'title'    => __( 'Enable Sample Files', 'sitecore' ),
 				'callback' => [ $this, 'enable_sample_files_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer',
+				'page'     => $register['page'],
+				'section'  => $register['section'],
 				'type'     => 'checkbox',
 				'args'     => [
 					'description' => sprintf(
@@ -117,6 +123,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			$register,
 			$fields
 		);
 	}

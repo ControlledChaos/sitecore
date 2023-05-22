@@ -42,6 +42,7 @@ class Settings_Fields_Admin_Footer extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

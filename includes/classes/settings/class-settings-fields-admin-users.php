@@ -63,6 +63,7 @@ class Settings_Fields_Admin_Users extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

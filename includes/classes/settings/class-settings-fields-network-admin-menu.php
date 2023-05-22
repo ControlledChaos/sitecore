@@ -26,6 +26,7 @@ class Settings_Fields_Network_Admin_Menu extends Settings_Fields {
 		$fields = [];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

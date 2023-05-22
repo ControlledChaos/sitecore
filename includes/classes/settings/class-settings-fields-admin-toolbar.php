@@ -58,6 +58,7 @@ class Settings_Fields_Admin_Toolbar extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

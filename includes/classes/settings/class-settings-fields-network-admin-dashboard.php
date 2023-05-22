@@ -36,6 +36,7 @@ class Settings_Fields_Network_Admin_Dashboard extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

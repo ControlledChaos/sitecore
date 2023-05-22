@@ -86,6 +86,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 		}
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

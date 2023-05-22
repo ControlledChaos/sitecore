@@ -41,6 +41,7 @@ class Settings_Fields_Admin_Header extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

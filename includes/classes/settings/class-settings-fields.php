@@ -155,29 +155,33 @@ class Settings_Fields {
 					$callback = $field['callback'];
 				}
 
-				register_setting(
-					$field['page'],
-					$field['id'],
-					[
-						'type' => $field['type']
-					]
-				);
-
 				if (
 					is_array( $register ) &&
-					( array_key_exists( 'serialize', $register ) && ! $register['serialize'] ) ||
-					! array_key_exists( 'serialize', $register ) ||
-					! is_array( $register )
+					array_key_exists( 'serialize', $register ) &&
+					true == $register['serialize']
 				) {
-					add_settings_field(
-						$field['id'],
-						$field['title'],
-						$callback,
+					register_setting(
+						$register['section'],
+						$field['id']
+					);
+				} else {
+					register_setting(
 						$field['page'],
-						$field['section'],
-						$field['args']
+						$field['id'],
+						[
+							'type' => $field['type']
+						]
 					);
 				}
+
+				add_settings_field(
+					$field['id'],
+					$field['title'],
+					$callback,
+					$field['page'],
+					$field['section'],
+					$field['args']
+				);
 			endif;
 		}
 	}

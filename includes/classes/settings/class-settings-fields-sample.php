@@ -21,6 +21,11 @@ class Settings_Fields_Sample extends Settings_Fields {
 	 */
 	public function __construct() {
 
+		$array = [
+			'section'    => 'scp-settings-section-sample',
+			'add_fields' => false
+		];
+
 		$fields = [
 			[
 				'id'       => 'sample_field_one',
@@ -88,6 +93,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

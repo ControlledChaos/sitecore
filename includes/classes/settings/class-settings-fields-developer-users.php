@@ -49,6 +49,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

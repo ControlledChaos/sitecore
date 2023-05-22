@@ -23,9 +23,7 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 	 */
 	public function __construct() {
 
-		$fields = [];
-
-		$acfe_fields = [
+		$fields = [
 			[
 				'id'       => 'email_from_name',
 				'title'    => __( 'Email From Text', 'sitecore' ),
@@ -41,7 +39,10 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 					'label_for' => 'email_from_name',
 					'class'     => 'admin-field'
 				]
-			],
+			]
+		];
+
+		$acfe_fields = [
 			[
 				'id'       => 'acfe_enable_forms_ui',
 				'title'    => __( 'Enable ACFE Forms UI', 'sitecore' ),
@@ -60,10 +61,11 @@ class Settings_Fields_Admin_Forms extends Settings_Fields {
 		];
 
 		if ( class_exists( 'acfe' ) ) {
-			$fields = array_merge( $acfe_fields, $fields );
+			$fields = array_merge( $fields, $acfe_fields );
 		}
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

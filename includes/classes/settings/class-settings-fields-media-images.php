@@ -49,6 +49,7 @@ class Settings_Fields_Media_Images extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}

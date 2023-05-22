@@ -87,6 +87,7 @@ class Settings_Fields_Admin_Menu extends Settings_Fields {
 		];
 
 		parent :: __construct(
+			null,
 			$fields
 		);
 	}
