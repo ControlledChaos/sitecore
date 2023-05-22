@@ -35,7 +35,7 @@ function setup() {
 	add_action( 'init', $ns( 'page_taxonomies' ) );
 
 	// Add excerpts to the page post type.
-	add_action( 'add_meta_boxes', $ns( 'add_page_excerpts' ) );
+	add_action( 'init', $ns( 'add_page_excerpts' ) );
 
 	// Show excerpt metabox by default.
 	add_filter( 'default_hidden_meta_boxes', $ns( 'show_excerpt_metabox' ), 10, 2 );
