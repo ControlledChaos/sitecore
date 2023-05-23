@@ -79,7 +79,13 @@ function setup() {
 	endif;
 
 	// Add custom post types to "At a Glance".
-	add_action( 'dashboard_glance_items', $ns( 'dashboard_glance_items' ) );
+	add_action( 'plugins_loaded', function() {
+
+		// Do not run if the Dashboard Summary plugin is active.
+		if ( ! is_plugin_active( 'dashboard-summary/dashboard-summary.php' ) ) {
+			add_action( 'dashboard_glance_items', $ns( 'dashboard_glance_items' ) );
+		}
+	} );
 
 	// Remove contextual help items.
 	add_action( 'admin_head', $ns( 'remove_help_items' ) );
