@@ -85,11 +85,11 @@ $images = get_posts( [
 				<li><?php printf( '<a href="%s" class="welcome-icon welcome-content-settings">' . __( 'Website Content', 'sitecore' ) . '</a>', admin_url( 'admin.php?page=custom-content' ) ); ?></li>
 
 				<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'menus' ) ) : ?>
-				<li><?php printf( '<a href="%s" class="welcome-icon welcome-menus">' . __( 'Manage menus', 'sitecore' ) . '</a>', admin_url( 'nav-menus.php' ) ); ?></li>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-menus">' . __( 'Manage Menus', 'sitecore' ) . '</a>', admin_url( 'nav-menus.php' ) ); ?></li>
 			<?php endif; ?>
 
 			<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'widgets' ) ) : ?>
-				<li><?php printf( '<a href="%s" class="welcome-icon welcome-widgets">' . __( 'Manage widgets', 'sitecore' ) . '</a>', admin_url( 'widgets.php' ) ); ?></li>
+				<li><?php printf( '<a href="%s" class="welcome-icon welcome-widgets">' . __( 'Manage Widgets', 'sitecore' ) . '</a>', admin_url( 'widgets.php' ) ); ?></li>
 			<?php endif; ?>
 
 			<?php if ( current_user_can( 'edit_posts' ) ) : ?>
