@@ -198,7 +198,7 @@ class Add_Page {
 	 */
 	protected function add_menu_page() {
 
-		$screen  = $this->page_options['menu_slug'];
+		$screen = $this->page_options['menu_slug'];
 
 		if ( $this->is_subpage() ) {
 
