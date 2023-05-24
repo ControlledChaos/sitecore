@@ -137,9 +137,7 @@ function add_post_type_menu_order() {
 
 				$select = $columns['cb'];
 				$title  = $columns['title'];
-				unset( $select );
-				unset( $title );
-				$order = [
+				$order  = [
 					'cb'         => $select,
 					'title'      => $title,
 					'menu_order' => menu_order_list_label()
