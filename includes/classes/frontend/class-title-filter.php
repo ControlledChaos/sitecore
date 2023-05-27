@@ -59,10 +59,7 @@ class Title_Filter {
 		$this->post_types = wp_parse_args( $post_types, $types );
 		$this->priority   = (int) $priority;
 
-		// Add title filter if post types are set.
-		if ( $this->post_types() ) {
-			add_filter( 'the_title', [ $this, 'the_title' ], $this->priority, 2 );
-		}
+		add_action( 'init', [ $this, 'custom_title' ], $this->priority );
 	}
 
 	/**
@@ -80,16 +77,88 @@ class Title_Filter {
 		return false;
 	}
 
+	public function custom_title() {
+
+		// Add title filter if post types are set.
+		if ( $this->post_types() ) {
+			add_filter( 'the_title', [ $this, 'the_title' ], 10, 1 );
+		}
+	}
+
 	/**
 	 * Title text
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @param  string $title The value of the title field.
-	 * @param  integer $id The ID of the post.
 	 * @return string Returns the text of the post title.
 	 */
-	public function the_title( $title ) {
+	public function the_title( $title = '' ) {
+
+		// Get the array of post types to be filtered.
+		$types = $this->post_types;
+
+		// Modify the title for each post type in the post_types property.
+		foreach ( $types as $type ) {
+
+			// Default title for post types not modified.
+			$title = $title;
+
+			// If the post type matches one in the loop.
+			if ( $type == get_post_type( get_the_ID() ) ) {
+
+				$object = get_post_type_object( $type );
+
+				if ( $object->labels->singular_name ) {
+					$name = $object->labels->singular_name;
+				} else {
+					$name = $object->labels->name;
+				}
+
+				/**
+				 * Using `in_the_loop()` will modify all instances of
+				 * the title in the loop, including the post navigation.
+				 * Post navigation outside of the loop is not modified.
+				 */
+
+				/**
+				 * If the post is in its post type archive
+				 * and if the title is in the loop.
+				 */
+				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
+
+					// Text specific to the archive.
+					$title = sprintf(
+						__( 'Filtered Demo Title: Archived %s #%s', 'sitecore' ),
+						$name,
+						get_the_ID(),
+					);
+
+				// If the post is in the main blog pages.
+				} elseif ( is_home() && is_main_query() && in_the_loop() ) {
+
+					// Text specific to the blog.
+					$title = sprintf(
+						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
+						$name,
+						get_the_ID(),
+					);
+
+				// If the post is singular and if it is in the loop.
+				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
+
+					// Text specific to the single post.
+					$title = sprintf(
+						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
+						$name,
+						get_the_ID()
+					);
+
+				}
+			}
+		}
+
+		// Return the modified or unmodified title.
 		return $title;
 	}
 }
