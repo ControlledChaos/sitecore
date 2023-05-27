@@ -89,7 +89,7 @@ class Title_Filter {
 	 * @param  integer $id The ID of the post.
 	 * @return string Returns the text of the post title.
 	 */
-	public function the_title( $title, $id ) {
+	public function the_title( $title ) {
 		return $title;
 	}
 }

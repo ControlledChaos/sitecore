@@ -40,10 +40,9 @@ class Title_Sample extends Title_Filter {
 	 * @since  1.0.0
 	 * @access public
 	 * @param  string $title The value of the title field.
-	 * @param  integer $id The ID of the post.
 	 * @return string Returns the text of the post title.
 	 */
-	public function the_title( $title, $id ) {
+	public function the_title( $title ) {
 
 		// Get the array of post types to be filtered.
 		$types = $this->post_types;
@@ -55,7 +54,7 @@ class Title_Sample extends Title_Filter {
 		foreach ( $types as $type ) {
 
 			// If the post type matches one in the loop.
-			if ( $type == get_post_type( $id ) ) {
+			if ( $type == get_post_type( get_the_ID() ) ) {
 
 				$object = get_post_type_object( $type );
 
@@ -81,7 +80,7 @@ class Title_Sample extends Title_Filter {
 					$title = sprintf(
 						__( 'Filtered Demo Title: Archived %s #%s', 'sitecore' ),
 						$name,
-						$id,
+						get_the_ID(),
 					);
 
 				// If the post is in the main blog pages.
@@ -91,7 +90,7 @@ class Title_Sample extends Title_Filter {
 					$title = sprintf(
 						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
 						$name,
-						$id,
+						get_the_ID(),
 					);
 
 				// If the post is singular and if it is in the loop.
@@ -101,7 +100,7 @@ class Title_Sample extends Title_Filter {
 					$title = sprintf(
 						__( 'Filtered Demo Title: %s #%s', 'sitecore' ),
 						$name,
-						$id
+						get_the_ID()
 					);
 
 				}
