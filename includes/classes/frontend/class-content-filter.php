@@ -87,9 +87,21 @@ class Content_Filter {
 		$this->post_formats = wp_parse_args( $post_formats, $formats );
 		$this->priority     = $priority;
 
-		// Add content filter if post types are set.
+		add_action( 'init', [ $this, 'custom_content' ], $this->priority );
+	}
+
+	/**
+	 * Custom content
+	 *
+	 * Adds the content filter.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function custom_content() {
 		if ( $this->post_types() || $this->post_taxes() || $this->post_formats() ) {
-			add_filter( 'the_content', [ $this, 'the_content' ], $this->priority, 1 );
+			add_filter( 'the_content', [ $this, 'the_content' ], 10, 1 );
 		}
 	}
 
