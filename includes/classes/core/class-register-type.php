@@ -220,10 +220,12 @@ class Register_Type {
 	 */
 	protected function options() {
 
+		$labels = $this->labels();
+
 		$options = [
-			'label'                 => __( ucwords( $this->type_labels['plural'] ), 'sitecore' ),
-			'labels'                => $this->labels(),
-			'description'           => __( ucfirst( $this->type_labels['description'] ), 'sitecore' ),
+			'label'                 => __( ucwords( $labels['name'] ), 'sitecore' ),
+			'labels'                => $labels,
+			'description'           => $labels['description'],
 			'public'                => $this->type_options['public'],
 			'hierarchical'          => $this->type_options['hierarchical'],
 			'exclude_from_search'   => $this->type_options['exclude_from_search'],
@@ -237,7 +239,7 @@ class Register_Type {
 			'rest_namespace'        => $this->type_options['rest_namespace'],
 			'rest_controller_class' => $this->type_options['rest_controller_class'],
 			'menu_position'         => $this->type_options['menu_position'],
-			'menu_icon'             => $this->type_labels['menu_icon'],
+			'menu_icon'             => $labels['menu_icon'],
 			'capability_type'       => $this->capability_type(),
 			'capabilities'          => $this->type_options['capabilities'],
 			'map_meta_cap'          => $this->type_options['map_meta_cap'],
@@ -272,8 +274,10 @@ class Register_Type {
 
 		$labels = [
 			'name'                  => __( ucwords( $this->type_labels['plural'] ), 'sitecore' ),
+			'description'           => __( ucfirst( $this->type_labels['description'] ), 'sitecore' ),
 			'singular_name'         => __( ucwords( $this->type_labels['singular'] ), 'sitecore' ),
 			'menu_name'             => __( ucwords( $this->type_labels['plural'] ), 'sitecore' ),
+			'menu_icon'             => $this->type_labels['menu_icon'],
 			'all_items'             => __( 'All ' . ucwords( $this->type_labels['plural'] ), 'sitecore' ),
 			'add_new'               => __( 'Add New', 'sitecore' ),
 			'add_new_item'          => __( 'Add New ' . ucwords( $this->type_labels['singular'] ), 'sitecore' ),
