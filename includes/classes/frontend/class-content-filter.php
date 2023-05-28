@@ -171,6 +171,10 @@ class Content_Filter {
 				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
 					$content = $this->archive_content();
 
+				// If the post is in the blog index and if it is in the loop.
+				} elseif ( is_home( $type ) && is_main_query() && in_the_loop() ) {
+					$content = $this->single_content();
+
 				// If the post is singular and if it is in the loop.
 				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
 					$content = $this->single_content();
