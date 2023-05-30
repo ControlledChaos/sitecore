@@ -125,7 +125,7 @@ class Settings_Fields_Sample extends Settings_Fields {
 	 */
 	public function sample_field_two_sanitize() {
 
-		$option = get_option( 'sample_field_two', 'b' );
+		$option = get_option( 'sample_field_two' );
 		$valid  = [ 'a', 'b' ];
 
 		if ( in_array( $option, $valid ) ) {
@@ -144,7 +144,15 @@ class Settings_Fields_Sample extends Settings_Fields {
 	 * @return boolean
 	 */
 	public function sample_field_three_sanitize() {
-		$option = get_option( 'sample_field_three', [] );
+
+		$option = get_option( 'sample_field_three' );
+		$valid  = [ 'one', 'two' ];
+
+		if ( in_array( $option, $valid ) ) {
+			$option = $option;
+		} else {
+			$option = '';
+		}
 		return apply_filters( 'scp_sample_field_three', $option );
 	}
 
@@ -273,7 +281,6 @@ class Settings_Fields_Sample extends Settings_Fields {
 		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_three_sanitize();
-		$array    = 'sample_select';
 
 		$html = '<fieldset>';
 		$html .= sprintf(
@@ -281,10 +288,9 @@ class Settings_Fields_Sample extends Settings_Fields {
 			$fields[$order]['title']
 		);
 		$html .= sprintf(
-			'<select id="%s" name="%s[%s]">',
+			'<select id="%s" name="%s">',
 			$field_id,
-			$field_id,
-			$array
+			$field_id
 		);
 		$html .= sprintf(
 			'<option value="">%s</option>',
@@ -292,12 +298,12 @@ class Settings_Fields_Sample extends Settings_Fields {
 		);
 		$html .= sprintf(
 			'<option value="one" %s>%s</option>',
-			selected( $option[ $array ], 'one', false ),
+			selected( $option, 'one', false ),
 			__( 'Option One', 'sitecore' )
 		);
 		$html .= sprintf(
 			'<option value="two" %s>%s</option>',
-			selected( $option[ $array ], 'two', false ),
+			selected( $option, 'two', false ),
 			__( 'Option Two', 'sitecore' )
 		);
 		$html .= '</select>';
