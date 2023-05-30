@@ -269,7 +269,7 @@ class Content_Filter {
 	 * @return void
 	 */
 	protected function singular_content() {
-		return apply_filters( 'the_content', get_post_field( 'post_content', get_the_ID() ) );
+		return get_post_field( 'post_content', get_the_ID() );
 	}
 
 	/**
@@ -280,7 +280,7 @@ class Content_Filter {
 	 * @return void
 	 */
 	protected function archive_content() {
-		return apply_filters( 'the_content', get_post_field( 'post_content', get_the_ID() ) );
+		return get_post_field( 'post_content', get_the_ID() );
 	}
 
 	/**
