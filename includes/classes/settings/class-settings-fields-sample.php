@@ -124,7 +124,15 @@ class Settings_Fields_Sample extends Settings_Fields {
 	 * @return boolean
 	 */
 	public function sample_field_two_sanitize() {
-		$option = get_option( 'sample_field_two' );
+
+		$option = get_option( 'sample_field_two', 'b' );
+		$valid  = [ 'a', 'b' ];
+
+		if ( in_array( $option, $valid ) ) {
+			$option = $option;
+		} else {
+			$option = 'b';
+		}
 		return apply_filters( 'scp_sample_field_two', $option );
 	}
 
@@ -213,14 +221,6 @@ class Settings_Fields_Sample extends Settings_Fields {
 		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->sample_field_two_sanitize();
-		$array    = 'sample_radio';
-
-		// Default button to check.
-		if ( ! $option[ $array ] ) {
-			$default = '';
-		} else {
-			$default = 'b';
-		}
 
 		$html = '<fieldset>';
 		$html .= sprintf(
@@ -229,27 +229,25 @@ class Settings_Fields_Sample extends Settings_Fields {
 		);
 		$html .= sprintf(
 			'<label for="%s">',
-			'sample_radio_a'
+			$field_id . '_a'
 		);
 		$html .= sprintf(
-			'<input type="radio" id="%s" name="%s[%s]" value="a" %s /> %s',
-			'sample_radio_a',
+			'<input type="radio" id="%s" name="%s" value="a" %s /> %s',
+			$field_id . '_a',
 			$field_id,
-			$array,
-			checked( 'a', $option[ $array ], false ),
+			checked( 'a', $option, false ),
 			__( 'Option A', 'sitecore' )
 		);
 		$html .= '</label><br />';
 		$html .= sprintf(
 			'<label for="%s">',
-			'sample_radio_b'
+			$field_id . '_b'
 		);
 		$html .= sprintf(
-			'<input type="radio" id="%s" name="%s[%s]" value="b" %s /> %s',
-			'sample_radio_b',
+			'<input type="radio" id="%s" name="%s" value="b" %s /> %s',
+			$field_id . '_b',
 			$field_id,
-			$array,
-			checked( $default, $option[ $array ], false ),
+			checked( 'b', $option, false ),
 			__( 'Option B', 'sitecore' )
 		);
 		$html .= '</label>';
