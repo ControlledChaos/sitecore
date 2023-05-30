@@ -15,9 +15,6 @@
 
 namespace SiteCore\Classes\Front;
 
-// Alias namespaces.
-use SiteCore\Classes\Vendor as Vendor;
-
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -59,6 +56,17 @@ class Content_Filter {
 	public $post_formats = [];
 
 	/**
+	 * Post templates
+	 *
+	 * Array of the templates to be used.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var    array Array of the templates to be used.
+	 */
+	public $post_templates = [];
+
+	/**
 	 * Content filter priority
 	 *
 	 * When to filter the content.
@@ -76,16 +84,18 @@ class Content_Filter {
 	 * @access public
 	 * @return self
 	 */
-	public function __construct( $post_types, $post_taxes, $post_formats, $priority ) {
+	public function __construct( $post_types, $post_taxes, $post_formats, $post_templates, $priority ) {
 
-		$types   = [];
-		$taxes   = [];
-		$formats = [];
+		$types     = [];
+		$taxes     = [];
+		$formats   = [];
+		$templates = [];
 
-		$this->post_types   = wp_parse_args( $post_types, $types );
-		$this->post_taxes   = wp_parse_args( $post_taxes, $taxes );
-		$this->post_formats = wp_parse_args( $post_formats, $formats );
-		$this->priority     = $priority;
+		$this->post_types     = wp_parse_args( $post_types, $types );
+		$this->post_taxes     = wp_parse_args( $post_taxes, $taxes );
+		$this->post_formats   = wp_parse_args( $post_formats, $formats );
+		$this->post_templates = wp_parse_args( $post_templates, $templates );
+		$this->priority       = $priority;
 
 		add_action( 'init', [ $this, 'custom_content' ], $this->priority );
 	}
@@ -269,7 +279,43 @@ class Content_Filter {
 	 * @return void
 	 */
 	protected function singular_content() {
-		return get_post_field( 'post_content', get_the_ID() );
+
+		// Variables.
+		$default   = get_post_field( 'post_content', get_the_ID() );
+		$templates = $this->post_templates;
+		$theme     = '';
+		$plugin    = '';
+
+		// If the class has an array of singular templates.
+		if (
+			is_array( $templates ) &&
+			array_key_exists( 'singular', $templates ) &&
+			is_array( $templates['singular'] )
+		) {
+
+			// Look for a single content template in the active theme.
+			if ( array_key_exists( 'theme', $templates['singular'] ) ) {
+				$theme = locate_template( $templates['singular']['theme'] . '.php' );
+			}
+
+			// Plugin template path.
+			if ( array_key_exists( 'plugin', $templates['singular'] ) ) {
+				$plugin = SCP_PATH . $templates['singular']['plugin'] . '.php';
+			}
+		}
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $theme ) ) {
+			get_template_part( $templates['singular']['theme'] );
+
+		// Use the plugin template if no theme template is found.
+		} elseif ( file_exists( $plugin ) ) {
+			include $plugin;
+
+		// If template files fail, use the default content.
+		} else {
+			return $default;
+		}
 	}
 
 	/**
@@ -280,7 +326,43 @@ class Content_Filter {
 	 * @return void
 	 */
 	protected function archive_content() {
-		return get_post_field( 'post_content', get_the_ID() );
+
+		// Variables.
+		$default   = get_post_field( 'post_content', get_the_ID() );
+		$templates = $this->post_templates;
+		$theme     = '';
+		$plugin    = '';
+
+		// If the class has an array of singular templates.
+		if (
+			is_array( $templates ) &&
+			array_key_exists( 'archive', $templates ) &&
+			is_array( $templates['archive'] )
+		) {
+
+			// Look for a single content template in the active theme.
+			if ( array_key_exists( 'theme', $templates['archive'] ) ) {
+				$theme = locate_template( $templates['archive']['theme'] . '.php' );
+			}
+
+			// Plugin template path.
+			if ( array_key_exists( 'plugin', $templates['archive'] ) ) {
+				$plugin = SCP_PATH . $templates['archive']['plugin'] . '.php';
+			}
+		}
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $theme ) ) {
+			get_template_part( $templates['archive']['theme'] );
+
+		// Use the plugin template if no theme template is found.
+		} elseif ( file_exists( $plugin ) ) {
+			include $plugin;
+
+		// If template files fail, use the default content.
+		} else {
+			return $default;
+		}
 	}
 
 	/**
@@ -288,18 +370,17 @@ class Content_Filter {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @param  string $content The value of the content field.
 	 * @return mixed Returns the content to be filtered or
 	 *               returns the unfiltered content if post types don't match.
 	 */
-	public function the_content( $content ) {
+	public function the_content() {
 
 		// Get the array of post types & taxonomies to be filtered.
 		$types = $this->post_types;
 		$taxes = $this->post_taxes;
 
 		// Default content for post types not modified.
-		$content = $content;
+		$content = get_post_field( 'post_content', get_the_ID() );
 
 		// Modify the content for each post type in the post_types property.
 		foreach ( $types as $type ) {

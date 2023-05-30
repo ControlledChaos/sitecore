@@ -29,111 +29,50 @@ class Content_Sample extends Content_Filter {
 	 */
 	public function __construct() {
 
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
 		$types = [
 			'post',
 			'sample_type'
 		];
 
 		$taxes = [
-			// 'sample_tax'
+			'sample_tax'
 		];
 
 		$formats = [
 			'aside'
 		];
 
+		/**
+		 * Content template file paths
+		 *
+		 * Do not include the `.php` file extension.
+		 * This is added by the parent class.
+		 *
+		 * The ACF suffix returns `-acf` if the Advanced
+		 * Custom Fields plugin is active or if the bundled
+		 * Applied Content Forms files are included, returns
+		 * null if not.
+		 */
+		$templates = [
+			'singular' => [
+				'plugin' => 'views/frontend/content/content-single-sample' . $acf->suffix(),
+				'theme'  => 'templates/template-parts/content/content-single-sample' . $acf->suffix()
+			],
+			'archive'  => [
+				'plugin' => 'views/frontend/content/content-archive-sample' . $acf->suffix(),
+				'theme'  => 'templates/template-parts/content/content-archive-sample' . $acf->suffix()
+			]
+		];
+
 		parent :: __construct(
 			$types,
 			$taxes,
 			$formats,
+			$templates,
 			10
 		);
-	}
-
-	/**
-	 * Single post type content
-	 *
-	 * A partials subdirectory is used because many themes
-	 * have more markup in the content directory files than
-	 * simply the content section, which this replaces.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return void
-	 */
-	protected function singular_content() {
-
-		// Instantiate Plugin_ACF class to get the suffix.
-		$acf = new Vendor\Plugin_ACF;
-
-		// Look for a single content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-single-sample' . $acf->suffix() . '.php' );
-
-		// If the active theme has a template, use that.
-		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-single-sample' . $acf->suffix() );
-
-		// Use the plugin template if no theme template is found.
-		} else {
-			include SCP_PATH . 'views/frontend/content/content-single-sample' . $acf->suffix() . '.php';
-		}
-	}
-
-	/**
-	 * Post type archive content
-	 *
-	 * A partials subdirectory is used because many themes
-	 * have more markup in the content directory files than
-	 * simply the content section, which this replaces.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return void
-	 */
-	protected function archive_content() {
-
-		// Instantiate Plugin_ACF class to get the suffix.
-		$acf = new Vendor\Plugin_ACF;
-
-		// Look for a archive content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-archive-sample' . $acf->suffix() . '.php' );
-
-		// If the active theme has a template, use that.
-		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-archive-sample' . $acf->suffix() );
-
-		// Use the plugin template if no theme template is found.
-		} else {
-			include SCP_PATH . 'views/frontend/content/content-archive-sample' . $acf->suffix() . '.php';
-		}
-	}
-
-	/**
-	 * Taxonomy archive content
-	 *
-	 * A partials subdirectory is used because many themes
-	 * have more markup in the content directory files than
-	 * simply the content section, which this replaces.
-	 *
-	 * @since  1.0.0
-	 * @access protected
-	 * @return void
-	 */
-	protected function taxonomy_content() {
-
-		// Instantiate Plugin_ACF class to get the suffix.
-		$acf = new Vendor\Plugin_ACF;
-
-		// Look for a taxonomy content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-taxonomy-sample' . $acf->suffix() . '.php' );
-
-		// If the active theme has a template, use that.
-		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-taxonomy-sample' . $acf->suffix() );
-
-		// Use the plugin template if no theme template is found.
-		} else {
-			include SCP_PATH . 'views/frontend/content/content-taxonomy-sample' . $acf->suffix() . '.php';
-		}
 	}
 }
