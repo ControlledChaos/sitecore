@@ -24,7 +24,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function __construct() {
 
 		$register = [
-			'serialize' => true,
+			'serialize' => false,
 			'page'      => 'developer-tools',
 			'section'   => 'scp-options-developer'
 		];
