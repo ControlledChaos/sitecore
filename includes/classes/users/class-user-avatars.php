@@ -562,7 +562,7 @@ class User_Avatars {
 	 */
 	function disable_gravatar( $avatar, $id_or_email, $default, $alt ) {
 
-		$localhost = array( 'localhost', '127.0.0.1' );
+		$localhost = [ 'localhost', '127.0.0.1' ];
 		$size      = (int) 48;
 
 		if ( ! in_array( $_SERVER['SERVER_ADDR'] , $localhost ) ) {
