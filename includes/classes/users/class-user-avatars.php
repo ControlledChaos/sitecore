@@ -571,8 +571,7 @@ class User_Avatars {
 
 		$document = new \DOMDocument;
 		$document->loadHTML( $avatar );
-
-		$images = $document->getElementsByTagName( 'img' );
+		$images   = $document->getElementsByTagName( 'img' );
 
 		if ( $images && $images->length > 0 ) {
 			$url_1  = urldecode( $images->item(0)->getAttribute( 'src' ) );
