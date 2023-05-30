@@ -51,35 +51,6 @@ class Content_Sample extends Content_Filter {
 	}
 
 	/**
-	 * Post type archive content
-	 *
-	 * A partials subdirectory is used because many themes
-	 * have more markup in the content directory files than
-	 * simply the content section, which this replaces.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function archive_content() {
-
-		// Instantiate Plugin_ACF class to get the suffix.
-		$acf = new Vendor\Plugin_ACF;
-
-		// Look for a archive content template in the active theme.
-		$template = locate_template( 'template-parts/content/content-archive-sample' . $acf->suffix() . '.php' );
-
-		// If the active theme has a template, use that.
-		if ( ! empty( $template ) ) {
-			get_template_part( 'template-parts/content/content-archive-sample' . $acf->suffix() );
-
-		// Use the plugin template if no theme template is found.
-		} else {
-			include SCP_PATH . 'views/frontend/content/content-archive-sample' . $acf->suffix() . '.php';
-		}
-	}
-
-	/**
 	 * Single post type content
 	 *
 	 * A partials subdirectory is used because many themes
@@ -87,10 +58,10 @@ class Content_Sample extends Content_Filter {
 	 * simply the content section, which this replaces.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	 public function single_content() {
+	protected function singular_content() {
 
 		// Instantiate Plugin_ACF class to get the suffix.
 		$acf = new Vendor\Plugin_ACF;
@@ -109,6 +80,35 @@ class Content_Sample extends Content_Filter {
 	}
 
 	/**
+	 * Post type archive content
+	 *
+	 * A partials subdirectory is used because many themes
+	 * have more markup in the content directory files than
+	 * simply the content section, which this replaces.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return void
+	 */
+	protected function archive_content() {
+
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
+		// Look for a archive content template in the active theme.
+		$template = locate_template( 'template-parts/content/content-archive-sample' . $acf->suffix() . '.php' );
+
+		// If the active theme has a template, use that.
+		if ( ! empty( $template ) ) {
+			get_template_part( 'template-parts/content/content-archive-sample' . $acf->suffix() );
+
+		// Use the plugin template if no theme template is found.
+		} else {
+			include SCP_PATH . 'views/frontend/content/content-archive-sample' . $acf->suffix() . '.php';
+		}
+	}
+
+	/**
 	 * Taxonomy archive content
 	 *
 	 * A partials subdirectory is used because many themes
@@ -116,10 +116,10 @@ class Content_Sample extends Content_Filter {
 	 * simply the content section, which this replaces.
 	 *
 	 * @since  1.0.0
-	 * @access public
+	 * @access protected
 	 * @return void
 	 */
-	public function taxonomy_content() {
+	protected function taxonomy_content() {
 
 		// Instantiate Plugin_ACF class to get the suffix.
 		$acf = new Vendor\Plugin_ACF;

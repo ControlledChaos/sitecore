@@ -151,6 +151,139 @@ class Content_Filter {
 	}
 
 	/**
+	 * Get single post type content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function get_singular_content() {
+		return $this->singular_content();
+	}
+
+	/**
+	 * Post index title
+	 *
+	 * Title if the post is in the main blog pages.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_index_content() {
+		return $this->get_singular_content();
+	}
+
+	/**
+	 * Post type archive title
+	 *
+	 * Title if the post is in its post type archive.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_post_type_content() {
+		return $this->get_index_content();
+	}
+
+	/**
+	 * Get post type archive content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function get_archive_content() {
+		return $this->archive_content();
+	}
+
+	/**
+	 * Category archive title
+	 *
+	 * Title if the post is in a category archive.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_category_content() {
+		return $this->get_archive_content();
+	}
+
+	/**
+	 * Tag archive title
+	 *
+	 * Title if the post is in a tag archive.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_tag_content() {
+		return $this->get_archive_content();
+	}
+
+	/**
+	 * Date archive title
+	 *
+	 * Title if the post is in a date archive.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_date_content() {
+		return $this->get_archive_content();
+	}
+
+	/**
+	 * Author archive title
+	 *
+	 * Title if the post is in an author archive.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return mixed Returns the title text or null.
+	 */
+	protected function get_author_content() {
+		return $this->get_archive_content();
+	}
+
+	/**
+	 * Get taxonomy archive content
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function get_taxonomy_content() {
+		return $this->get_archive_content();
+	}
+
+	/**
+	 * Single post type content
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return void
+	 */
+	protected function singular_content() {
+		return apply_filters( 'the_content', get_post_field( 'post_content', get_the_ID() ) );
+	}
+
+	/**
+	 * Post type archive content
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return void
+	 */
+	protected function archive_content() {
+		return apply_filters( 'the_content', get_post_field( 'post_content', get_the_ID() ) );
+	}
+
+	/**
 	 * Filter content
 	 *
 	 * @since  1.0.0
@@ -181,20 +314,34 @@ class Content_Filter {
 				 * and if the content is in the loop.
 				 */
 				if ( is_post_type_archive( $type ) && is_main_query() && in_the_loop() ) {
-					$content = $this->archive_content();
+					$content = $this->get_archive_content();
+
+				} elseif ( is_category() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_category_content();
+
+				} elseif ( is_tag() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_tag_content();
+
+				} elseif ( is_date() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_date_content();
+
+				} elseif ( is_author() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_author_content();
+
+				} elseif ( is_archive() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_archive_content();
 
 				// If the post is in the blog index and if it is in the loop.
 				} elseif ( is_home( $type ) && is_main_query() && in_the_loop() ) {
-					$content = $this->single_content();
+					$content = $this->get_singular_content();
+
+				// If the post is in taxonomy archive pages and if it is in the loop.
+				} elseif ( is_tax() && is_main_query() && in_the_loop() ) {
+					$content = $this->get_taxonomy_content();
 
 				// If the post is singular and if it is in the loop.
 				} elseif ( is_singular( $type ) && is_main_query() && in_the_loop() ) {
-					$content = $this->single_content();
-
-				// If the post is in taxonomy archive pages and if it is in the loop.
-				} elseif ( is_tax( 'sample_tax' ) && is_main_query() && in_the_loop() ) {
-					$content = $this->taxonomy_content();
-
+					$content = $this->get_singular_content();
 				}
 			}
 
