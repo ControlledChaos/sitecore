@@ -560,7 +560,7 @@ class User_Avatars {
 	 * @param  string $alt
 	 * @return array
 	 */
-	function disable_gravatar( $avatar, $id_or_email, $default, $alt ) {
+	public function disable_gravatar( $avatar, $id_or_email, $default, $alt ) {
 
 		$localhost = [ 'localhost', '127.0.0.1' ];
 		$size      = (int) 48;
