@@ -69,7 +69,7 @@ class User_Avatars {
 		// Add bbPress forum support.
 		add_action( 'bbp_user_edit_after_about', [ $this, 'bbpress_user_profile' ] );
 
-		// Disable the connection to Gravater.
+		// Disable the connection to Gravatar.
 		add_filter( 'get_avatar', [ $this, 'disable_gravatar' ], 9, 5 );
 		add_filter( 'get_avatar', [ $this, 'get_avatar' ], 10, 5 );
 
