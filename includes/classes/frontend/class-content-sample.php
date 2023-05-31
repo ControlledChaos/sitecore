@@ -10,9 +10,6 @@
 
 namespace SiteCore\Classes\Front;
 
-// Alias namespaces.
-use SiteCore\Classes\Vendor as Vendor;
-
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -28,9 +25,6 @@ class Content_Sample extends Content_Filter {
 	 * @return self
 	 */
 	public function __construct() {
-
-		// Instantiate Plugin_ACF class to get the suffix.
-		$acf = new Vendor\Plugin_ACF;
 
 		$types = [
 			'post',
@@ -51,19 +45,18 @@ class Content_Sample extends Content_Filter {
 		 * Do not include the `.php` file extension.
 		 * This is added by the parent class.
 		 *
-		 * The ACF suffix returns `-acf` if the Advanced
-		 * Custom Fields plugin is active or if the bundled
-		 * Applied Content Forms files are included, returns
-		 * null if not.
+		 * The `-acf` suffix is added by the parent class
+		 * id the `acf_suffix` key is true.
 		 */
 		$templates = [
-			'singular' => [
-				'plugin' => 'views/frontend/content/content-single-sample' . $acf->suffix(),
-				'theme'  => 'templates/template-parts/content/content-single-sample' . $acf->suffix()
+			'acf_suffix' => true,
+			'singular'   => [
+				'plugin' => 'views/frontend/content/content-single-sample',
+				'theme'  => 'templates/template-parts/content/content-single-sample'
 			],
-			'archive'  => [
-				'plugin' => 'views/frontend/content/content-archive-sample' . $acf->suffix(),
-				'theme'  => 'templates/template-parts/content/content-archive-sample' . $acf->suffix()
+			'archive'    => [
+				'plugin' => 'views/frontend/content/content-archive-sample',
+				'theme'  => 'templates/template-parts/content/content-archive-sample'
 			]
 		];
 

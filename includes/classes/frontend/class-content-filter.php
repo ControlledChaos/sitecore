@@ -15,6 +15,9 @@
 
 namespace SiteCore\Classes\Front;
 
+// Alias namespaces.
+use SiteCore\Classes\Vendor as Vendor;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -89,7 +92,9 @@ class Content_Filter {
 		$types     = [];
 		$taxes     = [];
 		$formats   = [];
-		$templates = [];
+		$templates = [
+			'acf_suffix' => false
+		];
 
 		$this->post_types     = wp_parse_args( $post_types, $types );
 		$this->post_taxes     = wp_parse_args( $post_taxes, $taxes );
@@ -124,7 +129,7 @@ class Content_Filter {
 	 *                 has at least one post type.
 	 */
 	private function post_types() {
-		if ( isset( $this->post_types ) && is_array( $this->post_types ) ) {
+		if ( is_array( $this->post_types ) && isset( $this->post_types ) ) {
 			return true;
 		}
 		return false;
@@ -139,7 +144,7 @@ class Content_Filter {
 	 *                 has at least one taxonomy.
 	 */
 	private function post_taxes() {
-		if ( isset( $this->post_taxes ) && is_array( $this->post_taxes ) ) {
+		if ( is_array( $this->post_taxes ) && isset( $this->post_taxes ) ) {
 			return true;
 		}
 		return false;
@@ -154,10 +159,38 @@ class Content_Filter {
 	 *                 has at least one formats.
 	 */
 	private function post_formats() {
-		if ( isset( $this->post_formats ) && is_array( $this->post_formats ) ) {
+		if ( is_array( $this->post_formats ) && isset( $this->post_formats ) ) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * ACF suffix
+	 *
+	 * The ACF suffix returns `-acf` if the Advanced
+ 	 * Custom Fields plugin is active or if the bundled
+	 * Applied Content Forms files are included, returns
+	 * null if not.
+	 *
+	 * @since  1.0.0
+	 * @access protected
+	 * @return string
+	 */
+	protected function acf_suffix() {
+
+		// Instantiate Plugin_ACF class to get the suffix.
+		$acf = new Vendor\Plugin_ACF;
+
+		$templates  = $this->post_templates;
+		$acf_suffix = '';
+
+		if ( is_array( $templates ) && array_key_exists( 'acf_suffix', $templates ) ) {
+			if ( true == $templates['acf_suffix'] ) {
+				$acf_suffix = $acf->suffix();
+			}
+		}
+		return $acf_suffix;
 	}
 
 	/**
@@ -292,21 +325,22 @@ class Content_Filter {
 			array_key_exists( 'singular', $templates ) &&
 			is_array( $templates['singular'] )
 		) {
+			$singular = $templates['singular'];
 
 			// Look for a single content template in the active theme.
-			if ( array_key_exists( 'theme', $templates['singular'] ) ) {
-				$theme = locate_template( $templates['singular']['theme'] . '.php' );
+			if ( array_key_exists( 'theme', $singular ) ) {
+				$theme = locate_template( $singular['theme'] . $this->acf_suffix() . '.php' );
 			}
 
 			// Plugin template path.
-			if ( array_key_exists( 'plugin', $templates['singular'] ) ) {
-				$plugin = SCP_PATH . $templates['singular']['plugin'] . '.php';
+			if ( array_key_exists( 'plugin', $singular ) ) {
+				$plugin = SCP_PATH . $singular['plugin'] . $this->acf_suffix() . '.php';
 			}
 		}
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $theme ) ) {
-			get_template_part( $templates['singular']['theme'] );
+			get_template_part( $templates['singular']['theme'] . $this->acf_suffix() );
 
 		// Use the plugin template if no theme template is found.
 		} elseif ( file_exists( $plugin ) ) {
@@ -342,18 +376,18 @@ class Content_Filter {
 
 			// Look for a single content template in the active theme.
 			if ( array_key_exists( 'theme', $templates['archive'] ) ) {
-				$theme = locate_template( $templates['archive']['theme'] . '.php' );
+				$theme = locate_template( $templates['archive']['theme'] . $this->acf_suffix() . '.php' );
 			}
 
 			// Plugin template path.
 			if ( array_key_exists( 'plugin', $templates['archive'] ) ) {
-				$plugin = SCP_PATH . $templates['archive']['plugin'] . '.php';
+				$plugin = SCP_PATH . $templates['archive']['plugin'] . $this->acf_suffix() . '.php';
 			}
 		}
 
 		// If the active theme has a template, use that.
 		if ( ! empty( $theme ) ) {
-			get_template_part( $templates['archive']['theme'] );
+			get_template_part( $templates['archive']['theme'] . $this->acf_suffix() );
 
 		// Use the plugin template if no theme template is found.
 		} elseif ( file_exists( $plugin ) ) {
