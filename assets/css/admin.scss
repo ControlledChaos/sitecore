@@ -42,10 +42,13 @@
 /// For the installed plugins and the add new plugins screens.
 /// This provides better distinction between active and inactive plugins.
 ///
-.plugins tr.inactive *,
-.plugins .plugins a.delete {
-	background: #f3f3f3;
-	color: #777777;
+.plugins-php table.widefat {
+	background: inherit;
+}
+
+.plugins tr,
+.plugins a.delete {
+	background: rgba( $color: white, $alpha: 0.5 );
 }
 
 .plugins tr.inactive .activate a:hover {
@@ -62,8 +65,7 @@
 }
 
 .row-actions span.delete a {
-	background: #f3f3f3;
-	color: #777777;
+	background: rgba( $color: white, $alpha: 0.5 );
 }
 
 .row-actions span.delete a:hover {

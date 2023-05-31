@@ -345,10 +345,13 @@
   content: '\f161' !important;
 }
 
-.plugins tr.inactive *,
-.plugins .plugins a.delete {
-  background: #f3f3f3;
-  color: #777777;
+.plugins-php table.widefat {
+  background: inherit;
+}
+
+.plugins tr,
+.plugins a.delete {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .plugins tr.inactive .activate a:hover {
@@ -365,8 +368,7 @@
 }
 
 .row-actions span.delete a {
-  background: #f3f3f3;
-  color: #777777;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .row-actions span.delete a:hover {
