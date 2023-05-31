@@ -9,15 +9,17 @@
  * @since    1.0.0
  * @link     https://github.com/ControlledChaos/sitecore
  *
- * Plugin Name:  Site Core
- * Plugin URI:   https://github.com/ControlledChaos/sitecore
- * Description:  Develop site-specific plugins for ClassicPress and WordPres.
- * Version:      1.0.0
- * Author:       Controlled Chaos Design
- * Author URI:   https://ccdzine.com/
- * Text Domain:  sitecore
- * Domain Path:  /languages
- * Requires PHP  5.4
+ * Plugin Name:       Site Core
+ * Plugin URI:        https://github.com/ControlledChaos/sitecore
+ * Description:       Develop site-specific plugins for ClassicPress and WordPres.
+ * Version:           1.0.0
+ * Author:            Controlled Chaos Design
+ * Author URI:        https://ccdzine.com/
+ * Text Domain:       sitecore
+ * Domain Path:       /languages
+ * Requires PHP:      5.4
+ * Requires at least: 4.9
+ * Tested up to:      6.2.2
  */
 
 namespace SiteCore;
