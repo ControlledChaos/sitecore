@@ -79,7 +79,7 @@ function setup() {
 	endif;
 
 	// Add custom post types to "At a Glance".
-	add_action( 'plugins_loaded', function() {
+	add_action( 'admin_init', function() use ( $ns ) {
 
 		// Do not run if the Dashboard Summary plugin is active.
 		if ( ! is_plugin_active( 'dashboard-summary/dashboard-summary.php' ) ) {
