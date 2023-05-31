@@ -69,7 +69,7 @@ function options() {
 }
 
 /**
- * Get plugin row notice
+ * Add plugin row notice
  *
  * @since  1.0.0
  * @return void
@@ -132,21 +132,31 @@ function row_notice( $plugin_file, $plugin_data, $status ) {
 }
 
 /**
- * PHP deactivation notice: admin header
+ * Add PHP disable notice
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function get_php_notice() {
+	add_action( 'pre_current_active_plugins', __NAMESPACE__ . '\php_notice', 9 );
+}
+
+/**
+ * PHP disable notice
  *
  * @since  1.0.0
  * @return string Returns the markup of the admin notice.
  */
-function php_deactivate_notice_header() {
+function php_notice() {
 
 ?>
-	<div id="plugin-php-notice" class="notice notice-error is-dismissible">
+	<div id="plugin-php-notice" class="notice notice-error">
 		<?php echo sprintf(
 			'<p>%s %s %s %s %s %s</p>',
 			__( 'Functionality of the', 'sitecore' ),
 			SCP_NAME,
 			__( 'plugin has been disabled because it requires PHP version', 'sitecore' ),
-			php()->minimum(),
+			SCP_MIN_PHP_VERSION,
 			__( 'or greater. Your system is running PHP version', 'sitecore' ),
 			phpversion()
 		); ?>

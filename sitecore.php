@@ -271,7 +271,10 @@ function deactivate_plugin() {
  */
 if ( ! min_php_version() ) {
 
-	// First add a notice to the plugin row.
+	// Add a notice to the plugin page header.
+	Activate\get_php_notice();
+
+	// Add a notice to the plugin row.
 	Activate\get_row_notice();
 
 	// Stop here.
