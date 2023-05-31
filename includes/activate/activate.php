@@ -66,12 +66,6 @@ function options() {
 	} elseif ( in_array( $avatar, $gravatar ) ) {
 		update_option( 'avatar_default', $mystery );
 	}
-
-	// Options true by default.
-	add_option( 'disable_block_widgets', true );
-	add_option( 'admin_menu_menus_top', true );
-	add_option( 'admin_menu_widgets_top', true );
-	add_option( 'toolbar_remove_platform_link', true );
 }
 
 /**
