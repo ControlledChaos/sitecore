@@ -65,6 +65,7 @@ Vendor\setup();
 Users\setup();
 User_Roles\setup();
 Front_Page_Post_Type\setup();
+Compatibility\setup();
 
 // Network.
 if ( is_multisite() ) {

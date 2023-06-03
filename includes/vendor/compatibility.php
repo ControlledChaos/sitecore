@@ -11,6 +11,22 @@
 namespace SiteCore\Compatibility;
 
 /**
+ * Execute functions
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function setup() {
+
+	// Return namespaced function.
+	$ns = function( $function ) {
+		return __NAMESPACE__ . "\\$function";
+	};
+
+	add_action( 'init', $ns( 'ds_acf_tools_link' ) );
+}
+
+/**
  * Get pluggable path
  *
  * Used to check for the `is_user_logged_in` function.
@@ -53,7 +69,6 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
  * Checks for the Advanced Custom Fields plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the plugin is installed & active.
  */
 function active_acf() {
@@ -71,7 +86,6 @@ function active_acf() {
  * and for the same core class bundled in this plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the plugin is installed & active.
  */
 function active_acf_pro() {
@@ -91,7 +105,6 @@ function active_acf_pro() {
  * Checks for the Advanced Custom Fields: Extended plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the plugin is installed & active.
  */
 function active_acfe() {
@@ -108,7 +121,6 @@ function active_acfe() {
  * Checks for the Advanced Custom Fields: Extended PRO plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the plugin is installed & active.
  */
 function active_acfe_pro() {
@@ -126,7 +138,6 @@ function active_acfe_pro() {
  * with this plugin or as activated original plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the core file is found & included.
  */
 function has_acf() {
@@ -153,7 +164,6 @@ function has_acf() {
  * plugin which may include the pro version.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the core file is found & included.
  */
 function has_acf_pro() {
@@ -177,7 +187,6 @@ function has_acf_pro() {
  * with this plugin.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the core file is found & included.
  */
 function has_acfe() {
@@ -204,7 +213,6 @@ function has_acfe() {
  * plugin which may include the pro version.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if the core file is found & included.
  */
 function has_acfe_pro() {
@@ -227,7 +235,6 @@ function has_acfe_pro() {
  * Returns true if ACF or ACF PRO is found.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if ACF is found.
  */
 function acf_ready() {
@@ -247,7 +254,6 @@ function acf_ready() {
  * Returns true if ACFE or ACFE PRO is found.
  *
  * @since  1.0.0
- * @access public
  * @return boolean Returns true if ACFE is found.
  */
 function acfe_ready() {
@@ -259,4 +265,34 @@ function acfe_ready() {
 
 	// Otherwise return false.
 	return false;
+}
+
+/**
+ * Dashboard Summary filters
+ *
+ * @link https://github.com/ControlledChaos/dashboard-summary
+ *
+ * @since  1.0.0
+ * @return boolean Returns true if ACFE is found.
+ */
+function ds_acf_tools_link() {
+
+	if ( ! is_plugin_active( 'dashboard-summary/dashboard-summary.php' ) ) {
+		return;
+	}
+
+	// Filters the link to the ACF tools page.
+	add_filter( 'ds_acf_link_tools', function() {
+		return 'tools.php?page=acf-tools';
+	} );
+
+	// Filters the description for ACFE types & taxes links
+	if ( ! is_plugin_active( 'acf-extended/acf-extended.php' ) ) {
+		add_filter( 'ds_site_widget_content_acfe_description_types', function() {
+			return sprintf(
+				'<p class="description">%s</p>',
+				__( 'Manage custom post types and custom taxonomies.', 'dashboard-summary' )
+			);
+		} );
+	}
 }
