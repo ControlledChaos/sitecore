@@ -36,7 +36,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'acf-column-enabled'    => 0,
 			'acf-column-post_types' => '',
@@ -46,24 +46,24 @@ acf_add_local_field_group( [
 				2 => 'link_category',
 				3 => 'acf-field-group-category',
 				4 => 'media_type',
-				5 => 'test_tax_one',
+				5 => 'test_tax_one'
 			],
 			'default_value' => '',
 			'placeholder'   => __( 'Just a text field.', 'sitecore' ),
 			'prepend'       => __( '', 'sitecore' ),
 			'append'        => __( '', 'sitecore' ),
 			'maxlength'     => '',
-			'acfe_field_group_condition' => 0,
-		],
+			'acfe_field_group_condition' => 0
+		]
 	],
 	'location' => [
 		[
 			[
 				'param'    => 'options_page',
 				'operator' => '==',
-				'value'    => 'sample-acf-options-subpage',
-			],
-		],
+				'value'    => 'sample-acf-options-subpage'
+			]
+		]
 	],
 	'menu_order'            => 0,
 	'position'              => 'acf_after_title',
@@ -77,5 +77,5 @@ acf_add_local_field_group( [
 	'acfe_form'             => 0,
 	'acfe_display_title'    => '',
 	'acfe_meta'             => '',
-	'acfe_note'             => '',
+	'acfe_note'             => ''
 ] );

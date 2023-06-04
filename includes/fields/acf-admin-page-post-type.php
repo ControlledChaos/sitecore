@@ -37,7 +37,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'placement' => 'top',
 			'endpoint'  => 0,
@@ -53,7 +53,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => 'read',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -72,7 +72,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -91,7 +91,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -110,7 +110,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -131,7 +131,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -150,7 +150,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -170,7 +170,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => 10,
 			'placeholder'   => '',
@@ -191,7 +191,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'default_value' => '',
 			'placeholder'   => __( '', 'sitecore' ),
@@ -211,7 +211,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'placement' => 'top',
 			'endpoint'  => 0,
@@ -228,7 +228,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'acfe_repeater_stylised_button' => 0,
 			'layout'        => 'row',
@@ -251,7 +251,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'placement' => 'top',
 					'endpoint'  => 0,
@@ -269,7 +269,7 @@ acf_add_local_field_group( [
 					'wrapper' => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'default_value' => '',
 					'maxlength'     => '',
@@ -290,7 +290,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'default_value' => '',
 					'maxlength'     => '',
@@ -311,7 +311,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'default_value' => 'read',
 					'maxlength'     => '',
@@ -332,7 +332,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'placement' => 'top',
 					'endpoint'  => 0,
@@ -350,7 +350,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'default_value'   => '',
 					'tabs'            => 'all',
@@ -367,9 +367,9 @@ acf_add_local_field_group( [
 			[
 				'param'    => 'post_type',
 				'operator' => '==',
-				'value'    => 'admin',
-			],
-		],
+				'value'    => 'admin'
+			]
+		]
 	],
 	'menu_order'            => 0,
 	'position'              => 'acf_after_title',
@@ -386,7 +386,7 @@ acf_add_local_field_group( [
 		6 => 'categories',
 		7 => 'tags',
 		8 => 'send-trackbacks',
-		9 => 'the_content',
+		9 => 'the_content'
 	],
 	'active'             => true,
 	'description'        => __( '', 'sitecore' ),
@@ -394,5 +394,5 @@ acf_add_local_field_group( [
 	'acfe_display_title' => '',
 	'acfe_autosync'      => '',
 	'acfe_form' => 0,
-	'acfe_note' => '',
+	'acfe_note' => ''
 ] );

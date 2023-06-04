@@ -33,7 +33,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => 'acf-options-page-subtitle',
-				'id'    => '',
+				'id'    => ''
 			],
 			'message'   => __( 'Used to replace the tabbed content on the custom user dashboard.', 'sitecore' ),
 			'new_lines' => 'wpautop',
@@ -50,7 +50,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'acfe_permissions'      => '',
 			'message'       => __( '', 'sitecore' ),
@@ -78,7 +78,7 @@ acf_add_local_field_group( [
 			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id'    => '',
+				'id'    => ''
 			],
 			'acfe_repeater_stylised_button' => 1,
 			'collapsed'    => 'field_6436268c4dd60',
@@ -98,7 +98,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acfe_permissions' => '',
 					'placement'        => 'top',
@@ -115,7 +115,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'hide_field' => '',
 					'hide_label' => '',
@@ -146,7 +146,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acf-column-enabled'    => 0,
 					'acf-column-post_types' => '',
@@ -155,7 +155,7 @@ acf_add_local_field_group( [
 						1 => 'post_tag',
 						2 => 'link_category',
 						3 => 'acf-field-group-category',
-						4 => 'media_type',
+						4 => 'media_type'
 					],
 					'default_value' => '',
 					'placeholder'   => __( '', 'sitecore' ),
@@ -189,7 +189,7 @@ acf_add_local_field_group( [
 						1 => 'post_tag',
 						2 => 'link_category',
 						3 => 'acf-field-group-category',
-						4 => 'media_type',
+						4 => 'media_type'
 					],
 					'default_value' => '',
 					'placeholder'   => 'dashicons-admin-generic',
@@ -211,7 +211,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acf-column-enabled'    => 0,
 					'acf-column-post_types' => '',
@@ -220,7 +220,7 @@ acf_add_local_field_group( [
 						1 => 'post_tag',
 						2 => 'link_category',
 						3 => 'acf-field-group-category',
-						4 => 'media_type',
+						4 => 'media_type'
 					],
 					'default_value' => '',
 					'placeholder'   => __( '', 'sitecore' ),
@@ -239,7 +239,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acf-column-enabled'    => 0,
 					'acf-column-post_types' => '',
@@ -248,7 +248,7 @@ acf_add_local_field_group( [
 						1 => 'post_tag',
 						2 => 'link_category',
 						3 => 'acf-field-group-category',
-						4 => 'media_type',
+						4 => 'media_type'
 					],
 					'default_value' => 'read',
 					'placeholder'   => __( '', 'sitecore' ),
@@ -267,7 +267,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acfe_permissions' => '',
 					'placement'        => 'top',
@@ -284,7 +284,7 @@ acf_add_local_field_group( [
 					'wrapper'           => [
 						'width' => '',
 						'class' => '',
-						'id'    => '',
+						'id'    => ''
 					],
 					'acf-column-enabled'    => 0,
 					'acf-column-post_types' => '',
@@ -293,7 +293,7 @@ acf_add_local_field_group( [
 						1 => 'post_tag',
 						2 => 'link_category',
 						3 => 'acf-field-group-category',
-						4 => 'media_type',
+						4 => 'media_type'
 					],
 					'default_value' => '',
 					'tabs'          => 'all',
@@ -309,9 +309,9 @@ acf_add_local_field_group( [
 			[
 				'param'    => 'options_page',
 				'operator' => '==',
-				'value'    => 'acf-dashboard-tabs',
-			],
-		],
+				'value'    => 'acf-dashboard-tabs'
+			]
+		]
 	],
 	'menu_order'            => 0,
 	'position'              => 'acf_after_title',
@@ -329,5 +329,5 @@ acf_add_local_field_group( [
 	'acfe_autosync' => '',
 	'acfe_form'     => 0,
 	'acfe_meta'     => '',
-	'acfe_note'     => '',
+	'acfe_note'     => ''
 ] );
