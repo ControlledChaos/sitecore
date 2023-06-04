@@ -23,6 +23,13 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
+	// Disable Site Health in Dashboard Summary plugin.
+	if ( get_option( 'disable_site_health', false ) ) {
+		add_action( 'init', function() {
+			add_filter( 'ds_show_health_link', '__return_false' );
+		} );
+	}
+
 	add_action( 'init', $ns( 'ds_acf_tools_link' ) );
 }
 
@@ -90,10 +97,7 @@ function active_acf() {
  */
 function active_acf_pro() {
 
-	if (
-		class_exists( 'acf_pro' ) ||
-		is_plugin_active( 'advanced-custom-fields-pro/acf.php' )
-	) {
+	if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 		return true;
 	}
 	return false;
@@ -169,7 +173,7 @@ function has_acf() {
 function has_acf_pro() {
 
 	// Look for ACF PRO files and set as a variable.
-	$acf_pro = file_exists( SCP_PATH . 'includes/vendor/acf-pro/acf.php' );
+	$acf_pro = file_exists( SCP_PATH . 'includes/vendor/acf/acf.php' );
 
 	// Return true if the file is found.
 	if ( $acf_pro && class_exists( 'acf_pro' ) ) {
