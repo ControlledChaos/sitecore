@@ -385,7 +385,7 @@ function remove_menu_items() {
 }
 
 /**
- * Shoe in admin menu
+ * Show in admin menu
  *
  * @since  1.0.0
  * @param  array $args Array of arguments for registering a post type.
