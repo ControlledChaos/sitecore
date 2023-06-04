@@ -24,7 +24,7 @@ $avatar = get_avatar(
 
 $get_user_desc = get_user_option( 'description' );
 if ( ! empty( $get_user_desc ) || ctype_space( $get_user_desc ) ) {
-	$user_desc = wp_trim_words( $get_user_desc, 64, '&hellip;' );
+	$user_desc = $get_user_desc;
 } else {
 	$user_desc = __( 'As a user of this website you can include a bio/description which may be displayed to other users or to the public, depending on your user permissions, member plugins, and the active theme.', 'sitecore' );
 }
@@ -71,11 +71,8 @@ if ( ! empty( $get_user_desc ) || ctype_space( $get_user_desc ) ) {
 		<div id="dashboard-next-steps" class="dashboard-panel-column">
 
 			<h3><?php _e( 'Bio/Description', 'sitecore' ); ?></h3>
+			<?php echo wpautop( $user_desc, false ); ?>
 
-			<?php printf(
-				'<p>%s</p>',
-				$user_desc
-			); ?>
 			<p><a href="<?php echo admin_url( 'profile.php' ); ?>#wp-description-wrap"><?php _e( 'Edit Bio', 'sitecore' ); ?></a></p>
 		</div>
 
