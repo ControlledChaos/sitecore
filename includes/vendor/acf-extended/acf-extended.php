@@ -364,7 +364,7 @@ class ACFE{
      */
     function acf(){
 
-        return class_exists('ACF') && defined('ACF_PRO') && defined('ACF_VERSION') && version_compare(ACF_VERSION, '5.8', '>=');
+        return class_exists('ACF') && defined('ACF_VERSION') && version_compare(ACF_VERSION, '5.8', '>=');
 
     }
 
