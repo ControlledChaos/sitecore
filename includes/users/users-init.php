@@ -264,14 +264,14 @@ function remove_color_picker() {
 }
 
 /**
- *	Profile rich text editor
-	*
-	*	Add TinyMCE editor to replace the "Biographical Info" field in a user profile.
-	*
-	* @since  1.0.0
-	* @param  object $user An object with details about the current logged in user.
-	* @return string Return the editor and container markup.
-	*/
+ * Profile rich text editor
+ *
+ * Add TinyMCE editor to replace the "Biographical Info" field in a user profile.
+ *
+ * @since  1.0.0
+ * @param  object $user An object with details about the current logged in user.
+ * @return string Return the editor and container markup.
+ */
 function profile_editor( $user ) {
 
 	ob_start();
