@@ -273,7 +273,7 @@ class Plugin {
 		// Stop here if bundled is disabled.
 		if ( ! $this->use_bundled() ) {
 			return;
-		} elseif ( is_plugin_active( $this->upgrade_basename() ) ) {
+		} elseif ( $this->is_active() ) {
 			return;
 		}
 
