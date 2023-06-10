@@ -14,9 +14,12 @@ namespace SiteCore\Views\Admin;
 <div>
 	<p class="description"><?php _e( 'Meta data tags for SEO and embed display.', 'sitecore' ); ?></p>
 	<?php do_action( 'scp_before_meta_tags_settings' ); ?>
-	<?php
-	// settings_fields( 'meta-tags' );
-	// do_settings_sections( 'meta-tags' );
-	?>
+
+	<table class="form-table" role="presentation">
+		<?php
+		settings_fields( 'custom-content' );
+		do_settings_fields( 'custom-content', 'scp-options-meta-tags' );
+		?>
+	</table>
 	<?php do_action( 'scp_after_meta_tags_settings' ); ?>
 </div>

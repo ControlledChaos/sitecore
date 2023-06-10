@@ -125,7 +125,10 @@ function subtitle() {
 function description() {
 
 	// Site description (tagline).
-	$site_description = wp_strip_all_tags( get_bloginfo( 'description' ) );
+	$site_desc = wp_strip_all_tags( get_bloginfo( 'description' ) );
+
+	// Get options.
+	$blog_desc = get_option( 'meta_description_blog_index', '' );
 
 	// Get the manual excerpt from the metabox.
 	$manual_excerpt = '';
@@ -141,16 +144,57 @@ function description() {
 	// Auto excerpt from content as a fallback.
 	$auto_excerpt = wp_strip_all_tags( wp_trim_words( get_the_content(), 40, '&hellp;' ) );
 
-	$search = wp_strip_all_tags(
-		sprintf(
-			'%s %s',
-			__( 'Showing results for', 'sitecore' ),
-			get_search_query()
+	$search = apply_filters(
+		'meta_description_search_results',
+		wp_strip_all_tags(
+			sprintf(
+				'%s %s',
+				__( 'Showing search results for', 'sitecore' ),
+				get_search_query()
+			)
 		)
 	);
 
-	if ( ! empty( $site_description ) && ( is_front_page() || is_home() ) ) {
-		$description = $site_description;
+	if ( is_home() ) {
+
+		if ( 'posts' == get_option( 'show_on_front' ) ) {
+
+			if ( ! empty( $blog_desc && ! ctype_space( $blog_desc ) ) ) {
+				$description = $blog_desc;
+
+			} elseif ( ! empty( $site_desc && ! ctype_space( $site_desc ) ) ) {
+				$description = $site_desc;
+			}
+
+		} elseif ( ! empty( get_option( 'page_for_posts' ) ) ) {
+
+			if ( ! empty( $blog_desc && ! ctype_space( $blog_desc ) ) ) {
+				$description = $blog_desc;
+
+			} elseif ( has_excerpt( get_option( 'page_for_posts' ) ) ) {
+				$manual_excerpt = get_post( get_option( 'page_for_posts' ) )->post_excerpt;
+
+				if ( ! ctype_space( $manual_excerpt ) ) {
+					$description = wp_strip_all_tags( $manual_excerpt );
+				}
+
+			} elseif ( ! empty( $site_desc && ! ctype_space( $site_desc ) ) ) {
+				$description = $site_desc;
+			}
+		}
+
+	} elseif ( 'page' == get_option( 'show_on_front' ) && is_front_page() ) {
+
+		if (
+			'excerpt' === get_option( 'meta_description_front_page' ) &&
+			has_excerpt( get_option( 'page_on_front' ) ) &&
+			! ctype_space( $manual_excerpt )
+		) {
+			$description = wp_strip_all_tags( $manual_excerpt );
+
+		} elseif ( ! empty( $site_desc ) && ! ctype_space( $site_desc ) ) {
+			$description = $site_desc;
+		}
 
 	} elseif ( is_search() ) {
 		$description = $search;
@@ -406,7 +450,8 @@ function post_genre() {
  * @return array Returns an empty, filtered array.
  */
 function get_keywords() {
-	return apply_filters( 'scp_meta_data_get_keywords', [] );
+	$keywords = get_option( 'meta_site_keywords', '' );
+	return apply_filters( 'scp_meta_data_get_keywords', [ $keywords ] );
 }
 
 /**
