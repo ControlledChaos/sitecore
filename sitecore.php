@@ -20,6 +20,7 @@
  * Requires PHP:      5.4
  * Requires at least: 4.9
  * Tested up to:      6.2.2
+ * Network:           false
  */
 
 namespace SiteCore;
