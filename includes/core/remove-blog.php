@@ -85,6 +85,11 @@ function setup() {
 	add_filter( 'feed_links_show_comments_feed', '__return_false' );
 	add_filter( 'pre_option_default_pingback_flag', '__return_zero' );
 	add_filter( 'get_comments_number', $ns( 'comments_number' ) );
+
+	// Dashboard Summary plugin.
+	if ( is_plugin_active( 'dashboard-summary/dashboard-summary.php' ) ) {
+		add_filter( 'ds_display_posts', '__return_false' );
+	}
 }
 
 /**
