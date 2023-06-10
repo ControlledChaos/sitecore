@@ -73,7 +73,10 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			]
 		];
 
-		if ( ! get_option( 'remove_blog', false ) ) {
+		if (
+			! get_option( 'remove_blog', false ) &&
+			'posts' === get_option( 'show_on_front' )
+		) {
 			$fields = array_merge( $fields, $blog_desc );
 		}
 

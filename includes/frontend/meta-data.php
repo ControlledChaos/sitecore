@@ -168,10 +168,7 @@ function description() {
 
 		} elseif ( ! empty( get_option( 'page_for_posts' ) ) ) {
 
-			if ( ! empty( $blog_desc && ! ctype_space( $blog_desc ) ) ) {
-				$description = $blog_desc;
-
-			} elseif ( has_excerpt( get_option( 'page_for_posts' ) ) ) {
+			if ( has_excerpt( get_option( 'page_for_posts' ) ) ) {
 				$manual_excerpt = get_post( get_option( 'page_for_posts' ) )->post_excerpt;
 
 				if ( ! ctype_space( $manual_excerpt ) ) {
