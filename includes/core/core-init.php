@@ -37,6 +37,12 @@ function setup() {
 		Remove_Blog\setup();
 	}
 
+	// Add taxonomies to the page post type.
+	add_action( 'init', $ns( 'page_taxonomies' ) );
+
+	// Add excerpts to the page post type.
+	add_action( 'init', $ns( 'add_page_excerpts' ) );
+
 	// Allow link manager.
 	if ( get_option( 'enable_link_manager', false ) ) {
 		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
@@ -109,6 +115,29 @@ function classes() {
 		$sample_tax = new Core_Class\Register_Sample_Tax;
 		$sample_tax->add_tax();
 	}
+}
+
+/**
+ * Page taxonomies
+ *
+ * Adds taxonomies to the page post type.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function page_taxonomies() {
+	register_taxonomy_for_object_type( 'category', 'page' );
+	register_taxonomy_for_object_type( 'post_tag', 'page' );
+}
+
+/**
+ * Add excerpts to `page` post type
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function add_page_excerpts() {
+	add_post_type_support( 'page', 'excerpt' );
 }
 
 /**
