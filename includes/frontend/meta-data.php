@@ -543,6 +543,27 @@ function site_logo( $html = null ) {
 }
 
 /**
+ * Default copyright
+ *
+ * @since  1.0.0
+ * @return string Returns the text of the default copyright.
+ */
+function copyright_default() {
+
+	$copy    = '%copy%';
+	$year    = '%year%';
+	$name    = '%name%';
+	$default = sprintf(
+		'%s%s %s. %s',
+		$copy,
+		$year,
+		$name,
+		__( 'All rights reserved.', 'sitecore' )
+	);
+	return apply_filters( 'scp_meta_copyright_default', $default );
+}
+
+/**
  * Copyright
  *
  * @since  1.0.0
@@ -550,11 +571,20 @@ function site_logo( $html = null ) {
  */
 function copyright() {
 
-	$copy = sprintf(
-		__( '&copy; Copyright %s %s. All rights reserved.' ),
-		get_the_time( 'Y' ),
-		get_bloginfo( 'name' )
-	);
+	$option  = get_option( 'meta_site_copyright', '' );
+	$default = copyright_default();
+
+	if ( ! empty( $option ) && ! ctype_space( $option ) ) {
+		$text = $option;
+	} else {
+		$text = $default;
+	}
+
+	$text = str_replace( '%copy%', '&copy;', $text );
+	$text = str_replace( '%year%', get_the_time( 'Y' ), $text );
+	$text = str_replace( '%name%', get_bloginfo( 'name' ), $text );
+	$copy = $text;
+
 	return apply_filters( 'scp_meta_data_copyright', $copy );
 }
 

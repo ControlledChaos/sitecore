@@ -10,6 +10,8 @@
 
 namespace SiteCore\Classes\Settings;
 
+use function SiteCore\Meta_Tags\copyright_default;
+
 class Settings_Fields_Meta_Tags extends Settings_Fields {
 
 	/**
@@ -80,6 +82,22 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			$fields = array_merge( $fields, $blog_desc );
 		}
 
+		$more_fields = [
+			[
+				'id'       => 'meta_site_copyright',
+				'title'    => __( 'Site Copyright', 'sitecore' ),
+				'callback' => [ $this, 'meta_site_copyright_callback' ],
+				'page'     => 'custom-content',
+				'section'  => 'scp-options-meta-tags',
+				'type'     => 'text',
+				'args'     => [
+					'description' => null,
+					'class'       => 'meta-tags-field'
+				]
+			]
+		];
+		$fields = array_merge( $fields, $more_fields );
+
 		parent :: __construct(
 			null,
 			$fields
@@ -148,6 +166,26 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 
 		$option = wp_strip_all_tags( get_option( 'meta_description_blog_index' ), false );
 		return apply_filters( 'scp_meta_description_blog_index', $option );
+	}
+
+	/**
+	 * Sanitize Site Copyright field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function meta_site_copyright_sanitize() {
+
+		$default = copyright_default();
+		$option  = wp_strip_all_tags( get_option( 'meta_site_copyright' ), false );
+
+		if ( ! empty( $option ) ) {
+			$option = $option;
+		} else {
+			$option = $default;
+		}
+		return apply_filters( 'scp_meta_site_copyright', $option );
 	}
 
 	/**
@@ -258,6 +296,42 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		$html .= sprintf(
 			__( '<p class="description">Description tag for %s index pages.</p>', 'sitecore' ),
 			$this->posts_name()
+		);
+		$html .= '</fieldset>';
+
+		echo $html;
+	}
+
+	/**
+	 * Site Copyright field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function meta_site_copyright_callback() {
+
+		$fields   = $this->settings_fields;
+		$field_id = 'meta_site_copyright';
+		$option   = $this->meta_site_copyright_sanitize();
+
+		$html = '<fieldset>';
+		$html .= sprintf(
+			'<legend class="screen-reader-text">%s</legend>',
+			__( 'Site Copyright', 'sitecore' )
+		);
+		$html .= sprintf(
+			'<input id="%s" class="regular-text" name="%s" type="text" value="%s" placeholder="%s" />',
+			$field_id,
+			$field_id,
+			$option,
+			__( 'Enter text&hellip;', 'sitecore' )
+		);
+		$html .= sprintf(
+			__( '<p class="description">Use %s for the copyright symbol. Use %s for the current year. Use %s for the website name.</p>', 'sitecore' ),
+			'<code style="user-select: all">%copy%</code>',
+			'<code style="user-select: all">%year%</code>',
+			'<code style="user-select: all">%name%</code>'
 		);
 		$html .= '</fieldset>';
 
