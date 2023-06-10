@@ -1,6 +1,6 @@
 <?php
 /**
- * Content settings sample tab
+ * Content settings tab
  *
  * @package    Site_Core
  * @subpackage Views

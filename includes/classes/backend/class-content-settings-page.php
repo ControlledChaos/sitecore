@@ -120,6 +120,18 @@ class Content_Settings_Page extends Add_Page {
 			'content'    => '',
 			'callback'   => [ $this, 'settings_tab' ]
 		] );
+
+		if ( get_option( 'enable_meta_tags', true ) ) :
+			$this->add_content_tab( [
+				'capability' => 'read',
+				'id'         => 'content-settings-meta-tags',
+				'tab'        => __( 'Meta', 'sitecore' ),
+				'heading'    => __( 'Frontend Meta Tags', 'sitecore' ),
+				'icon'       => 'dashicons-share1',
+				'content'    => '',
+				'callback'   => [ $this, 'meta_tags_tab' ]
+			] );
+			endif;
 	}
 
 	/**
@@ -142,5 +154,16 @@ class Content_Settings_Page extends Add_Page {
 	 */
 	public function settings_tab() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-content.php';
+	}
+
+	/**
+	 * Meta tags callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function meta_tags_tab() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-content-meta-tags.php';
 	}
 }

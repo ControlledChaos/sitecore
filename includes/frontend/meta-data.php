@@ -29,30 +29,14 @@ function setup() {
 	};
 
 	// Print meta tags to the head.
-	add_action( 'wp_head', $ns( 'print_meta_tags' ) );
+	if ( get_option( 'enable_meta_tags', true ) ) {
+		add_action( 'wp_head', $ns( 'print_meta_tags' ) );
+	}
 
 	// Print structured data scripts to the head.
-	add_action( 'wp_head', $ns( 'print_structured_data' ) );
-}
-
-/**
- * Use meta tags
- *
- * @since  1.0.0
- * @return boolean
- */
-function use_meta_tags() {
-	return apply_filters( 'scp_use_meta_tags', true );
-}
-
-/**
- * Use structured data
- *
- * @since  1.0.0
- * @return boolean
- */
-function use_structured_data() {
-	return apply_filters( 'scp_use_structured_data', true );
+	if ( get_option( 'enable_structured_data', true ) ) {
+		add_action( 'wp_head', $ns( 'print_structured_data' ) );
+	}
 }
 
 /**
@@ -557,11 +541,6 @@ function word_count() {
  */
 function print_meta_tags() {
 
-	// Stop if `use_meta_tags` returns false.
-	if ( ! use_meta_tags() ) {
-		return;
-	}
-
 	$tags  = meta_tags();
 	$tags .= schema_tags();
 	$tags .= open_graph_tags();
@@ -578,11 +557,6 @@ function print_meta_tags() {
  * @return void
  */
 function print_structured_data() {
-
-	// Stop if `use_structured_data` returns false.
-	if ( ! use_structured_data() ) {
-		return;
-	}
 
 	$data = null;
 
