@@ -811,8 +811,29 @@ class Add_Page {
 					// If the tab has sub-tabs.
 					if ( ! empty( $sub_tabs ) ) :
 
+						/**
+						 * Wrapping elements attributes
+						 *
+						 * Different styles used if only one tab is registered.
+						 * Data attribute only if more than one tab.
+						 */
+						if ( is_array( $sub_tabs ) && count( $sub_tabs ) > 1 ) {
+							$wrap_class    = 'registered-content-wrap admin-tabs';
+							$content_class = 'registered-content tab-content';
+						} else {
+							$wrap_class    = 'registered-content-wrap';
+							$content_class = 'registered-content';
+						}
+
 					?>
 					<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="<?php echo $hashtags; ?>" >
+
+						<?php
+
+						// Print the tabs list if more than one tab is registered.
+						if ( count( $sub_tabs ) > 1 ) :
+
+						?>
 
 						<ul class="admin-tabs-list hide-if-no-js">
 
@@ -852,6 +873,7 @@ class Add_Page {
 					endforeach; // For each tab.
 
 					echo '</ul>';
+					endif; // If more than one sub-tab.
 
 					// Content for each sub tab of the parent tab.
 					foreach ( $sub_tabs as $sub_tab ) :
