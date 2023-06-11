@@ -41,7 +41,6 @@ class Sample_Page extends Add_Page {
 			'menu_slug'     => 'sample-page',
 			'icon_url'      => 'dashicons-welcome-learn-more',
 			'position'      => 3,
-			'tabs_hashtags' => true,
 			'add_help'      => true
 		];
 
@@ -98,6 +97,29 @@ class Sample_Page extends Add_Page {
 			'tab'       => __( 'Two', 'sitecore' ),
 			'heading'   => __( 'Sample Sub-Content Two', 'sitecore' ),
 			'icon'      => 'dashicons-carrot',
+			'content'   => sprintf(
+				'<p style="color: #d00"><strong>%s</strong></p>',
+				__( 'An extra paragraph added by the content key.', 'sitecore' )
+			),
+			'callback'  => [ $this, 'sample_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'id'        => 'sample-sub-three',
+			'parent_id' => 'sample-two',
+			'tab'       => __( 'Three', 'sitecore' ),
+			'heading'   => __( 'Sample Sub-Content Three', 'sitecore' ),
+			'icon'      => 'dashicons-beer',
+			'content'   => '',
+			'callback'  => [ $this, 'sample_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'id'        => 'sample-sub-four',
+			'parent_id' => 'sample-two',
+			'tab'       => __( 'Four', 'sitecore' ),
+			'heading'   => __( 'Sample Sub-Content Four', 'sitecore' ),
+			'icon'      => 'dashicons-album',
 			'content'   => '',
 			'callback'  => [ $this, 'sample_tab' ]
 		] );
