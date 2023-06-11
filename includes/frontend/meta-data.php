@@ -447,8 +447,15 @@ function post_genre() {
  * @return array Returns an empty, filtered array.
  */
 function get_keywords() {
-	$keywords = get_option( 'meta_site_keywords', '' );
-	return apply_filters( 'scp_meta_data_get_keywords', [ $keywords ] );
+
+	$option = get_option( 'meta_site_keywords', '' );
+
+	if ( strlen( $option ) == 0 ) {
+		return '';
+	}
+	$keywords = explode( "\n", str_replace( "\r", "", $option ) );
+
+	return $keywords;
 }
 
 /**
