@@ -518,10 +518,48 @@ class Add_Page {
 
 		foreach ( $priorities as $list ) {
 			foreach ( $list as $tab ) {
-				$sorted[ $tab['id'] ] = $tab;
+				if ( is_null( $tab['parent_id'] ) ) {
+					$sorted[ $tab['id'] ] = $tab;
+				}
 			}
 		}
 		return $sorted;
+	}
+
+	/**
+	 * Gets the content sub-tabs registered for the screen.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $id The ID of the parent tab.
+	 * @return array Content tabs with arguments.
+	 */
+	public function get_content_sub_tabs( $id ) {
+
+		// Get content tabs for the page.
+		$tabs = $this->content_tabs;
+
+		// Set up an array of sub-tabs.
+		$sub_tabs = [];
+
+		// Run through tabs for the page.
+		foreach ( $tabs as $tab ) {
+
+			// Weed out tabs without a parent ID set.
+			if ( ! is_null( $tab['parent_id'] ) ) {
+
+				/**
+				 * If the tab's parent ID value matches
+				 * that of the function instance.
+				 */
+				if ( $id == $tab['parent_id'] ) {
+					$sub_tabs[] = $this->get_content_tab( $tab['id'] );
+				}
+			}
+		}
+
+		// Return the sub-tabs for the parent tab.
+		return $sub_tabs;
 	}
 
 	/**
@@ -574,8 +612,7 @@ class Add_Page {
 
 		$defaults = [
 			'id'             => null,
-			'id_before'      => null,
-			'id_after'       => null,
+			'parent_id'      => null,
 			'url'            => null,
 			'capability'     => 'read',
 			'tab'            => null,
@@ -585,6 +622,8 @@ class Add_Page {
 			'class'          => 'content-tab',
 			'icon'           => null,
 			'content'        => null,
+			'sub_tabs_top'   => false,
+			'sub_tabs_only'  => false,
 			'settings'       => '',
 			'hide-if-no-js'  => false,
 			'callback'       => null,
@@ -642,106 +681,237 @@ class Add_Page {
 	 */
 	public function render_content_tabs() {
 
+		// Get the primary tabs for this page.
 		$tabs = $this->get_content_tabs();
 
+		// Whether to add hashtags to the URL when switching tabs.
+		$hashtags = 'false';
 		if ( true == $this->page_options['tabs_hashtags'] ) {
 			$hashtags = 'true';
-		} else {
-			$hashtags = 'false';
 		}
 
+		/**
+		 * Wrapping elements attributes
+		 *
+		 * Different styles used if only one tab is registered.
+		 * Data attribute only if more than one tab.
+		 */
 		if ( is_array( $tabs ) && count( $tabs ) > 1 ) {
-
-			$tabbed         = ' data-tabbed="tabbed"';
-			$wrap_class     = 'registered-content-wrap admin-tabs';
-			$content_class  = 'registered-content tab-content';
-
+			$tabbed        = 'data-tabbed="tabbed"';
+			$wrap_class    = 'registered-content-wrap admin-tabs';
+			$content_class = 'registered-content tab-content';
 		} else {
-			$tabbed         = '';
-			$wrap_class     = 'registered-content-wrap';
-			$content_class  = 'registered-content';
+			$tabbed        = '';
+			$wrap_class    = 'registered-content-wrap';
+			$content_class = 'registered-content';
 		}
 
 		?>
 		<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="<?php echo $hashtags; ?>" >
 
-			<?php if ( count( $tabs ) > 1 ) : ?>
+			<?php
+
+			// Print the tabs list if more than one tab is registered.
+			if ( count( $tabs ) > 1 ) :
+
+			?>
 
 			<ul class="admin-tabs-list hide-if-no-js">
+
 			<?php
+
+			// Linked list item for each tab.
 			foreach ( $tabs as $tab ) :
 
+				// Don't print the tab if the user is not allowed to view.
 				if ( current_user_can( $tab['capability'] ) ) :
 
-					$content_id  = $tab['id_before'] . $tab['id'] . $tab['id_after'];
-					$content_url = $tab['url'];
-
+					// If the tab is simply a link to another URL.
 					if ( ! empty( $tab['url'] ) ) {
 						$href = $tab['url'];
+
+					// If the link is to a content block on the page.
 					} else {
-						$href = "#$content_id";
+						$href = '#' . $tab['id'];
 					}
 
+					// Add an inline icon if one is set for the tab.
+					$icon = null;
 					if ( ! empty( $tab['icon'] ) ) {
 						$icon = sprintf(
 							'<span class="content-tab-icon dashicons %1s"></span> ',
 							$tab['icon']
 						);
-					} else {
-						$icon = null;
 					}
+
+					// Print the linked list item with or without icon.
 					?>
 						<li class="<?php echo $tab['class']; ?>">
-							<a href="<?php echo esc_url( $href ); ?>" aria-controls="<?php echo esc_attr( $content_id ); ?>">
+							<a href="<?php echo esc_url( $href ); ?>" aria-controls="<?php echo esc_attr( $tab['id'] ); ?>">
 								<?php echo $icon . $tab['tab']; ?>
 							</a>
 					<?php
-				endif;
-			endforeach;
+				endif; // If capability.
+			endforeach; // For each tab.
+
 			?>
-
 			</ul>
-
-			<?php endif; ?>
-
 			<?php
-			foreach ( $this->get_content_tabs() as $tab ) :
 
+			endif; // If tabs count is more than one.
+
+			// Content for each tab.
+			foreach ( $tabs as $tab ) :
+
+				// Add hide class if true.
 				if ( true == $tab['hide-if-no-js'] ) {
 					$content_class .= ' hide-if-no-js';
 				}
 
+				// Get sub-tabs for the tab ID.
+				$sub_tabs = $this->get_content_sub_tabs( $tab['id'] );
 
+				// Don't print the content if the user is not allowed to view.
 				if ( current_user_can( $tab['capability'] ) ) :
 
-					$content_id = $tab['id_before'] . $tab['id'] . $tab['id_after'];
-
-					if ( ! empty( $tab['heading'] ) ) {
-						$heading_before = $tab['heading_before'];
-						$heading_after  = $tab['heading_after'];
-					} else {
-						$heading_before = '<h2>';
-						$heading_after  = '</h2>';
-					}
+				// Wrap content with another tabs switcher element.
 				?>
-				<div id="<?php echo esc_attr( $content_id ); ?>" class="<?php echo $content_class; ?>">
+				<div id="<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo $content_class; ?>">
 
-					<?php echo $tab['heading_before'] . $tab['heading'] . $tab['heading_after']; ?>
 					<?php
 
-					// Development hook.
-					do_action( "content_{$tab['id']}_tab_before" );
+					// Print the tab heading.
+					echo $tab['heading_before'] . $tab['heading'] . $tab['heading_after'];
 
-					// Print tab content, apply development filter.
-					echo apply_filters( "content_{$tab['id']}_tab", $tab['content'] );
+					/**
+					 * Default tab content
+					 *
+					 * Prints the content and callback if the tab has
+					 * no sub-tabs or it has sub-tabs, sub-tabs are not
+					 * set to display at top, and not set for sub-tabs only.
+					 */
+					if ( empty( $sub_tabs ) || ( $sub_tabs && ! $tab['sub_tabs_top'] && ! $tab['sub_tabs_only'] ) ) :
 
-					// If it exists, fire tab callback.
-					if ( ! empty( $tab['callback'] ) ) {
-						call_user_func_array( $tab['callback'], [ $this, $tab ] );
-					}
+						// Development hook.
+						do_action( "content_{$tab['id']}_tab_before" );
 
-					// Development hook.
-					do_action( "content_{$tab['id']}_tab_after" );
+						// Print tab content, apply development filter.
+						echo apply_filters( "content_{$tab['id']}_tab", $tab['content'] );
+
+						// If it exists, fire tab callback.
+						if ( ! empty( $tab['callback'] ) ) {
+							call_user_func_array( $tab['callback'], [ $this, $tab ] );
+						}
+
+						// Development hook.
+						do_action( "content_{$tab['id']}_tab_after" );
+
+					endif;
+
+					// If the tab has sub-tabs.
+					if ( ! empty( $sub_tabs ) ) :
+
+					?>
+					<div class="<?php echo $wrap_class; ?>" <?php echo $tabbed; ?> data-tabdeeplinking="<?php echo $hashtags; ?>" >
+
+						<ul class="admin-tabs-list hide-if-no-js">
+
+						<?php
+
+						// Linked tab for each sub tab of the parent tab.
+						foreach ( $sub_tabs as $sub_tab ) :
+
+						// If the tab is simply a link to another URL.
+						if ( ! empty( $sub_tab['url'] ) ) {
+							$href = $sub_tab['url'];
+
+						// If the link is to a sub-content block in the parent content.
+						} else {
+							$href = '#' . $sub_tab['id'];
+						}
+
+						// Add an inline icon if one is set for the tab.
+						$icon = null;
+						if ( ! empty( $sub_tab['icon'] ) ) {
+							$icon = sprintf(
+								'<span class="content-tab-icon dashicons %1s"></span> ',
+								$sub_tab['icon']
+							);
+						}
+
+						// Don't print the tab if the user is not allowed to view.
+						if ( current_user_can( $sub_tab['capability'] ) ) :
+
+						?>
+							<li class="<?php echo $sub_tab['class']; ?>">
+								<a href="<?php echo esc_url( $href ); ?>" aria-controls="<?php echo esc_attr( $sub_tab['id'] ); ?>">
+									<?php echo $icon . $sub_tab['tab']; ?>
+								</a>
+						<?php
+						endif; // If capability.
+					endforeach; // For each tab.
+
+					echo '</ul>';
+
+					// Content for each sub tab of the parent tab.
+					foreach ( $sub_tabs as $sub_tab ) :
+
+					// Don't print the content if the user is not allowed to view.
+					if ( current_user_can( $sub_tab['capability'] ) ) :
+
+					?>
+						<div id="<?php echo $sub_tab['id']; ?>" class="<?php echo $content_class; ?>">
+							<?php echo $sub_tab['heading_before'] . $sub_tab['heading'] . $sub_tab['heading_after']; ?>
+							<?php
+
+							// Development hook.
+							do_action( "content_{$sub_tab['id']}_sub_tab_before" );
+
+							// Print sub-tab content, apply development filter.
+							echo apply_filters( "content_{$sub_tab['id']}_sub_tab", $sub_tab['content'] );
+
+							// If it exists, fire sub-tab callback.
+							if ( ! empty( $sub_tab['callback'] ) ) {
+								call_user_func_array( $sub_tab['callback'], [ $this, $sub_tab ] );
+							}
+
+							// Development hook.
+							do_action( "content_{$sub_tab['id']}_sub_tab_after" );
+
+							?>
+						</div>
+					<?php
+					endif; // If capability.
+					endforeach; // For each sub-tab.
+
+					echo '</div>';
+
+					endif; // If tab has sub-tabs.
+
+					/**
+					 * Alternate tab content
+					 *
+					 * Prints the content and callback if the tab has
+					 * sub-tabs, sub-tabs are set to display at top,
+					 * and not set for sub-tabs only.
+					 */
+					if ( $sub_tabs && $tab['sub_tabs_top'] && ! $tab['sub_tabs_only'] ) :
+
+						// Development hook.
+						do_action( "content_{$tab['id']}_tab_before" );
+
+						// Print tab content, apply development filter.
+						echo apply_filters( "content_{$tab['id']}_tab", $tab['content'] );
+
+						// If it exists, fire tab callback.
+						if ( ! empty( $tab['callback'] ) ) {
+							call_user_func_array( $tab['callback'], [ $this, $tab ] );
+						}
+
+						// Development hook.
+						do_action( "content_{$tab['id']}_tab_after" );
+
+					endif;
 
 					?>
 				</div>
