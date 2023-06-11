@@ -763,13 +763,30 @@ class Add_Page {
 			// Content for each tab.
 			foreach ( $tabs as $tab ) :
 
-				// Add hide class if true.
-				if ( true == $tab['hide-if-no-js'] ) {
-					$content_class .= ' hide-if-no-js';
-				}
-
 				// Get sub-tabs for the tab ID.
 				$sub_tabs = $this->get_content_sub_tabs( $tab['id'] );
+
+				// Add has sub-tabs class if so.
+				if ( ! empty( $sub_tabs ) ) {
+					$content_class .= ' has-sub-tabs';
+				}
+
+				// Sub-tabs only class.
+				if ( ! empty( $sub_tabs ) && true == $tab['sub_tabs_only'] ) {
+					$content_class .= ' sub-tabs-only';
+				}
+
+				// Add a tabs position class.
+				if ( ! empty( $sub_tabs ) && true == $tab['sub_tabs_top'] && false == $tab['sub_tabs_only'] ) {
+					$content_class .= ' sub-tabs-top';
+				} elseif ( ! empty( $sub_tabs ) && false == $tab['sub_tabs_only'] ) {
+					$content_class .= ' sub-tabs-bottom';
+				}
+
+				// Add hide class if true.
+				if ( ! empty( $sub_tabs ) && true == $tab['hide-if-no-js'] ) {
+					$content_class .= ' hide-if-no-js';
+				}
 
 				// Don't print the content if the user is not allowed to view.
 				if ( current_user_can( $tab['capability'] ) ) :
