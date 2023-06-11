@@ -64,12 +64,13 @@ class Sample_Page extends Add_Page {
 	public function tabs() {
 
 		$this->add_content_tab( [
-			'id'         => 'sample-one',
-			'tab'        => __( 'One', 'sitecore' ),
-			'heading'    => __( 'Sample Content One', 'sitecore' ),
-			'icon'       => 'dashicons-admin-home',
-			'content'    => '',
-			'callback'   => [ $this, 'sample_tab' ]
+			'id'            => 'sample-one',
+			'tab'           => __( 'One', 'sitecore' ),
+			'heading'       => __( 'Sample Content One', 'sitecore' ),
+			'icon'          => 'dashicons-admin-home',
+			'content'       => '',
+			'sub_tabs_only' => true,
+			'callback'      => [ $this, 'sample_tab' ]
 		] );
 
 		$this->add_content_tab( [
@@ -79,6 +80,26 @@ class Sample_Page extends Add_Page {
 			'icon'       => 'dashicons-admin-generic',
 			'content'    => '',
 			'callback'   => [ $this, 'sample_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'id'        => 'sample-sub-one',
+			'parent_id' => 'sample-one',
+			'tab'       => __( 'One', 'sitecore' ),
+			'heading'   => __( 'Sample Sub-Content One', 'sitecore' ),
+			'icon'      => 'dashicons-drumstick',
+			'content'   => '',
+			'callback'  => [ $this, 'sample_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'id'        => 'sample-sub-two',
+			'parent_id' => 'sample-one',
+			'tab'       => __( 'Two', 'sitecore' ),
+			'heading'   => __( 'Sample Sub-Content Two', 'sitecore' ),
+			'icon'      => 'dashicons-carrot',
+			'content'   => '',
+			'callback'  => [ $this, 'sample_tab' ]
 		] );
 	}
 
