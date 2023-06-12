@@ -441,41 +441,54 @@ function post_genre() {
 /**
  * Get keywords
  *
- * Development function.
+ * Converts each line of a textarea field
+ * to an array value.
  *
  * @since  1.0.0
- * @return array Returns an empty, filtered array.
+ * @return mixed Returns a simple array or
+ *               an empty string.
  */
 function get_keywords() {
 
+	// Get the content of the keywords option.
 	$option = get_option( 'meta_site_keywords', '' );
 
-	if ( strlen( $option ) == 0 ) {
+	// Return an empty string if the option is empty or only contains spaces.
+	if ( 0 == strlen( $option ) || ctype_space( $option ) ) {
 		return '';
 	}
+
+	/**
+	 * Convert each new line of the option to an array value,
+	 * removing any carriage return entities.
+	 */
 	$keywords = explode( "\n", str_replace( "\r", "", $option ) );
 
+	// Return an array of keywords or phrases.
 	return $keywords;
 }
 
 /**
  * Keywords
  *
- * Development function.
+ * Converts the array of keywords or phrases
+ * to a comma-separated string.
  *
  * @since  1.0.0
- * @return string Returns a filtered string of keywords.
+ * @return string Returns a comma-separated string of
+ *                keywords or phrases, or an empty string.
  */
 function keywords() {
 
 	// Get keywords.
 	$keywords = get_keywords();
 
-	// Separate keywords with commas.
+	// Convert keywords array to a comma-separated string.
 	if ( is_array( $keywords ) ) {
 		$keywords = implode( ', ', $keywords );
 	}
 
+	// Return the comma-separated string of keywords or empty.
 	return apply_filters( 'scp_meta_data_keywords', $keywords );
 }
 
