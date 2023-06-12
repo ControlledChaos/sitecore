@@ -33,6 +33,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 				'type'     => 'textarea',
 				'args'     => [
 					'description' => null,
+					'label_for'   => 'meta_site_keywords',
 					'class'       => 'meta-tags-field'
 				]
 			]
@@ -70,6 +71,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 				'type'     => 'text',
 				'args'     => [
 					'description' => null,
+					'label_for'   => 'meta_description_blog_index',
 					'class'       => 'meta-tags-field'
 				]
 			]
@@ -92,6 +94,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 				'type'     => 'text',
 				'args'     => [
 					'description' => null,
+					'label_for'   => 'meta_site_copyright',
 					'class'       => 'meta-tags-field'
 				]
 			]
@@ -207,6 +210,10 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			__( 'Site Keywords', 'sitecore' )
 		);
 		$html .= sprintf(
+			'<p>%s</p>',
+			__( 'Add one keyword or phrases per line.', 'sitecore' )
+		);
+		$html .= sprintf(
 			'<textarea id="%s" name="%s" rows="5" cols="50">%s</textarea>',
 			$field_id,
 			$field_id,
@@ -214,7 +221,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		);
 		$html .= sprintf(
 			'<p class="description">%s</p>',
-			__( 'Add one keyword or phrases per line. The keywords meta tag will not print if this field is left empty.', 'sitecore' )
+			__( 'The keywords meta tag will not print if this field is left empty.', 'sitecore' )
 		);
 		$html .= '</fieldset>';
 
