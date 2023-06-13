@@ -532,13 +532,35 @@ function image() {
 
 	global $post;
 
-	// Use the featured image on singular pages if there is one.
-	if ( is_singular() && has_post_thumbnail() ) {
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'meta-image', [ 1280, 720 ], true, '' );
+	$default_image = apply_filters( 'scp_default_meta_image_blog_index', '' );
+	$index_image   = get_option( 'meta_image_blog_index', '' );
+	$archive_image = get_option( 'meta_image_archive', '' );
+
+	if ( has_image_size( 'meta-image' ) ) {
+		$size = 'meta-image';
+	} else {
+		$size = 'large';
+	}
+
+	$src = $default_image;
+	if ( is_home() && 'posts' === get_option( 'show_on_front' ) ) {
+
+		if ( ! empty( $index_image ) ) {
+			$image = wp_get_attachment_image_src( $index_image, $size, false );
+			$src   = $image[0];
+		}
+
+	} elseif ( is_archive() ) {
+
+		if ( ! empty( $archive_image ) ) {
+			$image = wp_get_attachment_image_src( $archive_image, $size, false );
+			$src   = $image[0];
+		}
+
+	} elseif ( is_singular() && has_post_thumbnail() ) {
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size, [ 1280, 720 ], true, '' );
 		$src   = $image[0];
 
-	} else {
-		$src = '';
 	}
 	return apply_filters( 'scp_meta_data_image', $src );
 }

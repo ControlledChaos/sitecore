@@ -166,4 +166,134 @@ class Content_Settings_Page extends Add_Page {
 	public function meta_tags_tab() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-content-meta-tags.php';
 	}
+
+	/**
+	 * Enqueue page scripts
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_enqueue_scripts() {
+		wp_enqueue_media();
+	}
+
+	/**
+	 * Print page scripts
+	 *
+	 * Hooks into the page slug (suffix).
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function admin_print_scripts() {
+
+		wp_print_scripts( 'media-upload' );
+
+		?>
+		<script type="text/javascript">
+		jQuery(document).ready( function($) {
+
+			var blog_uploader;
+			$( '#meta-image-blog-index-upload-button' ).click( function(e) {
+				e.preventDefault();
+
+				// If the uploader object has already been created, reopen the dialog.
+				if ( blog_uploader ) {
+					blog_uploader.open();
+					return;
+				}
+				// Extend the wp.media object.
+				blog_uploader = wp.media.frames.file_frame = wp.media( {
+					title  : "<?php _e( 'Choose Image', 'sitecore' ); ?>",
+					button : {
+						text : "<?php _e( 'Choose Image', 'sitecore' ); ?>"
+					},
+					library : {
+						type : 'image'
+					},
+					multiple : false,
+					close    : true
+				} );
+
+				/**
+				 * When a file is selected, get the URL
+				 * and set it as the text field's value,
+				 * as well as thr preview src value.
+				 */
+				blog_uploader.on( 'select', function() {
+
+					attachment = blog_uploader.state().get( 'selection' ).first().toJSON();
+
+					$( '#meta-image-blog-index-upload-field' ).val( attachment.id );
+					$( '#meta-image-blog-index-preview' ).show().attr( 'src', attachment.url );
+					$( '#meta-image-blog-index-upload-button' ).val( "<?php _e( 'Replace Image', 'sitecore' ); ?>" );
+					$( '#meta-image-blog-index-remove-button' ).removeAttr( 'disabled' );
+				} );
+
+				// Open the uploader dialog.
+				blog_uploader.open();
+			} );
+
+			var archive_uploader;
+			$( '#meta-image-archive-upload-button' ).click( function(e) {
+				e.preventDefault();
+
+				// If the uploader object has already been created, reopen the dialog.
+				if ( archive_uploader ) {
+					archive_uploader.open();
+					return;
+				}
+				// Extend the wp.media object.
+				archive_uploader = wp.media.frames.file_frame = wp.media( {
+					title  : "<?php _e( 'Choose Image', 'sitecore' ); ?>",
+					button : {
+						text : "<?php _e( 'Choose Image', 'sitecore' ); ?>"
+					},
+					library : {
+						type : 'image'
+					},
+					multiple : false,
+					close    : true
+				} );
+
+				/**
+				 * When a file is selected, get the URL
+				 * and set it as the text field's value,
+				 * as well as thr preview src value.
+				 */
+				archive_uploader.on( 'select', function() {
+
+					attachment = archive_uploader.state().get( 'selection' ).first().toJSON();
+
+					$( '#meta-image-archive-upload-field' ).val( attachment.id );
+					$( '#meta-image-archive-preview' ).show().attr( 'src', attachment.url );
+					$( '#meta-image-archive-upload-button' ).val( "<?php _e( 'Replace Image', 'sitecore' ); ?>" );
+					$( '#meta-image-archive-remove-button' ).removeAttr( 'disabled' );
+				} );
+
+				// Open the uploader dialog.
+				archive_uploader.open();
+			} );
+
+			$( '#meta-image-blog-index-remove-button' ).click( function(e) {
+				$( '#meta-image-blog-index-upload-field' ).val( '' );
+				$( '#meta-image-blog-index-upload-button' ).val( "<?php _e( 'Add Image', 'sitecore' ); ?>" );
+				$( '#meta-image-blog-index-preview' ).hide();
+				$(this).attr( 'disabled', true );
+				return false;
+			} );
+
+			$( '#meta-image-archive-remove-button' ).click( function(e) {
+				$( '#meta-image-archive-upload-field' ).val( '' );
+				$( '#meta-image-archive-upload-button' ).val( "<?php _e( 'Add Image', 'sitecore' ); ?>" );
+				$( '#meta-image-archive-preview' ).hide();
+				$(this).attr( 'disabled', true );
+				return false;
+			} );
+		} );
+		</script>
+		<?php
+	}
 }

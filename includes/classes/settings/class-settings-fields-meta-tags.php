@@ -58,7 +58,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			$fields = array_merge( $fields, $front_desc );
 		}
 
-		$blog_desc = [
+		$blog_front = [
 			[
 				'id'       => 'meta_description_blog_index',
 				'title'    => sprintf(
@@ -74,6 +74,22 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 					'label_for'   => 'meta_description_blog_index',
 					'class'       => 'meta-tags-field'
 				]
+			],
+			[
+				'id'       => 'meta_image_blog_index',
+				'title'    => sprintf(
+					__( '%s Image', 'sitecore' ),
+					ucwords( $this->posts_name() )
+				),
+				'callback' => [ $this, 'meta_image_blog_index_callback' ],
+				'page'     => 'custom-content',
+				'section'  => 'scp-options-meta-tags',
+				'type'     => 'text',
+				'args'     => [
+					'description' => null,
+					'label_for'   => 'meta_image_blog_index',
+					'class'       => 'meta-tags-field'
+				]
 			]
 		];
 
@@ -81,10 +97,23 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			! get_option( 'remove_blog', false ) &&
 			'posts' === get_option( 'show_on_front' )
 		) {
-			$fields = array_merge( $fields, $blog_desc );
+			$fields = array_merge( $fields, $blog_front );
 		}
 
 		$more_fields = [
+			[
+				'id'       => 'meta_image_archive',
+				'title'    => __( 'Archive Image', 'sitecore' ),
+				'callback' => [ $this, 'meta_image_archive_callback' ],
+				'page'     => 'custom-content',
+				'section'  => 'scp-options-meta-tags',
+				'type'     => 'text',
+				'args'     => [
+					'description' => null,
+					'label_for'   => 'meta_image_archive',
+					'class'       => 'meta-tags-field'
+				]
+			],
 			[
 				'id'       => 'meta_site_copyright',
 				'title'    => __( 'Site Copyright', 'sitecore' ),
@@ -169,6 +198,64 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 
 		$option = wp_strip_all_tags( get_option( 'meta_description_blog_index' ), false );
 		return apply_filters( 'scp_meta_description_blog_index', $option );
+	}
+
+	/**
+	 * Sanitize Blog Image field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function meta_image_blog_index_sanitize() {
+
+		$option = get_option( 'meta_image_blog_index' );
+		$image  = '';
+		$src    = apply_filters( 'scp_default_meta_image_blog_index', '' );
+
+		if ( has_image_size( 'meta-image' ) ) {
+			$size = 'meta-image';
+		} else {
+			$size = 'large';
+		}
+
+		if ( ! empty( $option ) ) {
+			$image = wp_get_attachment_image_src( $option, $size, [ 1280, 720 ], true, '' );
+
+			if ( is_array( $image ) ) {
+				$src = $image[0];
+			}
+		}
+		return $src;
+	}
+
+	/**
+	 * Sanitize Archive Image field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function meta_image_archive_sanitize() {
+
+		$option = get_option( 'meta_image_archive' );
+		$image  = '';
+		$src    = apply_filters( 'scp_default_meta_image_blog_index', '' );
+
+		if ( has_image_size( 'meta-image' ) ) {
+			$size = 'meta-image';
+		} else {
+			$size = 'large';
+		}
+
+		if ( ! empty( $option ) ) {
+			$image = wp_get_attachment_image_src( $option, $size, [ 1280, 720 ], true, '' );
+
+			if ( is_array( $image ) ) {
+				$src = $image[0];
+			}
+		}
+		return $src;
 	}
 
 	/**
@@ -307,6 +394,77 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		$html .= '</fieldset>';
 
 		echo $html;
+	}
+
+	/**
+	 * Blog Image field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function meta_image_blog_index_callback() {
+
+		$option = $this->meta_image_blog_index_sanitize();
+
+		$disabled = '';
+		if ( empty( $option ) ) {
+			$disabled = 'disabled';
+		}
+
+		$upload = __( 'Add Image', 'sitecore' );
+		if ( ! empty( $option ) ) {
+			$upload = __( 'Replace Image', 'sitecore' );
+		}
+
+		$caption = wp_get_attachment_caption( get_option( 'meta_image_blog_index' ) );
+		$alt     = get_post_meta( get_option( 'meta_image_blog_index' ), '_wp_attachment_image_alt', true );
+
+		?>
+		<figure style="margin: 0;">
+			<img style="width: 100%; height: auto; max-width: 360px;" id="meta-image-blog-index-preview" src="<?php echo esc_attr( $option ); ?>" />
+			<figcaption class="screen-reader-text"><?php _e( 'Posts index meta image preview', 'sitecore' ); ?></figcaption>
+		</figure>
+		<p>
+			<input data-name="add" type="hidden" id="meta-image-blog-index-upload-field" name="meta_image_blog_index" id="meta_image_blog_index" value="<?php echo esc_attr( $option ); ?>" />
+			<input type="button" id="meta-image-blog-index-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
+			<input type="button" id="meta-image-blog-index-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
+		</p>
+	<?php
+	}
+
+	/**
+	 * Archive Image field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function meta_image_archive_callback() {
+
+		$option = $this->meta_image_archive_sanitize();
+
+		$disabled = '';
+		if ( empty( $option ) ) {
+			$disabled = 'disabled';
+		}
+
+		$upload = __( 'Add Image', 'sitecore' );
+		if ( ! empty( $option ) ) {
+			$upload = __( 'Replace Image', 'sitecore' );
+		}
+
+		?>
+		<figure style="margin: 0;">
+			<img style="width: 100%; height: auto; max-width: 360px;" id="meta-image-archive-preview" src="<?php echo esc_attr( $option ); ?>" />
+			<figcaption class="screen-reader-text"><?php _e( 'Archive meta image preview', 'sitecore' ); ?></figcaption>
+		</figure>
+		<p>
+			<input data-name="add" type="hidden" id="meta-image-archive-upload-field" name="meta_image_archive" id="meta_image_archive" value="<?php echo esc_attr( $option ); ?>" />
+			<input type="button" id="meta-image-archive-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
+			<input type="button" id="meta-image-archive-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
+		</p>
+	<?php
 	}
 
 	/**
