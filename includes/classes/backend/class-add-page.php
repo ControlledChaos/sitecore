@@ -238,7 +238,7 @@ class Add_Page {
 			} );
 		}
 
-		add_action( "admin_footer-{$screen}", [ $this, 'admin_print_footer_scripts' ], 20 );
+		add_action( "admin_print_scripts-{$screen}", [ $this, 'admin_print_scripts' ] );
 	}
 
 	/**
@@ -297,7 +297,7 @@ class Add_Page {
 			} );
 		}
 
-		add_action( "admin_footer-{$screen}", [ $this, 'admin_print_footer_scripts' ], 20 );
+		add_action( "admin_footer-{$screen}", [ $this, 'admin_print_scripts' ], 20 );
 	}
 
 	/**
@@ -1208,7 +1208,7 @@ class Add_Page {
 	 * @access public
 	 * @return void
 	 */
-	public function admin_print_footer_scripts() {
+	public function admin_print_scripts() {
 		?>
 		<!-- Findme --><script><?php echo $this->page_options['menu_slug']; ?></script>
 		<?php
