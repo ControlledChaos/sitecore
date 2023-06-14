@@ -392,7 +392,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			<figcaption class="screen-reader-text"><?php _e( 'Posts index meta image preview', 'sitecore' ); ?></figcaption>
 		</figure>
 		<p>
-			<input data-name="add-blog-index" type="hidden" id="meta-image-blog-index-upload-field" name="meta_image_blog_index" id="meta_image_blog_index" value="<?php echo esc_attr( $option ); ?>" />
+			<input type="hidden" id="meta-image-blog-index-upload-field" name="meta_image_blog_index" id="meta_image_blog_index" value="<?php echo esc_attr( $option ); ?>" />
 			<input type="button" id="meta-image-blog-index-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
 			<input type="button" id="meta-image-blog-index-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
 		</p>
@@ -427,7 +427,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			<figcaption class="screen-reader-text"><?php _e( 'Archive meta image preview', 'sitecore' ); ?></figcaption>
 		</figure>
 		<p>
-			<input data-name="add-archive" type="hidden" id="meta-image-archive-upload-field" name="meta_image_archive" id="meta_image_archive" value="<?php echo esc_attr( $option ); ?>" />
+			<input type="hidden" id="meta-image-archive-upload-field" name="meta_image_archive" id="meta_image_archive" value="<?php echo esc_attr( $option ); ?>" />
 			<input type="button" id="meta-image-archive-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
 			<input type="button" id="meta-image-archive-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
 		</p>
