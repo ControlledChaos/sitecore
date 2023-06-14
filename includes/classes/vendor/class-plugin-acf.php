@@ -64,7 +64,7 @@ class Plugin_ACF extends Plugin {
 		add_action( 'plugins_loaded', [ $this, 'acf_settings_show_admin' ], 20 );
 
 		// Add ACF field groups.
-		add_action( 'plugins_loaded', [ $this, 'field_groups' ], 20 );
+		add_action( 'init', [ $this, 'field_groups' ], 20 );
 
 		/**
 		 * Remove the ACF toolbar.
