@@ -210,23 +210,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 	public function meta_image_blog_index_sanitize() {
 
 		$option = get_option( 'meta_image_blog_index' );
-		$image  = '';
-		$src    = apply_filters( 'scp_default_meta_image_blog_index', '' );
-
-		if ( has_image_size( 'meta-image' ) ) {
-			$size = 'meta-image';
-		} else {
-			$size = 'large';
-		}
-
-		if ( ! empty( $option ) ) {
-			$image = wp_get_attachment_image_src( $option, $size, [ 1280, 720 ], true, '' );
-
-			if ( is_array( $image ) ) {
-				$src = $image[0];
-			}
-		}
-		return $src;
+		return $option;
 	}
 
 	/**
@@ -239,23 +223,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 	public function meta_image_archive_sanitize() {
 
 		$option = get_option( 'meta_image_archive' );
-		$image  = '';
-		$src    = apply_filters( 'scp_default_meta_image_blog_index', '' );
-
-		if ( has_image_size( 'meta-image' ) ) {
-			$size = 'meta-image';
-		} else {
-			$size = 'large';
-		}
-
-		if ( ! empty( $option ) ) {
-			$image = wp_get_attachment_image_src( $option, $size, [ 1280, 720 ], true, '' );
-
-			if ( is_array( $image ) ) {
-				$src = $image[0];
-			}
-		}
-		return $src;
+		return $option;
 	}
 
 	/**
@@ -406,6 +374,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 	public function meta_image_blog_index_callback() {
 
 		$option = $this->meta_image_blog_index_sanitize();
+		$src    = $this->image_preview_src( $option );
 
 		$disabled = '';
 		if ( empty( $option ) ) {
@@ -417,16 +386,13 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			$upload = __( 'Replace Image', 'sitecore' );
 		}
 
-		$caption = wp_get_attachment_caption( get_option( 'meta_image_blog_index' ) );
-		$alt     = get_post_meta( get_option( 'meta_image_blog_index' ), '_wp_attachment_image_alt', true );
-
 		?>
-		<figure style="margin: 0;">
-			<img style="width: 100%; height: auto; max-width: 360px;" id="meta-image-blog-index-preview" src="<?php echo esc_attr( $option ); ?>" />
+		<figure style="margin: 0; max-width: 360px;">
+			<img style="max-width: 100%; height: auto;" id="meta-image-blog-index-preview" src="<?php echo esc_attr( $src ); ?>" />
 			<figcaption class="screen-reader-text"><?php _e( 'Posts index meta image preview', 'sitecore' ); ?></figcaption>
 		</figure>
 		<p>
-			<input data-name="add" type="hidden" id="meta-image-blog-index-upload-field" name="meta_image_blog_index" id="meta_image_blog_index" value="<?php echo esc_attr( $option ); ?>" />
+			<input data-name="add-blog-index" type="hidden" id="meta-image-blog-index-upload-field" name="meta_image_blog_index" id="meta_image_blog_index" value="<?php echo esc_attr( $option ); ?>" />
 			<input type="button" id="meta-image-blog-index-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
 			<input type="button" id="meta-image-blog-index-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
 		</p>
@@ -443,6 +409,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 	public function meta_image_archive_callback() {
 
 		$option = $this->meta_image_archive_sanitize();
+		$src    = $this->image_preview_src( $option );
 
 		$disabled = '';
 		if ( empty( $option ) ) {
@@ -455,12 +422,12 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		}
 
 		?>
-		<figure style="margin: 0;">
-			<img style="width: 100%; height: auto; max-width: 360px;" id="meta-image-archive-preview" src="<?php echo esc_attr( $option ); ?>" />
+		<figure style="margin: 0; max-width: 360px;">
+			<img style="max-width: 100%; height: auto;" id="meta-image-archive-preview" src="<?php echo esc_attr( $src ); ?>" />
 			<figcaption class="screen-reader-text"><?php _e( 'Archive meta image preview', 'sitecore' ); ?></figcaption>
 		</figure>
 		<p>
-			<input data-name="add" type="hidden" id="meta-image-archive-upload-field" name="meta_image_archive" id="meta_image_archive" value="<?php echo esc_attr( $option ); ?>" />
+			<input data-name="add-archive" type="hidden" id="meta-image-archive-upload-field" name="meta_image_archive" id="meta_image_archive" value="<?php echo esc_attr( $option ); ?>" />
 			<input type="button" id="meta-image-archive-upload-button" class="button button-primary" value="<?php echo $upload; ?>" />
 			<input type="button" id="meta-image-archive-remove-button" class="button" value="<?php _e( 'Remove', 'sitecore' ); ?>" <?php echo $disabled; ?> />
 		</p>
@@ -501,5 +468,38 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		$html .= '</fieldset>';
 
 		echo $html;
+	}
+
+	/**
+	 * Image preview src attribute
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @param  string $id Thr attachment ID.
+	 * @return string Returns the image URL or
+	 *                empty if no default filtered.
+	 */
+	public function image_preview_src( $id = '' ) {
+
+		if ( empty( $id ) ) {
+			$src = apply_filters( 'scp_default_meta_image_src', '' );
+
+			if ( ! has_filter( 'scp_default_meta_image_src', false ) ) {
+				return '';
+			}
+		}
+
+		if ( has_image_size( 'meta-image' ) ) {
+			$size = 'meta-image';
+		} else {
+			$size = 'large';
+		}
+
+		$image = wp_get_attachment_image_src( $id, $size, [ 1280, 720 ], true, '' );
+
+		if ( is_array( $image ) ) {
+			$src = $image[0];
+		}
+		return $src;
 	}
 }
