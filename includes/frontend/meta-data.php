@@ -558,7 +558,7 @@ function image() {
 		}
 
 	} elseif ( is_singular() && has_post_thumbnail() ) {
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size, [ 1280, 720 ], true, '' );
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), $size, false );
 		$src   = $image[0];
 
 	}

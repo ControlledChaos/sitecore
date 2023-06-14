@@ -495,7 +495,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 			$size = 'large';
 		}
 
-		$image = wp_get_attachment_image_src( $id, $size, [ 1280, 720 ], true, '' );
+		$image = wp_get_attachment_image_src( $id, $size, false );
 
 		if ( is_array( $image ) ) {
 			$src = $image[0];
