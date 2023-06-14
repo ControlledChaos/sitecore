@@ -224,6 +224,7 @@ class Content_Settings_Page extends Add_Page {
 				 */
 				blog_uploader.on( 'select', function() {
 
+					// @todo Get src of meta-image size rather than full size.
 					attachment = blog_uploader.state().get( 'selection' ).first().toJSON();
 
 					$( '#meta-image-blog-index-upload-field' ).val( attachment.id );
@@ -265,6 +266,7 @@ class Content_Settings_Page extends Add_Page {
 				 */
 				archive_uploader.on( 'select', function() {
 
+					// @todo Get src of meta-mage size rather than full size.
 					attachment = archive_uploader.state().get( 'selection' ).first().toJSON();
 
 					$( '#meta-image-archive-upload-field' ).val( attachment.id );
