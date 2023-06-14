@@ -170,6 +170,8 @@ class Content_Settings_Page extends Add_Page {
 	/**
 	 * Enqueue page scripts
 	 *
+	 * Enqueues scripts for the media modal.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
@@ -182,6 +184,9 @@ class Content_Settings_Page extends Add_Page {
 	 * Print page scripts
 	 *
 	 * Hooks into the page slug (suffix).
+	 *
+	 * Script employs the media modal for choosing
+	 * images, and it modifies the image field buttons.
 	 *
 	 * @since  1.0.0
 	 * @access public
