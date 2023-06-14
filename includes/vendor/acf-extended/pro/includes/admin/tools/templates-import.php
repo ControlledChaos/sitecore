@@ -7,6 +7,10 @@ if(!defined('ABSPATH'))
 if(!acf_get_setting('acfe/modules/templates'))
     return;
 
+if ( ! get_option( 'enable_dynamic_templates' ) ) {
+    return;
+}
+
 if(!class_exists('acfe_dynamic_templates_import')):
 
 class acfe_dynamic_templates_import extends acfe_module_import{

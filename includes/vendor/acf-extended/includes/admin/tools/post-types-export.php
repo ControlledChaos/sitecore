@@ -7,6 +7,10 @@ if(!defined('ABSPATH'))
 if(!acf_get_setting('acfe/modules/post_types'))
     return;
 
+if ( ! get_option( 'enable_dynamic_post_types' ) ) {
+    return;
+}
+
 if(!class_exists('acfe_dynamic_post_types_export')):
 
 class acfe_dynamic_post_types_export extends acfe_module_export{

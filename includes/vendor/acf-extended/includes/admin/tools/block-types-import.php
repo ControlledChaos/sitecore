@@ -7,6 +7,10 @@ if(!defined('ABSPATH'))
 if(!acf_get_setting('acfe/modules/block_types'))
     return;
 
+if ( ! get_option( 'enable_dynamic_block_types' ) ) {
+    return;
+}
+
 if(!class_exists('acfe_dynamic_block_types_import') && class_exists( 'acf_pro' )):
 
 class acfe_dynamic_block_types_import extends acfe_module_import{

@@ -7,6 +7,10 @@ if(!defined('ABSPATH'))
 if(!acf_get_setting('acfe/modules/taxonomies'))
     return;
 
+if ( ! get_option( 'enable_dynamic_taxonomies' ) ) {
+    return;
+}
+
 if(!class_exists('acfe_dynamic_taxonomies_import')):
 
 class acfe_dynamic_taxonomies_import extends acfe_module_import{
