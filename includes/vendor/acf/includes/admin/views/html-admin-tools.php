@@ -18,7 +18,8 @@ $class = $active ? 'single' : 'grid';
 ?>
 <div class="wrap" id="acf-admin-tools">
 
-	<h1><?php _e( 'Content Tools', 'acf' ); ?> <?php if(  $active ): ?><a class="page-title-action" href="<?php echo acf_get_admin_tools_url(); ?>"><?php _e( 'Back to all tools', 'acf' ); ?></a><?php endif; ?></h1>
+	<h1><?php _e( 'Content Tools', 'acf' ); ?> <?php if (  $active ) : ?><a class="page-title-action" href="<?php echo acf_get_admin_tools_url(); ?>"><?php _e( 'Back to Tools', 'acf' ); ?></a><?php else : ?><a class="page-title-action" href="<?php echo admin_url( 'edit.php?post_type=acf-field-group' ); ?>"><?php _e( 'Field Groups', 'acf' ); ?></a><?php endif; ?></h1>
+
 	<p class="description"><?php _e( 'Import and export various content types.', 'acf' ); ?></p>
 
 	<div class="acf-meta-box-wrap -<?php echo $class; ?>">
