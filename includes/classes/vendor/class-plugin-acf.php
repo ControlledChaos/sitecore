@@ -77,6 +77,9 @@ class Plugin_ACF extends Plugin {
 
 		// Admin columns for ACF fields.
 		add_action( 'plugins_loaded', [ $this, 'acf_columns' ], 20 );
+
+		// Prevent new field groups adding a field.
+		add_filter( 'acf/field_group/auto_add_first_field', '__return_false' );
 	}
 
 	/**
