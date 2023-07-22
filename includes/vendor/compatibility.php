@@ -219,7 +219,7 @@ function has_acfe() {
 function has_acfe_pro() {
 
 	// Set core ACF file as a variable.
-	$acfe_pro = file_exists( SCP_PATH . 'includes/vendor/acf-extended-pro/acf-extended.php' );
+	$acfe_pro = file_exists( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
 
 	// Return true if the file is found & included.
 	if ( $acfe_pro && class_exists( 'ACFE_Pro' ) ) {
