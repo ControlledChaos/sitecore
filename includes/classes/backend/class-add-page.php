@@ -121,7 +121,7 @@ class Add_Page {
 		 * Add an ACF options page and load field groups
 		 * if ACF options page function is available.
 		 */
-		if ( $this->page_options['acf']['acf_page'] && Compat\active_acf_pro() ) {
+		if ( $this->page_options['acf']['acf_page'] && ( Compat\active_acf_pro() || Compat\has_acf_pro() ) ) {
 			add_action( 'acf/init', [ $this, 'acf_page_init' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
