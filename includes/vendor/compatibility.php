@@ -164,9 +164,6 @@ function has_acf() {
  * Checks for Advanced Custom Fields PRO files included
  * with this plugin.
  *
- * This is provided for custom versions of this
- * plugin which may include the pro version.
- *
  * @since  1.0.0
  * @return boolean Returns true if the core file is found & included.
  */
