@@ -10,6 +10,9 @@
 
 namespace SiteCore\Classes\Vendor;
 
+use function SiteCore\Compatibility\active_acf;
+use function SiteCore\Compatibility\active_acf_pro;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -184,8 +187,26 @@ class Plugin_ACFE extends Plugin {
 			// Only show under content settings if the page exists.
 			if ( $content ) {
 
-				// Set content settings as menu parent.
-				$args['show_in_menu'] = 'custom-content';
+				/**
+				 * If the ACF plugin is active and the version is
+				 * greater than or equal to 6.1 then hide the
+				 * ACFE post types and taxonomies because these
+				 * features were added in ACF 6.1.0.
+				 */
+				if ( active_acf() || active_acf_pro() ) {
+					if ( defined ( 'ACF_VERSION' ) && 6.1 >= ACF_VERSION ) {
+						$args['show_in_menu'] = 'hide-me';
+
+						/**
+						 * Allow a config file backdoor since the ACF
+						 * and ACFE post types and taxonomies have
+						 * different names.
+						 */
+						if ( defined( 'SHOW_ACFE_DPT_DT' ) && SHOW_ACFE_DPT_DT ) {
+							$args['show_in_menu'] = 'custom-content';
+						}
+					}
+				}
 			}
 		}
 
