@@ -80,13 +80,15 @@ function f( $dir, $file ) {
 function core() {
 
 	$classes = [
-		ns( 'Core', 'Editor_Options' )       => f( 'core', 'editor-options.php' ),
-		ns( 'Core', 'Register_Type' )        => f( 'core', 'register-type.php' ),
-		ns( 'Core', 'Register_Sample_Type' ) => f( 'core', 'register-sample-type.php' ),
-		ns( 'Core', 'Register_Admin' )       => f( 'core', 'register-admin.php' ),
-		ns( 'Core', 'Register_Tax' )         => f( 'core', 'register-tax.php' ),
-		ns( 'Core', 'Register_Sample_Tax' )  => f( 'core', 'register-sample-tax.php' ),
-		ns( 'Core', 'Register_Media_Type' )  => f( 'core', 'register-media-type.php' )
+		ns( 'Core', 'Editor_Options' )            => f( 'core', 'editor-options.php' ),
+		ns( 'Core', 'Register_Type' )             => f( 'core', 'register-type.php' ),
+		ns( 'Core', 'Register_Sample_Type' )      => f( 'core', 'register-sample-type.php' ),
+		ns( 'Core', 'Register_Admin' )            => f( 'core', 'register-admin.php' ),
+		ns( 'Core', 'Register_Tax' )              => f( 'core', 'register-tax.php' ),
+		ns( 'Core', 'Register_Sample_Tax' )       => f( 'core', 'register-sample-tax.php' ),
+		ns( 'Core', 'Register_Media_Type' )       => f( 'core', 'register-media-type.php' ),
+		ns( 'Core', 'Register_Shortcode' )        => f( 'core', 'register-shortcode.php' ),
+		ns( 'Core', 'Register_Sample_Shortcode' ) => f( 'core', 'register-sample-shortcode.php' ),
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {

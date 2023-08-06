@@ -114,6 +114,9 @@ function classes() {
 
 		$sample_tax = new Core_Class\Register_Sample_Tax;
 		$sample_tax->add_tax();
+
+		$sample_shortcode = new Core_Class\Register_Sample_Shortcode;
+		$sample_shortcode->add_shortcode();
 	}
 }
 
