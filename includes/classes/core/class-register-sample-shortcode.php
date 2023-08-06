@@ -77,7 +77,7 @@ class Register_Sample_Shortcode extends Register_Shortcode {
 		if ( 'yes' === $code_atts['wrap_text'] ) {
 			$html  = '<div class="sample-shortcode-wrap">';
 			$html .= sprintf(
-				'<p class="%s" style="color: %s">%s</p>',
+				'<p class="%s"><span style="color: %s">%s</span></p>',
 				esc_attr( $class ),
 				esc_attr( $code_atts['text_color'] ),
 				$content
