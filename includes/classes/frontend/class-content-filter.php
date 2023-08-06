@@ -350,15 +350,6 @@ class Content_Filter {
 		} else {
 			return $default;
 		}
-
-		// Sample shortcode text.
-		$code_text = __( 'This is a sample shortcode, using the <code>[sample]</code> tag, appended to the filtered content using the <code>do_shortcode()</code> function.' );
-
-		// Sample shortcode tag.
-		$code_tag = "[sample wrap_text='yes' text_class='sample-paragraph']{$code_text}[/sample]";
-
-		// Append content with shortcode.
-		echo do_shortcode( $code_tag );
 	}
 
 	/**
