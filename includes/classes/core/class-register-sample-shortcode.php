@@ -61,11 +61,11 @@ class Register_Sample_Shortcode extends Register_Shortcode {
 		/**
 		 * Sample paragraph class
 		 *
-		 * There is no default class in the shortcode
-		 * attributes array, just an empty string.
-		 * This demonstrates a default that is to be
-		 * used always and possibly supplemented by a
-		 * shortcode attribute.
+		 * There is no default class value in the
+		 * shortcode attributes array, just an empty
+		 * string. This demonstrates a default that
+		 * is to be used always and possibly supplemented
+		 * by a shortcode attribute.
 		 */
 		if ( ! empty( $code_atts['text_class'] ) ) {
 			$class = 'sample-shortcode ' . $code_atts['text_class'];
@@ -73,13 +73,28 @@ class Register_Sample_Shortcode extends Register_Shortcode {
 			$class = 'sample-shortcode';
 		}
 
+		/**
+		 * Font weight
+		 *
+		 * There is no key for weight in the shortcode
+		 * attributes array. This demonstrates a default
+		 * may be overridden by adding an attribute in
+		 * the shortcode without a fallback array key.
+		 */
+		if ( array_key_exists( 'text_weight', $atts ) && $atts['text_weight'] ) {
+			$weight = $atts['text_weight'];
+		} else {
+			$weight = 'inherit';
+		}
+
 		// Add a wrapping element if `wrap_text="yes"`.
 		if ( 'yes' === $code_atts['wrap_text'] ) {
 			$html  = '<div class="sample-shortcode-wrap">';
 			$html .= sprintf(
-				'<p class="%s"><span style="color: %s">%s</span></p>',
+				'<p class="%s"><span style="color: %s; font-weight: %s;">%s</span></p>',
 				esc_attr( $class ),
 				esc_attr( $code_atts['text_color'] ),
+				esc_attr( $weight ),
 				$content
 			);
 			$html .= '</div';
