@@ -6,44 +6,44 @@ if(!defined('ABSPATH'))
 if(!class_exists('acfe_admin_settings')):
 
 class acfe_admin_settings{
-    
+
     public $defaults = array();
     public $updated = array();
     public $fields = array();
-    
+
     function __construct(){
-    
+
         add_action('acf/init', array($this, 'acf_pre_init'), 1);
         add_action('acf/init', array($this, 'acf_post_init'), 100);
-        
+
         $this->register_fields();
-        
+
     }
-    
+
     /*
      * Pre Init
      */
     function acf_pre_init(){
         $this->defaults = acf()->settings;
     }
-    
+
     /*
      * Post Init
      */
     function acf_post_init(){
         $this->updated = acf()->settings;
     }
-    
+
     /*
      * Register Fields
      */
     function register_fields(){
-    
+
         $this->fields = array(
-        
+
             // ACF
             'acf' => array(
-            
+
                 array(
                     'label'         => 'Path',
                     'name'          => 'path',
@@ -213,13 +213,13 @@ class acfe_admin_settings{
                     'description'   => 'Allows ACF to remove the default WP custom fields metabox. Defaults to true',
                     'category'      => 'acf',
                 ),
-        
+
             ),
-        
-        
+
+
             // ACFE
             'acfe' => array(
-            
+
                 array(
                     'label'         => 'Theme Folder',
                     'name'          => 'acfe/theme_folder',
@@ -241,12 +241,12 @@ class acfe_admin_settings{
                     'description'   => 'Detected Theme URL',
                     'category'      => 'acfe',
                 ),
-        
+
             ),
-        
+
             // AutoSync
             'autosync' => array(
-            
+
                 array(
                     'label'         => 'Json',
                     'name'          => 'acfe/json',
@@ -291,12 +291,12 @@ class acfe_admin_settings{
                     'description'   => 'PHP AutoSync saving path',
                     'category'      => 'autosync',
                 ),
-        
+
             ),
-        
+
             // Modules
             'modules' => array(
-            
+
                 array(
                     'label'         => 'Author',
                     'name'          => 'acfe/modules/author',
@@ -381,12 +381,12 @@ class acfe_admin_settings{
                     'description'   => 'Show/hide the UI enhancements module. Defaults to true',
                     'category'      => 'modules',
                 ),
-        
+
             ),
-        
+
             // Fields
             'fields' => array(
-            
+
                 array(
                     'label'         => 'reCaptcha: Secret key',
                     'name'          => 'acfe/field/recaptcha/secret_key',
@@ -429,13 +429,13 @@ class acfe_admin_settings{
                     'description'   => 'Show/hide reCaptcha v3 logo',
                     'category'      => 'fields',
                 ),
-        
+
             ),
-    
+
         );
-        
+
     }
-    
+
 }
 
 acf_new_instance('acfe_admin_settings');
@@ -445,68 +445,68 @@ endif;
 if(!class_exists('acfe_admin_settings_ui')):
 
 class acfe_admin_settings_ui{
-    
+
     public $defaults = array();
     public $updated = array();
     public $fields = array();
-    
+
     function __construct(){
-        
+
         add_action('admin_menu',                array($this, 'admin_menu'));
         add_action('acfe/admin_settings/load',  array($this, 'load'));
         add_action('acfe/admin_settings/html',  array($this, 'html'));
-    
+
     }
-    
+
     /*
      * Admin Menu
      */
     function admin_menu(){
-        
+
         if(!acf_get_setting('show_admin'))
             return;
-    
-        $page = add_submenu_page('custom-content', __('Settings'), __('Settings'), acf_get_setting('capability'), 'acfe-settings', array($this, 'menu_html'));
-        
+
+        $page = add_submenu_page( 'custom-content', __( 'Content Settings' ), __( 'Settings' ), acf_get_setting( 'capability' ), 'acfe-settings', array( $this, 'menu_html' ) );
+
         add_action("load-{$page}", array($this, 'menu_load'));
-        
+
     }
-    
+
     /*
      * Menu Load
      */
     function menu_load(){
         do_action('acfe/admin_settings/load');
     }
-    
+
     /*
      * Menu HTML
      */
     function menu_html(){
         do_action('acfe/admin_settings/html');
     }
-    
+
     /*
      * Load
      */
     function load(){
-    
+
         $acfe_admin_settings = acf_get_instance('acfe_admin_settings');
-        
+
         $this->defaults = $acfe_admin_settings->defaults;
         $this->updated = $acfe_admin_settings->updated;
         $this->fields = $acfe_admin_settings->fields;
-        
+
         // Enqueue
         acf_enqueue_scripts();
-        
+
     }
-    
+
     /*
      * Prepare Setting
      */
     function prepare_setting($setting){
-    
+
         $setting = wp_parse_args($setting, array(
             'label'         => '',
             'name'          => '',
@@ -518,92 +518,92 @@ class acfe_admin_settings_ui{
             'updated'       => '',
             'diff'          => false,
         ));
-        
+
         $name = $setting['name'];
         $type = $setting['type'];
         $format = $setting['format'];
         $default = $this->defaults[$name];
         $updated = $this->updated[$name];
-        
+
         $vars = array(
             'default' => $this->defaults[$name],
             'updated' => $this->updated[$name]
         );
-    
+
         foreach($vars as $v => $var){
-        
+
             $result = $var;
-        
+
             if($type === 'true_false'){
-            
+
                 $result = $var ? '<span class="dashicons dashicons-saved"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
-            
+
             }elseif($type === 'text'){
-            
+
                 $result = '<span class="dashicons dashicons-no-alt"></span>';
-    
+
                 if($format === 'array' && empty($var) && $v === 'updated' && $default !== $updated){
                     $var = array('(empty)');
                 }
-            
+
                 if(!empty($var)){
-                
+
                     if(!is_array($var)){
                         $var = explode(',', $var);
                     }
-                
+
                     foreach($var as &$r){
                         $r = '<div class="acf-js-tooltip acfe-settings-text" title="' . $r . '"><code>' . $r . '</code></div>';
                     }
-                
+
                     $result = implode('', $var);
-                
+
                 }
-            
+
             }
-        
+
             $setting[$v] = $result;
-        
+
         }
-    
+
         // Local Changes
         if($default !== $updated){
-        
+
             $setting['updated'] .= '<span style="color:#888; margin-left:7px;vertical-align: 6px;font-size:11px;">(Local code)</span>';
             $setting['diff'] = true;
-        
+
         }
-        
+
         return $setting;
-        
+
     }
-    
+
     /*
      * HTML
      */
     function html(){
-        
+
         ?>
         <div class="wrap" id="acfe-admin-settings">
 
-            <h1><?php _e('Settings'); ?></h1>
+            <h1><?php _e( 'Content Settings' ); ?></h1>
 
             <div id="poststuff">
-        
+
                 <div id="post-body" class="metabox-holder">
-                    
+
                     <!-- Metabox -->
                     <div id="postbox-container-2" class="postbox-container">
-        
+
                         <div class="postbox acf-postbox">
-                            
+
                             <div class="postbox-header">
                                 <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
                             </div>
                             <div class="inside acf-fields -left">
-                            
+
                                 <?php $this->render_fields(); ?>
-        
+
                                 <script type="text/javascript">
                                     if(typeof acf !== 'undefined'){
                                         acf.newPostbox({
@@ -614,46 +614,46 @@ class acfe_admin_settings_ui{
                                 </script>
                             </div>
                         </div>
-    
+
                     </div>
-                
+
                 </div>
-                
+
             </div>
-            
+
         </div>
         <?php
     }
-    
+
     function render_fields(){
-        
+
         foreach(array('ACF', 'ACFE', 'AutoSync', 'Modules', 'Fields') as $tab){
-            
+
             // Category
             $category = sanitize_title($tab);
-            
+
             if(isset($this->fields[$category])){
-    
+
                 $fields = array();
                 $count = 0;
-    
+
                 foreach($this->fields[$category] as $field){
-                    
+
                     $field = $this->prepare_setting($field);
                     $fields[] = $field;
-        
+
                 }
-    
+
                 foreach($fields as $field){
-        
+
                     if(!$field['diff']) continue;
                     $count++;
-        
+
                 }
-    
+
                 $class = $count > 0 ? 'acfe-tab-badge' : 'acfe-tab-badge acf-hidden';
                 $tab .= ' <span class="' . $class . '">' . $count . '</span>';
-    
+
                 // Tab
                 acf_render_field_wrap(array(
                     'type'  => 'tab',
@@ -663,7 +663,7 @@ class acfe_admin_settings_ui{
                         'data-no-preference' => true,
                     ),
                 ));
-    
+
                 // Thead
                 acf_render_field_wrap(array(
                     'type'  => 'acfe_dynamic_render',
@@ -679,7 +679,7 @@ class acfe_admin_settings_ui{
                         <?php
                     }
                 ));
-        
+
                 foreach($fields as $field){ ?>
 
                     <div class="acf-field">
@@ -696,16 +696,16 @@ class acfe_admin_settings_ui{
 
                         </div>
                     </div>
-            
+
                     <?php
                 }
-        
+
             }
-            
+
         }
-        
+
     }
-    
+
 }
 
 acf_new_instance('acfe_admin_settings_ui');
