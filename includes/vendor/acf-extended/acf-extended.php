@@ -245,12 +245,12 @@ class ACFE{
         acfe_include('includes/modules/module.php');
         acfe_include('includes/modules/author.php');
         acfe_include('includes/modules/dev.php');
-        acfe_include('includes/modules/block-types.php');
         acfe_include('includes/modules/forms.php');
         acfe_include('includes/modules/options.php');
         acfe_include('includes/modules/options-pages.php');
         acfe_include('includes/modules/post-types.php');
         acfe_include('includes/modules/taxonomies.php');
+        acfe_include('includes/modules/block-types.php');
         acfe_include('includes/modules/single-meta.php');
         acfe_include('includes/modules/ui.php');
         acfe_include('includes/modules/ui-settings.php');
