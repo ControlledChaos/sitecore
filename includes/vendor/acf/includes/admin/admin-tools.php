@@ -3,7 +3,7 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('acf_admin_tools') ) :
-
+#[AllowDynamicProperties]
 class acf_admin_tools {
 
 

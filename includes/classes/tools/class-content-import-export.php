@@ -20,6 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Content_Import_Export extends \ACF_Admin_Tool {
 
 	/**
+	 * Menu icon
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @var string Admin menu icon class.
+	 */
+	public $icon = '';
+
+	/**
 	 * Initialize metabox
 	 *
 	 * @since  1.0.0

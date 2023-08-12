@@ -3,7 +3,7 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('acf_revisions') ) :
-
+#[AllowDynamicProperties]
 class acf_revisions {
 	
 	// vars

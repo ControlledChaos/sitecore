@@ -3,7 +3,7 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('acf_fields') ) :
-
+#[AllowDynamicProperties]
 class acf_fields {
 	
 	/** @var array Contains an array of field type instances */

@@ -54,7 +54,7 @@ if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 }
 
 if ( ! class_exists( 'ACF' ) ) :
-
+	#[AllowDynamicProperties]
 class ACF {
 
 	/** @var string The plugin version number. */
