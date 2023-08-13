@@ -4,8 +4,10 @@ if(!defined('ABSPATH'))
     exit;
 
 if(!class_exists('acfe_form_front')):
-#[AllowDynamicProperties]
+
 class acfe_form_front{
+
+    protected $fields = [];
     
     function __construct(){
         

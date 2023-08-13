@@ -202,7 +202,7 @@ function floc_headers( $headers ) {
 	// Check for existence of interest-cohort directive; set flag.
 	foreach ( $policies as $n => $policy ) {
 
-		$policies[$n] = $policy = trim( $policy );
+		$policies[$n] = $policy = trim( $policy ?? '' );
 
 		if ( stripos( $policy, 'interest-cohort' ) === 0 ) {
 			$directive_present = true;

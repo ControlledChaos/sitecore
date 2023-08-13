@@ -11,9 +11,12 @@
 */
 
 if( ! class_exists('acf_form_widget') ) :
-#[AllowDynamicProperties]
+
 class acf_form_widget {
 	
+	public $preview_values;
+	public $preview_reference;
+	public $preview_errors;
 	
 	/*
 	*  __construct

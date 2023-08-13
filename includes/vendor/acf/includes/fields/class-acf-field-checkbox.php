@@ -3,7 +3,10 @@
 if( ! class_exists('acf_field_checkbox') ) :
 
 class acf_field_checkbox extends acf_field {
-	
+
+	// Declare for ACFE Pro included here.
+	public $_values;
+    public $_all_checked;
 	
 	/*
 	*  __construct

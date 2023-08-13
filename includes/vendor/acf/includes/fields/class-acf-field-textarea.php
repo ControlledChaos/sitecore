@@ -3,8 +3,7 @@
 if( ! class_exists('acf_field_textarea') ) :
 
 class acf_field_textarea extends acf_field {
-	
-	
+
 	/*
 	*  initialize
 	*

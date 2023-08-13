@@ -46,7 +46,7 @@ class Register_Sample_Shortcode extends Register_Shortcode {
 	 * @access public
 	 * @return string Returns markup and the shortcode content.
 	 */
-	public function output( $atts, $content = null ) {
+	public function output( $atts, $content = '' ) {
 
 		/**
 		 * Combines user attributes with attributes array

@@ -4,7 +4,9 @@ if( ! class_exists('acf_field_oembed') ) :
 
 class acf_field_oembed extends acf_field {
 	
-	
+	public $width;
+	public $height;
+
 	/*
 	*  __construct
 	*

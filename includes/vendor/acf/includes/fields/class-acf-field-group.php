@@ -4,7 +4,8 @@ if( ! class_exists('acf_field__group') ) :
 
 class acf_field__group extends acf_field {
 	
-	
+	public $have_rows;
+
 	/*
 	*  __construct
 	*

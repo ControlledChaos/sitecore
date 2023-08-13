@@ -72,7 +72,7 @@ class Register_Shortcode {
 	 * @access public
 	 * @return void
 	 */
-	public function output( $atts, $content = null ) {
+	public function output( $atts, $content = '' ) {
 		return $content;
 	}
 }

@@ -3,10 +3,12 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('acf_form_customizer') ) :
-#[AllowDynamicProperties]
+
 class acf_form_customizer {
 	
-	
+	public $preview_values;
+	public $preview_fields;
+	public $preview_errors;
 	/*
 	*  __construct
 	*

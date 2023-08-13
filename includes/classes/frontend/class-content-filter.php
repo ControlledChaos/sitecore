@@ -463,6 +463,10 @@ class Content_Filter {
 			$this->after_content();
 		}
 
+		if ( is_null( $content ) ) {
+			$content = '';
+		}
+
 		// Return the modified or unmodified content.
 		return $content;
 	}

@@ -35,7 +35,7 @@ class acfe_dynamic_forms_hooks{
     
     function prepare_custom_html($value, $post_id, $field){
         
-        $custom_html = trim(get_field('acfe_form_custom_html', $post_id));
+        $custom_html = trim( get_field( 'acfe_form_custom_html', $post_id ) ?? '' );
         
         if($value === false && !empty($custom_html))
             $value = true;

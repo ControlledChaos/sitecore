@@ -3,9 +3,10 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('acf_loop') ) :
-#[AllowDynamicProperties]
+
 class acf_loop {
 	
+	public $loops = [];
 	
 	/*
 	*  __construct

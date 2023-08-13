@@ -642,7 +642,7 @@ function word_count() {
 
 	$count = null;
 	if ( is_singular() ) {
-		$count = str_word_count( trim( strip_tags( get_the_content( null, false, get_the_ID() ) ) ) );
+		$count = str_word_count( trim( strip_tags( get_the_content( null, false, get_the_ID() ) ) ) ?? 0 );
 	}
 	return $count;
 }

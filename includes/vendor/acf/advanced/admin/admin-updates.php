@@ -73,8 +73,8 @@ class ACF_Admin_Updates {
 
 			// Find the version number for this chunk.
 			$bit = explode('</h4>', $bit);
-			$bit_version = trim( $bit[0] );
-	    	$bit_text = trim( $bit[1] );
+			$bit_version = trim( $bit[0] ?? '' );
+	    	$bit_text = trim( $bit[1] ?? '' );
 
 			// Compare the chunk version number against param and return HTML.
 			if( acf_version_compare($bit_version, '==', $version) ) {
@@ -218,7 +218,7 @@ class ACF_Admin_Updates {
 
 		// Connect to API.
 		$post = array(
-			'acf_license'	=> trim($_POST['acf_pro_licence']),
+			'acf_license'	=> trim( $_POST['acf_pro_licence'] ?? '' ),
 			'acf_version'	=> acf_get_setting('version'),
 			'wp_name'		=> get_bloginfo('name'),
 			'wp_url'		=> home_url(),

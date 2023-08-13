@@ -3,7 +3,7 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if( ! class_exists('ACF_Admin_Field_Groups') ) :
-#[AllowDynamicProperties]
+
 class ACF_Admin_Field_Groups {
 	
 	/**

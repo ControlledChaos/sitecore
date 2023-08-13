@@ -5,7 +5,8 @@ if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if( ! class_exists('ACF_Admin_Tool_Import') ) :
 
 class ACF_Admin_Tool_Import extends ACF_Admin_Tool {
-	
+
+	public $icon;
 	
 	/**
 	*  initialize

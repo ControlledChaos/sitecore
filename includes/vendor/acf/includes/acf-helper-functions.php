@@ -73,7 +73,7 @@ function acf_merge_attributes( $array1, $array2 ) {
 	// Append together special attributes.
 	foreach( array('class', 'style') as $key ) {
 		if( isset($array1[$key]) && isset($array2[$key]) ) {
-			$array3[$key] = trim($array1[$key]) . ' ' . trim($array2[$key]);
+			$array3[$key] = trim( $array1[$key] ?? [] ) . ' ' . trim( $array2[$key] ?? [] );
 		}
 	}
 	
@@ -372,10 +372,10 @@ function acf_slugify( $str = '', $glue = '-' ) {
  * @return	string
  */
 function acf_punctify( $str = '' ) {
-	if ( substr( trim( strip_tags( $str ) ), -1) !== '.' ) {
-		return trim( $str ) . '.';
+	if ( substr( trim( strip_tags( $str ) ?? '' ), -1) !== '.' ) {
+		return trim( $str ?? '' ) . '.';
 	}
-	return trim( $str );
+	return trim( $str ?? '' );
 }
 
 /**

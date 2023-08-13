@@ -4,7 +4,9 @@ if( ! class_exists('acf_field_clone') ) :
 
 class acf_field_clone extends acf_field {
 	
-	
+	public $cloning;
+	public $have_rows;
+
 	/*
 	*  __construct
 	*

@@ -3,7 +3,7 @@
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
 
 if( ! class_exists('ACF_Data') ) :
-#[AllowDynamicProperties]
+
 class ACF_Data {
 	
 	/** @var string Unique identifier. */
