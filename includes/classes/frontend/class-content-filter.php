@@ -463,6 +463,7 @@ class Content_Filter {
 			$this->after_content();
 		}
 
+		// Fix for PHP 8+.
 		if ( is_null( $content ) ) {
 			$content = '';
 		}

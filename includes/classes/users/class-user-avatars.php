@@ -245,6 +245,7 @@ class User_Avatars {
 	 */
 	public function get_avatar( $size, $id_or_email = '', $default = '', $alt = false ) {
 
+		// Fix for PHP 8+.
 		$avatar = '';
 
 		// Determine if we receive an ID or string.
