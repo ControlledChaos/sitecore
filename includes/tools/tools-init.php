@@ -10,12 +10,14 @@
 
 namespace SiteCore\Tools;
 
-use SiteCore\Classes\Core      as Core_Class,
-	SiteCore\Classes\Tools     as Tools_Class,
-	SiteCore\Types_Taxes_Order as Types_Taxes_Order,
-	SiteCore\Theme_Test_Drive  as Test_Drive,
-	SiteCore\Disable_Toolbar   as Disable_Toolbar,
-	SiteCore\Remove_Customizer as Remove_Customizer;
+use SiteCore\{
+	Classes\Core      as Core_Class,
+	Classes\Tools     as Tools_Class,
+	Types_Taxes_Order as Types_Taxes_Order,
+	Theme_Test_Drive  as Test_Drive,
+	Disable_Toolbar   as Disable_Toolbar,
+	Remove_Customizer as Remove_Customizer
+};
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

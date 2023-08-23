@@ -11,8 +11,7 @@
 namespace SiteCore;
 
 // Alias namespaces.
-use
-SiteCore\Classes\Autoload as Autoload;
+use SiteCore\Classes\Autoload as Autoload;
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

@@ -10,9 +10,11 @@
 
 namespace SiteCore\Admin;
 
-use SiteCore\Classes as Classes,
-	SiteCore\Compatibility  as Compat,
-	SiteCore\Classes\Vendor as Vendor;
+use SiteCore\{
+	Classes        as Classes,
+	Compatibility  as Compat,
+	Classes\Vendor as Vendor
+};
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

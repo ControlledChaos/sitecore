@@ -10,8 +10,10 @@
 
 namespace SiteCore\Media;
 
-use SiteCore\Classes\Core     as Core_Class,
-	SiteCore\Classes\Settings as Settings_Class;
+use SiteCore\{
+	Classes\Core     as Core_Class,
+	Classes\Settings as Settings_Class
+};
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

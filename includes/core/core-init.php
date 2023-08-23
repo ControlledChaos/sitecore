@@ -10,8 +10,10 @@
 
 namespace SiteCore\Core;
 
-use SiteCore\Classes\Core as Core_Class,
-	SiteCore\Remove_Blog  as Remove_Blog;
+use SiteCore\{
+	Classes\Core as Core_Class,
+	Remove_Blog  as Remove_Blog
+};
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

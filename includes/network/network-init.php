@@ -10,9 +10,11 @@
 
 namespace SiteCore\Network;
 
-use SiteCore\Classes\Network  as Network_Class,
-	SiteCore\Classes\Admin    as Admin_Class,
-	SiteCore\Classes\Settings as Settings_Class;
+use SiteCore\{
+	Classes\Network  as Network_Class,
+	Admin            as Admin_Class,
+	Classes\Settings as Settings_Class
+};
 
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {

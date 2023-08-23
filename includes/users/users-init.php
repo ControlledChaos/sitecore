@@ -10,8 +10,10 @@
 
 namespace SiteCore\Users;
 
-use SiteCore\Classes       as Classes,
-	SiteCore\Classes\Users as Users_Class;
+use SiteCore\{
+	Classes       as Classes,
+	Classes\Users as Users_Class
+};
 
 use function SiteCore\Core\is_classicpress;
 

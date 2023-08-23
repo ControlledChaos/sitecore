@@ -16,6 +16,7 @@
  */
 
 namespace SiteCore\Classes\Users;
+
 use SiteCore\Classes as Classes;
 
 // Restrict direct access.
