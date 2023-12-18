@@ -38,7 +38,7 @@ define( 'SCP_MIN_PHP_VERSION', '7.4' );
 /**
  * Function: Minimum PHP version
  *
- * Checks the PHP version sunning on the current host
+ * Checks the PHP version running on the current host
  * against the minimum version required by this plugin.
  *
  * @since  1.0.0

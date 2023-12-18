@@ -27,7 +27,7 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @var array An array of page labels.
+	 * @var    array An array of page labels.
 	 */
 	public $page_labels = [];
 
@@ -36,7 +36,7 @@ class Add_Page {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @var array An array of page options.
+	 * @var    array An array of page options.
 	 */
 	public $page_options = [];
 
