@@ -185,7 +185,7 @@ class Register_Type {
 		 * Post type excerpt metaboxes
 		 *
 		 * Run with a lower priority (higher number) than
-		 * the priorty of the similar function in
+		 * the priority of the similar function in
 		 * `includes/backend/post-edit.php`.
 		 */
 		add_action( 'add_meta_boxes', [ $this, 'excerpt_metabox' ], 22 );

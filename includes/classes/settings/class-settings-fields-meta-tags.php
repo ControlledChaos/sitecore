@@ -266,7 +266,7 @@ class Settings_Fields_Meta_Tags extends Settings_Fields {
 		);
 		$html .= sprintf(
 			'<p>%s</p>',
-			__( 'Add one keyword or phrases per line.', 'sitecore' )
+			__( 'Add one keyword or phrase per line.', 'sitecore' )
 		);
 		$html .= sprintf(
 			'<textarea id="%s" name="%s" rows="5" cols="50">%s</textarea>',
