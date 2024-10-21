@@ -44,7 +44,13 @@ final class Customizer_Reset {
 		add_action( 'wp_ajax_customizer_reset', [ $this, 'ajax' ] );
 
 		// Customizer instance.
-		add_action( 'customize_register', [ $this, 'register' ] );
+		if ( function_exists( 'wp_is_block_theme' ) ) {
+			if ( ! wp_is_block_theme() ) {
+				add_action( 'customize_register', [ $this, 'register' ] );
+			}
+		} else {
+			add_action( 'customize_register', [ $this, 'register' ] );
+		}
 	}
 
 	/**

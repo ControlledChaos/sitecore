@@ -34,7 +34,13 @@ function setup() {
 	add_filter( 'pre_get_posts', $ns( 'front_page_pre_get_posts' ) );
 
 	// Customizer settings & text.
-	add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
+	if ( function_exists( 'wp_is_block_theme' ) ) {
+		if ( ! wp_is_block_theme() ) {
+			add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
+		}
+	} else {
+		add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
+	}
 }
 
 /**
