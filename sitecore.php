@@ -17,9 +17,9 @@
  * Author URI:        https://ccdzine.com/
  * Text Domain:       sitecore
  * Domain Path:       /languages
- * Requires PHP:      5.4
+ * Requires PHP:      7.4
  * Requires at least: 4.9
- * Tested up to:      6.3
+ * Tested up to:      6.6.2
  * Network:           false
  */
 
