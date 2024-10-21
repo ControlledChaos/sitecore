@@ -416,7 +416,7 @@ class ACF_Compatibility {
 			foreach( $group as $j => $rule ) {
 				
 				// migrate param
-				if( isset($replace[ $rule['param'] ]) ) {
+				if( array_key_exists( 'param', $rule ) && isset($replace[ $rule['param'] ]) ) {
 					$field_group['location'][ $i ][ $j ]['param'] = $replace[ $rule['param'] ];
 				}
 			}}

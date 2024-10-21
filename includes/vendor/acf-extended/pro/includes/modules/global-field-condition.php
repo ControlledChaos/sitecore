@@ -240,7 +240,7 @@ class acfe_pro_global_field_condition{
             
             foreach($group as $_k => $rule){
                 
-                if(!acf_is_field_key($rule['param']))
+                if( array_key_exists( 'param', $rule ) && !acf_is_field_key($rule['param']))
                     continue;
                 
                 unset($field_group['location'][$k]);

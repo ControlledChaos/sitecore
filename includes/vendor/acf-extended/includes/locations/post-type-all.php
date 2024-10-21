@@ -33,7 +33,7 @@ class acfe_location_post_type_all{
      */
     function rule_match($match, $rule, $options){
         
-        if($rule['value'] !== 'all'){
+        if( array_key_exists( 'value', $rule ) && $rule['value'] !== 'all'){
             return $match;
         }
         
