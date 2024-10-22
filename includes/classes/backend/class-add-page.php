@@ -1032,8 +1032,7 @@ class Add_Page {
 	 * the `views/pages` directory to output the markup of the page.
 	 *
 	 * The following demonstrates the basic page wrap and heading
-	 * markup that is standard to ClassicPress, WordPress, and the
-	 * antibrand system.
+	 * markup that is standard to ClassicPress and WordPress.
 	 *
 	 * @since  1.0.0
 	 * @access public

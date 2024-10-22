@@ -99,7 +99,7 @@ function classes() {
 	/**
 	 * Editor options for WordPress
 	 *
-	 * Not run for ClassicPress and the default antibrand system.
+	 * Not run for ClassicPress.
 	 * The `Core\is_classicpress()` function checks for ClassicPress.
 	 *
 	 * Not run if the Classic Editor plugin is active.

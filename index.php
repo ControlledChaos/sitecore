@@ -2,7 +2,7 @@
 /**
  * Site Core plugin
  *
- * Develop site-specific plugins for ClassicPress, WordPress, and the antibrand system.
+ * Develop site-specific plugins for ClassicPress and WordPress.
  *
  * @package    Site_Core
  * @subpackage Init
