@@ -8,8 +8,6 @@
  * @since      1.0.0
  */
 
- use SiteCore\Users as Users;
-
 use function SiteCore\Admin\Dashboard\post_types_list;
 use function SiteCore\Admin\Dashboard\taxonomies_list;
 
