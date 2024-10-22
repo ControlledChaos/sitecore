@@ -12,6 +12,8 @@
 
 namespace SiteCore\Classes\Tools;
 
+use function SiteCore\Core\can_fse;
+
 // Restrict direct access.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -44,11 +46,7 @@ final class Customizer_Reset {
 		add_action( 'wp_ajax_customizer_reset', [ $this, 'ajax' ] );
 
 		// Customizer instance.
-		if ( function_exists( 'wp_is_block_theme' ) ) {
-			if ( ! wp_is_block_theme() ) {
-				add_action( 'customize_register', [ $this, 'register' ] );
-			}
-		} else {
+		if ( ! can_fse() ) {
 			add_action( 'customize_register', [ $this, 'register' ] );
 		}
 	}

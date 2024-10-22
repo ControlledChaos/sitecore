@@ -192,6 +192,28 @@ function platform_name() {
 }
 
 /**
+ * FSE capable
+ *
+ * Checks if full-site-editing is available.
+ *
+ * @since  1.0.0
+ * @return boolean Returns true if a block theme is active.
+ */
+function can_fse() {
+
+	if ( is_classicpress() ) {
+		return false;
+	}
+
+	if ( function_exists( 'wp_is_block_theme' ) ) {
+		if ( wp_is_block_theme() ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * Dashboard type
  *
  * @since  1.0.0

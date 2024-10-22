@@ -11,7 +11,10 @@
 namespace SiteCore\Views\Admin;
 
 use SiteCore\Classes\Settings as Settings;
-use function SiteCore\Core\is_classicpress;
+use function SiteCore\Core\{
+	is_classicpress,
+	can_fse
+};
 
 $settings = new Settings\Settings_Fields_Admin_Menu;
 
@@ -31,6 +34,7 @@ settings_fields( 'options-admin' );
 	<?php do_action( 'scp_before_admin_menu_settings' ); ?>
 	<table class="form-table" role="presentation">
 		<tbody>
+			<?php if ( ! can_fse() ) : ?>
 			<tr class="admin-field">
 				<th scope="row"><?php _e( 'Link Positions', 'sitecore' ); ?></th>
 				<td>
@@ -41,6 +45,7 @@ settings_fields( 'options-admin' );
 					</fieldset>
 				</td>
 			</tr>
+			<?php endif; ?>
 			<?php if ( ! is_classicpress() && $show_blocks ) : ?>
 			<tr class="admin-field">
 				<th scope="row"><?php _e( 'Content Types', 'sitecore' ); ?></th>

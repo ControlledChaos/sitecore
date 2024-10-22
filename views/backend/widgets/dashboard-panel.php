@@ -8,13 +8,15 @@
  * @since      1.0.0
  */
 
+use function SiteCore\Core\can_fse;
+
 /**
  * Panel tabs
  *
  * The customize panel is only available
  * to user who can customize themes.
  */
-if ( current_user_can( 'customize' ) ) {
+if ( current_user_can( 'customize' ) || current_user_can( 'edit_theme_options' ) ) {
 	$customize = sprintf(
         '<li class="content-tab"><a href="%1s"><span class="dashicons dashicons-art"></span> %2s</a></li>',
 		'#customize',
@@ -55,8 +57,13 @@ $tabs = apply_filters( 'scp_dashboard_panel_tabs', [
 		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/welcome-dashboard-tab' . $acf->suffix() . '.php' );
 
 		// Customize tab.
-		if ( current_user_can( 'customize' ) ) {
-			include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/customize-dashboard-tab' . $acf->suffix() . '.php' );
+		if ( current_user_can( 'customize' ) || current_user_can( 'edit_theme_options' ) ) {
+
+			if ( can_fse() ) {
+				include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/fse-dashboard-tab' . $acf->suffix() . '.php' );
+			} else {
+				include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/customize-dashboard-tab' . $acf->suffix() . '.php' );
+			}
 		}
 
 		// Content tab.

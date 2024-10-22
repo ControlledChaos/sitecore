@@ -12,6 +12,8 @@
 
 namespace SiteCore\Front_Page_Post_Type;
 
+use function SiteCore\Core\can_fse;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -34,11 +36,7 @@ function setup() {
 	add_filter( 'pre_get_posts', $ns( 'front_page_pre_get_posts' ) );
 
 	// Customizer settings & text.
-	if ( function_exists( 'wp_is_block_theme' ) ) {
-		if ( ! wp_is_block_theme() ) {
-			add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
-		}
-	} else {
+	if ( ! can_fse() ) {
 		add_action( 'customize_register', $ns( 'front_page_query_customize' ), 20 );
 	}
 }

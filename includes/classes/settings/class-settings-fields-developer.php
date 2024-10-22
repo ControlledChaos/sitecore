@@ -10,7 +10,10 @@
 
 namespace SiteCore\Classes\Settings;
 
-use function SiteCore\Core\platform_name;
+use function SiteCore\Core\{
+	platform_name,
+	can_fse
+};
 
 class Settings_Fields_Developer extends Settings_Fields {
 
@@ -70,18 +73,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 				]
 			],
 			[
-				'id'       => 'customizer_reset',
-				'title'    => __( 'Customizer Reset', 'sitecore' ),
-				'callback' => [ $this, 'customizer_reset_callback' ],
-				'page'     => $register['page'],
-				'section'  => $register['section'],
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Enable the ability to reset customizations to the active theme.', 'sitecore' ),
-					'class'       => 'admin-field'
-				]
-			],
-			[
 				'id'       => 'disable_site_health',
 				'title'    => __( 'Disable Site Health', 'sitecore' ),
 				'callback' => [ $this, 'disable_site_health_callback' ],
@@ -121,6 +112,27 @@ class Settings_Fields_Developer extends Settings_Fields {
 				]
 			]
 		];
+
+		$customizer_reset = [
+			[
+				'id'       => 'customizer_reset',
+				'title'    => __( 'Customizer Reset', 'sitecore' ),
+				'callback' => [ $this, 'customizer_reset_callback' ],
+				'page'     => $register['page'],
+				'section'  => $register['section'],
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Enable the ability to reset customizations to the active theme.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
+			]
+		];
+
+		if ( can_fse() ) {
+			$fields = array_merge( $fields, $customizer_reset );
+		} else {
+			$fields = array_merge( $fields, $customizer_reset );
+		}
 
 		parent :: __construct(
 			$register,
@@ -397,44 +409,6 @@ class Settings_Fields_Developer extends Settings_Fields {
 	}
 
 	/**
-	 * Customizer Reset field callback
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function customizer_reset_callback() {
-
-		$fields   = $this->settings_fields;
-		$order    = 3;
-		$field_id = $fields[$order]['id'];
-		$option   = $this->customizer_reset_sanitize();
-
-		$html = sprintf(
-			'<fieldset><legend class="screen-reader-text">%s</legend>',
-			$fields[$order]['title']
-		);
-		$html .= sprintf(
-			'<label for="%s">',
-			$field_id
-		);
-		$html .= sprintf(
-			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
-			$field_id,
-			$field_id,
-			checked( 1, $option, false ),
-			$fields[$order]['args']['description']
-		);
-		$html .= '</label></fieldset>';
-		$html .= sprintf(
-			'<p class="description">%s</p>',
-			__( 'Adds a button in the Customizer panel header.', 'sitecore' )
-		);
-
-		echo $html;
-	}
-
-	/**
 	 * Disable Site Health field callback
 	 *
 	 * @since  1.0.0
@@ -444,7 +418,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function disable_site_health_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 4;
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_site_health_sanitize();
 
@@ -482,7 +456,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function disable_floc_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 5;
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_floc_sanitize();
 
@@ -520,7 +494,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 	public function enable_sample_files_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 6;
+		$order    = 5;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_sample_files_sanitize();
 
@@ -540,6 +514,44 @@ class Settings_Fields_Developer extends Settings_Fields {
 			$fields[$order]['args']['description']
 		);
 		$html .= '</label></fieldset>';
+
+		echo $html;
+	}
+
+	/**
+	 * Customizer Reset field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function customizer_reset_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = 6;
+		$field_id = $fields[$order]['id'];
+		$option   = $this->customizer_reset_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'Adds a button in the Customizer panel header.', 'sitecore' )
+		);
 
 		echo $html;
 	}
