@@ -97,7 +97,10 @@ function active_acf() {
  */
 function active_acf_pro() {
 
-	if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+	if (
+		is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ||
+		is_plugin_active( 'applied-content-forms/acf.php' )
+	) {
 		return true;
 	}
 	return false;
@@ -129,7 +132,10 @@ function active_acfe() {
  */
 function active_acfe_pro() {
 
-	if ( is_plugin_active( 'acf-extended-pro/acf-extended.php' ) ) {
+	if (
+		is_plugin_active( 'acf-extended-pro/acf-extended.php' ) ||
+		is_plugin_active( 'applied-content-forms/acf.php' )
+	) {
 		return true;
 	}
 	return false;
