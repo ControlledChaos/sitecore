@@ -240,11 +240,12 @@ function login_title() {
 
 	// Get the custom logo URL.
 	$logo   = get_theme_mod( 'custom_logo' );
-	$src    = wp_get_attachment_image_src( $logo , 'full' );
+	$src    = '';
 	$output = '';
 
 	// Title markup, inside the h1 > a elements.
-	if ( has_custom_logo( get_current_blog_id() ) ) {
+	if ( $logo && has_custom_logo( get_current_blog_id() ) ) {
+		$src     = wp_get_attachment_image_src( $logo , 'full' );
 		$output .= sprintf(
 			'<span class="login-title-logo site-logo"><img src="%s" /></span> ',
 			$src[0]
@@ -256,7 +257,6 @@ function login_title() {
 		get_bloginfo( 'name' ),
 		__( 'Login', 'sitecore' )
 	);
-
 	return $output;
 }
 
