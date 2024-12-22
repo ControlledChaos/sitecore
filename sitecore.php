@@ -158,7 +158,7 @@ function load_plugin_textdomain() {
 		dirname( SCP_BASENAME ) . '/languages'
 	);
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\load_plugin_textdomain' );
+add_action( 'init', __NAMESPACE__ . '\load_plugin_textdomain' );
 
 /**
  * Plugin page link
