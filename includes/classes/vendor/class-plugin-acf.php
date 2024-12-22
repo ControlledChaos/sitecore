@@ -75,9 +75,6 @@ class Plugin_ACF extends Plugin {
 		 */
 		add_filter( 'acf/admin/toolbar', '__return_false' );
 
-		// Admin columns for ACF fields.
-		add_action( 'plugins_loaded', [ $this, 'acf_columns' ], 20 );
-
 		// Prevent new field groups adding a field.
 		add_filter( 'acf/field_group/auto_add_first_field', '__return_false' );
 	}
@@ -211,21 +208,5 @@ class Plugin_ACF extends Plugin {
 
 		// Return the suffix.
 		return $suffix;
-	}
-
-	/**
-	 * Admin columns for ACF fields
-	 *
-	 * Adds options in the edit field interface to add the field to
-	 * list pages, such as "All Posts".
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function acf_columns() {
-		if ( class_exists( 'SiteCore\Classes\Vendor\ACF_Columns' ) && is_admin() ) {
-			new ACF_Columns;
-		}
 	}
 }

@@ -218,8 +218,7 @@ function vendor() {
 		ns( 'Vendor', 'Plugin_Sample' )      => f( 'vendor', 'plugin-sample.php' ),
 		ns( 'Vendor', 'Plugin_ACF' )         => f( 'vendor', 'plugin-acf.php' ),
 		ns( 'Vendor', 'Plugin_ACFE' )        => f( 'vendor', 'plugin-acfe.php' ),
-		ns( 'Vendor', 'ACF_Nav_Menu_Field' ) => f( 'vendor', 'acf-nav-menu-field.php' ),
-		ns( 'Vendor', 'ACF_Columns' )        => f( 'vendor', 'acf-columns.php' )
+		ns( 'Vendor', 'ACF_Nav_Menu_Field' ) => f( 'vendor', 'acf-nav-menu-field.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {
