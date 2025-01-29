@@ -59,6 +59,10 @@ function setup() {
 		Test_Drive\setup();
 	}
 
+	if ( ! get_option( 'enable_text_domain', true ) ) {
+		add_filter( 'pre_load_textdomain', '__return_false', -42 );
+	}
+
 	if ( is_multisite() ) {
 		if ( is_network_admin() ) {
 			Disable_Toolbar\setup();

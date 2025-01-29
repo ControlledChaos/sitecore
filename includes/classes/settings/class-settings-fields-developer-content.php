@@ -21,9 +21,19 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	 */
 	public function __construct() {
 
-		$fields = [];
-
-		$acfe_fields = [
+		$fields = [
+			[
+				'id'       => 'enable_text_domain',
+				'title'    => __( 'Enable Translations', 'sitecore' ),
+				'callback' => [ $this, 'enable_text_domain_callback' ],
+				'page'     => 'developer-tools',
+				'section'  => 'scp-options-developer-content',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Fetch translation files if provided. Otherwise loads only US English.', 'sitecore' ),
+					'class'       => 'admin-field'
+				]
+			],
 			[
 				'id'       => 'enable_meta_tags',
 				'title'    => __( 'Enable Meta Tags', 'sitecore' ),
@@ -47,7 +57,10 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 					'description' => __( 'Add frontend structured data to the head.', 'sitecore' ),
 					'class'       => 'admin-field'
 				]
-			],
+			]
+		];
+
+		$acfe_fields = [
 			[
 				'id'       => 'enable_dynamic_post_types',
 				'title'    => __( 'Enable Post Types', 'sitecore' ),
@@ -113,6 +126,24 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 			null,
 			$fields
 		);
+	}
+
+	/**
+	 * Sanitize Enable Translations field
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return boolean
+	 */
+	public function enable_text_domain_sanitize() {
+
+		$option = get_option( 'enable_text_domain', true );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return $option;
 	}
 
 	/**
@@ -224,6 +255,44 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	}
 
 	/**
+	 * Enable Translations field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enable_text_domain_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = 0;
+		$field_id = $fields[$order]['id'];
+		$option   = $this->enable_text_domain_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
+		$html .= sprintf(
+			'<p class="description">%s</p>',
+			__( 'The <code>pre_load_textdomain</code> filter returns true or false.', 'sitecore' )
+		);
+
+		echo $html;
+	}
+
+	/**
 	 * Enable Meta Tags field callback
 	 *
 	 * @since  1.0.0
@@ -233,7 +302,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_meta_tags_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 0;
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_meta_tags_sanitize();
 
@@ -271,7 +340,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_structured_data_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 1;
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_structured_data_sanitize();
 
@@ -305,7 +374,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_post_types_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 2;
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_post_types_sanitize();
 
@@ -343,7 +412,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_taxonomies_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 3;
+		$order    = 4;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_taxonomies_sanitize();
 
@@ -381,7 +450,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_block_types_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 4;
+		$order    = 5;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_block_types_sanitize();
 
@@ -419,7 +488,7 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 	public function enable_dynamic_templates_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 5;
+		$order    = 6;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_dynamic_templates_sanitize();
 
