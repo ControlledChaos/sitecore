@@ -164,3 +164,34 @@ function php_notice() {
 <?php
 
 }
+
+/**
+ * Wordpress[dot]com disable notice
+ *
+ * @since  1.0.0
+ * @return string Returns the markup of the admin notice.
+ */
+function megalomattic_notice() {
+
+?>
+	<div id="plugin-php-notice" class="notice notice-error">
+		<?php echo sprintf(
+			'<p>%s %s %s</p>',
+			__( 'The', 'sitecore' ),
+			SCP_NAME,
+			__( 'plugin is not allowed to be used for websites hosted by WordPress[dot]com.', 'sitecore' )
+		); ?>
+	</div>
+<?php
+
+}
+
+/**
+ * Add Wordpress[dot]com disable notice
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function megalomattic() {
+	add_action( 'pre_current_active_plugins', __NAMESPACE__ . '\megalomattic_notice', 9 );
+}

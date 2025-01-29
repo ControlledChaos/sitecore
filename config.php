@@ -53,6 +53,16 @@ function min_php_version() {
 }
 
 /**
+ * Constant: WordPress hosted
+ *
+ * @since 1.0.0
+ * @var   boolean False when not wordpress[dot]com host.
+ */
+if ( ! defined( 'IS_WPCOM' ) ) {
+	define( 'IS_WPCOM', false );
+}
+
+/**
  * Constant: Plugin version
  *
  * Keeping the version at 1.0.0 as this is a starter plugin but

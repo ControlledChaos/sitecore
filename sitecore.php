@@ -227,7 +227,7 @@ include_once SCP_PATH . 'includes/activate/deactivate.php';
 \register_deactivation_hook( __FILE__, __NAMESPACE__ . '\deactivate_plugin' );
 
 /**
- * Run activation class
+ * Plugin activation
  *
  * The code that runs during plugin activation.
  *
@@ -242,7 +242,7 @@ function activate_plugin() {
 }
 
 /**
- * Run deactivation class
+ * Plugin deactivation
  *
  * The code that runs during plugin deactivation.
  *
@@ -271,7 +271,6 @@ function deactivate_plugin() {
  * because of the namespaces.
  *
  * @since  1.0.0
- * @return void
  */
 if ( ! min_php_version() ) {
 
@@ -280,6 +279,26 @@ if ( ! min_php_version() ) {
 
 	// Add a notice to the plugin row.
 	Activate\get_row_notice();
+
+	// Stop here.
+	return;
+}
+
+/**
+ * Disable plugin for wordpress[dot]com
+ *
+ * Personal protest of Matt Mullenweg.
+ * Remove if you feel otherwise.
+ *
+ * This renders the plugin useless when activated
+ * for sites hosted by wordpress[dot]com.
+ *
+ * @since  1.0.0
+ */
+if ( IS_WPCOM ) {
+
+	// Add a notice to the plugin page header.
+	Activate\megalomattic();
 
 	// Stop here.
 	return;
