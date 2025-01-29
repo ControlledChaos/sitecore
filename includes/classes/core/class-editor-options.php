@@ -87,7 +87,7 @@ class Editor_Options {
 		remove_action( 'try_gutenberg_panel', 'wp_try_gutenberg_panel' );
 
 		if ( ! $block_editor && ! $gutenberg  ) {
-			// return;
+			return;
 		}
 
 		if ( $settings['allow-users'] ) {
