@@ -173,14 +173,29 @@ function php_notice() {
  */
 function megalomattic_notice() {
 
+	// Access global variables.
+	global $page, $s, $status;
+
+	// Deactivation link.
+	$deactivate = 'plugins.php?action=deactivate&amp;plugin=' . urlencode( SCP_BASENAME ) . '&amp;plugin_status=' . $status . '&amp;paged=' . $page . '&amp;s=' . $s;
+
+	$notice = sprintf(
+		'%s %s %s',
+		__( 'The', 'sitecore' ),
+		SCP_NAME,
+		__( 'plugin is not allowed to be used for websites hosted by WordPress[dot]com.', 'sitecore' )
+	);
+
+	if ( current_user_can( 'deactivate_plugin', SCP_BASENAME ) ) {
+		$notice .= sprintf(
+			' <a href="%s">%s</a>',
+			wp_nonce_url( $deactivate, 'deactivate-plugin_' . SCP_BASENAME ),
+			__( 'Deactivate', 'sitecore' )
+		);
+	}
 ?>
 	<div id="plugin-php-notice" class="notice notice-error">
-		<?php echo sprintf(
-			'<p>%s %s %s</p>',
-			__( 'The', 'sitecore' ),
-			SCP_NAME,
-			__( 'plugin is not allowed to be used for websites hosted by WordPress[dot]com.', 'sitecore' )
-		); ?>
+		<p><?php echo $notice; ?></p>
 	</div>
 <?php
 
