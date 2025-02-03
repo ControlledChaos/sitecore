@@ -5,8 +5,9 @@ Develop site-specific plugins for ClassicPress and WordPres.
 ![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_minimum-7.4-8892bf.svg?style=flat-square)
 ![Tested on PHP version 8.2.4](https://img.shields.io/badge/PHP_tested-8.2.4-8892bf.svg?style=flat-square)
 ![ClassicPress tested on version 2.2](https://img.shields.io/badge/ClassicPress_tested-2.2-03768e.svg?style=flat-square)
-![WordPress tested on version 6.6.2](https://img.shields.io/badge/WordPress_tested-6.6.2-2271b1.svg?style=flat-square)
+![WordPress tested on version 6.7.1](https://img.shields.io/badge/WordPress_tested-6.7.1-2271b1.svg?style=flat-square)
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
+![Disabled for WordPress hosting](https://img.shields.io/badge/WP_Hosting-Blocked-dd0000.svg?style=flat-square)
 
 ![Site Core Plugin Cover Image](https://github.com/ControlledChaos/sitecore/raw/main/cover.jpg)
 
