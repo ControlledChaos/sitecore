@@ -53,8 +53,9 @@ if ( enable_posts_to_news() ) {
 function enable_posts_to_news() {
 
 	$enable = get_option( 'posts_to_news', false );
+	$plugin = is_plugin_active( 'posts-to-news/posts-to-news.php' );
 
-	if ( true == $enable ) {
+	if ( true == $enable && ! $plugin ) {
 		return true;
 	}
 	return false;

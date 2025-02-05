@@ -137,6 +137,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 define( 'SCP_BASENAME', plugin_basename( __FILE__ ) );
 
+// Maybe get plugin file to check for other plugins.
+$get_plugin = ABSPATH . 'wp-admin/includes/plugin.php';
+if ( ! function_exists( 'is_plugin_active' ) && file_exists( $get_plugin ) ) {
+	include_once( $get_plugin );
+}
+
 /**
  * Load text domain
  *
