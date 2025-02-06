@@ -39,7 +39,8 @@ function setup() {
 	add_action( 'admin_footer', $ns( 'at_glance_text' ) );
 }
 if ( enable_posts_to_news() ) {
-	setup();
+	add_action( 'init', __NAMESPACE__ . '\setup' );
+	add_filter( 'register_post_type_args', __NAMESPACE__ . '\post_type_options', 20, 2 );
 }
 
 /**
@@ -59,6 +60,23 @@ function enable_posts_to_news() {
 		return true;
 	}
 	return false;
+}
+
+/**
+ * New post type options
+ *
+ * @since  1.0.0
+ * @param  array $args Array of arguments for registering a post type.
+ * @param  string $post_type Post type name.
+ * @return array Returns an array of new option arguments.
+ */
+function post_type_options( $args, $post_type ) {
+
+	if ( 'post' === $post_type ) {
+		$args['menu_icon'] = get_news_icon();
+		return $args;
+	}
+	return $args;
 }
 
 /**
@@ -380,6 +398,6 @@ function at_glance_text() {
 	if ( 'dashboard' != $screen->id ) {
 		return;
 	} ?>
-	<script>jQuery(document).ready(function(a){a('.post-count a[href="edit.php?post_type=post"]').text(function(){return a(this).text().replace('1 Post','1 <?php echo ucwords( singular() ); ?>')}),a('.post-count a[href="edit.php?post_type=post"]').text(function(){return a(this).text().replace('Posts','<?php echo ucwords( plural() ); ?>')})});</script>
+	<script>jQuery(document).ready(function(a){a('#dashboard_right_now .post-count a[href="edit.php?post_type=post"]').text(function(){return a(this).text().replace('1 Post','1 <?php echo ucwords( singular() ); ?>')}),a('#dashboard_right_now .post-count a[href="edit.php?post_type=post"]').text(function(){return a(this).text().replace('Posts','<?php echo ucwords( plural() ); ?>')})});</script>
 	<?php
 }
