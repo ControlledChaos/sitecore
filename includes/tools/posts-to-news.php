@@ -31,16 +31,16 @@ function setup() {
 	};
 
 	// Rewrite post type labels.
+	add_filter( 'register_post_type_args', $ns( 'post_type_options' ), 10, 2 );
 	add_action( 'wp_loaded', $ns( 'rewrite_type_labels' ) );
 	add_action( 'admin_menu', $ns( 'rewrite_taxonomy_labels' ) );
 	add_action( 'admin_menu', $ns( 'menu_icon' ) );
-	add_filter( 'post_updated_messages', $ns( 'page_messages' ) );
+	add_filter( 'post_updated_messages', $ns( 'page_messages' ), 10, 1 );
 	add_action( 'admin_head', $ns( 'icon_css' ) );
 	add_action( 'admin_footer', $ns( 'at_glance_text' ) );
 }
 if ( enable_posts_to_news() ) {
-	add_action( 'init', __NAMESPACE__ . '\setup' );
-	add_filter( 'register_post_type_args', __NAMESPACE__ . '\post_type_options', 20, 2 );
+	setup();
 }
 
 /**
@@ -56,7 +56,7 @@ function enable_posts_to_news() {
 	$enable = get_option( 'posts_to_news', false );
 	$plugin = is_plugin_active( 'posts-to-news/posts-to-news.php' );
 
-	if ( true == $enable && ! $plugin ) {
+	if ( $enable && ! $plugin ) {
 		return true;
 	}
 	return false;
