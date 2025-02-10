@@ -64,8 +64,7 @@
 .wpsf-tab .wpsf-section-description {
   margin: 30px 0 20px;
   padding: 0 30px 30px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   font-size: 13px;
   line-height: 1.5;
   border-bottom: 1px solid #f1f1f1;
@@ -107,7 +106,6 @@
     padding: 20px 0;
   }
 }
-
 /* $. Repeater */
 .wpsf-group__row:first-child .wpsf-group__row-remove {
   display: none;
@@ -139,8 +137,7 @@
   height: 25px;
   background: #e5e5e5;
   border-radius: 25px;
-  -webkit-box-shadow: inset 0px 1px #c5c5c5;
-          box-shadow: inset 0px 1px #c5c5c5;
+  box-shadow: inset 0px 1px #c5c5c5;
   font-size: 90%;
   font-weight: bold;
 }
@@ -213,26 +210,24 @@
     height: 24px;
   }
 }
-
 /* $. Fields */
 .wpsf-section input.hasDatepicker {
   background: #fff;
 }
 
-.wpsf-section input[type="checkbox"],
-.wpsf-section input[type="radio"] {
+.wpsf-section input[type=checkbox],
+.wpsf-section input[type=radio] {
   vertical-align: text-bottom;
 }
 
 @media screen and (max-width: 782px) {
-  .wpsf-section input[type="checkbox"],
-  .wpsf-section input[type="radio"] {
+  .wpsf-section input[type=checkbox],
+  .wpsf-section input[type=radio] {
     vertical-align: middle;
     display: inline-block;
     margin-top: 0;
   }
 }
-
 /* $. Multifields */
 .wpsf-multifields {
   overflow: hidden;
@@ -245,6 +240,7 @@
   display: inline-block;
   padding-right: 10px;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -267,7 +263,6 @@
     margin: -10px 0 0;
   }
 }
-
 /* $. Subtitle */
 .wpsf-subtitle {
   font-weight: 400;
@@ -283,7 +278,6 @@
     margin: 10px 0 15px;
   }
 }
-
 /* $. Tables */
 .wpsf-section .form-table th,
 .wpsf-section .form-table td {
@@ -306,7 +300,6 @@
     padding-bottom: 20px;
   }
 }
-
 /* $. Lists */
 .wpsf-list {
   margin: 0;
@@ -319,7 +312,6 @@
     min-height: 25px;
   }
 }
-
 .wpsf-list li:last-child {
   margin-bottom: 0;
 }
@@ -331,18 +323,16 @@
 .scp-admin-header .admin-site-branding {
   padding-top: 1.5em;
 }
-
 .scp-admin-header .admin-site-branding .admin-site-title {
   margin-top: 0;
 }
-
 .scp-admin-header .admin-navigation .admin-navigation-list li {
   display: inline;
   margin-right: 0.75em;
 }
 
 .dashicons-admin-media:before {
-  content: '\f161' !important;
+  content: "\f161" !important;
 }
 
 .plugins-php table.widefat {
@@ -422,7 +412,7 @@
 .backend-tabbed-content .ui-tabs-nav {
   margin: 0;
   padding: 0;
-  padding: 9px 0 0 .4em;
+  padding: 9px 0 0 0.4em;
   border-bottom: 1px solid #ccc;
 }
 
@@ -470,7 +460,7 @@ html .backend-tabbed-content .ui-button.ui-state-disabled:hover {
   border-radius: 3px 3px 0 0;
   border: 1px solid #ccc;
   border-bottom: none;
-  margin: 1px .2em 0 0;
+  margin: 1px 0.2em 0 0;
   padding: 5px 10px;
   font-size: 14px;
   line-height: 24px;
