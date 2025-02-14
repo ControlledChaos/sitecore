@@ -51,9 +51,11 @@ function setup() {
 	// Remove user toolbar items.
 	add_action( 'admin_bar_menu', $ns( 'remove_toolbar_items' ), 999 );
 
-	// Post type archive titles & descriptions.
-	add_filter( 'get_the_archive_title', $ns( 'archive_titles' ) );
-	add_filter( 'get_the_archive_description', $ns( 'archive_descriptions' ) );
+	// Filtered post type archive titles & descriptions.
+	if ( get_option( 'enable_sample_files', false ) ) {
+		add_filter( 'get_the_archive_title', $ns( 'archive_titles' ) );
+		add_filter( 'get_the_archive_description', $ns( 'archive_descriptions' ) );
+	}
 }
 
 /**
