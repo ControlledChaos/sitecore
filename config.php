@@ -151,7 +151,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The URL of the developer/agency.
 		 */
-		'dev_url' => esc_url( 'https://ccdzine.com/' ),
+		'dev_url' => esc_url( 'https://github.com/ControlledChaos' ),
 
 		/**
 		 * Developer email
@@ -159,7 +159,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The URL of the developer/agency.
 		 */
-		'dev_email' => sanitize_email( 'greg@ccdzine.com' ),
+		'dev_email' => sanitize_email( '' ),
 
 		/**
 		 * Plugin URL
