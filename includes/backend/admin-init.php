@@ -486,7 +486,7 @@ function hide_policy_content_notice() {
  */
 function admin_header_menu() {
 	register_nav_menus( [
-		'admin_header' => __( 'Admin Header Menu', 'sitecore' )
+		'admin_header' => __( 'Admin Header', 'sitecore' )
 	] );
 }
 
