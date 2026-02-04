@@ -497,6 +497,18 @@ function admin_header_menu() {
  * @return void
  */
 function admin_header() {
+
+	/**
+	 * This plugin was developed alongside a theme boilerplate.
+	 * That theme also has an admin header so do not load
+	 * the admin header tab.
+	 *
+	 * Delete this condition as needed.
+	 */
+	if ( get_theme_mod( 'fct_admin_header' ) ) {
+		return;
+	}
+
 	include_once SCP_PATH . 'views/backend/header/admin-header.php';
 }
 
@@ -514,7 +526,7 @@ function admin_header_styles() {
 	 *
 	 * Delete this condition as needed.
 	 */
-	if ( SCP_THEME == get_option( 'template' ) ) {
+	if ( get_theme_mod( 'fct_admin_header' ) ) {
 		return false;
 	}
 

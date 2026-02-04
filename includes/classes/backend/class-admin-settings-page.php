@@ -101,6 +101,14 @@ class Admin_Settings_Page extends Add_Page {
 			'callback'   => [ $this, 'toolbar_tab' ]
 		] );
 
+		/**
+		 * This plugin was developed alongside a theme boilerplate.
+		 * That theme also has an admin header so do not load
+		 * the admin header tab.
+		 *
+		 * Delete this condition as needed.
+		 */
+		if ( ! get_theme_mod( 'fct_admin_header' ) ) :
 		$this->add_content_tab( [
 			'id'         => 'header',
 			'capability' => 'manage_options',
@@ -110,6 +118,7 @@ class Admin_Settings_Page extends Add_Page {
 			'content'    => '',
 			'callback'   => [ $this, 'header_tab' ]
 		] );
+		endif;
 
 		$this->add_content_tab( [
 			'id'         => 'footer',
@@ -184,6 +193,18 @@ class Admin_Settings_Page extends Add_Page {
 	 * @return mixed Returns the tab content.
 	 */
 	public function header_tab() {
+
+		/**
+		 * This plugin was developed alongside a theme boilerplate.
+		 * That theme also has an admin header so do not load
+		 * the admin header tab.
+		 *
+		 * Delete this condition as needed.
+		 */
+		if ( get_theme_mod( 'fct_admin_header' ) ) {
+			return;
+		}
+
 		include SCP_PATH . 'views/backend/forms/partials/settings-admin-header.php';
 	}
 
