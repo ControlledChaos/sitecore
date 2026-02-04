@@ -11,26 +11,6 @@
 	max-width: 1024px;
 }
 
-// Admin header
-.scp-admin-header {
-
-	.admin-site-branding {
-		padding-top: 1.5em;
-
-		.admin-site-title {
-			margin-top: 0;
-		}
-	}
-
-	.admin-navigation {
-
-		.admin-navigation-list li {
-			display: inline;
-			margin-right: 0.75em;
-		}
-	}
-}
-
 // Admin menu
 .dashicons-admin-media:before {
 	content: '\f161' !important;

@@ -17,7 +17,7 @@ $site_description = get_bloginfo( 'description', 'display' );
 ?>
 <header id="masthead" class="site-header admin-header" role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization">
 
-	<div class="site-branding-wrap">
+	<div class="site-branding-wrap nav-aside-branding">
 		<div class="site-branding">
 
 			<?php echo Tags\site_logo(); ?>
@@ -39,7 +39,7 @@ $site_description = get_bloginfo( 'description', 'display' );
 			<?php
 			wp_nav_menu( [
 				'theme_location' => 'admin_header',
-				'container'      => false,
+				'container_id'   => 'admin-menu-wrap',
 				'menu_id'        => 'admin-header-menu',
 				'fallback_cb'    => false
 			] );

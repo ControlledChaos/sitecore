@@ -138,6 +138,14 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'name' => SCP_NAME,
 
 		/**
+		 * Companion theme
+		 *
+		 * @since 1.0.0
+		 * @var   string Slug of the companion theme.
+		 */
+		'theme' => 'frontcore',
+
+		/**
 		 * Developer name
 		 *
 		 * @since 1.0.0
@@ -193,6 +201,16 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 */
 		'color_picker' => true
 	] );
+}
+
+/**
+ * Companion theme
+ *
+ * @since 1.0.0
+ * @var   string Slug of the companion theme.
+ */
+if ( ! defined( 'SCP_THEME' ) ) {
+	define( 'SCP_THEME', SCP_CONFIG['theme'] );
 }
 
 /**

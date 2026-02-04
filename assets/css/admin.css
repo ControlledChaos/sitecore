@@ -320,17 +320,6 @@
   max-width: 1024px;
 }
 
-.scp-admin-header .admin-site-branding {
-  padding-top: 1.5em;
-}
-.scp-admin-header .admin-site-branding .admin-site-title {
-  margin-top: 0;
-}
-.scp-admin-header .admin-navigation .admin-navigation-list li {
-  display: inline;
-  margin-right: 0.75em;
-}
-
 .dashicons-admin-media:before {
   content: "\f161" !important;
 }

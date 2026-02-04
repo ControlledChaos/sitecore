@@ -508,6 +508,10 @@ function admin_header() {
  */
 function admin_header_styles() {
 
+	if ( SCP_THEME == get_option( 'template' ) ) {
+		return false;
+	}
+
 ?>
 <style>
 .admin-header {
