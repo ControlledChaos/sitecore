@@ -508,6 +508,12 @@ function admin_header() {
  */
 function admin_header_styles() {
 
+	/**
+	 * This plugin was developed alongside a theme boilerplate.
+	 * That theme also has an admin header so do not load CSS here.
+	 *
+	 * Delete this condition as needed.
+	 */
 	if ( SCP_THEME == get_option( 'template' ) ) {
 		return false;
 	}
