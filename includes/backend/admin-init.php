@@ -505,7 +505,7 @@ function admin_header() {
 	 *
 	 * Delete this condition as needed.
 	 */
-	if ( get_theme_mod( 'fct_admin_header' ) ) {
+	if ( get_theme_mod( SCP_THEME_PREFIX . 'admin_header' ) ) {
 		return;
 	}
 
@@ -526,7 +526,7 @@ function admin_header_styles() {
 	 *
 	 * Delete this condition as needed.
 	 */
-	if ( get_theme_mod( 'fct_admin_header' ) ) {
+	if ( get_theme_mod( SCP_THEME_PREFIX . 'admin_header' ) ) {
 		return false;
 	}
 

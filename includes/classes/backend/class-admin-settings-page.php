@@ -108,7 +108,7 @@ class Admin_Settings_Page extends Add_Page {
 		 *
 		 * Delete this condition as needed.
 		 */
-		if ( ! get_theme_mod( 'fct_admin_header' ) ) :
+		if ( ! get_theme_mod( SCP_THEME_PREFIX . 'admin_header' ) ) :
 		$this->add_content_tab( [
 			'id'         => 'header',
 			'capability' => 'manage_options',
@@ -201,7 +201,7 @@ class Admin_Settings_Page extends Add_Page {
 		 *
 		 * Delete this condition as needed.
 		 */
-		if ( get_theme_mod( 'fct_admin_header' ) ) {
+		if ( get_theme_mod( SCP_THEME_PREFIX . 'admin_header' ) ) {
 			return;
 		}
 

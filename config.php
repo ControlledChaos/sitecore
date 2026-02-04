@@ -146,6 +146,16 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		'theme' => 'frontcore',
 
 		/**
+		 * Companion theme prefix
+		 *
+		 * The prefix used for options by the companion theme.
+		 *
+		 * @since 1.0.0
+		 * @var   string Slug of the companion theme.
+		 */
+		'theme_prefix' => 'fct_',
+
+		/**
 		 * Developer name
 		 *
 		 * @since 1.0.0
@@ -211,6 +221,16 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
  */
 if ( ! defined( 'SCP_THEME' ) ) {
 	define( 'SCP_THEME', SCP_CONFIG['theme'] );
+}
+
+/**
+ * Companion theme prefix
+ *
+ * @since 1.0.0
+ * @var   string Slug of the companion theme.
+ */
+if ( ! defined( 'SCP_THEME_PREFIX' ) ) {
+	define( 'SCP_THEME_PREFIX', SCP_CONFIG['theme_prefix'] );
 }
 
 /**
