@@ -15,7 +15,7 @@
  * Version:           1.0.0
  * UpdateURI:         false
  * Author:            Controlled Chaos Design
- * Author URI:        https://ccdzine.com/
+ * Author URI:        https://github.com/ControlledChaos
  * Text Domain:       sitecore
  * Domain Path:       /languages
  * Requires PHP:      7.4

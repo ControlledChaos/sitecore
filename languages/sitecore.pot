@@ -361,7 +361,7 @@ msgid "Help Sidebar"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://ccdzine.com/"
+msgid "https://github.com/ControlledChaos"
 msgstr ""
 
 #. URI of the plugin
