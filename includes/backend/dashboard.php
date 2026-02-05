@@ -103,6 +103,9 @@ function setup() {
  */
 function remove_help_items() {
 	$screen = get_current_screen();
+	if ( use_custom() ) {
+		$screen->remove_help_tab( 'overview' );
+	}
 	$screen->remove_help_tab( 'help-navigation' );
 	$screen->remove_help_tab( 'help-layout' );
 	$screen->remove_help_tab( 'help-content' );
