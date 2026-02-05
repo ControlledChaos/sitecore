@@ -23,18 +23,6 @@ class Settings_Fields_Content extends Settings_Fields {
 
 		$fields = [
 			[
-				'id'       => 'posts_to_news',
-				'title'    => __( 'Change Posts to News', 'sitecore' ),
-				'callback' => [ $this, 'posts_to_news_callback' ],
-				'page'     => 'custom-content',
-				'section'  => 'scp-settings-content-posts',
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Check to change blog posts to news posts.', 'sitecore' ),
-					'class'       => 'content-field'
-				]
-			],
-			[
 				'id'       => 'remove_blog',
 				'title'    => __( 'Remove Blog', 'sitecore' ),
 				'callback' => [ $this, 'remove_blog_callback' ],
@@ -84,28 +72,29 @@ class Settings_Fields_Content extends Settings_Fields {
 			]
 		];
 
+		$news = [
+			[
+				'id'       => 'posts_to_news',
+				'title'    => __( 'Change Posts to News', 'sitecore' ),
+				'callback' => [ $this, 'posts_to_news_callback' ],
+				'page'     => 'custom-content',
+				'section'  => 'scp-settings-content-posts',
+				'type'     => 'checkbox',
+				'args'     => [
+					'description' => __( 'Check to change blog posts to news posts.', 'sitecore' ),
+					'class'       => 'content-field'
+				]
+			],
+		];
+
+		if ( ! get_option( 'remove_blog' ) ) {
+			$fields = array_merge( $fields, $news );
+		}
+
 		parent :: __construct(
 			null,
 			$fields
 		);
-	}
-
-	/**
-	 * Sanitize Posts to News field
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return boolean
-	 */
-	public function posts_to_news_sanitize() {
-
-		$option = get_option( 'posts_to_news', false );
-		if ( true == $option ) {
-			$option = true;
-		} else {
-			$option = false;
-		}
-		return apply_filters( 'scp_posts_to_news', $option );
 	}
 
 	/**
@@ -181,37 +170,21 @@ class Settings_Fields_Content extends Settings_Fields {
 	}
 
 	/**
-	 * Posts to News field callback
+	 * Sanitize Posts to News field
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
-	public function posts_to_news_callback() {
+	public function posts_to_news_sanitize() {
 
-		$fields   = $this->settings_fields;
-		$order    = 0;
-		$field_id = $fields[$order]['id'];
-		$option   = $this->posts_to_news_sanitize();
-
-		$html = sprintf(
-			'<fieldset><legend class="screen-reader-text">%s</legend>',
-			$fields[$order]['title']
-		);
-		$html .= sprintf(
-			'<label for="%s">',
-			$field_id
-		);
-		$html .= sprintf(
-			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
-			$field_id,
-			$field_id,
-			checked( 1, $option, false ),
-			$fields[$order]['args']['description']
-		);
-		$html .= '</label></fieldset>';
-
-		echo $html;
+		$option = get_option( 'posts_to_news', false );
+		if ( true == $option ) {
+			$option = true;
+		} else {
+			$option = false;
+		}
+		return apply_filters( 'scp_posts_to_news', $option );
 	}
 
 	/**
@@ -224,7 +197,7 @@ class Settings_Fields_Content extends Settings_Fields {
 	public function remove_blog_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 1;
+		$order    = 0;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->remove_blog_sanitize();
 
@@ -258,7 +231,7 @@ class Settings_Fields_Content extends Settings_Fields {
 	public function type_tax_sort_order_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 2;
+		$order    = 1;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->type_tax_sort_order_sanitize();
 
@@ -292,7 +265,7 @@ class Settings_Fields_Content extends Settings_Fields {
 	public function disable_block_widgets_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 3;
+		$order    = 2;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->disable_block_widgets_sanitize();
 
@@ -326,7 +299,7 @@ class Settings_Fields_Content extends Settings_Fields {
 	public function enable_link_manager_callback() {
 
 		$fields   = $this->settings_fields;
-		$order    = 4;
+		$order    = 3;
 		$field_id = $fields[$order]['id'];
 		$option   = $this->enable_link_manager_sanitize();
 
@@ -352,6 +325,40 @@ class Settings_Fields_Content extends Settings_Fields {
 			esc_url( 'https://codex.wordpress.org/Links_Manager' ),
 			'https://codex.wordpress.org/Links_Manager'
 		);
+
+		echo $html;
+	}
+
+	/**
+	 * Posts to News field callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function posts_to_news_callback() {
+
+		$fields   = $this->settings_fields;
+		$order    = 4;
+		$field_id = $fields[$order]['id'];
+		$option   = $this->posts_to_news_sanitize();
+
+		$html = sprintf(
+			'<fieldset><legend class="screen-reader-text">%s</legend>',
+			$fields[$order]['title']
+		);
+		$html .= sprintf(
+			'<label for="%s">',
+			$field_id
+		);
+		$html .= sprintf(
+			'<input type="checkbox" id="%s" name="%s" value="1" %s /> %s',
+			$field_id,
+			$field_id,
+			checked( 1, $option, false ),
+			$fields[$order]['args']['description']
+		);
+		$html .= '</label></fieldset>';
 
 		echo $html;
 	}
