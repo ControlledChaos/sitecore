@@ -30,6 +30,7 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
+	// Load frontend classes.
 	add_action( 'plugins_loaded', $ns( 'classes' ) );
 
 	// Remove unpopular meta tags.
@@ -55,6 +56,15 @@ function setup() {
 	if ( get_option( 'enable_sample_files', false ) ) {
 		add_filter( 'get_the_archive_title', $ns( 'archive_titles' ) );
 		add_filter( 'get_the_archive_description', $ns( 'archive_descriptions' ) );
+	}
+
+	// Block styles.
+	if (
+		'tinymce'  == get_option( 'editor-options-replace', 'tinymce' ) &&
+		'disallow' == get_option( 'editor-options-allow-users', 'disallow' )
+	) {
+		add_filter( 'should_load_separate_core_block_assets', '__return_false', 1 );
+		add_filter( 'should_load_block_assets_on_demand', '__return_false', 1 );
 	}
 }
 
