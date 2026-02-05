@@ -118,3 +118,7 @@
 .no-js #dashboard-panel .dashboard-panel-content {
   display: block !important;
 }
+
+.classicpress-admin #normal-sortables #scp-dashboard summary {
+  display: none;
+}

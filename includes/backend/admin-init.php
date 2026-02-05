@@ -13,7 +13,8 @@ namespace SiteCore\Admin;
 use SiteCore\{
 	Classes        as Classes,
 	Compatibility  as Compat,
-	Classes\Vendor as Vendor
+	Classes\Vendor as Vendor,
+	Core           as Core
 };
 
 // Restrict direct access.
@@ -35,6 +36,9 @@ function setup() {
 	};
 
 	add_action( 'plugins_loaded', $ns( 'classes' ) );
+
+	// Add body classes.
+	add_filter( 'admin_body_class', $ns( 'admin_body_class' ) );
 
 	// Post edit screens.
 	add_action( 'plugins_loaded', function() {
@@ -148,6 +152,24 @@ function classes() {
 		$sample_acf->add_page();
 		$sample_acf_sub->add_page();
 	}
+}
+
+/**
+ * Admin body classes
+ *
+ * @since  1.0.0
+ * @param  array $body_class Array of body classes.
+ * @return array Return the conditionally modified array of body classes.
+ */
+function admin_body_class( $body_class ) {
+
+	if ( Core\is_classicpress() ) {
+		$body_class .= ' classicpress-admin';
+	} else {
+		$body_class .= ' wordpress-admin';
+	}
+
+	return $body_class;
 }
 
 /**

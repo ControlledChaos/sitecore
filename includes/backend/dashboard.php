@@ -14,7 +14,8 @@ namespace SiteCore\Admin\Dashboard;
 use SiteCore\{
 	Classes        as Classes,
 	Classes\Users  as Users,
-	Classes\Vendor as Vendor
+	Classes\Vendor as Vendor,
+	Core           as Core
 };
 
 // Restrict direct access.
@@ -173,6 +174,11 @@ function remove_widgets() {
 
 	// PHP update nag.
 	unset( $wp_meta_boxes['dashboard']['normal']['high']['dashboard_php_nag'] );
+
+	// ClassicPress Directory.
+	if ( Core\is_classicpress() ) {
+		remove_meta_box( 'dashboard_directory', 'dashboard', 'normal' );
+	}
 
 	// Hide forums activity.
 	if (
