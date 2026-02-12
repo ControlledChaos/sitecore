@@ -160,7 +160,7 @@ class Settings_Fields_Developer_Users extends Settings_Fields {
 		$html .= '</label></fieldset>';
 		$html .= sprintf(
 			'<p class="description">%s</p>',
-			__( 'This account has the "Developer" user role. Default username, email, and password set in includes/users/users.php.', 'sitecore' )
+			__( 'This account has the "Developer" user role. Default username, email, and password set in includes/users/users-init.php.', 'sitecore' )
 		);
 
 		echo $html;
