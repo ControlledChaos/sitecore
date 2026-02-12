@@ -165,7 +165,7 @@ function mail_from_name() {
  * Check for ClassicPress
  *
  * @since  1.0.0
- * @return boolean Returns true is ClassicPress is used.
+ * @return boolean Returns true if ClassicPress is used.
  */
 function is_classicpress() {
 
@@ -189,6 +189,24 @@ function platform_name() {
 	}
 
 	return apply_filters( 'scp_platform_name', $name );
+}
+
+/**
+ * Platform version
+ *
+ * @since  1.0.0
+ * @global string $wp_version The current WordPress version.
+ * @return string Returns the name of the platform
+ */
+function platform_version() {
+
+	// Access global variables.
+	global $wp_version;
+
+	if ( is_classicpress() ) {
+		return classicpress_version();
+	}
+	return $wp_version;
 }
 
 /**
