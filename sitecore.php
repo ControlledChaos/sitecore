@@ -13,14 +13,17 @@
  * Plugin URI:        https://github.com/ControlledChaos/sitecore
  * Description:       Develop site-specific plugins for ClassicPress and WordPres.
  * Version:           1.0.0
- * UpdateURI:         false
+ * UpdateURI:         https://github.com/ControlledChaos/releases/latest/download/sitecore.zip
  * Author:            Controlled Chaos Design
  * Author URI:        https://github.com/ControlledChaos
  * Text Domain:       sitecore
  * Domain Path:       /languages
  * Requires PHP:      7.4
  * Requires at least: 4.9
- * Tested up to:      6.6.2
+ * Requires CP        2.0.0
+ * License            Nope
+ * License URI        DISCLAIMER.md
+ * Tested up to:      6.9.1
  * Network:           true
  */
 
