@@ -988,3 +988,66 @@ function my_sites_default_icon() {
 
 	echo $style;
 }
+
+/**
+ * User can develop
+ *
+ * @since  1.0.0
+ * @return boolean
+ */
+function user_can_develop() {
+
+	// False if no logged in.
+	if ( ! is_user_logged_in() ) {
+		return false;
+	}
+
+	// True if the user has develop capability (Developer role).
+	if ( current_user_can( 'develop' ) ) {
+		return true;
+	}
+
+	/**
+	 * Count users with Developer role to allow the site owner
+	 * email account if no users with Developer role.
+	 */
+	$dev_count = 0;
+	$dev_users = get_users( [ 'role__in' => [ 'developer' ] ] );
+	foreach ( $dev_users as $dev_user ) {
+		$dev_count++;
+	}
+
+	// True if the current user has the admin email.
+	$current = wp_get_current_user();
+	if ( ! developer_lock() && $dev_count = 0 && $current->user_email == get_option( 'admin_email' ) ) {
+		return true;
+	}
+
+	// True for network Super Admins.
+	if ( is_multisite() ) {
+		if ( is_super_admin( get_current_user_id() ) ) {
+			return true;
+		}
+	}
+
+	// Default.
+	return false;
+}
+
+/**
+ * Developer lock
+ *
+ * Returns true if the `SCP_DEV_LOCK` has been
+ * defined as true in `wp-config.php`.
+ *
+ * @since  1.0.0
+ * @return boolean
+ */
+ function developer_lock() {
+	 if ( defined( 'SCP_DEV_LOCK' ) ) {
+		 if ( SCP_DEV_LOCK ) {
+			 return true;
+		 }
+	 }
+	 return false;
+ }
