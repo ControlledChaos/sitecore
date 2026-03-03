@@ -39,9 +39,7 @@ class Sample_ACF_Suboptions extends Add_Page {
 		];
 
 		$options = [
-			'acf'           => [
-				'acf_page' => true
-			],
+			'acf'         => true,
 			'capability'  => 'read',
 			'menu_slug'   => 'sample-acf-options-subpage',
 			'parent_slug' => 'options-general.php',

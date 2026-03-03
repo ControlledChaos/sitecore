@@ -33,10 +33,7 @@ class Admin_Settings_Page extends Add_Page {
 		];
 
 		$options = [
-			'settings'      => [
-				'print_form' => true,
-				'capability' => 'manage_options'
-			],
+			'settings'      => true,
 			'menu_slug'     => 'options-admin',
 			'parent_slug'   => 'options-general.php',
 			'position'      => 35,

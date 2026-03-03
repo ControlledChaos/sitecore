@@ -87,10 +87,7 @@ class Add_Page {
 		$options = [
 			'settings'       => false,
 			'network'        => false,
-			'acf'            => [
-				'acf_page'   => false,
-				'capability' => 'manage_options'
-			],
+			'acf'            => false,
 			'capability'     => 'manage_options',
 			'menu_slug'      => '',
 			'parent_slug'    => '',
@@ -121,7 +118,7 @@ class Add_Page {
 		 * Add an ACF options page and load field groups
 		 * if ACF options page function is available.
 		 */
-		if ( $this->page_options['acf']['acf_page'] && ( Compat\active_acf_pro() || Compat\has_acf_pro() ) ) {
+		if ( $this->page_options['acf'] && ( Compat\active_acf_pro() || Compat\has_acf_pro() ) ) {
 			add_action( 'acf/init', [ $this, 'acf_page_init' ], $this->priority );
 			add_action( 'acf/init', [ $this, 'acf_field_groups' ] );
 
@@ -273,19 +270,13 @@ class Add_Page {
 			'updated_message' => $this->acf_update_message()
 		];
 
-		if ( isset( $this->page_options['acf']['capability'] ) ) {
-			$acf_capability = $this->page_options['acf']['capability'];
-		} else {
-			$acf_capability = $this->page_options['capability'];
-		}
-
 		if ( $this->is_subpage() ) {
 			acf_add_options_sub_page( $options );
 		} else {
 			acf_add_options_page( $options );
 		}
 
-		if ( ! current_user_can( $acf_capability ) ) {
+		if ( ! current_user_can( $options['capability'] ) ) {
 			add_action( "admin_head-{$screen}", function() {
 				remove_meta_box( 'submitdiv', 'acf_options_page', 'side' );
 			} );
@@ -389,10 +380,8 @@ class Add_Page {
 	 */
 	protected function form_user_access() {
 
-		if ( is_array( $this->page_options['settings'] ) ) {
-			if ( array_key_exists( 'capability', $this->page_options['settings'] ) ) {
-				return $this->page_options['settings']['capability'];
-			}
+		if ( $this->page_options['settings'] ) {
+			return $this->page_options['capability'];
 		} else {
 			return 'scp_no_user_form_access';
 		}
@@ -407,10 +396,7 @@ class Add_Page {
 	 */
 	protected function form_action() {
 
-		if (
-			! $this->page_options['settings']['print_form'] ||
-			$this->page_options['acf']['acf_page']
-		) {
+		if ( ! $this->page_options['settings'] ) {
 			return null;
 		}
 
@@ -435,10 +421,7 @@ class Add_Page {
 			return null;
 		}
 
-		if (
-			! $this->page_options['settings']['print_form'] ||
-			$this->page_options['acf']['acf_page']
-		) {
+		if ( ! $this->page_options['settings'] ) {
 			return null;
 		}
 
@@ -462,10 +445,7 @@ class Add_Page {
 			return null;
 		}
 
-		if (
-			! $this->page_options['settings']['print_form'] ||
-			$this->page_options['acf']['acf_page']
-		) {
+		if ( ! $this->page_options['settings'] ) {
 			return null;
 		}
 
