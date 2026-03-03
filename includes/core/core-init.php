@@ -224,7 +224,7 @@ function can_fse() {
 	}
 
 	if ( function_exists( 'wp_is_block_theme' ) ) {
-		if ( wp_is_block_theme() ) {
+		if ( \wp_get_theme()->is_block_theme() ) {
 			return true;
 		}
 	}
