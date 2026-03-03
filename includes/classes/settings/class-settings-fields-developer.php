@@ -128,9 +128,7 @@ class Settings_Fields_Developer extends Settings_Fields {
 			]
 		];
 
-		if ( can_fse() ) {
-			$fields = array_merge( $fields, $customizer_reset );
-		} else {
+		if ( ! can_fse() ) {
 			$fields = array_merge( $fields, $customizer_reset );
 		}
 
