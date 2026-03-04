@@ -96,6 +96,11 @@
     float: left;
   }
 }
+#dashboard-panel .dashboard-panel-section-intro figure svg {
+  width: 64px;
+  height: 64px;
+  fill: currentColor;
+}
 #dashboard-panel .dashboard-panel-section-intro div {
   margin-bottom: 2rem;
 }
@@ -113,6 +118,16 @@
   padding: 1em;
   line-height: 1;
   text-align: center;
+}
+#dashboard-panel #dashboard-content-lists ul {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+}
+#dashboard-panel #dashboard-content-lists li {
+  width: 50%;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .no-js #dashboard-panel .dashboard-panel-content {

@@ -1,6 +1,6 @@
 <div class="wrap" id="acfe-admin-options">
 
-    <h1 class="wp-heading-inline"><?php _e( 'Website Options' ); ?></h1>
+    <h1 class="wp-heading-inline"><?php _e( 'Edit Website Options' ); ?></h1>
     <a href="<?php echo sprintf('?page=%s&action=add', esc_attr($_REQUEST['page'])); ?>" class="page-title-action"><?php _e('Add New'); ?></a>
 
     <div id="user-message" class="notice notice-warning is-dismissible">

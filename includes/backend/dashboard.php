@@ -479,12 +479,12 @@ function post_types_list() {
 			$menu_icon = '<icon class="dashicons ' . $type->menu_icon . '"></icon>';
 
 		// If the icon is a URL.
-		} elseif( 0 === strpos( $type->menu_icon, 'http' ) ) {
+		} elseif ( 0 === strpos( $type->menu_icon, 'http' ) ) {
 			$menu_icon = '<icon class="scp-cpt-icons"><img src="' . esc_url( $type->menu_icon ) . '" /></icon>';
 
 		// Fall back to the default post icon.
 		} else {
-			$menu_icon = '<icon class="dashicons dashicons-admin-post dashicons-admin-' . $type->menu_icon . '"></icon>';
+			$menu_icon = '<icon class="dashicons dashicons-admin-post"></icon>';
 		}
 
 		// Supply an edit link if media & the user can access the media library.
@@ -499,7 +499,7 @@ function post_types_list() {
 			);
 
 		// Supply an edit link if not media & the user can edit posts.
-		} elseif ( 'attachment' != $post_type && current_user_can( $type->cap->edit_posts ) ) {
+		} elseif ( current_user_can( $type->cap->edit_posts ) ) {
 			$html .= sprintf(
 				'<li class="post-count %s-count"><a href="edit.php?post_type=%s">%s %s %s</a></li>',
 				$type->name,
@@ -518,7 +518,6 @@ function post_types_list() {
 				$number,
 				$name
 			);
-
 		}
 	}
 

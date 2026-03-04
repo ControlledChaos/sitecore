@@ -1,558 +1,561 @@
 <?php
 
 if(!defined('ABSPATH'))
-    exit;
+	exit;
 
 // Check setting
 if(!acf_get_setting('acfe/modules/options'))
-    return;
+	return;
 
 if(!class_exists('acfe_module_options')):
 
 class acfe_module_options{
 
-    var $action = 'list';
+	var $action = 'list';
 
-    /*
-     * Construct
-     */
-    function __construct(){
+	/*
+	 * Construct
+	 */
+	function __construct(){
 
-        // WP List Table
-        acfe_include('includes/modules/options.class.php');
+		// WP List Table
+		acfe_include('includes/modules/options.class.php');
 
-        // Actions
-        add_filter('set-screen-option', array($this, 'acfe_options_screen'), 10, 3);
-        add_action('admin_menu',        array($this, 'admin_menu'));
-        add_action('acf/save_post',     array($this, 'save_post'), 5);
+		// Actions
+		add_filter( 'set-screen-option', array( $this, 'acfe_options_screen' ), 10, 3 );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'acf/save_post', array( $this, 'save_post' ), 5 );
 
-    }
+	}
 
-    function acfe_options_screen($status, $option, $value){
+	function acfe_options_screen($status, $option, $value){
 
-        if($option !== 'options_per_page') return $status;
+		if($option !== 'options_per_page') return $status;
 
-        return $value;
+		return $value;
 
-    }
+	}
 
-    /*
-     * Admin menu
-     */
-    function admin_menu(){
+	/*
+	 * Admin menu
+	 */
+	function admin_menu() {
 
-        if(!acf_get_setting('show_admin')) return;
+		$page = add_submenu_page(
+			'tools.php',
+			__( 'Edit Website Options' ),
+			__( 'Edit Options' ),
+			acf_get_setting( 'capability' ),
+			'acfe-options',
+			[ $this, 'admin_html' ]
+		);
+		add_action( "load-{$page}", [ $this, 'admin_load' ] );
+	}
 
-        $page = add_submenu_page('options-general.php', __( 'Website Options' ), __( 'Options' ), acf_get_setting('capability'), 'acfe-options', array($this, 'admin_html'));
+	/*
+	 * Admin load
+	 */
+	function admin_load(){
 
-        add_action("load-{$page}", array($this, 'admin_load'));
+		// Messages
+		if($message = acf_maybe_get_GET('message')){
 
-    }
+			// deleted bulk-deleted updated added
 
-    /*
-     * Admin load
-     */
-    function admin_load(){
+			if($message === 'deleted'){
 
-        // Messages
-        if($message = acf_maybe_get_GET('message')){
+				acf_add_admin_notice(__('Option has been deleted'), 'success');
 
-            // deleted bulk-deleted updated added
+			}elseif($message === 'bulk-deleted'){
 
-            if($message === 'deleted'){
+				acf_add_admin_notice(__('Options have been deleted'), 'success');
 
-                acf_add_admin_notice(__('Option has been deleted'), 'success');
+			}elseif($message === 'updated'){
 
-            }elseif($message === 'bulk-deleted'){
+				acf_add_admin_notice(__('Option has been updated'), 'success');
 
-                acf_add_admin_notice(__('Options have been deleted'), 'success');
+			}elseif($message === 'added'){
 
-            }elseif($message === 'updated'){
+				acf_add_admin_notice(__('Option has been added'), 'success');
 
-                acf_add_admin_notice(__('Option has been updated'), 'success');
+			}
 
-            }elseif($message === 'added'){
+		}
 
-                acf_add_admin_notice(__('Option has been added'), 'success');
+		// default: list
+		$this->action = 'list';
 
-            }
+		// edit or delete
+		if(acfe_maybe_get_REQUEST('action', '-1') !== '-1'){
 
-        }
+			$this->action = $_REQUEST['action'];
 
-        // default: list
-        $this->action = 'list';
+		// bulk-delete
+		}elseif(acfe_maybe_get_REQUEST('action2', '-1') !== '-1'){
 
-        // edit or delete
-        if(acfe_maybe_get_REQUEST('action', '-1') !== '-1'){
+			$this->action = $_REQUEST['action2'];
 
-            $this->action = $_REQUEST['action'];
+		}
 
-        // bulk-delete
-        }elseif(acfe_maybe_get_REQUEST('action2', '-1') !== '-1'){
+		if($this->action === 'list'){
 
-            $this->action = $_REQUEST['action2'];
+			$this->load_list();
 
-        }
+		}elseif($this->action === 'edit' || $this->action === 'add'){
 
-        if($this->action === 'list'){
+			$this->load_edit();
 
-            $this->load_list();
+		}elseif($this->action === 'delete'){
 
-        }elseif($this->action === 'edit' || $this->action === 'add'){
+			$this->load_delete();
 
-            $this->load_edit();
+		}elseif($this->action === 'bulk-delete'){
 
-        }elseif($this->action === 'delete'){
+			$this->load_bulk_delete();
 
-            $this->load_delete();
+		}
 
-        }elseif($this->action === 'bulk-delete'){
+		// Enqueue
+		acf_enqueue_scripts();
 
-            $this->load_bulk_delete();
+	}
 
-        }
+	/*
+	 * Admin html
+	 */
+	function admin_html(){
 
-        // Enqueue
-        acf_enqueue_scripts();
+		if($this->action === 'list'){
 
-    }
+			$this->html_list();
 
-    /*
-     * Admin html
-     */
-    function admin_html(){
+		}elseif($this->action === 'edit' || $this->action === 'add'){
 
-        if($this->action === 'list'){
+			$this->html_edit();
 
-            $this->html_list();
+		}
 
-        }elseif($this->action === 'edit' || $this->action === 'add'){
+	}
 
-            $this->html_edit();
+	/*
+	 * Load: List
+	 */
+	function load_list(){
 
-        }
+		add_screen_option('per_page', array(
+			'label'     => 'Options',
+			'default'   => 100,
+			'option'    => 'options_per_page'
+		));
 
-    }
+	}
 
-    /*
-     * Load: List
-     */
-    function load_list(){
+	/*
+	 * Load: Edit
+	 */
+	function load_edit(){
 
-        add_screen_option('per_page', array(
-            'label'     => 'Options',
-            'default'   => 100,
-            'option'    => 'options_per_page'
-        ));
+		// Nonce
+		if(acf_verify_nonce('acfe-options-edit')){
 
-    }
+			// Save data
+			if(acf_validate_save_post(true)){
 
-    /*
-     * Load: Edit
-     */
-    function load_edit(){
+				acf_save_post('acfe_options_edit');
 
-        // Nonce
-        if(acf_verify_nonce('acfe-options-edit')){
+				$redirect = add_query_arg(array('message' => 'updated'));
 
-            // Save data
-            if(acf_validate_save_post(true)){
+				if($this->action === 'add'){
 
-                acf_save_post('acfe_options_edit');
+					$redirect = sprintf('?page=%s&message=added', esc_attr($_REQUEST['page']));
 
-                $redirect = add_query_arg(array('message' => 'updated'));
+				}
 
-                if($this->action === 'add'){
+				wp_redirect($redirect);
+				exit;
 
-                    $redirect = sprintf('?page=%s&message=added', esc_attr($_REQUEST['page']));
+			}
 
-                }
+		}
 
-                wp_redirect($redirect);
-                exit;
+		// Actions
+		add_action('acf/input/admin_head', array($this, 'add_metaboxes'));
 
-            }
+		// Add columns support
+		add_screen_option('layout_columns', array(
+			'max'     => 2,
+			'default' => 2,
+		));
 
-        }
+	}
 
-        // Actions
-        add_action('acf/input/admin_head', array($this, 'add_metaboxes'));
+	/*
+	 * Load: Delete
+	 */
+	function load_delete(){
 
-        // Add columns support
-        add_screen_option('layout_columns', array(
-            'max'     => 2,
-            'default' => 2,
-        ));
+		// nonce
+		$nonce = esc_attr($_REQUEST['_wpnonce']);
 
-    }
+		// verify
+		if(!wp_verify_nonce($nonce, 'acfe_options_delete_option')){
+			wp_die('Cheatin’, huh?');
+		}
 
-    /*
-     * Load: Delete
-     */
-    function load_delete(){
+		// delete
+		$this->delete_option(absint($_GET['option']));
 
-        // nonce
-        $nonce = esc_attr($_REQUEST['_wpnonce']);
+		// redirect
+		wp_redirect(sprintf('?page=%s&message=deleted', esc_attr($_REQUEST['page'])));
+		exit;
 
-        // verify
-        if(!wp_verify_nonce($nonce, 'acfe_options_delete_option')){
-            wp_die('Cheatin’, huh?');
-        }
+	}
 
-        // delete
-        $this->delete_option(absint($_GET['option']));
+	/*
+	 * Load: Bulk Delete
+	 */
+	function load_bulk_delete(){
 
-        // redirect
-        wp_redirect(sprintf('?page=%s&message=deleted', esc_attr($_REQUEST['page'])));
-        exit;
+		// nonce
+		$nonce = esc_attr($_REQUEST['_wpnonce']);
 
-    }
+		// verify
+		if(!wp_verify_nonce($nonce, 'bulk-options')){
+			wp_die('Cheatin’, huh?');
+		}
 
-    /*
-     * Load: Bulk Delete
-     */
-    function load_bulk_delete(){
+		// ids
+		$delete_ids = esc_sql($_REQUEST['bulk-delete']);
 
-        // nonce
-        $nonce = esc_attr($_REQUEST['_wpnonce']);
+		// loop
+		foreach($delete_ids as $id){
 
-        // verify
-        if(!wp_verify_nonce($nonce, 'bulk-options')){
-            wp_die('Cheatin’, huh?');
-        }
+			// delete
+			$this->delete_option($id);
 
-        // ids
-        $delete_ids = esc_sql($_REQUEST['bulk-delete']);
+		}
 
-        // loop
-        foreach($delete_ids as $id){
+		wp_redirect(sprintf('?page=%s&message=bulk-deleted', esc_attr($_REQUEST['page'])));
+		exit;
 
-            // delete
-            $this->delete_option($id);
+	}
 
-        }
+	/*
+	 * HTML: List
+	 */
+	function html_list(){
 
-        wp_redirect(sprintf('?page=%s&message=bulk-deleted', esc_attr($_REQUEST['page'])));
-        exit;
+		acfe_get_view('html-options-list');
 
-    }
+	}
 
-    /*
-     * HTML: List
-     */
-    function html_list(){
+	/*
+	 * HTML: Edit
+	 */
+	function html_edit(){
 
-        acfe_get_view('html-options-list');
+		acfe_get_view('html-options-edit');
 
-    }
+	}
 
-    /*
-     * HTML: Edit
-     */
-    function html_edit(){
+	/*
+	 * Save Post
+	 */
+	function save_post($post_id){
 
-        acfe_get_view('html-options-edit');
+		// Validate
+		if($post_id !== 'acfe_options_edit') return;
 
-    }
+		// Vars
+		$option_name = wp_unslash($_POST['acf']['field_acfe_options_edit_name']);
+		$option_value = wp_unslash($_POST['acf']['field_acfe_options_edit_value']);
+		$autoload = $_POST['acf']['field_acfe_options_edit_autoload'];
 
-    /*
-     * Save Post
-     */
-    function save_post($post_id){
+		// Value serialized?
+		$option_value = maybe_unserialize($option_value);
 
-        // Validate
-        if($post_id !== 'acfe_options_edit') return;
+		// Update
+		update_option($option_name, $option_value, $autoload);
 
-        // Vars
-        $option_name = wp_unslash($_POST['acf']['field_acfe_options_edit_name']);
-        $option_value = wp_unslash($_POST['acf']['field_acfe_options_edit_value']);
-        $autoload = $_POST['acf']['field_acfe_options_edit_autoload'];
+		// Flush ACF
+		$_POST['acf'] = array();
 
-        // Value serialized?
-        $option_value = maybe_unserialize($option_value);
+	}
 
-        // Update
-        update_option($option_name, $option_value, $autoload);
+	/*
+	 * Delete Option
+	 */
+	function delete_option($id){
 
-        // Flush ACF
-        $_POST['acf'] = array();
+		global $wpdb;
 
-    }
+		$wpdb->delete("{$wpdb->options}", array('option_id' => $id), array('%d'));
 
-    /*
-     * Delete Option
-     */
-    function delete_option($id){
+	}
 
-        global $wpdb;
+	/*
+	 * Add Metaboxes
+	 */
+	function add_metaboxes(){
 
-        $wpdb->delete("{$wpdb->options}", array('option_id' => $id), array('%d'));
+		$option = array(
+			'option_id'     => 0,
+			'option_name'   => '',
+			'option_value'  => '',
+			'autoload'      => 'no',
+		);
 
-    }
+		$option_id = absint(acfe_maybe_get_REQUEST('option'));
 
-    /*
-     * Add Metaboxes
-     */
-    function add_metaboxes(){
+		if($option_id){
 
-        $option = array(
-            'option_id'     => 0,
-            'option_name'   => '',
-            'option_value'  => '',
-            'autoload'      => 'no',
-        );
+			global $wpdb;
 
-        $option_id = absint(acfe_maybe_get_REQUEST('option'));
+			$get_option = $wpdb->get_row("SELECT * FROM {$wpdb->options} WHERE option_id = '$option_id'", 'ARRAY_A');
 
-        if($option_id){
+			if(!empty($get_option)){
+				$option = $get_option;
+			}
 
-            global $wpdb;
+		}
 
-            $get_option = $wpdb->get_row("SELECT * FROM {$wpdb->options} WHERE option_id = '$option_id'", 'ARRAY_A');
+		$field_group = array(
+			'ID'                    => 0,
+			'key'                   => 'group_acfe_options_edit',
+			'style'                 => 'default',
+			'label_placement'       => 'left',
+			'instruction_placement' => 'label',
+			'fields'                => array()
+		);
 
-            if(!empty($get_option)){
-                $option = $get_option;
-            }
+		$fields = array();
 
-        }
+		$fields[] = array(
+			'label'             => __('Name'),
+			'key'               => 'field_acfe_options_edit_name',
+			'name'              => 'field_acfe_options_edit_name',
+			'type'              => 'text',
+			'prefix'            => 'acf',
+			'instructions'      => '',
+			'required'          => true,
+			'conditional_logic' => false,
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+			'value'             => $option['option_name'],
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+		);
 
-        $field_group = array(
-            'ID'                    => 0,
-            'key'                   => 'group_acfe_options_edit',
-            'style'                 => 'default',
-            'label_placement'       => 'left',
-            'instruction_placement' => 'label',
-            'fields'                => array()
-        );
+		// Serialized || HTML
+		if(is_serialized($option['option_value']) || $option['option_value'] != strip_tags($option['option_value'])){
 
-        $fields = array();
-
-        $fields[] = array(
-            'label'             => __('Name'),
-            'key'               => 'field_acfe_options_edit_name',
-            'name'              => 'field_acfe_options_edit_name',
-            'type'              => 'text',
-            'prefix'            => 'acf',
-            'instructions'      => '',
-            'required'          => true,
-            'conditional_logic' => false,
-            'default_value'     => '',
-            'placeholder'       => '',
-            'prepend'           => '',
-            'append'            => '',
-            'maxlength'         => '',
-            'value'             => $option['option_name'],
-            'wrapper'           => array(
-                'width' => '',
-                'class' => '',
-                'id'    => '',
-            ),
-        );
-
-        // Serialized || HTML
-        if(is_serialized($option['option_value']) || $option['option_value'] != strip_tags($option['option_value'])){
-
-            $type = 'serialized';
-            $instructions = 'Use this <a href="https://duzun.me/playground/serialize" target="_blank">online tool</a> to unserialize/seriliaze data.';
-
-            if($option['option_value'] != strip_tags($option['option_value'])){
-
-                $type = 'HTML';
-                $instructions = '';
-
-            }
-
-            $fields[] = array(
-                'label'             => __('Value <code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">' . $type . '</code>'),
-                'key'               => 'field_acfe_options_edit_value',
-                'name'              => 'field_acfe_options_edit_value',
-                'type'              => 'textarea',
-                'prefix'            => 'acf',
-                'instructions'      => $instructions,
-                'required'          => false,
-                'conditional_logic' => false,
-                'default_value'     => '',
-                'placeholder'       => '',
-                'prepend'           => '',
-                'append'            => '',
-                'maxlength'         => '',
-                'value'             => $option['option_value'],
-                'class'             => 'code',
-                'wrapper'           => array(
-                    'width' => '',
-                    'class' => '',
-                    'id'    => '',
-                ),
-            );
-
-        }
-
-        // Serialized || HTML
-        elseif(acfe_is_json($option['option_value'])){
-
-            $type = 'json';
-            $instructions = 'Use this <a href="http://solutions.weblite.ca/php2json/" target="_blank">online tool</a> to decode/encode json.';
-
-            $fields[] = array(
-                'label'             => __('Value <code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">' . $type . '</code>'),
-                'key'               => 'field_acfe_options_edit_value',
-                'name'              => 'field_acfe_options_edit_value',
-                'type'              => 'textarea',
-                'prefix'            => 'acf',
-                'instructions'      => $instructions,
-                'required'          => false,
-                'conditional_logic' => false,
-                'default_value'     => '',
-                'placeholder'       => '',
-                'prepend'           => '',
-                'append'            => '',
-                'maxlength'         => '',
-                'value'             => $option['option_value'],
-                'class'             => 'code',
-                'wrapper'           => array(
-                    'width' => '',
-                    'class' => '',
-                    'id'    => '',
-                ),
-            );
-
-        }
-
-        // String
-        else{
-
-            $type = '';
-            if(!empty($option['option_value']))
-                $type = '<code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">string</code>';
-
-            $fields[] = array(
-                'label'             => __('Value ' . $type),
-                'key'               => 'field_acfe_options_edit_value',
-                'name'              => 'field_acfe_options_edit_value',
-                'type'              => 'textarea',
-                'prefix'            => 'acf',
-                'instructions'      => '',
-                'required'          => false,
-                'conditional_logic' => false,
-                'default_value'     => '',
-                'placeholder'       => '',
-                'prepend'           => '',
-                'append'            => '',
-                'maxlength'         => '',
-                'value'             => $option['option_value'],
-                'wrapper'           => array(
-                    'width' => '',
-                    'class' => '',
-                    'id'    => '',
-                ),
-            );
-
-        }
-
-        $fields[] = array(
-            'label'             => __('Autoload'),
-            'key'               => 'field_acfe_options_edit_autoload',
-            'name'              => 'field_acfe_options_edit_autoload',
-            'type'              => 'select',
-            'prefix'            => 'acf',
-            'instructions'      => '',
-            'required'          => true,
-            'conditional_logic' => false,
-            'default_value'     => '',
-            'placeholder'       => '',
-            'prepend'           => '',
-            'append'            => '',
-            'maxlength'         => '',
-            'value'             => $option['autoload'],
-            'choices'           => array(
-                'no'    => __('No'),
-                'yes'   => __('Yes'),
-            ),
-            'wrapper'           => array(
-                'width' => '',
-                'class' => '',
-                'id'    => '',
-            ),
-        );
-
-        $field_group['fields'] = $fields;
-
-        $metabox_submit_title = __('Submit','acf');
-        $metabox_main_title = __('Add Option');
-
-        if(!empty($option['option_id'])){
-
-            $metabox_submit_title = __('Edit','acf');
-            $metabox_main_title = __('Edit Option');
-
-        }
-
-        // Submit Metabox
-        add_meta_box('submitdiv', $metabox_submit_title, function($post, $args) use($option){
-
-            $delete_nonce = wp_create_nonce('acfe_options_delete_option');
-
-            ?>
-            <div id="major-publishing-actions">
-
-                <?php if(!empty($option['option_id'])){ ?>
-
-                    <div id="delete-action">
-                        <a class="submitdelete deletion" style="color:#a00;" href="<?php echo sprintf('?page=%s&action=%s&option=%s&_wpnonce=%s', esc_attr($_REQUEST['page']), 'delete', $option['option_id'], $delete_nonce); ?>">
-                            <?php _e('Delete'); ?>
-                        </a>
-                    </div>
-
-                <?php } ?>
-
-                <div id="publishing-action">
-                    <span class="spinner"></span>
-                    <input type="submit" accesskey="p" value="<?php _e('Update'); ?>" class="button button-primary button-large" id="publish" name="publish">
-                </div>
-
-                <div class="clear"></div>
-
-            </div>
-            <?php
-        }, 'acf_options_page', 'side', 'high');
-
-        // Main Metabox
-        add_meta_box('acf-group_acfe_options_edit', $metabox_main_title, function($post, $args){
-
-            // extract args
-            extract($args); // all variables from the add_meta_box function
-            extract($args); // all variables from the args argument
-
-            // vars
-            $o = array(
-                'id'            => $id,
-                'key'           => $field_group['key'],
-                'style'         => $field_group['style'],
-                'label'         => $field_group['label_placement'],
-                'editLink'      => '',
-                'editTitle'     => __('Edit field group', 'acf'),
-                'visibility'    => true
-            );
-
-            // load fields
-            $fields = $field_group['fields'];
-
-            // render
-            acf_render_fields($fields, 'acfe-options-edit', 'div', $field_group['instruction_placement']);
-
-            ?>
-            <script type="text/javascript">
-                if(typeof acf !== 'undefined'){
-
-                    acf.newPostbox(<?php echo json_encode($o); ?>);
-
-                }
-            </script>
-            <?php
-
-        }, 'acf_options_page', 'normal', 'high', array('field_group' => $field_group));
-
-    }
+			$type = 'serialized';
+			$instructions = 'Use this <a href="https://duzun.me/playground/serialize" target="_blank">online tool</a> to unserialize/seriliaze data.';
+
+			if($option['option_value'] != strip_tags($option['option_value'])){
+
+				$type = 'HTML';
+				$instructions = '';
+
+			}
+
+			$fields[] = array(
+				'label'             => __('Value <code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">' . $type . '</code>'),
+				'key'               => 'field_acfe_options_edit_value',
+				'name'              => 'field_acfe_options_edit_value',
+				'type'              => 'textarea',
+				'prefix'            => 'acf',
+				'instructions'      => $instructions,
+				'required'          => false,
+				'conditional_logic' => false,
+				'default_value'     => '',
+				'placeholder'       => '',
+				'prepend'           => '',
+				'append'            => '',
+				'maxlength'         => '',
+				'value'             => $option['option_value'],
+				'class'             => 'code',
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+			);
+
+		}
+
+		// Serialized || HTML
+		elseif(acfe_is_json($option['option_value'])){
+
+			$type = 'json';
+			$instructions = 'Use this <a href="http://solutions.weblite.ca/php2json/" target="_blank">online tool</a> to decode/encode json.';
+
+			$fields[] = array(
+				'label'             => __('Value <code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">' . $type . '</code>'),
+				'key'               => 'field_acfe_options_edit_value',
+				'name'              => 'field_acfe_options_edit_value',
+				'type'              => 'textarea',
+				'prefix'            => 'acf',
+				'instructions'      => $instructions,
+				'required'          => false,
+				'conditional_logic' => false,
+				'default_value'     => '',
+				'placeholder'       => '',
+				'prepend'           => '',
+				'append'            => '',
+				'maxlength'         => '',
+				'value'             => $option['option_value'],
+				'class'             => 'code',
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+			);
+
+		}
+
+		// String
+		else{
+
+			$type = '';
+			if(!empty($option['option_value']))
+				$type = '<code style="font-size:11px;float:right; line-height:1.2; margin-top:1px;">string</code>';
+
+			$fields[] = array(
+				'label'             => __('Value ' . $type),
+				'key'               => 'field_acfe_options_edit_value',
+				'name'              => 'field_acfe_options_edit_value',
+				'type'              => 'textarea',
+				'prefix'            => 'acf',
+				'instructions'      => '',
+				'required'          => false,
+				'conditional_logic' => false,
+				'default_value'     => '',
+				'placeholder'       => '',
+				'prepend'           => '',
+				'append'            => '',
+				'maxlength'         => '',
+				'value'             => $option['option_value'],
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+			);
+
+		}
+
+		$fields[] = array(
+			'label'             => __('Autoload'),
+			'key'               => 'field_acfe_options_edit_autoload',
+			'name'              => 'field_acfe_options_edit_autoload',
+			'type'              => 'select',
+			'prefix'            => 'acf',
+			'instructions'      => '',
+			'required'          => true,
+			'conditional_logic' => false,
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+			'value'             => $option['autoload'],
+			'choices'           => array(
+				'no'    => __('No'),
+				'yes'   => __('Yes'),
+			),
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+		);
+
+		$field_group['fields'] = $fields;
+
+		$metabox_submit_title = __('Submit','acf');
+		$metabox_main_title = __('Add Option');
+
+		if(!empty($option['option_id'])){
+
+			$metabox_submit_title = __('Edit','acf');
+			$metabox_main_title = __('Edit Option');
+
+		}
+
+		// Submit Metabox
+		add_meta_box('submitdiv', $metabox_submit_title, function($post, $args) use($option){
+
+			$delete_nonce = wp_create_nonce('acfe_options_delete_option');
+
+			?>
+			<div id="major-publishing-actions">
+
+				<?php if(!empty($option['option_id'])){ ?>
+
+					<div id="delete-action">
+						<a class="submitdelete deletion" style="color:#a00;" href="<?php echo sprintf('?page=%s&action=%s&option=%s&_wpnonce=%s', esc_attr($_REQUEST['page']), 'delete', $option['option_id'], $delete_nonce); ?>">
+							<?php _e('Delete'); ?>
+						</a>
+					</div>
+
+				<?php } ?>
+
+				<div id="publishing-action">
+					<span class="spinner"></span>
+					<input type="submit" accesskey="p" value="<?php _e('Update'); ?>" class="button button-primary button-large" id="publish" name="publish">
+				</div>
+
+				<div class="clear"></div>
+
+			</div>
+			<?php
+		}, 'acf_options_page', 'side', 'high');
+
+		// Main Metabox
+		add_meta_box('acf-group_acfe_options_edit', $metabox_main_title, function($post, $args){
+
+			// extract args
+			extract($args); // all variables from the add_meta_box function
+			extract($args); // all variables from the args argument
+
+			// vars
+			$o = array(
+				'id'            => $id,
+				'key'           => $field_group['key'],
+				'style'         => $field_group['style'],
+				'label'         => $field_group['label_placement'],
+				'editLink'      => '',
+				'editTitle'     => __('Edit field group', 'acf'),
+				'visibility'    => true
+			);
+
+			// load fields
+			$fields = $field_group['fields'];
+
+			// render
+			acf_render_fields($fields, 'acfe-options-edit', 'div', $field_group['instruction_placement']);
+
+			?>
+			<script type="text/javascript">
+				if(typeof acf !== 'undefined'){
+
+					acf.newPostbox(<?php echo json_encode($o); ?>);
+
+				}
+			</script>
+			<?php
+
+		}, 'acf_options_page', 'normal', 'high', array('field_group' => $field_group));
+
+	}
 
 }
 

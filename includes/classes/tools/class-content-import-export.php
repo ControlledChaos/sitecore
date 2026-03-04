@@ -50,10 +50,31 @@ class Content_Import_Export extends \ACF_Admin_Tool {
 	 */
 	public function html() {
 
+		$importer_installed = array_key_exists( 'wordpress-importer/wordpress-importer.php', get_plugins() );
+		$importer_active    = is_plugin_active( 'wordpress-importer/wordpress-importer.php' );
+
+		if ( $importer_active ) {
+			$import = admin_url( 'admin.php?import=wordpress' );
+		} elseif ( $importer_installed ) {
+			$import = wp_nonce_url(
+				add_query_arg(
+					[
+						'action' => 'activate',
+						'plugin' => 'wordpress-importer/wordpress-importer.php',
+						'from'   => 'import',
+					],
+					admin_url( 'plugins.php' )
+				),
+				'activate-plugin_wordpress-importer/wordpress-importer.php'
+			);
+		} else {
+			$import = admin_url( 'import.php' );
+		}
+
 	?>
 	<p><?php _e( 'Import and export native content as well as custom post types.', 'sitecore' ); ?></p>
 	<p>
-		<a href="<?php echo admin_url( 'import.php' ); ?>" class="button button-primary">
+		<a href="<?php echo $import; ?>" class="button button-primary">
 			<?php _e( 'Import Content', 'sitecore' ); ?>
 		</a>
 		<a href="<?php echo admin_url( 'export.php' ); ?>" class="button button-primary">

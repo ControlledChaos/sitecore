@@ -109,6 +109,12 @@
 			@media screen and ( max-width: 799px ) {
 				float: left;
 			}
+
+			svg {
+				width: 64px;
+				height: 64px;
+				fill: currentColor;
+			}
 		}
 
 		div {
@@ -136,6 +142,20 @@
 			padding: 1em;
 			line-height: 1;
 			text-align: center;
+		}
+	}
+
+	#dashboard-content-lists {
+		ul {
+			margin: 0;
+			display: inline-block;
+			width: 100%;
+		}
+
+		li {
+			width: 50%;
+			float: left;
+			margin-bottom: 10px;
 		}
 	}
 }

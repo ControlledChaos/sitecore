@@ -12,7 +12,7 @@ namespace SiteCore\Network;
 
 use SiteCore\{
 	Classes\Network  as Network_Class,
-	Admin            as Admin_Class,
+	Classes\Admin    as Admin_Class,
 	Classes\Settings as Settings_Class
 };
 

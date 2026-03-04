@@ -101,14 +101,14 @@ class acfe_dynamic_forms extends acfe_dynamic_module{
             $capability = false;
 
         register_post_type($this->post_type, array(
-            'label'                 => __('Forms', 'acf'),
-            'description'           => __('Forms', 'acf'),
+            'label'                 => __('Dynamic Forms', 'acf'),
+            'description'           => __('Dynamic Forms', 'acf'),
             'labels'                => array(
-                'name'          => __('Forms', 'acf'),
-                'singular_name' => __('Form', 'acf'),
-                'menu_name'     => __('Forms', 'acf'),
-                'edit_item'     => 'Edit Form',
-                'add_new_item'  => 'New Form',
+                'name'          => __('Dynamic Forms', 'acf'),
+                'singular_name' => __('Dynamic Form', 'acf'),
+                'menu_name'     => __('Dynamic Forms', 'acf'),
+                'edit_item'     => 'Edit Dynamic Form',
+                'add_new_item'  => 'New Dynamic Form',
             ),
             'supports'              => array('title'),
             'hierarchical'          => false,

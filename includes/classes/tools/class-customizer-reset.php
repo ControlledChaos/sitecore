@@ -31,6 +31,22 @@ final class Customizer_Reset {
 	private $wp_customize;
 
 	/**
+	 * Class instance
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return object Returns the instance.
+	 */
+	public static function instance() {
+
+		static $instance = null;
+		if ( is_null( $instance ) ) {
+			$instance = new self;
+		}
+		return $instance;
+	}
+
+	/**
 	 * Constructor method
 	 *
 	 * @since  1.0.0

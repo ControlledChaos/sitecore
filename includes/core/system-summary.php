@@ -236,6 +236,48 @@ function search_engines() {
 }
 
 /**
+ * Count active plugins
+ *
+ * @since  1.0.0
+ * @return string Returns the markup of the notice.
+ */
+function count_active_plugins() {
+
+	$plugins = get_plugins();
+	$count   = 0;
+	foreach ( $plugins as $plugin => $data ) {
+		if ( is_plugin_active( $plugin ) ) {
+			$count++;
+		}
+	}
+
+	// Conditional text by plugin count.
+	$before = _n( 'There is', 'There are', intval( $count ), 'sitecore' );
+	$after  = _n( 'active plugin.', 'active plugins.', intval( $count ), 'sitecore' );
+
+	// Link to the plugins page if the current user can manage plugins.
+	if ( current_user_can( 'activate_plugins' ) ) {
+		$html = sprintf(
+			'%s <a href="%s">%s %s</a>',
+			$before,
+			esc_url( self_admin_url( 'plugins.php?plugin_status=active' ) ),
+			$count,
+			$after
+		);
+
+	// Otherwise text with no link.
+	} else {
+		$html = sprintf(
+			'%s %s %s',
+			$before,
+			$count,
+			$after
+		);
+	}
+	return $html;
+}
+
+/**
  * Available themes
  *
  * The available & allowed themes notice.

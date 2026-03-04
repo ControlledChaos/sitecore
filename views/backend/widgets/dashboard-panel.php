@@ -8,11 +8,12 @@
  * @since      1.0.0
  */
 
-use function SiteCore\Core\can_fse;
+use function SiteCore\Core\{
+	is_classicpress,
+	can_fse
+};
 
 /**
- * Panel tabs
- *
  * The customize panel is only available
  * to user who can customize themes.
  */
@@ -24,6 +25,26 @@ if ( current_user_can( 'customize' ) || current_user_can( 'edit_theme_options' )
 	);
 } else {
 	$customize = null;
+}
+
+/**
+ * The system panel is only available
+ * to user who can manage options (admins).
+ */
+if ( is_classicpress() ) {
+	$system_icon = 'dashicons-admin-generic';
+} else {
+	$system_icon = 'dashicons-database';
+}
+if ( current_user_can( 'manage_options' ) ) {
+	$system = sprintf(
+        '<li class="content-tab"><a href="%1s"><span class="dashicons %2s"></span> %3s</a></li>',
+		'#system',
+		$system_icon,
+       __( 'System', 'sitecore' )
+	);
+} else {
+	$system = null;
 }
 
 $content = sprintf(
@@ -41,7 +62,8 @@ $tabs = apply_filters( 'scp_dashboard_panel_tabs', [
         __( 'Welcome', 'sitecore' )
 	),
 	$content,
-	$customize
+	$customize,
+	$system
 ] );
 
 ?>
@@ -68,6 +90,11 @@ $tabs = apply_filters( 'scp_dashboard_panel_tabs', [
 
 		// Content tab.
 		include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/content-dashboard-tab' . $acf->suffix() . '.php' );
+
+		// System tab.
+		if ( current_user_can( 'manage_options' ) ) {
+			include_once( SCP_PATH . 'views/backend/widgets/dashboard-tabs/system-dashboard-tab' . $acf->suffix() . '.php' );
+		}
 		?>
 	</div>
 </div>

@@ -74,7 +74,7 @@ class Plugin_ACFE extends Plugin {
 
 
 		// New ACFE post type options.
-		add_filter( 'register_post_type_args', [ $this, 'acfe_post_type_options' ], 11, 2 );
+		add_filter( 'register_post_type_args', [ $this, 'acfe_post_type_options' ], 15, 2 );
 	}
 
 	/**
@@ -212,10 +212,12 @@ class Plugin_ACFE extends Plugin {
 
 		if ( 'acfe-form' == $post_type ) {
 			$args['show_in_menu'] = 'tools.php';
+			$args['menu_position'] = 6;
 		}
 
 		if ( 'acfe-dop' == $post_type ) {
-			$args['show_in_menu'] = 'options-general.php';
+			$args['show_in_menu']  = 'tools.php';
+			$args['menu_position'] = 7;
 		}
 
 		return $args;

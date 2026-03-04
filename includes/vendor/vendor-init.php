@@ -54,6 +54,7 @@ function acf() {
 
 	if ( function_exists( 'acf_register_admin_tool' ) ) {
 		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Content_Import_Export' );
+		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Manage_Fields' );
 	}
 }
 

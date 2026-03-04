@@ -43,7 +43,7 @@ class Developer_Settings_Page extends Add_Page {
 			'menu_slug'     => 'developer-tools',
 			'parent_slug'   => 'tools.php',
 			'icon_url'      => 'dashicons-admin-generic',
-			'position'      => 1,
+			'position'      => 10,
 			'tabs_hashtags' => true,
 			'add_help'      => false
 		];

@@ -58,7 +58,7 @@ $images = get_posts( [
 
 			<h3><?php _e( 'Content Summary', 'sitecore' ); ?></h3>
 
-			<div id="dashboard_right_now" style="padding: 1rem 0;">
+			<div id="dashboard-content-lists" style="padding: 1rem 0;">
 				<?php post_types_list(); ?>
 				<hr />
 				<?php taxonomies_list(); ?>
@@ -80,9 +80,11 @@ $images = get_posts( [
 			</form>
 
 			<ul>
+			<?php if ( current_user_can( 'manage_options' ) ) : ?>
 				<li><?php printf( '<a href="%s" class="welcome-icon welcome-content-settings">' . __( 'Website Content', 'sitecore' ) . '</a>', admin_url( 'admin.php?page=custom-content' ) ); ?></li>
+			<?php endif; ?>
 
-				<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'menus' ) ) : ?>
+			<?php if ( current_user_can( 'switch_themes' ) && current_theme_supports( 'menus' ) ) : ?>
 				<li><?php printf( '<a href="%s" class="welcome-icon welcome-menus">' . __( 'Manage Menus', 'sitecore' ) . '</a>', admin_url( 'nav-menus.php' ) ); ?></li>
 			<?php endif; ?>
 

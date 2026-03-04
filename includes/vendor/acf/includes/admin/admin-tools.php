@@ -30,7 +30,7 @@ class acf_admin_tools {
 	function __construct() {
 
 		// actions
-		add_action('admin_menu', array($this, 'admin_menu'));
+		add_action( 'admin_menu', array( $this, 'admin_menu' ), 9 );
 
 	}
 
@@ -108,17 +108,15 @@ class acf_admin_tools {
 
 	function admin_menu() {
 
-		// bail early if no show_admin
-		if( !acf_get_setting('show_admin') ) return;
-
-
-		// add page
-		$page = add_submenu_page( 'tools.php', __('Content Tools','acf'), __('Content Tools','acf'), acf_get_setting('capability'), 'acf-tools', array($this, 'html'));
-
-
-		// actions
-		add_action('load-' . $page, array($this, 'load'));
-
+		$page = add_submenu_page(
+			'tools.php',
+			__( 'Content Tools' ),
+			__( 'Content Tools' ),
+			acf_get_setting( 'capability' ),
+			'acf-tools',
+			[ $this, 'html' ]
+		);
+		add_action( "load-{$page}", [ $this, 'load' ] );
 	}
 
 

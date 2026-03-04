@@ -89,7 +89,7 @@ function setup() {
 function classes() {
 
 	if ( get_option( 'customizer_reset', false ) ) {
-		new Tools_Class\Customizer_Reset;
+		Tools_Class\Customizer_Reset :: instance();
 	}
 }
 
@@ -99,13 +99,15 @@ function classes() {
  * @since  1.0.0
  * @global $pagenow Get the current admin screen.
  * @return boolean Returns true if on the tools screen.
+ *                 Returns false for subpages.
  */
 function is_tools_screen() {
 
 	// Access current admin page.
 	global $pagenow;
 
-	if ( 'tools.php' == $pagenow ) {
+	$parse = parse_url( $_SERVER['REQUEST_URI'] );
+	if ( 'tools.php' == $pagenow && ! array_key_exists( 'query', $parse ) ) {
 		return true;
 	}
 	return false;
@@ -137,8 +139,34 @@ function dev_settings_page() {
  */
 function available_tools() {
 
-	if ( current_user_can( 'develop' ) && dev_settings_page() ) :
+	if ( current_user_can( 'manage_options' ) ) :
+	?>
+	<div class="card">
+		<h2 class="title"><?php _e( 'Content Tools', 'sitecore' ); ?></h2>
+		<p>
+		<?php
+			printf(
+				__( 'Import and export various content types on the <a href="%s">content tools</a> page. This includes custom fields and forms. Developers can export some ACF content as PHP for plugin and theme development.', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=acf-tools' ) )
+			);
+		?>
+		</p>
+	</div>
+	<div class="card">
+		<h2 class="title"><?php _e( 'Manage Options', 'sitecore' ); ?></h2>
+		<p>
+		<?php
+			printf(
+				__( 'Manage this website\'s options database table from the <a href="%s">options edit</a> page. This is for advanced users or developers only.', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=acfe-options' ) )
+			);
+		?>
+		</p>
+	</div>
+	<?php
+	endif;
 
+	if ( current_user_can( 'develop' ) && dev_settings_page() ) :
 	?>
 	<div class="card">
 		<h2 class="title"><?php _e( 'Developer Tools', 'sitecore' ); ?></h2>
@@ -147,6 +175,28 @@ function available_tools() {
 			printf(
 				__( 'As a registered developer of this website there are <a href="%s">tools available</a> to you for managing the site.', 'sitecore' ),
 				esc_url( admin_url( 'tools.php?page=developer-tools' ) )
+			);
+		?>
+		</p>
+	</div>
+	<div class="card">
+		<h2 class="title"><?php _e( 'Orphan Meta Cleaner', 'sitecore' ); ?></h2>
+		<p>
+		<?php
+			printf(
+				__( 'Clean orphan metadata from posts, terms, users, and options pages with <a href="%s">this tool</a>.', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=acfe-scripts&script=orphan_meta_cleaner' ) )
+			);
+		?>
+		</p>
+	</div>
+	<div class="card">
+		<h2 class="title"><?php _e( 'Single Meta Converter', 'sitecore' ); ?></h2>
+		<p>
+		<?php
+			printf(
+				__( 'Convert posts, users, taxonomies & options pages meta to Single Meta or back to normal <a href="%s">this tool</a>.', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=acfe-scripts&script=single_meta_converter' ) )
 			);
 		?>
 		</p>
@@ -168,6 +218,17 @@ function add_help_tabs() {
 
 	$screen = get_current_screen();
 
+	$screen->add_help_tab(
+		[
+			'id'      => 'edit_options',
+			'title'   => __( 'Manage Options', 'sitecore' ),
+			'content' => sprintf(
+				__( '<p>The <a href="%s">options management page</a> page edits the options database. Only use this if you are familiar with editing the database via the phpmyadmin interface.</p>', 'sitecore' ),
+				esc_url( admin_url( 'tools.php?page=acfe-options' ) )
+			)
+		]
+	);
+
 	if ( current_user_can( 'develop' ) && dev_settings_page() ) {
 		$screen->add_help_tab(
 			[
@@ -180,6 +241,7 @@ function add_help_tabs() {
 			]
 		);
 	}
+	$screen->set_help_sidebar( null );
 }
 
 /**

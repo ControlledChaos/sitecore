@@ -535,9 +535,9 @@ class acfe_pro_admin_settings{
         );
 
         $this->fields['modules'][] = array(
-            'label'         => 'Scripts',
+            'label'         => 'Maintenance',
             'name'          => 'acfe/modules/scripts',
-            'description'   => 'Enable the Scripts UI. Defaults to true',
+            'description'   => 'Enable the Maintenance UI. Defaults to true',
             'type'          => 'true_false',
             'category'      => 'modules',
         );
