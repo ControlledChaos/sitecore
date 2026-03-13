@@ -16,7 +16,7 @@ class acfe_dynamic_taxonomies extends acfe_dynamic_module{
 			return;
 		}
 
-		$this->active = acf_get_setting('acfe/modules/taxonomies');
+		$this->active = true;
 		$this->settings = 'modules.taxonomies';
 		$this->post_type = 'acfe-dt';
 		$this->label = 'Taxonomy Name';

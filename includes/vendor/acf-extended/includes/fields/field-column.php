@@ -6,9 +6,9 @@ if(!defined('ABSPATH'))
 if(!class_exists('acfe_field_column')):
 
 class acfe_field_column extends acf_field{
-    
+
     function __construct(){
-        
+
         $this->name = 'acfe_column';
         $this->label = __('Column', 'acfe');
         $this->category = 'layout';
@@ -16,20 +16,20 @@ class acfe_field_column extends acf_field{
             'columns'       => '6/12',
             'endpoint'      => false,
         );
-        
+
         // Hooks
         add_filter('acfe/field_wrapper_attributes/type=acfe_column',    array($this, 'field_wrapper_attributes'), 10, 2);
         add_filter('acf/validate_field/type=acfe_column',               array($this, 'new_validate_field'), 20);
-        
+
         parent::__construct();
-        
+
     }
-    
+
     function new_validate_field($field){
-        
+
         if(!acfe_ends_with($field['columns'], '/6'))
             return $field;
-        
+
         if($field['columns'] === '1/6'){
             $field['columns'] = '2/12';
         }elseif($field['columns'] === '2/6'){
@@ -43,13 +43,13 @@ class acfe_field_column extends acf_field{
         }elseif($field['columns'] === '6/6'){
             $field['columns'] = '12/12';
         }
-        
+
         return $field;
-        
+
     }
-    
+
     function render_field_settings($field){
-        
+
         // columns
         acf_render_field_setting($field, array(
             'label'         => __('Columns', 'acfe'),
@@ -81,7 +81,7 @@ class acfe_field_column extends acf_field{
                 )
             )
         ));
-        
+
         // endpoint
         acf_render_field_setting($field, array(
             'label'         => __('Endpoint','acf'),
@@ -91,76 +91,76 @@ class acfe_field_column extends acf_field{
             'ui'            => 1,
             'class'         => 'acfe-field-columns-endpoint',
         ));
-        
+
     }
-    
+
     function field_wrapper_attributes($wrapper, $field){
-        
+
         if($field['endpoint']){
-            
+
             $wrapper['data-endpoint'] = $field['endpoint'];
-            
+
         }
-        
+
         elseif($field['columns']){
-            
+
             $wrapper['data-columns'] = $field['columns'];
-            
+
         }
-        
+
         return $wrapper;
-        
+
     }
-    
-    
+
+
     function render_field($field){
-        
+
         // vars
         $atts = array(
             'class' => 'acf-fields',
         );
-        
+
         ?>
         <div <?php acf_esc_attr_e($atts); ?>></div>
         <?php
-        
+
     }
 
     function load_field($field){
-        
+
         $columns = '';
         if($field['columns'])
             $columns = ucfirst($field['columns']);
-        
+
         if($field['endpoint'])
             $columns = 'Endpoint';
-        
+
         $field['label'] = '(Column ' . $columns . ')';
         $field['name'] = '';
         $field['instructions'] = '';
         $field['required'] = 0;
         $field['value'] = false;
-        
+
         return $field;
-        
+
     }
-    
+
     function prepare_field($field){
-    
+
         global $pagenow;
-        
+
         // Do not render on User/Term views without Enhanced UI module (because of Table render)
-        if((acf_is_screen(array('profile', 'user-edit')) || (acf_is_screen('user') && !is_multisite()) || $pagenow === 'term.php') && !acf_get_setting('acfe/modules/ui'))
-            return false;
-        
+        if((acf_is_screen(array('profile', 'user-edit')) || (acf_is_screen('user') && !is_multisite()) || $pagenow === 'term.php') )
+            // return false;
+
         // Do not render on New Term page (forced to left)
         if($pagenow === 'edit-tags.php')
             return false;
-        
+
         $field['label'] = false;
-        
+
         return $field;
-        
+
     }
 
 }

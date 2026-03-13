@@ -46,14 +46,6 @@ class Plugin_ACFE extends Plugin {
 		);
 
 		/**
-		 * Dequeue ACFE UI changes
-		 *
-		 * Uncomment to remove ACFE UI modifications.
-		 * May cause conflicts with some metaboxes.
-		 */
-		// add_action( 'admin_enqueue_scripts', [ $this, 'dequeue_acfe_ui' ] );
-
-		/**
 		 * ACF local JSON
 		 *
 		 * Remove some of the JSON directory filters in ACFE.
@@ -75,18 +67,6 @@ class Plugin_ACFE extends Plugin {
 
 		// New ACFE post type options.
 		add_filter( 'register_post_type_args', [ $this, 'acfe_post_type_options' ], 15, 2 );
-	}
-
-	/**
-	 * Dequeue ACFE UI changes
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @return void
-	 */
-	public function dequeue_acfe_ui() {
-		wp_dequeue_style( 'acf-extended-ui' );
-        wp_dequeue_script( 'acf-extended-ui' );
 	}
 
 	/**
@@ -153,17 +133,6 @@ class Plugin_ACFE extends Plugin {
 	}
 
 	/**
-	 * Editor setting
-	 *
-	 * Enable ACFE rich text editor module by default.
-	 */
-	public function acfe_editor_setting() {
-		if ( function_exists( 'acf_update_setting' ) ) {
-			acf_update_setting( 'acfe/modules/classic_editor', true );
-		}
-	}
-
-	/**
 	 * New ACFE post type options
 	 *
 	 * @since  1.0.0
@@ -208,11 +177,6 @@ class Plugin_ACFE extends Plugin {
 					}
 				}
 			}
-		}
-
-		if ( 'acfe-form' == $post_type ) {
-			$args['show_in_menu'] = 'tools.php';
-			$args['menu_position'] = 6;
 		}
 
 		if ( 'acfe-dop' == $post_type ) {

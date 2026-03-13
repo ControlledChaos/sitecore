@@ -1,560 +1,513 @@
 <?php
 
 if(!defined('ABSPATH'))
-    exit;
+	exit;
 
 if(!class_exists('acfe_pro_admin_settings')):
 
 class acfe_pro_admin_settings{
 
-    public $defaults = array();
-    public $updated = array();
-    public $fields = array();
+	public $defaults = array();
+	public $updated = array();
+	public $fields = array();
 
-    function __construct(){
+	function __construct(){
 
-        $class = acf_get_instance('acfe_admin_settings_ui');
+		$class = acf_get_instance('acfe_admin_settings_ui');
 
-        add_action('acf/init',                      array($this, 'acf_init'), 9);
-        add_action('acfe/admin_settings/load',      array($this, 'load'));
-        add_action('acfe/admin_settings/html',      array($this, 'html'));
+		add_action('acf/init',                      array($this, 'acf_init'), 9);
+		add_action('acfe/admin_settings/load',      array($this, 'load'));
+		add_action('acfe/admin_settings/html',      array($this, 'html'));
 
-        remove_action('acfe/admin_settings/load',   array($class, 'load'));
-        remove_action('acfe/admin_settings/html',   array($class, 'html'));
+		remove_action('acfe/admin_settings/load',   array($class, 'load'));
+		remove_action('acfe/admin_settings/html',   array($class, 'html'));
 
-    }
+	}
 
-    /*
-     * ACF Init
-     */
-    function acf_init(){
+	/*
+	 * ACF Init
+	 */
+	function acf_init(){
 
-        $settings = acfe_get_settings('settings');
+		$settings = acfe_get_settings('settings');
 
-        if(empty($settings)){
-            return;
-        }
+		if(empty($settings)){
+			return;
+		}
 
-        foreach($settings as $k => $v){
-            acf_update_setting($k, $v);
-        }
+		foreach($settings as $k => $v){
+			acf_update_setting($k, $v);
+		}
 
-    }
+	}
 
-    /*
-     * Load
-     */
-    function load(){
+	/*
+	 * Load
+	 */
+	function load(){
 
-        $acfe_admin_settings = acf_get_instance('acfe_admin_settings');
+		$acfe_admin_settings = acf_get_instance('acfe_admin_settings');
 
-        $this->defaults = $acfe_admin_settings->defaults;
-        $this->updated = $acfe_admin_settings->updated;
-        $this->fields = $acfe_admin_settings->fields;
+		$this->defaults = $acfe_admin_settings->defaults;
+		$this->updated = $acfe_admin_settings->updated;
+		$this->fields = $acfe_admin_settings->fields;
 
-        $this->register_fields();
+		$this->register_fields();
 
-        // Enqueue
-        acf_enqueue_scripts();
+		// Enqueue
+		acf_enqueue_scripts();
 
-        // Submit
-        if(acf_verify_nonce('acfe_settings')){
+		// Submit
+		if(acf_verify_nonce('acfe_settings')){
 
-            // Validate
-            if(acf_validate_save_post(true)){
+			// Validate
+			if(acf_validate_save_post(true)){
 
-                $this->save_post();
+				$this->save_post();
 
-                // Redirect
-                wp_redirect(add_query_arg(array('message' => 'acfe_settings')));
-                exit;
+				// Redirect
+				wp_redirect(add_query_arg(array('message' => 'acfe_settings')));
+				exit;
 
-            }
+			}
 
-        }
+		}
 
-        // Success
-        if(acf_maybe_get_GET('message') === 'acfe_settings'){
+		// Success
+		if(acf_maybe_get_GET('message') === 'acfe_settings'){
 
-            acf_add_admin_notice('Settings Saved.', 'success');
+			acf_add_admin_notice('Settings Saved.', 'success');
 
-        }
+		}
 
-    }
+	}
 
-    /*
-     * Save Post
-     */
-    function save_post(){
+	/*
+	 * Save Post
+	 */
+	function save_post(){
 
-        $values = acf_maybe_get_POST('acfe_settings', array());
+		$values = acf_maybe_get_POST('acfe_settings', array());
 
-        foreach($values as $name => &$value){
+		foreach($values as $name => &$value){
 
-            $data = $this->get_setting($name);
+			$data = $this->get_setting($name);
 
-            if($data['format'] === 'array'){
+			if($data['format'] === 'array'){
 
-                if(empty($value)){
-                    $value = array();
-                }else{
-                    $value = explode(',', $value);
-                }
+				if(empty($value)){
+					$value = array();
+				}else{
+					$value = explode(',', $value);
+				}
 
-            }
+			}
 
-            $value = wp_unslash($value);
+			$value = wp_unslash($value);
 
-        }
+		}
 
-        // Update Settings
-        acfe_update_settings('settings', $values);
+		// Update Settings
+		acfe_update_settings('settings', $values);
 
-    }
+	}
 
-    /*
-     * Get Setting
-     */
-    function get_setting($name){
+	/*
+	 * Get Setting
+	 */
+	function get_setting($name){
 
-        foreach($this->fields as $category => $rows){
+		foreach($this->fields as $category => $rows){
 
-            foreach($rows as $row){
+			foreach($rows as $row){
 
-                if($row['name'] !== $name)
-                    continue;
+				if($row['name'] !== $name)
+					continue;
 
-                $setting = $row;
-                break;
+				$setting = $row;
+				break;
 
-            }
+			}
 
-        }
+		}
 
-        return $this->validate_setting($setting);
+		return $this->validate_setting($setting);
 
-    }
+	}
 
-    /*
-     * Validate Setting
-     */
-    function validate_setting($setting){
+	/*
+	 * Validate Setting
+	 */
+	function validate_setting($setting){
 
-        $setting = wp_parse_args($setting, array(
-            'label'         => '',
-            'name'          => '',
-            'type'          => '',
-            'description'   => '',
-            'category'      => '',
-            'format'        => '',
-            'default'       => '',
-            'updated'       => '',
-            'value'         => '',
-            'class'         => '',
-            'buttons'       => '',
-            'diff'          => false,
-        ));
+		$setting = wp_parse_args($setting, array(
+			'label'         => '',
+			'name'          => '',
+			'type'          => '',
+			'description'   => '',
+			'category'      => '',
+			'format'        => '',
+			'default'       => '',
+			'updated'       => '',
+			'value'         => '',
+			'class'         => '',
+			'buttons'       => '',
+			'diff'          => false,
+		));
 
-        return $setting;
+		return $setting;
 
-    }
+	}
 
-    /*
-     * Prepare Setting
-     */
-    function prepare_setting($setting){
+	/*
+	 * Prepare Setting
+	 */
+	function prepare_setting($setting){
 
-        // Vars
-        $settings = acfe_get_settings('settings');
+		// Vars
+		$settings = acfe_get_settings('settings');
 
-        $name = $setting['name'];
-        $type = $setting['type'];
-        $format = $setting['format'];
-        $default = $this->defaults[$name];
-        $updated = $this->updated[$name];
+		$name = $setting['name'];
+		$type = $setting['type'];
+		$format = $setting['format'];
+		$default = $this->defaults[$name];
+		$updated = $this->updated[$name];
 
-        $vars = array(
-            'default' => $default,
-            'updated' => $updated
-        );
+		$vars = array(
+			'default' => $default,
+			'updated' => $updated
+		);
 
-        foreach($vars as $v => $var){
+		foreach($vars as $v => $var){
 
-            $result = $var;
+			$result = $var;
 
-            if($type === 'true_false'){
+			if($type === 'true_false'){
 
-                $result = $var ? '<span class="dashicons dashicons-saved"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
+				$result = $var ? '<span class="dashicons dashicons-saved"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
 
-            }elseif($type === 'text'){
+			}elseif($type === 'text'){
 
-                $result = '<span class="dashicons dashicons-no-alt"></span>';
+				$result = '<span class="dashicons dashicons-no-alt"></span>';
 
-                if($format === 'array' && empty($var) && $v === 'updated' && $default !== $updated){
-                    $var = array('(empty)');
-                }
+				if($format === 'array' && empty($var) && $v === 'updated' && $default !== $updated){
+					$var = array('(empty)');
+				}
 
-                if(!empty($var)){
+				if(!empty($var)){
 
-                    if(!is_array($var)){
-                        $var = explode(',', $var);
-                    }
+					if(!is_array($var)){
+						$var = explode(',', $var);
+					}
 
-                    foreach($var as &$r){
-                        $r = '<div class="acf-js-tooltip acfe-settings-text" title="' . $r . '"><code>' . $r . '</code></div>';
-                    }
+					foreach($var as &$r){
+						$r = '<div class="acf-js-tooltip acfe-settings-text" title="' . $r . '"><code>' . $r . '</code></div>';
+					}
 
-                    $result = implode('', $var);
+					$result = implode('', $var);
 
-                }
+				}
 
-            }
+			}
 
-            $setting[$v] = $result;
+			$setting[$v] = $result;
 
-        }
+		}
 
-        // Local Changes
-        if($default !== $updated && $updated !== acfe_get_settings("settings.{$name}")){
+		// Local Changes
+		if($default !== $updated && $updated !== acfe_get_settings("settings.{$name}")){
 
-            $setting['updated'] .= '<span style="color:#888; margin-left:7px;vertical-align: 6px;font-size:11px;">(Local code)</span>';
-            $setting['diff'] = true;
+			$setting['updated'] .= '<span style="color:#888; margin-left:7px;vertical-align: 6px;font-size:11px;">(Local code)</span>';
+			$setting['diff'] = true;
 
-        }
+		}
 
-        // Value
-        $button_edit = $button_default = $class = '';
-        $value = acf_maybe_get($settings, $name);
+		// Value
+		$button_edit = $button_default = $class = '';
+		$value = acf_maybe_get($settings, $name);
 
-        // Value exists
-        if($value !== null){
+		// Value exists
+		if($value !== null){
 
-            $button_edit = 'acf-hidden';
-            $setting['diff'] = true;
+			$button_edit = 'acf-hidden';
+			$setting['diff'] = true;
 
-        }else{
+		}else{
 
-            $button_default = 'acf-hidden';
-            $class = 'acf-hidden acfe-disabled';
+			$button_default = 'acf-hidden';
+			$class = 'acf-hidden acfe-disabled';
 
-            $value = $this->defaults[$name];
+			$value = $this->defaults[$name];
 
-        }
+		}
 
-        if(is_array($value)){
-            $value = implode(',', $value);
-        }
+		if(is_array($value)){
+			$value = implode(',', $value);
+		}
 
-        $setting['value'] = $value;
-        $setting['class'] = $class;
-        $setting['buttons'] = '<a href="#" class="' . $button_default . '" data-acfe-settings-action="default" data-acfe-settings-field="' . $name . '" style="margin-left:2px; padding:6px 0;display:block;">Default</a><a href="#" class="acf-button button ' . $button_edit . '" data-acfe-settings-action="edit" data-acfe-settings-field="' . $name . '">Edit</a>';
+		$setting['value'] = $value;
+		$setting['class'] = $class;
+		$setting['buttons'] = '<a href="#" class="' . $button_default . '" data-acfe-settings-action="default" data-acfe-settings-field="' . $name . '" style="margin-left:2px; padding:6px 0;display:block;">Default</a><a href="#" class="acf-button button ' . $button_edit . '" data-acfe-settings-action="edit" data-acfe-settings-field="' . $name . '">Edit</a>';
 
-        return $setting;
+		return $setting;
 
-    }
+	}
 
-    /*
-     * HTML
-     */
-    function html(){
+	/*
+	 * HTML
+	 */
+	function html(){
 
-        ?>
-        <div class="wrap" id="acfe-admin-settings">
+		?>
+		<div class="wrap" id="acfe-admin-settings">
 
-            <h1><?php _e( 'Content Settings' ); ?></h1>
+			<h1><?php _e( 'Content Settings' ); ?></h1>
 
-            <form id="post" method="post" name="post">
+			<form id="post" method="post" name="post">
 
-                <?php
+				<?php
 
-                // render post data
-                acf_form_data(array(
-                    'screen' => 'acfe_settings',
-                ));
+				// render post data
+				acf_form_data(array(
+					'screen' => 'acfe_settings',
+				));
 
-                ?>
-                <div id="poststuff">
+				?>
+				<div id="poststuff">
 
-                    <div id="post-body" class="metabox-holder columns-2">
+					<div id="post-body" class="metabox-holder columns-2">
 
-                        <!-- Sidebar -->
-                        <div id="postbox-container-1" class="postbox-container">
+						<!-- Metabox -->
+						<div id="postbox-container-2" class="postbox-container">
 
-                            <div id="side-sortables" class="meta-box-sortables ui-sortable">
-                                <div id="submitdiv" class="postbox">
-                                    <div class="postbox-header"><h2 class="hndle ui-sortable-handle">Publish</h2></div>
-                                    <div class="inside">
+							<div class="postbox acf-postbox">
 
-                                        <div id="minor-publishing">
+								<div class="postbox-header">
+									<h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
+								</div>
+								<div class="inside acf-fields -left">
 
-                                            <div id="misc-publishing-actions">
+									<?php $this->render_fields(); ?>
 
-                                                <div class="misc-pub-section acfe-misc-export">
-                                                    <span class="dashicons dashicons-editor-code"></span>
-                                                    Export:
-                                                    <a href="<?php echo admin_url("tools.php?page=acf-tools&tool=acfe_settings_export&action=php"); ?>">PHP</a>
-                                                    <a href="<?php echo admin_url("tools.php?page=acf-tools&tool=acfe_settings_export&action=json"); ?>">Json</a>
-                                                </div>
-                                            </div>
+									<script type="text/javascript">
+										if(typeof acf !== 'undefined'){
+											acf.newPostbox({
+												'id': 'acfe-settings',
+												'label': 'left'
+											});
+										}
+									</script>
+								</div>
+							</div>
+						</div>
+						<p><input type="submit" accesskey="p" value="<?php _e( 'Update' ); ?>" class="button button-primary button-large" id="publish" name="publish" /></p>
+					</div>
 
-                                        </div>
+				</div>
 
-                                        <div id="major-publishing-actions">
+			</form>
 
-                                            <div id="publishing-action">
-                                                <span class="spinner"></span>
-                                                <input type="submit" accesskey="p" value="<?php _e('Update'); ?>" class="button button-primary button-large" id="publish" name="publish">
-                                            </div>
+		</div>
+		<?php
+	}
 
-                                            <div class="clear"></div>
+	/*
+	 * Render Fields
+	 */
+	function render_fields(){
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+		foreach(array('Features', 'ACF', 'ACFE', 'AutoSync', 'Fields') as $tab){
 
-                        </div>
+			// Category
+			$category = sanitize_title($tab);
 
-                        <!-- Metabox -->
-                        <div id="postbox-container-2" class="postbox-container">
+			if(isset($this->fields[$category])){
 
-                            <div class="postbox acf-postbox">
+				$fields = array();
+				$count = 0;
 
-                                <div class="postbox-header">
-                                    <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
-                                </div>
-                                <div class="inside acf-fields -left">
+				foreach($this->fields[$category] as $field){
 
-                                    <?php $this->render_fields(); ?>
+					// Prepare
+					$field = $this->validate_setting($field);
+					$field = $this->prepare_setting($field);
 
-                                    <script type="text/javascript">
-                                        if(typeof acf !== 'undefined'){
-                                            acf.newPostbox({
-                                                'id': 'acfe-settings',
-                                                'label': 'left'
-                                            });
-                                        }
-                                    </script>
-                                </div>
-                            </div>
+					$fields[] = $field;
 
-                        </div>
+				}
 
-                    </div>
+				foreach($fields as $field){
 
-                </div>
+					if(!$field['diff']) continue;
+					$count++;
 
-            </form>
+				}
 
-        </div>
-        <?php
-    }
+				$class = $count > 0 ? 'acfe-tab-badge' : 'acfe-tab-badge acf-hidden';
+				$tab .= ' <span class="' . $class . '">' . $count . '</span>';
 
-    /*
-     * Render Fields
-     */
-    function render_fields(){
+				// Tab
+				acf_render_field_wrap(array(
+					'type'  => 'tab',
+					'label' => $tab,
+					'key'   => 'field_acfe_settings_tabs',
+					'wrapper' => array(
+						'data-no-preference' => true,
+					),
+				));
 
-        foreach(array('ACF', 'ACFE', 'AutoSync', 'Modules', 'Fields') as $tab){
+				// Thead
+				acf_render_field_wrap(array(
+					'type'  => 'acfe_dynamic_render',
+					'label' => '',
+					'key'   => 'field_acfe_settings_thead_' . $category,
+					'wrapper' => array(
+						'class' => 'acfe-settings-thead'
+					),
+					'render' => function($field){
+						?>
+						<div>Default</div>
+						<div>Registered</div>
+						<div>Edit</div>
+						<?php
+					}
+				));
 
-            // Category
-            $category = sanitize_title($tab);
+				foreach($fields as $field){ ?>
 
-            if(isset($this->fields[$category])){
+					<div class="acf-field">
+						<div class="acf-label">
+							<label><span class="acf-js-tooltip dashicons dashicons-info" title="<?php echo $field['name']; ?>"></span><?php echo $field['label']; ?></label>
+							<?php if($field['description']){ ?>
+								<p class="description"><?php echo $field['description']; ?></p>
+							<?php } ?>
+						</div>
+						<div class="acf-input">
 
-                $fields = array();
-                $count = 0;
+							<div><?php echo $field['default']; ?></div>
 
-                foreach($this->fields[$category] as $field){
+							<div><?php echo $field['updated']; ?></div>
 
-                    // Prepare
-                    $field = $this->validate_setting($field);
-                    $field = $this->prepare_setting($field);
+							<div>
 
-                    $fields[] = $field;
+								<div><?php echo $field['buttons']; ?></div>
 
-                }
+								<div>
+									<?php
+									acf_render_field_wrap(array(
+										'instructions'  => '',
+										'type'          => $field['type'],
+										'ui'            => true,
+										'key'           => $field['name'],
+										'name'          => $field['name'],
+										'prefix'        => 'acfe_settings',
+										'value'         => $field['value'],
+										'wrapper'       => array(
+											'class'                     => $field['class'],
+											'style'                     => 'margin:0;',
+											'data-acfe-settings-field'  => 1
+										)
+									));
+									?>
+								</div>
 
-                foreach($fields as $field){
+							</div>
 
-                    if(!$field['diff']) continue;
-                    $count++;
+						</div>
+					</div>
 
-                }
+					<?php
+				}
 
-                $class = $count > 0 ? 'acfe-tab-badge' : 'acfe-tab-badge acf-hidden';
-                $tab .= ' <span class="' . $class . '">' . $count . '</span>';
+			}
 
-                // Tab
-                acf_render_field_wrap(array(
-                    'type'  => 'tab',
-                    'label' => $tab,
-                    'key'   => 'field_acfe_settings_tabs',
-                    'wrapper' => array(
-                        'data-no-preference' => true,
-                    ),
-                ));
+		}
 
-                // Thead
-                acf_render_field_wrap(array(
-                    'type'  => 'acfe_dynamic_render',
-                    'label' => '',
-                    'key'   => 'field_acfe_settings_thead_' . $category,
-                    'wrapper' => array(
-                        'class' => 'acfe-settings-thead'
-                    ),
-                    'render' => function($field){
-                        ?>
-                        <div>Default</div>
-                        <div>Registered</div>
-                        <div>Edit</div>
-                        <?php
-                    }
-                ));
+	}
 
-                foreach($fields as $field){ ?>
+	/*
+	 * Register Fields
+	 */
+	function register_fields(){
 
-                    <div class="acf-field">
-                        <div class="acf-label">
-                            <label><span class="acf-js-tooltip dashicons dashicons-info" title="<?php echo $field['name']; ?>"></span><?php echo $field['label']; ?></label>
-                            <?php if($field['description']){ ?>
-                                <p class="description"><?php echo $field['description']; ?></p>
-                            <?php } ?>
-                        </div>
-                        <div class="acf-input">
+		$this->fields['features'][] = array(
+			'label'         => 'Field Group UI',
+			'name'          => 'acfe/modules/field_group_ui',
+			'description'   => 'Enable the enhanced Field Group UI module. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                            <div><?php echo $field['default']; ?></div>
+		$this->fields['features'][] = array(
+			'label'         => 'Force Sync',
+			'name'          => 'acfe/modules/force_sync',
+			'description'   => 'Enable the Force Sync module. Defaults to false',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                            <div><?php echo $field['updated']; ?></div>
+		$this->fields['features'][] = array(
+			'label'         => 'Force Sync: Delete',
+			'name'          => 'acfe/modules/force_sync/delete',
+			'description'   => 'Sync deleted field groups files. Force Sync must be enabled. Defaults to false',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                            <div>
+		$this->fields['features'][] = array(
+			'label'         => 'Forms: Shortcode Preview',
+			'name'          => 'acfe/modules/forms/shortcode_preview',
+			'type'          => 'text',
+			'description'   => 'Display <code>[acfe_form]</code> shortcode preview in editors. Defaults to false',
+			'category'      => 'features',
+			'format'        => 'array',
+		);
 
-                                <div><?php echo $field['buttons']; ?></div>
+		$this->fields['features'][] = array(
+			'label'         => 'Global Field Condition',
+			'name'          => 'acfe/modules/global_field_condition',
+			'description'   => 'Enable the Global Field Condition module. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                                <div>
-                                    <?php
-                                    acf_render_field_wrap(array(
-                                        'instructions'  => '',
-                                        'type'          => $field['type'],
-                                        'ui'            => true,
-                                        'key'           => $field['name'],
-                                        'name'          => $field['name'],
-                                        'prefix'        => 'acfe_settings',
-                                        'value'         => $field['value'],
-                                        'wrapper'       => array(
-                                            'class'                     => $field['class'],
-                                            'style'                     => 'margin:0;',
-                                            'data-acfe-settings-field'  => 1
-                                        )
-                                    ));
-                                    ?>
-                                </div>
+		$this->fields['features'][] = array(
+			'label'         => 'Rewrite Rules',
+			'name'          => 'acfe/modules/rewrite_rules',
+			'description'   => 'Enable the Rewrite Rules UI. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                            </div>
+		$this->fields['features'][] = array(
+			'label'         => 'Screen Layouts',
+			'name'          => 'acfe/modules/screen_layouts',
+			'description'   => 'Enable the Columns Screen Layouts. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                        </div>
-                    </div>
+		$this->fields['features'][] = array(
+			'label'         => 'Maintenance',
+			'name'          => 'acfe/modules/scripts',
+			'description'   => 'Enable the Maintenance UI. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-                    <?php
-                }
+		$this->fields['features'][] = array(
+			'label'         => 'Templates',
+			'name'          => 'acfe/modules/templates',
+			'description'   => 'Enable the Templates module. Defaults to true',
+			'type'          => 'true_false',
+			'category'      => 'features',
+		);
 
-            }
+		usort($this->fields['features'], function($a, $b){
+			// return strcmp($a['label'], $b['label']);
+		});
 
-        }
-
-    }
-
-    /*
-     * Register Fields
-     */
-    function register_fields(){
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Classic Editor',
-            'name'          => 'acfe/modules/classic_editor',
-            'description'   => 'Enable the Classic Editor module. Defaults to false',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Field Group UI',
-            'name'          => 'acfe/modules/field_group_ui',
-            'description'   => 'Enable the enhanced Field Group UI module. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Force Sync',
-            'name'          => 'acfe/modules/force_sync',
-            'description'   => 'Enable the Force Sync module. Defaults to false',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Force Sync: Delete',
-            'name'          => 'acfe/modules/force_sync/delete',
-            'description'   => 'Sync deleted field groups files. Force Sync must be enabled. Defaults to false',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Forms: Shortcode Preview',
-            'name'          => 'acfe/modules/forms/shortcode_preview',
-            'type'          => 'text',
-            'description'   => 'Display <code>[acfe_form]</code> shortcode preview in editors. Defaults to false',
-            'category'      => 'modules',
-            'format'        => 'array',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Global Field Condition',
-            'name'          => 'acfe/modules/global_field_condition',
-            'description'   => 'Enable the Global Field Condition module. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Rewrite Rules',
-            'name'          => 'acfe/modules/rewrite_rules',
-            'description'   => 'Enable the Rewrite Rules UI. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Screen Layouts',
-            'name'          => 'acfe/modules/screen_layouts',
-            'description'   => 'Enable the Columns Screen Layouts. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Maintenance',
-            'name'          => 'acfe/modules/scripts',
-            'description'   => 'Enable the Maintenance UI. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        $this->fields['modules'][] = array(
-            'label'         => 'Templates',
-            'name'          => 'acfe/modules/templates',
-            'description'   => 'Enable the Templates module. Defaults to true',
-            'type'          => 'true_false',
-            'category'      => 'modules',
-        );
-
-        usort($this->fields['modules'], function($a, $b){
-            return strcmp($a['label'], $b['label']);
-        });
-
-    }
+	}
 
 }
 

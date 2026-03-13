@@ -16,7 +16,7 @@ class acfe_dynamic_post_types extends acfe_dynamic_module{
 			return;
 		}
 
-		$this->active = acf_get_setting('acfe/modules/post_types');
+		$this->active = true;
 		$this->settings = 'modules.post_types';
 		$this->post_type = 'acfe-dpt';
 		$this->label = 'Post Type Label';
