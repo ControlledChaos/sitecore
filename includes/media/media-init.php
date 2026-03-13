@@ -38,6 +38,9 @@ function setup() {
 	// Add categories and tags to media library items.
 	add_action( 'init' , $ns( 'media_taxonomies' ) );
 
+	// Upload filenames to lowercase.
+	add_filter( 'sanitize_file_name', 'mb_strtolower' );
+
 	// Add image sizes.
 	add_action( 'init', $ns( 'image_sizes' ) );
 
