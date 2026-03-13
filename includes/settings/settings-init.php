@@ -76,12 +76,14 @@ function admin_settings() {
 function content_settings() {
 
 	$sections  = new Settings_Class\Settings_Sections_Content;
-	$posts     = new Settings_Class\Settings_Fields_Content;
+	$features  = new Settings_Class\Settings_Fields_Features;
+	$options   = new Settings_Class\Settings_Fields_Content;
 	$meta_tags = new Settings_Class\Settings_Fields_Meta_Tags;
 	$page      = new Backend_Class\Content_Settings_Page;
 
 	$sections  -> sections();
-	$posts     -> fields();
+	$features  -> fields();
+	$options   -> fields();
 	$meta_tags -> fields();
 	$page      -> add_page();
 }

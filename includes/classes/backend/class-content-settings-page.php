@@ -113,9 +113,19 @@ class Content_Settings_Page extends Add_Page {
 
 		$this->add_content_tab( [
 			'capability' => 'manage_options',
+			'id'         => 'content-settings-features',
+			'tab'        => __( 'Features', 'sitecore' ),
+			'heading'    => __( 'Content Features', 'sitecore' ),
+			'icon'       => 'dashicons-flag',
+			'content'    => '',
+			'callback'   => [ $this, 'features_tab' ]
+		] );
+
+		$this->add_content_tab( [
+			'capability' => 'manage_options',
 			'id'         => 'content-settings',
 			'tab'        => __( 'Options', 'sitecore' ),
-			'heading'    => __( 'Website Content Options', 'sitecore' ),
+			'heading'    => __( 'Content Options', 'sitecore' ),
 			'icon'       => 'dashicons-admin-generic',
 			'content'    => '',
 			'callback'   => [ $this, 'settings_tab' ]
@@ -143,6 +153,17 @@ class Content_Settings_Page extends Add_Page {
 	 */
 	public function intro_tab() {
 		include SCP_PATH . 'views/backend/forms/partials/settings-content-intro.php';
+	}
+
+	/**
+	 * Features callback
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return mixed Returns the tab content.
+	 */
+	public function features_tab() {
+		include SCP_PATH . 'views/backend/forms/partials/settings-features.php';
 	}
 
 	/**
