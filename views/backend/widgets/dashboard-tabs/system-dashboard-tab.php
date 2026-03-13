@@ -9,9 +9,9 @@
  */
 
 use function SiteCore\Core\{
+	is_classicpress,
 	platform_name,
 	platform_version,
-	is_classicpress
 };
 use SiteCore\System_Summary as Summary;
 
@@ -22,6 +22,7 @@ if ( is_classicpress() ) {
 	$avatar = SCP_PATH . 'assets/images/wordpress-avatar.svg';
 }
 
+// Database icon.
 if ( is_classicpress() ) {
 	$database_icon = 'dashicons-admin-generic';
 } else {
@@ -112,6 +113,12 @@ if ( is_classicpress() ) {
 
 			<ul id="dashboard-website-options">
 				<li><a href="<?php echo admin_url( 'options-general.php' ); ?>"><?php _e( 'General Settings', 'sitecore' ); ?></a></li>
+
+				<li><a href="<?php echo admin_url( 'options.php' ); ?>"><?php _e( 'Options Editor', 'sitecore' ); ?></a></li>
+
+				<?php if ( ! get_option( 'disable_site_health', false ) ) : ?>
+				<li><a href="<?php echo admin_url( 'site-health.php' ); ?>"><?php _e( 'Site Health', 'sitecore' ); ?></a></li>
+				<?php endif; ?>
 			</ul>
 		</div>
 	</div>
