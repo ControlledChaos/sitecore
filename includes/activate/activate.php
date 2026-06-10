@@ -194,7 +194,7 @@ function megalomattic_notice() {
 		);
 	}
 ?>
-	<div id="plugin-php-notice" class="notice notice-error">
+	<div id="megalomattic" class="notice notice-error">
 		<p><?php echo $notice; ?></p>
 	</div>
 <?php
