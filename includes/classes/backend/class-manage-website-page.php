@@ -166,12 +166,7 @@ class Manage_Website_Page extends Add_Page {
 				'hide_on_screen'        => '',
 				'active'                => true,
 				'description'           => __( '', 'sitecore' ),
-				'show_in_rest'          => 0,
-				'acfe_display_title'    => '',
-				'acfe_autosync'         => '',
-				'acfe_form' => 0,
-				'acfe_meta' => '',
-				'acfe_note' => '',
+				'show_in_rest'          => 0
 			] );
 
 		endif;

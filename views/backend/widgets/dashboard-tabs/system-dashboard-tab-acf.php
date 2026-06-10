@@ -13,12 +13,6 @@ use function SiteCore\Core\{
 	platform_name,
 	platform_version,
 };
-use function SiteCore\Compatibility\{
-	active_acfe,
-	active_acfe_pro,
-	has_acfe,
-	has_acfe_pro
-};
 use SiteCore\System_Summary as Summary;
 
 // Platform avatar.
@@ -35,26 +29,7 @@ if ( is_classicpress() ) {
 	$database_icon = 'dashicons-database';
 }
 
-// ACFE and options page.
-$acfe = false;
 $edit_options  = 'options.php';
-if ( active_acfe() || active_acfe_pro() ) {
-	$acfe = true;
-	if ( acf_get_setting( 'acfe/modules/options' ) ) {
-		$edit_options = 'options-general.php?page=acfe-options';
-	}
-	if ( acf_get_setting( 'acfe/modules/options_pages' ) ) {
-		$options_pages = 'edit.php?post_type=acfe-dop';
-	}
-} elseif ( has_acfe() || has_acfe_pro() ) {
-	$acfe = true;
-	if ( acf_get_setting( 'acfe/modules/options' ) ) {
-		$edit_options = 'tools.php?page=acfe-options';
-	}
-	if ( acf_get_setting( 'acfe/modules/options_pages' ) ) {
-		$options_pages = 'edit.php?post_type=acfe-dop';
-	}
-}
 
 ?>
 <div id="system" class="tab-content dashboard-panel-content dashboard-content-system" style="display: none;">
@@ -142,14 +117,6 @@ if ( active_acfe() || active_acfe_pro() ) {
 				<li><a href="<?php echo admin_url( 'options-general.php' ); ?>"><?php _e( 'General Settings', 'sitecore' ); ?></a></li>
 
 				<li><a href="<?php echo admin_url( $edit_options ); ?>"><?php _e( 'Options Editor', 'sitecore' ); ?></a></li>
-
-				<?php if ( $acfe && $options_pages ) : ?>
-				<li><a href="<?php echo admin_url( $options_pages ); ?>"><?php _e( 'Options Pages', 'sitecore' ); ?></a></li>
-				<?php endif; ?>
-
-				<?php if ( active_acfe_pro() || has_acfe_pro() ) : ?>
-				<li><a href="<?php echo admin_url( 'tools.php?page=acfe-scripts' ); ?>"><?php _e( 'Maintenance', 'sitecore' ); ?></a></li>
-				<?php endif; ?>
 
 				<?php if ( ! get_option( 'disable_site_health', false ) ) : ?>
 				<li><a href="<?php echo admin_url( 'site-health.php' ); ?>"><?php _e( 'Site Health', 'sitecore' ); ?></a></li>

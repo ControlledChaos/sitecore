@@ -28,15 +28,8 @@ function content_settings_intro( $content = '' ) {
 		Users\user_roles()
 	);
 
-	// If ACF and ACF Extended are active.
-	if ( current_user_can( 'develop' ) && ( class_exists( 'acf' ) && class_exists( 'acfe' ) ) ) {
-
-		$content .= sprintf(
-			'<p>%s</p>',
-			__( 'You are seeing this content because you have the user role of Developer, and because Advanced Custom Fields and Advanced Custom Fields: Extended are both active.', 'sitecore' )
-		);
-
-	} elseif ( current_user_can( 'develop' ) && class_exists( 'acf' ) ) {
+	// If ACF is active.
+	if ( current_user_can( 'develop' ) && class_exists( 'acf' ) ) {
 
 		$content .= sprintf(
 			'<p>%s</p>',

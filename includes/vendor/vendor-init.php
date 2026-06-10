@@ -34,7 +34,6 @@ function setup() {
 	};
 
 	add_action( 'plugins_loaded', $ns( 'acf' ) );
-	add_action( 'plugins_loaded', $ns( 'acfe' ) );
 }
 
 /**
@@ -56,16 +55,4 @@ function acf() {
 		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Content_Import_Export' );
 		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Manage_Fields' );
 	}
-}
-
-/**
- * Advanced Custom Fields: Extended
- *
- * @since  1.0.0
- * @return void
- */
-function acfe() {
-
-	$scp_acfe = new Vendor_Class\Plugin_ACFE;
-	$scp_acfe->include();
 }

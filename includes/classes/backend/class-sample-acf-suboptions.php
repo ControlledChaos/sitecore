@@ -77,25 +77,7 @@ class Sample_ACF_Suboptions extends Add_Page {
 	 * @access protected
 	 * @return string Returns the field markup.
 	 */
-	protected function field_group_actions() {
-
-		$html = sprintf(
-			'<p>%s</p>',
-			__( 'Try one of the following actions with this sample field group.', 'sitecore' )
-		);
-
-		$html .= sprintf(
-			'<p><a href="%s" target="_blank" rel="nofollow noindex">%s</a> | <a href="%s" rel="nofollow noindex">%s</a> | <a href="%s" rel="nofollow noindex">%s</a></p>',
-			esc_url( admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=php&keys=' . $this->local_field_group_key() ) ),
-			__( 'Copy PHP', 'sitecore' ),
-			esc_url( admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=json&keys=' . $this->local_field_group_key() ) ),
-			__( 'Export JSON', 'sitecore' ),
-			esc_url( admin_url( 'tools.php?page=acf-tools&tool=acfe-fg-local&action=sync&keys=' . $this->local_field_group_key() ) ),
-			__( 'Sync to Database', 'sitecore' )
-		);
-
-		return $html;
-	}
+	protected function field_group_actions() {}
 
 	/**
 	 * Field groups
@@ -137,36 +119,10 @@ class Sample_ACF_Suboptions extends Add_Page {
 				'placeholder'   => __( 'Just a text field.', 'sitecore' ),
 				'prepend'       => __( '', 'sitecore' ),
 				'append'        => __( '', 'sitecore' ),
-				'maxlength'     => '',
-				'acfe_field_group_condition' => 0
+				'maxlength'     => ''
 			]
 		];
 		$fields = array_merge( $fields, $sample );
-
-		$actions = [
-			[
-				'key'               => 'field_64bc275df6658',
-				'label'             => __( 'Field Group Options', 'sitecore' ),
-				'name'              => 'sample_options_subpage_actions',
-				'type'              => 'message',
-				'instructions'      => __( '', 'sitecore' ),
-				'required'          => 0,
-				'conditional_logic' => 0,
-				'wrapper'           => [
-					'width' => '',
-					'class' => '',
-					'id'    => '',
-				],
-				'message'   => $this->field_group_actions(),
-				'new_lines' => '',
-				'esc_html'  => 0,
-				'acfe_field_group_condition' => 0,
-			]
-		];
-
-		if ( Compat\active_acfe() || Compat\has_acfe() ) {
-			$fields = array_merge( $fields, $actions );
-		}
 
 		acf_add_local_field_group( [
 			'key'      => $this->local_field_group_key(),
@@ -188,12 +144,7 @@ class Sample_ACF_Suboptions extends Add_Page {
 			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
-			'description'           => __( 'Field group provided as a sample for the sample options page.', 'sitecore' ),
-			'acfe_autosync'         => '',
-			'acfe_form'             => 0,
-			'acfe_display_title'    => '',
-			'acfe_meta'             => '',
-			'acfe_note'             => ''
+			'description'           => __( 'Field group provided as a sample for the sample options page.', 'sitecore' )
 		] );
 	}
 }

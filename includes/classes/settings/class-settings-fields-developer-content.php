@@ -60,68 +60,6 @@ class Settings_Fields_Developer_Content extends Settings_Fields {
 			]
 		];
 
-		$acfe_fields = [
-			[
-				'id'       => 'enable_dynamic_post_types',
-				'title'    => __( 'Enable Post Types', 'sitecore' ),
-				'callback' => [ $this, 'enable_dynamic_post_types_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer-content',
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Allow the addition and management of custom post types via user interface.', 'sitecore' ),
-					'class'       => 'admin-field'
-				]
-			],
-			[
-				'id'       => 'enable_dynamic_taxonomies',
-				'title'    => __( 'Enable Taxonomies', 'sitecore' ),
-				'callback' => [ $this, 'enable_dynamic_taxonomies_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer-content',
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Allow the addition and management of custom taxonomies via user interface.', 'sitecore' ),
-					'class'       => 'admin-field'
-				]
-			],
-			[
-				'id'       => 'enable_dynamic_block_types',
-				'title'    => __( 'Enable Block Types', 'sitecore' ),
-				'callback' => [ $this, 'enable_dynamic_block_types_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer-content',
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Allow the addition and management of custom block types via user interface.', 'sitecore' ),
-					'class'       => 'admin-field'
-				]
-			]
-		];
-
-		if ( class_exists( 'acfe' ) ) {
-			$fields = array_merge( $fields, $acfe_fields );
-		}
-
-		$acfe_pro_fields = [
-			[
-				'id'       => 'enable_dynamic_templates',
-				'title'    => __( 'Enable Edit Templates', 'sitecore' ),
-				'callback' => [ $this, 'enable_dynamic_templates_callback' ],
-				'page'     => 'developer-tools',
-				'section'  => 'scp-options-developer-content',
-				'type'     => 'checkbox',
-				'args'     => [
-					'description' => __( 'Allow the addition and management of custom editing templates via user interface.', 'sitecore' ),
-					'class'       => 'admin-field'
-				]
-			]
-		];
-
-		if ( class_exists( 'acfe_pro' ) ) {
-			$fields = array_merge( $fields, $acfe_pro_fields );
-		}
-
 		parent :: __construct(
 			null,
 			$fields

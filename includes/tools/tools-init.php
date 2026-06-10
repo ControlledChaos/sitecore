@@ -152,17 +152,6 @@ function available_tools() {
 		?>
 		</p>
 	</div>
-	<div class="card">
-		<h2 class="title"><?php _e( 'Manage Options', 'sitecore' ); ?></h2>
-		<p>
-		<?php
-			printf(
-				__( 'Manage this website\'s options database table from the <a href="%s">options edit</a> page. This is for advanced users or developers only.', 'sitecore' ),
-				esc_url( admin_url( 'tools.php?page=acfe-options' ) )
-			);
-		?>
-		</p>
-	</div>
 	<?php
 	endif;
 
@@ -175,28 +164,6 @@ function available_tools() {
 			printf(
 				__( 'As a registered developer of this website there are <a href="%s">tools available</a> to you for managing the site.', 'sitecore' ),
 				esc_url( admin_url( 'tools.php?page=developer-tools' ) )
-			);
-		?>
-		</p>
-	</div>
-	<div class="card">
-		<h2 class="title"><?php _e( 'Orphan Meta Cleaner', 'sitecore' ); ?></h2>
-		<p>
-		<?php
-			printf(
-				__( 'Clean orphan metadata from posts, terms, users, and options pages with <a href="%s">this tool</a>.', 'sitecore' ),
-				esc_url( admin_url( 'tools.php?page=acfe-scripts&script=orphan_meta_cleaner' ) )
-			);
-		?>
-		</p>
-	</div>
-	<div class="card">
-		<h2 class="title"><?php _e( 'Single Meta Converter', 'sitecore' ); ?></h2>
-		<p>
-		<?php
-			printf(
-				__( 'Convert posts, users, taxonomies & options pages meta to Single Meta or back to normal <a href="%s">this tool</a>.', 'sitecore' ),
-				esc_url( admin_url( 'tools.php?page=acfe-scripts&script=single_meta_converter' ) )
 			);
 		?>
 		</p>

@@ -96,41 +96,6 @@ function active_acf_pro() {
 }
 
 /**
- * ACFE is active
- *
- * Checks for the Advanced Custom Fields: Extended plugin.
- *
- * @since  1.0.0
- * @return boolean Returns true if the plugin is installed & active.
- */
-function active_acfe() {
-
-	if ( is_plugin_active( 'acf-extended/acf-extended.php' ) ) {
-		return true;
-	}
-	return false;
-}
-
-/**
- * ACFE PRO is active
- *
- * Checks for the Advanced Custom Fields: Extended PRO plugin.
- *
- * @since  1.0.0
- * @return boolean Returns true if the plugin is installed & active.
- */
-function active_acfe_pro() {
-
-	if (
-		is_plugin_active( 'acf-extended-pro/acf-extended.php' ) ||
-		is_plugin_active( 'applied-content-forms/acf.php' )
-	) {
-		return true;
-	}
-	return false;
-}
-
-/**
  * ACF included
  *
  * Checks for Advanced Custom Fields files included
@@ -177,55 +142,6 @@ function has_acf_pro() {
 }
 
 /**
- * ACFE included
- *
- * Checks for Advanced Custom Fields: Extended files included
- * with this plugin.
- *
- * @since  1.0.0
- * @return boolean Returns true if the core file is found & included.
- */
-function has_acfe() {
-
-	// Set core ACF file as a variable.
-	$acfe = file_exists( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
-
-	// Return true if the file is found.
-	if ( $acfe && class_exists( 'ACFE' ) ) {
-		return true;
-	}
-
-	// Otherwise return false.
-	return false;
-}
-
-/**
- * ACFE PRO included
- *
- * Checks for Advanced Custom Fields: Extended PRO
- * files included with this plugin.
- *
- * This is provided for custom versions of this
- * plugin which may include the pro version.
- *
- * @since  1.0.0
- * @return boolean Returns true if the core file is found & included.
- */
-function has_acfe_pro() {
-
-	// Set core ACF file as a variable.
-	$acfe_pro = file_exists( SCP_PATH . 'includes/vendor/acf-extended/acf-extended.php' );
-
-	// Return true if the file is found & included.
-	if ( $acfe_pro && class_exists( 'ACFE_Pro' ) ) {
-		return true;
-	}
-
-	// Otherwise return false.
-	return false;
-}
-
-/**
  * ACF ready
  *
  * Returns true if ACF or ACF PRO is found.
@@ -244,24 +160,6 @@ function acf_ready() {
 	return false;
 }
 
-/**
- * ACFE ready
- *
- * Returns true if ACFE or ACFE PRO is found.
- *
- * @since  1.0.0
- * @return boolean Returns true if ACFE is found.
- */
-function acfe_ready() {
-
-	// Return true if ready.
-	if ( has_acfe() || has_acfe_pro() || active_acfe() || active_acfe_pro() ) {
-		return true;
-	}
-
-	// Otherwise return false.
-	return false;
-}
 
 /**
  * Dashboard Summary filters
@@ -281,14 +179,4 @@ function ds_acf_tools_link() {
 	add_filter( 'ds_acf_link_tools', function() {
 		return 'tools.php?page=acf-tools';
 	} );
-
-	// Filters the description for ACFE types & taxes links
-	if ( ! is_plugin_active( 'acf-extended/acf-extended.php' ) ) {
-		add_filter( 'ds_site_widget_content_acfe_description_types', function() {
-			return sprintf(
-				'<p class="description">%s</p>',
-				__( 'Manage custom post types and custom taxonomies.', 'dashboard-summary' )
-			);
-		} );
-	}
 }
