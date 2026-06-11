@@ -37,18 +37,6 @@ Anyone who wants to submit a replacement for the plugin's cover image into which
 
 Following are the highlights of this plugin's functionality.
 
-### Advanced Custom Fields
-
-This plugin includes a bundled fork of Advanced Custom Fields Pro version 5.9.6, the last version of the plugin released before it was sold to by its originator, Elliot Condon, to the Delicious Brains corporation.
-
-[https://www.advancedcustomfields.com](https://www.advancedcustomfields.com)
-
-### Advanced Custom Fields: Extended
-
-This plugin includes a bundled version of Advanced Custom Fields: Extended Pro version 10.8.8.6, modified to work with certain developer settings.
-
-[https://www.acf-extended.com](https://www.acf-extended.com)
-
 ### Editor Options
 
 If the plugin is used with WordPress 5.0 or higher then it provides various content editing options. Set the block editor or the rich text editor as default. Allow users to choose their editor preference to override the default editor. In networks, all site administrators to override editor defaults.

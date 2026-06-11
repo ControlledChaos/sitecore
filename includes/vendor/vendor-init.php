@@ -46,13 +46,4 @@ function acf() {
 
 	$scp_acf = new Vendor_Class\Plugin_ACF;
 	$scp_acf->include();
-
-	if ( Compat\has_acf() ) {
-		new Vendor_Class\ACF_Nav_Menu_Field;
-	}
-
-	if ( function_exists( 'acf_register_admin_tool' ) ) {
-		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Content_Import_Export' );
-		\acf_register_admin_tool( 'SiteCore\Classes\Tools\Manage_Fields' );
-	}
 }

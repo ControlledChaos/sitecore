@@ -133,7 +133,7 @@ function classes() {
 
 	if (
 		get_option( 'enable_custom_dashboard', false ) &&
-		Compat\has_acf()
+		Compat\acf_pro_ready()
 	) {
 		$dashboard_acf = new Classes\Admin\Dashboard_Tabs_ACF;
 		$dashboard_acf->add_page();
@@ -385,10 +385,7 @@ function menus_widgets() {
 function remove_menu_items() {
 
 	// Stop if no content metabox on the ACF content tools screen.
-	if (
-		! class_exists( 'acf' ) &&
-		! class_exists( 'SiteCore\Classes\Tools\Content_Import_Export' )
-	) {
+	if ( ! class_exists( 'acf' )	) {
 		return;
 	}
 

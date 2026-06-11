@@ -151,11 +151,6 @@ function settings() {
 function tools() {
 
 	$classes = [
-
-		// Load `ACF_Admin_Tool` prior to `Content_Import_Export`.
-		'ACF_Admin_Tool' => SCP_PATH . 'includes/vendor/acf/includes/admin/tools/class-acf-admin-tool.php',
-
-		ns( 'Tools', 'Content_Import_Export' ) => f( 'tools', 'content-import-export.php' ),
 		ns( 'Tools', 'Manage_Fields' ) => f( 'tools', 'manage-fields.php' ),
 		ns( 'Tools', 'Customizer_Reset' )      => f( 'tools', 'customizer-reset.php' ),
 		ns( 'Tools', 'Disable_User_Toolbar' )  => f( 'tools', 'disable-user-toolbar.php' )
@@ -218,8 +213,7 @@ function vendor() {
 	$classes = [
 		ns( 'Vendor', 'Plugin' )             => f( 'vendor', 'plugin.php' ),
 		ns( 'Vendor', 'Plugin_Sample' )      => f( 'vendor', 'plugin-sample.php' ),
-		ns( 'Vendor', 'Plugin_ACF' )         => f( 'vendor', 'plugin-acf.php' ),
-		ns( 'Vendor', 'ACF_Nav_Menu_Field' ) => f( 'vendor', 'acf-nav-menu-field.php' )
+		ns( 'Vendor', 'Plugin_ACF' )         => f( 'vendor', 'plugin-acf.php' )
 	];
 	spl_autoload_register(
 		function ( string $class ) use ( $classes ) {

@@ -69,7 +69,9 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
  */
 function active_acf() {
 
-	if ( is_plugin_active( 'advanced-custom-fields/acf.php' ) ) {
+	if ( is_plugin_active( 'advanced-custom-fields/acf.php' ) ||
+		is_plugin_active( 'applied-content-forms/acf.php' ) )
+	{
 		return true;
 	}
 	return false;
@@ -96,52 +98,6 @@ function active_acf_pro() {
 }
 
 /**
- * ACF included
- *
- * Checks for Advanced Custom Fields files included
- * with this plugin or as activated original plugin.
- *
- * @since  1.0.0
- * @return boolean Returns true if the core file is found & included.
- */
-function has_acf() {
-
-	// Look for ACF files and set as a variable.
-	$acf = file_exists( SCP_PATH . 'includes/vendor/acf/acf.php' );
-
-	// Return true if the file is found.
-	if ( $acf && class_exists( 'acf' ) ) {
-		return true;
-	}
-
-	// Otherwise return false.
-	return false;
-}
-
-/**
- * ACF PRO included
- *
- * Checks for Advanced Custom Fields PRO files included
- * with this plugin.
- *
- * @since  1.0.0
- * @return boolean Returns true if the core file is found & included.
- */
-function has_acf_pro() {
-
-	// Look for ACF PRO files and set as a variable.
-	$acf_pro = file_exists( SCP_PATH . 'includes/vendor/acf/acf.php' );
-
-	// Return true if the file is found.
-	if ( $acf_pro && class_exists( 'acf_pro' ) ) {
-		return true;
-	}
-
-	// Otherwise return false.
-	return false;
-}
-
-/**
  * ACF ready
  *
  * Returns true if ACF or ACF PRO is found.
@@ -152,7 +108,7 @@ function has_acf_pro() {
 function acf_ready() {
 
 	// Return true if ready.
-	if ( has_acf() || has_acf_pro() || active_acf() || active_acf_pro() ) {
+	if ( active_acf() || active_acf_pro() ) {
 		return true;
 	}
 
@@ -160,6 +116,24 @@ function acf_ready() {
 	return false;
 }
 
+/**
+ * ACF Pro ready
+ *
+ * Returns true if ACF PRO is found.
+ *
+ * @since  1.0.0
+ * @return boolean Returns true if ACF is found.
+ */
+function acf_pro_ready() {
+
+	// Return true if ready.
+	if ( active_acf_pro() ) {
+		return true;
+	}
+
+	// Otherwise return false.
+	return false;
+}
 
 /**
  * Dashboard Summary filters
@@ -167,7 +141,7 @@ function acf_ready() {
  * @link https://github.com/ControlledChaos/dashboard-summary
  *
  * @since  1.0.0
- * @return boolean Returns true if ACFE is found.
+ * @return boolean
  */
 function ds_acf_tools_link() {
 
