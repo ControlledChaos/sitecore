@@ -23,7 +23,7 @@
  * Requires CP        2.0.0
  * License            Nope
  * License URI        DISCLAIMER.md
- * Tested up to:      6.9.1
+ * Tested up to:      7.0
  * Network:           true
  */
 
