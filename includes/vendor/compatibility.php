@@ -23,7 +23,7 @@ function setup() {
 		return __NAMESPACE__ . "\\$function";
 	};
 
-	// Disable Site Health in Dashboard Summary plugin.
+	// Disable Site Health in Dashboard Summary Widget plugin.
 	if ( get_option( 'disable_site_health', false ) ) {
 		add_action( 'init', function() {
 			add_filter( 'ds_show_health_link', '__return_false' );
@@ -136,7 +136,7 @@ function acf_pro_ready() {
 }
 
 /**
- * Dashboard Summary filters
+ * Dashboard Summary Widget filters
  *
  * @link https://github.com/ControlledChaos/dashboard-summary
  *
