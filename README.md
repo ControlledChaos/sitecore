@@ -1,6 +1,6 @@
 # Site Core
 
-Develop site-specific plugins for ClassicPress and WordPres.
+Develop site-specific plugins for ClassicPress and WordPress.
 
 ![Minimum PHP version 7.4](https://img.shields.io/badge/PHP_minimum-7.4-8892bf.svg?style=flat-square)
 ![Tested on PHP version 8.2.4](https://img.shields.io/badge/PHP_tested-8.2.4-8892bf.svg?style=flat-square)
