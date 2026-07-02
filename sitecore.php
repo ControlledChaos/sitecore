@@ -2,7 +2,7 @@
 /**
  * Site Core plugin
  *
- * Develop site-specific plugins for ClassicPress and WordPres.
+ * Develop site-specific plugins for ClassicPress and WordPress.
  *
  * @package  Site_Core
  * @category Core
