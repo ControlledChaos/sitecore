@@ -138,7 +138,7 @@ function acf_pro_ready() {
 /**
  * Dashboard Summary Widget filters
  *
- * @link https://github.com/ControlledChaos/dashboard-summary
+ * @link https://github.com/CCDzine-Builds/dashboard-summary
  *
  * @since  1.0.0
  * @return boolean

@@ -7,15 +7,15 @@
  * @package  Site_Core
  * @category Core
  * @since    1.0.0
- * @link     https://github.com/ControlledChaos/sitecore
+ * @link     https://github.com/CCDzine-Builds/sitecore
  *
  * Plugin Name:       Site Core
- * Plugin URI:        https://github.com/ControlledChaos/sitecore
+ * Plugin URI:        https://github.com/CCDzine-Builds/sitecore
  * Description:       Develop site-specific plugins for ClassicPress and WordPres.
  * Version:           1.0.0
- * UpdateURI:         https://github.com/ControlledChaos/releases/latest/download/sitecore.zip
+ * UpdateURI:         https://github.com/CCDzine-Builds/releases/latest/download/sitecore.zip
  * Author:            Controlled Chaos Design
- * Author URI:        https://github.com/ControlledChaos
+ * Author URI:        https://github.com/CCDzine-Builds
  * Text Domain:       sitecore
  * Domain Path:       /languages
  * Requires PHP:      7.4
@@ -119,7 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *    plugin name & URL, plus more personal or white-label constants.
  *
  * 9. Plugin URI:
- *    Find `https://github.com/ControlledChaos/sitecore` and replace with the
+ *    Find `https://github.com/CCDzine-Builds/sitecore` and replace with the
  *    URI of your plugin.
  *
  * 10. Change the developer backup account info in the `Users` class.

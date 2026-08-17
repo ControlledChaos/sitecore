@@ -169,7 +169,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The URL of the developer/agency.
 		 */
-		'dev_url' => esc_url( 'https://github.com/ControlledChaos' ),
+		'dev_url' => esc_url( 'https://github.com/CCDzine-Builds' ),
 
 		/**
 		 * Developer email
@@ -185,7 +185,7 @@ if ( ! defined( 'SCP_CONFIG' ) ) {
 		 * @since 1.0.0
 		 * @var   string The URL of the plugin.
 		 */
-		'plugin_url' => esc_url( 'https://github.com/ControlledChaos/sitecore' ),
+		'plugin_url' => esc_url( 'https://github.com/CCDzine-Builds/sitecore' ),
 
 		/**
 		 * Allow Site Health
