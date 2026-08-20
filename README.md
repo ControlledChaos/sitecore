@@ -9,7 +9,7 @@ Develop site-specific plugins for ClassicPress and WordPress.
 ![ACF Ready](https://img.shields.io/badge/ACF-Ready-00d3ae.svg?style=flat-square)
 ![Disabled for WordPress hosting](https://img.shields.io/badge/WP_Hosting-Blocked-dd0000.svg?style=flat-square)
 
-![Site Core Plugin Cover Image](https://github.com/ControlledChaos/sitecore/raw/main/cover.jpg)
+![Site Core Plugin Cover Image](https://github.com/CCDzine-Builds/sitecore/raw/main/cover.jpg)
 
 ## Plugin Overview
 
